@@ -1,8 +1,9 @@
-# Final implementation defaults — proposed
+# Accepted implementation defaults
 
-These recommendations close the remaining architecture choices. They are not yet
-approved or implemented. Exact compatible package versions will be selected and
-locked when scaffolding; numerical thresholds will follow development measurements.
+These defaults and the implementation handoff are accepted. The research core is
+implemented; the complete hosted platform is not. Exact compatible package
+versions are locked as each component is added. Numerical thresholds will follow
+development measurements before a scored protocol is frozen.
 
 ## Application interfaces
 
@@ -85,8 +86,8 @@ unless the design is explicitly revised.
 
 ## Implementation handoff
 
-After approval, start with the M0 simulator, typed contracts, package interfaces
-and tests. Then complete evaluation and durable execution against those contracts.
+Start with the M0 simulator, typed contracts, package interfaces and tests. Then
+complete evaluation and durable hosted execution against those contracts.
 Routine reversible engineering choices can follow project conventions and the
 accepted constraints, with significant decisions recorded in the repository.
 Surface changes to product scope, trust boundaries or scientific claims.

@@ -10,6 +10,8 @@ htmlcov/
 build/
 dist/
 runs/
+*.sqlite
+*.sqlite-*
 artifacts/
 .env
 .env.*

@@ -1,14 +1,22 @@
 # Initial law families
 
-These are proposed dimensionless toy laws for controlled identification. They are
+These are implemented dimensionless reference laws for controlled identification. They are
 not a faithful electromagnetism or materials simulator. For position vector
 `x`, velocity `v`, known mass `m`, and force `F`, integrate `dx/dt = v` and
-`dv/dt = F/m`. The anchor is at the origin; there are no collisions or walls.
+`dv/dt = F/m`. Reference fixtures place an anchor at the origin; custom structures
+may choose other fixed positions. There are no collisions or walls.
 
-The formulas below describe single-particle reference cases. The accepted
-production scope includes up to eight interacting particles in two dimensions.
-Pairwise interactions, topology exposure and per-object hidden parameters still
-need an explicit contract; these reference cases do not yet specify that contract.
+The formulas below describe single-particle reference cases. For spring and
+radial pair interactions, replace `x` with `x_i - x_j` on every visible undirected
+connection, add the resulting force to particle `i`, and subtract it from `j`.
+Forces on fixed anchors are discarded by the integrator. Springs have zero rest
+length in this version. The velocity law acts independently on each movable
+particle. Each regime has one coefficient set shared across its applicable
+particles/connections; object-specific coefficients are not implemented.
+
+The structure supports one to eight movable particles and up to eight anchors.
+Anchor positions and connection topology are public. The active force family,
+coefficients, observation seed and change boundary stay in the private definition.
 
 | Family | Force | Useful interventions | Example hidden change |
 | --- | --- | --- | --- |
@@ -35,7 +43,7 @@ separate. Initial observations are measured after the impulse.
 
 Bound both legal interventions and generator coefficients. Check representative
 and boundary conditions against a smaller timestep before freezing a suite.
-The implementation should reject nonfinite state and raise a simulation error rather
+The implementation rejects nonfinite state and raises a simulation error rather
 than clipping motion into apparently valid data. Consumed experiments stay
 consumed if integration fails. Noisy sensor measurements may fall outside the
 legal range of initial conditions; do not clip those measurements.
@@ -47,6 +55,7 @@ Low-speed experiments cannot reveal nonlinear drag. A narrow distance range
 confounds radial exponent with field strength. Zero velocity hides transverse
 forces completely. These ambiguities motivate active experiment selection.
 
-The first study evaluates recovery inside a disclosed function library. Later
-studies can test unknown function classes and hidden variables, but should not
-describe the initial closed-library task as unrestricted scientific discovery.
+The planned controlled study evaluates recovery inside a disclosed function
+library. The separate discovery track accepts user-defined predictive models.
+The fitter, predictor evaluation and scored suites are not implemented yet; the
+current random investigator does not claim to recover equations.
