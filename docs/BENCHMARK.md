@@ -12,9 +12,16 @@ this protocol, configuration files and commit before collecting evaluation runs.
    quickly does each method recover?
 3. Are improvements worth the additional wall time and API cost?
 
-The primary track uses a shared disclosed model class. Its claims concern
-experiment design and adaptation within that class, not open-ended discovery of
-arbitrary laws. Incorrect and overconfident models are legitimate outcomes.
+The controlled-selection track uses a shared disclosed model class. Its claims
+concern experiment design and adaptation within that class. A separate
+agent-discovery track accepts executable predictive models and measures complete
+agent performance. Keep results and claims from the two tracks separate.
+Incorrect and overconfident models are legitimate outcomes in both.
+
+The scientific details below primarily specify the controlled-selection track.
+Budgets, metrics, serialization and failure handling for the agent-discovery track
+must also be frozen before an official evaluation. That track is accepted product
+scope, but its complete protocol is not yet specified.
 
 ## Environment and experiment cost
 
@@ -35,8 +42,8 @@ arbitrary laws. Incorrect and overconfident models are legitimate outcomes.
 - Parameter changes and activation/deactivation of terms are separate strata.
   Family-switch and gradual-drift conditions are deferred.
 
-The proposed first demo uses the same trajectory duration and bounds but only 12
-experiments and a fixed change after 6. Do not report demo scores as results.
+Small deterministic development fixtures may use reduced budgets and known
+change points. They are test fixtures, not scored reference results.
 
 Invalid requests are rejected without a physics observation. Cap proposal retries
 at two per slot; then use a fixed seeded valid fallback and report the event. All
@@ -53,7 +60,7 @@ stability before freezing the world distribution.
 | Classical active | Maximizes predicted ensemble disagreement over a common candidate set | The same fitter and ensemble |
 | LLM design | Chooses from the same candidate set using observations, residuals and model summaries | The same fitter and ensemble |
 
-Use a common seeded candidate set of 128 interventions per round for the primary
+Use a common seeded candidate set of 128 interventions per round for the controlled
 comparison; random chooses uniformly from that set. Pin this generator. Shared
 calibration observations are identical across methods for a paired world.
 Independent experiment noise streams are keyed by world and experiment index.
@@ -63,7 +70,7 @@ fit and uncertainty information. The LLM sees the complete numerical observation
 record or a fixed disclosed transform; do not claim a matched-information study
 if it receives only selective summaries. Set a fixed context-management policy.
 
-Fix a common adaptation policy for the primary selector comparison. Separately
+Fix a common adaptation policy for the controlled selector comparison. Separately
 cross selectors with all-history, sliding-window and detector-reset policies to
 measure which component caused an improvement. Use an oracle reset at the true
 change only as a labeled diagnostic upper bound, never as an ordinary baseline.
@@ -71,7 +78,7 @@ change only as a labeled diagnostic upper bound, never as an ordinary baseline.
 Log model/provider version, settings, prompts, responses, timeouts, token counts,
 latency and actual reported cost. Pin numeric fits and cap fitting work per round.
 An equal experiment budget is not an equal compute budget; report both. Choose
-provider and spending cap before an evaluation sweep. Do not publish estimated
+provider and operational limits before an evaluation sweep. Do not publish estimated
 prices as actual costs.
 
 ## Model fitting and uncertainty
@@ -161,10 +168,13 @@ The proposed `strange-physics.observations.v1` demo export covers only the first
 record type. It will not be a complete research provenance bundle. A local
 in-process scaffold is not safe isolation for an untrusted agent.
 
-Use processes and validated serialization when adding agents. Never pass hidden
+Use isolated execution environments and validated serialization for agents and
+submitted predictors. Ordinary process separation alone is not sufficient for
+untrusted hosted code. Never pass hidden
 config paths or true change markers in errors or model context. Test this boundary.
-Archive raw numeric artifacts and sanitized provider transcripts for published
-runs. Replaying a recorded LLM run is reproducible; resampling a remote model is
+Publish raw numeric artifacts and sanitized provider transcripts for all scored
+reference runs, including failures. Keep customer investigations private unless
+their owner explicitly publishes them. Replaying a recorded LLM run is reproducible; resampling a remote model is
 not guaranteed to produce identical decisions even at temperature zero.
 
 ## Results policy

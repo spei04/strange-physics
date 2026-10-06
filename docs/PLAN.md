@@ -6,13 +6,18 @@ Only planning documents and repository metadata exist at this stage. See
 
 ## Objective
 
-Build a reproducible benchmark and visual laboratory around this question:
+Build an extensible production research platform around this question:
 
 > Under a fixed number of interventions, which experiment-selection strategies
 > learn predictive rules that generalize, and recover when those rules change?
 
 Research correctness takes priority over interface breadth. A negative result for
 the LLM is a valid outcome. Do not design the suite to make one method win.
+
+The target user is a research engineer integrating an agent, running a controlled
+investigation, and diagnosing failures. The product must support external teams,
+private studies, durable remote execution, and independent deployment. The browser
+is a client of the same research interfaces available to the SDK and CLI.
 
 ## Scope of version 0.1
 
@@ -24,10 +29,19 @@ the LLM is a valid outcome. Do not design the suite to make one method win.
 - Numerical position and velocity observations with controlled sensor noise.
 - A fixed budget, a stationary control condition, and at most one unannounced
   change between experiments. Resetting the particle does not reset the law.
-- Three experiment selectors sharing a model fitter and adaptation policy.
-- Offline CLI evaluation, versioned run records, and a browser replay viewer.
+- Agent discovery with executable predictive models, plus a separate controlled
+  comparison of three selectors sharing a model fitter and adaptation policy.
+- Python SDK, CLI, hosted service, versioned run records, and a live browser
+  investigation/replay interface. Support self-hosted deployment.
+- Durable remote jobs with checkpoints, cancellation, bounded retries and quotas.
+- Isolated execution of user-supplied agents and predictors; private customer
+  investigations and explicit artifact publication.
 - A constrained world builder: supported primitives and coefficient ranges.
-  Free-form equations and arbitrary executable code come later.
+  Extend law families through a versioned plugin contract without core changes.
+
+The one-particle scientific starting point above remains a proposal. The next
+review considers interacting systems with up to eight particles. Do not infer
+that approved production execution settles the scientific scope or solver.
 
 ## Architecture
 
@@ -36,15 +50,19 @@ interpolates recorded frames; it does not implement a second physics engine.
 
 ```mermaid
 flowchart LR
-    Selector[Experiment selector] --> Request[Validated experiment]
-    Request --> Simulator[Private world runner]
+    Clients[SDK / CLI / browser] --> API[Workspace and job API]
+    API --> Jobs[Durable job queue]
+    Jobs --> Worker[Investigation coordinator]
+    Worker --> Agent[Isolated agent runtime]
+    Agent --> Request[Validated experiment request]
+    Request --> Simulator[Isolated world runner]
     Simulator --> Observation[Numerical observations]
-    Observation --> Fitter[Shared model fitter]
-    Fitter --> Selector
-    Observation --> Log[Versioned run record]
-    Fitter --> Log
-    Fitter --> Evaluator[Independent held-out evaluator]
-    Log --> Viewer[Replay viewer]
+    Observation --> Agent
+    Agent --> Predictor[Submitted predictor artifact]
+    Predictor --> Evaluator[Independent held-out evaluator]
+    Worker --> Log[Versioned artifacts and events]
+    Evaluator --> Log
+    Log --> Clients
 ```
 
 ### Core and contracts
@@ -53,22 +71,50 @@ Keep the initial package small: dataclasses, a force-law interface, fixed-step
 RK4, a budget-enforcing session, and seeded random exploration. Add NumPy and
 SciPy when implementing fitting. Keep all dependencies locked with uv.
 
-The proposed initial code is a trusted local scaffold. Before running an LLM, introduce
-separate runner and agent processes with serialized messages. Agent processes
-must not receive hidden configurations, evaluator files, seeds that reconstruct
-worlds, or filesystem/shell access to them. A Python private attribute alone is
-not a research isolation boundary.
+Use the same typed, versioned messages across local and remote execution. Separate
+the coordinator, simulator, agent runtime and evaluator. Agent code must not
+receive hidden configurations, evaluator files, seeds that reconstruct worlds,
+or filesystem access to them. A Python private attribute or ordinary same-host
+process is not sufficient isolation for hostile code in a shared hosted service.
+
+Submit immutable agent, law and predictor packages with pinned dependencies and
+content hashes. Evaluate predictors in a fresh restricted environment. Provide
+only the inputs required for prediction, no true outputs or evaluator credentials,
+and do not return held-out evaluation feedback during the investigation.
 
 Proposed agent-facing operations:
 
 - `describe_space()` returns legal interventions, units, timing and budget.
 - `run_experiment(spec)` returns timestamped observations and remaining budget.
-- `fit_model()` fits only observations already purchased from the budget.
-- `predict(spec)` evaluates the current fitted model, never the true simulator.
-- `submit_model()` stores a serializable model snapshot for offline evaluation.
+- `fit_model()` is available in the controlled track and uses only purchased data.
+- `predict(spec)` evaluates a submitted model, never the true simulator.
+- `submit_model()` commits a predictor artifact for independent evaluation.
 
-Each selected experiment includes a concise, public rationale and optional
+Each selected experiment includes a concise, workspace-visible rationale and optional
 testable hypothesis. Treat these as annotations, not evidence of correctness.
+
+### Production execution
+
+Begin with one application service and independently scalable workers. Use durable
+job state, an append-only event record, and immutable objects for bulk artifacts.
+Provider, queue and database choices remain under review. Implement authentication
+and workspace authorization before accepting private hosted studies.
+
+Record experiment identity and the committed result before acknowledging success.
+Use idempotency keys and reconcile incomplete attempts after a crash so retries
+cannot create a second logical experiment or platform charge. External model
+requests have separate attempt records: an ambiguous provider response may have
+incurred cost, so do not promise exactly-once external billing or blindly retry it.
+
+Checkpoint agent state using an explicit contract; do not promise transparent
+continuation of arbitrary process memory. Preserve accepted experiments and
+submitted predictors across worker failure. Make cancellation, deadline expiry,
+partial completion and failed runs visible terminal states.
+
+Track model usage and resource consumption with configurable run/workspace limits.
+Customer-supplied credentials must stay outside user-code runtimes and public
+artifacts. Budget is not a reason to reduce the accepted product scope, but no
+unbounded infrastructure or model sweep is authorized by this plan.
 
 ### Inference
 
@@ -79,14 +125,15 @@ fields, compare a small, disclosed exponent grid; do not secretly give the fitte
 the correct exponent. Use bootstrap resampling of whole experiments for an
 ensemble, since samples within a trajectory are correlated.
 
-All selectors share that fitter, its feature library, its fit budget and its
-change-handling policy. Ensemble disagreement is an acquisition heuristic;
-predictive interval coverage must be measured rather than assumed.
+In the controlled track, selectors share that fitter, its feature library, its
+fit budget and its change-handling policy. Ensemble disagreement is an acquisition
+heuristic; predictive interval coverage must be measured rather than assumed.
 
-Later add a separate model-discovery track using a bounded expression grammar
-with numerical validation. Do not execute generated Python to evaluate models.
+The agent-discovery track accepts executable predictor artifacts inside the
+isolated execution contract. Agents may propose and fit different model classes.
 Report this track separately because changing both selection and model class
-would confound the primary comparison.
+does not isolate the causal effect of experiment selection. The sandbox must
+enforce runtime/output limits and numerical validation independently of the agent.
 
 ### Adaptation
 
@@ -107,27 +154,28 @@ shows actual and predicted trajectories, uncertainty bands, budget, public
 hypotheses and the current experiment. The timeline supports play, pause, scrub,
 speed controls and synchronized strategy comparison.
 
-A later builder exposes sliders for coefficients and a hidden-change schedule.
-The agent receives only the resulting observation API. A local Python service
-can stream completed experiments over server-sent events. A public static viewer
-can ship before a hosted inference service; live provider calls require server-side
-credentials and per-run spending caps. No accounts or database are needed for
-the initial local workflow.
+A builder exposes coefficients and a hidden-change schedule. The agent receives
+only the resulting observation API. The hosted service streams committed events
+to the browser; reconnects resume from a durable cursor. Local and hosted clients
+use the same record schema. Keep private data behind workspace authorization and
+make publication an explicit action. Show hypotheses and uncertainty as model
+outputs rather than scientific ground truth.
 
 ## Milestones and acceptance gates
 
 | Milestone | Deliverable | Completion gate |
 | --- | --- | --- |
-| M0 — foundation | Finalized plan, force laws, protocol skeleton, replay export, CI | Deterministic demos; meaningful physical and protocol tests pass. |
-| M1 — identification | Frozen world generator, fitter, trajectory predictor, held-out evaluator | Known recoverable noiseless cases fit accurately; unit/noise/scaling checks pass; evaluation data cannot leak into training. |
-| M2 — classical benchmark | Random and disagreement selectors, stationary/changed suites, adaptation ablations | Paired runs produce error curves, false-alarm counts, recovery failures and uncertainty coverage from one command. |
-| M3 — LLM investigation | One provider adapter, bounded structured outputs, transcript and cost accounting | Same interface and budget; malformed requests have declared handling; dry-run fixtures work without credentials. |
-| M4 — first research release | Frozen protocol, full comparison, plots, report and run manifests | Reproduce all published metrics from archived numeric artifacts; include uncertainty and all failed runs. |
-| M5 — visual laboratory | Replay player, comparison view, constrained world builder | Replay agrees with recorded samples; imported files validate; a visitor can build and investigate a supported world locally. |
+| M0 — contracts and physics | Finalized architecture, SDK contracts, law plugins, deterministic simulator and CI | External code can add a law and agent without core changes; physical/protocol tests pass. |
+| M1 — research evaluation | Fitter, predictor interface, held-out evaluator and two evaluation tracks | Known recoverable cases fit accurately; evaluation data cannot leak; metrics reproduce from stored artifacts. |
+| M2 — durable execution | Hosted API, authentication, workspace permissions, queue, isolated workers and checkpointing | Crash recovery, cancellation, duplicate requests, egress/isolation and cross-workspace access tests pass. |
+| M3 — agent integration | Model gateway, executable predictor packages, provider adapter, customer credentials and usage accounting | Full investigations run locally and remotely; provider failures and ambiguous retries have explicit outcomes. |
+| M4 — research workspace | Live investigation, world builder, replay, comparison, import/export and self-hosting | External team can run a private study, inspect failures, export it and deploy independently. |
+| M5 — production and reference release | Frozen evaluation, complete reference artifacts, deploy/upgrade/restore procedures and observability | Publish all scored runs; pass the agreed load and recovery tests; complete an outside-team integration. |
 
-Build in dependency order. M0 is still pending, not a completed benchmark.
-M1–M4 are the critical path. Estimate effort after M1 establishes fitter quality
-and simulator cost; do not promise a research result on a calendar deadline.
+Build in dependency order. All milestones are pending. M1 and M2 can progress
+independently once M0 contracts settle. A production release requires the entire
+set of gates, not merely an animated investigation. Estimate effort after initial
+simulation, sandbox and provider measurements.
 
 ## Tests and release gates
 
@@ -140,6 +188,9 @@ and simulator cost; do not promise a research result on a calendar deadline.
 - Research: leakage tests, synthetic recovery, prediction serialization,
   stationary false alarms, censored failures and aggregation by independent world.
 - Interface: replay schema compatibility and end-to-end replay/scrubbing checks.
+- Operations: idempotent requests, worker crashes, cancellation, checkpoint
+  restoration, cross-workspace isolation, unavailable dependencies, backup restore
+  and the agreed concurrent-job target.
 - Quality: Ruff formatting/linting, strict mypy, pytest, and frontend lint/type
   checks when a frontend exists. CI never needs a paid provider key.
 
@@ -152,9 +203,9 @@ licenses if external code is introduced.
 
 Keep this checkout for sequential work. Do not create a checkout for every
 milestone. Keep caches outside checkouts, dependencies owned by the checkout,
-and large generated runs outside Git. Publish only curated, sanitized benchmark
-artifacts after checking their contents; provider keys and local paths never
-belong in public artifacts.
+and large generated runs outside Git. Publish sanitized artifacts for every scored
+reference run, including failures. Keep customer studies private by default and
+require explicit publication. Provider keys never belong in public artifacts.
 
 Store durable release manifests and needed evidence outside disposable worktrees.
 Each manifest identifies commit, task/owner, purpose, config hashes and artifact
@@ -164,7 +215,8 @@ needed records. The active main checkout remains useful for the next milestone.
 
 ## Deferred work
 
-Many-body interactions, collisions, pixel observations, gradual drift, multiple
-change points, compositional laws, open-ended symbolic discovery and reinforcement
-learning are follow-up studies. Add each only with an evaluation question and
-an adequate baseline. No GPU training is required for the first release.
+Collisions, pixel observations, gradual drift, multiple change points and
+reinforcement learning remain proposed follow-up studies. Many-body scope is
+under review. Executable predictor submission is accepted first-release scope.
+Add new research conditions with a specific evaluation question and adequate
+baselines. No GPU training is required for the first release.

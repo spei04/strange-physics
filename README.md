@@ -2,14 +2,15 @@
 
 **How quickly can an agent recover when the laws of its world change?**
 
-Strange Physics is a research sandbox for active system identification under a
-fixed experiment budget. An investigator chooses interventions, observes numerical
-trajectories, fits a predictive model, and investigates unexpected failures after
-an unannounced change in the governing law.
+Strange Physics is a planned open-source research platform for developing and
+evaluating agents that discover unfamiliar physical laws. Teams will connect
+their own agents, define worlds, run controlled investigations, and reproduce
+failures after an unannounced change in the governing law.
 
-The planned visual interface lets visitors build a small world and replay an
-investigation: actual motion, predicted motion, uncertainty, experiments, and
-model revisions on a shared timeline.
+The product targets are a Python SDK, CLI, hosted service, and self-hosted
+deployment. Durable jobs will run agents and executable predictive models in
+isolated workers. A live browser interface will show actual motion, predicted
+motion, uncertainty, experiments, and model revisions on a shared timeline.
 
 ## Status
 
@@ -17,9 +18,10 @@ This repository currently contains a research plan and project skeleton.
 **There is no executable simulator, agent, benchmark, browser viewer, or result
 yet.** Infrastructure and architecture decisions are under review.
 
-The proposed foundation includes three force families, a two-dimensional probe
-simulator, fixed-cost experiments, seeded observation noise, hidden changes
-between experiments, and versioned trajectory export.
+The proposed scientific foundation includes three force families, fixed-cost
+experiments, seeded observation noise, hidden changes between experiments, and
+versioned run artifacts. Customer investigations will be private by default;
+published reference benchmarks will include every scored run and its failures.
 
 Start with the [implementation plan](docs/PLAN.md), the [draft benchmark
 protocol](docs/BENCHMARK.md), and the [open design decisions](docs/DESIGN_DECISIONS.md).
@@ -28,24 +30,36 @@ These documents describe proposed behavior, not completed features.
 ## Development setup
 
 The proposed stack is Python with uv for research code and TypeScript/React with
-Canvas for the later replay viewer. Exact runtime versions, dependencies,
-deployment and execution boundaries will be selected in the design review.
+Canvas for the visual interface. Exact runtime versions, dependencies, deployment
+provider and execution boundaries will be selected in the design review.
 Setup commands will be added with the first runnable implementation.
 
 ## Research design
 
-The proposed primary study compares **random exploration**, **classical uncertainty-driven
-exploration**, and **LLM-selected experiments**, using the same model fitter and
-observation interface. This isolates the value of experiment selection. A later,
-separate study will allow agents to propose model structures.
+Two separate tracks will measure different capabilities:
+
+- **Agent discovery:** agents select experiments, analyze observations, and submit
+  executable predictive models. Teams can supply their own implementations.
+- **Controlled experiment selection:** random, classical uncertainty-driven and
+  LLM selectors use the same model fitter and observation interface. This isolates
+  the value of experiment selection.
 
 Primary outcomes are prediction error across the experiment budget and after a
 change. Recovery time, false alarms on unchanged worlds, uncertainty calibration,
 and compute/API cost are secondary outcomes. Failure to recover stays in the
 results. Hidden evaluation scores never feed back into experiment selection.
 
-The first release uses numerical observations. Learning from pixels, arbitrary
-user code, reinforcement learning, and GPU training are outside its scope.
+The first release uses numerical observations. Learning from pixels,
+reinforcement learning, and GPU training are outside its scope. User-supplied
+agent and predictor code requires isolated, resource-limited execution.
+
+## Adoption requirements
+
+- Add an agent and law family without modifying the core platform.
+- Reconstruct a completed run from its versioned manifest and recorded artifacts.
+- Resume work after worker failure without charging twice for one experiment.
+- Run privately on the hosted service or deploy the system independently.
+- Enforce configurable run budgets, quotas and cancellation; record model usage.
 
 ## Repository map
 
