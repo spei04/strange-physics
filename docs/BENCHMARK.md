@@ -23,23 +23,30 @@ Budgets, metrics, serialization and failure handling for the agent-discovery tra
 must also be frozen before an official evaluation. That track is accepted product
 scope, but its complete protocol is not yet specified.
 
-The platform now targets up to eight interacting particles. The single-probe
-design below is a reference-case proposal; multi-particle task distributions and
-identifiability controls remain to be specified. Public reference suites and a
+The platform targets up to eight interacting particles. Single-probe worlds are
+reference cases; multi-particle distributions and identifiability controls remain
+to be calibrated on development worlds. Public reference suites and a
 separate versioned blind evaluation suite are accepted. Keep their manifests,
 access rules and reported scores distinct; never label the public suite blind.
 
 ## Environment and experiment cost
 
-- Three law families, dimensionless coordinates, one movable probe, known mass.
-- Each accepted request resets the probe to chosen initial conditions and applies
-  one impulse at time zero. A reset never changes or rewinds the hidden regime.
+- Three law families, dimensionless coordinates and one to eight movable particles,
+  with fixed-anchor reference cases.
+- Agents know particle identities, masses and connections. They do not receive
+  the active force laws, hidden coefficients or realized change times.
+- Each accepted request chooses initial positions, velocities and masses within
+  the published bounds, with at most one impulse on a selected particle at time
+  zero. There are no interventions during the ensuing trajectory in this track.
+  Resetting initial conditions never changes or rewinds the hidden regime.
 - Proposed unit cost: 2 simulated seconds, integration step 0.01, and 41 position
   and velocity observations at uniform 0.05-second spacing, including time zero.
 - Legal positions and velocities have norm at most 2; impulse norm at most 1;
   mass is between 0.5 and 2. These limits apply equally to all methods.
-- Total budget: 40 experiments, including 4 common calibration experiments.
-  No method gets free measurements or access to evaluation probes.
+- Accepted default scored budget: 40 experiments, including 4 common calibration
+  experiments. No method gets free measurements or access to evaluation probes.
+  Custom studies can select other budgets; scores with different budgets are
+  separate conditions, not directly interchangeable leaderboard entries.
 - Stationary worlds retain their law for all 40 experiments. Changed worlds have
   one change after 16–24 completed experiments, sampled independently of method
   performance and hidden from agents. This guarantees pre/post-change budgets.
@@ -47,6 +54,15 @@ access rules and reported scores distinct; never label the public suite blind.
   family label or timing. All receive the same candidate feature dictionary.
 - Parameter changes and activation/deactivation of terms are separate strata.
   Family-switch and gradual-drift conditions are deferred.
+
+The law stays fixed within each experiment. Its coefficients or active terms may
+change only between experiments, and stationary controls never change. The
+proposed 16–24 change window, legal numerical bounds, observation cadence and
+solver settings still require development validation before protocol freeze.
+
+Primary scoring measures prediction on held-out conditions and recovery after
+changes. Matching the exact hidden equation is a secondary diagnostic, since
+equivalent predictive models may have different representations.
 
 Small deterministic development fixtures may use reduced budgets and known
 change points. They are test fixtures, not scored reference results.
@@ -119,11 +135,14 @@ scores to the agent. Any diagnostic probes the agent requests consume the normal
 budget. Viewer-only ground truth is added only after the episode ends.
 
 Begin with a development pilot to estimate runtime, variance and recoverability.
-Proposed evaluation: 30 independent worlds per family and condition, three policy
-seeds per world, and three selectors. This is 1,620 episodes for three families
-and two conditions, including 540 LLM episodes and up to 21,600 LLM decisions
-before retries. Establish cost with a small pilot first. Do not launch the full
-sweep merely because a provider credential exists.
+One draft controlled-track evaluation uses 30 independent worlds per family and
+condition, three policy seeds per world, and three selectors. With three families
+and three conditions (stationary, coefficient change, term change), this is 2,430
+episodes, including 810 LLM-selector episodes. At one selection call per adaptive
+experiment, that implies 29,160 selection calls after the four common calibration
+experiments; retries and other model calls are additional. Final suite size must
+follow a development pilot measuring variability, runtime and cost. Do not launch
+the full sweep merely because a provider credential exists.
 
 ## Metrics
 
@@ -170,18 +189,19 @@ experiments, model snapshots and evaluator outputs. Keep three separate artifact
 2. Evaluator-only world parameters, change events and held-out trajectories.
 3. Completed viewer bundles that may reveal ground truth after the investigation.
 
-The proposed `strange-physics.observations.v1` demo export covers only the first
+The proposed `strange-physics.observations.v1` observation export covers only the first
 record type. It will not be a complete research provenance bundle. A local
 in-process scaffold is not safe isolation for an untrusted agent.
 
 Use isolated execution environments and validated serialization for agents and
 submitted predictors. Ordinary process separation alone is not sufficient for
-untrusted hosted code. Never pass hidden
-config paths or true change markers in errors or model context. Test this boundary.
+untrusted hosted code. Never pass hidden config paths or true change markers in
+errors or model context. Test this boundary.
 Publish raw numeric artifacts and sanitized provider transcripts for all scored
 reference runs, including failures. Keep customer investigations private unless
-their owner explicitly publishes them. Replaying a recorded LLM run is reproducible; resampling a remote model is
-not guaranteed to produce identical decisions even at temperature zero.
+their owner explicitly publishes them. Replaying a recorded LLM run is
+reproducible; resampling a remote model is not guaranteed to produce identical
+decisions even at temperature zero.
 
 ## Results policy
 

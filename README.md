@@ -53,6 +53,12 @@ change. Recovery time, false alarms on unchanged worlds, uncertainty calibration
 and compute/API cost are secondary outcomes. Failure to recover stays in the
 results. Hidden evaluation scores never feed back into experiment selection.
 
+The accepted default is 40 experiments including four common calibration
+experiments. Agents choose initial conditions and an initial impulse, with no
+intervention during motion. Particle identities, masses and connections are
+visible; active force laws, coefficients and change times are hidden. Laws stay
+fixed within each experiment and can change between experiments.
+
 The first release uses numerical observations. Learning from pixels,
 reinforcement learning, and GPU training are outside its scope. User-supplied
 agent and predictor code requires isolated, resource-limited execution.

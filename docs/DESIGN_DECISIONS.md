@@ -66,9 +66,9 @@ public design record.
 The [checkpoint contract](CHECKPOINTS.md) explains the accepted recovery model.
 These are design decisions; no runtime or infrastructure is implemented yet.
 
-## Next decisions — round 4
+## Accepted decisions — round 4
 
-| Decision | Proposed starting point | Decisions that depend on it |
+| Decision | Accepted direction | Decisions that depend on it |
 | --- | --- | --- |
 | Experiment controls | Select initial conditions and an initial impulse; continuous control is a later separate track | Request schema, action validation, simulator loop and agent SDK |
 | Visible structure | Reveal particle identities, masses and connections; hide active force laws, coefficients and change times | Observation schema, identifiable tasks, fitter features and leakage tests |
@@ -76,21 +76,30 @@ These are design decisions; no runtime or infrastructure is implemented yet.
 | Change boundary | Law fixed within each experiment, with changes between experiments and stationary controls | Regime state, resets, detector and recovery measurements |
 | Primary scores | Held-out trajectory error and post-change recovery; equation recovery is secondary | Predictor contract, held-out probes, aggregation and score artifacts |
 
-## Dependent decisions to visit later
+## Final review — implementation defaults
 
-- Simulator representation: particle interaction semantics, solver
-  accuracy and bounds; force grammar and identifiability.
-- Experiment contract: legal controls, units, fixed cost, observation cadence,
-  noise model, agent information, invalid-request handling and reset semantics.
-- Inference: model dictionary, numerical fit, uncertainty estimation, change
-  detector and old-data policy.
-- Evaluation: held-out splits, budgets, metrics, number of seeds, pilot power and
-  cost, protocol freeze, failure accounting and result artifacts.
-- Execution: exact sandbox configuration, reproducibility manifests, checkpoint
-  serialization, timeouts and scheduling of the accepted concurrent workload.
-- Interface: replay schema, renderer, transport for live runs, world builder,
-  deployment and visitor limits.
-- Operations: secrets, logging, retention, release artifacts, CI and disk use.
+These choices remain proposed. They complete the material architecture review;
+remaining numerical settings require development measurements, not guesses.
+
+| Decision | Recommended default | What it settles |
+| --- | --- | --- |
+| Application stack | Python/FastAPI with NumPy/SciPy; React/TypeScript/Vite and Canvas 2D; HTTP/JSON and resumable server-sent events | API/schema tooling, numerical runtime, frontend and live event transport |
+| Identity provider | Google Identity Platform with Google and GitHub sign-in; workspace membership enforced by the application; standard OIDC adapter for self-hosting | Hosted login provider, workspace boundary and self-hosted identity integration |
+| Delivery and secrets | Terraform, GitHub Actions with workload identity federation, Artifact Registry and Secret Manager; checked production release gate | Infrastructure source, short-lived CI credentials, images, keys and release workflow |
+| Availability and recovery | One US primary region, multi-zone production database and tested backup restoration | Initial availability model, deployment region verification and recovery testing |
+| Data retention | Keep customer runs until explicit deletion or an owner-configured retention policy | Durable data policy, deletion authority and artifact lifecycle |
+| Scientific configuration | Calibrate solver accuracy, noise, feature library, change schedule, thresholds and suite size on development worlds, then freeze before evaluation | Numerical settings, inference/adaptation details and evaluation validity |
+| Remaining engineering decisions | Resolve routine choices within the accepted constraints and document them; reopen material product, security or research tradeoffs | Package layout, validation rules, interaction conventions, timeouts, tests, instrumentation and work order |
+
+Default build order remains M0 through M5 in the implementation plan. Initial work
+implements the contracts and physics locally; the production release still requires
+the accepted hosted and operational capabilities. Architecture acceptance does
+not establish cloud permissions, credit eligibility or measured load capacity.
+
+See [implementation defaults](IMPLEMENTATION_DEFAULTS.md) for verified integration
+constraints behind these recommendations. Approval of this final review and the
+implementation handoff will close the design interview; material scope changes
+will still be surfaced rather than silently folded into the build.
 
 Update this record after each review round. A proposal in another document is
 not a substitute for an answered decision here.

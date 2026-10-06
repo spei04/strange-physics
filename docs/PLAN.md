@@ -26,10 +26,17 @@ is a client of the same research interfaces available to the SDK and CLI.
   numerical and identification checks. Exact interaction semantics remain under
   review; collisions are not required by the accepted scope.
 - Three families with hidden coefficients, including terms that may be absent.
-- Known mass, initial conditions, applied impulse and observation timing.
+- Visible particle identities, masses and connections; active force laws,
+  coefficients and realized change times remain hidden.
+- Agent-selected initial positions, velocities and masses, with at most one
+  initial impulse. Continuous control is a separate future track.
 - Numerical position and velocity observations with controlled sensor noise.
-- A fixed budget, a stationary control condition, and at most one unannounced
+- Default scored budget of 40 experiments including four common calibration
+  experiments, with configurable budgets for custom studies.
+- A stationary control condition and at most one unannounced
   change between experiments. Resetting the particle does not reset the law.
+- Primary scores measure held-out prediction error and recovery after changes;
+  exact equation recovery is a secondary diagnostic.
 - Agent discovery with executable predictive models, plus a separate controlled
   comparison of three selectors sharing a model fitter and adaptation policy.
 - Python SDK, CLI, hosted service, versioned run records, and a live browser
