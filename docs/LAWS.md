@@ -5,6 +5,11 @@ not a faithful electromagnetism or materials simulator. For position vector
 `x`, velocity `v`, known mass `m`, and force `F`, integrate `dx/dt = v` and
 `dv/dt = F/m`. The anchor is at the origin; there are no collisions or walls.
 
+The formulas below describe single-particle reference cases. The accepted
+production scope includes up to eight interacting particles in two dimensions.
+Pairwise interactions, topology exposure and per-object hidden parameters still
+need an explicit contract; these reference cases do not yet specify that contract.
+
 | Family | Force | Useful interventions | Example hidden change |
 | --- | --- | --- | --- |
 | Spring | `F = -(k1 + k3 * dot(x,x)) * x` | Vary displacement and mass; excite small and large amplitudes | Activate a cubic restoring term |

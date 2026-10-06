@@ -30,22 +30,37 @@ An outside team must be able to add its own agent and law family without changin
 the core, then reconstruct a recorded run from its manifest. Remote model calls
 are replayable from records; a fresh model invocation is not guaranteed identical.
 
-## Next decisions — round 2
+## Accepted decisions — round 2
 
-These recommendations are not yet accepted.
+All recommendations from this round were accepted except the AWS provider
+recommendation, which was replaced with Google Cloud to use available credits.
+The personal GitHub repository remains independent of the deployment account.
 
-| Decision | Proposed starting point | Decisions that depend on it |
+| Decision | Accepted direction | Decisions that depend on it |
 | --- | --- | --- |
 | Hosted access | Approved organizations first; public SDK and self-hosting remain available | Authentication, membership, abuse handling and onboarding |
-| Cloud deployment | AWS for the first managed deployment, with portable application interfaces | Infrastructure definitions, task isolation, queues, database and object storage |
+| Cloud deployment | Google Cloud for the first managed deployment, using an eligible credited billing account; retain portable application interfaces | Dedicated projects, organization policies, task isolation, queues, database and object storage |
 | Uploaded runtimes | Python agent and predictor packages first; remote agents use HTTP | Package manifests, dependency builds, SDK and sandbox image |
 | Worker network | No general internet access for hosted user code; broker model calls | Egress controls, secrets, provider gateway and dependency installation |
 | Initial load | Acceptance test 100 simultaneous investigations per deployment | Worker scheduling, provider backpressure, quotas and load tests |
 | Physics scope | Two-dimensional interacting systems with up to eight particles and single-particle reference cases | Integrator, force interfaces, fitting library and visualization |
 | Official evaluation | Public reference suites plus a distinct, versioned blind evaluation suite | Test-world isolation, submission limits, result publication and auditing |
 
-The [deployment options](DEPLOYMENT_OPTIONS.md) record source-backed constraints
-for the provider question; they do not constitute an accepted deployment choice.
+The [deployment design](DEPLOYMENT_OPTIONS.md) records source-backed constraints
+for Google Cloud. The provider is accepted; service selection, project boundaries
+and deployment configuration remain proposals. Billing identifiers and account
+details are not part of this public design record.
+
+## Next decisions — round 3
+
+| Decision | Proposed starting point | Decisions that depend on it |
+| --- | --- | --- |
+| Project boundary | Separate development and production Google Cloud projects, linked to the eligible credited billing account | Organization/folder placement, IAM, environments and deployment permissions |
+| Execution architecture | Cloud Run trusted services; separate GKE Sandbox execution; Cloud SQL PostgreSQL, Cloud Storage and Cloud Tasks | Infrastructure code, network/DNS policy, region and quota validation |
+| Workspace access | Managed OpenID Connect login, invitation-only membership and owner/researcher/viewer roles | Identity provider selection, authorization model and SDK authentication |
+| Agent packaging | Python package plus lockfile; platform builds an immutable image in an isolated build environment | Build dependencies, package registry access, image policy and runtime compatibility |
+| Agent recovery | Explicit SDK checkpoint after every committed experiment, including declared state and artifact references | State schema, checkpoint consistency, resume contract and failure tests |
+| Reference changes | Both coefficient changes and activation/deactivation of terms within a family, scored separately | World generator, change detector, recovery metrics and protocol freeze |
 
 ## Dependent decisions to visit later
 

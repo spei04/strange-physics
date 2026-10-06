@@ -23,6 +23,12 @@ Budgets, metrics, serialization and failure handling for the agent-discovery tra
 must also be frozen before an official evaluation. That track is accepted product
 scope, but its complete protocol is not yet specified.
 
+The platform now targets up to eight interacting particles. The single-probe
+design below is a reference-case proposal; multi-particle task distributions and
+identifiability controls remain to be specified. Public reference suites and a
+separate versioned blind evaluation suite are accepted. Keep their manifests,
+access rules and reported scores distinct; never label the public suite blind.
+
 ## Environment and experiment cost
 
 - Three law families, dimensionless coordinates, one movable probe, known mass.

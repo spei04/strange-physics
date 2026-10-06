@@ -21,9 +21,10 @@ is a client of the same research interfaces available to the SDK and CLI.
 
 ## Scope of version 0.1
 
-- Two-dimensional motion in dimensionless units; initially one movable particle
-  and one fixed anchor or field source. This is sufficient to identify the three
-  force families without introducing collisions or many-body instability.
+- Two-dimensional motion in dimensionless units with up to eight interacting
+  particles. Include single-particle and fixed-anchor reference cases for
+  numerical and identification checks. Exact interaction semantics remain under
+  review; collisions are not required by the accepted scope.
 - Three families with hidden coefficients, including terms that may be absent.
 - Known mass, initial conditions, applied impulse and observation timing.
 - Numerical position and velocity observations with controlled sensor noise.
@@ -39,9 +40,14 @@ is a client of the same research interfaces available to the SDK and CLI.
 - A constrained world builder: supported primitives and coefficient ranges.
   Extend law families through a versioned plugin contract without core changes.
 
-The one-particle scientific starting point above remains a proposal. The next
-review considers interacting systems with up to eight particles. Do not infer
-that approved production execution settles the scientific scope or solver.
+Approved organizations can use the hosted service; the SDK and self-hosting stay
+public. Uploaded agents and predictors initially target Python, while externally
+hosted agents can use HTTP. Hosted code has no unrestricted internet access;
+model calls use a broker and dependencies come from prepared environments.
+
+The first production deployment targets Google Cloud and 100 simultaneous
+investigations. Provider selection does not settle service configuration or
+prove capacity. See the [deployment design](DEPLOYMENT_OPTIONS.md).
 
 ## Architecture
 
@@ -97,7 +103,8 @@ testable hypothesis. Treat these as annotations, not evidence of correctness.
 
 Begin with one application service and independently scalable workers. Use durable
 job state, an append-only event record, and immutable objects for bulk artifacts.
-Provider, queue and database choices remain under review. Implement authentication
+Google Cloud is selected; execution, queue and database services remain under
+review. Implement authentication
 and workspace authorization before accepting private hosted studies.
 
 Record experiment identity and the committed result before acknowledging success.
@@ -216,7 +223,8 @@ needed records. The active main checkout remains useful for the next milestone.
 ## Deferred work
 
 Collisions, pixel observations, gradual drift, multiple change points and
-reinforcement learning remain proposed follow-up studies. Many-body scope is
-under review. Executable predictor submission is accepted first-release scope.
+reinforcement learning remain proposed follow-up studies. Systems with up to
+eight interacting particles and executable predictor submission are accepted
+first-release scope.
 Add new research conditions with a specific evaluation question and adequate
 baselines. No GPU training is required for the first release.

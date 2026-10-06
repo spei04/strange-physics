@@ -18,10 +18,12 @@ This repository currently contains a research plan and project skeleton.
 **There is no executable simulator, agent, benchmark, browser viewer, or result
 yet.** Infrastructure and architecture decisions are under review.
 
-The proposed scientific foundation includes three force families, fixed-cost
-experiments, seeded observation noise, hidden changes between experiments, and
-versioned run artifacts. Customer investigations will be private by default;
-published reference benchmarks will include every scored run and its failures.
+The scientific scope includes three force families, two-dimensional systems with
+up to eight interacting particles, fixed-cost experiments, seeded observation
+noise, hidden changes between experiments, and versioned run artifacts. Customer
+investigations will be private by default; published reference benchmarks will
+include every scored run and its failures. A separate blind suite will evaluate
+worlds that participants cannot inspect.
 
 Start with the [implementation plan](docs/PLAN.md), the [draft benchmark
 protocol](docs/BENCHMARK.md), and the [open design decisions](docs/DESIGN_DECISIONS.md).
@@ -30,8 +32,9 @@ These documents describe proposed behavior, not completed features.
 ## Development setup
 
 The proposed stack is Python with uv for research code and TypeScript/React with
-Canvas for the visual interface. Exact runtime versions, dependencies, deployment
-provider and execution boundaries will be selected in the design review.
+Canvas for the visual interface. Google Cloud is the first deployment target;
+exact services, runtime versions, dependencies and execution boundaries are still
+under review. See the [deployment design](docs/DEPLOYMENT_OPTIONS.md).
 Setup commands will be added with the first runnable implementation.
 
 ## Research design

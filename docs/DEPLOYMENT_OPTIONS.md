@@ -1,60 +1,111 @@
-# First production deployment — decision pending
+# Google Cloud reference deployment
 
-The architecture review has accepted durable remote jobs and isolated execution
-of user-supplied agents and predictors. The cloud provider has not been selected.
-This document records factual constraints behind the AWS recommendation.
+Google Cloud is the accepted provider because existing credits are available.
+The GitHub repository remains in the personal account `spei04`. The component
+mapping below is a recommendation pending the next architecture-review round.
+No infrastructure has been provisioned.
 
-## AWS reference deployment
+## Proposed component mapping
 
-Candidate components: ECS/Fargate for application and worker tasks, RDS
-PostgreSQL for durable job/workspace metadata, S3 for versioned artifacts, and
-SQS for dispatch. A queue is a delivery mechanism, not the authoritative record
-of whether an experiment has completed.
+| Responsibility | Google Cloud component |
+| --- | --- |
+| Web application, authenticated API, coordinator and model gateway | Cloud Run services |
+| Uploaded Python agents and submitted predictors | Separate GKE execution cluster using GKE Sandbox |
+| Workspace permissions, run state, budgets, experiment identities and outbox | Cloud SQL for PostgreSQL |
+| Trajectories, checkpoints, manifests, predictors and replay assets | Cloud Storage |
+| Short dispatch and reconciliation operations | Cloud Tasks |
+| Versioned runtime images | Artifact Registry |
+| Trusted-service secrets | Secret Manager; workload identity for service authentication |
 
-- Fargate provides hardware-virtualized isolation between tasks. Containers in
-  one task share resources and networking. Run arbitrary agent code in separate
-  tasks from the trusted coordinator, simulator and evaluator. This boundary
-  follows from [AWS's task isolation guidance](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/security-fargate-ec2.html).
-- Task IAM credentials are accessible to containers inside the task. Give
-  untrusted tasks no broad application role or provider secrets. Distinguish
-  application roles from the execution role used for image pulls and logging.
-  See [task IAM roles](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html).
-- A private subnet alone does not establish closed network access. Security
-  groups cannot block the VPC Route 53 Resolver, so DNS controls are required
-  alongside egress restrictions. See [security-group limitations](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html).
-- Fargate restricts privileged containers and host-level capabilities. Do not
-  design around nested Docker or assume an in-task sandbox can use those
-  privileges. See [Fargate security considerations](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-security-considerations.html).
-- SQS Standard can redeliver messages. Use stable identities, durable state
-  transitions and fenced worker leases to prevent duplicate logical work. See
-  [delivery behavior](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues-at-least-once-delivery.html).
-- SQS visibility cannot extend beyond 12 hours after receipt. Dispatch bounded
-  work units and checkpoint long investigations rather than treating one queue
-  receipt as an indefinite job lease. See [visibility limits](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/best-practices-processing-messages-timely-manner.html).
+Use separate development and production projects linked to the eligible billing
+account. This boundary is recommended, not yet provisioned or accepted. Keep
+unrelated applications outside these projects. Organization/folder placement,
+regions and IAM must be resolved from actual permissions and project policies.
 
-These are service capabilities and constraints, not proof that an application
-configuration is secure or reliable. Validate isolation, authorization, recovery
-and restore behavior in the actual deployment before release.
+## Submitted code and isolation
 
-## Managed application platform alternative
+GKE Sandbox explicitly supports untrusted and third-party code. Use a separate
+execution tier with an isolated unit for each investigation, resource limits and
+network policy. Permit only authenticated operations on the run broker. Do not
+provide user code with Kubernetes service-account tokens, broad cloud IAM roles,
+model-provider credentials, database access, shared writable volumes or hidden
+evaluation assets. Submitted predictors evaluated on blind inputs should have
+no network. These are proposed controls informed by [GKE Sandbox documentation](https://docs.cloud.google.com/kubernetes-engine/docs/concepts/sandbox-pods)
+and [GKE network policy](https://docs.cloud.google.com/kubernetes-engine/docs/how-to/network-policy).
 
-A managed platform can reduce application-service operations. However, general
-background-worker support does not establish the isolation required for hostile
-agent code. For example, Render one-off jobs inherit the parent service's
-configuration and environment variables; using that mechanism requires careful
-separation of secrets and trust boundaries. See [Render one-off jobs](https://render.com/docs/one-off-jobs).
+DNS policy belongs in the isolation tests: blocking ordinary internet traffic
+while allowing arbitrary public DNS queries still leaves an exfiltration path.
+Use fixed broker endpoints or an allowlisted resolver. Run-scoped broker
+credentials authorize only the operations and artifacts needed by that run.
+The simulator and evaluator execute separately from arbitrary agent code.
 
-A managed control plane paired with a separate execution provider remains an
-option. It introduces another integration and operational boundary.
+Cloud Run is not inherently unsuitable for isolated execution: Google documents
+a virtual-machine-monitor boundary and multiple isolation layers. The GKE
+recommendation favors explicit workload lifecycle, network and metadata controls
+for submitted code. Cloud Run Jobs remain an option for trusted reference sweeps.
+See [Cloud Run security](https://docs.cloud.google.com/run/docs/securing/security)
+and the [runtime contract](https://docs.cloud.google.com/run/docs/container-contract).
 
-## Portability requirement
+Validate the pinned scientific stack under the selected GKE Sandbox runtime.
+Service capabilities alone do not establish application-level isolation or
+correctness; exercise adversarial access, termination and recovery tests.
+
+## Durable dispatch and execution
+
+Cloud Tasks dispatches a short, idempotent operation to ensure that an execution
+exists. It must not hold open an HTTP request for the whole investigation. HTTP
+handlers have a maximum deadline of 30 minutes, and duplicate task executions
+can occur. See [HTTP target deadlines](https://docs.cloud.google.com/tasks/docs/creating-http-target-tasks)
+and [duplicate executions](https://docs.cloud.google.com/tasks/docs/common-pitfalls).
+
+Record launch intent in a transactional outbox. Use deterministic execution IDs,
+unique experiment-step keys, worker leases with fencing, and reconciliation.
+PostgreSQL is authoritative for whether an experiment consumed budget; the
+queue is not. Checkpoint committed experiment boundaries and make cancellation
+and partial failure visible. External provider attempts need their own records
+because ambiguous responses can still incur cost.
+
+Cloud Run CPU job tasks can be configured up to 168 hours, but maintenance can
+break outbound VPC connections. Do not use task lifetime as a durability
+guarantee. See [job timeout and maintenance](https://docs.cloud.google.com/run/docs/configuring/task-timeout).
+
+Pub/Sub is not required for initial job dispatch. Revisit it when independent
+consumers need the same events. Its exactly-once feature does not make external
+model calls or database side effects transactional. See [Cloud Tasks versus Pub/Sub](https://docs.cloud.google.com/tasks/docs/comp-pub-sub)
+and [exactly-once delivery scope](https://docs.cloud.google.com/pubsub/docs/exactly-once-delivery).
+
+## Durability and artifacts
+
+Recommend regional high availability for the production database, automated
+backups, point-in-time recovery and tested restoration. Cloud SQL supports
+cross-zone replication in its [HA configuration](https://docs.cloud.google.com/sql/docs/postgres/high-availability).
+Protect immutable artifacts with hashes, object generation identifiers and
+[generation preconditions](https://docs.cloud.google.com/storage/docs/request-preconditions)
+for safe retries. Replication, backups and artifact reproducibility serve distinct
+purposes; test all required recovery paths.
+
+The accepted load target is 100 simultaneous investigations per deployment.
+Verify CPU/IP quotas, database connection limits, provider rate limits, workload
+resource requirements and startup behavior before claiming that capacity.
+
+## Credits and account verification
+
+A Google login identifies a user; it does not establish the resource organization,
+project owner, billing account or applicable credit balance. Project usage is
+charged to its linked billing account. Credits can have scope and expiry
+conditions. Check the actual credit-bearing account, credit eligibility and
+expiration before provisioning. See [Cloud Billing setup](https://docs.cloud.google.com/billing/docs/how-to/create-billing-account)
+and [billing/credit details](https://docs.cloud.google.com/billing/docs/how-to/resolve-issues).
+
+Keep account identifiers, credit balances and organization-specific settings
+outside public documentation. The personal GitHub repository and Google Cloud
+resource ownership are separate decisions. Do not assume the selected cloud
+identity can create projects, attach billing or bypass organization policies.
+
+## Portability
 
 Keep the simulator, agent messages, job state machine and artifact schemas
-independent of the cloud provider. Put task launch, queue delivery and object
-access behind small adapters. Define a supported self-hosting configuration
-after choosing the reference deployment. Local Docker should not be advertised
-as equivalent to a hardware-isolated shared hosted environment.
-
-Choosing AWS accepts responsibility for IAM, networking and deployment
-configuration in exchange for a coherent deployment in a customer's cloud
-account. No infrastructure has been provisioned.
+independent of Google Cloud. Put execution launch, queue delivery and object
+access behind small adapters. Document a supported self-hosting configuration.
+Local Docker is useful for trusted development but should not be advertised as
+equivalent to the hosted isolation boundary for arbitrary customer code.
