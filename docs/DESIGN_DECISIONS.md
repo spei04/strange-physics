@@ -47,13 +47,14 @@ The personal GitHub repository remains independent of the deployment account.
 | Official evaluation | Public reference suites plus a distinct, versioned blind evaluation suite | Test-world isolation, submission limits, result publication and auditing |
 
 The [deployment design](DEPLOYMENT_OPTIONS.md) records source-backed constraints
-for Google Cloud. The provider is accepted; service selection, project boundaries
-and deployment configuration remain proposals. Billing identifiers and account
-details are not part of this public design record.
+for Google Cloud. The provider, principal services and development/production
+project boundary are accepted. Detailed configuration still needs review and
+verification. Billing identifiers and account details are not part of this
+public design record.
 
-## Next decisions — round 3
+## Accepted decisions — round 3
 
-| Decision | Proposed starting point | Decisions that depend on it |
+| Decision | Accepted direction | Decisions that depend on it |
 | --- | --- | --- |
 | Project boundary | Separate development and production Google Cloud projects, linked to the eligible credited billing account | Organization/folder placement, IAM, environments and deployment permissions |
 | Execution architecture | Cloud Run trusted services; separate GKE Sandbox execution; Cloud SQL PostgreSQL, Cloud Storage and Cloud Tasks | Infrastructure code, network/DNS policy, region and quota validation |
@@ -62,9 +63,22 @@ details are not part of this public design record.
 | Agent recovery | Explicit SDK checkpoint after every committed experiment, including declared state and artifact references | State schema, checkpoint consistency, resume contract and failure tests |
 | Reference changes | Both coefficient changes and activation/deactivation of terms within a family, scored separately | World generator, change detector, recovery metrics and protocol freeze |
 
+The [checkpoint contract](CHECKPOINTS.md) explains the accepted recovery model.
+These are design decisions; no runtime or infrastructure is implemented yet.
+
+## Next decisions — round 4
+
+| Decision | Proposed starting point | Decisions that depend on it |
+| --- | --- | --- |
+| Experiment controls | Select initial conditions and an initial impulse; continuous control is a later separate track | Request schema, action validation, simulator loop and agent SDK |
+| Visible structure | Reveal particle identities, masses and connections; hide active force laws, coefficients and change times | Observation schema, identifiable tasks, fitter features and leakage tests |
+| Default scored budget | 40 experiments including 4 common calibration experiments; configurable budgets for custom studies | Change schedule, cost pilot, evaluation harness and run limits |
+| Change boundary | Law fixed within each experiment, with changes between experiments and stationary controls | Regime state, resets, detector and recovery measurements |
+| Primary scores | Held-out trajectory error and post-change recovery; equation recovery is secondary | Predictor contract, held-out probes, aggregation and score artifacts |
+
 ## Dependent decisions to visit later
 
-- Simulator representation: particle interactions; 2D versus 1D; solver
+- Simulator representation: particle interaction semantics, solver
   accuracy and bounds; force grammar and identifiability.
 - Experiment contract: legal controls, units, fixed cost, observation cadence,
   noise model, agent information, invalid-request handling and reset semantics.
@@ -72,8 +86,8 @@ details are not part of this public design record.
   detector and old-data policy.
 - Evaluation: held-out splits, budgets, metrics, number of seeds, pilot power and
   cost, protocol freeze, failure accounting and result artifacts.
-- Execution: local process boundaries, generated-code policy, checkpoints,
-  reproducibility manifests, timeouts and concurrency.
+- Execution: exact sandbox configuration, reproducibility manifests, checkpoint
+  serialization, timeouts and scheduling of the accepted concurrent workload.
 - Interface: replay schema, renderer, transport for live runs, world builder,
   deployment and visitor limits.
 - Operations: secrets, logging, retention, release artifacts, CI and disk use.

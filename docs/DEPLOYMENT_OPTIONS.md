@@ -1,11 +1,12 @@
 # Google Cloud reference deployment
 
 Google Cloud is the accepted provider because existing credits are available.
-The GitHub repository remains in the personal account `spei04`. The component
-mapping below is a recommendation pending the next architecture-review round.
+The GitHub repository remains in the personal account `spei04`. The principal
+service mapping and separate development/production projects were accepted in
+architecture-review round 3. Detailed configuration remains under review.
 No infrastructure has been provisioned.
 
-## Proposed component mapping
+## Accepted principal services
 
 | Responsibility | Google Cloud component |
 | --- | --- |
@@ -14,11 +15,13 @@ No infrastructure has been provisioned.
 | Workspace permissions, run state, budgets, experiment identities and outbox | Cloud SQL for PostgreSQL |
 | Trajectories, checkpoints, manifests, predictors and replay assets | Cloud Storage |
 | Short dispatch and reconciliation operations | Cloud Tasks |
-| Versioned runtime images | Artifact Registry |
-| Trusted-service secrets | Secret Manager; workload identity for service authentication |
+
+Artifact Registry for versioned images and Secret Manager/workload identity for
+trusted-service credentials remain proposed supporting components. Provider and
+service selection do not approve a specific IAM policy or secret-access path.
 
 Use separate development and production projects linked to the eligible billing
-account. This boundary is recommended, not yet provisioned or accepted. Keep
+account. This boundary is accepted but not yet provisioned. Keep
 unrelated applications outside these projects. Organization/folder placement,
 regions and IAM must be resolved from actual permissions and project policies.
 

@@ -32,9 +32,10 @@ These documents describe proposed behavior, not completed features.
 ## Development setup
 
 The proposed stack is Python with uv for research code and TypeScript/React with
-Canvas for the visual interface. Google Cloud is the first deployment target;
-exact services, runtime versions, dependencies and execution boundaries are still
-under review. See the [deployment design](docs/DEPLOYMENT_OPTIONS.md).
+Canvas for the visual interface. The accepted Google Cloud services are Cloud
+Run, GKE Sandbox, Cloud SQL PostgreSQL, Cloud Storage and Cloud Tasks. Runtime
+versions, dependencies and detailed configuration remain under review. See the
+[deployment design](docs/DEPLOYMENT_OPTIONS.md).
 Setup commands will be added with the first runnable implementation.
 
 ## Research design
@@ -72,6 +73,7 @@ docs/BENCHMARK.md    proposed evaluation and fairness rules
 docs/LAWS.md         equations, units and identifiable interventions
 docs/RELATED_WORK.md positioning and prior work
 docs/DESIGN_DECISIONS.md decisions to settle before implementation
+docs/CHECKPOINTS.md  save points and recovery after worker failure
 CONTRIBUTING.md      contribution and research integrity guidelines
 ```
 

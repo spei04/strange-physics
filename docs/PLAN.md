@@ -103,9 +103,16 @@ testable hypothesis. Treat these as annotations, not evidence of correctness.
 
 Begin with one application service and independently scalable workers. Use durable
 job state, an append-only event record, and immutable objects for bulk artifacts.
-Google Cloud is selected; execution, queue and database services remain under
-review. Implement authentication
-and workspace authorization before accepting private hosted studies.
+The selected service mapping is Cloud Run for trusted services, a separate GKE
+Sandbox execution tier, Cloud SQL PostgreSQL for state, Cloud Storage for artifacts
+and Cloud Tasks for dispatch. Use separate development and production projects.
+Detailed cloud configuration remains under review. Implement managed OpenID
+Connect login, explicit invitations and owner/researcher/viewer roles before
+accepting private hosted studies. A matching email domain never grants membership.
+
+Accept Python packages with lockfiles and build immutable runtime images in
+isolated build environments. Uploaded package build hooks are user code and must
+not execute in a trusted deployment pipeline with production credentials.
 
 Record experiment identity and the committed result before acknowledging success.
 Use idempotency keys and reconcile incomplete attempts after a crash so retries
@@ -113,8 +120,9 @@ cannot create a second logical experiment or platform charge. External model
 requests have separate attempt records: an ambiguous provider response may have
 incurred cost, so do not promise exactly-once external billing or blindly retry it.
 
-Checkpoint agent state using an explicit contract; do not promise transparent
-continuation of arbitrary process memory. Preserve accepted experiments and
+Checkpoint declared agent state after each committed experiment using an explicit
+SDK contract; do not promise transparent continuation of arbitrary process memory.
+See the [checkpoint contract](CHECKPOINTS.md). Preserve accepted experiments and
 submitted predictors across worker failure. Make cancellation, deadline expiry,
 partial completion and failed runs visible terminal states.
 
