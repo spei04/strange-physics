@@ -1,7 +1,8 @@
 # Benchmark protocol — draft, not yet frozen
 
-This document specifies intended evaluation. No benchmark or simulator is
-implemented yet. Tune design choices on development worlds, then freeze
+This document specifies intended evaluation. The numerical simulator and local
+random investigator are implemented; the fitter, scored benchmark and hosted
+agent-discovery track are not. Tune design choices on development worlds, then freeze
 this protocol, configuration files and commit before collecting evaluation runs.
 
 ## Questions and interpretation
