@@ -4,6 +4,9 @@
       "additionalProperties": false,
       "properties": {
         "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Id",
           "type": "string"
@@ -34,11 +37,17 @@
       "additionalProperties": false,
       "properties": {
         "a": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "A",
           "type": "string"
         },
         "b": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "B",
           "type": "string"
@@ -74,6 +83,8 @@
           "type": "string"
         },
         "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Model Sha256",
           "type": "string"
@@ -114,6 +125,8 @@
           "type": "integer"
         },
         "protocol_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Protocol Sha256",
           "type": "string"
@@ -221,6 +234,9 @@
           "type": "integer"
         },
         "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Operation Id",
           "type": "string"
@@ -359,6 +375,9 @@
       "additionalProperties": false,
       "properties": {
         "particle_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Particle Id",
           "type": "string"
@@ -432,6 +451,8 @@
       "description": "A fitted shared linear coefficient, with explicit observation provenance.",
       "properties": {
         "fit_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Fit Config Sha256",
           "type": "string"
@@ -459,6 +480,8 @@
           "type": "number"
         },
         "observation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Observation Sha256",
           "type": "string"
@@ -491,6 +514,8 @@
       "additionalProperties": false,
       "properties": {
         "engine_fingerprint": {
+          "maxLength": 64,
+          "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Engine Fingerprint",
           "type": "string"
@@ -508,6 +533,9 @@
           "type": "array"
         },
         "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Run Id",
           "type": "string"
@@ -536,6 +564,9 @@
       "additionalProperties": false,
       "properties": {
         "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Id",
           "type": "string"
@@ -600,6 +631,8 @@
           "type": "number"
         },
         "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Model Sha256",
           "type": "string"
@@ -639,6 +672,8 @@
       "additionalProperties": false,
       "properties": {
         "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Model Sha256",
           "type": "string"
@@ -707,6 +742,8 @@
       "description": "Only the supplied purchased prefix is available to a fitter.",
       "properties": {
         "fit_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Fit Config Sha256",
           "type": "string"
@@ -758,6 +795,9 @@
         },
         "particle_ids": {
           "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
             "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
             "type": "string"
           },

@@ -7,7 +7,14 @@ from typing import Annotated, Literal, Self
 
 from pydantic import BaseModel, ConfigDict, Field, JsonValue, model_validator
 
-Identifier = Annotated[str, Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")]
+Identifier = Annotated[
+    str,
+    Field(
+        pattern=r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+        # JSON Schema regex engines may allow a final newline before the end anchor.
+        json_schema_extra={"not": {"pattern": "[^A-Za-z0-9_-]"}},
+    ),
+]
 Number = Annotated[float, Field(allow_inf_nan=False)]
 Vector = tuple[Number, Number]
 
@@ -208,7 +215,9 @@ class ObservationBundle(Message):
     schema_version: Literal["strange-physics.observations.v1"] = "strange-physics.observations.v1"
     run_id: Identifier
     engine_version: str
-    engine_fingerprint: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
+    engine_fingerprint: Annotated[
+        str, Field(pattern=r"^[0-9a-f]{64}$", min_length=64, max_length=64)
+    ]
     space: ExperimentSpace
     records: Annotated[tuple[ExperimentRecord, ...], Field(max_length=10_000)]
 

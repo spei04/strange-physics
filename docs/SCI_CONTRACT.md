@@ -108,6 +108,8 @@ and the calibrated extrapolation domain remain runtime/scientific checks.
 
 Times start at zero, strictly increase, stay within ten seconds and align to
 `integration_dt` within the existing grid-ratio tolerance of `1e-8`.
+Rounded integration-step indices must also strictly increase: two distinct float
+times cannot alias the same step, and the horizon must include a positive step.
 There are 2–2,001 output times, integration steps are between 0.0001 and 0.05,
 and the horizon may require no more than 20,000 steps. The response must have
 exactly the requested times and particle count. A predictor should retain the

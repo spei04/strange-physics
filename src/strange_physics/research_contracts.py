@@ -22,7 +22,7 @@ from strange_physics.contracts import (
 )
 from strange_physics.serialization import canonical_json
 
-Digest = Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
+Digest = Annotated[str, Field(pattern=r"^[0-9a-f]{64}$", min_length=64, max_length=64)]
 Index = Annotated[int, Field(ge=0, le=9_999)]
 Count = Annotated[int, Field(ge=0, le=2**53 - 1)]
 CANONICAL_PROFILE = "strange-physics.python-json.v1"
@@ -116,11 +116,18 @@ class PredictionRequest(Message):
             raise ValueError("prediction times must start at zero")
         if any(a >= b for a, b in zip(self.times, self.times[1:], strict=False)):
             raise ValueError("prediction times must strictly increase")
+        previous_step = -1
         for time in self.times:
             ratio = time / self.integration_dt
-            if not math.isclose(ratio, round(ratio), rel_tol=0, abs_tol=1e-8):
+            step = round(ratio)
+            if not math.isclose(ratio, step, rel_tol=0, abs_tol=1e-8):
                 raise ValueError("prediction times must align with the integration grid")
-        if round(self.times[-1] / self.integration_dt) > 20_000:
+            if step <= previous_step:
+                raise ValueError(
+                    "prediction times must map to distinct increasing integration steps"
+                )
+            previous_step = step
+        if previous_step > 20_000:
             raise ValueError("prediction exceeds the supported integration work limit")
         return self
 

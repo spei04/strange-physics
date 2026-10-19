@@ -6,9 +6,10 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from pydantic import ValidationError
+from pydantic import TypeAdapter, ValidationError
+from pydantic.json_schema import models_json_schema
 
-from strange_physics.contracts import Frame, ObservationBundle, Trajectory
+from strange_physics.contracts import Checkpoint, Frame, Identifier, ObservationBundle, Trajectory
 from strange_physics.research_contracts import (
     EvaluationReport,
     LinearSpringModel,
@@ -361,3 +362,57 @@ def test_response_frame_contract_enforces_finite_and_equal_vector_counts() -> No
                 Frame(time=0.0, positions=((1.0, 0.0),), velocities=((0.0, 0.0),)),
             )
         )
+
+
+@pytest.mark.parametrize("times", [[0.0, 1e-14], [0.0, 0.01, 0.010000000000001]])
+def test_prediction_rejects_distinct_times_that_alias_the_same_step(times: list[float]) -> None:
+    with pytest.raises(ValidationError, match="distinct increasing integration steps"):
+        request(times=times, integration_dt=0.01)
+
+
+def test_prediction_preserves_normal_float_grid_tolerance() -> None:
+    parsed = request(times=[0.0, 0.01, 0.020000000000001], integration_dt=0.01)
+    assert parsed.times == (0.0, 0.01, 0.020000000000001)
+
+
+@pytest.mark.parametrize("value", FIXTURES["boundary_values"]["identifiers"]["valid"])
+def test_identifier_runtime_accepts_published_boundary_values(value: str) -> None:
+    assert TypeAdapter(Identifier).validate_python(value) == value
+
+
+@pytest.mark.parametrize("value", FIXTURES["boundary_values"]["identifiers"]["invalid"])
+def test_identifier_runtime_rejects_nonportable_boundary_values(value: str) -> None:
+    with pytest.raises(ValidationError):
+        TypeAdapter(Identifier).validate_python(value)
+
+
+@pytest.mark.parametrize("value", FIXTURES["boundary_values"]["digests"]["valid"])
+def test_digest_runtime_accepts_exact_length_lowercase_hex(value: str) -> None:
+    assert request(model_sha256=value).model_sha256 == value
+    bundle = payload("SpringFitInput")["observations"]
+    bundle["engine_fingerprint"] = value
+    assert ObservationBundle.model_validate_json(json.dumps(bundle)).engine_fingerprint == value
+
+
+@pytest.mark.parametrize("value", FIXTURES["boundary_values"]["digests"]["invalid"])
+def test_digest_runtime_rejects_newlines_unicode_and_length_mismatch(value: str) -> None:
+    with pytest.raises(ValidationError):
+        request(model_sha256=value)
+    bundle = payload("SpringFitInput")["observations"]
+    bundle["engine_fingerprint"] = value
+    with pytest.raises(ValidationError):
+        ObservationBundle.model_validate_json(json.dumps(bundle))
+
+
+def test_core_schema_tracks_runtime_and_portable_string_constraints() -> None:
+    stored = json.loads((ROOT / "contracts/core.schema.json").read_text())
+    _, generated = models_json_schema(
+        [(ObservationBundle, "validation"), (Checkpoint, "validation")]
+    )
+    assert stored["$defs"] == generated["$defs"]
+    identifier = stored["$defs"]["Anchor"]["properties"]["id"]
+    assert identifier["not"] == {"pattern": "[^A-Za-z0-9_-]"}
+    fingerprint = stored["$defs"]["ObservationBundle"]["properties"]["engine_fingerprint"]
+    assert fingerprint["minLength"] == fingerprint["maxLength"] == 64
+    digest = research_json_schema()["$defs"]["PredictionRequest"]["properties"]["model_sha256"]
+    assert digest["minLength"] == digest["maxLength"] == 64
