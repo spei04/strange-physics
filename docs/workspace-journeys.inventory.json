@@ -1,0 +1,969 @@
+{
+  "schema_version": "strange-physics.workspace-journeys.design.v1",
+  "status": "draft-for-review",
+  "source_commit": "f6cead9c09272e98bdacdeb8d8f687368f2fac3f",
+  "task": "SP-22.a",
+  "contract_gates": {
+    "ID": "SP-01.b incomplete; first control subset only",
+    "WEB": "SP-01.d pending",
+    "ART": "SP-01.c pending"
+  },
+  "run_state_source": {
+    "path": "contracts/control.schema.json",
+    "pointer": "/$defs/RunView/properties/status/enum"
+  },
+  "run_states": [
+    "queued",
+    "preparing",
+    "running",
+    "recovering",
+    "evaluating",
+    "cancelling",
+    "completed",
+    "failed",
+    "cancelled",
+    "expired"
+  ],
+  "ui_states": [
+    "loading",
+    "empty",
+    "ready",
+    "submitting",
+    "outcome_unknown",
+    "retryable_error",
+    "permanent_error",
+    "private_unavailable",
+    "session_expired",
+    "revoked"
+  ],
+  "accessibility_checks": [
+    "a11y-01",
+    "a11y-02",
+    "a11y-03",
+    "a11y-04",
+    "a11y-05",
+    "a11y-06",
+    "a11y-07",
+    "a11y-08"
+  ],
+  "journeys": [
+    {
+      "id": "J01",
+      "title": "Workspace and invitation",
+      "producer_tasks": [
+        "SP-08.a",
+        "SP-08.b",
+        "SP-08.d",
+        "SP-11.c",
+        "SP-22.c"
+      ],
+      "anchor": "j01"
+    },
+    {
+      "id": "J02",
+      "title": "Author and version a world",
+      "producer_tasks": [
+        "SP-01.d",
+        "SP-22.b",
+        "SP-22.d"
+      ],
+      "anchor": "j02"
+    },
+    {
+      "id": "J03",
+      "title": "Start a run",
+      "producer_tasks": [
+        "SP-09.b",
+        "SP-09.c",
+        "SP-12.b",
+        "SP-12.c",
+        "SP-16.a",
+        "SP-22.e"
+      ],
+      "anchor": "j03"
+    },
+    {
+      "id": "J04",
+      "title": "Cancel or observe expiry",
+      "producer_tasks": [
+        "SP-09.c",
+        "SP-16.c",
+        "SP-16.e",
+        "SP-23.d"
+      ],
+      "anchor": "j04"
+    },
+    {
+      "id": "J05",
+      "title": "Inspect live investigation",
+      "producer_tasks": [
+        "SP-23.a",
+        "SP-23.b",
+        "SP-23.c",
+        "SP-23.d",
+        "SP-12.c",
+        "SP-20.d"
+      ],
+      "anchor": "j05"
+    },
+    {
+      "id": "J06",
+      "title": "Replay and compare",
+      "producer_tasks": [
+        "SP-24.a",
+        "SP-24.b",
+        "SP-24.c",
+        "SP-24.d",
+        "SP-21.c"
+      ],
+      "anchor": "j06"
+    },
+    {
+      "id": "J07",
+      "title": "Export for verification",
+      "producer_tasks": [
+        "SP-25.c",
+        "SP-25.e",
+        "SP-13.d",
+        "SP-11.b",
+        "SP-11.c"
+      ],
+      "anchor": "j07"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "F01",
+      "journey": "J01",
+      "ui_states": [
+        "loading",
+        "empty",
+        "ready",
+        "retryable_error"
+      ],
+      "run_states": [],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-01",
+        "a11y-03",
+        "a11y-04",
+        "a11y-08"
+      ],
+      "producer_tasks": [
+        "SP-08.a",
+        "SP-08.b",
+        "SP-08.d",
+        "SP-11.c",
+        "SP-22.c"
+      ],
+      "expected": "Bootstrap shows only current authorized private workspaces; empty membership is not a loading failure; initial ownership is server-controlled.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F02",
+      "journey": "J01",
+      "ui_states": [
+        "submitting",
+        "ready"
+      ],
+      "run_states": [],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-01",
+        "a11y-03"
+      ],
+      "producer_tasks": [
+        "SP-08.a",
+        "SP-08.b",
+        "SP-08.d",
+        "SP-11.c",
+        "SP-22.c"
+      ],
+      "expected": "A valid single-use invitation grants only its approved role after recipient authentication; current membership is reloaded.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F03",
+      "journey": "J01",
+      "ui_states": [
+        "permanent_error"
+      ],
+      "run_states": [],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-02",
+        "a11y-04"
+      ],
+      "producer_tasks": [
+        "SP-08.a",
+        "SP-08.b",
+        "SP-08.d",
+        "SP-11.c",
+        "SP-22.c"
+      ],
+      "expected": "Expired/revoked/used or wrong-account invitations cannot grant access; concurrent acceptance and same-user retry follow the frozen ID policy.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F04",
+      "journey": "J01",
+      "ui_states": [
+        "submitting",
+        "ready",
+        "permanent_error"
+      ],
+      "run_states": [],
+      "actors": [
+        "owner"
+      ],
+      "accessibility_checks": [
+        "a11y-01",
+        "a11y-06"
+      ],
+      "producer_tasks": [
+        "SP-08.a",
+        "SP-08.b",
+        "SP-08.d",
+        "SP-11.c",
+        "SP-22.c"
+      ],
+      "expected": "Role changes and removal use current authority; a concurrent sole-owner removal is rejected without role escalation.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F05",
+      "journey": "J01",
+      "ui_states": [
+        "session_expired",
+        "revoked",
+        "private_unavailable"
+      ],
+      "run_states": [],
+      "actors": [
+        "researcher",
+        "viewer",
+        "anonymous"
+      ],
+      "accessibility_checks": [
+        "a11y-03",
+        "a11y-04"
+      ],
+      "producer_tasks": [
+        "SP-08.a",
+        "SP-08.b",
+        "SP-08.d",
+        "SP-11.c",
+        "SP-22.c"
+      ],
+      "expected": "Expiry does not replay mutations; revocation clears private state; foreign lookups disclose no metadata or account linkage.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F06",
+      "journey": "J02",
+      "ui_states": [
+        "empty",
+        "ready",
+        "private_unavailable"
+      ],
+      "run_states": [],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-01",
+        "a11y-08"
+      ],
+      "producer_tasks": [
+        "SP-01.d",
+        "SP-22.b",
+        "SP-22.d"
+      ],
+      "expected": "An empty supported catalog is explained; only authorized authors can create worlds; no arbitrary law upload executes.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F07",
+      "journey": "J02",
+      "ui_states": [
+        "ready",
+        "permanent_error"
+      ],
+      "run_states": [],
+      "actors": [
+        "owner",
+        "researcher"
+      ],
+      "accessibility_checks": [
+        "a11y-01",
+        "a11y-02",
+        "a11y-05"
+      ],
+      "producer_tasks": [
+        "SP-01.d",
+        "SP-22.b",
+        "SP-22.d"
+      ],
+      "expected": "All supported edits work through fields without dragging; invalid bounds, particle identities and topology identify the field and preserve the draft.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F08",
+      "journey": "J02",
+      "ui_states": [
+        "submitting",
+        "outcome_unknown",
+        "ready",
+        "retryable_error",
+        "permanent_error"
+      ],
+      "run_states": [],
+      "actors": [
+        "owner",
+        "researcher"
+      ],
+      "accessibility_checks": [
+        "a11y-02",
+        "a11y-03"
+      ],
+      "producer_tasks": [
+        "SP-01.d",
+        "SP-22.b",
+        "SP-22.d"
+      ],
+      "expected": "Saved versions are immutable; uncertain save is reconciled before another version; stale edits cannot alter a version referenced by an existing run.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F09",
+      "journey": "J02",
+      "ui_states": [
+        "ready",
+        "private_unavailable"
+      ],
+      "run_states": [],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-03",
+        "a11y-05"
+      ],
+      "producer_tasks": [
+        "SP-01.d",
+        "SP-22.b",
+        "SP-22.d"
+      ],
+      "expected": "Author preview is explicit; agent/API/SSE/error/export projections exclude hidden truth; owner has no blind-suite bypass; author-steered conditions are not labeled blinded.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F10",
+      "journey": "J03",
+      "ui_states": [
+        "empty",
+        "ready"
+      ],
+      "run_states": [],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-01",
+        "a11y-02",
+        "a11y-08"
+      ],
+      "producer_tasks": [
+        "SP-09.b",
+        "SP-09.c",
+        "SP-12.b",
+        "SP-12.c",
+        "SP-16.a",
+        "SP-22.e"
+      ],
+      "expected": "Unsaved world or unapproved package blocks start; review pins versions, track and distinct experiment/resource allowances; viewer cannot start.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F11",
+      "journey": "J03",
+      "ui_states": [
+        "submitting",
+        "outcome_unknown",
+        "ready"
+      ],
+      "run_states": [
+        "queued"
+      ],
+      "actors": [
+        "owner",
+        "researcher"
+      ],
+      "accessibility_checks": [
+        "a11y-03",
+        "a11y-04"
+      ],
+      "producer_tasks": [
+        "SP-09.b",
+        "SP-09.c",
+        "SP-12.b",
+        "SP-12.c",
+        "SP-16.a",
+        "SP-22.e"
+      ],
+      "expected": "Lost acknowledgement reconciles the same logical request; identical retry does not create a second run; stale workspace responses are not applied.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F12",
+      "journey": "J03",
+      "ui_states": [
+        "permanent_error",
+        "retryable_error"
+      ],
+      "run_states": [],
+      "actors": [
+        "owner",
+        "researcher"
+      ],
+      "accessibility_checks": [
+        "a11y-02",
+        "a11y-04"
+      ],
+      "producer_tasks": [
+        "SP-09.b",
+        "SP-09.c",
+        "SP-12.b",
+        "SP-12.c",
+        "SP-16.a",
+        "SP-22.e"
+      ],
+      "expected": "Changed request conflicts; invalid input is not charged; quota and temporary platform rejection are distinct; retry follows current authority and server guidance.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F13",
+      "journey": "J03",
+      "ui_states": [
+        "ready"
+      ],
+      "run_states": [
+        "queued",
+        "preparing",
+        "running",
+        "recovering",
+        "evaluating"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-03",
+        "a11y-04"
+      ],
+      "producer_tasks": [
+        "SP-09.b",
+        "SP-09.c",
+        "SP-12.b",
+        "SP-12.c",
+        "SP-16.a",
+        "SP-22.e"
+      ],
+      "expected": "Progress uses authoritative committed state; acknowledgement, worker recovery and evaluation do not imply completion.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F14",
+      "journey": "J04",
+      "ui_states": [
+        "submitting",
+        "outcome_unknown",
+        "ready"
+      ],
+      "run_states": [
+        "queued",
+        "cancelling",
+        "cancelled"
+      ],
+      "actors": [
+        "owner",
+        "researcher"
+      ],
+      "accessibility_checks": [
+        "a11y-01",
+        "a11y-03",
+        "a11y-06"
+      ],
+      "producer_tasks": [
+        "SP-09.c",
+        "SP-16.c",
+        "SP-16.e",
+        "SP-23.d"
+      ],
+      "expected": "Cancellation acceptance fences new launch/broker/result/checkpoint writes; only prior committed records persist; worker termination and resource settlement remain pending until proven.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F15",
+      "journey": "J04",
+      "ui_states": [
+        "ready",
+        "permanent_error"
+      ],
+      "run_states": [
+        "evaluating",
+        "cancelling",
+        "completed",
+        "cancelled"
+      ],
+      "actors": [
+        "owner",
+        "researcher"
+      ],
+      "accessibility_checks": [
+        "a11y-03",
+        "a11y-04"
+      ],
+      "producer_tasks": [
+        "SP-09.c",
+        "SP-16.c",
+        "SP-16.e",
+        "SP-23.d"
+      ],
+      "expected": "The locked/CAS winner determines completion versus cancellation; later output cannot revive a cancelled slot or rewrite a prior committed result.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F16",
+      "journey": "J04",
+      "ui_states": [
+        "ready",
+        "retryable_error",
+        "permanent_error"
+      ],
+      "run_states": [
+        "failed",
+        "expired"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-04",
+        "a11y-05"
+      ],
+      "producer_tasks": [
+        "SP-09.c",
+        "SP-16.c",
+        "SP-16.e",
+        "SP-23.d"
+      ],
+      "expected": "Failed/expired runs retain accepted charges and real committed prefix; unresolved termination is an explicit fault, never a fictitious successful observation.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F17",
+      "journey": "J05",
+      "ui_states": [
+        "loading",
+        "empty",
+        "ready"
+      ],
+      "run_states": [
+        "running"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-04",
+        "a11y-05",
+        "a11y-08"
+      ],
+      "producer_tasks": [
+        "SP-23.a",
+        "SP-23.b",
+        "SP-23.c",
+        "SP-23.d",
+        "SP-12.c",
+        "SP-20.d"
+      ],
+      "expected": "No observations yet differs from a loaded empty result; live tables/animation derive only from purchased committed data.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F18",
+      "journey": "J05",
+      "ui_states": [
+        "ready",
+        "retryable_error"
+      ],
+      "run_states": [
+        "running",
+        "recovering"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-03",
+        "a11y-04"
+      ],
+      "producer_tasks": [
+        "SP-23.a",
+        "SP-23.b",
+        "SP-23.c",
+        "SP-23.d",
+        "SP-12.c",
+        "SP-20.d"
+      ],
+      "expected": "Duplicate/reordered events are deduplicated by sequence; gaps trigger resync; neither events nor budget are double-counted.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F19",
+      "journey": "J05",
+      "ui_states": [
+        "loading",
+        "ready",
+        "retryable_error"
+      ],
+      "run_states": [
+        "running",
+        "recovering"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-03",
+        "a11y-04"
+      ],
+      "producer_tasks": [
+        "SP-23.a",
+        "SP-23.b",
+        "SP-23.c",
+        "SP-23.d",
+        "SP-12.c",
+        "SP-20.d"
+      ],
+      "expected": "Expired cursor uses authoritative snapshot/archive; failed archive resync is visible, retained data is labeled stale and completeness is not claimed.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F20",
+      "journey": "J05",
+      "ui_states": [
+        "revoked",
+        "private_unavailable"
+      ],
+      "run_states": [
+        "running"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-03",
+        "a11y-04"
+      ],
+      "producer_tasks": [
+        "SP-23.a",
+        "SP-23.b",
+        "SP-23.c",
+        "SP-23.d",
+        "SP-12.c",
+        "SP-20.d"
+      ],
+      "expected": "Current membership revocation closes stream and prevents fresh fetches; private state/cache is cleared; no download retraction is promised.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F21",
+      "journey": "J05",
+      "ui_states": [
+        "ready",
+        "outcome_unknown"
+      ],
+      "run_states": [
+        "running"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-04",
+        "a11y-05"
+      ],
+      "producer_tasks": [
+        "SP-23.a",
+        "SP-23.b",
+        "SP-23.c",
+        "SP-23.d",
+        "SP-12.c",
+        "SP-20.d"
+      ],
+      "expected": "Provider outcomes/costs remain billed, estimated or unknown; no silent paid retry; learned model coefficients may appear, hidden true coefficients and held-out scores may not.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F22",
+      "journey": "J06",
+      "ui_states": [
+        "loading",
+        "ready"
+      ],
+      "run_states": [
+        "completed"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-01",
+        "a11y-05",
+        "a11y-07",
+        "a11y-08"
+      ],
+      "producer_tasks": [
+        "SP-24.a",
+        "SP-24.b",
+        "SP-24.c",
+        "SP-24.d",
+        "SP-21.c"
+      ],
+      "expected": "Keyboard play/pause/step/scrub reaches exact recorded timestamps; interpolation is labeled and never becomes a scientific observation or browser resimulation.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F23",
+      "journey": "J06",
+      "ui_states": [
+        "ready",
+        "permanent_error"
+      ],
+      "run_states": [
+        "completed",
+        "failed"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-04",
+        "a11y-05",
+        "a11y-07"
+      ],
+      "producer_tasks": [
+        "SP-24.a",
+        "SP-24.b",
+        "SP-24.c",
+        "SP-24.d",
+        "SP-21.c"
+      ],
+      "expected": "Missing/invalid prediction and absent uncertainty remain unavailable; recorded noisy observations, model predictions and separately authorized noiseless truth are distinct.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F24",
+      "journey": "J06",
+      "ui_states": [
+        "ready",
+        "permanent_error",
+        "private_unavailable"
+      ],
+      "run_states": [
+        "completed",
+        "failed",
+        "cancelled",
+        "expired"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-04",
+        "a11y-05"
+      ],
+      "producer_tasks": [
+        "SP-24.a",
+        "SP-24.b",
+        "SP-24.c",
+        "SP-24.d",
+        "SP-21.c"
+      ],
+      "expected": "Partial/corrupt/unsupported data is incomplete or unverified, not a completed/scorable record; SCI development failure makes primary MSE unscorable; terminal state alone does not release truth.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F25",
+      "journey": "J06",
+      "ui_states": [
+        "ready",
+        "permanent_error"
+      ],
+      "run_states": [
+        "completed",
+        "failed"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-05",
+        "a11y-08"
+      ],
+      "producer_tasks": [
+        "SP-24.a",
+        "SP-24.b",
+        "SP-24.c",
+        "SP-24.d",
+        "SP-21.c"
+      ],
+      "expected": "Protocol/track/budget/condition mismatch disables pooled ranks and aggregate claims; labeled exploratory juxtaposition retains failed outcomes.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F26",
+      "journey": "J07",
+      "ui_states": [
+        "submitting",
+        "ready",
+        "permanent_error"
+      ],
+      "run_states": [
+        "completed",
+        "failed",
+        "cancelled",
+        "expired"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-01",
+        "a11y-04",
+        "a11y-05"
+      ],
+      "producer_tasks": [
+        "SP-25.c",
+        "SP-25.e",
+        "SP-13.d",
+        "SP-11.b",
+        "SP-11.c"
+      ],
+      "expected": "Creation requires explicit export authority (owner-only draft); manifest completeness is separate from scientific success; accepted slots and failures remain represented.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F27",
+      "journey": "J07",
+      "ui_states": [
+        "session_expired",
+        "revoked",
+        "private_unavailable",
+        "retryable_error"
+      ],
+      "run_states": [],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-03",
+        "a11y-04"
+      ],
+      "producer_tasks": [
+        "SP-25.c",
+        "SP-25.e",
+        "SP-13.d",
+        "SP-11.b",
+        "SP-11.c"
+      ],
+      "expected": "Expired download access reauthorizes against current artifact policy; revocation/foreign IDs cannot retrieve bytes; run-read alone does not grant exports.",
+      "evidence_status": "planned; not an executed browser fixture"
+    },
+    {
+      "id": "F28",
+      "journey": "J07",
+      "ui_states": [
+        "ready",
+        "permanent_error"
+      ],
+      "run_states": [
+        "completed"
+      ],
+      "actors": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "accessibility_checks": [
+        "a11y-01",
+        "a11y-05",
+        "a11y-08"
+      ],
+      "producer_tasks": [
+        "SP-25.c",
+        "SP-25.e",
+        "SP-13.d",
+        "SP-11.b",
+        "SP-11.c"
+      ],
+      "expected": "Offline verification rejects missing bytes, hash mismatch and unsupported codecs; raw byte SHA and canonical typed-message digest follow their declared codecs; equality is possible for identical canonical bytes; no provider call or automatic publication occurs.",
+      "evidence_status": "planned; not an executed browser fixture"
+    }
+  ],
+  "integration_evidence_tasks": [
+    "SP-24.d",
+    "SP-30.a"
+  ],
+  "limitations": [
+    "Inventory validation is not UI, authentication, accessibility or production evidence.",
+    "Full ID, WEB and ART producer contracts and product review remain required.",
+    "Roles and scopes are server-enforced; provisional export authority cannot grant access."
+  ]
+}
