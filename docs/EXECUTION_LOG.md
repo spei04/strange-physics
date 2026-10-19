@@ -22,8 +22,6 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-19 23:29 | Research | SP-01.a — SCI contract design | Design accepted; implementation awaits exclusive writer handoff; Quality/lead review required; [#47](https://github.com/spei04/strange-physics/issues/47) |
 | 2026-10-19 23:28 | Project lead | SP-00.b — integrate reviewed baseline | Completed: PR #1 merge 7117060, tree-equivalent to reviewed 5cb1895; four CI checks pass |
 | 2026-10-19 23:30 | Platform | SP-01.c preparation — audit ART/EXEC boundary and repair DB freeze dependency | Added SP-01.b prerequisite; 369 edges and both reference forecasts regenerated; Quality review queued |
-
-
 | 2026-10-19 23:33 | Research | SP-01.a — implement local SCI subset | b4f8505; Quality review found grid aliasing and two schema/runtime gaps |
 | 2026-10-19 23:38 | Research | SP-01.a — repair three review findings | 8c86e76; 147 tests, Ruff and strict mypy pass; Quality independently accepted; writer released |
 | 2026-10-19 23:41 | Project lead | SP-01.a — accept repair and prepare integration | Accepted source 8c86e76; PR and matching CI next |

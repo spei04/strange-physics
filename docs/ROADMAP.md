@@ -1067,7 +1067,6 @@ The requested artifact paths are represented by useful sections in this single f
 | 2026-10-19 | Approved execution and dispatched independent engineers | SP-00.a complete for amended roster; Quality/Research baseline reviews pass, factual doc repairs in 9833e6f; Platform preflight complete with deployment NO-GO; SP-02.b pending exact disk/snapshot approval. See EXECUTION_LOG.md |
 | 2026-10-19 | Integrated reviewed baseline | SP-00.b complete: PR #1 merged as 7117060; tree matches reviewed 5cb1895, with four passing CI checks and both peer review scopes |
 | 2026-10-19 | Repaired DB-to-artifact freeze dependency | SP-01.b now precedes SP-01.c freeze; 369 edges, both reference schedules regenerated. R0 W6–7, spring W11–13 and R1 W18–26; GA W52–67 unchanged. Effort and current execution staffing unchanged |
-
 | 2026-10-19 | SCI subset independently accepted, integration pending | Research authored; Quality found three schema/grid defects and verified repairs at 8c86e76. No fitter or benchmark claim. Platform prepared unapproved staging cost and seven workspace journeys; Research reviews truth boundaries |
 
 **Approval scope:** execution backlog D01–D06 and initial R0/spring scope approved on 2026-10-19. Current execution uses a lead and up to three engineer subagents; the nine-human-team schedule remains conditional. No arbitrary paid benchmark sweep, compliance claim or unlimited infrastructure spend is implied. Cloud provisioning remains tied to concrete priced configuration, verified account permissions and applicable release/approval controls.
