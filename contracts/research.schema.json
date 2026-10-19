@@ -1,0 +1,841 @@
+{
+  "$defs": {
+    "Anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "Anchor",
+      "type": "object"
+    },
+    "Connection": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "A",
+          "type": "string"
+        },
+        "b": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "B",
+          "type": "string"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "title": "Connection",
+      "type": "object"
+    },
+    "EvaluationReport": {
+      "additionalProperties": false,
+      "description": "Development diagnostic: any failed prediction makes primary errors unscorable.",
+      "properties": {
+        "evaluation_runtime_ms": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Evaluation Runtime Ms",
+          "type": "integer"
+        },
+        "failed_prediction_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Failed Prediction Count",
+          "type": "integer"
+        },
+        "failure_policy": {
+          "const": "unscorable-on-any-failure.v1",
+          "default": "unscorable-on-any-failure.v1",
+          "title": "Failure Policy",
+          "type": "string"
+        },
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "normalization_scale": {
+          "exclusiveMinimum": 0,
+          "title": "Normalization Scale",
+          "type": "number"
+        },
+        "normalized_position_mse": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Normalized Position Mse"
+        },
+        "position_mse": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Position Mse"
+        },
+        "probe_count": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Probe Count",
+          "type": "integer"
+        },
+        "protocol_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Protocol Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.evaluation-report.v1",
+          "default": "strange-physics.evaluation-report.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "split": {
+          "const": "development",
+          "default": "development",
+          "title": "Split",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "unscorable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "valid_prediction_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Valid Prediction Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "status",
+        "model_sha256",
+        "protocol_sha256",
+        "probe_count",
+        "valid_prediction_count",
+        "failed_prediction_count",
+        "position_mse",
+        "normalized_position_mse",
+        "normalization_scale",
+        "evaluation_runtime_ms"
+      ],
+      "title": "EvaluationReport",
+      "type": "object"
+    },
+    "Experiment": {
+      "additionalProperties": false,
+      "properties": {
+        "impulse": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Impulse"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "particles": {
+          "items": {
+            "$ref": "#/$defs/ParticleInitial"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particles",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "strange-physics.experiment.v1",
+          "default": "strange-physics.experiment.v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "particles"
+      ],
+      "title": "Experiment",
+      "type": "object"
+    },
+    "ExperimentRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "anyOf": [
+            {
+              "const": "simulation_failed",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        },
+        "experiment": {
+          "$ref": "#/$defs/Experiment"
+        },
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "failed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "trajectory": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Trajectory"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "operation_id",
+        "index",
+        "experiment",
+        "status"
+      ],
+      "title": "ExperimentRecord",
+      "type": "object"
+    },
+    "ExperimentSpace": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "default": 40,
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Budget",
+          "type": "integer"
+        },
+        "calibration_experiments": {
+          "default": 4,
+          "minimum": 0,
+          "title": "Calibration Experiments",
+          "type": "integer"
+        },
+        "limits": {
+          "$ref": "#/$defs/Limits",
+          "default": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          }
+        },
+        "sampling": {
+          "$ref": "#/$defs/Sampling"
+        },
+        "schema_version": {
+          "const": "strange-physics.space.v1",
+          "default": "strange-physics.space.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "structure": {
+          "$ref": "#/$defs/Structure"
+        }
+      },
+      "required": [
+        "structure",
+        "sampling"
+      ],
+      "title": "ExperimentSpace",
+      "type": "object"
+    },
+    "Frame": {
+      "additionalProperties": false,
+      "properties": {
+        "positions": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Positions",
+          "type": "array"
+        },
+        "time": {
+          "minimum": 0,
+          "title": "Time",
+          "type": "number"
+        },
+        "velocities": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Velocities",
+          "type": "array"
+        }
+      },
+      "required": [
+        "time",
+        "positions",
+        "velocities"
+      ],
+      "title": "Frame",
+      "type": "object"
+    },
+    "Impulse": {
+      "additionalProperties": false,
+      "properties": {
+        "particle_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Particle Id",
+          "type": "string"
+        },
+        "vector": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Vector",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_id",
+        "vector"
+      ],
+      "title": "Impulse",
+      "type": "object"
+    },
+    "Limits": {
+      "additionalProperties": false,
+      "properties": {
+        "impulse_norm": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Impulse Norm",
+          "type": "number"
+        },
+        "max_mass": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Max Mass",
+          "type": "number"
+        },
+        "min_mass": {
+          "default": 0.5,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Min Mass",
+          "type": "number"
+        },
+        "position_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Position Norm",
+          "type": "number"
+        },
+        "velocity_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Velocity Norm",
+          "type": "number"
+        }
+      },
+      "title": "Limits",
+      "type": "object"
+    },
+    "LinearSpringModel": {
+      "additionalProperties": false,
+      "description": "A fitted shared linear coefficient, with explicit observation provenance.",
+      "properties": {
+        "fit_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Fit Config Sha256",
+          "type": "string"
+        },
+        "fit_record_indices": {
+          "items": {
+            "maximum": 9999,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 10000,
+          "minItems": 1,
+          "title": "Fit Record Indices",
+          "type": "array"
+        },
+        "fitter_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Fitter Version",
+          "type": "string"
+        },
+        "linear": {
+          "minimum": 0,
+          "title": "Linear",
+          "type": "number"
+        },
+        "observation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Observation Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.linear-spring-model.v1",
+          "default": "strange-physics.linear-spring-model.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "through_index": {
+          "maximum": 9999,
+          "minimum": 0,
+          "title": "Through Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "linear",
+        "through_index",
+        "fit_record_indices",
+        "observation_sha256",
+        "fitter_version",
+        "fit_config_sha256"
+      ],
+      "title": "LinearSpringModel",
+      "type": "object"
+    },
+    "ObservationBundle": {
+      "additionalProperties": false,
+      "properties": {
+        "engine_fingerprint": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Engine Fingerprint",
+          "type": "string"
+        },
+        "engine_version": {
+          "title": "Engine Version",
+          "type": "string"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/ExperimentRecord"
+          },
+          "maxItems": 10000,
+          "title": "Records",
+          "type": "array"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.observations.v1",
+          "default": "strange-physics.observations.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "space": {
+          "$ref": "#/$defs/ExperimentSpace"
+        }
+      },
+      "required": [
+        "run_id",
+        "engine_version",
+        "engine_fingerprint",
+        "space",
+        "records"
+      ],
+      "title": "ObservationBundle",
+      "type": "object"
+    },
+    "ParticleInitial": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "mass": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "title": "Mass",
+          "type": "number"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        },
+        "velocity": {
+          "default": [
+            0.0,
+            0.0
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Velocity",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "ParticleInitial",
+      "type": "object"
+    },
+    "PredictionRequest": {
+      "additionalProperties": false,
+      "description": "Public prediction probes may exceed purchased-action bounds.",
+      "properties": {
+        "experiment": {
+          "$ref": "#/$defs/Experiment"
+        },
+        "integration_dt": {
+          "maximum": 0.05,
+          "minimum": 0.0001,
+          "title": "Integration Dt",
+          "type": "number"
+        },
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.prediction-request.v1",
+          "default": "strange-physics.prediction-request.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "structure": {
+          "$ref": "#/$defs/Structure"
+        },
+        "times": {
+          "items": {
+            "maximum": 10,
+            "minimum": 0,
+            "type": "number"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "title": "Times",
+          "type": "array"
+        }
+      },
+      "required": [
+        "model_sha256",
+        "structure",
+        "experiment",
+        "times",
+        "integration_dt"
+      ],
+      "title": "PredictionRequest",
+      "type": "object"
+    },
+    "PredictionResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.prediction-response.v1",
+          "default": "strange-physics.prediction-response.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "trajectory": {
+          "$ref": "#/$defs/Trajectory"
+        }
+      },
+      "required": [
+        "model_sha256",
+        "trajectory"
+      ],
+      "title": "PredictionResponse",
+      "type": "object"
+    },
+    "Sampling": {
+      "additionalProperties": false,
+      "properties": {
+        "dt": {
+          "default": 0.01,
+          "maximum": 0.05,
+          "minimum": 0.0001,
+          "title": "Dt",
+          "type": "number"
+        },
+        "duration": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Duration",
+          "type": "number"
+        },
+        "position_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Position Noise",
+          "type": "number"
+        },
+        "sample_interval": {
+          "default": 0.05,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Sample Interval",
+          "type": "number"
+        },
+        "velocity_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Velocity Noise",
+          "type": "number"
+        }
+      },
+      "title": "Sampling",
+      "type": "object"
+    },
+    "SpringFitInput": {
+      "additionalProperties": false,
+      "description": "Only the supplied purchased prefix is available to a fitter.",
+      "properties": {
+        "fit_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Fit Config Sha256",
+          "type": "string"
+        },
+        "observations": {
+          "$ref": "#/$defs/ObservationBundle"
+        },
+        "schema_version": {
+          "const": "strange-physics.spring-fit-input.v1",
+          "default": "strange-physics.spring-fit-input.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "through_index": {
+          "maximum": 9999,
+          "minimum": 0,
+          "title": "Through Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "observations",
+        "through_index",
+        "fit_config_sha256"
+      ],
+      "title": "SpringFitInput",
+      "type": "object"
+    },
+    "Structure": {
+      "additionalProperties": false,
+      "properties": {
+        "anchors": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Anchor"
+          },
+          "maxItems": 8,
+          "title": "Anchors",
+          "type": "array"
+        },
+        "connections": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Connection"
+          },
+          "maxItems": 120,
+          "title": "Connections",
+          "type": "array"
+        },
+        "particle_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particle Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_ids"
+      ],
+      "title": "Structure",
+      "type": "object"
+    },
+    "Trajectory": {
+      "additionalProperties": false,
+      "properties": {
+        "frames": {
+          "items": {
+            "$ref": "#/$defs/Frame"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "title": "Frames",
+          "type": "array"
+        }
+      },
+      "required": [
+        "frames"
+      ],
+      "title": "Trajectory",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Local scientific interface subset. Validate a named $defs entry and execute the documented semantic and cross-message checks. No fitted results, predictor implementation or scored benchmark protocol is implied.",
+  "title": "Strange Physics local scientific contracts v1",
+  "x-canonical-profile": "strange-physics.python-json.v1",
+  "x-contract-status": "local-v1"
+}

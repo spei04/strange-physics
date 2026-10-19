@@ -4,6 +4,9 @@
       "additionalProperties": false,
       "properties": {
         "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Id",
           "type": "string"
@@ -34,6 +37,9 @@
       "additionalProperties": false,
       "properties": {
         "agent_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Agent Id",
           "type": "string"
@@ -69,11 +75,17 @@
       "additionalProperties": false,
       "properties": {
         "a": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "A",
           "type": "string"
         },
         "b": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "B",
           "type": "string"
@@ -147,6 +159,9 @@
           "type": "integer"
         },
         "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Operation Id",
           "type": "string"
@@ -285,6 +300,9 @@
       "additionalProperties": false,
       "properties": {
         "particle_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Particle Id",
           "type": "string"
@@ -358,6 +376,8 @@
       "additionalProperties": false,
       "properties": {
         "engine_fingerprint": {
+          "maxLength": 64,
+          "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Engine Fingerprint",
           "type": "string"
@@ -375,6 +395,9 @@
           "type": "array"
         },
         "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Run Id",
           "type": "string"
@@ -403,6 +426,9 @@
       "additionalProperties": false,
       "properties": {
         "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Id",
           "type": "string"
@@ -518,6 +544,9 @@
         },
         "particle_ids": {
           "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
             "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
             "type": "string"
           },
@@ -555,5 +584,5 @@
   },
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Schema definitions exported from the existing public Pydantic contracts. Validate against a named definition. Cross-field numerical and identity invariants still require runtime validation.",
-  "x-source-commit": "428b5a698b6f5654a9b91f547c9d4e7c196d3aa9"
+  "x-source": "src/strange_physics/contracts.py"
 }

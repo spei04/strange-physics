@@ -308,9 +308,9 @@ Experiment identities, graph/order/mass bounds, finite values, budget/checkpoint
 <a id="contract-sci"></a>
 ### C-SCI: Model, prediction and scoring messages
 
-**Owner:** Research + QE. **Freeze:** [SP-01.a](#sp-01-a). **Source:** [research.schema.json](../contracts/draft/research.schema.json), [BENCHMARK.md](BENCHMARK.md).
+**Owner:** Research + QE. **Freeze:** [SP-01.a](#sp-01-a). **Source:** [research.schema.json](../contracts/research.schema.json), [SCI_CONTRACT.md](SCI_CONTRACT.md), [BENCHMARK.md](BENCHMARK.md).
 
-Versioned model/provenance, purchased-data-only fitter input, monotonic times, finite ordered trajectories, failure counts, fixed normalizer. First-slice RMSE is a development diagnostic; full benchmark primary score remains normalized MSE.
+Versioned model/provenance, exact purchased-data-only fitter prefix, distinct integration steps, finite ordered trajectories, explicit failure counts and fixed coordinate normalizer. The first local subset reports development MSE and normalized MSE; any failed probe makes it unscorable. Full benchmark scoring remains unfrozen.
 
 <a id="contract-http"></a>
 ### C-HTTP: HTTP operations and error envelopes
@@ -503,8 +503,9 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Security and reliability:** Finite/shape boundaries explicit; fixtures are not results.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; in progress; Engineer Research owns design after baseline integration; issue #47 and review requirements in EXECUTION_LOG.md.
+- **Milestone / state:** R0; in progress. Implemented and independently accepted at 8c86e763b0e34292cae958aa87bd3f3fc3051f82; 147 tests, Ruff, strict mypy and independent JSON Schema parity checks pass. Three review findings repaired. Integration and matching CI pending. Owner: Engineer Research; [issue](https://github.com/spei04/strange-physics/issues/47).
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
 
 <a id="sp-01-b"></a>
 ### SP-01.b — Freeze identity, run and SQL contracts
@@ -620,8 +621,9 @@ Parent: [#4](https://github.com/spei04/strange-physics/issues/4). This issue clo
 - **Security and reliability:** Credit is not unlimited spend; unsupported combinations block.
 - **Effort and confidence:** 2 delivery engineer-days; low confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; backlog approved; not started; prerequisites and slice checkpoints still apply.
+- **Milestone / state:** R0; in progress. Priced staging proposal prepared; target-project/credit details and concrete configuration/spend approval remain open. No resources provisioned. Owner: Engineer Platform; [issue](https://github.com/spei04/strange-physics/issues/49).
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
 
 <a id="epic-sp-03"></a>
 ## SP-03 — Validate numerical domain and baseline
@@ -1936,8 +1938,9 @@ Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue c
 - **Security and reliability:** Do not reveal world truth in active-agent view.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
+- **Milestone / state:** R5; in progress. Seven journeys and acceptance inventory designed; Research truth-boundary review active. Documentation writer handoff and lead/product review pending. Owner: Engineer Platform (frontend design rotation); [issue](https://github.com/spei04/strange-physics/issues/50).
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
 
 <a id="sp-22-b"></a>
 ### SP-22.b — Implement versioned world and suite catalog API

@@ -226,6 +226,7 @@
     }
   },
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "PROPOSED definitions for the first learning/prediction/scoring slice. These are not frozen research settings or an implemented predictor runtime. Validate against a named definition.",
-  "x-contract-status": "draft"
+  "description": "Legacy proposed definitions. The first trusted-local SCI subset is superseded by ../research.schema.json and docs/SCI_CONTRACT.md. ArtifactRef remains a draft ART contract. Legacy fixtures do not imply v1 compatibility.",
+  "x-contract-status": "draft",
+  "x-superseded-local-subset": "../research.schema.json"
 }
