@@ -1,6 +1,10 @@
 # Agent checkpoints
 
-Status: accepted recovery approach; the wire schema and implementation are pending.
+Execution planning: [ROADMAP.md](ROADMAP.md) and [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md) own the approved delivery scope, prerequisite sequence and remaining approval gates. Accepted decisions and implemented behavior described here remain in force. Initial execution was approved on 2026-10-19; concrete paid and release actions retain their separate gates.
+
+Status: the local JSON checkpoint schema and transactional recovery are implemented.
+Hosted artifact storage and distributed worker leases remain future work. See
+[core implementation](CORE.md) for the current boundaries.
 
 ## In simple terms
 
@@ -19,7 +23,9 @@ Python variable or an entire running process.
 - Run identity, schema version, agent package/version and immutable runtime image.
 - The last committed experiment and a cursor into the durable event history.
 - Agent-declared state, such as candidate hypotheses and fitting configuration.
-- References and hashes for model artifacts and previously purchased observations.
+- Previously purchased observations are stored in the journal. Bulk model-artifact
+  references and hash verification are planned for the hosted artifact store;
+  the local checkpoint currently supports declared JSON state up to 256 KiB.
 - Random-generator state needed by the agent's supported replay contract.
 
 The platform retains budgets and completed experiments independently of any
@@ -39,7 +45,15 @@ Model-provider calls have their own attempt and response records. An ambiguous
 provider timeout can still incur cost. Checkpointing does not guarantee
 exactly-once external billing or identical responses to a fresh model request.
 
-## Storage contract to specify
+## Local persistence and hosted storage contract
+
+The local adapter uses an owner-readable SQLite journal with full synchronous
+commits. Checkpoints can cover only a completed prefix of experiments and cannot
+move backwards or overwrite the state at an already-checkpointed index. Resuming
+checks source, Python, dependency and registered-plugin fingerprints. A mismatch
+requires a deliberate migration; it is not silently accepted.
+
+The artifact protocol below remains a requirement for hosted execution:
 
 Write required artifacts before publishing a checkpoint as complete. Commit the
 checkpoint reference only after those artifacts are durable and identifiable by

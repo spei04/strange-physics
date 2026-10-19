@@ -1,14 +1,22 @@
 # Initial law families
 
-These are proposed dimensionless toy laws for controlled identification. They are
+These are implemented dimensionless reference laws for controlled identification. They are
 not a faithful electromagnetism or materials simulator. For position vector
 `x`, velocity `v`, known mass `m`, and force `F`, integrate `dx/dt = v` and
-`dv/dt = F/m`. The anchor is at the origin; there are no collisions or walls.
+`dv/dt = F/m`. Reference fixtures place an anchor at the origin; custom structures
+may choose other fixed positions. There are no collisions or walls.
 
-The formulas below describe single-particle reference cases. The accepted
-production scope includes up to eight interacting particles in two dimensions.
-Pairwise interactions, topology exposure and per-object hidden parameters still
-need an explicit contract; these reference cases do not yet specify that contract.
+The formulas below describe single-particle reference cases. For spring and
+radial pair interactions, replace `x` with `x_i - x_j` on every visible undirected
+connection, add the resulting force to particle `i`, and subtract it from `j`.
+Forces on fixed anchors are discarded by the integrator. Springs have zero rest
+length in this version. The velocity law acts independently on each movable
+particle. Each regime has one coefficient set shared across its applicable
+particles/connections; object-specific coefficients are not implemented.
+
+The structure supports one to eight movable particles and up to eight anchors.
+Anchor positions and connection topology are public. The active force family,
+coefficients, observation seed and change boundary stay in the private definition.
 
 | Family | Force | Useful interventions | Example hidden change |
 | --- | --- | --- | --- |
@@ -17,8 +25,11 @@ need an explicit contract; these reference cases do not yet specify that contrac
 | Velocity force | `F = -(c1 + c3 * dot(v,v)) * v + omega * R(v)` | Vary speed and direction; include nonzero velocity | Activate transverse deflection |
 
 `R(vx, vy) = (-vy, vx)`. Spring and drag coefficients are nonnegative in the
-initial bounded domain. Radial polarity `s` is -1 or +1; `eps` is a known positive
-softening radius. Far from the origin, radial force magnitude scales as `r^-p`.
+initial bounded domain. Radial polarity `s` is -1 or +1; `eps` is a positive
+softening radius stored in the private law configuration. The development generator
+uses the implementation default of 0.25; the public observation contract does not
+expose a world's softening value. Far from the origin, radial force magnitude scales
+as `r^-p`.
 The transverse velocity term does no instantaneous work because `v dot R(v)=0`.
 
 Mass and impulse are known interventions. An initial impulse `J` changes velocity
@@ -28,14 +39,14 @@ absolute simulation time within an experiment cannot reveal the change schedule.
 
 ## Numerical choices
 
-Use RK4 with fixed step 0.01 over 2 seconds; save observations every fifth step.
+The current development default is RK4 with fixed step 0.01 over 2 seconds, saving observations every fifth step. SP-03 validates these settings before a scored protocol is frozen.
 Keep the same observation times and integration accuracy for every method. The
 world's deterministic trajectory and independent Gaussian sensor noise are
 separate. Initial observations are measured after the impulse.
 
 Bound both legal interventions and generator coefficients. Check representative
 and boundary conditions against a smaller timestep before freezing a suite.
-The implementation should reject nonfinite state and raise a simulation error rather
+The implementation rejects nonfinite state and raises a simulation error rather
 than clipping motion into apparently valid data. Consumed experiments stay
 consumed if integration fails. Noisy sensor measurements may fall outside the
 legal range of initial conditions; do not clip those measurements.
@@ -47,6 +58,7 @@ Low-speed experiments cannot reveal nonlinear drag. A narrow distance range
 confounds radial exponent with field strength. Zero velocity hides transverse
 forces completely. These ambiguities motivate active experiment selection.
 
-The first study evaluates recovery inside a disclosed function library. Later
-studies can test unknown function classes and hidden variables, but should not
-describe the initial closed-library task as unrestricted scientific discovery.
+The planned controlled study evaluates recovery inside a disclosed function
+library. The separate discovery track accepts user-defined predictive models.
+The fitter, predictor evaluation and scored suites are not implemented yet; the
+current random investigator does not claim to recover equations.

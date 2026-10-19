@@ -1,7 +1,10 @@
 # Benchmark protocol — draft, not yet frozen
 
-This document specifies intended evaluation. No benchmark or simulator is
-implemented yet. Tune design choices on development worlds, then freeze
+Execution planning: [ROADMAP.md](ROADMAP.md) and [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md) own the approved delivery scope, prerequisite sequence and remaining approval gates. Accepted decisions and implemented behavior described here remain in force. Initial execution was approved on 2026-10-19; concrete paid and release actions retain their separate gates.
+
+This document specifies intended evaluation. The numerical simulator and local
+random investigator are implemented; the fitter, scored benchmark and hosted
+agent-discovery track are not. Tune design choices on development worlds, then freeze
 this protocol, configuration files and commit before collecting evaluation runs.
 
 ## Questions and interpretation
@@ -48,8 +51,10 @@ access rules and reported scores distinct; never label the public suite blind.
   Custom studies can select other budgets; scores with different budgets are
   separate conditions, not directly interchangeable leaderboard entries.
 - Stationary worlds retain their law for all 40 experiments. Changed worlds have
-  one change after 16–24 completed experiments, sampled independently of method
-  performance and hidden from agents. This guarantees pre/post-change budgets.
+  one change after 16–24 accepted experiment slots, sampled independently of
+  method performance and hidden from agents. Failed simulations consume slots
+  and advance this index. This guarantees pre/post-change budgets and keeps the
+  change boundary aligned across paired methods despite simulation failures.
 - Methods know that a change is possible, but not its realization, coefficients,
   family label or timing. All receive the same candidate feature dictionary.
 - Parameter changes and activation/deactivation of terms are separate strata.

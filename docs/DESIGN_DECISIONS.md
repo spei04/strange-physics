@@ -1,5 +1,7 @@
 # Architecture review
 
+Execution planning: [ROADMAP.md](ROADMAP.md) and [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md) own the approved delivery scope, prerequisite sequence and remaining approval gates. Accepted decisions and implemented behavior described here remain in force. Initial execution was approved on 2026-10-19; concrete paid and release actions retain their separate gates.
+
 ## Settled requirements
 
 - Public GitHub repository under the personal account `spei04`, not an organization.
@@ -64,7 +66,8 @@ public design record.
 | Reference changes | Both coefficient changes and activation/deactivation of terms within a family, scored separately | World generator, change detector, recovery metrics and protocol freeze |
 
 The [checkpoint contract](CHECKPOINTS.md) explains the accepted recovery model.
-These are design decisions; no runtime or infrastructure is implemented yet.
+The local runtime now implements these checkpoint semantics. Hosted infrastructure
+and the remaining production capabilities are not implemented yet.
 
 ## Accepted decisions — round 4
 
@@ -76,12 +79,13 @@ These are design decisions; no runtime or infrastructure is implemented yet.
 | Change boundary | Law fixed within each experiment, with changes between experiments and stationary controls | Regime state, resets, detector and recovery measurements |
 | Primary scores | Held-out trajectory error and post-change recovery; equation recovery is secondary | Predictor contract, held-out probes, aggregation and score artifacts |
 
-## Final review — implementation defaults
+## Accepted decisions — final implementation review
 
-These choices remain proposed. They complete the material architecture review;
-remaining numerical settings require development measurements, not guesses.
+These choices were accepted along with the implementation handoff. The design
+interview is complete. Numerical settings still require development measurements
+before scored evaluation; they are not established by architecture approval.
 
-| Decision | Recommended default | What it settles |
+| Decision | Accepted default | What it settles |
 | --- | --- | --- |
 | Application stack | Python/FastAPI with NumPy/SciPy; React/TypeScript/Vite and Canvas 2D; HTTP/JSON and resumable server-sent events | API/schema tooling, numerical runtime, frontend and live event transport |
 | Identity provider | Google Identity Platform with Google and GitHub sign-in; workspace membership enforced by the application; standard OIDC adapter for self-hosting | Hosted login provider, workspace boundary and self-hosted identity integration |
@@ -97,9 +101,8 @@ the accepted hosted and operational capabilities. Architecture acceptance does
 not establish cloud permissions, credit eligibility or measured load capacity.
 
 See [implementation defaults](IMPLEMENTATION_DEFAULTS.md) for verified integration
-constraints behind these recommendations. Approval of this final review and the
-implementation handoff will close the design interview; material scope changes
-will still be surfaced rather than silently folded into the build.
+constraints. Implementation has started with M0. Material scope changes must be
+surfaced rather than silently folded into the build.
 
 Update this record after each review round. A proposal in another document is
 not a substitute for an answered decision here.

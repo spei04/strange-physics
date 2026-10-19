@@ -1,8 +1,6 @@
 # Implementation plan
 
-Status: proposal. Architecture and infrastructure decisions are being reviewed.
-Only planning documents and repository metadata exist at this stage. See
-[open design decisions](DESIGN_DECISIONS.md) before treating a choice below as final.
+Status: accepted architecture and historical M0–M5 design. M0 local core exists on PR #1; later implementation is pending. The [roadmap](ROADMAP.md) owns the current enterprise scope and the [execution backlog](EXECUTION_BACKLOG.md) owns approved PR tasks, effort, dependencies and the conditional reference schedule. Initial execution was approved on 2026-10-19; concrete paid and release actions retain their separate gates. The original milestones below are retained only as mappings; they do not authorize implementation. See the [decision record](DESIGN_DECISIONS.md) and [core implementation](CORE.md).
 
 ## Objective
 
@@ -23,8 +21,9 @@ is a client of the same research interfaces available to the SDK and CLI.
 
 - Two-dimensional motion in dimensionless units with up to eight interacting
   particles. Include single-particle and fixed-anchor reference cases for
-  numerical and identification checks. Exact interaction semantics remain under
-  review; collisions are not required by the accepted scope.
+  numerical and identification checks. Pair forces are reciprocal along the
+  visible undirected graph; fixed anchors absorb reaction forces. Collisions are
+  outside the initial scope. See the [law contract](LAWS.md).
 - Three families with hidden coefficients, including terms that may be absent.
 - Visible particle identities, masses and connections; active force laws,
   coefficients and realized change times remain hidden.
@@ -80,9 +79,7 @@ flowchart LR
 
 ### Core and contracts
 
-Keep the initial package small: dataclasses, a force-law interface, fixed-step
-RK4, a budget-enforcing session, and seeded random exploration. Add NumPy and
-SciPy when implementing fitting. Keep all dependencies locked with uv.
+The implemented package uses strict Pydantic messages, NumPy, a force-law interface, fixed-step RK4, a budget-enforcing session and seeded random exploration. Add SciPy only when approved fitting work needs it. Keep dependencies locked with uv; typed data contracts must preserve current public semantics.
 
 Use the same typed, versioned messages across local and remote execution. Separate
 the coordinator, simulator, agent runtime and evaluator. Agent code must not
@@ -103,8 +100,9 @@ Proposed agent-facing operations:
 - `predict(spec)` evaluates a submitted model, never the true simulator.
 - `submit_model()` commits a predictor artifact for independent evaluation.
 
-Each selected experiment includes a concise, workspace-visible rationale and optional
-testable hypothesis. Treat these as annotations, not evidence of correctness.
+The future LLM adapter will record a concise, workspace-visible rationale and
+optional testable hypothesis for its experiments. Treat these as annotations,
+not evidence of correctness; the initial random agent makes no explanatory claims.
 
 ### Production execution
 
@@ -194,8 +192,10 @@ outputs rather than scientific ground truth.
 | M4 — research workspace | Live investigation, world builder, replay, comparison, import/export and self-hosting | External team can run a private study, inspect failures, export it and deploy independently. |
 | M5 — production and reference release | Frozen evaluation, complete reference artifacts, deploy/upgrade/restore procedures and observability | Publish all scored runs; pass the agreed load and recovery tests; complete an outside-team integration. |
 
-Build in dependency order. All milestones are pending. M1 and M2 can progress
-independently once M0 contracts settle. A production release requires the entire
+M0 is implemented locally and verified by repository tests, including an example
+extension outside the core package. This does not replace outside-team adoption
+testing. M1 through M5 remain pending; M1 and M2 can progress independently from
+the versioned M0 contracts. A production release requires the entire
 set of gates, not merely an animated investigation. Estimate effort after initial
 simulation, sandbox and provider measurements.
 

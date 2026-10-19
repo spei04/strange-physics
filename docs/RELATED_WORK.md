@@ -15,4 +15,4 @@ a paper or novelty claim, extend this review to change-point detection, adaptive
 system identification, active learning under drift, and continual learning.
 
 Links above are references; no upstream source code or assets are copied into
-this repository. No simulator or benchmark code has been implemented yet.
+this repository. The local simulator and recoverable random investigator are implemented; fitting and the scored benchmark remain planned. Current execution status is in [ROADMAP.md](ROADMAP.md) and [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md).
