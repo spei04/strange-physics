@@ -1,0 +1,1427 @@
+{
+  "$defs": {
+    "Anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "Anchor",
+      "type": "object"
+    },
+    "CancellationResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "cancellation",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/RunView"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "CancellationResult",
+      "type": "object"
+    },
+    "CheckpointBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Config Sha256",
+          "type": "string"
+        },
+        "agent_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "agent_package_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Package Sha256",
+          "type": "string"
+        },
+        "checkpoint_protocol": {
+          "const": "strange-physics.checkpoint.v1",
+          "default": "strange-physics.checkpoint.v1",
+          "title": "Checkpoint Protocol",
+          "type": "string"
+        },
+        "runtime_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Image Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_id",
+        "agent_package_sha256",
+        "agent_config_sha256",
+        "runtime_image_sha256"
+      ],
+      "title": "CheckpointBinding",
+      "type": "object"
+    },
+    "Connection": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "A",
+          "type": "string"
+        },
+        "b": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "B",
+          "type": "string"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "title": "Connection",
+      "type": "object"
+    },
+    "CreateRunRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_package_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Package Sha256",
+          "type": "string"
+        },
+        "experiment_budget": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Experiment Budget",
+          "type": "integer"
+        },
+        "limits": {
+          "$ref": "#/$defs/ResourceLimits"
+        },
+        "track": {
+          "enum": [
+            "controlled_selection",
+            "agent_discovery"
+          ],
+          "title": "Track",
+          "type": "string"
+        },
+        "world_version_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Version Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "world_version_id",
+        "agent_package_sha256",
+        "track",
+        "experiment_budget",
+        "limits"
+      ],
+      "title": "CreateRunRequest",
+      "type": "object"
+    },
+    "EmptyRequest": {
+      "additionalProperties": false,
+      "description": "Normalized no-body cancellation request.",
+      "properties": {},
+      "title": "EmptyRequest",
+      "type": "object"
+    },
+    "Error": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "unauthenticated",
+            "forbidden",
+            "not_found",
+            "idempotency_conflict",
+            "incompatible_state",
+            "invalid_request",
+            "budget_exhausted",
+            "quota_exceeded",
+            "temporarily_unavailable",
+            "cursor_expired",
+            "unsupported_version",
+            "execution_failed"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "operation_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Operation Id"
+        },
+        "request_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Request Id",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "request_id",
+        "retryable",
+        "operation_id"
+      ],
+      "title": "Error",
+      "type": "object"
+    },
+    "Experiment": {
+      "additionalProperties": false,
+      "properties": {
+        "impulse": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Impulse"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "particles": {
+          "items": {
+            "$ref": "#/$defs/ParticleInitial"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particles",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "strange-physics.experiment.v1",
+          "default": "strange-physics.experiment.v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "particles"
+      ],
+      "title": "Experiment",
+      "type": "object"
+    },
+    "ExperimentPage": {
+      "additionalProperties": false,
+      "description": "All accepted slots, including pending or aborted execution, in ordinal order.",
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/Operation"
+          },
+          "maxItems": 100,
+          "title": "Items",
+          "type": "array"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "maxLength": 512,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "items",
+        "next_cursor"
+      ],
+      "title": "ExperimentPage",
+      "type": "object"
+    },
+    "ExperimentRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "anyOf": [
+            {
+              "const": "simulation_failed",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        },
+        "experiment": {
+          "$ref": "#/$defs/Experiment"
+        },
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "failed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "trajectory": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Trajectory"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "operation_id",
+        "index",
+        "experiment",
+        "status"
+      ],
+      "title": "ExperimentRecord",
+      "type": "object"
+    },
+    "ExperimentResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "experiment",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/ExperimentRecord"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "ExperimentResult",
+      "type": "object"
+    },
+    "ExperimentSpace": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "default": 40,
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Budget",
+          "type": "integer"
+        },
+        "calibration_experiments": {
+          "default": 4,
+          "minimum": 0,
+          "title": "Calibration Experiments",
+          "type": "integer"
+        },
+        "limits": {
+          "$ref": "#/$defs/Limits",
+          "default": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          }
+        },
+        "sampling": {
+          "$ref": "#/$defs/Sampling"
+        },
+        "schema_version": {
+          "const": "strange-physics.space.v1",
+          "default": "strange-physics.space.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "structure": {
+          "$ref": "#/$defs/Structure"
+        }
+      },
+      "required": [
+        "structure",
+        "sampling"
+      ],
+      "title": "ExperimentSpace",
+      "type": "object"
+    },
+    "Frame": {
+      "additionalProperties": false,
+      "properties": {
+        "positions": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Positions",
+          "type": "array"
+        },
+        "time": {
+          "minimum": 0,
+          "title": "Time",
+          "type": "number"
+        },
+        "velocities": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Velocities",
+          "type": "array"
+        }
+      },
+      "required": [
+        "time",
+        "positions",
+        "velocities"
+      ],
+      "title": "Frame",
+      "type": "object"
+    },
+    "IdempotencyScope": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^[!-~]+$",
+          "title": "Key",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "run_creation",
+            "experiment",
+            "cancellation",
+            "model_submission"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "resource_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Resource Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "kind",
+        "resource_id",
+        "key"
+      ],
+      "title": "IdempotencyScope",
+      "type": "object"
+    },
+    "Impulse": {
+      "additionalProperties": false,
+      "properties": {
+        "particle_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Particle Id",
+          "type": "string"
+        },
+        "vector": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Vector",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_id",
+        "vector"
+      ],
+      "title": "Impulse",
+      "type": "object"
+    },
+    "Limits": {
+      "additionalProperties": false,
+      "properties": {
+        "impulse_norm": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Impulse Norm",
+          "type": "number"
+        },
+        "max_mass": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Max Mass",
+          "type": "number"
+        },
+        "min_mass": {
+          "default": 0.5,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Min Mass",
+          "type": "number"
+        },
+        "position_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Position Norm",
+          "type": "number"
+        },
+        "velocity_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Velocity Norm",
+          "type": "number"
+        }
+      },
+      "title": "Limits",
+      "type": "object"
+    },
+    "Membership": {
+      "additionalProperties": false,
+      "description": "Current application grant, loaded independently of credential claims.",
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "role": {
+          "enum": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "role",
+        "active",
+        "revision"
+      ],
+      "title": "Membership",
+      "type": "object"
+    },
+    "ModelReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "model_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "through_index": {
+          "maximum": 9999,
+          "minimum": -1,
+          "title": "Through Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "model_id",
+        "model_sha256",
+        "through_index"
+      ],
+      "title": "ModelReceipt",
+      "type": "object"
+    },
+    "ModelSubmissionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "model_submission",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/ModelReceipt"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "ModelSubmissionResult",
+      "type": "object"
+    },
+    "Operation": {
+      "additionalProperties": false,
+      "properties": {
+        "accepted_experiment_index": {
+          "anyOf": [
+            {
+              "maximum": 9999,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Accepted Experiment Index"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Error"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "kind": {
+          "enum": [
+            "run_creation",
+            "experiment",
+            "cancellation",
+            "model_submission"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "result": {
+          "anyOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "cancellation": "#/$defs/CancellationResult",
+                  "experiment": "#/$defs/ExperimentResult",
+                  "model_submission": "#/$defs/ModelSubmissionResult",
+                  "run_creation": "#/$defs/RunCreationResult"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/RunCreationResult"
+                },
+                {
+                  "$ref": "#/$defs/ExperimentResult"
+                },
+                {
+                  "$ref": "#/$defs/CancellationResult"
+                },
+                {
+                  "$ref": "#/$defs/ModelSubmissionResult"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Result"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed",
+            "cancelled"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "operation_id",
+        "kind",
+        "request_sha256",
+        "status",
+        "accepted_experiment_index",
+        "result",
+        "error"
+      ],
+      "title": "Operation",
+      "type": "object"
+    },
+    "ParticleInitial": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "mass": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "title": "Mass",
+          "type": "number"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        },
+        "velocity": {
+          "default": [
+            0.0,
+            0.0
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Velocity",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "ParticleInitial",
+      "type": "object"
+    },
+    "ResourceLimits": {
+      "additionalProperties": false,
+      "properties": {
+        "max_artifact_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Artifact Bytes",
+          "type": "integer"
+        },
+        "max_cpu_seconds": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Max Cpu Seconds",
+          "type": "integer"
+        },
+        "max_input_tokens": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Input Tokens",
+          "type": "integer"
+        },
+        "max_model_calls": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Model Calls",
+          "type": "integer"
+        },
+        "max_output_tokens": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "max_provider_cost_microusd": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Provider Cost Microusd",
+          "type": "integer"
+        },
+        "max_wall_seconds": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Max Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_cpu_seconds",
+        "max_wall_seconds",
+        "max_model_calls",
+        "max_input_tokens",
+        "max_output_tokens",
+        "max_artifact_bytes",
+        "max_provider_cost_microusd"
+      ],
+      "title": "ResourceLimits",
+      "type": "object"
+    },
+    "RunCreationResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "run_creation",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/RunView"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "RunCreationResult",
+      "type": "object"
+    },
+    "RunLease": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "epoch": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Epoch",
+          "type": "integer"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "revoked": {
+          "title": "Revoked",
+          "type": "boolean"
+        },
+        "run_deadline": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Run Deadline",
+          "type": "integer"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "preparing",
+            "running",
+            "recovering",
+            "evaluating",
+            "cancelling",
+            "completed",
+            "failed",
+            "cancelled",
+            "expired"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "attempt_id",
+        "epoch",
+        "expires_at",
+        "run_deadline",
+        "revoked",
+        "status"
+      ],
+      "title": "RunLease",
+      "type": "object"
+    },
+    "RunView": {
+      "additionalProperties": false,
+      "properties": {
+        "budget_remaining": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Budget Remaining",
+          "type": "integer"
+        },
+        "experiments_accepted": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Experiments Accepted",
+          "type": "integer"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "space": {
+          "$ref": "#/$defs/ExperimentSpace"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "preparing",
+            "running",
+            "recovering",
+            "evaluating",
+            "cancelling",
+            "completed",
+            "failed",
+            "cancelled",
+            "expired"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "status",
+        "revision",
+        "space",
+        "experiments_accepted",
+        "budget_remaining"
+      ],
+      "title": "RunView",
+      "type": "object"
+    },
+    "Sampling": {
+      "additionalProperties": false,
+      "properties": {
+        "dt": {
+          "default": 0.01,
+          "maximum": 0.05,
+          "minimum": 0.0001,
+          "title": "Dt",
+          "type": "number"
+        },
+        "duration": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Duration",
+          "type": "number"
+        },
+        "position_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Position Noise",
+          "type": "number"
+        },
+        "sample_interval": {
+          "default": 0.05,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Sample Interval",
+          "type": "number"
+        },
+        "velocity_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Velocity Noise",
+          "type": "number"
+        }
+      },
+      "title": "Sampling",
+      "type": "object"
+    },
+    "StoredRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "$ref": "#/$defs/Operation"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/IdempotencyScope"
+        }
+      },
+      "required": [
+        "scope",
+        "request_sha256",
+        "operation"
+      ],
+      "title": "StoredRequest",
+      "type": "object"
+    },
+    "Structure": {
+      "additionalProperties": false,
+      "properties": {
+        "anchors": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Anchor"
+          },
+          "maxItems": 8,
+          "title": "Anchors",
+          "type": "array"
+        },
+        "connections": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Connection"
+          },
+          "maxItems": 120,
+          "title": "Connections",
+          "type": "array"
+        },
+        "particle_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particle Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_ids"
+      ],
+      "title": "Structure",
+      "type": "object"
+    },
+    "Trajectory": {
+      "additionalProperties": false,
+      "properties": {
+        "frames": {
+          "items": {
+            "$ref": "#/$defs/Frame"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "title": "Frames",
+          "type": "array"
+        }
+      },
+      "required": [
+        "frames"
+      ],
+      "title": "Trajectory",
+      "type": "object"
+    },
+    "VerifiedCredential": {
+      "additionalProperties": false,
+      "description": "Internal verified identity projection, never a client-authored request body.",
+      "properties": {
+        "attempt_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "credential_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Credential Id",
+          "type": "string"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "issuer": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Issuer",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "user",
+            "service",
+            "run"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "lease_epoch": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lease Epoch"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revoked": {
+          "title": "Revoked",
+          "type": "boolean"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "scopes": {
+          "items": {
+            "enum": [
+              "runs:read",
+              "runs:create",
+              "runs:cancel",
+              "experiments:read",
+              "experiments:write",
+              "checkpoints:write",
+              "models:write"
+            ],
+            "type": "string"
+          },
+          "title": "Scopes",
+          "type": "array"
+        },
+        "subject": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "issuer",
+        "subject",
+        "principal_id",
+        "credential_id",
+        "kind",
+        "workspace_id",
+        "scopes",
+        "expires_at",
+        "revoked"
+      ],
+      "title": "VerifiedCredential",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/control.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Identity/run conformance subset. Named definitions require the documented semantic and cross-message checks. No hosted implementation or ART/WEB freeze.",
+  "x-contract-status": "control-v1"
+}

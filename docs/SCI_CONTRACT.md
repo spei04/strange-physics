@@ -1,7 +1,8 @@
 # Local scientific contracts v1
 
-Status: implemented first local SCI subset for SP-01.a; review and integration are
-required before the execution ledger records its freeze. The scientific domain,
+Status: first local SCI subset accepted and integrated for SP-01.a in PR #51,
+merge cc24aef592f3157b67024e3cab41159489c77ffa. Independent review and matching
+Python 3.12/3.14 CI passed; the execution log records the evidence. The scientific domain,
 fitter, predictor and evaluator remain separate implementation tasks.
 
 The authoritative messages are in

@@ -1,0 +1,535 @@
+{
+  "canonical_create": {
+    "sha256": "2cec77093804eae2bb620e4e65c49bda947d75d514638baf254f8c26cb220687",
+    "utf8_text": "{\"agent_package_sha256\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"experiment_budget\":6,\"limits\":{\"max_artifact_bytes\":1048576,\"max_cpu_seconds\":60,\"max_input_tokens\":0,\"max_model_calls\":0,\"max_output_tokens\":0,\"max_provider_cost_microusd\":0,\"max_wall_seconds\":120},\"track\":\"controlled_selection\",\"world_version_id\":\"world-1\"}"
+  },
+  "checkpoint": {
+    "agent_id": "agent-1",
+    "schema_version": "strange-physics.checkpoint.v1",
+    "state": {
+      "label": "synthetic \u03b2",
+      "seen": 1
+    },
+    "through_index": 0
+  },
+  "checkpoint_digest": "98eefb07d2b6fb9e73f7cbfab085528fcba4cba198769cee03068545241f7856",
+  "idempotency_keys": {
+    "invalid": [
+      "",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "has space",
+      "key\n",
+      "\u03b2",
+      "a\tb"
+    ],
+    "valid": [
+      "a",
+      "trial:repeat/1",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+      "~"
+    ]
+  },
+  "notice": "Synthetic conformance data only; not credentials, operational evidence or scientific results.",
+  "run_credential": {
+    "attempt_id": "attempt-1",
+    "credential_id": "credential-1",
+    "expires_at": 200,
+    "issuer": "https://issuer.example",
+    "kind": "run",
+    "lease_epoch": 3,
+    "principal_id": "principal-1",
+    "revoked": false,
+    "run_id": "run-1",
+    "scopes": [
+      "experiments:read",
+      "experiments:write",
+      "checkpoints:write",
+      "models:write"
+    ],
+    "subject": "user-subject-1",
+    "workspace_id": "ws-1"
+  },
+  "schema_negative": [
+    {
+      "field": "principal_id",
+      "model": "VerifiedCredential",
+      "value": "p\n"
+    },
+    {
+      "field": "expires_at",
+      "model": "VerifiedCredential",
+      "value": true
+    },
+    {
+      "field": "max_cpu_seconds",
+      "model": "ResourceLimits",
+      "value": 0
+    },
+    {
+      "field": "agent_package_sha256",
+      "model": "CreateRunRequest",
+      "value": "1111111111111111111111111111111111111111111111111111111111111111\n"
+    },
+    {
+      "field": "experiment_budget",
+      "model": "CreateRunRequest",
+      "value": 10001
+    },
+    {
+      "field": "key",
+      "model": "IdempotencyScope",
+      "value": "retry\n"
+    },
+    {
+      "field": "status",
+      "model": "Operation",
+      "value": "expired"
+    },
+    {
+      "field": "revision",
+      "model": "RunView",
+      "value": 9007199254740992
+    },
+    {
+      "field": "code",
+      "model": "Error",
+      "value": "simulation_failed"
+    }
+  ],
+  "valid": {
+    "CheckpointBinding": {
+      "agent_config_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "agent_id": "agent-1",
+      "agent_package_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "checkpoint_protocol": "strange-physics.checkpoint.v1",
+      "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    "CreateRunRequest": {
+      "agent_package_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "experiment_budget": 6,
+      "limits": {
+        "max_artifact_bytes": 1048576,
+        "max_cpu_seconds": 60,
+        "max_input_tokens": 0,
+        "max_model_calls": 0,
+        "max_output_tokens": 0,
+        "max_provider_cost_microusd": 0,
+        "max_wall_seconds": 120
+      },
+      "track": "controlled_selection",
+      "world_version_id": "world-1"
+    },
+    "EmptyRequest": {},
+    "Error": {
+      "code": "execution_failed",
+      "message": "Execution did not produce an observation.",
+      "operation_id": "op-4",
+      "request_id": "request-1",
+      "retryable": false
+    },
+    "ExperimentPage": {
+      "items": [
+        {
+          "accepted_experiment_index": 0,
+          "error": null,
+          "kind": "experiment",
+          "operation_id": "op-0",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
+          "result": {
+            "kind": "experiment",
+            "value": {
+              "error": null,
+              "experiment": {
+                "impulse": null,
+                "particles": [
+                  {
+                    "id": "p",
+                    "mass": 1.0,
+                    "position": [
+                      1.0,
+                      0.0
+                    ],
+                    "velocity": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "schema_version": "strange-physics.experiment.v1"
+              },
+              "index": 0,
+              "operation_id": "op-0",
+              "status": "completed",
+              "trajectory": {
+                "frames": [
+                  {
+                    "positions": [
+                      [
+                        1.0,
+                        0.0
+                      ]
+                    ],
+                    "time": 0.0,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        1.0,
+                        0.0
+                      ]
+                    ],
+                    "time": 0.05,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        1.0,
+                        0.0
+                      ]
+                    ],
+                    "time": 0.1,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "run_id": "run-1",
+          "status": "completed",
+          "workspace_id": "ws-1"
+        },
+        {
+          "accepted_experiment_index": 1,
+          "error": null,
+          "kind": "experiment",
+          "operation_id": "op-1",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
+          "result": {
+            "kind": "experiment",
+            "value": {
+              "error": "simulation_failed",
+              "experiment": {
+                "impulse": null,
+                "particles": [
+                  {
+                    "id": "p",
+                    "mass": 1.0,
+                    "position": [
+                      1.0,
+                      0.0
+                    ],
+                    "velocity": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "schema_version": "strange-physics.experiment.v1"
+              },
+              "index": 1,
+              "operation_id": "op-1",
+              "status": "failed",
+              "trajectory": null
+            }
+          },
+          "run_id": "run-1",
+          "status": "completed",
+          "workspace_id": "ws-1"
+        },
+        {
+          "accepted_experiment_index": 2,
+          "error": null,
+          "kind": "experiment",
+          "operation_id": "op-2",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
+          "result": null,
+          "run_id": "run-1",
+          "status": "pending",
+          "workspace_id": "ws-1"
+        },
+        {
+          "accepted_experiment_index": 3,
+          "error": null,
+          "kind": "experiment",
+          "operation_id": "op-3",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
+          "result": null,
+          "run_id": "run-1",
+          "status": "cancelled",
+          "workspace_id": "ws-1"
+        },
+        {
+          "accepted_experiment_index": 4,
+          "error": {
+            "code": "execution_failed",
+            "message": "Execution did not produce an observation.",
+            "operation_id": "op-4",
+            "request_id": "request-1",
+            "retryable": false
+          },
+          "kind": "experiment",
+          "operation_id": "op-4",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
+          "result": null,
+          "run_id": "run-1",
+          "status": "failed",
+          "workspace_id": "ws-1"
+        }
+      ],
+      "next_cursor": null,
+      "run_id": "run-1",
+      "workspace_id": "ws-1"
+    },
+    "IdempotencyScope": {
+      "key": "retry-1",
+      "kind": "run_creation",
+      "principal_id": "principal-1",
+      "resource_id": "ws-1",
+      "workspace_id": "ws-1"
+    },
+    "Membership": {
+      "active": true,
+      "principal_id": "principal-1",
+      "revision": 4,
+      "role": "researcher",
+      "workspace_id": "ws-1"
+    },
+    "ModelReceipt": {
+      "model_id": "model-1",
+      "model_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "through_index": -1
+    },
+    "Operation": {
+      "accepted_experiment_index": null,
+      "error": null,
+      "kind": "run_creation",
+      "operation_id": "create-1",
+      "request_sha256": "2cec77093804eae2bb620e4e65c49bda947d75d514638baf254f8c26cb220687",
+      "result": {
+        "kind": "run_creation",
+        "value": {
+          "budget_remaining": 4,
+          "experiments_accepted": 2,
+          "revision": 2,
+          "run_id": "run-1",
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          },
+          "status": "running",
+          "workspace_id": "ws-1"
+        }
+      },
+      "run_id": "run-1",
+      "status": "completed",
+      "workspace_id": "ws-1"
+    },
+    "ResourceLimits": {
+      "max_artifact_bytes": 1048576,
+      "max_cpu_seconds": 60,
+      "max_input_tokens": 0,
+      "max_model_calls": 0,
+      "max_output_tokens": 0,
+      "max_provider_cost_microusd": 0,
+      "max_wall_seconds": 120
+    },
+    "RunLease": {
+      "attempt_id": "attempt-1",
+      "epoch": 3,
+      "expires_at": 150,
+      "revoked": false,
+      "run_deadline": 180,
+      "run_id": "run-1",
+      "status": "running",
+      "workspace_id": "ws-1"
+    },
+    "RunView": {
+      "budget_remaining": 4,
+      "experiments_accepted": 2,
+      "revision": 2,
+      "run_id": "run-1",
+      "space": {
+        "budget": 6,
+        "calibration_experiments": 2,
+        "limits": {
+          "impulse_norm": 1.0,
+          "max_mass": 2.0,
+          "min_mass": 0.5,
+          "position_norm": 2.0,
+          "velocity_norm": 2.0
+        },
+        "sampling": {
+          "dt": 0.01,
+          "duration": 0.1,
+          "position_noise": 0.0,
+          "sample_interval": 0.05,
+          "velocity_noise": 0.0
+        },
+        "schema_version": "strange-physics.space.v1",
+        "structure": {
+          "anchors": [
+            {
+              "id": "a",
+              "position": [
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "connections": [
+            {
+              "a": "p",
+              "b": "a"
+            }
+          ],
+          "particle_ids": [
+            "p"
+          ]
+        }
+      },
+      "status": "running",
+      "workspace_id": "ws-1"
+    },
+    "StoredRequest": {
+      "operation": {
+        "accepted_experiment_index": null,
+        "error": null,
+        "kind": "run_creation",
+        "operation_id": "create-1",
+        "request_sha256": "2cec77093804eae2bb620e4e65c49bda947d75d514638baf254f8c26cb220687",
+        "result": {
+          "kind": "run_creation",
+          "value": {
+            "budget_remaining": 4,
+            "experiments_accepted": 2,
+            "revision": 2,
+            "run_id": "run-1",
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            },
+            "status": "running",
+            "workspace_id": "ws-1"
+          }
+        },
+        "run_id": "run-1",
+        "status": "completed",
+        "workspace_id": "ws-1"
+      },
+      "request_sha256": "2cec77093804eae2bb620e4e65c49bda947d75d514638baf254f8c26cb220687",
+      "scope": {
+        "key": "retry-1",
+        "kind": "run_creation",
+        "principal_id": "principal-1",
+        "resource_id": "ws-1",
+        "workspace_id": "ws-1"
+      }
+    },
+    "VerifiedCredential": {
+      "attempt_id": null,
+      "credential_id": "credential-1",
+      "expires_at": 200,
+      "issuer": "https://issuer.example",
+      "kind": "user",
+      "lease_epoch": null,
+      "principal_id": "principal-1",
+      "revoked": false,
+      "run_id": null,
+      "scopes": [
+        "runs:read",
+        "runs:create",
+        "runs:cancel"
+      ],
+      "subject": "user-subject-1",
+      "workspace_id": "ws-1"
+    }
+  }
+}
