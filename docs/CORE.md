@@ -1,6 +1,6 @@
 # Implemented research core
 
-Execution planning: [ROADMAP.md](ROADMAP.md) and [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md) own the proposed delivery sequence and approval gates. Accepted decisions and implemented behavior described here remain in force; future implementation awaits execution-backlog approval.
+Execution planning: [ROADMAP.md](ROADMAP.md) and [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md) own the approved delivery scope, prerequisite sequence and remaining approval gates. Accepted decisions and implemented behavior described here remain in force. Initial execution was approved on 2026-10-19; concrete paid and release actions retain their separate gates.
 
 The first milestone supplies reusable numerical and persistence contracts. It
 does not supply a production service, a trained investigator or benchmark results.

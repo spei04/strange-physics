@@ -1,6 +1,6 @@
 # Implementation plan
 
-Status: accepted architecture and historical M0–M5 design. M0 local core exists on PR #1; later implementation is pending. The [roadmap](ROADMAP.md) owns the current enterprise scope and the [execution backlog](EXECUTION_BACKLOG.md) owns proposed PR tasks, effort, dependencies and schedule. Its execution approval is still pending. The original milestones below are retained only as mappings; they do not authorize implementation. See the [decision record](DESIGN_DECISIONS.md) and [core implementation](CORE.md).
+Status: accepted architecture and historical M0–M5 design. M0 local core exists on PR #1; later implementation is pending. The [roadmap](ROADMAP.md) owns the current enterprise scope and the [execution backlog](EXECUTION_BACKLOG.md) owns approved PR tasks, effort, dependencies and the conditional reference schedule. Initial execution was approved on 2026-10-19; concrete paid and release actions retain their separate gates. The original milestones below are retained only as mappings; they do not authorize implementation. See the [decision record](DESIGN_DECISIONS.md) and [core implementation](CORE.md).
 
 ## Objective
 

@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**Status:** Awaiting user approval. No product implementation is authorized by publishing this document.
+**Status:** Approved by the product owner on 2026-10-19. Initial execution is in progress; concrete paid/release gates remain pending. See [assignment log](EXECUTION_LOG.md).
 **Owner:** technical lead and product owner. **Audited:** 2026-10-19. **Source baseline:** 28a4c19e8f9c92b83d886be6b96667d834784f9e.
 
 [Roadmap](ROADMAP.md) owns product requirements, architecture, risks and overall progress. This document owns the execution review, PR-sized assignments, schedule and gates. [execution-backlog.json](execution-backlog.json) contains the same task records, exact dependencies and reproducible scheduling model. Keep all three consistent in the same planning/implementation PR. Legacy PLAN.md milestones are historical mappings, not a second schedule.
@@ -37,16 +37,18 @@ Current public source constraints were rechecked on 2026-10-19: dispatch must to
 
 | Decision | Recommendation | Status / boundary |
 | --- | --- | --- |
-| D01 — Approve this execution baseline and initial work | Recommended: accept the 168-task backlog; begin with R0, the first-ten-day design/foundation work SP-22.a and SP-27.a, and the bounded spring slice SP-03.a/b, SP-04.a/b/e, SP-06.a when their prerequisites pass. Review each later vertical slice at its integration checkpoint; concrete paid/release gates still require their stated approval. | Pending user approval; no implementation in this change. |
-| D02 — Confirm real staffing and specialist capacity | Recommended: nine named engineers, 70% delivery availability, fractional product/design/security and independent assessment; retain two backend, two platform, two research, one frontend, one QE and one lead. | Names/start date not known. Seven or ten people requires rerunning resource scheduling, not retaining these dates. |
-| D03 — Accept the revised conditional horizon | Recommended: plan pilot onboarding W38–50, pilot evidence exit W45–59 and GA W52–67; reforecast after two weeks, R0 and each integration checkpoint. | Supersedes unsupported W19–22 pilot/W30–36 GA estimate. This is a feasible conservative schedule, not an optimized promise or statistical confidence interval. |
-| D04 — Confirm the enterprise release boundary | Recommended: retain both research tracks, secure hosted user code, SDK/CLI/browser, one supported self-host target, federation/SCIM, audit export and external adoption before GA. | Inherited architecture is not reopened. Customer-specific federation scope and supported self-host environment must be verified. |
-| D05 — Approve provisional operating and data targets | Recommended: keep the 100-investigation measured envelope, proposed SLO/RPO/RTO matrix, 7-day active deletion, disclosed backup lifecycle, limited initial pilot support and staffed GA response. | Targets are acceptance hypotheses, not achieved guarantees. Region/residency, retention and support terms need specialist/customer review. |
-| D06 — Approve concrete paid and release actions at their gates | Recommended: separate priced staging configuration, capped real-provider trial, official sweep, pilot release and GA rollout approvals. | Not requested as blanket permission now: each later gate supplies actual configuration, price/cap, evidence and rollback first. |
+| D01 — Approve this execution baseline and initial work | Recommended: accept the 168-task backlog; begin with R0, the first-ten-day design/foundation work SP-22.a and SP-27.a, and the bounded spring slice SP-03.a/b, SP-04.a/b/e, SP-06.a when their prerequisites pass. Review each later vertical slice at its integration checkpoint; concrete paid/release gates still require their stated approval. | Approved by product owner on 2026-10-19 at baseline 2d78e35; execute initial scope subject to prerequisites and remaining concrete gates. |
+| D02 — Confirm real staffing and specialist capacity | Recommended: nine named engineers, 70% delivery availability, fractional product/design/security and independent assessment; retain two backend, two platform, two research, one frontend, one QE and one lead. | Execution amendment approved: project lead plus up to three engineer subagents, sequential role coverage. Nine-person forecast remains a reference; actual human operations/specialists and external appointments remain unconfirmed. |
+| D03 — Accept the revised conditional horizon | Recommended: plan pilot onboarding W38–50, pilot evidence exit W45–59 and GA W52–67; reforecast after two weeks, R0 and each integration checkpoint. | Accepted as a conditional reference horizon, not a promise for subagent execution. Reforecast from actual throughput and external capacity. |
+| D04 — Confirm the enterprise release boundary | Recommended: retain both research tracks, secure hosted user code, SDK/CLI/browser, one supported self-host target, federation/SCIM, audit export and external adoption before GA. | Accepted release boundary; customer-specific federation and self-host support still require evidence. |
+| D05 — Approve provisional operating and data targets | Recommended: keep the 100-investigation measured envelope, proposed SLO/RPO/RTO matrix, 7-day active deletion, disclosed backup lifecycle, limited initial pilot support and staffed GA response. | Accepted as provisional acceptance hypotheses, not achieved guarantees; specialist/customer validation remains required. |
+| D06 — Approve concrete paid and release actions at their gates | Recommended: separate priced staging configuration, capped real-provider trial, official sweep, pilot release and GA rollout approvals. | Separate concrete approvals retained; no staging provisioning, provider spend, official sweep or release approval supplied by backlog approval. |
 
 Highest-risk assumptions: (1) the disclosed dictionary is identifiable and useful under noise/change, (2) hostile Python builds and predictors can be contained in the selected real configuration, (3) complete ensemble evaluation fits a practical cost/latency envelope, (4) nine staff plus security/assessor/partner availability exist when needed, (5) the credit-bearing cloud account permits the design and has sufficient quota, and (6) partner and 30-day operational evidence will actually be available. SP-03/07, SP-14/15/19/31, SP-07.b/28, SP-00/40, SP-02, and SP-32/36/40 respectively retire these risks. A negative scientific result is valid; a leakage or validity defect blocks the release.
 
 ## Effort, confidence and capacity
+
+Execution now uses one lead and at most three concurrent engineer subagents with rotating roles. The nine-person staffing model and day-by-day schedule below are retained as a human-team reference, not a forecast for this execution mode. [EXECUTION_LOG.md](EXECUTION_LOG.md) owns actual assignments, starts, reviews and blockers. Each execution lane has a responsible owner; specialist human staffing and independent assessment remain release prerequisites.
 
 - Base delivery effort: **689 engineer-days = 137.8 person-weeks**. This includes implementation, author-written tests and documentation. Four days (0.8 PW) are postlaunch; pre-GA work is 685 days (137 PW).
 - Explicit uncertainty reserve: **248.3 days = 49.66 PW**, allocated per task: high-confidence +10%, medium +25%, low +50%. Total all-work envelope: **937.3 days = 187.46 PW**. Reserve covers investigation, repair and rework; it is not extra feature scope or a statistical P80 calculation.
@@ -81,7 +83,7 @@ Weeks are relative five-working-day planning buckets. R8 begins with booking/des
 
 ### R0 gate
 
-**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; execution approval is recorded; other actual approval gates remain pending.
 
 **Exit tasks:** [SP-00.b](#sp-00-b), [SP-00.c](#sp-00-c), [SP-01.e](#sp-01-e), [SP-02.b](#sp-02-b), [SP-02.c](#sp-02-c). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
 
@@ -91,7 +93,7 @@ Weeks are relative five-working-day planning buckets. R8 begins with booking/des
 
 ### R1 gate
 
-**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; execution approval is recorded; other actual approval gates remain pending.
 
 **Exit tasks:** [SP-03.d](#sp-03-d), [SP-04.e](#sp-04-e), [SP-07.d](#sp-07-d). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
 
@@ -101,7 +103,7 @@ Weeks are relative five-working-day planning buckets. R8 begins with booking/des
 
 ### R2 gate
 
-**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; execution approval is recorded; other actual approval gates remain pending.
 
 **Exit tasks:** [SP-08.d](#sp-08-d), [SP-09.d](#sp-09-d), [SP-10.c](#sp-10-c), [SP-11.c](#sp-11-c), [SP-12.c](#sp-12-c). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
 
@@ -111,7 +113,7 @@ Weeks are relative five-working-day planning buckets. R8 begins with booking/des
 
 ### R3 gate
 
-**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; execution approval is recorded; other actual approval gates remain pending.
 
 **Exit tasks:** [SP-13.d](#sp-13-d), [SP-14.d](#sp-14-d), [SP-15.e](#sp-15-e), [SP-16.d](#sp-16-d), [SP-16.e](#sp-16-e), [SP-27.f](#sp-27-f), [SP-37.c](#sp-37-c). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
 
@@ -121,7 +123,7 @@ Weeks are relative five-working-day planning buckets. R8 begins with booking/des
 
 ### R4 gate
 
-**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; execution approval is recorded; other actual approval gates remain pending.
 
 **Exit tasks:** [SP-17.d](#sp-17-d), [SP-18.d](#sp-18-d), [SP-19.d](#sp-19-d), [SP-20.d](#sp-20-d), [SP-21.c](#sp-21-c). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
 
@@ -131,7 +133,7 @@ Weeks are relative five-working-day planning buckets. R8 begins with booking/des
 
 ### R5 gate
 
-**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; execution approval is recorded; other actual approval gates remain pending.
 
 **Exit tasks:** [SP-22.e](#sp-22-e), [SP-23.d](#sp-23-d), [SP-24.d](#sp-24-d), [SP-25.e](#sp-25-e), [SP-26.d](#sp-26-d). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
 
@@ -141,7 +143,7 @@ Weeks are relative five-working-day planning buckets. R8 begins with booking/des
 
 ### R6 gate
 
-**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; execution approval is recorded; other actual approval gates remain pending.
 
 **Exit tasks:** [SP-28.d](#sp-28-d), [SP-29.d](#sp-29-d), [SP-30.d](#sp-30-d), [SP-31.e](#sp-31-e). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
 
@@ -151,7 +153,7 @@ Weeks are relative five-working-day planning buckets. R8 begins with booking/des
 
 ### R7 gate
 
-**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; execution approval is recorded; other actual approval gates remain pending.
 
 **Exit tasks:** [SP-32.c](#sp-32-c), [SP-33.c](#sp-33-c), [SP-36.d](#sp-36-d). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
 
@@ -161,7 +163,7 @@ Weeks are relative five-working-day planning buckets. R8 begins with booking/des
 
 ### R8 gate
 
-**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; execution approval is recorded; other actual approval gates remain pending.
 
 **Exit tasks:** [SP-34.d](#sp-34-d), [SP-35.c](#sp-35-c), [SP-37.f](#sp-37-f), [SP-38.c](#sp-38-c), [SP-39.b](#sp-39-b), [SP-40.e](#sp-40-e), [SP-41.b](#sp-41-b). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
 
@@ -171,7 +173,7 @@ Weeks are relative five-working-day planning buckets. R8 begins with booking/des
 
 ### POST gate
 
-**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; execution approval is recorded; other actual approval gates remain pending.
 
 **Exit tasks:** [SP-41.c](#sp-41-c), [SP-41.d](#sp-41-d). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
 
@@ -382,7 +384,7 @@ Named decision/gate owner, exact source/config/test identity, unresolved blocker
 
 ## Task index
 
-Every leaf below is **awaiting approval**, with its own PR boundary and evidence. All are P0 for their stated release gate; this does not imply simultaneous assignment. API/storage producers precede consumers. Scope outside a leaf is not silently included in its estimate. Proposed tests are not already implemented. Reviewers are roles until actual staff are named.
+The backlog is approved. Each leaf below retains its own PR boundary, prerequisites, status and required evidence. All are P0 for their stated release gate; this does not imply simultaneous assignment. API/storage producers precede consumers. Scope outside a leaf is not silently included in its estimate. Proposed tests are not already implemented. Reviewers are roles until actual staff are named.
 
 | Epic / GitHub issue | PR units | Delivery PW | Assigned milestone(s) |
 | --- | --- | --- | --- |
@@ -438,16 +440,16 @@ Parent: [#2](https://github.com/spei04/strange-physics/issues/2). This issue clo
 ### SP-00.a — Record approval and named team capacity
 
 - **Objective:** Establish a reviewed, staffed and evidence-backed start without implying execution approval. This PR delivers record approval and named team capacity.
-- **Implementation scope:** Record D01–D06 dispositions, lane owners, reviewer availability and start conditions.
+- **Implementation scope:** Record D01–D06 dispositions, current execution lane owners, reviewer availability and start conditions. Preserve the nine-person forecast as a reference until human staffing exists.
 - **Out of scope:** Product implementation or accepting this backlog on the user's behalf.
 - **Prerequisites and dependencies:** [APPROVAL](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
-- **Acceptance criteria:** Every lane staffed; unresolved decisions block affected work.
-- **Required automated tests:** Check decision IDs, capacity and approval evidence links.
+- **Acceptance criteria:** Each current execution lane has a responsible owner and assignments obey the three-engineer concurrency limit; external human staffing remains an explicit release dependency.
+- **Required automated tests:** Validate decision IDs, accountable execution roles, three-engineer concurrency, independent review and approval evidence.
 - **Security and reliability:** No implied infrastructure-spend authority; private staffing evidence.
 - **Effort and confidence:** 1 delivery engineer-day; high confidence; +0.10 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R0; completed for stated scope; evidence in EXECUTION_LOG.md.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-00-b"></a>
@@ -462,8 +464,8 @@ Parent: [#2](https://github.com/spei04/strange-physics/issues/2). This issue clo
 - **Required automated tests:** Core CI, lint/types/build and merge-identity verification.
 - **Security and reliability:** Preserve private journals and unrelated work; green CI is not review.
 - **Effort and confidence:** 2 delivery engineer-days; high confidence; +0.20 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, SDK, Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, SDK, Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R0; in progress; evidence and remaining gate in EXECUTION_LOG.md.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-00-c"></a>
@@ -478,8 +480,8 @@ Parent: [#2](https://github.com/spei04/strange-physics/issues/2). This issue clo
 - **Required automated tests:** Validate readiness checklist owners, deadlines and sanitized evidence.
 - **Security and reliability:** No fabricated adoption or public customer identifiers.
 - **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R0; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-01"></a>
@@ -499,8 +501,8 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Required automated tests:** Schema/reference checks, positive/negative/runtime fixtures and Pydantic parity.
 - **Security and reliability:** Finite/shape boundaries explicit; fixtures are not results.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R0; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-01-b"></a>
@@ -515,8 +517,8 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Required automated tests:** Operation/path/schema checks and terminal/duplicate/conflict fixtures.
 - **Security and reliability:** Membership separate from identity; immutable terminal states.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R0; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-01-c"></a>
@@ -531,8 +533,8 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Required automated tests:** Hash/size/epoch/checkpoint fixtures with corrupt and incomplete cases.
 - **Security and reliability:** No trusted pickle; bounded inputs and scoped identities.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, security, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, security, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R0; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-01-d"></a>
@@ -547,8 +549,8 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Required automated tests:** Duplicate/gap/reordered/expired stream, revocation and partial-replay fixtures.
 - **Security and reliability:** Resync reauthorizes caller/run; no blind truth in active feed.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, SDK, frontend, Platform, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, SDK, frontend, Platform, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R0; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-01-e"></a>
@@ -563,8 +565,8 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Required automated tests:** CI structural/runtime fixtures, client compatibility and version rejection.
 - **Security and reliability:** Synthetic data only; draft routes excluded from freeze.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Backend, SDK, frontend, Research, QE, Frontend, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Backend, SDK, frontend, Research, QE, Frontend, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R0; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-02"></a>
@@ -584,8 +586,8 @@ Parent: [#4](https://github.com/spei04/strange-physics/issues/4). This issue clo
 - **Required automated tests:** Validate sanitized checklist against actual cloud readbacks.
 - **Security and reliability:** No account IDs/secrets in public output.
 - **Effort and confidence:** 2 delivery engineer-days; medium confidence; +0.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Technical lead, product, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R0; completed for stated scope; evidence in EXECUTION_LOG.md.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-02-b"></a>
@@ -600,8 +602,8 @@ Parent: [#4](https://github.com/spei04/strange-physics/issues/4). This issue clo
 - **Required automated tests:** Free-space, consumer-path and dependency-integrity readbacks.
 - **Security and reliability:** 423 MiB observed; no builds before headroom gate.
 - **Effort and confidence:** 2 delivery engineer-days; medium confidence; +0.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R0; blocked by the recorded prerequisite or concrete approval; see EXECUTION_LOG.md.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-02-c"></a>
@@ -616,8 +618,8 @@ Parent: [#4](https://github.com/spei04/strange-physics/issues/4). This issue clo
 - **Required automated tests:** Configuration/policy and cost-dimension checks.
 - **Security and reliability:** Credit is not unlimited spend; unsupported combinations block.
 - **Effort and confidence:** 2 delivery engineer-days; low confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R0; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-03"></a>
@@ -637,8 +639,8 @@ Parent: [#5](https://github.com/spei04/strange-physics/issues/5). This issue clo
 - **Required automated tests:** Analytic trajectories, reciprocity, rotation and applicable energy tests.
 - **Security and reliability:** Do not export hidden law state or clip failures.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, SDK. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-03-b"></a>
@@ -653,8 +655,8 @@ Parent: [#5](https://github.com/spei04/strange-physics/issues/5). This issue clo
 - **Required automated tests:** Analytic convergence, zero excitation and mass/order boundary fixtures.
 - **Security and reliability:** Failed tests require numerical justification, not arbitrary loosening.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-03-c"></a>
@@ -669,8 +671,8 @@ Parent: [#5](https://github.com/spei04/strange-physics/issues/5). This issue clo
 - **Required automated tests:** Convergence, radial near-origin, weak excitation and failure matrices.
 - **Security and reliability:** No redraw or family-label leakage.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, SDK, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, SDK, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-03-d"></a>
@@ -685,8 +687,8 @@ Parent: [#5](https://github.com/spei04/strange-physics/issues/5). This issue clo
 - **Required automated tests:** Profiling harness, bounded divergence and output-size tests.
 - **Security and reliability:** Private true-world diagnostics; microbenchmarks are not capacity evidence.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, SDK, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, SDK, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-04"></a>
@@ -706,8 +708,8 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 - **Required automated tests:** Coefficient recovery, rank deficiency, order/mass mismatch and no hidden input.
 - **Security and reliability:** No evaluator access; bounded compute and safe diagnostics.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, SDK. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-04-b"></a>
@@ -722,8 +724,8 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 - **Required automated tests:** Serialization, shuffled IDs, reversed times, tampered hashes and divergence.
 - **Security and reliability:** Bound output; no pickle or true simulator parameters.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-04-c"></a>
@@ -738,8 +740,8 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 - **Required automated tests:** Hand-computed features, reciprocal graph terms, mass scaling and exponent grid.
 - **Security and reliability:** No family/exponent oracle; cap feature count.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, SDK. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-04-d"></a>
@@ -754,8 +756,8 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 - **Required automated tests:** Mixture recovery, noisy/rank-deficient cases, serialization and runtime mismatch.
 - **Security and reliability:** Bound fitting work; no evaluation tuning.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-04-e"></a>
@@ -770,8 +772,8 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 - **Required automated tests:** CLI round-trip, corrupt artifacts and independent report assertions.
 - **Security and reliability:** Trusted local and development-only labels; no provider dependency.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, SDK. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-05"></a>
@@ -791,8 +793,8 @@ Parent: [#7](https://github.com/spei04/strange-physics/issues/7). This issue clo
 - **Required automated tests:** Deterministic samples, correlated-frame guard and coverage fixtures.
 - **Security and reliability:** Disagreement is not calibrated confidence; cap compute.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-05-b"></a>
@@ -807,8 +809,8 @@ Parent: [#7](https://github.com/spei04/strange-physics/issues/7). This issue clo
 - **Required automated tests:** Bounds, noise/seed separation and calibration accounting.
 - **Security and reliability:** No true change signal or free measurements.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, SDK. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-05-c"></a>
@@ -823,8 +825,8 @@ Parent: [#7](https://github.com/spei04/strange-physics/issues/7). This issue clo
 - **Required automated tests:** Stationary alarms, replay, recovery boundaries and hidden-marker rejection.
 - **Security and reliability:** Oracle reset diagnostic only; preserve failed experiments.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-05-d"></a>
@@ -839,8 +841,8 @@ Parent: [#7](https://github.com/spei04/strange-physics/issues/7). This issue clo
 - **Required automated tests:** Tie, timeout, low support and candidate parity fixtures.
 - **Security and reliability:** Bound fallback/retries; no uncharged simulations.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-06"></a>
@@ -860,8 +862,8 @@ Parent: [#8](https://github.com/spei04/strange-physics/issues/8). This issue clo
 - **Required automated tests:** Known errors, all invalid/missing output, normalization and tamper cases.
 - **Security and reliability:** Separate evaluator labels from fitter; report failures.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane TL. Required review: Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-06-b"></a>
@@ -876,8 +878,8 @@ Parent: [#8](https://github.com/spei04/strange-physics/issues/8). This issue clo
 - **Required automated tests:** Collision, pairing, stable extrapolation and leak fixtures.
 - **Security and reliability:** No reconstructible seed to agent; public is not blind.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-06-c"></a>
@@ -892,8 +894,8 @@ Parent: [#8](https://github.com/spei04/strange-physics/issues/8). This issue clo
 - **Required automated tests:** Hand-counted censoring, boundary changes, all-failure and penalty sensitivity.
 - **Security and reliability:** No successful-only ranking.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-06-d"></a>
@@ -908,8 +910,8 @@ Parent: [#8](https://github.com/spei04/strange-physics/issues/8). This issue clo
 - **Required automated tests:** Hand aggregates, missing/duplicate seeds and world-versus-frame resampling.
 - **Security and reliability:** Avoid pseudoreplication; disclose exclusions.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-07"></a>
@@ -929,8 +931,8 @@ Parent: [#9](https://github.com/spei04/strange-physics/issues/9). This issue clo
 - **Required automated tests:** Small CI calibration and reproducible larger development harness.
 - **Security and reliability:** No evaluation tuning; failed validity can halt release.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-07-b"></a>
@@ -945,8 +947,8 @@ Parent: [#9](https://github.com/spei04/strange-physics/issues/9). This issue clo
 - **Required automated tests:** Repeatable count, timeout, memory and estimator checks.
 - **Security and reliability:** Do not size from simulator-only timing.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-07-c"></a>
@@ -961,8 +963,8 @@ Parent: [#9](https://github.com/spei04/strange-physics/issues/9). This issue clo
 - **Required automated tests:** Interval-precision simulations and count/manifest checks.
 - **Security and reliability:** Do not tune study to favor a selector.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-07-d"></a>
@@ -977,8 +979,8 @@ Parent: [#9](https://github.com/spei04/strange-physics/issues/9). This issue clo
 - **Required automated tests:** Manifest, hash and cross-track mixing rejection.
 - **Security and reliability:** Candidate review is not official scoring approval.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, security, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, security, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-08"></a>
@@ -998,8 +1000,8 @@ Parent: [#10](https://github.com/spei04/strange-physics/issues/10). This issue c
 - **Required automated tests:** Fake issuer, key rollover, nonce/state/CSRF and token validation tests.
 - **Security and reliability:** No email-domain membership; safe token errors.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-08-b"></a>
@@ -1014,8 +1016,8 @@ Parent: [#10](https://github.com/spei04/strange-physics/issues/10). This issue c
 - **Required automated tests:** Concurrent accept, expiry, cross-workspace invite and account-linking tests.
 - **Security and reliability:** Prevent role escalation and confused identity merges.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-08-c"></a>
@@ -1030,8 +1032,8 @@ Parent: [#10](https://github.com/spei04/strange-physics/issues/10). This issue c
 - **Required automated tests:** Scope, rotation, epoch replay, revocation and credential redaction tests.
 - **Security and reliability:** Platform provider secrets never enter token claims.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, Platform, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, Platform, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-08-d"></a>
@@ -1046,8 +1048,8 @@ Parent: [#10](https://github.com/spei04/strange-physics/issues/10). This issue c
 - **Required automated tests:** CSRF/origin, logout, refresh and session fixation tests.
 - **Security and reliability:** Fail closed on unknown issuer or session state.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-09"></a>
@@ -1067,8 +1069,8 @@ Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue c
 - **Required automated tests:** Real PostgreSQL fresh/upgrade, FK, unique and transaction tests.
 - **Security and reliability:** Separate migration and runtime roles; parameterized access.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-09-b"></a>
@@ -1083,8 +1085,8 @@ Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue c
 - **Required automated tests:** Parallel retries, crash boundaries, exhausted budget and hash-conflict tests.
 - **Security and reliability:** No acknowledgement before durable commit; no duplicate debit.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, Research. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, Research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-09-c"></a>
@@ -1099,8 +1101,8 @@ Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue c
 - **Required automated tests:** Race cancel/complete/expire, stale revision and cross-tenant operation tests.
 - **Security and reliability:** Accepting cancel is not proof worker stopped.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-09-d"></a>
@@ -1115,8 +1117,8 @@ Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue c
 - **Required automated tests:** Schema parity, failed integration, duplicate result and malicious error-message tests.
 - **Security and reliability:** Trusted simulator identity separate from user code.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Research, SDK, Backend, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Research, SDK, Backend, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-10"></a>
@@ -1136,8 +1138,8 @@ Parent: [#12](https://github.com/spei04/strange-physics/issues/12). This issue c
 - **Required automated tests:** Duplicate delivery, crash after enqueue, retry exhaustion and replay tests.
 - **Security and reliability:** Queue never owns authoritative state; bounded retries.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-10-b"></a>
@@ -1152,8 +1154,8 @@ Parent: [#12](https://github.com/spei04/strange-physics/issues/12). This issue c
 - **Required automated tests:** Lease expiry, heartbeat race, clock-skew and stale-commit tests.
 - **Security and reliability:** Use server timestamps and transaction guards.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-10-c"></a>
@@ -1168,8 +1170,8 @@ Parent: [#12](https://github.com/spei04/strange-physics/issues/12). This issue c
 - **Required automated tests:** Process death, orphan launch, terminal race and replay idempotency tests.
 - **Security and reliability:** Retry bounded by run deadline; no invisible restart.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-11"></a>
@@ -1189,8 +1191,8 @@ Parent: [#13](https://github.com/spei04/strange-physics/issues/13). This issue c
 - **Required automated tests:** Role-bypass, unset context, FK traversal and connection reuse tests.
 - **Security and reliability:** Runtime cannot own tables or bypass RLS.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-11-b"></a>
@@ -1205,8 +1207,8 @@ Parent: [#13](https://github.com/spei04/strange-physics/issues/13). This issue c
 - **Required automated tests:** Endpoint/ID substitution, mass assignment and future-object policy fixtures.
 - **Security and reliability:** Signed access grants short-lived and authorized; no raw bucket access.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, security, Platform, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, security, Platform, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-11-c"></a>
@@ -1221,8 +1223,8 @@ Parent: [#13](https://github.com/spei04/strange-physics/issues/13). This issue c
 - **Required automated tests:** Revocation races, stale token, sole-owner and safe audit/redaction tests.
 - **Security and reliability:** No stale membership cache bypass.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, SDK, frontend, Frontend, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, SDK, frontend, Frontend, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-12"></a>
@@ -1242,8 +1244,8 @@ Parent: [#14](https://github.com/spei04/strange-physics/issues/14). This issue c
 - **Required automated tests:** Parallel exhaustion, partial settlement, negative amount and crash-retry tests.
 - **Security and reliability:** Limit enforcement independent of agent honesty.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-12-b"></a>
@@ -1258,8 +1260,8 @@ Parent: [#14](https://github.com/spei04/strange-physics/issues/14). This issue c
 - **Required automated tests:** Starvation, burst, cancellation release and scheduler replay tests.
 - **Security and reliability:** No unbounded in-memory queue or silent dropping.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-12-c"></a>
@@ -1274,8 +1276,8 @@ Parent: [#14](https://github.com/spei04/strange-physics/issues/14). This issue c
 - **Required automated tests:** Sum/replay/missing usage, tenant access and pagination tests.
 - **Security and reliability:** No prompts or credentials in usage output.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, SDK, frontend, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, SDK, frontend, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-13"></a>
@@ -1295,8 +1297,8 @@ Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue c
 - **Required automated tests:** Hash mismatch, conditional write, interrupted upload and storage outage tests.
 - **Security and reliability:** Private buckets; no user-specified arbitrary filesystem path.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, backend, research, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, backend, research, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-13-b"></a>
@@ -1311,8 +1313,8 @@ Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue c
 - **Required automated tests:** Traversal/decompression/oversize, expired grant and cross-tenant object tests.
 - **Security and reliability:** Do not execute uploaded content; bounded reads.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, Backend, SDK, frontend, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, Backend, SDK, frontend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-13-c"></a>
@@ -1327,8 +1329,8 @@ Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue c
 - **Required automated tests:** Write/commit crash matrix, hash tamper, stale epoch and prefix mismatch.
 - **Security and reliability:** Agent state interpreted only in sandbox; bound JSON size.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, Backend, Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, Backend, Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-13-d"></a>
@@ -1343,8 +1345,8 @@ Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue c
 - **Required automated tests:** Concurrent finalize, active lease, repeated cleanup and storage-error tests.
 - **Security and reliability:** No broad bucket deletion; preserve legal/retention exceptions.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, Backend, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, Backend, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-14"></a>
@@ -1364,8 +1366,8 @@ Parent: [#16](https://github.com/spei04/strange-physics/issues/16). This issue c
 - **Required automated tests:** Symlink/path escape, archive bomb, missing lock and digest-change tests.
 - **Security and reliability:** Treat install hooks as arbitrary code.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-14-b"></a>
@@ -1380,8 +1382,8 @@ Parent: [#16](https://github.com/spei04/strange-physics/issues/16). This issue c
 - **Required automated tests:** Malicious install hooks, metadata/DNS/egress probes and exhaustion tests.
 - **Security and reliability:** Never reuse trusted CI runner identity or mutable shared volume.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-14-c"></a>
@@ -1396,8 +1398,8 @@ Parent: [#16](https://github.com/spei04/strange-physics/issues/16). This issue c
 - **Required automated tests:** Image substitution, unsigned provenance, stale scan and failed promotion tests.
 - **Security and reliability:** Promotion identity cannot overwrite trusted base images.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-14-d"></a>
@@ -1412,8 +1414,8 @@ Parent: [#16](https://github.com/spei04/strange-physics/issues/16). This issue c
 - **Required automated tests:** End-to-end hostile hook, fork/disk exhaustion and poisoned cache tests.
 - **Security and reliability:** Real environment evidence required; mocks insufficient.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, security, backend, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-15"></a>
@@ -1433,8 +1435,8 @@ Parent: [#17](https://github.com/spei04/strange-physics/issues/17). This issue c
 - **Required automated tests:** Scientific imports, deterministic fixture, limits and unsupported-runtime rejection.
 - **Security and reliability:** No fallback to plain container when sandbox fails.
 - **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, security, backend, Research, SDK. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, security, backend, Research, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-15-b"></a>
@@ -1449,8 +1451,8 @@ Parent: [#17](https://github.com/spei04/strange-physics/issues/17). This issue c
 - **Required automated tests:** Admission policy, runtime-unavailable, host mount, service-token and exhaustion tests.
 - **Security and reliability:** Sandbox layer alone is insufficient; enforce full configuration.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, security, backend, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-15-c"></a>
@@ -1465,8 +1467,8 @@ Parent: [#17](https://github.com/spei04/strange-physics/issues/17). This issue c
 - **Required automated tests:** Audience/scope/epoch substitution, expired token and terminal-run tests.
 - **Security and reliability:** No provider/evaluator credentials or privileged diagnostic messages.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, security, backend, Backend, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, security, backend, Backend, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-15-d"></a>
@@ -1481,8 +1483,8 @@ Parent: [#17](https://github.com/spei04/strange-physics/issues/17). This issue c
 - **Required automated tests:** Metadata/private-IP/public-DNS/redirect/IPv6 and broker spoof tests.
 - **Security and reliability:** Fail closed when policy unavailable; record policy version.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, security, backend, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-15-e"></a>
@@ -1497,8 +1499,8 @@ Parent: [#17](https://github.com/spei04/strange-physics/issues/17). This issue c
 - **Required automated tests:** Cross-run filesystem, secret probes, resource attack and stale-token tests.
 - **Security and reliability:** Unresolved critical/high isolation issue blocks release.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, security, backend, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-16"></a>
@@ -1518,8 +1520,8 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 - **Required automated tests:** Local/remote conformance and one complete remote investigation.
 - **Security and reliability:** Only approved image and current epoch launch.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Platform, security, backend, Backend, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Platform, security, backend, Backend, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-16-b"></a>
@@ -1534,8 +1536,8 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 - **Required automated tests:** Kill before/after reserve/result/checkpoint with deterministic replay tests.
 - **Security and reliability:** Incompatible runtime or corrupt checkpoint fails visibly.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, research, Research, SDK. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, research, Research, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-16-c"></a>
@@ -1550,8 +1552,8 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 - **Required automated tests:** Cancel/complete races, uncooperative agent, deadline and orphan reconciliation.
 - **Security and reliability:** Do not refund pending usage before settlement.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, Backend, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, Backend, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-16-d"></a>
@@ -1566,8 +1568,8 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 - **Required automated tests:** Forced-death matrix, partitioned stale worker and replay hash consistency.
 - **Security and reliability:** Private exact-runtime evidence; failure blocks remote availability claims.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, security, backend, Backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, security, backend, Backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-16-e"></a>
@@ -1582,8 +1584,8 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 - **Required automated tests:** Synthetic stuck/failed/cancelled runs and telemetry redaction assertions.
 - **Security and reliability:** No run IDs as unbounded metric labels; trace access controlled.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-17"></a>
@@ -1603,8 +1605,8 @@ Parent: [#19](https://github.com/spei04/strange-physics/issues/19). This issue c
 - **Required automated tests:** Good/bad/ambiguous fixtures, schema and no-secret response checks.
 - **Security and reliability:** No user-selected arbitrary provider URL; exact policy version.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, research, security, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, research, security, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-17-b"></a>
@@ -1619,8 +1621,8 @@ Parent: [#19](https://github.com/spei04/strange-physics/issues/19). This issue c
 - **Required automated tests:** Send/commit timeout/crash, duplicate key and usage reconciliation tests.
 - **Security and reliability:** External billing is not exactly-once; never blindly resend.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, research, security, Platform, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, research, security, Platform, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-17-c"></a>
@@ -1635,8 +1637,8 @@ Parent: [#19](https://github.com/spei04/strange-physics/issues/19). This issue c
 - **Required automated tests:** Cross-workspace access, revoked key, SSRF/redirect and logging tests.
 - **Security and reliability:** Never return stored keys or place secrets in agent images.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, research, security, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, research, security, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-17-d"></a>
@@ -1651,8 +1653,8 @@ Parent: [#19](https://github.com/spei04/strange-physics/issues/19). This issue c
 - **Required automated tests:** Offline network-denial, response tamper, missing body and repeat replay tests.
 - **Security and reliability:** Private prompts retained under run policy; no silent fallback.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, research, security, Platform, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, research, security, Platform, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-18"></a>
@@ -1672,8 +1674,8 @@ Parent: [#20](https://github.com/spei04/strange-physics/issues/20). This issue c
 - **Required automated tests:** Fake provider retries/timeout/overflow/circuit and credential denial tests.
 - **Security and reliability:** All attempts metered; request destinations fixed.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, research, security, Platform, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, research, security, Platform, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-18-b"></a>
@@ -1688,8 +1690,8 @@ Parent: [#20](https://github.com/spei04/strange-physics/issues/20). This issue c
 - **Required automated tests:** Long history, injected annotation, hidden-field and token-ceiling fixtures.
 - **Security and reliability:** Treat content as data; hypothesis text is not correctness evidence.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Backend, research, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Backend, research, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-18-c"></a>
@@ -1704,8 +1706,8 @@ Parent: [#20](https://github.com/spei04/strange-physics/issues/20). This issue c
 - **Required automated tests:** Malformed/hallucinated ID, repeated invalid, budget exhaustion and checkpoint replay.
 - **Security and reliability:** No unconstrained tool execution or privileged summaries.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Backend, research, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Backend, research, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-18-d"></a>
@@ -1720,8 +1722,8 @@ Parent: [#20](https://github.com/spei04/strange-physics/issues/20). This issue c
 - **Required automated tests:** Automated cap-stop and response-schema verification plus offline replay.
 - **Security and reliability:** Pricing/retention/credential owner sign-off required before calls.
 - **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Backend, research, security, Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Backend, research, security, Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-19"></a>
@@ -1741,8 +1743,8 @@ Parent: [#21](https://github.com/spei04/strange-physics/issues/21). This issue c
 - **Required automated tests:** Protocol good/bad shapes/timestamps/interval examples and compatibility fixtures.
 - **Security and reliability:** No labels, true coefficients or evaluator credentials in request.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, platform, security, QE, Platform, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, platform, security, QE, Platform, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-19-b"></a>
@@ -1757,8 +1759,8 @@ Parent: [#21](https://github.com/spei04/strange-physics/issues/21). This issue c
 - **Required automated tests:** Digest substitution, missing entrypoint, lock mismatch and rejected build tests.
 - **Security and reliability:** No separate less-secure build path.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Research, platform, security, Platform, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Research, platform, security, Platform, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-19-c"></a>
@@ -1773,8 +1775,8 @@ Parent: [#21](https://github.com/spei04/strange-physics/issues/21). This issue c
 - **Required automated tests:** NaN, reordered particles, reversed times, invalid intervals and timeout fixtures.
 - **Security and reliability:** Never deserialize executable objects in evaluator controller.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, platform, security, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, platform, security, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-19-d"></a>
@@ -1789,8 +1791,8 @@ Parent: [#21](https://github.com/spei04/strange-physics/issues/21). This issue c
 - **Required automated tests:** Exfiltration, secret scan, timing/output overflow and process persistence tests.
 - **Security and reliability:** Security reviewer inspects deployed evidence.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane TL. Required review: Research, platform, security, Platform, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Research, platform, security, Platform, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-20"></a>
@@ -1810,8 +1812,8 @@ Parent: [#22](https://github.com/spei04/strange-physics/issues/22). This issue c
 - **Required automated tests:** IAM/role substitution, object enumeration and misconfigured startup tests.
 - **Security and reliability:** Explicitly public suites separated from blind/customer data.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Research, QE, Platform, backend, research, Backend, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Research, QE, Platform, backend, research, Backend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-20-b"></a>
@@ -1826,8 +1828,8 @@ Parent: [#22](https://github.com/spei04/strange-physics/issues/22). This issue c
 - **Required automated tests:** Predictor death, deadline, duplicate launch and input/output staging tests.
 - **Security and reliability:** No feedback or long-lived evaluator credentials in sandbox.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Research, platform, security, Platform, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Research, platform, security, Platform, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-20-c"></a>
@@ -1842,8 +1844,8 @@ Parent: [#22](https://github.com/spei04/strange-physics/issues/22). This issue c
 - **Required automated tests:** Missing snapshot, duplicate result, all-failure and incomplete evaluation tests.
 - **Security and reliability:** No active-agent score events or artifacts.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Backend, Platform, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Backend, Platform, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-20-d"></a>
@@ -1858,8 +1860,8 @@ Parent: [#22](https://github.com/spei04/strange-physics/issues/22). This issue c
 - **Required automated tests:** Leak canaries in fields, paths, errors, SSE and object broker.
 - **Security and reliability:** Leak contaminates suite and blocks scoring; record incident procedure.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, QE, Frontend, backend, Backend, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, QE, Frontend, backend, Backend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-21"></a>
@@ -1879,8 +1881,8 @@ Parent: [#23](https://github.com/spei04/strange-physics/issues/23). This issue c
 - **Required automated tests:** Pairing, calibration, fallback, failure denominator and replay checks.
 - **Security and reliability:** No conclusion that LLM must win.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Backend, research, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Backend, research, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-21-b"></a>
@@ -1895,8 +1897,8 @@ Parent: [#23](https://github.com/spei04/strange-physics/issues/23). This issue c
 - **Required automated tests:** Custom model, interrupted agent, invalid predictor and resource-cap journey.
 - **Security and reliability:** Do not pool discovery and controlled-selection rankings.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, platform, security, Platform, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, platform, security, Platform, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-21-c"></a>
@@ -1911,8 +1913,8 @@ Parent: [#23](https://github.com/spei04/strange-physics/issues/23). This issue c
 - **Required automated tests:** Manifest tamper, missing scored row, split collision and offline reproduction.
 - **Security and reliability:** Sanitize fixture data; no public customer results.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane TL. Required review: Research, QE, Platform, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Research, QE, Platform, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R4; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-22"></a>
@@ -1932,8 +1934,8 @@ Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue c
 - **Required automated tests:** Machine-check fixture/state inventory and accessibility checklist completeness.
 - **Security and reliability:** Do not reveal world truth in active-agent view.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-22-b"></a>
@@ -1948,8 +1950,8 @@ Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue c
 - **Required automated tests:** Bounds/version conflict, tenant traversal, unsupported laws and projection leakage.
 - **Security and reliability:** Hosted arbitrary law uploads not trusted; approved catalog only.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Frontend, backend, Backend, SDK, frontend, Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Frontend, backend, Backend, SDK, frontend, Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-22-c"></a>
@@ -1964,8 +1966,8 @@ Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue c
 - **Required automated tests:** Browser login/logout, wrong role, CSRF/session expiry and empty/error fixtures.
 - **Security and reliability:** No credentials in URL/local logs; sanitize user text.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, security, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, security, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-22-d"></a>
@@ -1980,8 +1982,8 @@ Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue c
 - **Required automated tests:** Invalid bounds, topology, stale version and accessibility journey tests.
 - **Security and reliability:** Client validation complements server; no executable upload path.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-22-e"></a>
@@ -1996,8 +1998,8 @@ Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue c
 - **Required automated tests:** Browser create conflict, permission removal, unavailable worker and cancel race.
 - **Security and reliability:** No promise of completion from 202 acceptance.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-23"></a>
@@ -2017,8 +2019,8 @@ Parent: [#25](https://github.com/spei04/strange-physics/issues/25). This issue c
 - **Required automated tests:** Rollback event absence, sequence uniqueness, tenant access and slow viewer tests.
 - **Security and reliability:** No truth/evaluator metadata in active event schemas.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Frontend, backend, Backend, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Frontend, backend, Backend, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-23-b"></a>
@@ -2033,8 +2035,8 @@ Parent: [#25](https://github.com/spei04/strange-physics/issues/25). This issue c
 - **Required automated tests:** Duplicate/gap/expired cursor, archive outage and membership revocation tests.
 - **Security and reliability:** Archive and snapshot use same tenant/privacy policy.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Frontend, backend, Platform, research, Backend, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Frontend, backend, Platform, research, Backend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-23-c"></a>
@@ -2049,8 +2051,8 @@ Parent: [#25](https://github.com/spei04/strange-physics/issues/25). This issue c
 - **Required automated tests:** Recorded feed, duplicate/out-of-order events and terminal transition browser tests.
 - **Security and reliability:** Treat annotations as untrusted; bounded client memory.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-23-d"></a>
@@ -2065,8 +2067,8 @@ Parent: [#25](https://github.com/spei04/strange-physics/issues/25). This issue c
 - **Required automated tests:** Browser offline/reconnect/revoke/expired-cursor and slow-consumer tests.
 - **Security and reliability:** No cached private data after workspace logout.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-24"></a>
@@ -2086,8 +2088,8 @@ Parent: [#26](https://github.com/spei04/strange-physics/issues/26). This issue c
 - **Required automated tests:** Frame alignment, seek/end boundaries, malformed chunk and performance fixtures.
 - **Security and reliability:** No second physics solver; bound memory and sanitize content.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Platform, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Platform, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-24-b"></a>
@@ -2102,8 +2104,8 @@ Parent: [#26](https://github.com/spei04/strange-physics/issues/26). This issue c
 - **Required automated tests:** Layer alignment, absent intervals, failed model and active-truth denial tests.
 - **Security and reliability:** No fabricated confidence or hidden evaluation during run.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-24-c"></a>
@@ -2118,8 +2120,8 @@ Parent: [#26](https://github.com/spei04/strange-physics/issues/26). This issue c
 - **Required automated tests:** Protocol mismatch, missing/failing run and paired time alignment tests.
 - **Security and reliability:** No successful-only filtering by default.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-24-d"></a>
@@ -2134,8 +2136,8 @@ Parent: [#26](https://github.com/spei04/strange-physics/issues/26). This issue c
 - **Required automated tests:** Automated accessibility, keyboard and browser visual-reference tests.
 - **Security and reliability:** No sensitive data in screenshots or diagnostics.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-25"></a>
@@ -2155,8 +2157,8 @@ Parent: [#27](https://github.com/spei04/strange-physics/issues/27). This issue c
 - **Required automated tests:** Retry/cancel/expiry/version/duplicate checkpoint and budget parity tests.
 - **Security and reliability:** Tokens redacted; bounded retry and explicit incompatible runtime.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, Research, Platform, security, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, Research, Platform, security, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-25-b"></a>
@@ -2171,8 +2173,8 @@ Parent: [#27](https://github.com/spei04/strange-physics/issues/27). This issue c
 - **Required automated tests:** Subprocess CLI success/failure, interrupted polling and secret-redaction tests.
 - **Security and reliability:** No keys in argv/history or exported manifests.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, Platform, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, Platform, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-25-c"></a>
@@ -2187,8 +2189,8 @@ Parent: [#27](https://github.com/spei04/strange-physics/issues/27). This issue c
 - **Required automated tests:** Tamper/missing artifact, large export, cross-tenant and pending-evaluation tests.
 - **Security and reliability:** Restricted truth/provider secrets excluded from ordinary export.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Platform, backend, research, Backend, SDK, frontend, Research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Platform, backend, research, Backend, SDK, frontend, Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-25-d"></a>
@@ -2203,8 +2205,8 @@ Parent: [#27](https://github.com/spei04/strange-physics/issues/27). This issue c
 - **Required automated tests:** Role/replay publication, secret canary, incomplete release and withdraw tests.
 - **Security and reliability:** Public copies not promised fully retractable.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, backend, research, Backend, SDK, frontend, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, backend, research, Backend, SDK, frontend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-25-e"></a>
@@ -2219,8 +2221,8 @@ Parent: [#27](https://github.com/spei04/strange-physics/issues/27). This issue c
 - **Required automated tests:** Network-denied replay, version mismatch, tamper and missing member tests.
 - **Security and reliability:** Never load private journal as public replay.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, backend, research, Research, QE, Frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, backend, research, Research, QE, Frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-26"></a>
@@ -2240,8 +2242,8 @@ Parent: [#28](https://github.com/spei04/strange-physics/issues/28). This issue c
 - **Required automated tests:** Install validation, missing runtime/secret and insecure-profile rejection tests.
 - **Security and reliability:** Do not advertise trusted development profile for hostile code.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-26-b"></a>
@@ -2256,8 +2258,8 @@ Parent: [#28](https://github.com/spei04/strange-physics/issues/28). This issue c
 - **Required automated tests:** Issuer mapping, object generation semantics and adapter conformance tests.
 - **Security and reliability:** Portable deployment must preserve auth/immutability boundaries.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Backend, security, Platform, backend, research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Backend, security, Platform, backend, research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-26-c"></a>
@@ -2272,8 +2274,8 @@ Parent: [#28](https://github.com/spei04/strange-physics/issues/28). This issue c
 - **Required automated tests:** Schema upgrade, old worker/client, interrupted migration and restore tests.
 - **Security and reliability:** Do not call seeded predecessor a real published version.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, Backend, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, Backend, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-26-d"></a>
@@ -2288,8 +2290,8 @@ Parent: [#28](https://github.com/spei04/strange-physics/issues/28). This issue c
 - **Required automated tests:** Automated install/upgrade/remote journey and invalid-config tests.
 - **Security and reliability:** External adoption remains a separate partner gate.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, QE, security, Frontend, backend, Research. Named engineer pending SP-00.a.
-- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, QE, security, Frontend, backend, Research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R5; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-27"></a>
@@ -2309,8 +2311,8 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 - **Required automated tests:** Terraform validate/plan, IAM policy and forged federation-context tests.
 - **Security and reliability:** No long-lived service keys; public CI never runs untrusted package hooks.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-27-b"></a>
@@ -2325,8 +2327,8 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 - **Required automated tests:** IaC drift, connectivity, pool bound and deny-access smoke tests.
 - **Security and reliability:** Pricing/cap approval remains precondition; backups enabled from first persistent data.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-27-c"></a>
@@ -2341,8 +2343,8 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 - **Required automated tests:** Health/config/identity failure, rollback and isolation preflight tests.
 - **Security and reliability:** Fail closed on missing configuration; keep stage independent of prod.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-27-d"></a>
@@ -2357,8 +2359,8 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 - **Required automated tests:** Dependency/secret scan, image substitution and provenance policy tests.
 - **Security and reliability:** Trusted deployment CI never executes customer hooks.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-27-e"></a>
@@ -2373,8 +2375,8 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 - **Required automated tests:** Redaction, cardinality, latency/error denominator and alert-fire/clear tests.
 - **Security and reliability:** Do not log raw prompts/world truth; low traffic handled explicitly.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Backend, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Backend, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-27-f"></a>
@@ -2389,8 +2391,8 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 - **Required automated tests:** Bad image, interrupted migration, mixed worker versions and rollback smoke.
 - **Security and reliability:** No production release authorization inferred from staging rehearsal.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-28"></a>
@@ -2410,8 +2412,8 @@ Parent: [#30](https://github.com/spei04/strange-physics/issues/30). This issue c
 - **Required automated tests:** Generator determinism, numerical/IO distribution and count checks.
 - **Security and reliability:** No paid provider stress; keep load artifacts private.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Research, Frontend, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Research, Frontend, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-28-b"></a>
@@ -2426,8 +2428,8 @@ Parent: [#30](https://github.com/spei04/strange-physics/issues/30). This issue c
 - **Required automated tests:** Automated latency, throughput, integrity and zero-duplicate budget assertions.
 - **Security and reliability:** Do not equate offered load or connected sockets with completed capacity.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-28-c"></a>
@@ -2442,8 +2444,8 @@ Parent: [#30](https://github.com/spei04/strange-physics/issues/30). This issue c
 - **Required automated tests:** Long-run leak, overload rejection, backlog and persistence integrity checks.
 - **Security and reliability:** 300 offered is stress, not capacity promise; stop on corruption.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-28-d"></a>
@@ -2458,8 +2460,8 @@ Parent: [#30](https://github.com/spei04/strange-physics/issues/30). This issue c
 - **Required automated tests:** Starvation, provider throttling, cancellation and crash-in-load tests.
 - **Security and reliability:** Unknown provider costs remain visible.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-29"></a>
@@ -2479,8 +2481,8 @@ Parent: [#31](https://github.com/spei04/strange-physics/issues/31). This issue c
 - **Required automated tests:** Backup completeness, missing object, permissions and lag alert tests.
 - **Security and reliability:** A successful scheduled job alone is not recoverability evidence.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend, research, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend, research, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-29-b"></a>
@@ -2495,8 +2497,8 @@ Parent: [#31](https://github.com/spei04/strange-physics/issues/31). This issue c
 - **Required automated tests:** Timed restore, corrupt object, interrupted replay and revoked identity tests.
 - **Security and reliability:** No production data exposed during drill; preserve private evidence.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend, research, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend, research, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-29-c"></a>
@@ -2511,8 +2513,8 @@ Parent: [#31](https://github.com/spei04/strange-physics/issues/31). This issue c
 - **Required automated tests:** Fault matrix, stale worker, pool exhaustion and no-duplicate invariants.
 - **Security and reliability:** Targets measured in deployed configuration, not assumed from service SLA.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, QE, security, Backend, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, QE, security, Backend, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-29-d"></a>
@@ -2527,8 +2529,8 @@ Parent: [#31](https://github.com/spei04/strange-physics/issues/31). This issue c
 - **Required automated tests:** Mixed-version upgrade, partial migration and health-regression rollback tests.
 - **Security and reliability:** Destructive schema change cannot bypass recovery review.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-30"></a>
@@ -2548,8 +2550,8 @@ Parent: [#32](https://github.com/spei04/strange-physics/issues/32). This issue c
 - **Required automated tests:** Browser/SDK/CLI cross-tenant negative and interruption journeys.
 - **Security and reliability:** Private run data never crosses workspace or public view.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Frontend, backend, Backend, SDK, frontend, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Frontend, backend, Backend, SDK, frontend, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-30-b"></a>
@@ -2564,8 +2566,8 @@ Parent: [#32](https://github.com/spei04/strange-physics/issues/32). This issue c
 - **Required automated tests:** Generated-client drift, old checkpoint and replay migration fixtures.
 - **Security and reliability:** Seeded predecessor labeled honestly before second real release.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane FE. Required review: Backend, SDK, frontend, Research, QE, Platform, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane FE. Required review: Backend, SDK, frontend, Research, QE, Platform, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-30-c"></a>
@@ -2580,8 +2582,8 @@ Parent: [#32](https://github.com/spei04/strange-physics/issues/32). This issue c
 - **Required automated tests:** Interrupted install, config mismatch, rollback and restored-client tests.
 - **Security and reliability:** No blanket support outside documented matrix.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-30-d"></a>
@@ -2596,8 +2598,8 @@ Parent: [#32](https://github.com/spei04/strange-physics/issues/32). This issue c
 - **Required automated tests:** Automated traceability/link completeness and manifest integrity checks.
 - **Security and reliability:** Document is not substitute for executed tests.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-31"></a>
@@ -2617,8 +2619,8 @@ Parent: [#33](https://github.com/spei04/strange-physics/issues/33). This issue c
 - **Required automated tests:** ID substitution, CSRF, mass assignment, object grants and revoked stream tests.
 - **Security and reliability:** Any cross-tenant access is release blocker.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane TL. Required review: Backend, security, SDK, frontend, Frontend, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Backend, security, SDK, frontend, Frontend, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-31-b"></a>
@@ -2633,8 +2635,8 @@ Parent: [#33](https://github.com/spei04/strange-physics/issues/33). This issue c
 - **Required automated tests:** Admission bypass, untrusted build, IPv6/DNS/metadata and resource attacks.
 - **Security and reliability:** Independent security specialist reviews evidence.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-31-c"></a>
@@ -2649,8 +2651,8 @@ Parent: [#33](https://github.com/spei04/strange-physics/issues/33). This issue c
 - **Required automated tests:** Canary leaks, injected text, malformed output and ambiguity/cap tests.
 - **Security and reliability:** Compromised suite quarantined; no silent result reuse.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Backend, research, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Backend, research, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-31-d"></a>
@@ -2665,8 +2667,8 @@ Parent: [#33](https://github.com/spei04/strange-physics/issues/33). This issue c
 - **Required automated tests:** Delete/revoke races, replayed backup, token expiry and secret/log canaries.
 - **Security and reliability:** No promise deletion instantly erases offline public copies.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, Platform, backend, research, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, Platform, backend, research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-31-e"></a>
@@ -2681,8 +2683,8 @@ Parent: [#33](https://github.com/spei04/strange-physics/issues/33). This issue c
 - **Required automated tests:** Repeat failed adversarial tests and evidence manifest checks.
 - **Security and reliability:** New material finding creates separately scoped repair PR; never rubber-stamp.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R6; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-32"></a>
@@ -2702,8 +2704,8 @@ Parent: [#34](https://github.com/spei04/strange-physics/issues/34). This issue c
 - **Required automated tests:** Readiness checker verifies required owner/evidence/expiry fields.
 - **Security and reliability:** No legal/compliance guarantees invented.
 - **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R7; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-32-b"></a>
@@ -2718,8 +2720,8 @@ Parent: [#34](https://github.com/spei04/strange-physics/issues/34). This issue c
 - **Required automated tests:** Run onboarding smoke and telemetry completeness checks.
 - **Security and reliability:** Real external attendance required; no internal substitution.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Frontend, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Frontend, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R7; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-32-c"></a>
@@ -2734,8 +2736,8 @@ Parent: [#34](https://github.com/spei04/strange-physics/issues/34). This issue c
 - **Required automated tests:** Usage denominator, evidence completeness and regression checks for pilot fixes.
 - **Security and reliability:** Partner absence blocks evidence, never counted as success.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R7; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-33"></a>
@@ -2755,8 +2757,8 @@ Parent: [#35](https://github.com/spei04/strange-physics/issues/35). This issue c
 - **Required automated tests:** Frozen manifest, seed separation, limits and estimated-count checks.
 - **Security and reliability:** Paid sweep approval separate from development approval.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R7; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-33-b"></a>
@@ -2771,8 +2773,8 @@ Parent: [#35](https://github.com/spei04/strange-physics/issues/35). This issue c
 - **Required automated tests:** Automatic completeness, frozen identity, failure denominator and report reproduction.
 - **Security and reliability:** Estimate is engineering effort; measured sweep wall time added at freeze.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Platform, security, backend, Backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Platform, security, backend, Backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R7; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-33-c"></a>
@@ -2787,8 +2789,8 @@ Parent: [#35](https://github.com/spei04/strange-physics/issues/35). This issue c
 - **Required automated tests:** Secret canaries, missing-row detection, hashes and offline report checks.
 - **Security and reliability:** Never publish private customer artifacts under reference-release authority.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R7; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-34"></a>
@@ -2808,8 +2810,8 @@ Parent: [#36](https://github.com/spei04/strange-physics/issues/36). This issue c
 - **Required automated tests:** Configuration/schema fixtures and fake-IdP capability tests.
 - **Security and reliability:** Do not assume SCIM/federation is included in existing credits.
 - **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-34-b"></a>
@@ -2824,8 +2826,8 @@ Parent: [#36](https://github.com/spei04/strange-physics/issues/36). This issue c
 - **Required automated tests:** Issuer confusion, assertion replay/expiry, key rotation and session tests.
 - **Security and reliability:** Security review required; no implicit membership from email.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-34-c"></a>
@@ -2840,8 +2842,8 @@ Parent: [#36](https://github.com/spei04/strange-physics/issues/36). This issue c
 - **Required automated tests:** Duplicate subject/email, concurrent linking, lost IdP and sole-owner tests.
 - **Security and reliability:** Audit every link/admin override; no shared break-glass credential.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-34-d"></a>
@@ -2856,8 +2858,8 @@ Parent: [#36](https://github.com/spei04/strange-physics/issues/36). This issue c
 - **Required automated tests:** Old/new key overlap, expiry, revoke race and least-scope tests.
 - **Security and reliability:** Basic service identity already exists in R2; no late prerequisite for pilot.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, Platform, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, Platform, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-35"></a>
@@ -2877,8 +2879,8 @@ Parent: [#37](https://github.com/spei04/strange-physics/issues/37). This issue c
 - **Required automated tests:** SCIM schema fixtures, duplicate mappings and conflicting version cases.
 - **Security and reliability:** Disable policy must cover API, stream, job and credential access.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-35-b"></a>
@@ -2893,8 +2895,8 @@ Parent: [#37](https://github.com/spei04/strange-physics/issues/37). This issue c
 - **Required automated tests:** Bulk limits, duplicate provisioning, stale updates and retry tests.
 - **Security and reliability:** Service credential narrowly scoped; rate-limit sync.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-35-c"></a>
@@ -2909,8 +2911,8 @@ Parent: [#37](https://github.com/spei04/strange-physics/issues/37). This issue c
 - **Required automated tests:** Active session/token/job/SSE disable races and sole-owner exceptions.
 - **Security and reliability:** No stale authorization caches or forgotten machine keys.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, Platform, backend, Frontend. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, Platform, backend, Frontend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-36"></a>
@@ -2930,8 +2932,8 @@ Parent: [#38](https://github.com/spei04/strange-physics/issues/38). This issue c
 - **Required automated tests:** Contract/extension regression and published example replay tests.
 - **Security and reliability:** Trusted local law extension differs from reviewed hosted catalog.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE, Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE, Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R7; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-36-b"></a>
@@ -2946,8 +2948,8 @@ Parent: [#38](https://github.com/spei04/strange-physics/issues/38). This issue c
 - **Required automated tests:** Independent install/upgrade smoke and reported-friction regressions.
 - **Security and reliability:** Partner environment/access must be available; no simulated adoption.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R7; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-36-c"></a>
@@ -2962,8 +2964,8 @@ Parent: [#38](https://github.com/spei04/strange-physics/issues/38). This issue c
 - **Required automated tests:** Offline replay, compatibility and artifact integrity checks.
 - **Security and reliability:** Keep private access paths out of public evidence.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, QE, Platform, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, QE, Platform, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R7; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-36-d"></a>
@@ -2978,8 +2980,8 @@ Parent: [#38](https://github.com/spei04/strange-physics/issues/38). This issue c
 - **Required automated tests:** Regression suite for fixed defects and traceability checker.
 - **Security and reliability:** Do not hide additional feature work inside documentation-only closure.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R7; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-37"></a>
@@ -2999,8 +3001,8 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 - **Required automated tests:** Audit omission, tamper permissions, redaction and transaction rollback tests.
 - **Security and reliability:** Basic audit is pilot prerequisite, not deferred to enterprise.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, Platform, QE. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, Platform, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-37-b"></a>
@@ -3015,8 +3017,8 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 - **Required automated tests:** Concurrent read/delete, shared artifact refs, legal-hold flag and repeated job tests.
 - **Security and reliability:** Keep minimum tombstone identity; no silent auto-expiry.
 - **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, backend, research, Backend, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, backend, research, Backend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-37-c"></a>
@@ -3031,8 +3033,8 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 - **Required automated tests:** Older-backup restore, missing ledger, interrupted replay and expired-object tests.
 - **Security and reliability:** Fail closed if latest suppression ledger unavailable.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend, research, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend, research, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-37-d"></a>
@@ -3047,8 +3049,8 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 - **Required automated tests:** Pagination gap, tamper, tenant traversal and export interruption tests.
 - **Security and reliability:** Personal data minimized; immutable does not mean publicly readable.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend, Platform, backend, research. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend, Platform, backend, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-37-e"></a>
@@ -3063,8 +3065,8 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 - **Required automated tests:** Time-controlled retention/expiry, rotation and resurrected-object regression tests.
 - **Security and reliability:** 35-day lifecycle is proposal requiring real service configuration proof.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, backend, research, QE, security, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, backend, research, QE, security, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-37-f"></a>
@@ -3079,8 +3081,8 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 - **Required automated tests:** Link/evidence completeness and stale-version checks.
 - **Security and reliability:** No compliance certification inferred from code or synthetic data.
 - **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-38"></a>
@@ -3100,8 +3102,8 @@ Parent: [#40](https://github.com/spei04/strange-physics/issues/40). This issue c
 - **Required automated tests:** Missing-generation, key/IAM denial and lag/copy integrity tests.
 - **Security and reliability:** Residency/key requirements reviewed before replication.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend, research, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend, research, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-38-b"></a>
@@ -3116,8 +3118,8 @@ Parent: [#40](https://github.com/spei04/strange-physics/issues/40). This issue c
 - **Required automated tests:** Timed failover, stale worker, DNS/cutover and duplicate-launch tests.
 - **Security and reliability:** No active-active claim; preserve original incident evidence.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-38-c"></a>
@@ -3132,8 +3134,8 @@ Parent: [#40](https://github.com/spei04/strange-physics/issues/40). This issue c
 - **Required automated tests:** Regression tests and repeated failed recovery sequence.
 - **Security and reliability:** Additional architectural changes consume explicit contingency/rebaseline.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-39"></a>
@@ -3153,8 +3155,8 @@ Parent: [#41](https://github.com/spei04/strange-physics/issues/41). This issue c
 - **Required automated tests:** Automated percentile, soak, fairness and invariants versus prior baseline.
 - **Security and reliability:** No stale pre-enterprise performance evidence.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, QE, security, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-39-b"></a>
@@ -3169,8 +3171,8 @@ Parent: [#41](https://github.com/spei04/strange-physics/issues/41). This issue c
 - **Required automated tests:** Usage sum, manifest identity and limit/config consistency checks.
 - **Security and reliability:** No unlimited scale or future price promises.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-40"></a>
@@ -3190,8 +3192,8 @@ Parent: [#42](https://github.com/spei04/strange-physics/issues/42). This issue c
 - **Required automated tests:** Checklist validates trained primary/secondary and escalation coverage.
 - **Security and reliability:** No unsupported 24/7 commitment; lead time external.
 - **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-40-b"></a>
@@ -3206,8 +3208,8 @@ Parent: [#42](https://github.com/spei04/strange-physics/issues/42). This issue c
 - **Required automated tests:** Reproduce/retest each accepted finding plus relevant regression suites.
 - **Security and reliability:** Five days is triage/initial reserve, not a cap on required remediation.
 - **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, Backend, backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, Backend, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-40-c"></a>
@@ -3222,8 +3224,8 @@ Parent: [#42](https://github.com/spei04/strange-physics/issues/42). This issue c
 - **Required automated tests:** Automated alert routing, revocation and runbook command checks.
 - **Security and reliability:** No live customer notification during drill without authorization.
 - **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Platform, QE, security, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-40-d"></a>
@@ -3238,8 +3240,8 @@ Parent: [#42](https://github.com/spei04/strange-physics/issues/42). This issue c
 - **Required automated tests:** Counter reconciliation, failure injection and missing-data detection.
 - **Security and reliability:** Low traffic includes disclosed synthetics; data gaps invalidate window.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-40-e"></a>
@@ -3254,8 +3256,8 @@ Parent: [#42](https://github.com/spei04/strange-physics/issues/42). This issue c
 - **Required automated tests:** Window continuity, denominator, SLI and source-identity checks.
 - **Security and reliability:** Material affecting change requires fresh relevant evidence; no fabricated uptime.
 - **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Technical lead, product. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-41"></a>
@@ -3275,8 +3277,8 @@ Parent: [#43](https://github.com/spei04/strange-physics/issues/43). This issue c
 - **Required automated tests:** Traceability, artifact hash, required-gate and exception-expiry checks.
 - **Security and reliability:** GA approval is separate from backlog approval.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-41-b"></a>
@@ -3291,8 +3293,8 @@ Parent: [#43](https://github.com/spei04/strange-physics/issues/43). This issue c
 - **Required automated tests:** Canary synthetic journey, invariant and rollback-trigger checks.
 - **Security and reliability:** Stop on security/state/availability regression.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** R8; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-41-c"></a>
@@ -3307,8 +3309,8 @@ Parent: [#43](https://github.com/spei04/strange-physics/issues/43). This issue c
 - **Required automated tests:** Automated operational/adoption summary reconciliation.
 - **Security and reliability:** Privacy-safe reporting; unique incident evidence retained.
 - **Effort and confidence:** 2 delivery engineer-days; medium confidence; +0.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** POST; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** POST; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-41-d"></a>
@@ -3323,8 +3325,8 @@ Parent: [#43](https://github.com/spei04/strange-physics/issues/43). This issue c
 - **Required automated tests:** Window/usage/incident evidence reconciliation.
 - **Security and reliability:** No automatic expansion to new regions/GPU/RL.
 - **Effort and confidence:** 2 delivery engineer-days; medium confidence; +0.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
-- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
-- **Milestone / state:** POST; awaiting user approval, not implemented.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
+- **Milestone / state:** POST; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 ## Dependency review and maintenance

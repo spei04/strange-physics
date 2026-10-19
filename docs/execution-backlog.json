@@ -1,6 +1,6 @@
 {
   "schema_version": "strange-physics.execution-plan.v1",
-  "status": "awaiting_user_approval",
+  "status": "approved_execution_in_progress",
   "baseline_commit": "28a4c19e8f9c92b83d886be6b96667d834784f9e",
   "updated": "2026-10-19",
   "staffing": {
@@ -39,37 +39,37 @@
       "D01",
       "Approve this execution baseline and initial work",
       "Recommended: accept the 168-task backlog; begin with R0, the first-ten-day design/foundation work SP-22.a and SP-27.a, and the bounded spring slice SP-03.a/b, SP-04.a/b/e, SP-06.a when their prerequisites pass. Review each later vertical slice at its integration checkpoint; concrete paid/release gates still require their stated approval.",
-      "Pending user approval; no implementation in this change."
+      "Approved by product owner on 2026-10-19 at baseline 2d78e35; execute initial scope subject to prerequisites and remaining concrete gates."
     ],
     [
       "D02",
       "Confirm real staffing and specialist capacity",
       "Recommended: nine named engineers, 70% delivery availability, fractional product/design/security and independent assessment; retain two backend, two platform, two research, one frontend, one QE and one lead.",
-      "Names/start date not known. Seven or ten people requires rerunning resource scheduling, not retaining these dates."
+      "Execution amendment approved: project lead plus up to three engineer subagents, sequential role coverage. Nine-person forecast remains a reference; actual human operations/specialists and external appointments remain unconfirmed."
     ],
     [
       "D03",
       "Accept the revised conditional horizon",
       "Recommended: plan pilot onboarding W38–50, pilot evidence exit W45–59 and GA W52–67; reforecast after two weeks, R0 and each integration checkpoint.",
-      "Supersedes unsupported W19–22 pilot/W30–36 GA estimate. This is a feasible conservative schedule, not an optimized promise or statistical confidence interval."
+      "Accepted as a conditional reference horizon, not a promise for subagent execution. Reforecast from actual throughput and external capacity."
     ],
     [
       "D04",
       "Confirm the enterprise release boundary",
       "Recommended: retain both research tracks, secure hosted user code, SDK/CLI/browser, one supported self-host target, federation/SCIM, audit export and external adoption before GA.",
-      "Inherited architecture is not reopened. Customer-specific federation scope and supported self-host environment must be verified."
+      "Accepted release boundary; customer-specific federation and self-host support still require evidence."
     ],
     [
       "D05",
       "Approve provisional operating and data targets",
       "Recommended: keep the 100-investigation measured envelope, proposed SLO/RPO/RTO matrix, 7-day active deletion, disclosed backup lifecycle, limited initial pilot support and staffed GA response.",
-      "Targets are acceptance hypotheses, not achieved guarantees. Region/residency, retention and support terms need specialist/customer review."
+      "Accepted as provisional acceptance hypotheses, not achieved guarantees; specialist/customer validation remains required."
     ],
     [
       "D06",
       "Approve concrete paid and release actions at their gates",
       "Recommended: separate priced staging configuration, capped real-provider trial, official sweep, pilot release and GA rollout approvals.",
-      "Not requested as blanket permission now: each later gate supplies actual configuration, price/cap, evidence and rollback first."
+      "Separate concrete approvals retained; no staging provisioning, provider spend, official sweep or release approval supplied by backlog approval."
     ]
   ],
   "audit": [
@@ -1153,9 +1153,9 @@
       "contracts": [
         "GOV"
       ],
-      "scope": "Record D01–D06 dispositions, lane owners, reviewer availability and start conditions.",
-      "accept": "Every lane staffed; unresolved decisions block affected work.",
-      "tests": "Check decision IDs, capacity and approval evidence links.",
+      "scope": "Record D01–D06 dispositions, current execution lane owners, reviewer availability and start conditions. Preserve the nine-person forecast as a reference until human staffing exists.",
+      "accept": "Each current execution lane has a responsible owner and assignments obey the three-engineer concurrency limit; external human staffing remains an explicit release dependency.",
+      "tests": "Validate decision IDs, accountable execution roles, three-engineer concurrency, independent review and approval evidence.",
       "risk": "No implied infrastructure-spend authority; private staffing evidence.",
       "out": "Product implementation or accepting this backlog on the user's behalf.",
       "milestone": "R0",
@@ -1164,13 +1164,15 @@
         "TL"
       ],
       "objective": "Establish a reviewed, staffed and evidence-backed start without implying execution approval. This PR delivers record approval and named team capacity.",
-      "status": "awaiting_approval",
+      "status": "completed",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
         "Technical lead",
         "product"
-      ]
+      ],
+      "evidence": "2026-10-19 product-owner approval and delegated-engineering roster in EXECUTION_LOG.md. Execution-mode amendment replaces a presumed nine-human-team start; no external staffing or assessment claimed.",
+      "issue": "https://github.com/spei04/strange-physics/issues/44"
     },
     {
       "id": "SP-00.b",
@@ -1198,7 +1200,7 @@
         "TL"
       ],
       "objective": "Establish a reviewed, staffed and evidence-backed start without implying execution approval. This PR delivers review and integrate the existing baseline.",
-      "status": "awaiting_approval",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1206,7 +1208,9 @@
         "SDK",
         "Technical lead",
         "product"
-      ]
+      ],
+      "issue": "https://github.com/spei04/strange-physics/issues/45",
+      "evidence": "Quality and research reviews passed at 2d78e35; 55 tests, Ruff, strict mypy and matching CI passed. Documentation findings repaired in 9833e6f and peer reviewed. Awaiting reviewed integration identity."
     },
     {
       "id": "SP-00.c",
@@ -1232,7 +1236,7 @@
         "TL"
       ],
       "objective": "Establish a reviewed, staffed and evidence-backed start without implying execution approval. This PR delivers secure partner and assessor availability.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1266,7 +1270,7 @@
         "RS2"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze the first scientific interface subset.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1302,7 +1306,7 @@
         "BE2"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze identity, run and sql contracts.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1339,7 +1343,7 @@
         "PL2"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze artifacts, packages and worker interfaces.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1377,7 +1381,7 @@
         "FE"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze world, sse and replay contracts.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1421,7 +1425,7 @@
         "TL"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers pin validation, clients and deterministic mocks.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1460,7 +1464,7 @@
         "PL2"
       ],
       "objective": "Make development and deployment prerequisites concrete, affordable and safe to use. This PR delivers verify cloud, credit and quota prerequisites.",
-      "status": "awaiting_approval",
+      "status": "completed",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1469,7 +1473,9 @@
         "Platform",
         "QE",
         "security"
-      ]
+      ],
+      "issue": "https://github.com/spei04/strange-physics/issues/46",
+      "evidence": "2026-10-19 read-only cloud audit accepted with deployment NO-GO. Current shared project/billing access verified; credit eligibility/expiry, dedicated project IAM and target quotas unresolved. Sanitized results and remediation owners in EXECUTION_LOG.md; private source evidence retained outside checkout."
     },
     {
       "id": "SP-02.b",
@@ -1496,14 +1502,15 @@
         "PL2"
       ],
       "objective": "Make development and deployment prerequisites concrete, affordable and safe to use. This PR delivers recover safe workspace headroom.",
-      "status": "awaiting_approval",
+      "status": "blocked",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
         "Platform",
         "QE",
         "security"
-      ]
+      ],
+      "evidence": "Inventory complete; project-only caches <18 MB cannot satisfy >=20 GiB requirement. Exact 200→300 GiB disk and recovery snapshot proposal prepared; explicit paid-action approval pending."
     },
     {
       "id": "SP-02.c",
@@ -1531,7 +1538,7 @@
         "PL2"
       ],
       "objective": "Make development and deployment prerequisites concrete, affordable and safe to use. This PR delivers approve a priced staging configuration.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1568,7 +1575,7 @@
         "RS2"
       ],
       "objective": "Ensure numerical results and supported interventions are scientifically defensible. This PR delivers extend independent analytic physics fixtures.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1603,7 +1610,7 @@
         "RS2"
       ],
       "objective": "Ensure numerical results and supported interventions are scientifically defensible. This PR delivers ratify first-spring domain and tolerances.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1638,7 +1645,7 @@
         "RS2"
       ],
       "objective": "Ensure numerical results and supported interventions are scientifically defensible. This PR delivers validate all-family numerical domains.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1674,7 +1681,7 @@
         "RS2"
       ],
       "objective": "Ensure numerical results and supported interventions are scientifically defensible. This PR delivers profile simulation and failure costs.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1712,7 +1719,7 @@
         "RS2"
       ],
       "objective": "Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers fit a spring using purchased observations.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1746,7 +1753,7 @@
         "RS2"
       ],
       "objective": "Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers predict with the versioned spring model.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1781,7 +1788,7 @@
         "RS2"
       ],
       "objective": "Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers implement disclosed integrated feature dictionary.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1815,7 +1822,7 @@
         "RS2"
       ],
       "objective": "Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers implement sparse fitting and model persistence.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1850,7 +1857,7 @@
         "RS2"
       ],
       "objective": "Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers deliver local fit-predict-score sdk and cli.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1884,7 +1891,7 @@
         "RS2"
       ],
       "objective": "Measure adaptive experiment selection and uncertainty without privileged information. This PR delivers bootstrap complete experiments.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1918,7 +1925,7 @@
         "RS2"
       ],
       "objective": "Measure adaptive experiment selection and uncertainty without privileged information. This PR delivers generate identical candidate banks.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1953,7 +1960,7 @@
         "RS2"
       ],
       "objective": "Measure adaptive experiment selection and uncertainty without privileged information. This PR delivers implement declared adaptation policies.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1986,7 +1993,7 @@
         "RS2"
       ],
       "objective": "Measure adaptive experiment selection and uncertainty without privileged information. This PR delivers select experiments by bounded disagreement.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2019,7 +2026,7 @@
         "TL"
       ],
       "objective": "Produce unbiased, reproducible generalization and recovery measurements. This PR delivers compute independent development reports.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2055,7 +2062,7 @@
         "RS2"
       ],
       "objective": "Produce unbiased, reproducible generalization and recovery measurements. This PR delivers generate restricted held-out probe banks.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2092,7 +2099,7 @@
         "RS2"
       ],
       "objective": "Produce unbiased, reproducible generalization and recovery measurements. This PR delivers score penalties and censored recovery.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2125,7 +2132,7 @@
         "TL"
       ],
       "objective": "Produce unbiased, reproducible generalization and recovery measurements. This PR delivers aggregate paired independent worlds.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2159,7 +2166,7 @@
         "RS2"
       ],
       "objective": "Choose study settings from development evidence before official evaluation. This PR delivers calibrate uncertainty and adaptation.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2194,7 +2201,7 @@
         "RS2"
       ],
       "objective": "Choose study settings from development evidence before official evaluation. This PR delivers profile complete ensemble evaluation.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2231,7 +2238,7 @@
         "RS2"
       ],
       "objective": "Choose study settings from development evidence before official evaluation. This PR delivers choose study size from precision evidence.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2269,7 +2276,7 @@
         "RS2"
       ],
       "objective": "Choose study settings from development evidence before official evaluation. This PR delivers version both candidate research protocols.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2307,7 +2314,7 @@
         "BE2"
       ],
       "objective": "Provide private workspaces and usable human/machine authentication. This PR delivers verify oidc identities and sessions.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2345,7 +2352,7 @@
         "BE2"
       ],
       "objective": "Provide private workspaces and usable human/machine authentication. This PR delivers implement workspaces, invitations and roles.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2382,7 +2389,7 @@
         "BE2"
       ],
       "objective": "Provide private workspaces and usable human/machine authentication. This PR delivers issue scoped machine and run credentials.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2418,7 +2425,7 @@
         "BE2"
       ],
       "objective": "Provide private workspaces and usable human/machine authentication. This PR delivers implement secure browser authentication endpoints.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2455,7 +2462,7 @@
         "BE2"
       ],
       "objective": "Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers create tenant sql schema and migration harness.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2491,7 +2498,7 @@
         "BE2"
       ],
       "objective": "Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers reserve experiments and budgets atomically.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2528,7 +2535,7 @@
         "BE2"
       ],
       "objective": "Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers implement run and operation state transitions.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2565,7 +2572,7 @@
         "BE2"
       ],
       "objective": "Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers connect trusted simulator results to run transactions.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2603,7 +2610,7 @@
         "BE2"
       ],
       "objective": "Recover remote work reliably despite duplicate delivery and stale workers. This PR delivers dispatch transactional outbox intents.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2640,7 +2647,7 @@
         "BE2"
       ],
       "objective": "Recover remote work reliably despite duplicate delivery and stale workers. This PR delivers fence worker leases and heartbeats.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2678,7 +2685,7 @@
         "BE2"
       ],
       "objective": "Recover remote work reliably despite duplicate delivery and stale workers. This PR delivers reconcile abandoned launches and results.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2716,7 +2723,7 @@
         "BE2"
       ],
       "objective": "Prevent cross-tenant access and honor current authorization on every surface. This PR delivers enforce tenant row policies and safe pool reuse.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2752,7 +2759,7 @@
         "BE2"
       ],
       "objective": "Prevent cross-tenant access and honor current authorization on every surface. This PR delivers authorize every operation and artifact reference.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2794,7 +2801,7 @@
         "BE2"
       ],
       "objective": "Prevent cross-tenant access and honor current authorization on every surface. This PR delivers enforce live revocation and audit decisions.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2832,7 +2839,7 @@
         "BE2"
       ],
       "objective": "Bound resource consumption and account for usage fairly across tenants. This PR delivers reserve and settle resource allowances.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2870,7 +2877,7 @@
         "BE2"
       ],
       "objective": "Bound resource consumption and account for usage fairly across tenants. This PR delivers implement fair bounded admission.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2908,7 +2915,7 @@
         "BE2"
       ],
       "objective": "Bound resource consumption and account for usage fairly across tenants. This PR delivers expose usage reconciliation and safe summaries.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2947,7 +2954,7 @@
         "PL2"
       ],
       "objective": "Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers implement immutable content storage adapter.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2986,7 +2993,7 @@
         "PL2"
       ],
       "objective": "Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers expose authorized artifact and package upload lifecycle.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3027,7 +3034,7 @@
         "PL2"
       ],
       "objective": "Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers commit checkpoint and model references safely.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3066,7 +3073,7 @@
         "PL2"
       ],
       "objective": "Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers collect abandoned uploads without deleting live state.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3105,7 +3112,7 @@
         "PL2"
       ],
       "objective": "Build customer packages without exposing trusted deployment credentials. This PR delivers validate package manifests and safe extraction.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3143,7 +3150,7 @@
         "PL2"
       ],
       "objective": "Build customer packages without exposing trusted deployment credentials. This PR delivers execute isolated quarantined builds.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3180,7 +3187,7 @@
         "PL2"
       ],
       "objective": "Build customer packages without exposing trusted deployment credentials. This PR delivers scan and promote digest-pinned runtime images.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3217,7 +3224,7 @@
         "TL"
       ],
       "objective": "Build customer packages without exposing trusted deployment credentials. This PR delivers review hostile-build evidence.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3255,7 +3262,7 @@
         "PL2"
       ],
       "objective": "Enforce hostile-code isolation rather than relying on a container label. This PR delivers probe scientific runtime compatibility.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3292,7 +3299,7 @@
         "PL2"
       ],
       "objective": "Enforce hostile-code isolation rather than relying on a container label. This PR delivers enforce sandbox and resource admission policy.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3331,7 +3338,7 @@
         "BE2"
       ],
       "objective": "Enforce hostile-code isolation rather than relying on a container label. This PR delivers implement epoch-scoped run broker permissions.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3370,7 +3377,7 @@
         "PL2"
       ],
       "objective": "Enforce hostile-code isolation rather than relying on a container label. This PR delivers enforce broker-only network and dns.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3407,7 +3414,7 @@
         "TL"
       ],
       "objective": "Enforce hostile-code isolation rather than relying on a container label. This PR delivers validate hostile-runtime isolation.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3448,7 +3455,7 @@
         "BE2"
       ],
       "objective": "Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers coordinate one remote investigation.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3487,7 +3494,7 @@
         "PL2"
       ],
       "objective": "Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers resume an agent from committed checkpoints.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3526,7 +3533,7 @@
         "PL2"
       ],
       "objective": "Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers cancel, expire and reconcile remote work.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3564,7 +3571,7 @@
         "TL"
       ],
       "objective": "Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers prove end-to-end interruption invariants.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3602,7 +3609,7 @@
         "PL2"
       ],
       "objective": "Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers instrument remote execution and recovery.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3639,7 +3646,7 @@
         "BE2"
       ],
       "objective": "Make model calls replayable and their potentially ambiguous costs visible. This PR delivers freeze model-call and credential-management contracts.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3679,7 +3686,7 @@
         "BE2"
       ],
       "objective": "Make model calls replayable and their potentially ambiguous costs visible. This PR delivers persist provider attempts and ambiguous usage.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3719,7 +3726,7 @@
         "BE2"
       ],
       "objective": "Make model calls replayable and their potentially ambiguous costs visible. This PR delivers manage workspace provider secrets.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3757,7 +3764,7 @@
         "BE2"
       ],
       "objective": "Make model calls replayable and their potentially ambiguous costs visible. This PR delivers replay recorded model responses offline.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3795,7 +3802,7 @@
         "BE2"
       ],
       "objective": "Connect an LLM selector fairly and safely within declared compute limits. This PR delivers implement bounded provider transport.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3833,7 +3840,7 @@
         "RS2"
       ],
       "objective": "Connect an LLM selector fairly and safely within declared compute limits. This PR delivers version the llm information transform.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3871,7 +3878,7 @@
         "RS2"
       ],
       "objective": "Connect an LLM selector fairly and safely within declared compute limits. This PR delivers implement controlled llm candidate selection.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3910,7 +3917,7 @@
         "RS2"
       ],
       "objective": "Connect an LLM selector fairly and safely within declared compute limits. This PR delivers validate a capped real-provider integration.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3949,7 +3956,7 @@
         "RS2"
       ],
       "objective": "Accept executable predictive models under a strict untrusted-code contract. This PR delivers freeze executable predictor protocol.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -3989,7 +3996,7 @@
         "PL2"
       ],
       "objective": "Accept executable predictive models under a strict untrusted-code contract. This PR delivers build predictor images through approved pipeline.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4027,7 +4034,7 @@
         "RS2"
       ],
       "objective": "Accept executable predictive models under a strict untrusted-code contract. This PR delivers validate bounded predictor outputs.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4064,7 +4071,7 @@
         "TL"
       ],
       "objective": "Accept executable predictive models under a strict untrusted-code contract. This PR delivers exercise hostile predictor fixtures.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4104,7 +4111,7 @@
         "PL2"
       ],
       "objective": "Score models without disclosing hidden evaluation truth to active agents. This PR delivers isolate evaluation truth and job ownership.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4144,7 +4151,7 @@
         "PL2"
       ],
       "objective": "Score models without disclosing hidden evaluation truth to active agents. This PR delivers run networkless predictor jobs.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4184,7 +4191,7 @@
         "RS2"
       ],
       "objective": "Score models without disclosing hidden evaluation truth to active agents. This PR delivers persist complete snapshot scoring.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4224,7 +4231,7 @@
         "TL"
       ],
       "objective": "Score models without disclosing hidden evaluation truth to active agents. This PR delivers audit evaluation information flow.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4265,7 +4272,7 @@
         "RS2"
       ],
       "objective": "Demonstrate both accepted research tracks with complete provenance and failures. This PR delivers integrate controlled-selector comparisons.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4306,7 +4313,7 @@
         "RS2"
       ],
       "objective": "Demonstrate both accepted research tracks with complete provenance and failures. This PR delivers integrate complete agent-discovery track.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4345,7 +4352,7 @@
         "TL"
       ],
       "objective": "Demonstrate both accepted research tracks with complete provenance and failures. This PR delivers verify cross-track provenance and comparison reports.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4381,7 +4388,7 @@
         "FE"
       ],
       "objective": "Let researchers create private worlds and run investigations through an accessible product. This PR delivers specify accessible workspace journeys.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4421,7 +4428,7 @@
         "BE2"
       ],
       "objective": "Let researchers create private worlds and run investigations through an accessible product. This PR delivers implement versioned world and suite catalog api.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4462,7 +4469,7 @@
         "FE"
       ],
       "objective": "Let researchers create private worlds and run investigations through an accessible product. This PR delivers implement authenticated workspace shell.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4500,7 +4507,7 @@
         "FE"
       ],
       "objective": "Let researchers create private worlds and run investigations through an accessible product. This PR delivers build constrained world editor.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4536,7 +4543,7 @@
         "FE"
       ],
       "objective": "Let researchers create private worlds and run investigations through an accessible product. This PR delivers integrate world-to-run product journey.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4577,7 +4584,7 @@
         "BE2"
       ],
       "objective": "Expose live progress and history without gaps or privacy violations. This PR delivers publish committed event and replay endpoints.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4616,7 +4623,7 @@
         "BE2"
       ],
       "objective": "Expose live progress and history without gaps or privacy violations. This PR delivers implement cursor expiry and archive resynchronization.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4653,7 +4660,7 @@
         "FE"
       ],
       "objective": "Expose live progress and history without gaps or privacy violations. This PR delivers render live investigation timeline.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4687,7 +4694,7 @@
         "FE"
       ],
       "objective": "Expose live progress and history without gaps or privacy violations. This PR delivers integrate reconnect and cancellation ux.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4723,7 +4730,7 @@
         "FE"
       ],
       "objective": "Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers implement indexed frame replay and scrubbing.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4759,7 +4766,7 @@
         "FE"
       ],
       "objective": "Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers overlay prediction and uncertainty diagnostics.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4795,7 +4802,7 @@
         "FE"
       ],
       "objective": "Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers compare recorded strategies and failures.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4829,7 +4836,7 @@
         "FE"
       ],
       "objective": "Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers verify accessible diagnostic journeys.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4866,7 +4873,7 @@
         "BE2"
       ],
       "objective": "Support programmatic use, complete exports and explicit safe publication. This PR delivers implement remote sdk session adapter.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4905,7 +4912,7 @@
         "BE2"
       ],
       "objective": "Support programmatic use, complete exports and explicit safe publication. This PR delivers deliver remote cli operations.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4946,7 +4953,7 @@
         "BE2"
       ],
       "objective": "Support programmatic use, complete exports and explicit safe publication. This PR delivers build complete export manifest and retrieval api.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4987,7 +4994,7 @@
         "BE2"
       ],
       "objective": "Support programmatic use, complete exports and explicit safe publication. This PR delivers implement explicit sanitized publication lifecycle.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5030,7 +5037,7 @@
         "FE"
       ],
       "objective": "Support programmatic use, complete exports and explicit safe publication. This PR delivers verify offline reconstruction across clients.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5070,7 +5077,7 @@
         "PL2"
       ],
       "objective": "Allow independent deployment within one documented support matrix. This PR delivers package one supported secure self-host installation.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5109,7 +5116,7 @@
         "PL2"
       ],
       "objective": "Allow independent deployment within one documented support matrix. This PR delivers validate portable identity and storage adapters.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5149,7 +5156,7 @@
         "PL2"
       ],
       "objective": "Allow independent deployment within one documented support matrix. This PR delivers implement self-host upgrade and recovery procedure.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5189,7 +5196,7 @@
         "TL"
       ],
       "objective": "Allow independent deployment within one documented support matrix. This PR delivers verify clean install-to-investigation journey.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5227,7 +5234,7 @@
         "PL2"
       ],
       "objective": "Create reproducible delivery, monitoring and rollback foundations. This PR delivers create keyless environment bootstrap and policy checks.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5261,7 +5268,7 @@
         "PL2"
       ],
       "objective": "Create reproducible delivery, monitoring and rollback foundations. This PR delivers provision versioned staging data and dispatch services.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5298,7 +5305,7 @@
         "PL2"
       ],
       "objective": "Create reproducible delivery, monitoring and rollback foundations. This PR delivers deploy trusted staging api and worker test substrate.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5335,7 +5342,7 @@
         "PL2"
       ],
       "objective": "Create reproducible delivery, monitoring and rollback foundations. This PR delivers sign trusted images and enforce release provenance.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5373,7 +5380,7 @@
         "PL2"
       ],
       "objective": "Create reproducible delivery, monitoring and rollback foundations. This PR delivers implement telemetry, slo counters and alerts.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5413,7 +5420,7 @@
         "PL2"
       ],
       "objective": "Create reproducible delivery, monitoring and rollback foundations. This PR delivers rehearse progressive deploy and rollback.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5453,7 +5460,7 @@
         "TL"
       ],
       "objective": "Establish the supported capacity and fair-overload envelope with measurements. This PR delivers build representative capacity workload generators.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5492,7 +5499,7 @@
         "TL"
       ],
       "objective": "Establish the supported capacity and fair-overload envelope with measurements. This PR delivers measure stepped load and latency budgets.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5527,7 +5534,7 @@
         "PL2"
       ],
       "objective": "Establish the supported capacity and fair-overload envelope with measurements. This PR delivers run mixed soak and saturation characterization.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5564,7 +5571,7 @@
         "TL"
       ],
       "objective": "Establish the supported capacity and fair-overload envelope with measurements. This PR delivers verify fair admission under faults.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5603,7 +5610,7 @@
         "PL2"
       ],
       "objective": "Prove recoverability of acknowledged work and deletion state. This PR delivers implement backup and recovery-set manifests.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5643,7 +5650,7 @@
         "PL2"
       ],
       "objective": "Prove recoverability of acknowledged work and deletion state. This PR delivers restore sql and objects with tombstone replay.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5683,7 +5690,7 @@
         "TL"
       ],
       "objective": "Prove recoverability of acknowledged work and deletion state. This PR delivers exercise worker loss and database failover.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5721,7 +5728,7 @@
         "PL2"
       ],
       "objective": "Prove recoverability of acknowledged work and deletion state. This PR delivers rehearse deployment rollback under load.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5763,7 +5770,7 @@
         "FE"
       ],
       "objective": "Validate complete customer journeys and supported upgrades on one candidate. This PR delivers test authenticated end-to-end researcher journeys.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5805,7 +5812,7 @@
         "FE"
       ],
       "objective": "Validate complete customer journeys and supported upgrades on one candidate. This PR delivers verify version compatibility matrix.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5847,7 +5854,7 @@
         "FE"
       ],
       "objective": "Validate complete customer journeys and supported upgrades on one candidate. This PR delivers verify install, upgrade and recovery as one journey.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5884,7 +5891,7 @@
         "TL"
       ],
       "objective": "Validate complete customer journeys and supported upgrades on one candidate. This PR delivers review integrated release-candidate evidence.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5925,7 +5932,7 @@
         "TL"
       ],
       "objective": "Detect and resolve exploitable security and data-boundary failures. This PR delivers audit tenant and session boundary matrix.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -5965,7 +5972,7 @@
         "PL2"
       ],
       "objective": "Detect and resolve exploitable security and data-boundary failures. This PR delivers audit build and runtime boundary in release configuration.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6003,7 +6010,7 @@
         "RS2"
       ],
       "objective": "Detect and resolve exploitable security and data-boundary failures. This PR delivers audit research leakage and provider controls.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6043,7 +6050,7 @@
         "BE2"
       ],
       "objective": "Detect and resolve exploitable security and data-boundary failures. This PR delivers verify deletion, revocation and log privacy.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6083,7 +6090,7 @@
         "TL"
       ],
       "objective": "Detect and resolve exploitable security and data-boundary failures. This PR delivers resolve security review and release blockers.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6120,7 +6127,7 @@
         "TL"
       ],
       "objective": "Obtain real design-partner adoption and operational feedback. This PR delivers finalize partner data terms and pilot support scope.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6157,7 +6164,7 @@
         "TL"
       ],
       "objective": "Obtain real design-partner adoption and operational feedback. This PR delivers onboard partner investigations.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6193,7 +6200,7 @@
         "TL"
       ],
       "objective": "Obtain real design-partner adoption and operational feedback. This PR delivers review four weeks of partner usage.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6233,7 +6240,7 @@
         "RS2"
       ],
       "objective": "Publish a trustworthy reference study including failures and reproducibility artifacts. This PR delivers approve official protocol and priced sweep.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6271,7 +6278,7 @@
         "RS2"
       ],
       "objective": "Publish a trustworthy reference study including failures and reproducibility artifacts. This PR delivers execute and verify scored reference collection.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6311,7 +6318,7 @@
         "RS2"
       ],
       "objective": "Publish a trustworthy reference study including failures and reproducibility artifacts. This PR delivers publish sanitized complete reference artifacts.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6349,7 +6356,7 @@
         "BE2"
       ],
       "objective": "Support enterprise federation and scoped credential administration. This PR delivers validate enterprise federation requirements and entitlement.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6386,7 +6393,7 @@
         "BE2"
       ],
       "objective": "Support enterprise federation and scoped credential administration. This PR delivers implement workspace-bound enterprise federation.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6422,7 +6429,7 @@
         "BE2"
       ],
       "objective": "Support enterprise federation and scoped credential administration. This PR delivers migrate linked identities without lockout.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6457,7 +6464,7 @@
         "BE2"
       ],
       "objective": "Support enterprise federation and scoped credential administration. This PR delivers harden enterprise service-credential lifecycle.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6493,7 +6500,7 @@
         "BE2"
       ],
       "objective": "Keep enterprise identity provisioning and revocation consistent across live resources. This PR delivers freeze scim mapping and lifecycle semantics.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6529,7 +6536,7 @@
         "BE2"
       ],
       "objective": "Keep enterprise identity provisioning and revocation consistent across live resources. This PR delivers implement bounded provisioning and reconciliation.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6565,7 +6572,7 @@
         "BE2"
       ],
       "objective": "Keep enterprise identity provisioning and revocation consistent across live resources. This PR delivers enforce rapid end-to-end deprovisioning.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6605,7 +6612,7 @@
         "RS2"
       ],
       "objective": "Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers validate an outside team's agent and law extension.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6643,7 +6650,7 @@
         "PL2"
       ],
       "objective": "Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers validate independent self-host install and upgrade.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6682,7 +6689,7 @@
         "TL"
       ],
       "objective": "Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers independently reproduce a released report.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6717,7 +6724,7 @@
         "TL"
       ],
       "objective": "Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers close partner integration findings.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6753,7 +6760,7 @@
         "BE2"
       ],
       "objective": "Make access changes, deletion and retention auditable and recoverable. This PR delivers persist basic security audit events.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6792,7 +6799,7 @@
         "BE2"
       ],
       "objective": "Make access changes, deletion and retention auditable and recoverable. This PR delivers implement authorized deletion and retention jobs.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6831,7 +6838,7 @@
         "PL2"
       ],
       "objective": "Make access changes, deletion and retention auditable and recoverable. This PR delivers preserve deletion and revocation across recovery.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6871,7 +6878,7 @@
         "BE2"
       ],
       "objective": "Make access changes, deletion and retention auditable and recoverable. This PR delivers export tamper-evident enterprise audit history.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6912,7 +6919,7 @@
         "BE2"
       ],
       "objective": "Make access changes, deletion and retention auditable and recoverable. This PR delivers verify enterprise retention and privacy operations.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6950,7 +6957,7 @@
         "TL"
       ],
       "objective": "Make access changes, deletion and retention auditable and recoverable. This PR delivers review customer data and support documentation.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -6989,7 +6996,7 @@
         "PL2"
       ],
       "objective": "Recover service and consistent data after primary-region loss. This PR delivers create an independent regional recovery set.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7028,7 +7035,7 @@
         "PL2"
       ],
       "objective": "Recover service and consistent data after primary-region loss. This PR delivers perform timed secondary-region recovery.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7063,7 +7070,7 @@
         "PL2"
       ],
       "objective": "Recover service and consistent data after primary-region loss. This PR delivers resolve and repeat failed recovery steps.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7103,7 +7110,7 @@
         "TL"
       ],
       "objective": "Publish measured limits for the final enterprise configuration. This PR delivers revalidate final supported capacity envelope.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7139,7 +7146,7 @@
         "PL2"
       ],
       "objective": "Publish measured limits for the final enterprise configuration. This PR delivers publish measured cost and operating limits.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7176,7 +7183,7 @@
         "TL"
       ],
       "objective": "Obtain independent assurance and demonstrated operational support. This PR delivers book independent assessment and support roster.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7218,7 +7225,7 @@
         "PL2"
       ],
       "objective": "Obtain independent assurance and demonstrated operational support. This PR delivers remediate independent assessment findings.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7255,7 +7262,7 @@
         "TL"
       ],
       "objective": "Obtain independent assurance and demonstrated operational support. This PR delivers exercise incident and credential response.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7291,7 +7298,7 @@
         "PL2"
       ],
       "objective": "Obtain independent assurance and demonstrated operational support. This PR delivers start final-candidate slo evidence collection.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7326,7 +7333,7 @@
         "TL"
       ],
       "objective": "Obtain independent assurance and demonstrated operational support. This PR delivers review 30 calendar days of slo evidence.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7366,7 +7373,7 @@
         "TL"
       ],
       "objective": "Release only against verified gates and learn from actual launch outcomes. This PR delivers sign evidence-based ga readiness.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7403,7 +7410,7 @@
         "PL2"
       ],
       "objective": "Release only against verified gates and learn from actual launch outcomes. This PR delivers execute approved progressive ga rollout.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7437,7 +7444,7 @@
         "TL"
       ],
       "objective": "Release only against verified gates and learn from actual launch outcomes. This PR delivers conduct day-seven launch review.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7474,7 +7481,7 @@
         "TL"
       ],
       "objective": "Release only against verified gates and learn from actual launch outcomes. This PR delivers conduct day-thirty planning reset.",
-      "status": "awaiting_approval",
+      "status": "approved_unstarted",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -7492,7 +7499,9 @@
       "deps": [],
       "lag": 0,
       "external": true,
-      "label": "User approves execution backlog and D01–D06; all work initially blocked"
+      "label": "Product owner approved backlog on 2026-10-19; concrete paid/release gates remain pending",
+      "status": "completed",
+      "evidence": "EXECUTION_LOG.md#approval-and-execution-capacity"
     },
     {
       "id": "PAID_TRIAL",
@@ -9832,7 +9841,7 @@
     "resourceOverlaps": 0,
     "missingContractGates": 0,
     "verifiedAt": "2026-10-19",
-    "note": "Verified for both conditional forecast scenarios; actual implementation and all external approvals remain pending."
+    "note": "Forecast DAG validation unchanged. Execution approval is recorded separately; actual completions require reviewed evidence and remaining external gates are pending."
   },
   "superseded_native_epic_dependencies": [
     {
@@ -10492,5 +10501,25 @@
         }
       ]
     }
-  ]
+  ],
+  "execution": {
+    "approved_at": "2026-10-19",
+    "approved_baseline": "2d78e3598252e211110883b164854b64c356eeda",
+    "approval_evidence": "Product owner approved the backlog in the project conversation and requested independent engineer subagents, reassignment on completion and a short assignment log.",
+    "mode": "One project lead and up to three concurrent engineer subagents; rotating specialties, independent review before integration.",
+    "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
+    "lane_owners": {
+      "TL": "Project lead",
+      "BE1": "Project lead until delegated",
+      "BE2": "Project lead until delegated",
+      "PL1": "Engineer Platform",
+      "PL2": "Engineer Platform (sequential assignments)",
+      "RS1": "Engineer Research",
+      "RS2": "Engineer Research (sequential assignments)",
+      "FE": "Project lead until delegated",
+      "QE": "Engineer Quality"
+    },
+    "review_policy": "Author does not approve own change. Lead coordinates peer review and takes integration responsibility; subagent review is not independent third-party assessment.",
+    "log": "EXECUTION_LOG.md"
+  }
 }

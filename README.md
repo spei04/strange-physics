@@ -31,7 +31,7 @@ investigations will be private by default; published reference benchmarks will
 include every scored run and its failures. A separate blind suite will evaluate
 worlds that participants cannot inspect.
 
-Start with the [enterprise roadmap](docs/ROADMAP.md), the [execution backlog](docs/EXECUTION_BACKLOG.md), the [draft benchmark protocol](docs/BENCHMARK.md), [accepted decisions](docs/DESIGN_DECISIONS.md), and [implemented core](docs/CORE.md). The audited execution backlog awaits user approval; no new implementation starts before that approval. The older implementation plan is retained as design history, with milestone mappings in the roadmap.
+Start with the [enterprise roadmap](docs/ROADMAP.md), the [execution backlog](docs/EXECUTION_BACKLOG.md), the [draft benchmark protocol](docs/BENCHMARK.md), [accepted decisions](docs/DESIGN_DECISIONS.md), and [implemented core](docs/CORE.md). The audited execution backlog was approved on 2026-10-19. Initial execution follows its prerequisites; concrete paid and release actions retain their separate gates. The older implementation plan is retained as design history, with milestone mappings in the roadmap.
 
 ## Development setup
 
