@@ -1,5 +1,7 @@
 # Agent checkpoints
 
+Execution planning: [ROADMAP.md](ROADMAP.md) and [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md) own the proposed delivery sequence and approval gates. Accepted decisions and implemented behavior described here remain in force; future implementation awaits execution-backlog approval.
+
 Status: the local JSON checkpoint schema and transactional recovery are implemented.
 Hosted artifact storage and distributed worker leases remain future work. See
 [core implementation](CORE.md) for the current boundaries.

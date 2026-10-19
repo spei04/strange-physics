@@ -1,5 +1,7 @@
 # Architecture review
 
+Execution planning: [ROADMAP.md](ROADMAP.md) and [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md) own the proposed delivery sequence and approval gates. Accepted decisions and implemented behavior described here remain in force; future implementation awaits execution-backlog approval.
+
 ## Settled requirements
 
 - Public GitHub repository under the personal account `spei04`, not an organization.

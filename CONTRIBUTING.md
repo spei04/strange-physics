@@ -1,7 +1,6 @@
 # Contributing
 
-Read the implementation plan and draft benchmark protocol before changing
-experimental behavior. Keep changes scoped and distinguish demos from evidence.
+Read the [roadmap](docs/ROADMAP.md), [execution backlog](docs/EXECUTION_BACKLOG.md) and draft benchmark protocol before changing experimental behavior. Select one approved PR task, verify actual prerequisites, and keep task evidence, roadmap progress and the machine-readable ledger consistent. Keep changes scoped and distinguish demonstrations from evidence.
 
 Use `uv sync --locked` and the Ruff, strict mypy and pytest checks listed in the
 README. CI checks Python 3.12 and 3.14 and builds the distribution. Commit the

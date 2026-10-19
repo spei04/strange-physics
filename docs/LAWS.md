@@ -36,7 +36,7 @@ absolute simulation time within an experiment cannot reveal the change schedule.
 
 ## Numerical choices
 
-Use RK4 with fixed step 0.01 over 2 seconds; save observations every fifth step.
+The current development default is RK4 with fixed step 0.01 over 2 seconds, saving observations every fifth step. SP-03 validates these settings before a scored protocol is frozen.
 Keep the same observation times and integration accuracy for every method. The
 world's deterministic trajectory and independent Gaussian sensor noise are
 separate. Initial observations are measured after the impulse.

@@ -86,8 +86,7 @@ unless the design is explicitly revised.
 
 ## Implementation handoff
 
-Start with the M0 simulator, typed contracts, package interfaces and tests. Then
-complete evaluation and durable hosted execution against those contracts.
+The M0 simulator, typed contracts, package interfaces and local tests are implemented. Next work follows the [execution backlog](EXECUTION_BACKLOG.md), which requires user approval before implementation. Its subset contract gates precede dependent evaluation and hosted execution.
 Routine reversible engineering choices can follow project conventions and the
 accepted constraints, with significant decisions recorded in the repository.
 Surface changes to product scope, trust boundaries or scientific claims.

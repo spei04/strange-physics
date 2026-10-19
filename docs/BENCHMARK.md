@@ -1,5 +1,7 @@
 # Benchmark protocol — draft, not yet frozen
 
+Execution planning: [ROADMAP.md](ROADMAP.md) and [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md) own the proposed delivery sequence and approval gates. Accepted decisions and implemented behavior described here remain in force; future implementation awaits execution-backlog approval.
+
 This document specifies intended evaluation. The numerical simulator and local
 random investigator are implemented; the fitter, scored benchmark and hosted
 agent-discovery track are not. Tune design choices on development worlds, then freeze

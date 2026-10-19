@@ -1,0 +1,3338 @@
+# Strange Physics — execution backlog
+
+**Status:** Awaiting user approval. No product implementation is authorized by publishing this document.
+**Owner:** technical lead and product owner. **Audited:** 2026-10-19. **Source baseline:** 28a4c19e8f9c92b83d886be6b96667d834784f9e.
+
+[Roadmap](ROADMAP.md) owns product requirements, architecture, risks and overall progress. This document owns the execution review, PR-sized assignments, schedule and gates. [execution-backlog.json](execution-backlog.json) contains the same task records, exact dependencies and reproducible scheduling model. Keep all three consistent in the same planning/implementation PR. Legacy PLAN.md milestones are historical mappings, not a second schedule.
+
+The 42 existing GitHub issues become epic rollups. **168 reviewable PR tasks, 368 prerequisite edges and ten approval/calendar gates** replace the coarse assignment graph. Tasks are issue-ready Markdown records; no additional 168 GitHub tickets are required to review this proposal. Select and materialize an individual task when assigning approved work. Parent issues are not independently assignable multiweek changes. Their old native whole-epic blockers are superseded by the leaf DAG: do not infer task readiness from parent issue state.
+
+**Navigate:** [Audit](#planning-audit) · [Decisions](#decisions-requiring-approval) · [Estimate](#effort-confidence-and-capacity) · [Milestones](#milestone-schedule-and-exit-gates) · [Critical path](#critical-path-and-parallel-work) · [First ten days](#first-two-weeks-day-by-day) · [Contracts](#contract-register) · [PR tasks](#task-index) · [Dependency review](#dependency-review-and-maintenance)
+
+## Planning audit
+
+Inspected README, CONTRIBUTING, all ten preexisting docs, four JSON contract artifacts, dependency/CI configuration and public interfaces in contracts/session/journal/sdk. Existing implementation is the local trusted 55-test research core; no fitter, hosted runtime or enterprise controls were implemented by this review. Existing assertions were compared with source and public issue/milestone state. Draft checkpoint PUT already agrees with the design; it is not a discovered defect.
+
+| ID | Finding | Correction |
+| --- | --- | --- |
+| AR01 | PLAN.md describes dataclasses and postpones NumPy; CORE.md/pyproject already use NumPy/Pydantic. | Correct legacy status/stack and link canonical roadmap/backlog; preserve accepted design. |
+| AR02 | RELATED_WORK.md says no simulator exists; DEPLOYMENT_OPTIONS.md calls accepted registry/secrets choices proposed. | Correct current-status contradictions without changing scope. |
+| AR03 | Roadmap uses generic /operations/{op} shorthand while draft API scopes operations to a run or workspace; checkpoint PUT was checked and already agrees. | Expand scoped polling paths in roadmap; preserve existing immutable PUT checkpoint contract. SP-01.b validates exact paths/errors. |
+| AR04 | SP-01 tried to freeze all present/future interfaces in two weeks and blocked unrelated work. | Subset freezes owned by SP-01.a–d, SP-17.a, SP-19.a, SP-34.a/SP-35.a; consumer dependencies explicit. |
+| AR05 | 42 epics of 1–4 person-weeks were not independently assignable PR tasks. | Replace assignment unit with 168 leaf records; parent issues become rollups, not implementation tickets. |
+| AR06 | World catalog, provider connection management, publication and SSE server lacked explicit build owners. | Add SP-22.b, SP-17.c, SP-25.d, SP-23.a/b; frontend no longer scheduled against absent backend. |
+| AR07 | Service-identity E2E preceded enterprise service identity delivery. | Move basic service/run tokens to SP-08.c; SP-34.d adds enterprise policy only. |
+| AR08 | Pilot delete/recovery tests needed tombstones/audit assigned to GA. | Move SP-37.a–c to R3; keep audit export/enterprise retention in R8. |
+| AR09 | First spring slice depended on complete three-family research packages. | SP-03.b→04.a/b→06.a→04.e creates early independent evidence; later fitting cannot hide its failure. |
+| AR10 | Early integration dates and 118 PW estimate did not model reviewer capacity, missing endpoints or specialist queues. | Bottom-up 689 delivery days, confidence-weighted contingency and nine explicit resource lanes replace unverified dates; one feasible plan forecasts GA W52–67, pilot onboarding W38–50. |
+| AR11 | Final load evidence could predate enterprise changes/assessment fixes. | SP-39.a waits for SP-40.b and final identity/retention/DR; changed candidate invalidates affected evidence. |
+| AR12 | GA package mixed launch approval with future D7/D30 reviews. | SP-41.c/d are postlaunch only; they cannot block prelaunch readiness. |
+| AR13 | Whole-epic blockers conflict with partial-interface parallel work. | Leaf DAG is authoritative; remove legacy native epic blockers after publication and replace issue bodies with exact leaf links. |
+| AR14 | Headroom ~423 MiB, external availability, priced approvals and 30-day history were not executable dependencies. | Hard SP-02.b gate and named external/calendar gates; no fabricated completion or wait-time-as-approval. |
+| AR15 | Full sweep engineering effort hid unmeasured execution time and design-partner recruitment. | Separate external runtime/participation gates; forecast conditional on measurement and appointments. |
+
+Current public source constraints were rechecked on 2026-10-19: dispatch must tolerate duplicate/unordered delivery ([Cloud Tasks](https://docs.cloud.google.com/tasks/docs/common-pitfalls)); sandbox choice still needs enforced configuration and adversarial verification ([GKE Sandbox](https://docs.cloud.google.com/kubernetes-engine/docs/concepts/sandbox-pods)); API validation and runtime semantics are separate obligations ([OpenAPI 3.1](https://spec.openapis.org/oas/v3.1.0)). These facts do not validate this product's unimplemented deployment.
+
+## Decisions requiring approval
+
+| Decision | Recommendation | Status / boundary |
+| --- | --- | --- |
+| D01 — Approve this execution baseline and initial work | Recommended: accept the 168-task backlog and authorize R0 plus the bounded spring slice SP-03.a/b, SP-04.a/b/e, SP-06.a when their prerequisites pass. Select subsequent vertical slices at integration reviews. | Pending user approval; no implementation in this change. |
+| D02 — Confirm real staffing and specialist capacity | Recommended: nine named engineers, 70% delivery availability, fractional product/design/security and independent assessment; retain two backend, two platform, two research, one frontend, one QE and one lead. | Names/start date not known. Seven or ten people requires rerunning resource scheduling, not retaining these dates. |
+| D03 — Accept the revised conditional horizon | Recommended: plan pilot onboarding W38–50, pilot evidence exit W45–59 and GA W52–67; reforecast after two weeks, R0 and each integration checkpoint. | Supersedes unsupported W19–22 pilot/W30–36 GA estimate. This is a feasible conservative schedule, not an optimized promise or statistical confidence interval. |
+| D04 — Confirm the enterprise release boundary | Recommended: retain both research tracks, secure hosted user code, SDK/CLI/browser, one supported self-host target, federation/SCIM, audit export and external adoption before GA. | Inherited architecture is not reopened. Customer-specific federation scope and supported self-host environment must be verified. |
+| D05 — Approve provisional operating and data targets | Recommended: keep the 100-investigation measured envelope, proposed SLO/RPO/RTO matrix, 7-day active deletion, disclosed backup lifecycle, limited initial pilot support and staffed GA response. | Targets are acceptance hypotheses, not achieved guarantees. Region/residency, retention and support terms need specialist/customer review. |
+| D06 — Approve concrete paid and release actions at their gates | Recommended: separate priced staging configuration, capped real-provider trial, official sweep, pilot release and GA rollout approvals. | Not requested as blanket permission now: each later gate supplies actual configuration, price/cap, evidence and rollback first. |
+
+Highest-risk assumptions: (1) the disclosed dictionary is identifiable and useful under noise/change, (2) hostile Python builds and predictors can be contained in the selected real configuration, (3) complete ensemble evaluation fits a practical cost/latency envelope, (4) nine staff plus security/assessor/partner availability exist when needed, (5) the credit-bearing cloud account permits the design and has sufficient quota, and (6) partner and 30-day operational evidence will actually be available. SP-03/07, SP-14/15/19/31, SP-07.b/28, SP-00/40, SP-02, and SP-32/36/40 respectively retire these risks. A negative scientific result is valid; a leakage or validity defect blocks the release.
+
+## Effort, confidence and capacity
+
+- Base delivery effort: **689 engineer-days = 137.8 person-weeks**. This includes implementation, author-written tests and documentation. Four days (0.8 PW) are postlaunch; pre-GA work is 685 days (137 PW).
+- Explicit uncertainty reserve: **248.3 days = 49.66 PW**, allocated per task: high-confidence +10%, medium +25%, low +50%. Total all-work envelope: **937.3 days = 187.46 PW**. Reserve covers investigation, repair and rework; it is not extra feature scope or a statistical P80 calculation.
+- Nine engineers deliver **0.7 day per working day**, or 6.3 PW/week collectively. The remaining 30% covers review, coordination, support and planning. Do not subtract author tests again. Fractional product/design/security and an independent assessor are additional appointment assumptions; external calendars are separate.
+- Resource lanes: TL, BE1/BE2, PL1/PL2, RS1/RS2, FE and QE. Peers within backend/platform/research can take either lane. The lead may own independent system verification; selected browser/compatibility checks may be owned by FE. Reviewer capacity stays in the 30% allowance. One author task per lane; no hidden multiassignment.
+- Each leaf is 1–5 delivery days and one independently reviewable PR or operational-evidence change. At 70% availability, a five-day task spans about 7.1 working days. If a change exceeds five delivery days after discovery, split by tested behavior before assignment; do not hide an unbounded repair program in a task.
+- Base and reserve schedules are **feasible conservative list schedules**, not an optimization proof. The JSON includes the pure scheduling function, role eligibility, all durations and gate delays. No hiring ramp, holidays, unknown approval wait, partner wait beyond stated minima or unmeasured reference-sweep runtime is silently assumed complete.
+- High confidence means established local/interface behavior; medium means known implementation patterns with integration risk; low means unproven numerical/security/provider/customer behavior. These are planning judgments, not measured probabilities. Re-estimate after D10, R0, each integration checkpoint and each uncertainty spike.
+
+The original 118 PW plus 25% and GA W30–36 did not account for the expanded task graph and scarce specialist queues. The revised forecast is **pilot onboarding W38–50; R7 evidence exit W45–59; GA W52–67**, from approved, staffed start. Additional evidence waits or material redesign extend it. Keep accepted scope; improve the forecast using measured cycle time rather than compressing security/recovery gates. A seventh or tenth engineer changes role capacity and requires a model rerun.
+
+### Reserve management
+
+Research validity/compute spikes: SP-03.c/d and SP-07.a/b; sandbox/build spikes: SP-15.a and SP-14.b; federation/partner spikes: SP-34.a and SP-00.c; restoration spikes: SP-29.b and SP-38.b. Review immediately at each spike exit. If the low-confidence reserve is consumed or an acceptance invariant needs redesign, stop that path, record an ADR/scope change and rebaseline dependents. Parallel unaffected work may continue after its own gates. Paid sweeps and third-party assessment elapsed time are re-estimated from actual measurements/booking; approval delay is never converted to approval.
+
+## Milestone schedule and exit gates
+
+Weeks are relative five-working-day planning buckets. R8 begins with booking/design work before the pilot; it cannot exit before R7 and operational evidence. Only the first ten days below are daily commitments; later windows remain milestone-level forecasts. Base exit and reserve exit are separate scenarios, not promised due dates.
+
+| Milestone | Earliest base work | Base exit | Reserve exit | Delivery / reserve PW | Owner |
+| --- | --- | --- | --- | --- | --- |
+| R0 — Scope, contracts and environment readiness | W1 | W5 | W6 | 6.2 / 1.71 | TL + product |
+| R1 — Scientifically valid learning and evaluation core | W2 | W18 | W24 | 17.2 / 6.90 | Research lead |
+| R2 — Private durable control plane | W3 | W16 | W20 | 14.0 / 3.95 | Backend lead |
+| R3 — Isolated execution and recoverable data | W2 | W24 | W33 | 23.8 / 8.35 | Platform lead + security |
+| R4 — Provider integration and both research tracks | W3 | W27 | W36 | 16.2 / 6.30 | Research + backend |
+| R5 — Researcher product and supported self-hosting | W1 | W30 | W40 | 19.4 / 5.35 | Frontend + platform |
+| R6 — Integrated production pilot readiness | W18 | W35 | W45 | 14.2 / 5.55 | QE + security + platform |
+| R7 — Design-partner evidence and reference publication | W35 | W45 | W59 | 8.4 / 3.80 | Product + research |
+| R8 — Enterprise GA readiness and rollout | W4 | W52 | W67 | 17.6 / 7.55 | TL + security + platform |
+| POST — Postlaunch reviews | W53 | W57 | W72 | 0.8 / 0.20 | TL + product |
+
+### R0 gate
+
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+
+**Exit tasks:** [SP-00.b](#sp-00-b), [SP-00.c](#sp-00-c), [SP-01.e](#sp-01-e), [SP-02.b](#sp-02-b), [SP-02.c](#sp-02-c). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
+
+**Required evidence:** Signed baseline and subset contracts; named staff/partners pipeline; pinned client/mock checks; safe headroom and priced authorized staging config.
+
+**Blocking risks / done:** No contract consumer starts until its specific subset is accepted; whole R0 exit need not serialize independent numerical work. Gate owner: TL + product. Dated source, environment, commands/results, reviewer and limitations are required in the release evidence manifest.
+
+### R1 gate
+
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+
+**Exit tasks:** [SP-03.d](#sp-03-d), [SP-04.e](#sp-04-e), [SP-07.d](#sp-07-d). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
+
+**Required evidence:** Independent spring slice and full numerical/identifiability report; development uncertainty/failure/precision and total evaluator-cost evidence; both candidate protocols versioned.
+
+**Blocking risks / done:** Invalid domain or uncalibrated uncertainty blocks official study; milestone may end in documented redesign. Gate owner: Research lead. Dated source, environment, commands/results, reviewer and limitations are required in the release evidence manifest.
+
+### R2 gate
+
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+
+**Exit tasks:** [SP-08.d](#sp-08-d), [SP-09.d](#sp-09-d), [SP-10.c](#sp-10-c), [SP-11.c](#sp-11-c), [SP-12.c](#sp-12-c). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
+
+**Required evidence:** Real PostgreSQL concurrency/RLS tests; auth, invitations, basic service/run credentials, budgets, outbox, epochs and revocation verified.
+
+**Blocking risks / done:** No private or uploaded customer runtime before integrated R3 security and release review. Gate owner: Backend lead. Dated source, environment, commands/results, reviewer and limitations are required in the release evidence manifest.
+
+### R3 gate
+
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+
+**Exit tasks:** [SP-13.d](#sp-13-d), [SP-14.d](#sp-14-d), [SP-15.e](#sp-15-e), [SP-16.d](#sp-16-d), [SP-16.e](#sp-16-e), [SP-27.f](#sp-27-f), [SP-37.c](#sp-37-c). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
+
+**Required evidence:** Real staged remote recovery and hostile build/runtime/network evidence; immutable artifacts/checkpoints; basic audit/delete/tombstone replay; signed deploy/rollback/telemetry.
+
+**Blocking risks / done:** SP-37.a–c moved here; managed runtime fail-closed and no missing committed artifacts are nonwaivable. Gate owner: Platform lead + security. Dated source, environment, commands/results, reviewer and limitations are required in the release evidence manifest.
+
+### R4 gate
+
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+
+**Exit tasks:** [SP-17.d](#sp-17-d), [SP-18.d](#sp-18-d), [SP-19.d](#sp-19-d), [SP-20.d](#sp-20-d), [SP-21.c](#sp-21-c). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
+
+**Required evidence:** Capped provider trial; ambiguous billing/replay tested; hostile executable predictor validation; complete controlled and discovery manifests with no truth feedback.
+
+**Blocking risks / done:** Paid-trial gate separate; both tracks and failed rows required, no cherry-picked demonstration. Gate owner: Research + backend. Dated source, environment, commands/results, reviewer and limitations are required in the release evidence manifest.
+
+### R5 gate
+
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+
+**Exit tasks:** [SP-22.e](#sp-22-e), [SP-23.d](#sp-23-d), [SP-24.d](#sp-24-d), [SP-25.e](#sp-25-e), [SP-26.d](#sp-26-d). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
+
+**Required evidence:** Accessible author→run→inspect→export; durable SSE/resync; offline replay; supported fresh install/upgrade with explicit trust limitations.
+
+**Blocking risks / done:** World/provider/publication/SSE backend tasks precede consumers; internal install is not external adoption. Gate owner: Frontend + platform. Dated source, environment, commands/results, reviewer and limitations are required in the release evidence manifest.
+
+### R6 gate
+
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+
+**Exit tasks:** [SP-28.d](#sp-28-d), [SP-29.d](#sp-29-d), [SP-30.d](#sp-30-d), [SP-31.e](#sp-31-e). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
+
+**Required evidence:** R1–R5 integrated at exact candidate; 100-run hold/soak/fairness, real failover/restore, negative security, deletion, migration and complete journeys pass.
+
+**Blocking risks / done:** Any lost acknowledged state, duplicate logical debit, critical/high exploit, leak or failed restore blocks pilot. Gate owner: QE + security + platform. Dated source, environment, commands/results, reviewer and limitations are required in the release evidence manifest.
+
+### R7 gate
+
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+
+**Exit tasks:** [SP-32.c](#sp-32-c), [SP-33.c](#sp-33-c), [SP-36.d](#sp-36-d). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
+
+**Required evidence:** Actual four-week partner use and outcome denominators; external agent/law/install/upgrade/reproduction; approved scored suite with all failures sanitized.
+
+**Blocking risks / done:** External readiness, price approval and sweep wall time are real dependencies; missing evidence blocks adoption claims. Gate owner: Product + research. Dated source, environment, commands/results, reviewer and limitations are required in the release evidence manifest.
+
+### R8 gate
+
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+
+**Exit tasks:** [SP-34.d](#sp-34-d), [SP-35.c](#sp-35-c), [SP-37.f](#sp-37-f), [SP-38.c](#sp-38-c), [SP-39.b](#sp-39-b), [SP-40.e](#sp-40-e), [SP-41.b](#sp-41-b). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
+
+**Required evidence:** Federation/SCIM/audit/retention validated; independent assessment resolved; regional drill; final capacity test; staffed incident drill and 30-day SLO evidence; explicit rollout approval.
+
+**Blocking risks / done:** R7 and all gate evidence required. Material candidate changes invalidate affected evidence; no compliance or unlimited-scale claim. Gate owner: TL + security + platform. Dated source, environment, commands/results, reviewer and limitations are required in the release evidence manifest.
+
+### POST gate
+
+**Entry:** constituent tasks may start only after their explicit prerequisite records and required contract subset are complete; all actual approval gates remain pending.
+
+**Exit tasks:** [SP-41.c](#sp-41-c), [SP-41.d](#sp-41-d). All other task records allocated to this milestone must also be done; the list names its integration joins, not a waiver.
+
+**Required evidence:** D7 and D30 outcomes reviewed with corrective owners and new scope decisions.
+
+**Blocking risks / done:** Scheduled after GA; never used as a pre-GA dependency. Gate owner: TL + product. Dated source, environment, commands/results, reviewer and limitations are required in the release evidence manifest.
+
+
+### Integration checkpoints
+
+| ID / checkpoint | Joins | Evidence / next decision |
+| --- | --- | --- |
+| I0 — Baseline and first interface subsets | [SP-00.b](#sp-00-b), [SP-01.a](#sp-01-a), [SP-01.b](#sp-01-b), [SP-01.c](#sp-01-c) | Code identity and core compatibility reviewed; subsets can unblock independent work. |
+| I1 — First independent learning slice | [SP-04.e](#sp-04-e) | Observe→fit→predict→independent development score; analytic accuracy, explicit failure and provenance. Stop research expansion if architecture fails. |
+| I2 — Private transactional run | [SP-09.d](#sp-09-d), [SP-11.c](#sp-11-c), [SP-12.c](#sp-12-c) | Real PostgreSQL, roles/service tokens, exactly one logical debit and failure outcome. |
+| I3 — Recoverable isolated remote run | [SP-16.d](#sp-16-d), [SP-16.e](#sp-16-e), [SP-37.c](#sp-37-c) | Kill/restart/cancel with no duplicate debit, malicious-runtime denial, telemetry and suppression ledger. |
+| I4 — Both tracks and usable product | [SP-21.c](#sp-21-c), [SP-24.d](#sp-24-d), [SP-25.e](#sp-25-e), [SP-26.d](#sp-26-d) | Real provider/predictor paths, accessible browser, offline export and supported install; mock success insufficient. |
+| I5 — Production pilot release candidate | [SP-30.d](#sp-30-d), [SP-32.a](#sp-32-a) | R1–R6 gates, security specialist and actual support/partner/data readiness; explicit pilot release authorization. |
+| I6 — Enterprise candidate and measured operations | [SP-40.b](#sp-40-b), [SP-39.b](#sp-39-b), [SP-40.e](#sp-40-e) | Independent findings resolved, final capacity verified and complete 30-calendar-day SLO record. |
+| I7 — GA and postlaunch | [SP-41.a](#sp-41-a), [SP-41.b](#sp-41-b) | Signed readiness plus explicit rollout approval; D7/D30 reviews remain after release. |
+
+## Critical path and parallel work
+
+The base resource-constrained path passes through contract/SQL/authorization → shared backend queue (broker, provider management, SSE and basic lifecycle) → world/live/replay UI → integrated journeys → pilot terms and final privacy controls → external assessment → final load/incident review → 30-day SLO window → GA. Science, sandbox and partner work are near-critical alternative paths; any invalidity or external delay can take over the critical path.
+
+The exact controlling chain is below. **Resource** means the preceding task occupies the same author lane; it is not a fabricated technical dependency. **Dependency** means an explicit prerequisite. **Wait** means an approval/calendar gate. The machine ledger includes every other parallel task and both scenarios.
+
+| Chain node | Incoming constraint | Purpose |
+| --- | --- | --- |
+| [APPROVAL](#external-and-calendar-gates) | Approval | User approves execution backlog and D01–D06; all work initially blocked |
+| [SP-00.a](#sp-00-a) | Dependency | Record approval and named team capacity |
+| [SP-00.b](#sp-00-b) | Dependency | Review and integrate the existing baseline |
+| [SP-01.b](#sp-01-b) | Dependency | Freeze identity, run and SQL contracts |
+| [SP-09.a](#sp-09-a) | Dependency | Create tenant SQL schema and migration harness |
+| [SP-09.b](#sp-09-b) | Dependency | Reserve experiments and budgets atomically |
+| [SP-09.c](#sp-09-c) | Dependency | Implement run and operation state transitions |
+| [SP-09.d](#sp-09-d) | Dependency | Connect trusted simulator results to run transactions |
+| [SP-11.a](#sp-11-a) | Dependency | Enforce tenant row policies and safe pool reuse |
+| [SP-11.b](#sp-11-b) | Dependency | Authorize every operation and artifact reference |
+| [SP-11.c](#sp-11-c) | Dependency | Enforce live revocation and audit decisions |
+| [SP-15.c](#sp-15-c) | Dependency | Implement epoch-scoped run broker permissions |
+| [SP-17.a](#sp-17-a) | Resource: BE1 | Freeze model-call and credential-management contracts |
+| [SP-17.c](#sp-17-c) | Dependency | Manage workspace provider secrets |
+| [SP-23.a](#sp-23-a) | Resource: BE1 | Publish committed event and replay endpoints |
+| [SP-17.d](#sp-17-d) | Resource: BE1 | Replay recorded model responses offline |
+| [SP-37.a](#sp-37-a) | Resource: BE1 | Persist basic security audit events |
+| [SP-37.b](#sp-37-b) | Dependency | Implement authorized deletion and retention jobs |
+| [SP-34.a](#sp-34-a) | Resource: BE1 | Validate enterprise federation requirements and entitlement |
+| [SP-22.b](#sp-22-b) | Resource: BE1 | Implement versioned world and suite catalog API |
+| [SP-22.d](#sp-22-d) | Dependency | Build constrained world editor |
+| [SP-23.d](#sp-23-d) | Resource: FE | Integrate reconnect and cancellation UX |
+| [SP-24.a](#sp-24-a) | Dependency | Implement indexed frame replay and scrubbing |
+| [SP-24.b](#sp-24-b) | Dependency | Overlay prediction and uncertainty diagnostics |
+| [SP-24.c](#sp-24-c) | Dependency | Compare recorded strategies and failures |
+| [SP-22.e](#sp-22-e) | Resource: FE | Integrate world-to-run product journey |
+| [SP-24.d](#sp-24-d) | Resource: FE | Verify accessible diagnostic journeys |
+| [SP-30.a](#sp-30-a) | Dependency | Test authenticated end-to-end researcher journeys |
+| [SP-30.b](#sp-30-b) | Dependency | Verify version compatibility matrix |
+| [SP-30.c](#sp-30-c) | Dependency | Verify install, upgrade and recovery as one journey |
+| [SP-30.d](#sp-30-d) | Dependency | Review integrated release-candidate evidence |
+| [SP-32.a](#sp-32-a) | Dependency | Finalize partner data terms and pilot support scope |
+| [SP-37.f](#sp-37-f) | Dependency | Review customer data and support documentation |
+| [ASSESSMENT](#external-and-calendar-gates) | Wait | Independent assessment complete; assume ten working days service lead time, verify booking |
+| [SP-40.b](#sp-40-b) | Dependency | Remediate independent assessment findings |
+| [SP-39.a](#sp-39-a) | Dependency | Revalidate final supported capacity envelope |
+| [SP-36.d](#sp-36-d) | Resource: TL | Close partner integration findings |
+| [SP-40.c](#sp-40-c) | Resource: TL | Exercise incident and credential response |
+| [SP-40.d](#sp-40-d) | Dependency | Start final-candidate SLO evidence collection |
+| [SLO_OBSERVATION](#external-and-calendar-gates) | Wait | At least 30 consecutive calendar days; 22 workdays conservative scheduling proxy |
+| [SP-40.e](#sp-40-e) | Dependency | Review 30 calendar days of SLO evidence |
+| [SP-41.a](#sp-41-a) | Dependency | Sign evidence-based GA readiness |
+| [SP-41.b](#sp-41-b) | Dependency | Execute approved progressive GA rollout |
+
+| Parallel stream | Starts after | Can proceed alongside | Integration that cannot be skipped |
+| --- | --- | --- | --- |
+| Analytic numerical fixtures / scientific contracts | Reviewed baseline and headroom for changed dependencies | Backend schema and platform configuration | SP-03.b before first fit; full numerical calibration before study freeze |
+| Backend identity / transaction work | SP-01.b; database harness as declared | Scientific fitting, artifact/worker contracts, frontend journey design | SP-09.d/11.c/12.c before authenticated durable run |
+| Isolated build / runtime and artifact storage | SP-01.c, approved infrastructure and exact leaf prerequisites | Research inference and product mocks | SP-14.d/15.e before enabling uploaded code; SP-16.d proves recovery |
+| Browser mocks and accessible journeys | SP-22.a then SP-01.e for consuming mock contracts | Backend producers | Real world/SSE/auth routes before SP-22.e/23.d; no mock-only product gate |
+| Predictor packaging / held-out evaluation | SP-19.a and artifact/isolation prerequisites | Shared-fitter calibration, gateway transport | Both tracks join at SP-21.c; leak matrix must pass |
+| Basic enterprise identity design / assessor booking | Base identity and partner requirements; SP-40.a booking | Pilot product construction | Final config, independent fixes and capacity precede SLO collection |
+| Partner observation / reference sweep / external install | R6 pilot gate and their separate approvals | Each other where external participants available | R7 requires all outcomes, not a scheduled meeting |
+
+## External and calendar gates
+
+| Gate | Required predecessors | Minimum modeled elapsed time | Actual release condition |
+| --- | --- | --- | --- |
+| APPROVAL | User review of this backlog | Not modeled; explicit approval required | User approves execution backlog and D01–D06; all work initially blocked |
+| PAID_TRIAL | [SP-17.c](#sp-17-c), [SP-18.c](#sp-18-c), [SP-02.c](#sp-02-c) | Not modeled; explicit approval required | Explicit capped real-provider trial approval |
+| PILOT_RELEASE | [SP-32.a](#sp-32-a) | Not modeled; explicit approval required | Limited production pilot release approval |
+| PILOT_OBSERVATION | [SP-32.b](#sp-32-b) | 20 working days | Four working weeks of actual partner use; external participation required |
+| OFFICIAL_SWEEP | [SP-33.a](#sp-33-a) | Not modeled; explicit approval required | Explicit priced reference collection approval; measured runtime added at freeze |
+| ASSESSMENT | [SP-40.a](#sp-40-a), [SP-35.c](#sp-35-c), [SP-37.f](#sp-37-f), [SP-38.c](#sp-38-c) | 10 working days | Independent assessment complete; assume ten working days service lead time, verify booking |
+| SLO_OBSERVATION | [SP-40.d](#sp-40-d) | 22 working days | At least 30 consecutive calendar days; 22 workdays conservative scheduling proxy |
+| GA_RELEASE | [SP-41.a](#sp-41-a) | Not modeled; explicit approval required | User/product owner authorizes actual GA rollout |
+| POST_LAUNCH_D7 | [SP-41.b](#sp-41-b) | 5 working days | At least seven calendar days after successful rollout |
+| POST_LAUNCH_D30 | [SP-41.b](#sp-41-b) | 22 working days | At least thirty calendar days after successful rollout |
+
+Zero modeled approval duration is a conditional scheduling input, never evidence of approval. Thirty calendar days is the actual SLO requirement; 22 working days is a conservative no-holiday scheduling proxy. Four-week partner use must contain actual participating organizations. At official protocol freeze, add measured sweep execution/queue time to OFFICIAL_SWEEP/SP-33.b. Assessor work assumes a booked ten-working-day window; replace it with the real booking. Customer/procurement delays have no fabricated upper bound.
+
+## First two weeks: day by day
+
+D1 starts only after the user approves the backlog and the team is available. A task listed on a day may start partway through it, only after its listed predecessors actually finish. The JSON records exact fractional-day start/finish and lane order; this table rounds for daily communication. Unlisted lanes use review capacity or remain uncommitted; do not invent productive delivery work to fill a calendar.
+
+| Day | Lead / quality | Backend | Platform | Research | Frontend | Checkpoint |
+| --- | --- | --- | --- | --- | --- | --- |
+| D1 (W1) | TL: [SP-00.a](#sp-00-a) | Review / no author task | Review / no author task | Review / no author task | Review / no author task | Continue scoped work; record blockers |
+| D2 (W1) | TL: [SP-00.a](#sp-00-a); QE: [SP-00.b](#sp-00-b); TL: [SP-00.c](#sp-00-c) | Review / no author task | PL1: [SP-02.a](#sp-02-a) | Review / no author task | Review / no author task | Target evidence: [SP-00.a](#sp-00-a) |
+| D3 (W1) | QE: [SP-00.b](#sp-00-b); TL: [SP-00.c](#sp-00-c) | Review / no author task | PL1: [SP-02.a](#sp-02-a) | Review / no author task | Review / no author task | Continue scoped work; record blockers |
+| D4 (W1) | QE: [SP-00.b](#sp-00-b); TL: [SP-00.c](#sp-00-c) | Review / no author task | PL1: [SP-02.a](#sp-02-a) | Review / no author task | Review / no author task | Continue scoped work; record blockers |
+| D5 (W1) | QE: [SP-00.b](#sp-00-b); TL: [SP-00.c](#sp-00-c) | BE1: [SP-01.b](#sp-01-b) | PL1: [SP-02.a](#sp-02-a); PL2: [SP-02.b](#sp-02-b); PL1: [SP-02.c](#sp-02-c) | RS1: [SP-01.a](#sp-01-a) | FE: [SP-22.a](#sp-22-a) | Target evidence: [SP-00.b](#sp-00-b), [SP-02.a](#sp-02-a); W1 capacity/approval review |
+| D6 (W2) | TL: [SP-00.c](#sp-00-c) | BE1: [SP-01.b](#sp-01-b) | PL2: [SP-02.b](#sp-02-b); PL1: [SP-02.c](#sp-02-c) | RS1: [SP-01.a](#sp-01-a) | FE: [SP-22.a](#sp-22-a) | Target evidence: [SP-00.c](#sp-00-c) |
+| D7 (W2) | Review / no author task | BE1: [SP-01.b](#sp-01-b) | PL2: [SP-02.b](#sp-02-b); PL1: [SP-02.c](#sp-02-c) | RS1: [SP-01.a](#sp-01-a) | FE: [SP-22.a](#sp-22-a) | Continue scoped work; record blockers |
+| D8 (W2) | Review / no author task | BE1: [SP-01.b](#sp-01-b) | PL2: [SP-02.b](#sp-02-b); PL1: [SP-02.c](#sp-02-c); PL2: [SP-01.c](#sp-01-c); PL1: [SP-27.a](#sp-27-a) | RS1: [SP-01.a](#sp-01-a); RS2: [SP-03.a](#sp-03-a) | FE: [SP-22.a](#sp-22-a) | Target evidence: [SP-02.b](#sp-02-b), [SP-02.c](#sp-02-c) |
+| D9 (W2) | Review / no author task | BE1: [SP-01.b](#sp-01-b) | PL2: [SP-01.c](#sp-01-c); PL1: [SP-27.a](#sp-27-a) | RS1: [SP-01.a](#sp-01-a); RS2: [SP-03.a](#sp-03-a) | FE: [SP-22.a](#sp-22-a) | Target evidence: [SP-01.a](#sp-01-a), [SP-22.a](#sp-22-a) |
+| D10 (W2) | Review / no author task | BE1: [SP-01.b](#sp-01-b) | PL2: [SP-01.c](#sp-01-c); PL1: [SP-27.a](#sp-27-a) | RS2: [SP-03.a](#sp-03-a) | Review / no author task | Target evidence: [SP-01.b](#sp-01-b); re-estimate remaining R0 and first-slice work, do not declare full contract freeze |
+
+Day-ten outcome is partial contract/preflight evidence, not an implemented hosted service. R0 exit is W5 base/W6 reserve. First independent learning slice SP-04.e is approximately W9 base/W11 reserve in this model. If headroom or permissions remain unresolved, keep dependent tasks blocked and reforecast; no project/dependency copies are created on the Mac.
+
+## Contract register
+
+These contracts are requirements for each task, not claims that future interfaces exist. A contract producer/review task can work on a draft; implementation consumers require the freeze task in their transitive prerequisites. SP-22.a is a journey-specification input, not a consumer implementation. OPS/GOV are existing proposed policy constraints with later concrete authorization gates. Every task's referenced contract obligations below are part of its acceptance and review scope.
+
+<a id="contract-core"></a>
+### C-CORE: Current public SDK and laws
+
+**Owner:** Research + SDK. **Freeze:** Existing core or roadmap policy; task-specific changes still reviewed. **Source:** [core.schema.json](../contracts/core.schema.json), [CORE.md](CORE.md), [LAWS.md](LAWS.md), [CHECKPOINTS.md](CHECKPOINTS.md).
+
+Experiment identities, graph/order/mass bounds, finite values, budget/checkpoint prefix and strict unknown-field rejection. Existing local formats are implemented; hosted semantics are not.
+
+<a id="contract-sci"></a>
+### C-SCI: Model, prediction and scoring messages
+
+**Owner:** Research + QE. **Freeze:** [SP-01.a](#sp-01-a). **Source:** [research.schema.json](../contracts/draft/research.schema.json), [BENCHMARK.md](BENCHMARK.md).
+
+Versioned model/provenance, purchased-data-only fitter input, monotonic times, finite ordered trajectories, failure counts, fixed normalizer. First-slice RMSE is a development diagnostic; full benchmark primary score remains normalized MSE.
+
+<a id="contract-http"></a>
+### C-HTTP: HTTP operations and error envelopes
+
+**Owner:** Backend + SDK + frontend. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [openapi.json](../contracts/draft/openapi.json).
+
+OpenAPI 3.1, scoped operation polling, Idempotency-Key on applicable mutations, immutable checkpoint PUT, explicit 401/403/404/409/422/429/503 semantics, version policy. Current draft has 11 operations, not complete product API.
+
+<a id="contract-id"></a>
+### C-ID: Identity, membership and credential authority
+
+**Owner:** Backend + security. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [roadmap sections 5–6 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze).
+
+Issuer/subject identity, explicit workspace roles/invitations, scoped machine and run credentials, revocation and secure browser session semantics. Enterprise federation refined by SP-34.a; SCIM frozen by SP-35.a before those consumers.
+
+<a id="contract-db"></a>
+### C-DB: Transactional relational invariants
+
+**Owner:** Backend. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [roadmap data model](ROADMAP.md#6-data-model-ownership-and-lifecycle).
+
+Composite tenant ownership, unique operation/ordinal, atomic debit/result/outbox, revision/epoch checks, immutable terminal state, safe migration/runtime-role separation.
+
+<a id="contract-art"></a>
+### C-ART: Artifact and recovery manifests
+
+**Owner:** Platform + backend + research. **Freeze:** [SP-01.c](#sp-01-c). **Source:** [roadmap artifact contracts](ROADMAP.md#52-event-and-artifact-contracts), [CHECKPOINTS.md](CHECKPOINTS.md).
+
+Hash, byte size, media type, storage generation, visibility, runtime/protocol identity, checkpoint completed prefix, deletion tombstones, bounded safe deserialization and complete export.
+
+<a id="contract-exec"></a>
+### C-EXEC: Build, worker, lease and broker protocol
+
+**Owner:** Platform + security + backend. **Freeze:** [SP-01.c](#sp-01-c). **Source:** [roadmap trust boundaries](ROADMAP.md#4-architecture-and-trust-boundaries).
+
+Approved image digest, launch ID, lease epoch, attempt identity, resource deadline, cancellation, network scope, quarantined builds and networkless predictors. No fallback from required sandbox.
+
+<a id="contract-web"></a>
+### C-WEB: World catalog, committed events and replay
+
+**Owner:** Frontend + backend. **Freeze:** [SP-01.d](#sp-01-d). **Source:** [roadmap event contracts](ROADMAP.md#52-event-and-artifact-contracts).
+
+Immutable world versions/author projection, per-run sequence, typed payload, Last-Event-ID, cursor-expired snapshot/archive resync, bounded replay chunks and post-run truth authorization.
+
+<a id="contract-provider"></a>
+### C-PROVIDER: Provider connection and durable call protocol
+
+**Owner:** Backend + research + security. **Freeze:** [SP-17.a](#sp-17-a). **Source:** [roadmap provider rules](ROADMAP.md#73-ai-workload-model).
+
+Connection secret reference, provider/model/version, logical call/attempt state, token reservation, timeout ambiguity, request/response hash, billed/estimated/unknown usage, replay without network.
+
+<a id="contract-pred"></a>
+### C-PRED: Executable predictor invocation
+
+**Owner:** Research + platform + security. **Freeze:** [SP-19.a](#sp-19-a). **Source:** [roadmap predictor boundary](ROADMAP.md#32-complete-agent-discovery-track).
+
+Public input only, protocol/image identity, timestamps/order/shape, finite outputs/declared intervals, CPU/wall/output caps and invalid-output failure classification.
+
+<a id="contract-ops"></a>
+### C-OPS: Deployment, telemetry and recovery policy
+
+**Owner:** Platform + QE + security. **Freeze:** Existing core or roadmap policy; task-specific changes still reviewed. **Source:** [roadmap operations](ROADMAP.md#13-cicd-deployment-reliability-and-operations), [DEPLOYMENT_OPTIONS.md](DEPLOYMENT_OPTIONS.md).
+
+Versioned IaC/config, keyless CI, isolated identities, bounded pools/metrics, exact evidence manifests, RPO/RTO/SLO targets and private records. Priced configuration needs SP-02.c; collection/rollout requires separate named gates.
+
+<a id="contract-gov"></a>
+### C-GOV: Approval, evidence and release records
+
+**Owner:** Technical lead + product. **Freeze:** Existing core or roadmap policy; task-specific changes still reviewed. **Source:** [roadmap governance](ROADMAP.md#14-risk-register-assumptions-and-governance).
+
+Named decision/gate owner, exact source/config/test identity, unresolved blockers, privacy-safe evidence links, scope/estimate change record and explicit external approvals.
+
+
+## Task index
+
+Every leaf below is **awaiting approval**, with its own PR boundary and evidence. All are P0 for their stated release gate; this does not imply simultaneous assignment. API/storage producers precede consumers. Scope outside a leaf is not silently included in its estimate. Proposed tests are not already implemented. Reviewers are roles until actual staff are named.
+
+| Epic / GitHub issue | PR units | Delivery PW | Assigned milestone(s) |
+| --- | --- | --- | --- |
+| [SP-00 — Approve scope, staff and evidence baseline](https://github.com/spei04/strange-physics/issues/2) | [SP-00.a](#sp-00-a), [SP-00.b](#sp-00-b), [SP-00.c](#sp-00-c) | 1.2 | R0 |
+| [SP-01 — Freeze shared schemas and mocks](https://github.com/spei04/strange-physics/issues/3) | [SP-01.a](#sp-01-a), [SP-01.b](#sp-01-b), [SP-01.c](#sp-01-c), [SP-01.d](#sp-01-d), [SP-01.e](#sp-01-e) | 3.8 | R0 |
+| [SP-02 — Verify cloud and workspace prerequisites](https://github.com/spei04/strange-physics/issues/4) | [SP-02.a](#sp-02-a), [SP-02.b](#sp-02-b), [SP-02.c](#sp-02-c) | 1.2 | R0 |
+| [SP-03 — Validate numerical domain and baseline](https://github.com/spei04/strange-physics/issues/5) | [SP-03.a](#sp-03-a), [SP-03.b](#sp-03-b), [SP-03.c](#sp-03-c), [SP-03.d](#sp-03-d) | 3.0 | R1 |
+| [SP-04 — Implement integrated sparse fitter](https://github.com/spei04/strange-physics/issues/6) | [SP-04.a](#sp-04-a), [SP-04.b](#sp-04-b), [SP-04.c](#sp-04-c), [SP-04.d](#sp-04-d), [SP-04.e](#sp-04-e) | 3.8 | R1 |
+| [SP-05 — Add uncertainty, adaptation and active selection](https://github.com/spei04/strange-physics/issues/7) | [SP-05.a](#sp-05-a), [SP-05.b](#sp-05-b), [SP-05.c](#sp-05-c), [SP-05.d](#sp-05-d) | 3.2 | R1 |
+| [SP-06 — Implement held-out metrics and failure policy](https://github.com/spei04/strange-physics/issues/8) | [SP-06.a](#sp-06-a), [SP-06.b](#sp-06-b), [SP-06.c](#sp-06-c), [SP-06.d](#sp-06-d) | 3.4 | R1 |
+| [SP-07 — Calibrate and draft frozen study manifests](https://github.com/spei04/strange-physics/issues/9) | [SP-07.a](#sp-07-a), [SP-07.b](#sp-07-b), [SP-07.c](#sp-07-c), [SP-07.d](#sp-07-d) | 3.8 | R1 |
+| [SP-08 — Build identity and workspace memberships](https://github.com/spei04/strange-physics/issues/10) | [SP-08.a](#sp-08-a), [SP-08.b](#sp-08-b), [SP-08.c](#sp-08-c), [SP-08.d](#sp-08-d) | 3.0 | R2 |
+| [SP-09 — Implement run and experiment transactions](https://github.com/spei04/strange-physics/issues/11) | [SP-09.a](#sp-09-a), [SP-09.b](#sp-09-b), [SP-09.c](#sp-09-c), [SP-09.d](#sp-09-d) | 3.4 | R2 |
+| [SP-10 — Add outbox, fencing and reconciliation](https://github.com/spei04/strange-physics/issues/12) | [SP-10.a](#sp-10-a), [SP-10.b](#sp-10-b), [SP-10.c](#sp-10-c) | 2.8 | R2 |
+| [SP-11 — Enforce tenant and artifact authorization](https://github.com/spei04/strange-physics/issues/13) | [SP-11.a](#sp-11-a), [SP-11.b](#sp-11-b), [SP-11.c](#sp-11-c) | 2.4 | R2 |
+| [SP-12 — Implement quotas and usage accounting](https://github.com/spei04/strange-physics/issues/14) | [SP-12.a](#sp-12-a), [SP-12.b](#sp-12-b), [SP-12.c](#sp-12-c) | 2.4 | R2 |
+| [SP-13 — Persist immutable artifacts and checkpoints](https://github.com/spei04/strange-physics/issues/15) | [SP-13.a](#sp-13-a), [SP-13.b](#sp-13-b), [SP-13.c](#sp-13-c), [SP-13.d](#sp-13-d) | 3.0 | R3 |
+| [SP-14 — Build packages in isolation](https://github.com/spei04/strange-physics/issues/16) | [SP-14.a](#sp-14-a), [SP-14.b](#sp-14-b), [SP-14.c](#sp-14-c), [SP-14.d](#sp-14-d) | 3.6 | R3 |
+| [SP-15 — Enforce sandbox runtime and broker policy](https://github.com/spei04/strange-physics/issues/17) | [SP-15.a](#sp-15-a), [SP-15.b](#sp-15-b), [SP-15.c](#sp-15-c), [SP-15.d](#sp-15-d), [SP-15.e](#sp-15-e) | 4.4 | R3 |
+| [SP-16 — Connect recoverable remote execution](https://github.com/spei04/strange-physics/issues/18) | [SP-16.a](#sp-16-a), [SP-16.b](#sp-16-b), [SP-16.c](#sp-16-c), [SP-16.d](#sp-16-d), [SP-16.e](#sp-16-e) | 4.6 | R3 |
+| [SP-17 — Implement durable model-call ledger](https://github.com/spei04/strange-physics/issues/19) | [SP-17.a](#sp-17-a), [SP-17.b](#sp-17-b), [SP-17.c](#sp-17-c), [SP-17.d](#sp-17-d) | 3.4 | R4 |
+| [SP-18 — Add bounded provider adapters and LLM selector](https://github.com/spei04/strange-physics/issues/20) | [SP-18.a](#sp-18-a), [SP-18.b](#sp-18-b), [SP-18.c](#sp-18-c), [SP-18.d](#sp-18-d) | 3.0 | R4 |
+| [SP-19 — Define executable predictor packaging](https://github.com/spei04/strange-physics/issues/21) | [SP-19.a](#sp-19-a), [SP-19.b](#sp-19-b), [SP-19.c](#sp-19-c), [SP-19.d](#sp-19-d) | 3.4 | R4 |
+| [SP-20 — Build independent evaluation execution](https://github.com/spei04/strange-physics/issues/22) | [SP-20.a](#sp-20-a), [SP-20.b](#sp-20-b), [SP-20.c](#sp-20-c), [SP-20.d](#sp-20-d) | 3.6 | R4 |
+| [SP-21 — Integrate the two research tracks](https://github.com/spei04/strange-physics/issues/23) | [SP-21.a](#sp-21-a), [SP-21.b](#sp-21-b), [SP-21.c](#sp-21-c) | 2.8 | R4 |
+| [SP-22 — Build workspace and constrained world UI](https://github.com/spei04/strange-physics/issues/24) | [SP-22.a](#sp-22-a), [SP-22.b](#sp-22-b), [SP-22.c](#sp-22-c), [SP-22.d](#sp-22-d), [SP-22.e](#sp-22-e) | 4.2 | R5 |
+| [SP-23 — Implement live event timeline and reconnection](https://github.com/spei04/strange-physics/issues/25) | [SP-23.a](#sp-23-a), [SP-23.b](#sp-23-b), [SP-23.c](#sp-23-c), [SP-23.d](#sp-23-d) | 3.6 | R5 |
+| [SP-24 — Implement prediction and replay diagnostics](https://github.com/spei04/strange-physics/issues/26) | [SP-24.a](#sp-24-a), [SP-24.b](#sp-24-b), [SP-24.c](#sp-24-c), [SP-24.d](#sp-24-d) | 3.4 | R5 |
+| [SP-25 — Deliver remote SDK, CLI and complete export](https://github.com/spei04/strange-physics/issues/27) | [SP-25.a](#sp-25-a), [SP-25.b](#sp-25-b), [SP-25.c](#sp-25-c), [SP-25.d](#sp-25-d), [SP-25.e](#sp-25-e) | 4.4 | R5 |
+| [SP-26 — Package supported self-host deployment](https://github.com/spei04/strange-physics/issues/28) | [SP-26.a](#sp-26-a), [SP-26.b](#sp-26-b), [SP-26.c](#sp-26-c), [SP-26.d](#sp-26-d) | 3.8 | R5 |
+| [SP-27 — Create IaC and trusted delivery foundation](https://github.com/spei04/strange-physics/issues/29) | [SP-27.a](#sp-27-a), [SP-27.b](#sp-27-b), [SP-27.c](#sp-27-c), [SP-27.d](#sp-27-d), [SP-27.e](#sp-27-e), [SP-27.f](#sp-27-f) | 5.2 | R3 |
+| [SP-28 — Measure capacity and fairness](https://github.com/spei04/strange-physics/issues/30) | [SP-28.a](#sp-28-a), [SP-28.b](#sp-28-b), [SP-28.c](#sp-28-c), [SP-28.d](#sp-28-d) | 3.6 | R6 |
+| [SP-29 — Prove backup, failover and fault recovery](https://github.com/spei04/strange-physics/issues/31) | [SP-29.a](#sp-29-a), [SP-29.b](#sp-29-b), [SP-29.c](#sp-29-c), [SP-29.d](#sp-29-d) | 3.6 | R6 |
+| [SP-30 — Verify integrated journeys and upgrades](https://github.com/spei04/strange-physics/issues/32) | [SP-30.a](#sp-30-a), [SP-30.b](#sp-30-b), [SP-30.c](#sp-30-c), [SP-30.d](#sp-30-d) | 3.0 | R6 |
+| [SP-31 — Exercise security and data boundaries](https://github.com/spei04/strange-physics/issues/33) | [SP-31.a](#sp-31-a), [SP-31.b](#sp-31-b), [SP-31.c](#sp-31-c), [SP-31.d](#sp-31-d), [SP-31.e](#sp-31-e) | 4.0 | R6 |
+| [SP-32 — Onboard and support design partners](https://github.com/spei04/strange-physics/issues/34) | [SP-32.a](#sp-32-a), [SP-32.b](#sp-32-b), [SP-32.c](#sp-32-c) | 2.2 | R7 |
+| [SP-33 — Freeze and publish scored reference release](https://github.com/spei04/strange-physics/issues/35) | [SP-33.a](#sp-33-a), [SP-33.b](#sp-33-b), [SP-33.c](#sp-33-c) | 2.6 | R7 |
+| [SP-34 — Add enterprise SSO and service identities](https://github.com/spei04/strange-physics/issues/36) | [SP-34.a](#sp-34-a), [SP-34.b](#sp-34-b), [SP-34.c](#sp-34-c), [SP-34.d](#sp-34-d) | 3.2 | R8 |
+| [SP-35 — Add provisioning and rapid deprovisioning](https://github.com/spei04/strange-physics/issues/37) | [SP-35.a](#sp-35-a), [SP-35.b](#sp-35-b), [SP-35.c](#sp-35-c) | 2.8 | R8 |
+| [SP-36 — Validate external extension and self-host adoption](https://github.com/spei04/strange-physics/issues/38) | [SP-36.a](#sp-36-a), [SP-36.b](#sp-36-b), [SP-36.c](#sp-36-c), [SP-36.d](#sp-36-d) | 3.6 | R7 |
+| [SP-37 — Ship enterprise audit and retention controls](https://github.com/spei04/strange-physics/issues/39) | [SP-37.a](#sp-37-a), [SP-37.b](#sp-37-b), [SP-37.c](#sp-37-c), [SP-37.d](#sp-37-d), [SP-37.e](#sp-37-e), [SP-37.f](#sp-37-f) | 5.2 | R3, R8 |
+| [SP-38 — Rehearse regional disaster recovery](https://github.com/spei04/strange-physics/issues/40) | [SP-38.a](#sp-38-a), [SP-38.b](#sp-38-b), [SP-38.c](#sp-38-c) | 2.8 | R8 |
+| [SP-39 — Revalidate supported production envelope](https://github.com/spei04/strange-physics/issues/41) | [SP-39.a](#sp-39-a), [SP-39.b](#sp-39-b) | 1.6 | R8 |
+| [SP-40 — Complete independent assurance and operations](https://github.com/spei04/strange-physics/issues/42) | [SP-40.a](#sp-40-a), [SP-40.b](#sp-40-b), [SP-40.c](#sp-40-c), [SP-40.d](#sp-40-d), [SP-40.e](#sp-40-e) | 3.8 | R8 |
+| [SP-41 — Approve GA release and post-launch review](https://github.com/spei04/strange-physics/issues/43) | [SP-41.a](#sp-41-a), [SP-41.b](#sp-41-b), [SP-41.c](#sp-41-c), [SP-41.d](#sp-41-d) | 2.0 | R8, POST |
+
+<a id="epic-sp-00"></a>
+## SP-00 — Approve scope, staff and evidence baseline
+
+Parent: [#2](https://github.com/spei04/strange-physics/issues/2). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-00-a"></a>
+### SP-00.a — Record approval and named team capacity
+
+- **Objective:** Establish a reviewed, staffed and evidence-backed start without implying execution approval. This PR delivers record approval and named team capacity.
+- **Implementation scope:** Record D01–D06 dispositions, lane owners, reviewer availability and start conditions.
+- **Out of scope:** Product implementation or accepting this backlog on the user's behalf.
+- **Prerequisites and dependencies:** [APPROVAL](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Every lane staffed; unresolved decisions block affected work.
+- **Required automated tests:** Check decision IDs, capacity and approval evidence links.
+- **Security and reliability:** No implied infrastructure-spend authority; private staffing evidence.
+- **Effort and confidence:** 1 delivery engineer-day; high confidence; +0.10 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-00-b"></a>
+### SP-00.b — Review and integrate the existing baseline
+
+- **Objective:** Establish a reviewed, staffed and evidence-backed start without implying execution approval. This PR delivers review and integrate the existing baseline.
+- **Implementation scope:** Review PR #1 and existing core; resolve baseline findings and integrate through normal review.
+- **Out of scope:** New fitter or merging before approval.
+- **Prerequisites and dependencies:** [SP-00.a](#sp-00-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-CORE](#contract-core), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** 55 existing tests and configured checks pass at reviewed integration identity.
+- **Required automated tests:** Core CI, lint/types/build and merge-identity verification.
+- **Security and reliability:** Preserve private journals and unrelated work; green CI is not review.
+- **Effort and confidence:** 2 delivery engineer-days; high confidence; +0.20 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, SDK, Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-00-c"></a>
+### SP-00.c — Secure partner and assessor availability
+
+- **Objective:** Establish a reviewed, staffed and evidence-backed start without implying execution approval. This PR delivers secure partner and assessor availability.
+- **Implementation scope:** Document partner requirements, legal/product contacts and independent-assessor lead times in private evidence.
+- **Out of scope:** Outreach without authorization; promising contracts.
+- **Prerequisites and dependencies:** [SP-00.a](#sp-00-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Three candidate organizations and external gate owners identified; unavailable commitments explicit.
+- **Required automated tests:** Validate readiness checklist owners, deadlines and sanitized evidence.
+- **Security and reliability:** No fabricated adoption or public customer identifiers.
+- **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-01"></a>
+## SP-01 — Freeze shared schemas and mocks
+
+Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-01-a"></a>
+### SP-01.a — Freeze the first scientific interface subset
+
+- **Objective:** Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze the first scientific interface subset.
+- **Implementation scope:** Review observation-only fitter inputs, model provenance, prediction ordering and report compatibility fixtures.
+- **Out of scope:** Full sparse fitting or benchmark freeze.
+- **Prerequisites and dependencies:** [SP-00.b](#sp-00-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-CORE](#contract-core), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Research/SDK owners sign version; hidden world fields absent.
+- **Required automated tests:** Schema/reference checks, positive/negative/runtime fixtures and Pydantic parity.
+- **Security and reliability:** Finite/shape boundaries explicit; fixtures are not results.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-01-b"></a>
+### SP-01.b — Freeze identity, run and SQL contracts
+
+- **Objective:** Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze identity, run and sql contracts.
+- **Implementation scope:** Specify session/membership/service scopes, operations, SQL constraints, idempotency and checkpoint PUT semantics.
+- **Out of scope:** Remaining product API groups or implementation.
+- **Prerequisites and dependencies:** [SP-00.b](#sp-00-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-HTTP](#contract-http), [C-ID](#contract-id), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Producer/consumer owners accept route/state/error and conflict examples.
+- **Required automated tests:** Operation/path/schema checks and terminal/duplicate/conflict fixtures.
+- **Security and reliability:** Membership separate from identity; immutable terminal states.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-01-c"></a>
+### SP-01.c — Freeze artifacts, packages and worker interfaces
+
+- **Objective:** Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze artifacts, packages and worker interfaces.
+- **Implementation scope:** Specify object generations, checkpoint prefixes, lease/broker epochs, build quarantine and predictor envelopes.
+- **Out of scope:** Provisioning or proving isolation.
+- **Prerequisites and dependencies:** [SP-00.b](#sp-00-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ART](#contract-art), [C-EXEC](#contract-exec), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Signed version covers partial object/DB writes and stale leases.
+- **Required automated tests:** Hash/size/epoch/checkpoint fixtures with corrupt and incomplete cases.
+- **Security and reliability:** No trusted pickle; bounded inputs and scoped identities.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, security, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-01-d"></a>
+### SP-01.d — Freeze world, SSE and replay contracts
+
+- **Objective:** Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze world, sse and replay contracts.
+- **Implementation scope:** Specify worlds/versioning, author/agent views, SSE sequence, cursor expiry and snapshot/archive resync.
+- **Out of scope:** API producer or UI implementation.
+- **Prerequisites and dependencies:** [SP-01.b](#sp-01-b), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-HTTP](#contract-http), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Backend/frontend/security approve exact fields and recovery semantics.
+- **Required automated tests:** Duplicate/gap/reordered/expired stream, revocation and partial-replay fixtures.
+- **Security and reliability:** Resync reauthorizes caller/run; no blind truth in active feed.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, SDK, frontend, Platform, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-01-e"></a>
+### SP-01.e — Pin validation, clients and deterministic mocks
+
+- **Objective:** Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers pin validation, clients and deterministic mocks.
+- **Implementation scope:** Pin contract tooling; generate Python/TS fixtures, drift checks and mock server/recorded streams.
+- **Out of scope:** Mocks as proof of deployed security.
+- **Prerequisites and dependencies:** [SP-01.a](#sp-01-a), [SP-01.b](#sp-01-b), [SP-01.c](#sp-01-c), [SP-01.d](#sp-01-d), [SP-02.b](#sp-02-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-HTTP](#contract-http), [C-SCI](#contract-sci), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Clean install regenerates approved subsets without drift.
+- **Required automated tests:** CI structural/runtime fixtures, client compatibility and version rejection.
+- **Security and reliability:** Synthetic data only; draft routes excluded from freeze.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Backend, SDK, frontend, Research, QE, Frontend, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-02"></a>
+## SP-02 — Verify cloud and workspace prerequisites
+
+Parent: [#4](https://github.com/spei04/strange-physics/issues/4). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-02-a"></a>
+### SP-02.a — Verify cloud, credit and quota prerequisites
+
+- **Objective:** Make development and deployment prerequisites concrete, affordable and safe to use. This PR delivers verify cloud, credit and quota prerequisites.
+- **Implementation scope:** Read-only region, billing credit coverage/expiry, organization policy, IAM and quota preflight; retain private evidence.
+- **Out of scope:** Provisioning or purchases.
+- **Prerequisites and dependencies:** [SP-00.a](#sp-00-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Dated service go/no-go and remediation owners; no guessed eligibility.
+- **Required automated tests:** Validate sanitized checklist against actual cloud readbacks.
+- **Security and reliability:** No account IDs/secrets in public output.
+- **Effort and confidence:** 2 delivery engineer-days; medium confidence; +0.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-02-b"></a>
+### SP-02.b — Recover safe workspace headroom
+
+- **Objective:** Make development and deployment prerequisites concrete, affordable and safe to use. This PR delivers recover safe workspace headroom.
+- **Implementation scope:** Inventory active consumers/archives; perform only approved resize or verified reproducible-cache cleanup.
+- **Out of scope:** Deleting migration archives, active worktrees or recreating project on Mac.
+- **Prerequisites and dependencies:** [SP-02.a](#sp-02-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** At least 20 GiB free or measured larger build need; needed consumers preserved.
+- **Required automated tests:** Free-space, consumer-path and dependency-integrity readbacks.
+- **Security and reliability:** 423 MiB observed; no builds before headroom gate.
+- **Effort and confidence:** 2 delivery engineer-days; medium confidence; +0.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-02-c"></a>
+### SP-02.c — Approve a priced staging configuration
+
+- **Objective:** Make development and deployment prerequisites concrete, affordable and safe to use. This PR delivers approve a priced staging configuration.
+- **Implementation scope:** Resolve region/runtime/project configuration and capped trial estimate; obtain provisioning authorization.
+- **Out of scope:** Production rollout or unbounded sweep.
+- **Prerequisites and dependencies:** [SP-02.a](#sp-02-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Concrete design, permissions and spending cap approved.
+- **Required automated tests:** Configuration/policy and cost-dimension checks.
+- **Security and reliability:** Credit is not unlimited spend; unsupported combinations block.
+- **Effort and confidence:** 2 delivery engineer-days; low confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R0; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-03"></a>
+## SP-03 — Validate numerical domain and baseline
+
+Parent: [#5](https://github.com/spei04/strange-physics/issues/5). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-03-a"></a>
+### SP-03.a — Extend independent analytic physics fixtures
+
+- **Objective:** Ensure numerical results and supported interventions are scientifically defensible. This PR delivers extend independent analytic physics fixtures.
+- **Implementation scope:** Add oscillator/drag/rotation references and independent mass/impulse/force invariants.
+- **Out of scope:** New integrator or fitter.
+- **Prerequisites and dependencies:** [SP-00.b](#sp-00-b), [SP-02.b](#sp-02-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-CORE](#contract-core); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Existing solver agrees with analytic cases without changing study distributions.
+- **Required automated tests:** Analytic trajectories, reciprocity, rotation and applicable energy tests.
+- **Security and reliability:** Do not export hidden law state or clip failures.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, SDK. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-03-b"></a>
+### SP-03.b — Ratify first-spring domain and tolerances
+
+- **Objective:** Ensure numerical results and supported interventions are scientifically defensible. This PR delivers ratify first-spring domain and tolerances.
+- **Implementation scope:** Calibrate excitation/mass cases, timestep refinements and conditioning.
+- **Out of scope:** Full-family calibration.
+- **Prerequisites and dependencies:** [SP-03.a](#sp-03-a), [SP-01.a](#sp-01-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-CORE](#contract-core), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Ratify or justify ≤1% coefficient error and ≤0.001 position RMSE over two seconds before fit acceptance.
+- **Required automated tests:** Analytic convergence, zero excitation and mass/order boundary fixtures.
+- **Security and reliability:** Failed tests require numerical justification, not arbitrary loosening.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-03-c"></a>
+### SP-03.c — Validate all-family numerical domains
+
+- **Objective:** Ensure numerical results and supported interventions are scientifically defensible. This PR delivers validate all-family numerical domains.
+- **Implementation scope:** Cover 1/3/8 particles, legal bounds, coefficient/term changes and stable extrapolation; report identifiability.
+- **Out of scope:** Arbitrary new law families.
+- **Prerequisites and dependencies:** [SP-03.b](#sp-03-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-CORE](#contract-core), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Versioned supported domain preserves unstable/unidentifiable case counts.
+- **Required automated tests:** Convergence, radial near-origin, weak excitation and failure matrices.
+- **Security and reliability:** No redraw or family-label leakage.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, SDK, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-03-d"></a>
+### SP-03.d — Profile simulation and failure costs
+
+- **Objective:** Ensure numerical results and supported interventions are scientifically defensible. This PR delivers profile simulation and failure costs.
+- **Implementation scope:** Measure CPU/memory/output across supported worlds and failures; record exact environment/config.
+- **Out of scope:** 100-run deployment.
+- **Prerequisites and dependencies:** [SP-03.c](#sp-03-c), [SP-02.b](#sp-02-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-CORE](#contract-core), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Reproducible p50/p95 profiles and proposed execution caps.
+- **Required automated tests:** Profiling harness, bounded divergence and output-size tests.
+- **Security and reliability:** Private true-world diagnostics; microbenchmarks are not capacity evidence.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, SDK, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-04"></a>
+## SP-04 — Implement integrated sparse fitter
+
+Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-04-a"></a>
+### SP-04.a — Fit a spring using purchased observations
+
+- **Objective:** Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers fit a spring using purchased observations.
+- **Implementation scope:** Fit integrated velocity increments using public masses and valid records; emit coefficient/provenance and conditioning.
+- **Out of scope:** Sparse full-family fitting.
+- **Prerequisites and dependencies:** [SP-03.b](#sp-03-b), [SP-02.b](#sp-02-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-CORE](#contract-core); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Analytic fixture meets ratified error; insufficient excitation explicitly fails.
+- **Required automated tests:** Coefficient recovery, rank deficiency, order/mass mismatch and no hidden input.
+- **Security and reliability:** No evaluator access; bounded compute and safe diagnostics.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, SDK. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-04-b"></a>
+### SP-04.b — Predict with the versioned spring model
+
+- **Objective:** Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers predict with the versioned spring model.
+- **Implementation scope:** Validate model/hash/runtime and propagate unseen initial conditions with ordered finite outputs.
+- **Out of scope:** Executable hosted predictor.
+- **Prerequisites and dependencies:** [SP-04.a](#sp-04-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Independent analytic prediction meets ratified bound.
+- **Required automated tests:** Serialization, shuffled IDs, reversed times, tampered hashes and divergence.
+- **Security and reliability:** Bound output; no pickle or true simulator parameters.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-04-c"></a>
+### SP-04.c — Implement disclosed integrated feature dictionary
+
+- **Objective:** Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers implement disclosed integrated feature dictionary.
+- **Implementation scope:** Implement spring, velocity/rotation, constant and radial-grid graph features with integrated increments.
+- **Out of scope:** Automatic feature search.
+- **Prerequisites and dependencies:** [SP-04.b](#sp-04-b), [SP-03.c](#sp-03-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-CORE](#contract-core); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Dictionary/version identical for every selector.
+- **Required automated tests:** Hand-computed features, reciprocal graph terms, mass scaling and exponent grid.
+- **Security and reliability:** No family/exponent oracle; cap feature count.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, SDK. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-04-d"></a>
+### SP-04.d — Implement sparse fitting and model persistence
+
+- **Objective:** Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers implement sparse fitting and model persistence.
+- **Implementation scope:** Add development-fixed regularization, support selection, degeneracy diagnostics and immutable models.
+- **Out of scope:** Ensembles or acquisition.
+- **Prerequisites and dependencies:** [SP-04.c](#sp-04-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Supported mixtures meet predeclared development tolerances; unsupported fits explicit.
+- **Required automated tests:** Mixture recovery, noisy/rank-deficient cases, serialization and runtime mismatch.
+- **Security and reliability:** Bound fitting work; no evaluation tuning.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-04-e"></a>
+### SP-04.e — Deliver local fit-predict-score SDK and CLI
+
+- **Objective:** Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers deliver local fit-predict-score sdk and cli.
+- **Implementation scope:** Wire typed artifacts into SDK/CLI reproduction with durations and failure classes.
+- **Out of scope:** Hosted product or official score.
+- **Prerequisites and dependencies:** [SP-04.b](#sp-04-b), [SP-06.a](#sp-06-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-CORE](#contract-core); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** One command sequence completes independent single-spring development scoring.
+- **Required automated tests:** CLI round-trip, corrupt artifacts and independent report assertions.
+- **Security and reliability:** Trusted local and development-only labels; no provider dependency.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, SDK. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-05"></a>
+## SP-05 — Add uncertainty, adaptation and active selection
+
+Parent: [#7](https://github.com/spei04/strange-physics/issues/7). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-05-a"></a>
+### SP-05.a — Bootstrap complete experiments
+
+- **Objective:** Measure adaptive experiment selection and uncertainty without privileged information. This PR delivers bootstrap complete experiments.
+- **Implementation scope:** Resample experiments, propagate ensembles and record support/coverage metadata.
+- **Out of scope:** Acquisition or blind calibration.
+- **Prerequisites and dependencies:** [SP-04.d](#sp-04-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Never resample frames as independent; low support explicit.
+- **Required automated tests:** Deterministic samples, correlated-frame guard and coverage fixtures.
+- **Security and reliability:** Disagreement is not calibrated confidence; cap compute.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-05-b"></a>
+### SP-05.b — Generate identical candidate banks
+
+- **Objective:** Measure adaptive experiment selection and uncertainty without privileged information. This PR delivers generate identical candidate banks.
+- **Implementation scope:** Generate seeded 128-candidate banks and four shared calibration experiments.
+- **Out of scope:** LLM integration.
+- **Prerequisites and dependencies:** [SP-04.d](#sp-04-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-CORE](#contract-core); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Candidate identities and budgets match across selectors.
+- **Required automated tests:** Bounds, noise/seed separation and calibration accounting.
+- **Security and reliability:** No true change signal or free measurements.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, SDK. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-05-c"></a>
+### SP-05.c — Implement declared adaptation policies
+
+- **Objective:** Measure adaptive experiment selection and uncertainty without privileged information. This PR delivers implement declared adaptation policies.
+- **Implementation scope:** Implement all-history/window/detector reset from pre-experiment residuals with checkpointable state.
+- **Out of scope:** Gradual-drift track.
+- **Prerequisites and dependencies:** [SP-05.a](#sp-05-a), [SP-05.b](#sp-05-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Policies use purchased history only; thresholds versioned.
+- **Required automated tests:** Stationary alarms, replay, recovery boundaries and hidden-marker rejection.
+- **Security and reliability:** Oracle reset diagnostic only; preserve failed experiments.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-05-d"></a>
+### SP-05.d — Select experiments by bounded disagreement
+
+- **Objective:** Measure adaptive experiment selection and uncertainty without privileged information. This PR delivers select experiments by bounded disagreement.
+- **Implementation scope:** Rank shared candidates within CPU budget; log ties and explicit fallbacks.
+- **Out of scope:** Superiority claim.
+- **Prerequisites and dependencies:** [SP-05.c](#sp-05-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Random and active use identical fit/adaptation inputs.
+- **Required automated tests:** Tie, timeout, low support and candidate parity fixtures.
+- **Security and reliability:** Bound fallback/retries; no uncharged simulations.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-06"></a>
+## SP-06 — Implement held-out metrics and failure policy
+
+Parent: [#8](https://github.com/spei04/strange-physics/issues/8). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-06-a"></a>
+### SP-06.a — Compute independent development reports
+
+- **Objective:** Produce unbiased, reproducible generalization and recovery measurements. This PR delivers compute independent development reports.
+- **Implementation scope:** Score analytic spring predictions with fixed normalization, counts and report hashes.
+- **Out of scope:** Full benchmark penalty freeze.
+- **Prerequisites and dependencies:** [SP-04.b](#sp-04-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Hand-calculated RMSE/counts match; missing output remains failure.
+- **Required automated tests:** Known errors, all invalid/missing output, normalization and tamper cases.
+- **Security and reliability:** Separate evaluator labels from fitter; report failures.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-06-b"></a>
+### SP-06.b — Generate restricted held-out probe banks
+
+- **Objective:** Produce unbiased, reproducible generalization and recovery measurements. This PR delivers generate restricted held-out probe banks.
+- **Implementation scope:** Create disjoint splits, paired 32+32 per-regime banks and visibility-tagged manifests.
+- **Out of scope:** Hosted isolation.
+- **Prerequisites and dependencies:** [SP-03.c](#sp-03-c), [SP-06.a](#sp-06-a), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Seed/world sets disjoint and paired methods share probes.
+- **Required automated tests:** Collision, pairing, stable extrapolation and leak fixtures.
+- **Security and reliability:** No reconstructible seed to agent; public is not blind.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-06-c"></a>
+### SP-06.c — Score penalties and censored recovery
+
+- **Objective:** Produce unbiased, reproducible generalization and recovery measurements. This PR delivers score penalties and censored recovery.
+- **Implementation scope:** Implement development penalty, 16-step recovery fraction and restricted latency with all failures included.
+- **Out of scope:** Official scored release.
+- **Prerequisites and dependencies:** [SP-06.b](#sp-06-b), [SP-04.d](#sp-04-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Crashing cannot improve primary score; unlearned/nonrecovering worlds retained.
+- **Required automated tests:** Hand-counted censoring, boundary changes, all-failure and penalty sensitivity.
+- **Security and reliability:** No successful-only ranking.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-06-d"></a>
+### SP-06.d — Aggregate paired independent worlds
+
+- **Objective:** Produce unbiased, reproducible generalization and recovery measurements. This PR delivers aggregate paired independent worlds.
+- **Implementation scope:** Aggregate seeds inside world, bootstrap worlds and report family/condition strata plus declared macro weights.
+- **Out of scope:** Interpreting uncollected results.
+- **Prerequisites and dependencies:** [SP-06.c](#sp-06-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Counts reconcile; paired estimates and intervals reproduce.
+- **Required automated tests:** Hand aggregates, missing/duplicate seeds and world-versus-frame resampling.
+- **Security and reliability:** Avoid pseudoreplication; disclose exclusions.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-07"></a>
+## SP-07 — Calibrate and draft frozen study manifests
+
+Parent: [#9](https://github.com/spei04/strange-physics/issues/9). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-07-a"></a>
+### SP-07.a — Calibrate uncertainty and adaptation
+
+- **Objective:** Choose study settings from development evidence before official evaluation. This PR delivers calibrate uncertainty and adaptation.
+- **Implementation scope:** Run capped development studies of noise, regularization, thresholds, coverage and recovery.
+- **Out of scope:** Official freeze.
+- **Prerequisites and dependencies:** [SP-05.d](#sp-05-d), [SP-06.d](#sp-06-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Candidate settings have sensitivity and negative-result evidence.
+- **Required automated tests:** Small CI calibration and reproducible larger development harness.
+- **Security and reliability:** No evaluation tuning; failed validity can halt release.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-07-b"></a>
+### SP-07.b — Profile complete ensemble evaluation
+
+- **Objective:** Choose study settings from development evidence before official evaluation. This PR delivers profile complete ensemble evaluation.
+- **Implementation scope:** Measure snapshots×probes×ensemble workload, failures and limits; update compute model.
+- **Out of scope:** Production capacity or GPU training.
+- **Prerequisites and dependencies:** [SP-07.a](#sp-07-a), [SP-03.d](#sp-03-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** 40×64 rollout count and ensemble multiplier explicit.
+- **Required automated tests:** Repeatable count, timeout, memory and estimator checks.
+- **Security and reliability:** Do not size from simulator-only timing.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-07-c"></a>
+### SP-07.c — Choose study size from precision evidence
+
+- **Objective:** Choose study settings from development evidence before official evaluation. This PR delivers choose study size from precision evidence.
+- **Implementation scope:** Estimate paired variance and precision; propose world/seed allocation, stopping and capped cost.
+- **Out of scope:** Launching paid evaluation.
+- **Prerequisites and dependencies:** [SP-07.a](#sp-07-a), [SP-07.b](#sp-07-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Independent review of justified size; 2430 episodes stays illustrative.
+- **Required automated tests:** Interval-precision simulations and count/manifest checks.
+- **Security and reliability:** Do not tune study to favor a selector.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-07-d"></a>
+### SP-07.d — Version both candidate research protocols
+
+- **Objective:** Choose study settings from development evidence before official evaluation. This PR delivers version both candidate research protocols.
+- **Implementation scope:** Complete controlled/discovery resource, snapshot, failure and visibility manifests.
+- **Out of scope:** Collecting/publishing reference results.
+- **Prerequisites and dependencies:** [SP-07.c](#sp-07-c), [SP-06.d](#sp-06-d), [SP-19.a](#sp-19-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Both tracks have reviewed candidate versions and immutable identities.
+- **Required automated tests:** Manifest, hash and cross-track mixing rejection.
+- **Security and reliability:** Candidate review is not official scoring approval.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, security, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R1; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-08"></a>
+## SP-08 — Build identity and workspace memberships
+
+Parent: [#10](https://github.com/spei04/strange-physics/issues/10). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-08-a"></a>
+### SP-08.a — Verify OIDC identities and sessions
+
+- **Objective:** Provide private workspaces and usable human/machine authentication. This PR delivers verify oidc identities and sessions.
+- **Implementation scope:** Implement issuer/audience/signature/expiry verification and session lifecycle; separate hosted and generic OIDC configuration.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-01.b](#sp-01-b), [SP-02.b](#sp-02-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Forged/wrong-issuer/expired tokens denied; logout and key rotation behavior defined.
+- **Required automated tests:** Fake issuer, key rollover, nonce/state/CSRF and token validation tests.
+- **Security and reliability:** No email-domain membership; safe token errors.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-08-b"></a>
+### SP-08.b — Implement workspaces, invitations and roles
+
+- **Objective:** Provide private workspaces and usable human/machine authentication. This PR delivers implement workspaces, invitations and roles.
+- **Implementation scope:** Add owner/researcher/viewer memberships, single-use expiring invites and explicit identity linking.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-08.a](#sp-08-a), [SP-09.a](#sp-09-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-DB](#contract-db), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Role matrix enforced; sole-owner removal and invite replay rejected.
+- **Required automated tests:** Concurrent accept, expiry, cross-workspace invite and account-linking tests.
+- **Security and reliability:** Prevent role escalation and confused identity merges.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-08-c"></a>
+### SP-08.c — Issue scoped machine and run credentials
+
+- **Objective:** Provide private workspaces and usable human/machine authentication. This PR delivers issue scoped machine and run credentials.
+- **Implementation scope:** Implement hashed workspace service credentials plus short-lived audience/run/epoch tokens, rotation and revocation.
+- **Out of scope:** Enterprise federation or SCIM.
+- **Prerequisites and dependencies:** [SP-08.b](#sp-08-b), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** SDK can authenticate without browser; stale/wrong-run/expired credential denied.
+- **Required automated tests:** Scope, rotation, epoch replay, revocation and credential redaction tests.
+- **Security and reliability:** Platform provider secrets never enter token claims.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, Platform, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-08-d"></a>
+### SP-08.d — Implement secure browser authentication endpoints
+
+- **Objective:** Provide private workspaces and usable human/machine authentication. This PR delivers implement secure browser authentication endpoints.
+- **Implementation scope:** Expose callback/session/logout and membership bootstrap with documented CORS/cookie/CSRF choices.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-08.c](#sp-08-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Browser and API sessions agree on current role and revocation.
+- **Required automated tests:** CSRF/origin, logout, refresh and session fixation tests.
+- **Security and reliability:** Fail closed on unknown issuer or session state.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-09"></a>
+## SP-09 — Implement run and experiment transactions
+
+Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-09-a"></a>
+### SP-09.a — Create tenant SQL schema and migration harness
+
+- **Objective:** Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers create tenant sql schema and migration harness.
+- **Implementation scope:** Add versioned PostgreSQL migrations, composite tenant foreign keys and constraint/index fixtures.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-01.b](#sp-01-b), [SP-02.b](#sp-02-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-DB](#contract-db), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Schema enforces run/operation/ordinal uniqueness; rollback/forward behavior documented.
+- **Required automated tests:** Real PostgreSQL fresh/upgrade, FK, unique and transaction tests.
+- **Security and reliability:** Separate migration and runtime roles; parameterized access.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-09-b"></a>
+### SP-09.b — Reserve experiments and budgets atomically
+
+- **Objective:** Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers reserve experiments and budgets atomically.
+- **Implementation scope:** Commit validated request, ordinal, debit and outbox in one transaction; canonicalize operation keys.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-09.a](#sp-09-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-DB](#contract-db), [C-HTTP](#contract-http), [C-CORE](#contract-core); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Concurrent duplicate returns same logical result; changed request conflicts; invalid request not charged.
+- **Required automated tests:** Parallel retries, crash boundaries, exhausted budget and hash-conflict tests.
+- **Security and reliability:** No acknowledgement before durable commit; no duplicate debit.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, Research. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-09-c"></a>
+### SP-09.c — Implement run and operation state transitions
+
+- **Objective:** Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers implement run and operation state transitions.
+- **Implementation scope:** Add create/read/cancel/operation routes, revision checks, deadlines and terminal-state immutability.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-09.b](#sp-09-b), [SP-08.b](#sp-08-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-HTTP](#contract-http), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Legal transitions and async cancellation observable; unauthorized IDs hidden.
+- **Required automated tests:** Race cancel/complete/expire, stale revision and cross-tenant operation tests.
+- **Security and reliability:** Accepting cancel is not proof worker stopped.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-09-d"></a>
+### SP-09.d — Connect trusted simulator results to run transactions
+
+- **Objective:** Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers connect trusted simulator results to run transactions.
+- **Implementation scope:** Adapt public observations to durable result commits and safe numerical failure records.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-09.c](#sp-09-c), [SP-01.a](#sp-01-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-CORE](#contract-core), [C-DB](#contract-db), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** One accepted experiment has one terminal result/debit and no hidden parameter fields.
+- **Required automated tests:** Schema parity, failed integration, duplicate result and malicious error-message tests.
+- **Security and reliability:** Trusted simulator identity separate from user code.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Research, SDK, Backend, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-10"></a>
+## SP-10 — Add outbox, fencing and reconciliation
+
+Parent: [#12](https://github.com/spei04/strange-physics/issues/12). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-10-a"></a>
+### SP-10.a — Dispatch transactional outbox intents
+
+- **Objective:** Recover remote work reliably despite duplicate delivery and stale workers. This PR delivers dispatch transactional outbox intents.
+- **Implementation scope:** Implement short idempotent Cloud Tasks handlers, deterministic launch IDs and failed-dispatch records.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-09.d](#sp-09-d), [SP-27.c](#sp-27-c), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-DB](#contract-db), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Duplicate/reordered/delayed delivery does not duplicate logical launch.
+- **Required automated tests:** Duplicate delivery, crash after enqueue, retry exhaustion and replay tests.
+- **Security and reliability:** Queue never owns authoritative state; bounded retries.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-10-b"></a>
+### SP-10.b — Fence worker leases and heartbeats
+
+- **Objective:** Recover remote work reliably despite duplicate delivery and stale workers. This PR delivers fence worker leases and heartbeats.
+- **Implementation scope:** Allocate monotonic epochs, renew leases and reject stale result/checkpoint commits.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-09.b](#sp-09-b), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-DB](#contract-db), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Partitioned old worker cannot write after replacement lease.
+- **Required automated tests:** Lease expiry, heartbeat race, clock-skew and stale-commit tests.
+- **Security and reliability:** Use server timestamps and transaction guards.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-10-c"></a>
+### SP-10.c — Reconcile abandoned launches and results
+
+- **Objective:** Recover remote work reliably despite duplicate delivery and stale workers. This PR delivers reconcile abandoned launches and results.
+- **Implementation scope:** Recover missed dispatch/expired leases and expose audited retry/deadline decisions.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-10.a](#sp-10-a), [SP-10.b](#sp-10-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-DB](#contract-db), [C-EXEC](#contract-exec), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Reconciliation converges without resurrecting terminal or cancelled runs.
+- **Required automated tests:** Process death, orphan launch, terminal race and replay idempotency tests.
+- **Security and reliability:** Retry bounded by run deadline; no invisible restart.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-11"></a>
+## SP-11 — Enforce tenant and artifact authorization
+
+Parent: [#13](https://github.com/spei04/strange-physics/issues/13). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-11-a"></a>
+### SP-11.a — Enforce tenant row policies and safe pool reuse
+
+- **Objective:** Prevent cross-tenant access and honor current authorization on every surface. This PR delivers enforce tenant row policies and safe pool reuse.
+- **Implementation scope:** Apply RLS to tenant tables with nonowner runtime role and transaction-local tenant context.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-08.b](#sp-08-b), [SP-09.d](#sp-09-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Cross-tenant reads/writes denied even under omitted filter and pooled reuse.
+- **Required automated tests:** Role-bypass, unset context, FK traversal and connection reuse tests.
+- **Security and reliability:** Runtime cannot own tables or bypass RLS.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-11-b"></a>
+### SP-11.b — Authorize every operation and artifact reference
+
+- **Objective:** Prevent cross-tenant access and honor current authorization on every surface. This PR delivers authorize every operation and artifact reference.
+- **Implementation scope:** Centralize scoped route/object policy, property allowlists and nonenumerating denied lookup.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-11.a](#sp-11-a), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-HTTP](#contract-http), [C-ID](#contract-id), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Every route/field has role decision; hashes alone confer no access.
+- **Required automated tests:** Endpoint/ID substitution, mass assignment and future-object policy fixtures.
+- **Security and reliability:** Signed access grants short-lived and authorized; no raw bucket access.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, security, Platform, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-11-c"></a>
+### SP-11.c — Enforce live revocation and audit decisions
+
+- **Objective:** Prevent cross-tenant access and honor current authorization on every surface. This PR delivers enforce live revocation and audit decisions.
+- **Implementation scope:** Check current membership/credential status on requests and define periodic SSE reauthorization hooks.
+- **Out of scope:** SCIM provisioning.
+- **Prerequisites and dependencies:** [SP-11.b](#sp-11-b), [SP-08.c](#sp-08-c), [SP-01.d](#sp-01-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Revoked caller denied new work; event authorization refresh ≤30 seconds.
+- **Required automated tests:** Revocation races, stale token, sole-owner and safe audit/redaction tests.
+- **Security and reliability:** No stale membership cache bypass.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, SDK, frontend, Frontend, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-12"></a>
+## SP-12 — Implement quotas and usage accounting
+
+Parent: [#14](https://github.com/spei04/strange-physics/issues/14). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-12-a"></a>
+### SP-12.a — Reserve and settle resource allowances
+
+- **Objective:** Bound resource consumption and account for usage fairly across tenants. This PR delivers reserve and settle resource allowances.
+- **Implementation scope:** Add atomic run/workspace CPU, token, artifact and execution reservations with attempt linkage.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-09.b](#sp-09-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-DB](#contract-db), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No concurrent budget overspend; unknown amounts remain explicit.
+- **Required automated tests:** Parallel exhaustion, partial settlement, negative amount and crash-retry tests.
+- **Security and reliability:** Limit enforcement independent of agent honesty.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-12-b"></a>
+### SP-12.b — Implement fair bounded admission
+
+- **Objective:** Bound resource consumption and account for usage fairly across tenants. This PR delivers implement fair bounded admission.
+- **Implementation scope:** Separate build, run and evaluation queues; workspace caps and weighted admission with bounded backlog.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-12.a](#sp-12-a), [SP-10.c](#sp-10-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-DB](#contract-db), [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** One tenant cannot monopolize slots; overload yields explicit queued/429 outcome.
+- **Required automated tests:** Starvation, burst, cancellation release and scheduler replay tests.
+- **Security and reliability:** No unbounded in-memory queue or silent dropping.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, Platform, security, backend, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-12-c"></a>
+### SP-12.c — Expose usage reconciliation and safe summaries
+
+- **Objective:** Bound resource consumption and account for usage fairly across tenants. This PR delivers expose usage reconciliation and safe summaries.
+- **Implementation scope:** Create usage query API and reconciler for reserved/settled/unknown amounts and attributable costs.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-12.b](#sp-12-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-HTTP](#contract-http), [C-DB](#contract-db), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Totals reconcile to immutable attempts without claiming estimated costs as billed.
+- **Required automated tests:** Sum/replay/missing usage, tenant access and pagination tests.
+- **Security and reliability:** No prompts or credentials in usage output.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, SDK, frontend, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R2; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-13"></a>
+## SP-13 — Persist immutable artifacts and checkpoints
+
+Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-13-a"></a>
+### SP-13.a — Implement immutable content storage adapter
+
+- **Objective:** Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers implement immutable content storage adapter.
+- **Implementation scope:** Write bounded hash/generation-verified objects and typed references behind portable storage interface.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-01.c](#sp-01-c), [SP-27.c](#sp-27-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ART](#contract-art), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Corrupt/incomplete objects cannot become committed references.
+- **Required automated tests:** Hash mismatch, conditional write, interrupted upload and storage outage tests.
+- **Security and reliability:** Private buckets; no user-specified arbitrary filesystem path.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, backend, research, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-13-b"></a>
+### SP-13.b — Expose authorized artifact and package upload lifecycle
+
+- **Objective:** Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers expose authorized artifact and package upload lifecycle.
+- **Implementation scope:** Stage uploads, validate size/digest/media/archive metadata and expose operation status and authorized read path.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-13.a](#sp-13-a), [SP-11.b](#sp-11-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ART](#contract-art), [C-HTTP](#contract-http), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Only owner workspace can finalize/read; pending objects remain quarantined.
+- **Required automated tests:** Traversal/decompression/oversize, expired grant and cross-tenant object tests.
+- **Security and reliability:** Do not execute uploaded content; bounded reads.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, Backend, SDK, frontend, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-13-c"></a>
+### SP-13.c — Commit checkpoint and model references safely
+
+- **Objective:** Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers commit checkpoint and model references safely.
+- **Implementation scope:** Commit completed-prefix checkpoint/model references after durable object verification; enforce index/runtime rules.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-13.b](#sp-13-b), [SP-10.b](#sp-10-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ART](#contract-art), [C-DB](#contract-db), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Crash between object and SQL leaves recoverable orphan, never missing committed artifact.
+- **Required automated tests:** Write/commit crash matrix, hash tamper, stale epoch and prefix mismatch.
+- **Security and reliability:** Agent state interpreted only in sandbox; bound JSON size.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, Backend, Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-13-d"></a>
+### SP-13.d — Collect abandoned uploads without deleting live state
+
+- **Objective:** Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers collect abandoned uploads without deleting live state.
+- **Implementation scope:** Implement grace-period reference scan, active-build/run guards and audited scratch cleanup.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-13.c](#sp-13-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ART](#contract-art), [C-DB](#contract-db), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Only unreferenced inactive objects removed; immutable retained artifacts remain.
+- **Required automated tests:** Concurrent finalize, active lease, repeated cleanup and storage-error tests.
+- **Security and reliability:** No broad bucket deletion; preserve legal/retention exceptions.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, Backend, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-14"></a>
+## SP-14 — Build packages in isolation
+
+Parent: [#16](https://github.com/spei04/strange-physics/issues/16). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-14-a"></a>
+### SP-14.a — Validate package manifests and safe extraction
+
+- **Objective:** Build customer packages without exposing trusted deployment credentials. This PR delivers validate package manifests and safe extraction.
+- **Implementation scope:** Validate pinned lockfiles, source digests, archive paths and build resource declarations.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-13.b](#sp-13-b), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Invalid or unpinned packages fail before build; accepted source immutable.
+- **Required automated tests:** Symlink/path escape, archive bomb, missing lock and digest-change tests.
+- **Security and reliability:** Treat install hooks as arbitrary code.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-14-b"></a>
+### SP-14.b — Execute isolated quarantined builds
+
+- **Objective:** Build customer packages without exposing trusted deployment credentials. This PR delivers execute isolated quarantined builds.
+- **Implementation scope:** Launch build sandbox with constrained dependency fetch, private scratch and no deploy/runtime credentials.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-14.a](#sp-14-a), [SP-27.d](#sp-27-d), [SP-15.b](#sp-15-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Build can access only approved mirror/registry paths; timeout and resource kill enforced.
+- **Required automated tests:** Malicious install hooks, metadata/DNS/egress probes and exhaustion tests.
+- **Security and reliability:** Never reuse trusted CI runner identity or mutable shared volume.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-14-c"></a>
+### SP-14.c — Scan and promote digest-pinned runtime images
+
+- **Objective:** Build customer packages without exposing trusted deployment credentials. This PR delivers scan and promote digest-pinned runtime images.
+- **Implementation scope:** Produce provenance/SBOM, scan results and quarantine-to-approved transition tied to immutable digest.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-14.b](#sp-14-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-ART](#contract-art), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Only approved matching image launches; rejected scan stays quarantined.
+- **Required automated tests:** Image substitution, unsigned provenance, stale scan and failed promotion tests.
+- **Security and reliability:** Promotion identity cannot overwrite trusted base images.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-14-d"></a>
+### SP-14.d — Review hostile-build evidence
+
+- **Objective:** Build customer packages without exposing trusted deployment credentials. This PR delivers review hostile-build evidence.
+- **Implementation scope:** Run malicious build corpus in staging and verify credential/network/storage boundaries plus cleanup.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-14.c](#sp-14-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No secret/exfiltration path; failures block uploaded-code enablement.
+- **Required automated tests:** End-to-end hostile hook, fork/disk exhaustion and poisoned cache tests.
+- **Security and reliability:** Real environment evidence required; mocks insufficient.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-15"></a>
+## SP-15 — Enforce sandbox runtime and broker policy
+
+Parent: [#17](https://github.com/spei04/strange-physics/issues/17). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-15-a"></a>
+### SP-15.a — Probe scientific runtime compatibility
+
+- **Objective:** Enforce hostile-code isolation rather than relying on a container label. This PR delivers probe scientific runtime compatibility.
+- **Implementation scope:** Run pinned NumPy/Pydantic/SciPy trial image in selected sandbox; measure syscall, filesystem and startup behavior.
+- **Out of scope:** Broad product runtime.
+- **Prerequisites and dependencies:** [SP-02.c](#sp-02-c), [SP-27.c](#sp-27-c), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-CORE](#contract-core); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Supported runtime/version documented or architecture decision reopened.
+- **Required automated tests:** Scientific imports, deterministic fixture, limits and unsupported-runtime rejection.
+- **Security and reliability:** No fallback to plain container when sandbox fails.
+- **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, security, backend, Research, SDK. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-15-b"></a>
+### SP-15.b — Enforce sandbox and resource admission policy
+
+- **Objective:** Enforce hostile-code isolation rather than relying on a container label. This PR delivers enforce sandbox and resource admission policy.
+- **Implementation scope:** Require approved RuntimeClass, digest, read-only base, user/process/disk/CPU/memory/time limits; reject privileged mounts/tokens.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-15.a](#sp-15-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Invalid pod configurations fail closed; bounded malicious workloads terminated.
+- **Required automated tests:** Admission policy, runtime-unavailable, host mount, service-token and exhaustion tests.
+- **Security and reliability:** Sandbox layer alone is insufficient; enforce full configuration.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-15-c"></a>
+### SP-15.c — Implement epoch-scoped run broker permissions
+
+- **Objective:** Enforce hostile-code isolation rather than relying on a container label. This PR delivers implement epoch-scoped run broker permissions.
+- **Implementation scope:** Expose only allowed experiment/checkpoint/model-call operations with run/attempt-bound tokens.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-08.c](#sp-08-c), [SP-11.c](#sp-11-c), [SP-10.b](#sp-10-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-HTTP](#contract-http), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Agent cannot access full workspace API or another run/epoch.
+- **Required automated tests:** Audience/scope/epoch substitution, expired token and terminal-run tests.
+- **Security and reliability:** No provider/evaluator credentials or privileged diagnostic messages.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, security, backend, Backend, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-15-d"></a>
+### SP-15.d — Enforce broker-only network and DNS
+
+- **Objective:** Enforce hostile-code isolation rather than relying on a container label. This PR delivers enforce broker-only network and dns.
+- **Implementation scope:** Apply runtime egress/DNS/metadata policy and networkless predictor variant with independently verified routing.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-15.b](#sp-15-b), [SP-15.c](#sp-15-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Agent reaches broker only; predictor has no outbound path including DNS.
+- **Required automated tests:** Metadata/private-IP/public-DNS/redirect/IPv6 and broker spoof tests.
+- **Security and reliability:** Fail closed when policy unavailable; record policy version.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-15-e"></a>
+### SP-15.e — Validate hostile-runtime isolation
+
+- **Objective:** Enforce hostile-code isolation rather than relying on a container label. This PR delivers validate hostile-runtime isolation.
+- **Implementation scope:** Run adversarial tenant/runtime corpus and verify process termination and credential separation.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-15.d](#sp-15-d), [SP-14.d](#sp-14-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Security reviewer signs exact deployed image/network/runtime evidence before uploads enabled.
+- **Required automated tests:** Cross-run filesystem, secret probes, resource attack and stale-token tests.
+- **Security and reliability:** Unresolved critical/high isolation issue blocks release.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-16"></a>
+## SP-16 — Connect recoverable remote execution
+
+Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-16-a"></a>
+### SP-16.a — Coordinate one remote investigation
+
+- **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers coordinate one remote investigation.
+- **Implementation scope:** Connect launch, scoped broker, trusted simulation and committed result/checkpoint loop for one approved image.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-10.c](#sp-10-c), [SP-12.c](#sp-12-c), [SP-13.c](#sp-13-c), [SP-14.d](#sp-14-d), [SP-15.e](#sp-15-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-DB](#contract-db), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Remote run produces same logical observations/budgets as trusted local fixture.
+- **Required automated tests:** Local/remote conformance and one complete remote investigation.
+- **Security and reliability:** Only approved image and current epoch launch.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Platform, security, backend, Backend, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-16-b"></a>
+### SP-16.b — Resume an agent from committed checkpoints
+
+- **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers resume an agent from committed checkpoints.
+- **Implementation scope:** Restore declared state, replay committed-but-unobserved result and continue with immutable runtime.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-16.a](#sp-16-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-ART](#contract-art), [C-CORE](#contract-core); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Replacement never buys/debits an already committed experiment.
+- **Required automated tests:** Kill before/after reserve/result/checkpoint with deterministic replay tests.
+- **Security and reliability:** Incompatible runtime or corrupt checkpoint fails visibly.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, research, Research, SDK. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-16-c"></a>
+### SP-16.c — Cancel, expire and reconcile remote work
+
+- **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers cancel, expire and reconcile remote work.
+- **Implementation scope:** Revoke launch/broker access, terminate attempts, reconcile held allowances and preserve accepted results.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-16.b](#sp-16-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-DB](#contract-db), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** New work revoked ≤5s; controlled workers terminate ≤60s or explicit fault recorded.
+- **Required automated tests:** Cancel/complete races, uncooperative agent, deadline and orphan reconciliation.
+- **Security and reliability:** Do not refund pending usage before settlement.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, Backend, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-16-d"></a>
+### SP-16.d — Prove end-to-end interruption invariants
+
+- **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers prove end-to-end interruption invariants.
+- **Implementation scope:** Automate process/network failures across commit boundaries in staging with repeated replacement.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-16.e](#sp-16-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-DB](#contract-db), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No lost acknowledged result or duplicate logical charge; p95 recovery target measured.
+- **Required automated tests:** Forced-death matrix, partitioned stale worker and replay hash consistency.
+- **Security and reliability:** Private exact-runtime evidence; failure blocks remote availability claims.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, security, backend, Backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-16-e"></a>
+### SP-16.e — Instrument remote execution and recovery
+
+- **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers instrument remote execution and recovery.
+- **Implementation scope:** Add bounded-cardinality launch/recovery/cancel metrics, correlated traces and stuck-run runbook dashboards.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-16.c](#sp-16-c), [SP-27.e](#sp-27-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Alerts detect a deliberately stuck run and identify epoch/operation without private payload.
+- **Required automated tests:** Synthetic stuck/failed/cancelled runs and telemetry redaction assertions.
+- **Security and reliability:** No run IDs as unbounded metric labels; trace access controlled.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-17"></a>
+## SP-17 — Implement durable model-call ledger
+
+Parent: [#19](https://github.com/spei04/strange-physics/issues/19). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-17-a"></a>
+### SP-17.a — Freeze model-call and credential-management contracts
+
+- **Objective:** Make model calls replayable and their potentially ambiguous costs visible. This PR delivers freeze model-call and credential-management contracts.
+- **Implementation scope:** Specify logical call/attempt/ambiguous states, provider connection CRUD, token reservations and sanitized response replay.
+- **Out of scope:** Provider code or paid calls.
+- **Prerequisites and dependencies:** [SP-01.b](#sp-01-b), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-PROVIDER](#contract-provider), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Gateway/SDK/research/security approve schemas and timeout billing policy.
+- **Required automated tests:** Good/bad/ambiguous fixtures, schema and no-secret response checks.
+- **Security and reliability:** No user-selected arbitrary provider URL; exact policy version.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, research, security, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-17-b"></a>
+### SP-17.b — Persist provider attempts and ambiguous usage
+
+- **Objective:** Make model calls replayable and their potentially ambiguous costs visible. This PR delivers persist provider attempts and ambiguous usage.
+- **Implementation scope:** Implement durable operation/attempt ledger and request/response artifacts with bounded retries and reconciliation.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-17.a](#sp-17-a), [SP-12.c](#sp-12-c), [SP-13.c](#sp-13-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-PROVIDER](#contract-provider), [C-DB](#contract-db), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Crash after send yields explicit ambiguity; identical key never creates hidden new attempt.
+- **Required automated tests:** Send/commit timeout/crash, duplicate key and usage reconciliation tests.
+- **Security and reliability:** External billing is not exactly-once; never blindly resend.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, research, security, Platform, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-17-c"></a>
+### SP-17.c — Manage workspace provider secrets
+
+- **Objective:** Make model calls replayable and their potentially ambiguous costs visible. This PR delivers manage workspace provider secrets.
+- **Implementation scope:** Implement owner-only connect/test/rotate/revoke API with Secret Manager references and fixed approved destinations.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-17.a](#sp-17-a), [SP-11.c](#sp-11-c), [SP-27.c](#sp-27-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-PROVIDER](#contract-provider), [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Keys only accessible to gateway identity; callers receive redacted status.
+- **Required automated tests:** Cross-workspace access, revoked key, SSRF/redirect and logging tests.
+- **Security and reliability:** Never return stored keys or place secrets in agent images.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, research, security, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-17-d"></a>
+### SP-17.d — Replay recorded model responses offline
+
+- **Objective:** Make model calls replayable and their potentially ambiguous costs visible. This PR delivers replay recorded model responses offline.
+- **Implementation scope:** Return stored result for repeat operation; expose billed/estimated/unknown usage and explicit unresolved attempts.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-17.b](#sp-17-b), [SP-17.c](#sp-17-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-PROVIDER](#contract-provider), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Replay consumes no network/provider request; ambiguity persists until resolved.
+- **Required automated tests:** Offline network-denial, response tamper, missing body and repeat replay tests.
+- **Security and reliability:** Private prompts retained under run policy; no silent fallback.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, research, security, Platform, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-18"></a>
+## SP-18 — Add bounded provider adapters and LLM selector
+
+Parent: [#20](https://github.com/spei04/strange-physics/issues/20). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-18-a"></a>
+### SP-18.a — Implement bounded provider transport
+
+- **Objective:** Connect an LLM selector fairly and safely within declared compute limits. This PR delivers implement bounded provider transport.
+- **Implementation scope:** Add approved provider/version adapter, token/rate budgets, timeouts, circuit breaker and bounded parsing.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-17.d](#sp-17-d), [SP-15.c](#sp-15-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-PROVIDER](#contract-provider), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** 429/5xx/malformed responses have visible controlled outcomes without model substitution.
+- **Required automated tests:** Fake provider retries/timeout/overflow/circuit and credential denial tests.
+- **Security and reliability:** All attempts metered; request destinations fixed.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, research, security, Platform, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-18-b"></a>
+### SP-18.b — Version the LLM information transform
+
+- **Objective:** Connect an LLM selector fairly and safely within declared compute limits. This PR delivers version the llm information transform.
+- **Implementation scope:** Define purchased-history/fit/candidate transform with context ceiling, truncation record and hypothesis annotations.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-05.d](#sp-05-d), [SP-17.a](#sp-17-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-PROVIDER](#contract-provider); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Inputs contain same disclosed information and candidate set; transform version immutable.
+- **Required automated tests:** Long history, injected annotation, hidden-field and token-ceiling fixtures.
+- **Security and reliability:** Treat content as data; hypothesis text is not correctness evidence.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Backend, research, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-18-c"></a>
+### SP-18.c — Implement controlled LLM candidate selection
+
+- **Objective:** Connect an LLM selector fairly and safely within declared compute limits. This PR delivers implement controlled llm candidate selection.
+- **Implementation scope:** Parse candidate-ID actions; bound invalid proposals to two retries then declared valid fallback.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-18.a](#sp-18-a), [SP-18.b](#sp-18-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-PROVIDER](#contract-provider); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Same calibration/fitter/adaptation/budget as other selectors; costs separately recorded.
+- **Required automated tests:** Malformed/hallucinated ID, repeated invalid, budget exhaustion and checkpoint replay.
+- **Security and reliability:** No unconstrained tool execution or privileged summaries.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Backend, research, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-18-d"></a>
+### SP-18.d — Validate a capped real-provider integration
+
+- **Objective:** Connect an LLM selector fairly and safely within declared compute limits. This PR delivers validate a capped real-provider integration.
+- **Implementation scope:** Execute explicitly approved small trial with secret references and cap; compare latency/rate/usage to fake fixtures.
+- **Out of scope:** Official suite or unlimited spend.
+- **Prerequisites and dependencies:** [SP-18.c](#sp-18-c), [SP-17.c](#sp-17-c), [PAID_TRIAL](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-PROVIDER](#contract-provider), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Recorded model/version, actual/unknown cost and failure evidence; no unbounded calls.
+- **Required automated tests:** Automated cap-stop and response-schema verification plus offline replay.
+- **Security and reliability:** Pricing/retention/credential owner sign-off required before calls.
+- **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Backend, research, security, Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-19"></a>
+## SP-19 — Define executable predictor packaging
+
+Parent: [#21](https://github.com/spei04/strange-physics/issues/21). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-19-a"></a>
+### SP-19.a — Freeze executable predictor protocol
+
+- **Objective:** Accept executable predictive models under a strict untrusted-code contract. This PR delivers freeze executable predictor protocol.
+- **Implementation scope:** Define immutable predictor packaging, batch/time/size limits, optional intervals and compatibility/determinism declarations.
+- **Out of scope:** Implementing evaluation runner.
+- **Prerequisites and dependencies:** [SP-01.a](#sp-01-a), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-PRED](#contract-pred), [C-SCI](#contract-sci), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Research/platform/security sign complete prediction envelope and invalid-output policy.
+- **Required automated tests:** Protocol good/bad shapes/timestamps/interval examples and compatibility fixtures.
+- **Security and reliability:** No labels, true coefficients or evaluator credentials in request.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, platform, security, QE, Platform, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-19-b"></a>
+### SP-19.b — Build predictor images through approved pipeline
+
+- **Objective:** Accept executable predictive models under a strict untrusted-code contract. This PR delivers build predictor images through approved pipeline.
+- **Implementation scope:** Package predictor entrypoint and immutable references; reuse quarantined build pipeline with approved base runtime.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-19.a](#sp-19-a), [SP-14.d](#sp-14-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-PRED](#contract-pred), [C-EXEC](#contract-exec), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Predictor digest and protocol identity recorded and verified before invocation.
+- **Required automated tests:** Digest substitution, missing entrypoint, lock mismatch and rejected build tests.
+- **Security and reliability:** No separate less-secure build path.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Research, platform, security, Platform, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-19-c"></a>
+### SP-19.c — Validate bounded predictor outputs
+
+- **Objective:** Accept executable predictive models under a strict untrusted-code contract. This PR delivers validate bounded predictor outputs.
+- **Implementation scope:** Validate finite/order/shape/time/interval outputs and enforce CPU/output envelope independently of predictor.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-19.b](#sp-19-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-PRED](#contract-pred), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Malformed/nonfinite/oversize results become explicit scored failures.
+- **Required automated tests:** NaN, reordered particles, reversed times, invalid intervals and timeout fixtures.
+- **Security and reliability:** Never deserialize executable objects in evaluator controller.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, platform, security, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-19-d"></a>
+### SP-19.d — Exercise hostile predictor fixtures
+
+- **Objective:** Accept executable predictive models under a strict untrusted-code contract. This PR delivers exercise hostile predictor fixtures.
+- **Implementation scope:** Run malicious/malformed predictors in deployed networkless sandbox and verify no truth feedback.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-19.c](#sp-19-c), [SP-15.e](#sp-15-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-PRED](#contract-pred), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No filesystem/network/error side channel to restricted evaluator material.
+- **Required automated tests:** Exfiltration, secret scan, timing/output overflow and process persistence tests.
+- **Security and reliability:** Security reviewer inspects deployed evidence.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Research, platform, security, Platform, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-20"></a>
+## SP-20 — Build independent evaluation execution
+
+Parent: [#22](https://github.com/spei04/strange-physics/issues/22). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-20-a"></a>
+### SP-20.a — Isolate evaluation truth and job ownership
+
+- **Objective:** Score models without disclosing hidden evaluation truth to active agents. This PR delivers isolate evaluation truth and job ownership.
+- **Implementation scope:** Create evaluator-only storage/identity and snapshot job metadata with separate quota and access.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-06.b](#sp-06-b), [SP-13.d](#sp-13-d), [SP-27.c](#sp-27-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-ART](#contract-art), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Agent, viewer and gateway roles cannot read blind world/probe state.
+- **Required automated tests:** IAM/role substitution, object enumeration and misconfigured startup tests.
+- **Security and reliability:** Explicitly public suites separated from blind/customer data.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Research, QE, Platform, backend, research, Backend, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-20-b"></a>
+### SP-20.b — Run networkless predictor jobs
+
+- **Objective:** Score models without disclosing hidden evaluation truth to active agents. This PR delivers run networkless predictor jobs.
+- **Implementation scope:** Stage only public predictor inputs, execute bounded jobs and collect outputs under trusted controller.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-20.a](#sp-20-a), [SP-19.d](#sp-19-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-PRED](#contract-pred), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Truth stays outside sandbox; duplicate job yields one authoritative output.
+- **Required automated tests:** Predictor death, deadline, duplicate launch and input/output staging tests.
+- **Security and reliability:** No feedback or long-lived evaluator credentials in sandbox.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Research, platform, security, Platform, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-20-c"></a>
+### SP-20.c — Persist complete snapshot scoring
+
+- **Objective:** Score models without disclosing hidden evaluation truth to active agents. This PR delivers persist complete snapshot scoring.
+- **Implementation scope:** Score required snapshots/probes with immutable manifests, failures and evaluator queue/cost telemetry.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-20.b](#sp-20-b), [SP-06.d](#sp-06-d), [SP-07.d](#sp-07-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-DB](#contract-db), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Run is scored only when all required jobs terminal; counters reconcile.
+- **Required automated tests:** Missing snapshot, duplicate result, all-failure and incomplete evaluation tests.
+- **Security and reliability:** No active-agent score events or artifacts.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Backend, Platform, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-20-d"></a>
+### SP-20.d — Audit evaluation information flow
+
+- **Objective:** Score models without disclosing hidden evaluation truth to active agents. This PR delivers audit evaluation information flow.
+- **Implementation scope:** Exercise API/event/error/artifact paths while a hostile agent is active; verify post-run viewer gating.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-20.c](#sp-20-c), [SP-23.b](#sp-23-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-WEB](#contract-web), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No hidden labels/change markers/scores exposed through any active surface.
+- **Required automated tests:** Leak canaries in fields, paths, errors, SSE and object broker.
+- **Security and reliability:** Leak contaminates suite and blocks scoring; record incident procedure.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, QE, Frontend, backend, Backend, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-21"></a>
+## SP-21 — Integrate the two research tracks
+
+Parent: [#23](https://github.com/spei04/strange-physics/issues/23). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-21-a"></a>
+### SP-21.a — Integrate controlled-selector comparisons
+
+- **Objective:** Demonstrate both accepted research tracks with complete provenance and failures. This PR delivers integrate controlled-selector comparisons.
+- **Implementation scope:** Run capped development strategy/family matrix with paired worlds, shared fitter and adaptation.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-07.d](#sp-07-d), [SP-16.e](#sp-16-e), [SP-18.d](#sp-18-d), [SP-20.d](#sp-20-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-PROVIDER](#contract-provider); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Manifest proves equal purchased information/budget and separate compute costs.
+- **Required automated tests:** Pairing, calibration, fallback, failure denominator and replay checks.
+- **Security and reliability:** No conclusion that LLM must win.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Backend, research, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-21-b"></a>
+### SP-21.b — Integrate complete agent-discovery track
+
+- **Objective:** Demonstrate both accepted research tracks with complete provenance and failures. This PR delivers integrate complete agent-discovery track.
+- **Implementation scope:** Run independent custom agent and predictor through experiment/checkpoint/evaluation flow with declared limits.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-07.d](#sp-07-d), [SP-16.d](#sp-16-d), [SP-19.d](#sp-19-d), [SP-20.d](#sp-20-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-PRED](#contract-pred), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Complete-agent results separately labeled and reproducible from artifacts.
+- **Required automated tests:** Custom model, interrupted agent, invalid predictor and resource-cap journey.
+- **Security and reliability:** Do not pool discovery and controlled-selection rankings.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, platform, security, Platform, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-21-c"></a>
+### SP-21.c — Verify cross-track provenance and comparison reports
+
+- **Objective:** Demonstrate both accepted research tracks with complete provenance and failures. This PR delivers verify cross-track provenance and comparison reports.
+- **Implementation scope:** Cross-check immutable study manifests and paired reporting across both tracks with independently calculated fixtures.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-21.a](#sp-21-a), [SP-21.b](#sp-21-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** All counts, versions, failures and costs trace to source records.
+- **Required automated tests:** Manifest tamper, missing scored row, split collision and offline reproduction.
+- **Security and reliability:** Sanitize fixture data; no public customer results.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Research, QE, Platform, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R4; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-22"></a>
+## SP-22 — Build workspace and constrained world UI
+
+Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-22-a"></a>
+### SP-22.a — Specify accessible workspace journeys
+
+- **Objective:** Let researchers create private worlds and run investigations through an accessible product. This PR delivers specify accessible workspace journeys.
+- **Implementation scope:** Define invite/run/world/inspect flows, role states and keyboard/error/loading behavior; review with product.
+- **Out of scope:** UI or missing backend implementation.
+- **Prerequisites and dependencies:** [SP-00.b](#sp-00-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Annotated journeys and empty/failed/private states accepted before client code.
+- **Required automated tests:** Machine-check fixture/state inventory and accessibility checklist completeness.
+- **Security and reliability:** Do not reveal world truth in active-agent view.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-22-b"></a>
+### SP-22.b — Implement versioned world and suite catalog API
+
+- **Objective:** Let researchers create private worlds and run investigations through an accessible product. This PR delivers implement versioned world and suite catalog api.
+- **Implementation scope:** Create/read/list immutable supported world definitions and suite references with author preview and restricted agent projection.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-01.d](#sp-01-d), [SP-11.c](#sp-11-c), [SP-13.b](#sp-13-b), [SP-03.c](#sp-03-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-HTTP](#contract-http), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Builder can save/reload valid world; author rights never reveal official blind truth.
+- **Required automated tests:** Bounds/version conflict, tenant traversal, unsupported laws and projection leakage.
+- **Security and reliability:** Hosted arbitrary law uploads not trusted; approved catalog only.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Frontend, backend, Backend, SDK, frontend, Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-22-c"></a>
+### SP-22.c — Implement authenticated workspace shell
+
+- **Objective:** Let researchers create private worlds and run investigations through an accessible product. This PR delivers implement authenticated workspace shell.
+- **Implementation scope:** Build navigation, membership/run lists and authenticated client with role/error states.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-01.e](#sp-01-e), [SP-22.a](#sp-22-a), [SP-08.d](#sp-08-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Real session bootstrap and list operations work across supported roles.
+- **Required automated tests:** Browser login/logout, wrong role, CSRF/session expiry and empty/error fixtures.
+- **Security and reliability:** No credentials in URL/local logs; sanitize user text.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, security, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-22-d"></a>
+### SP-22.d — Build constrained world editor
+
+- **Objective:** Let researchers create private worlds and run investigations through an accessible product. This PR delivers build constrained world editor.
+- **Implementation scope:** Edit graph/initial ranges/approved laws and changes with server validation and immutable save.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-22.b](#sp-22-b), [SP-22.c](#sp-22-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Keyboard user creates/reloads supported world with clear author/agent separation.
+- **Required automated tests:** Invalid bounds, topology, stale version and accessibility journey tests.
+- **Security and reliability:** Client validation complements server; no executable upload path.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-22-e"></a>
+### SP-22.e — Integrate world-to-run product journey
+
+- **Objective:** Let researchers create private worlds and run investigations through an accessible product. This PR delivers integrate world-to-run product journey.
+- **Implementation scope:** Connect world version and approved package selection to create/read/cancel run with durable operation status.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-22.d](#sp-22-d), [SP-16.e](#sp-16-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Run references exact world/package versions; failed/cancelled state displayed honestly.
+- **Required automated tests:** Browser create conflict, permission removal, unavailable worker and cancel race.
+- **Security and reliability:** No promise of completion from 202 acceptance.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-23"></a>
+## SP-23 — Implement live event timeline and reconnection
+
+Parent: [#25](https://github.com/spei04/strange-physics/issues/25). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-23-a"></a>
+### SP-23.a — Publish committed event and replay endpoints
+
+- **Objective:** Expose live progress and history without gaps or privacy violations. This PR delivers publish committed event and replay endpoints.
+- **Implementation scope:** Implement per-run sequence events in transaction, bounded SSE batches and authorized replay chunks.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-01.d](#sp-01-d), [SP-09.d](#sp-09-d), [SP-11.c](#sp-11-c), [SP-13.c](#sp-13-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-HTTP](#contract-http), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No event before commit; no DB connection held per viewer; event freshness instrumented.
+- **Required automated tests:** Rollback event absence, sequence uniqueness, tenant access and slow viewer tests.
+- **Security and reliability:** No truth/evaluator metadata in active event schemas.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Frontend, backend, Backend, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-23-b"></a>
+### SP-23.b — Implement cursor expiry and archive resynchronization
+
+- **Objective:** Expose live progress and history without gaps or privacy violations. This PR delivers implement cursor expiry and archive resynchronization.
+- **Implementation scope:** Support Last-Event-ID, cursor expiry, authoritative snapshot and archived history pagination with reauthorization.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-23.a](#sp-23-a), [SP-13.d](#sp-13-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-ART](#contract-art), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Reconnect has no silent committed-event gaps; revoked stream closes ≤30s.
+- **Required automated tests:** Duplicate/gap/expired cursor, archive outage and membership revocation tests.
+- **Security and reliability:** Archive and snapshot use same tenant/privacy policy.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Frontend, backend, Platform, research, Backend, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-23-c"></a>
+### SP-23.c — Render live investigation timeline
+
+- **Objective:** Expose live progress and history without gaps or privacy violations. This PR delivers render live investigation timeline.
+- **Implementation scope:** Render experiment/budget/model revisions and terminal/pending states from committed sequence.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-22.c](#sp-22-c), [SP-23.b](#sp-23-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Replay is deterministic; duplicates and reconnect do not double-count budget.
+- **Required automated tests:** Recorded feed, duplicate/out-of-order events and terminal transition browser tests.
+- **Security and reliability:** Treat annotations as untrusted; bounded client memory.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-23-d"></a>
+### SP-23.d — Integrate reconnect and cancellation UX
+
+- **Objective:** Expose live progress and history without gaps or privacy violations. This PR delivers integrate reconnect and cancellation ux.
+- **Implementation scope:** Handle lost network, auth expiry, archive resync and cancellation progress without misleading completion.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-23.c](#sp-23-c), [SP-16.e](#sp-16-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** User sees gap recovery and explicit failed resync; real cancellation path works.
+- **Required automated tests:** Browser offline/reconnect/revoke/expired-cursor and slow-consumer tests.
+- **Security and reliability:** No cached private data after workspace logout.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-24"></a>
+## SP-24 — Implement prediction and replay diagnostics
+
+Parent: [#26](https://github.com/spei04/strange-physics/issues/26). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-24-a"></a>
+### SP-24.a — Implement indexed frame replay and scrubbing
+
+- **Objective:** Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers implement indexed frame replay and scrubbing.
+- **Implementation scope:** Load bounded immutable frame chunks; interpolate server data with play/pause/scrub/speed controls.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-23.d](#sp-23-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Reference frames exact at timestamps; reference-device interaction ≤100ms and ≥30fps target measured.
+- **Required automated tests:** Frame alignment, seek/end boundaries, malformed chunk and performance fixtures.
+- **Security and reliability:** No second physics solver; bound memory and sanitize content.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Platform, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-24-b"></a>
+### SP-24.b — Overlay prediction and uncertainty diagnostics
+
+- **Objective:** Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers overlay prediction and uncertainty diagnostics.
+- **Implementation scope:** Show actual/predicted trajectories, interval levels, errors and insufficient-support states with post-run truth gating.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-24.a](#sp-24-a), [SP-20.d](#sp-20-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Viewer distinguishes model uncertainty and failed/missing prediction from truth.
+- **Required automated tests:** Layer alignment, absent intervals, failed model and active-truth denial tests.
+- **Security and reliability:** No fabricated confidence or hidden evaluation during run.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-24-c"></a>
+### SP-24.c — Compare recorded strategies and failures
+
+- **Objective:** Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers compare recorded strategies and failures.
+- **Implementation scope:** Synchronize paired run timelines, budget/error curves and failure/cost indicators from manifest.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-24.b](#sp-24-b), [SP-07.d](#sp-07-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Compare only compatible protocol/conditions and disclose mismatches.
+- **Required automated tests:** Protocol mismatch, missing/failing run and paired time alignment tests.
+- **Security and reliability:** No successful-only filtering by default.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-24-d"></a>
+### SP-24.d — Verify accessible diagnostic journeys
+
+- **Objective:** Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers verify accessible diagnostic journeys.
+- **Implementation scope:** Complete keyboard/screen-reader alternatives, error descriptions and supported-browser rendering checks.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-24.c](#sp-24-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Essential investigation/replay usable without canvas-only interaction.
+- **Required automated tests:** Automated accessibility, keyboard and browser visual-reference tests.
+- **Security and reliability:** No sensitive data in screenshots or diagnostics.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-25"></a>
+## SP-25 — Deliver remote SDK, CLI and complete export
+
+Parent: [#27](https://github.com/spei04/strange-physics/issues/27). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-25-a"></a>
+### SP-25.a — Implement remote SDK session adapter
+
+- **Objective:** Support programmatic use, complete exports and explicit safe publication. This PR delivers implement remote sdk session adapter.
+- **Implementation scope:** Implement scoped auth, async operation polling, idempotent experiments and checkpoint restoration through frozen interfaces.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-01.e](#sp-01-e), [SP-08.c](#sp-08-c), [SP-16.e](#sp-16-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-HTTP](#contract-http), [C-CORE](#contract-core), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Trusted local and remote semantic conformance passes.
+- **Required automated tests:** Retry/cancel/expiry/version/duplicate checkpoint and budget parity tests.
+- **Security and reliability:** Tokens redacted; bounded retry and explicit incompatible runtime.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, Research, Platform, security, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-25-b"></a>
+### SP-25.b — Deliver remote CLI operations
+
+- **Objective:** Support programmatic use, complete exports and explicit safe publication. This PR delivers deliver remote cli operations.
+- **Implementation scope:** Add login/config/run/status/cancel/export command paths with secure credential references and meaningful exit codes.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-25.a](#sp-25-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-HTTP](#contract-http), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** CLI completes real remote run and resumes without duplicate experiment.
+- **Required automated tests:** Subprocess CLI success/failure, interrupted polling and secret-redaction tests.
+- **Security and reliability:** No keys in argv/history or exported manifests.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, Platform, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-25-c"></a>
+### SP-25.c — Build complete export manifest and retrieval API
+
+- **Objective:** Support programmatic use, complete exports and explicit safe publication. This PR delivers build complete export manifest and retrieval api.
+- **Implementation scope:** Assemble authorized run package including runtime/config, observations, models, attempts and scores; hash every reference.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-19.a](#sp-19-a), [SP-13.d](#sp-13-d), [SP-11.c](#sp-11-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ART](#contract-art), [C-HTTP](#contract-http), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Export complete or explicitly incomplete; offline verifier detects missing content.
+- **Required automated tests:** Tamper/missing artifact, large export, cross-tenant and pending-evaluation tests.
+- **Security and reliability:** Restricted truth/provider secrets excluded from ordinary export.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Platform, backend, research, Backend, SDK, frontend, Research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-25-d"></a>
+### SP-25.d — Implement explicit sanitized publication lifecycle
+
+- **Objective:** Support programmatic use, complete exports and explicit safe publication. This PR delivers implement explicit sanitized publication lifecycle.
+- **Implementation scope:** Add owner-requested publication review, visibility transition and withdrawal/takedown metadata.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-25.c](#sp-25-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ART](#contract-art), [C-HTTP](#contract-http), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No automatic publication; sanitized release retains failed scored rows.
+- **Required automated tests:** Role/replay publication, secret canary, incomplete release and withdraw tests.
+- **Security and reliability:** Public copies not promised fully retractable.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, backend, research, Backend, SDK, frontend, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-25-e"></a>
+### SP-25.e — Verify offline reconstruction across clients
+
+- **Objective:** Support programmatic use, complete exports and explicit safe publication. This PR delivers verify offline reconstruction across clients.
+- **Implementation scope:** Reconstruct recorded outputs in CLI/browser without provider/network calls; verify every manifest hash.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-25.b](#sp-25-b), [SP-25.d](#sp-25-d), [SP-21.c](#sp-21-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ART](#contract-art), [C-SCI](#contract-sci), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Independent environment reproduces reports and replay from export.
+- **Required automated tests:** Network-denied replay, version mismatch, tamper and missing member tests.
+- **Security and reliability:** Never load private journal as public replay.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, backend, research, Research, QE, Frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-26"></a>
+## SP-26 — Package supported self-host deployment
+
+Parent: [#28](https://github.com/spei04/strange-physics/issues/28). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-26-a"></a>
+### SP-26.a — Package one supported secure self-host installation
+
+- **Objective:** Allow independent deployment within one documented support matrix. This PR delivers package one supported secure self-host installation.
+- **Implementation scope:** Create versioned installer/config for documented Kubernetes sandbox, SQL/object/OIDC stack and separately labeled trusted dev mode.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-16.e](#sp-16-e), [SP-27.f](#sp-27-f), [SP-15.e](#sp-15-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Fresh supported environment completes health and isolation preflight.
+- **Required automated tests:** Install validation, missing runtime/secret and insecure-profile rejection tests.
+- **Security and reliability:** Do not advertise trusted development profile for hostile code.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-26-b"></a>
+### SP-26.b — Validate portable identity and storage adapters
+
+- **Objective:** Allow independent deployment within one documented support matrix. This PR delivers validate portable identity and storage adapters.
+- **Implementation scope:** Exercise standard OIDC and supported SQL/object configuration without managed-only assumptions.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-26.a](#sp-26-a), [SP-08.d](#sp-08-d), [SP-13.d](#sp-13-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-ART](#contract-art), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Document explicit supported compatibility matrix and deny unsafe config.
+- **Required automated tests:** Issuer mapping, object generation semantics and adapter conformance tests.
+- **Security and reliability:** Portable deployment must preserve auth/immutability boundaries.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Backend, security, Platform, backend, research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-26-c"></a>
+### SP-26.c — Implement self-host upgrade and recovery procedure
+
+- **Objective:** Allow independent deployment within one documented support matrix. This PR delivers implement self-host upgrade and recovery procedure.
+- **Implementation scope:** Automate backup/preflight, expand-contract upgrade, client compatibility and rollback/forward recovery.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-26.b](#sp-26-b), [SP-29.b](#sp-29-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Seeded supported previous release upgrades/restores without lost committed data.
+- **Required automated tests:** Schema upgrade, old worker/client, interrupted migration and restore tests.
+- **Security and reliability:** Do not call seeded predecessor a real published version.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, Backend, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-26-d"></a>
+### SP-26.d — Verify clean install-to-investigation journey
+
+- **Objective:** Allow independent deployment within one documented support matrix. This PR delivers verify clean install-to-investigation journey.
+- **Implementation scope:** Run documented fresh install and upgrade on supported target without operator edits; retain sanitized evidence.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-26.c](#sp-26-c), [SP-25.e](#sp-25-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-WEB](#contract-web), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Run, interruption, export and recovery succeed using published instructions.
+- **Required automated tests:** Automated install/upgrade/remote journey and invalid-config tests.
+- **Security and reliability:** External adoption remains a separate partner gate.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, QE, security, Frontend, backend, Research. Named engineer pending SP-00.a.
+- **Milestone / state:** R5; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-27"></a>
+## SP-27 — Create IaC and trusted delivery foundation
+
+Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-27-a"></a>
+### SP-27.a — Create keyless environment bootstrap and policy checks
+
+- **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers create keyless environment bootstrap and policy checks.
+- **Implementation scope:** Define separate environment identities, Terraform state and narrowly scoped repository/workflow federation with policy checks.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-02.b](#sp-02-b), [SP-02.c](#sp-02-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Unauthorized repo/ref/environment cannot obtain deployment authority.
+- **Required automated tests:** Terraform validate/plan, IAM policy and forged federation-context tests.
+- **Security and reliability:** No long-lived service keys; public CI never runs untrusted package hooks.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-27-b"></a>
+### SP-27.b — Provision versioned staging data and dispatch services
+
+- **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers provision versioned staging data and dispatch services.
+- **Implementation scope:** Deploy approved SQL/storage/queue/registry/secret/network configuration through IaC with private endpoints and bounded pools.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-27.a](#sp-27-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Configuration readback matches plan; no public storage or unintended identity grants.
+- **Required automated tests:** IaC drift, connectivity, pool bound and deny-access smoke tests.
+- **Security and reliability:** Pricing/cap approval remains precondition; backups enabled from first persistent data.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-27-c"></a>
+### SP-27.c — Deploy trusted staging API and worker test substrate
+
+- **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers deploy trusted staging api and worker test substrate.
+- **Implementation scope:** Deploy service skeleton/health checks and controlled runtime trial substrate with environment identities.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-27.b](#sp-27-b), [SP-09.a](#sp-09-a), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Smoke deployment/rollback recorded; no uploaded code enabled.
+- **Required automated tests:** Health/config/identity failure, rollback and isolation preflight tests.
+- **Security and reliability:** Fail closed on missing configuration; keep stage independent of prod.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-27-d"></a>
+### SP-27.d — Sign trusted images and enforce release provenance
+
+- **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers sign trusted images and enforce release provenance.
+- **Implementation scope:** Add locked build/scanning/SBOM/signature/provenance pipeline and digest verification for trusted images.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-27.c](#sp-27-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Only intended reviewed source produces accepted deployable artifact.
+- **Required automated tests:** Dependency/secret scan, image substitution and provenance policy tests.
+- **Security and reliability:** Trusted deployment CI never executes customer hooks.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-27-e"></a>
+### SP-27.e — Implement telemetry, SLO counters and alerts
+
+- **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers implement telemetry, slo counters and alerts.
+- **Implementation scope:** Define structured logs/traces, bounded metric labels, eligible-request SLI counters and burn-rate/synthetic alerts.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-27.c](#sp-27-c), [SP-09.c](#sp-09-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Injected failure reaches named test receiver; dashboards reconcile denominators.
+- **Required automated tests:** Redaction, cardinality, latency/error denominator and alert-fire/clear tests.
+- **Security and reliability:** Do not log raw prompts/world truth; low traffic handled explicitly.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Backend, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-27-f"></a>
+### SP-27.f — Rehearse progressive deploy and rollback
+
+- **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers rehearse progressive deploy and rollback.
+- **Implementation scope:** Implement canary gate, migration ordering and compatible image/client rollback with release manifest.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-27.d](#sp-27-d), [SP-27.e](#sp-27-e), [SP-16.c](#sp-16-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Failed canary halts expansion; seeded previous version remains recoverable.
+- **Required automated tests:** Bad image, interrupted migration, mixed worker versions and rollback smoke.
+- **Security and reliability:** No production release authorization inferred from staging rehearsal.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-28"></a>
+## SP-28 — Measure capacity and fairness
+
+Parent: [#30](https://github.com/spei04/strange-physics/issues/30). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-28-a"></a>
+### SP-28.a — Build representative capacity workload generators
+
+- **Objective:** Establish the supported capacity and fair-overload envelope with measurements. This PR delivers build representative capacity workload generators.
+- **Implementation scope:** Generate 1/3/8-particle family mix, viewers/builds, artifact sizes and fake-provider latencies; isolate evaluator pool.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-16.e](#sp-16-e), [SP-20.c](#sp-20-c), [SP-23.b](#sp-23-b), [SP-07.b](#sp-07-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-SCI](#contract-sci), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Workload manifest separates investigations/API/viewers/builds/evaluation and matches declared envelope.
+- **Required automated tests:** Generator determinism, numerical/IO distribution and count checks.
+- **Security and reliability:** No paid provider stress; keep load artifacts private.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Research, Frontend, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-28-b"></a>
+### SP-28.b — Measure stepped load and latency budgets
+
+- **Objective:** Establish the supported capacity and fair-overload envelope with measurements. This PR delivers measure stepped load and latency budgets.
+- **Implementation scope:** Run 10→25→50→100 investigations, 100 viewers and declared API mix; measure DB/queue/event budgets.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-28.a](#sp-28-a), [SP-37.c](#sp-37-c), [SP-27.f](#sp-27-f). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Two-hour target hold meets section 7 envelope or fails with bottleneck evidence.
+- **Required automated tests:** Automated latency, throughput, integrity and zero-duplicate budget assertions.
+- **Security and reliability:** Do not equate offered load or connected sockets with completed capacity.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-28-c"></a>
+### SP-28.c — Run mixed soak and saturation characterization
+
+- **Objective:** Establish the supported capacity and fair-overload envelope with measurements. This PR delivers run mixed soak and saturation characterization.
+- **Implementation scope:** Execute 24-hour soak and 300 offered-run/5× burst with slow and malicious workloads.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-28.b](#sp-28-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Bounded queue/memory growth; fair rejection and evaluator backlog <24h within supported envelope.
+- **Required automated tests:** Long-run leak, overload rejection, backlog and persistence integrity checks.
+- **Security and reliability:** 300 offered is stress, not capacity promise; stop on corruption.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-28-d"></a>
+### SP-28.d — Verify fair admission under faults
+
+- **Objective:** Establish the supported capacity and fair-overload envelope with measurements. This PR delivers verify fair admission under faults.
+- **Implementation scope:** Mix noisy tenants, provider outages and worker failures at supported load; compare fairness and recovery.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-28.c](#sp-28-c), [SP-29.c](#sp-29-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No monopolization or duplicate charge; latency/recovery thresholds measured.
+- **Required automated tests:** Starvation, provider throttling, cancellation and crash-in-load tests.
+- **Security and reliability:** Unknown provider costs remain visible.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-29"></a>
+## SP-29 — Prove backup, failover and fault recovery
+
+Parent: [#31](https://github.com/spei04/strange-physics/issues/31). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-29-a"></a>
+### SP-29.a — Implement backup and recovery-set manifests
+
+- **Objective:** Prove recoverability of acknowledged work and deletion state. This PR delivers implement backup and recovery-set manifests.
+- **Implementation scope:** Configure actual PITR/backup policies and verified database+object generation manifests with isolated restore identity.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-13.d](#sp-13-d), [SP-27.b](#sp-27-b), [SP-37.a](#sp-37-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-ART](#contract-art), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Recovery point maps every referenced object; lag/expiry visible.
+- **Required automated tests:** Backup completeness, missing object, permissions and lag alert tests.
+- **Security and reliability:** A successful scheduled job alone is not recoverability evidence.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend, research, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-29-b"></a>
+### SP-29.b — Restore SQL and objects with tombstone replay
+
+- **Objective:** Prove recoverability of acknowledged work and deletion state. This PR delivers restore sql and objects with tombstone replay.
+- **Implementation scope:** Restore into isolation, fence old leases/tokens and reapply deletion/revocation records before access.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-29.a](#sp-29-a), [SP-37.c](#sp-37-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-ART](#contract-art), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Pilot ≤15min RPO/≤4h RTO measured; no deleted object resurrected to users.
+- **Required automated tests:** Timed restore, corrupt object, interrupted replay and revoked identity tests.
+- **Security and reliability:** No production data exposed during drill; preserve private evidence.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend, research, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-29-c"></a>
+### SP-29.c — Exercise worker loss and database failover
+
+- **Objective:** Prove recoverability of acknowledged work and deletion state. This PR delivers exercise worker loss and database failover.
+- **Implementation scope:** Force worker/process loss and real HA failover; validate reconnection, epochs, artifact and budget integrity.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-29.b](#sp-29-b), [SP-16.e](#sp-16-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Worker p95 recovery ≤5min; DB failover ≤15min target with committed-state validation.
+- **Required automated tests:** Fault matrix, stale worker, pool exhaustion and no-duplicate invariants.
+- **Security and reliability:** Targets measured in deployed configuration, not assumed from service SLA.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, QE, security, Backend, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-29-d"></a>
+### SP-29.d — Rehearse deployment rollback under load
+
+- **Objective:** Prove recoverability of acknowledged work and deletion state. This PR delivers rehearse deployment rollback under load.
+- **Implementation scope:** Exercise bad deploy/migration under bounded workload and validate compatible rollback or forward fix.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-29.c](#sp-29-c), [SP-27.f](#sp-27-f). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Committed data, old clients and current leases survive documented recovery path.
+- **Required automated tests:** Mixed-version upgrade, partial migration and health-regression rollback tests.
+- **Security and reliability:** Destructive schema change cannot bypass recovery review.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-30"></a>
+## SP-30 — Verify integrated journeys and upgrades
+
+Parent: [#32](https://github.com/spei04/strange-physics/issues/32). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-30-a"></a>
+### SP-30.a — Test authenticated end-to-end researcher journeys
+
+- **Objective:** Validate complete customer journeys and supported upgrades on one candidate. This PR delivers test authenticated end-to-end researcher journeys.
+- **Implementation scope:** Automate invite/build/run/interrupt/cancel/replay/export/delete using human and scoped machine identities.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-21.c](#sp-21-c), [SP-24.d](#sp-24-d), [SP-25.e](#sp-25-e), [SP-26.d](#sp-26-d), [SP-37.c](#sp-37-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-WEB](#contract-web), [C-HTTP](#contract-http), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** All supported roles and terminal outcomes verified on release candidate.
+- **Required automated tests:** Browser/SDK/CLI cross-tenant negative and interruption journeys.
+- **Security and reliability:** Private run data never crosses workspace or public view.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Frontend, backend, Backend, SDK, frontend, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-30-b"></a>
+### SP-30.b — Verify version compatibility matrix
+
+- **Objective:** Validate complete customer journeys and supported upgrades on one candidate. This PR delivers verify version compatibility matrix.
+- **Implementation scope:** Exercise current/previous supported schema/client/worker/replay versions and declared deprecation policy.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-30.a](#sp-30-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-HTTP](#contract-http), [C-SCI](#contract-sci), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Unsupported versions fail explicitly; no silent artifact reinterpretation.
+- **Required automated tests:** Generated-client drift, old checkpoint and replay migration fixtures.
+- **Security and reliability:** Seeded predecessor labeled honestly before second real release.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane FE. Required review: Backend, SDK, frontend, Research, QE, Platform, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-30-c"></a>
+### SP-30.c — Verify install, upgrade and recovery as one journey
+
+- **Objective:** Validate complete customer journeys and supported upgrades on one candidate. This PR delivers verify install, upgrade and recovery as one journey.
+- **Implementation scope:** Run clean and seeded previous-release installations through upgrade/restore using published self-host instructions.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-30.b](#sp-30-b), [SP-29.d](#sp-29-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No manual undocumented intervention; export hashes/budgets preserved.
+- **Required automated tests:** Interrupted install, config mismatch, rollback and restored-client tests.
+- **Security and reliability:** No blanket support outside documented matrix.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-30-d"></a>
+### SP-30.d — Review integrated release-candidate evidence
+
+- **Objective:** Validate complete customer journeys and supported upgrades on one candidate. This PR delivers review integrated release-candidate evidence.
+- **Implementation scope:** Map every pilot requirement to source/run evidence and unresolved defect; freeze candidate identity.
+- **Out of scope:** Pilot or GA authorization.
+- **Prerequisites and dependencies:** [SP-30.c](#sp-30-c), [SP-28.d](#sp-28-d), [SP-31.e](#sp-31-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No blocking issue waived; owners and expiry for permitted lower-risk exceptions.
+- **Required automated tests:** Automated traceability/link completeness and manifest integrity checks.
+- **Security and reliability:** Document is not substitute for executed tests.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-31"></a>
+## SP-31 — Exercise security and data boundaries
+
+Parent: [#33](https://github.com/spei04/strange-physics/issues/33). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-31-a"></a>
+### SP-31.a — Audit tenant and session boundary matrix
+
+- **Objective:** Detect and resolve exploitable security and data-boundary failures. This PR delivers audit tenant and session boundary matrix.
+- **Implementation scope:** Run route/property/object/SSE/session authorization corpus including pooled RLS and service credentials.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-11.c](#sp-11-c), [SP-22.e](#sp-22-e), [SP-25.d](#sp-25-d), [SP-23.b](#sp-23-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Every supported identity/route has deny and allow evidence.
+- **Required automated tests:** ID substitution, CSRF, mass assignment, object grants and revoked stream tests.
+- **Security and reliability:** Any cross-tenant access is release blocker.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Backend, security, SDK, frontend, Frontend, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-31-b"></a>
+### SP-31.b — Audit build and runtime boundary in release configuration
+
+- **Objective:** Detect and resolve exploitable security and data-boundary failures. This PR delivers audit build and runtime boundary in release configuration.
+- **Implementation scope:** Repeat hostile build/runtime/network/DNS/metadata corpus with actual release deployment identities.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-15.e](#sp-15-e), [SP-16.e](#sp-16-e), [SP-27.f](#sp-27-f). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No trusted secret/evaluator/cloud access; policy fails closed.
+- **Required automated tests:** Admission bypass, untrusted build, IPv6/DNS/metadata and resource attacks.
+- **Security and reliability:** Independent security specialist reviews evidence.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-31-c"></a>
+### SP-31.c — Audit research leakage and provider controls
+
+- **Objective:** Detect and resolve exploitable security and data-boundary failures. This PR delivers audit research leakage and provider controls.
+- **Implementation scope:** Exercise hostile prompts/predictors and gateway limits across UI/API/error/manifest paths.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-20.d](#sp-20-d), [SP-18.d](#sp-18-d), [SP-21.c](#sp-21-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-PROVIDER](#contract-provider); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No hidden truth or credential exposure; all attempts/fallbacks disclosed.
+- **Required automated tests:** Canary leaks, injected text, malformed output and ambiguity/cap tests.
+- **Security and reliability:** Compromised suite quarantined; no silent result reuse.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Backend, research, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-31-d"></a>
+### SP-31.d — Verify deletion, revocation and log privacy
+
+- **Objective:** Detect and resolve exploitable security and data-boundary failures. This PR delivers verify deletion, revocation and log privacy.
+- **Implementation scope:** Exercise owner delete, revoked credentials, active stream/job access and restored tombstones; inspect telemetry redaction.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-37.c](#sp-37-c), [SP-31.a](#sp-31-a), [SP-29.b](#sp-29-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-ART](#contract-art), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Active access revoked immediately; seven-day active removal policy executable; backups honor disclosed expiry.
+- **Required automated tests:** Delete/revoke races, replayed backup, token expiry and secret/log canaries.
+- **Security and reliability:** No promise deletion instantly erases offline public copies.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, Platform, backend, research, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-31-e"></a>
+### SP-31.e — Resolve security review and release blockers
+
+- **Objective:** Detect and resolve exploitable security and data-boundary failures. This PR delivers resolve security review and release blockers.
+- **Implementation scope:** Coordinate independent specialist review, triage findings and retest exact fixes; use explicit contingency work for defects.
+- **Out of scope:** Open-ended unlimited remediation inside this estimate.
+- **Prerequisites and dependencies:** [SP-31.a](#sp-31-a), [SP-31.b](#sp-31-b), [SP-31.c](#sp-31-c), [SP-31.d](#sp-31-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No exploitable critical/high finding; lower exceptions have owner/control/expiry.
+- **Required automated tests:** Repeat failed adversarial tests and evidence manifest checks.
+- **Security and reliability:** New material finding creates separately scoped repair PR; never rubber-stamp.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R6; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-32"></a>
+## SP-32 — Onboard and support design partners
+
+Parent: [#34](https://github.com/spei04/strange-physics/issues/34). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-32-a"></a>
+### SP-32.a — Finalize partner data terms and pilot support scope
+
+- **Objective:** Obtain real design-partner adoption and operational feedback. This PR delivers finalize partner data terms and pilot support scope.
+- **Implementation scope:** Confirm pilot organizations, terms, approved access, limits and business-hours primary/backup support.
+- **Out of scope:** Sending invitations or signing terms without appropriate authority.
+- **Prerequisites and dependencies:** [SP-00.c](#sp-00-c), [SP-30.d](#sp-30-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** External commitments and contact roster exist before private customer data.
+- **Required automated tests:** Readiness checker verifies required owner/evidence/expiry fields.
+- **Security and reliability:** No legal/compliance guarantees invented.
+- **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-32-b"></a>
+### SP-32.b — Onboard partner investigations
+
+- **Objective:** Obtain real design-partner adoption and operational feedback. This PR delivers onboard partner investigations.
+- **Implementation scope:** Observe genuine first-run sessions and capture private numerator/denominator, support friction and repeat-study intent.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-32.a](#sp-32-a), [PILOT_RELEASE](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Named participating organizations can run private studies; deviations recorded.
+- **Required automated tests:** Run onboarding smoke and telemetry completeness checks.
+- **Security and reliability:** Real external attendance required; no internal substitution.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Frontend, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-32-c"></a>
+### SP-32.c — Review four weeks of partner usage
+
+- **Objective:** Obtain real design-partner adoption and operational feedback. This PR delivers review four weeks of partner usage.
+- **Implementation scope:** Assess adoption, repeated studies, support load and failure patterns; assign scoped fixes and acceptance decisions.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [PILOT_OBSERVATION](#external-and-calendar-gates), [SP-36.d](#sp-36-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Actual partner outcomes recorded against proposed targets; launch-impacting gaps resolved.
+- **Required automated tests:** Usage denominator, evidence completeness and regression checks for pilot fixes.
+- **Security and reliability:** Partner absence blocks evidence, never counted as success.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-33"></a>
+## SP-33 — Freeze and publish scored reference release
+
+Parent: [#35](https://github.com/spei04/strange-physics/issues/35). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-33-a"></a>
+### SP-33.a — Approve official protocol and priced sweep
+
+- **Objective:** Publish a trustworthy reference study including failures and reproducibility artifacts. This PR delivers approve official protocol and priced sweep.
+- **Implementation scope:** Freeze both scored-track manifests and exclusions before collection; obtain explicit cost/credential/publication authority.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-07.d](#sp-07-d), [SP-21.c](#sp-21-c), [SP-31.e](#sp-31-e), [SP-30.d](#sp-30-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Signed immutable protocol and capped run plan; no tuning afterward.
+- **Required automated tests:** Frozen manifest, seed separation, limits and estimated-count checks.
+- **Security and reliability:** Paid sweep approval separate from development approval.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-33-b"></a>
+### SP-33.b — Execute and verify scored reference collection
+
+- **Objective:** Publish a trustworthy reference study including failures and reproducibility artifacts. This PR delivers execute and verify scored reference collection.
+- **Implementation scope:** Run approved bounded paired suite; retain all scored attempts/failures and exact identities; reconcile costs.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-33.a](#sp-33-a), [OFFICIAL_SWEEP](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-EXEC](#contract-exec), [C-PROVIDER](#contract-provider); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** All scheduled rows accounted for or explicitly failed; no selective redraw.
+- **Required automated tests:** Automatic completeness, frozen identity, failure denominator and report reproduction.
+- **Security and reliability:** Estimate is engineering effort; measured sweep wall time added at freeze.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, QE, Platform, security, backend, Backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-33-c"></a>
+### SP-33.c — Publish sanitized complete reference artifacts
+
+- **Objective:** Publish a trustworthy reference study including failures and reproducibility artifacts. This PR delivers publish sanitized complete reference artifacts.
+- **Implementation scope:** Review and publish reference manifests/results/failures and sanitized provider transcripts with independent reproduction.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-33.b](#sp-33-b), [SP-25.d](#sp-25-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** All scored outcomes available without secrets; claims match measured scope.
+- **Required automated tests:** Secret canaries, missing-row detection, hashes and offline report checks.
+- **Security and reliability:** Never publish private customer artifacts under reference-release authority.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, Platform, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-34"></a>
+## SP-34 — Add enterprise SSO and service identities
+
+Parent: [#36](https://github.com/spei04/strange-physics/issues/36). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-34-a"></a>
+### SP-34.a — Validate enterprise federation requirements and entitlement
+
+- **Objective:** Support enterprise federation and scoped credential administration. This PR delivers validate enterprise federation requirements and entitlement.
+- **Implementation scope:** Verify required partner OIDC/SAML federation flows, IdP entitlements, tenant mapping and failure/lockout design.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-08.d](#sp-08-d), [SP-00.c](#sp-00-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Chosen provider supports concrete partner scenarios or documented ADR change.
+- **Required automated tests:** Configuration/schema fixtures and fake-IdP capability tests.
+- **Security and reliability:** Do not assume SCIM/federation is included in existing credits.
+- **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-34-b"></a>
+### SP-34.b — Implement workspace-bound enterprise federation
+
+- **Objective:** Support enterprise federation and scoped credential administration. This PR delivers implement workspace-bound enterprise federation.
+- **Implementation scope:** Add federation connection management, issuer binding and safe login/session mapping without domain auto-join.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-34.a](#sp-34-a), [SP-11.c](#sp-11-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Wrong-tenant/issuer login denied; approved member authenticates with enterprise IdP.
+- **Required automated tests:** Issuer confusion, assertion replay/expiry, key rotation and session tests.
+- **Security and reliability:** Security review required; no implicit membership from email.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-34-c"></a>
+### SP-34.c — Migrate linked identities without lockout
+
+- **Objective:** Support enterprise federation and scoped credential administration. This PR delivers migrate linked identities without lockout.
+- **Implementation scope:** Implement explicit verified linking/migration, recovery admin path and sole-owner protection.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-34.b](#sp-34-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Existing users migrate safely without account takeover or ownership loss.
+- **Required automated tests:** Duplicate subject/email, concurrent linking, lost IdP and sole-owner tests.
+- **Security and reliability:** Audit every link/admin override; no shared break-glass credential.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-34-d"></a>
+### SP-34.d — Harden enterprise service-credential lifecycle
+
+- **Objective:** Support enterprise federation and scoped credential administration. This PR delivers harden enterprise service-credential lifecycle.
+- **Implementation scope:** Add enterprise scope policy, expiry/rotation reporting and administrator credential audit.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-34.c](#sp-34-c), [SP-08.c](#sp-08-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Scoped machine identities rotate/revoke without widening privilege.
+- **Required automated tests:** Old/new key overlap, expiry, revoke race and least-scope tests.
+- **Security and reliability:** Basic service identity already exists in R2; no late prerequisite for pilot.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, Platform, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-35"></a>
+## SP-35 — Add provisioning and rapid deprovisioning
+
+Parent: [#37](https://github.com/spei04/strange-physics/issues/37). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-35-a"></a>
+### SP-35.a — Freeze SCIM mapping and lifecycle semantics
+
+- **Objective:** Keep enterprise identity provisioning and revocation consistent across live resources. This PR delivers freeze scim mapping and lifecycle semantics.
+- **Implementation scope:** Specify Users/Groups mapping, idempotency, version conflict, disable/delete and owner-protection behavior.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-34.d](#sp-34-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Partner/security accept scope and bounded reconciliation semantics.
+- **Required automated tests:** SCIM schema fixtures, duplicate mappings and conflicting version cases.
+- **Security and reliability:** Disable policy must cover API, stream, job and credential access.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-35-b"></a>
+### SP-35.b — Implement bounded provisioning and reconciliation
+
+- **Objective:** Keep enterprise identity provisioning and revocation consistent across live resources. This PR delivers implement bounded provisioning and reconciliation.
+- **Implementation scope:** Implement SCIM endpoints, group role mapping, paginated sync and replay-safe audit.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-35.a](#sp-35-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Repeated/out-of-order operations converge without escalation.
+- **Required automated tests:** Bulk limits, duplicate provisioning, stale updates and retry tests.
+- **Security and reliability:** Service credential narrowly scoped; rate-limit sync.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-35-c"></a>
+### SP-35.c — Enforce rapid end-to-end deprovisioning
+
+- **Objective:** Keep enterprise identity provisioning and revocation consistent across live resources. This PR delivers enforce rapid end-to-end deprovisioning.
+- **Implementation scope:** Revoke account/service/run access, close streams and stop unauthorized new work; reconcile active jobs.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-35.b](#sp-35-b), [SP-37.e](#sp-37-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-EXEC](#contract-exec), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Disabled principal denied new calls immediately; stream ≤30s and job launch ≤5s revocation targets.
+- **Required automated tests:** Active session/token/job/SSE disable races and sole-owner exceptions.
+- **Security and reliability:** No stale authorization caches or forgotten machine keys.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, Platform, backend, Frontend. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-36"></a>
+## SP-36 — Validate external extension and self-host adoption
+
+Parent: [#38](https://github.com/spei04/strange-physics/issues/38). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-36-a"></a>
+### SP-36.a — Validate an outside team's agent and law extension
+
+- **Objective:** Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers validate an outside team's agent and law extension.
+- **Implementation scope:** Observe external author adding agent/law without core changes; record actual friction and review bounded fixes.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-25.e](#sp-25-e), [SP-26.d](#sp-26-d), [SP-32.b](#sp-32-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-CORE](#contract-core), [C-SCI](#contract-sci), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** External code runs and recovers using supported interfaces; independent author evidence.
+- **Required automated tests:** Contract/extension regression and published example replay tests.
+- **Security and reliability:** Trusted local law extension differs from reviewed hosted catalog.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE, Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-36-b"></a>
+### SP-36.b — Validate independent self-host install and upgrade
+
+- **Objective:** Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers validate independent self-host install and upgrade.
+- **Implementation scope:** Support outside team using documented target; verify fresh install, upgrade and restore without hidden operator edits.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-26.d](#sp-26-d), [SP-32.b](#sp-32-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** External operator signs observed install/upgrade results and limitations.
+- **Required automated tests:** Independent install/upgrade smoke and reported-friction regressions.
+- **Security and reliability:** Partner environment/access must be available; no simulated adoption.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-36-c"></a>
+### SP-36.c — Independently reproduce a released report
+
+- **Objective:** Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers independently reproduce a released report.
+- **Implementation scope:** External consumer reconstructs manifest/report without model calls; compare hashes and numerical tolerances.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-36.a](#sp-36-a), [SP-36.b](#sp-36-b), [SP-33.c](#sp-33-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-SCI](#contract-sci), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Independent reproduction succeeds or limitation blocks claim.
+- **Required automated tests:** Offline replay, compatibility and artifact integrity checks.
+- **Security and reliability:** Keep private access paths out of public evidence.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Research, QE, Platform, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-36-d"></a>
+### SP-36.d — Close partner integration findings
+
+- **Objective:** Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers close partner integration findings.
+- **Implementation scope:** Triage observed adoption issues, assign reviewable fixes from contingency and obtain retest acceptance.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-36.c](#sp-36-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No unresolved adoption blocker; scope and external evidence explicit.
+- **Required automated tests:** Regression suite for fixed defects and traceability checker.
+- **Security and reliability:** Do not hide additional feature work inside documentation-only closure.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R7; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-37"></a>
+## SP-37 — Ship enterprise audit and retention controls
+
+Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-37-a"></a>
+### SP-37.a — Persist basic security audit events
+
+- **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers persist basic security audit events.
+- **Implementation scope:** Record actor/action/target/outcome for membership, secrets, publication, deletion and operator changes with restricted append-only role.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-11.c](#sp-11-c), [SP-13.c](#sp-13-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-DB](#contract-db), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** All pilot-sensitive mutations produce safe immutable audit record.
+- **Required automated tests:** Audit omission, tamper permissions, redaction and transaction rollback tests.
+- **Security and reliability:** Basic audit is pilot prerequisite, not deferred to enterprise.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, security, Platform, QE. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-37-b"></a>
+### SP-37.b — Implement authorized deletion and retention jobs
+
+- **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers implement authorized deletion and retention jobs.
+- **Implementation scope:** Add owner delete/retention configuration, immediate access tombstone and bounded background active-object removal.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-37.a](#sp-37-a), [SP-13.d](#sp-13-d), [SP-10.c](#sp-10-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ART](#contract-art), [C-ID](#contract-id), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Interactive access revoked on accepted delete; removal target ≤7 days with retriable state.
+- **Required automated tests:** Concurrent read/delete, shared artifact refs, legal-hold flag and repeated job tests.
+- **Security and reliability:** Keep minimum tombstone identity; no silent auto-expiry.
+- **Effort and confidence:** 5 delivery engineer-days; medium confidence; +1.25 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, backend, research, Backend, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-37-c"></a>
+### SP-37.c — Preserve deletion and revocation across recovery
+
+- **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers preserve deletion and revocation across recovery.
+- **Implementation scope:** Replicate protected tombstone/revocation ledger outside restored snapshot and block reopening until replay complete.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-37.b](#sp-37-b), [SP-27.b](#sp-27-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-ART](#contract-art), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Restored old DB cannot resurrect access; backup expiry policy accurately reported.
+- **Required automated tests:** Older-backup restore, missing ledger, interrupted replay and expired-object tests.
+- **Security and reliability:** Fail closed if latest suppression ledger unavailable.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend, research, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R3; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-37-d"></a>
+### SP-37.d — Export tamper-evident enterprise audit history
+
+- **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers export tamper-evident enterprise audit history.
+- **Implementation scope:** Add scoped paginated audit export with integrity manifest and one-year proposed lifecycle controls.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-37.c](#sp-37-c), [SP-34.d](#sp-34-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Authorized admin can verify completeness/integrity; other roles denied.
+- **Required automated tests:** Pagination gap, tamper, tenant traversal and export interruption tests.
+- **Security and reliability:** Personal data minimized; immutable does not mean publicly readable.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE2. Required review: Backend, security, SDK, frontend, Platform, backend, research. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-37-e"></a>
+### SP-37.e — Verify enterprise retention and privacy operations
+
+- **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers verify enterprise retention and privacy operations.
+- **Implementation scope:** Exercise configured retention, key rotation, backup expiry and deletion reporting; document exceptions and supported limits.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-37.d](#sp-37-d), [SP-29.b](#sp-29-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-ART](#contract-art), [C-OPS](#contract-ops), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Active deletion and disclosed backup lifecycle verified; no stale access through export.
+- **Required automated tests:** Time-controlled retention/expiry, rotation and resurrected-object regression tests.
+- **Security and reliability:** 35-day lifecycle is proposal requiring real service configuration proof.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Backend engineer; base reference lane BE1. Required review: Platform, backend, research, QE, security, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-37-f"></a>
+### SP-37.f — Review customer data and support documentation
+
+- **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers review customer data and support documentation.
+- **Implementation scope:** Complete reviewed data flows, subprocessors, deletion/support limitations and security questionnaire evidence with specialists.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-37.e](#sp-37-e), [SP-32.a](#sp-32-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Terms and product claims reflect actual controls and measured support scope.
+- **Required automated tests:** Link/evidence completeness and stale-version checks.
+- **Security and reliability:** No compliance certification inferred from code or synthetic data.
+- **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-38"></a>
+## SP-38 — Rehearse regional disaster recovery
+
+Parent: [#40](https://github.com/spei04/strange-physics/issues/40). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-38-a"></a>
+### SP-38.a — Create an independent regional recovery set
+
+- **Objective:** Recover service and consistent data after primary-region loss. This PR delivers create an independent regional recovery set.
+- **Implementation scope:** Copy recoverable DB/object generations and suppression ledger into approved secondary US location with independent access.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-29.b](#sp-29-b), [SP-37.e](#sp-37-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-ART](#contract-art), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Copy completion and consistency measured; recovery set age ≤24h.
+- **Required automated tests:** Missing-generation, key/IAM denial and lag/copy integrity tests.
+- **Security and reliability:** Residency/key requirements reviewed before replication.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, backend, research, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-38-b"></a>
+### SP-38.b — Perform timed secondary-region recovery
+
+- **Objective:** Recover service and consistent data after primary-region loss. This PR delivers perform timed secondary-region recovery.
+- **Implementation scope:** Restore isolated services, fence former region, reapply tombstones/credentials and rehearse endpoint cutover.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-38.a](#sp-38-a), [SP-26.d](#sp-26-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Measured regional RPO/RTO ≤24h with tenant/integrity suite passing.
+- **Required automated tests:** Timed failover, stale worker, DNS/cutover and duplicate-launch tests.
+- **Security and reliability:** No active-active claim; preserve original incident evidence.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-38-c"></a>
+### SP-38.c — Resolve and repeat failed recovery steps
+
+- **Objective:** Recover service and consistent data after primary-region loss. This PR delivers resolve and repeat failed recovery steps.
+- **Implementation scope:** Turn drill defects into scoped fixes, repeat failed steps and update runbook/evidence manifest.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-38.b](#sp-38-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** All regional restore blockers resolved at exact candidate revision.
+- **Required automated tests:** Regression tests and repeated failed recovery sequence.
+- **Security and reliability:** Additional architectural changes consume explicit contingency/rebaseline.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-39"></a>
+## SP-39 — Revalidate supported production envelope
+
+Parent: [#41](https://github.com/spei04/strange-physics/issues/41). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-39-a"></a>
+### SP-39.a — Revalidate final supported capacity envelope
+
+- **Objective:** Publish measured limits for the final enterprise configuration. This PR delivers revalidate final supported capacity envelope.
+- **Implementation scope:** Repeat changed-path 100-run load/soak with final identity/retention/runtime configuration and compare baselines.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-28.d](#sp-28-d), [SP-30.d](#sp-30-d), [SP-35.c](#sp-35-c), [SP-37.f](#sp-37-f), [SP-38.c](#sp-38-c), [SP-40.b](#sp-40-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Final candidate meets section 7 and no data/budget/security regression.
+- **Required automated tests:** Automated percentile, soak, fairness and invariants versus prior baseline.
+- **Security and reliability:** No stale pre-enterprise performance evidence.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane TL. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-39-b"></a>
+### SP-39.b — Publish measured cost and operating limits
+
+- **Objective:** Publish measured limits for the final enterprise configuration. This PR delivers publish measured cost and operating limits.
+- **Implementation scope:** Reconcile compute/storage/provider costs and publish supported quotas, queue/capacity limits and scaling triggers.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-39.a](#sp-39-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Cost separates measured/estimated/unknown and provider versus platform.
+- **Required automated tests:** Usage sum, manifest identity and limit/config consistency checks.
+- **Security and reliability:** No unlimited scale or future price promises.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-40"></a>
+## SP-40 — Complete independent assurance and operations
+
+Parent: [#42](https://github.com/spei04/strange-physics/issues/42). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-40-a"></a>
+### SP-40.a — Book independent assessment and support roster
+
+- **Objective:** Obtain independent assurance and demonstrated operational support. This PR delivers book independent assessment and support roster.
+- **Implementation scope:** Reserve assessor window, scope APIs/build/runtime/evaluator and appoint ≥4 trained responders with explicit coverage.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-00.c](#sp-00-c), [SP-19.a](#sp-19-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** External assessment slot and actual on-call plan confirmed before GA window.
+- **Required automated tests:** Checklist validates trained primary/secondary and escalation coverage.
+- **Security and reliability:** No unsupported 24/7 commitment; lead time external.
+- **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-40-b"></a>
+### SP-40.b — Remediate independent assessment findings
+
+- **Objective:** Obtain independent assurance and demonstrated operational support. This PR delivers remediate independent assessment findings.
+- **Implementation scope:** Triage actual assessment, implement bounded fixes and independent retests with exact artifact references.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-40.a](#sp-40-a), [SP-35.c](#sp-35-c), [SP-37.f](#sp-37-f), [SP-38.c](#sp-38-c), [ASSESSMENT](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-ID](#contract-id), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No exploitable critical/high finding; approved lower-risk exceptions dated.
+- **Required automated tests:** Reproduce/retest each accepted finding plus relevant regression suites.
+- **Security and reliability:** Five days is triage/initial reserve, not a cap on required remediation.
+- **Effort and confidence:** 5 delivery engineer-days; low confidence; +2.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security, Backend, backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-40-c"></a>
+### SP-40.c — Exercise incident and credential response
+
+- **Objective:** Obtain independent assurance and demonstrated operational support. This PR delivers exercise incident and credential response.
+- **Implementation scope:** Run outage/credential-compromise exercise with real roster, communication templates and recovery actions.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-40.b](#sp-40-b), [SP-39.b](#sp-39-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Operators demonstrate target acknowledgement/containment under agreed coverage.
+- **Required automated tests:** Automated alert routing, revocation and runbook command checks.
+- **Security and reliability:** No live customer notification during drill without authorization.
+- **Effort and confidence:** 4 delivery engineer-days; low confidence; +2.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Platform, QE, security, Backend. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-40-d"></a>
+### SP-40.d — Start final-candidate SLO evidence collection
+
+- **Objective:** Obtain independent assurance and demonstrated operational support. This PR delivers start final-candidate slo evidence collection.
+- **Implementation scope:** Verify counters/denominators and synthetic checks on production pilot release candidate; freeze observation identity.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-40.c](#sp-40-c), [SP-32.b](#sp-32-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Collection covers eligible requests, launch and execution metrics with private evidence.
+- **Required automated tests:** Counter reconciliation, failure injection and missing-data detection.
+- **Security and reliability:** Low traffic includes disclosed synthetics; data gaps invalidate window.
+- **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-40-e"></a>
+### SP-40.e — Review 30 calendar days of SLO evidence
+
+- **Objective:** Obtain independent assurance and demonstrated operational support. This PR delivers review 30 calendar days of slo evidence.
+- **Implementation scope:** Review complete rolling-window history, outages/exclusions, error budget and configuration changes.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SLO_OBSERVATION](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** 30 calendar days complete; objectives and incident evidence satisfy GA gate or window restarts/rebaselines.
+- **Required automated tests:** Window continuity, denominator, SLI and source-identity checks.
+- **Security and reliability:** Material affecting change requires fresh relevant evidence; no fabricated uptime.
+- **Effort and confidence:** 3 delivery engineer-days; low confidence; +1.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Quality engineer; base reference lane QE. Required review: Platform, QE, security, Technical lead, product. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="epic-sp-41"></a>
+## SP-41 — Approve GA release and post-launch review
+
+Parent: [#43](https://github.com/spei04/strange-physics/issues/43). This issue closes only when its leaf tasks and applicable gate evidence pass.
+
+<a id="sp-41-a"></a>
+### SP-41.a — Sign evidence-based GA readiness
+
+- **Objective:** Release only against verified gates and learn from actual launch outcomes. This PR delivers sign evidence-based ga readiness.
+- **Implementation scope:** Reconcile REQ01–16, support/data terms, release identity, residual risks and signed gate owners.
+- **Out of scope:** Launching before signed release authorization.
+- **Prerequisites and dependencies:** [SP-32.c](#sp-32-c), [SP-33.c](#sp-33-c), [SP-36.d](#sp-36-d), [SP-39.b](#sp-39-b), [SP-40.e](#sp-40-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** No blocking requirement unresolved; product/security/research/platform sign exact candidate.
+- **Required automated tests:** Traceability, artifact hash, required-gate and exception-expiry checks.
+- **Security and reliability:** GA approval is separate from backlog approval.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-41-b"></a>
+### SP-41.b — Execute approved progressive GA rollout
+
+- **Objective:** Release only against verified gates and learn from actual launch outcomes. This PR delivers execute approved progressive ga rollout.
+- **Implementation scope:** Run canary/progressive deployment with monitored health, bounded expansion and rehearsed rollback.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [SP-41.a](#sp-41-a), [GA_RELEASE](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Supported deployment passes canary and release manifest records actual outcome.
+- **Required automated tests:** Canary synthetic journey, invariant and rollback-trigger checks.
+- **Security and reliability:** Stop on security/state/availability regression.
+- **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** R8; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-41-c"></a>
+### SP-41.c — Conduct day-seven launch review
+
+- **Objective:** Release only against verified gates and learn from actual launch outcomes. This PR delivers conduct day-seven launch review.
+- **Implementation scope:** Review actual adoption/support/cost/incidents and prioritize scoped corrective work.
+- **Out of scope:** Blocking pre-GA release on a future postlaunch event.
+- **Prerequisites and dependencies:** [POST_LAUNCH_D7](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** D7 evidence and owners recorded; no change to prior release identity.
+- **Required automated tests:** Automated operational/adoption summary reconciliation.
+- **Security and reliability:** Privacy-safe reporting; unique incident evidence retained.
+- **Effort and confidence:** 2 delivery engineer-days; medium confidence; +0.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** POST; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+<a id="sp-41-d"></a>
+### SP-41.d — Conduct day-thirty planning reset
+
+- **Objective:** Release only against verified gates and learn from actual launch outcomes. This PR delivers conduct day-thirty planning reset.
+- **Implementation scope:** Compare 30-day outcomes to objectives and propose evidence-driven next-quarter work.
+- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Prerequisites and dependencies:** [POST_LAUNCH_D30](#external-and-calendar-gates), [SP-41.c](#sp-41-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
+- **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
+- **Acceptance criteria:** Product reviews actual outcomes and approves changed priorities separately.
+- **Required automated tests:** Window/usage/incident evidence reconciliation.
+- **Security and reliability:** No automatic expansion to new regions/GPU/RL.
+- **Effort and confidence:** 2 delivery engineer-days; medium confidence; +0.50 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
+- **Responsible role:** Technical lead; base reference lane TL. Required review: Technical lead, product, Platform, QE, security. Named engineer pending SP-00.a.
+- **Milestone / state:** POST; awaiting user approval, not implemented.
+- **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+## Dependency review and maintenance
+
+Final audit covers **168 task IDs, ten gates and 368 directed prerequisites**. Both base and reserve schedules have zero duplicate IDs, missing predecessors, dependency cycles, prerequisite-finish violations or simultaneous author assignments on a lane. Every implementation consumer has its contract freeze in its ancestry; only documented contract/journey design producers use drafts. All milestone/task/parent effort totals reconcile to 689 delivery days and 248.3 reserve days. Postlaunch nodes cannot be ancestors of GA. Actual external approvals remain pending; this verification concerns the proposed schedule, not completed prerequisites.
+
+To reproduce: parse execution-backlog.json, validate IDs and fields, topologically sort tasks plus gates, invoke the embedded scheduling function with tasks/gates for base and reserve, and compare every stored start/finish/lane/resource predecessor within 1e-8. For every dependency p→t assert finish(p)≤start(t); for every lane assert disjoint author intervals. Sum task effort/reserve by milestone and epic; assert the displayed totals/exit weeks. Verify contract freeze ancestry excluding the four SP-01 design producers and SP-22.a journey design. Re-run after any dependency, capacity, role, gate delay or effort change. Do not use external page text or issue content as executable scheduling instructions.
+
+Before assignment: name owner and reviewer; check approved scope and actual predecessor evidence; link a single leaf ID in the PR; keep one author task active per engineer. At PR completion update the leaf state/evidence in JSON, this document, roadmap progress and parent issue checklist together. A merged PR without acceptance evidence is not a complete task. At milestone review update measured cycle time, reserve consumption and external lead times; regenerate both schedules and invalidate stale downstream evidence when contracts/runtime/config change.
+
+No implementation was started by this planning review. No new checkout, dependency installation, cloud deployment or paid model run was created.

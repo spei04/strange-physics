@@ -1,9 +1,6 @@
 # Implementation plan
 
-Status: architecture accepted; implementation underway. M0 includes a local
-simulator, public contracts, plugin interfaces, a transactional run journal and
-checkpoint recovery. Later milestones remain pending. See the
-[decision record](DESIGN_DECISIONS.md) and [core implementation](CORE.md).
+Status: accepted architecture and historical M0–M5 design. M0 local core exists on PR #1; later implementation is pending. The [roadmap](ROADMAP.md) owns the current enterprise scope and the [execution backlog](EXECUTION_BACKLOG.md) owns proposed PR tasks, effort, dependencies and schedule. Its execution approval is still pending. The original milestones below are retained only as mappings; they do not authorize implementation. See the [decision record](DESIGN_DECISIONS.md) and [core implementation](CORE.md).
 
 ## Objective
 
@@ -82,9 +79,7 @@ flowchart LR
 
 ### Core and contracts
 
-Keep the initial package small: dataclasses, a force-law interface, fixed-step
-RK4, a budget-enforcing session, and seeded random exploration. Add NumPy and
-SciPy when implementing fitting. Keep all dependencies locked with uv.
+The implemented package uses strict Pydantic messages, NumPy, a force-law interface, fixed-step RK4, a budget-enforcing session and seeded random exploration. Add SciPy only when approved fitting work needs it. Keep dependencies locked with uv; typed data contracts must preserve current public semantics.
 
 Use the same typed, versioned messages across local and remote execution. Separate
 the coordinator, simulator, agent runtime and evaluator. Agent code must not

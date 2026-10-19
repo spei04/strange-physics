@@ -31,10 +31,7 @@ investigations will be private by default; published reference benchmarks will
 include every scored run and its failures. A separate blind suite will evaluate
 worlds that participants cannot inspect.
 
-Start with the [implementation plan](docs/PLAN.md), the [draft benchmark
-protocol](docs/BENCHMARK.md), [accepted decisions](docs/DESIGN_DECISIONS.md), and
-[implemented core](docs/CORE.md). The core documentation distinguishes current
-behavior from the remaining production work.
+Start with the [enterprise roadmap](docs/ROADMAP.md), the [execution backlog](docs/EXECUTION_BACKLOG.md), the [draft benchmark protocol](docs/BENCHMARK.md), [accepted decisions](docs/DESIGN_DECISIONS.md), and [implemented core](docs/CORE.md). The audited execution backlog awaits user approval; no new implementation starts before that approval. The older implementation plan is retained as design history, with milestone mappings in the roadmap.
 
 ## Development setup
 
@@ -126,7 +123,10 @@ src/strange_physics/ simulation, force plugins, public contracts, journal, SDK a
 tests/              physical, protocol, crash-recovery and extension tests
 examples/           external law and agent implementations
 docs/CORE.md         implemented behavior, file boundaries and limitations
-docs/PLAN.md         architecture, milestones and completion criteria
+docs/ROADMAP.md      product, architecture, requirements and strategic progress
+docs/EXECUTION_BACKLOG.md PR tasks, dependencies, daily start plan and milestone gates
+docs/execution-backlog.json matching task and resource-schedule ledger
+docs/PLAN.md         historical design and original milestone mapping
 docs/BENCHMARK.md    proposed evaluation and fairness rules
 docs/LAWS.md         equations, units and identifiable interventions
 docs/RELATED_WORK.md positioning and prior work

@@ -3,14 +3,14 @@
 **Document owner:** product owner and engineering lead
 **Last verified:** 2026-10-19
 **Repository:** [spei04/strange-physics](https://github.com/spei04/strange-physics)
-**Status:** Stage 2 work packages published and initial contract drafts validated; expanded assumptions, contract freeze and first implementation slice await approval.
+**Status:** Execution backlog audited and prepared: 168 PR tasks across 42 epics, with resource/dependency-checked schedules. User approval is required before implementation.
 **Implementation baseline:** 428b5a698b6f5654a9b91f547c9d4e7c196d3aa9, on feat/research-core; [PR #1](https://github.com/spei04/strange-physics/pull/1) is open, not merged.
 
-This is the single maintained enterprise roadmap, requirements register, execution backlog, and progress record. It fills the requested engineering-blueprint template in one file. Existing [accepted decisions](DESIGN_DECISIONS.md), [core contracts](CORE.md), [law definitions](LAWS.md), and [draft benchmark](BENCHMARK.md) remain useful detailed references. This document proposes an expanded release schedule; it does not retroactively approve new scope, change scientific settings, or claim deployed controls. If approved, its R0–R8 schedule supersedes the older M0–M5 schedule; section 10 maps the two.
+This is the maintained enterprise roadmap, requirements register and strategic progress record. The requested blueprint remains consolidated here. The later execution-planning request adds [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md) for assignable PR tasks and [execution-backlog.json](execution-backlog.json) for their matching dependency/capacity ledger. Existing [accepted decisions](DESIGN_DECISIONS.md), [core contracts](CORE.md), [law definitions](LAWS.md), and [draft benchmark](BENCHMARK.md) remain useful detailed references. This document proposes an expanded release schedule; it does not retroactively approve new scope, change scientific settings, or claim deployed controls. If approved, its R0–R8 schedule supersedes the older M0–M5 schedule; section 10 maps the two.
 
 No broad implementation, new infrastructure, paid sweep, or compliance certification is performed by creating this plan. Previously approved architecture remains accepted. New enterprise gates and quantitative assumptions below are proposals until approved or measured.
 
-**Navigate:** [Progress](#0-progress-evidence-and-how-to-maintain-this-file) · [Product](#1-product-definition-and-planning-assumptions) · [Architecture](#4-architecture-and-trust-boundaries) · [Capacity and cost](#7-capacity-performance-and-cost-model) · [Security](#8-security-requirements-and-threat-model) · [Milestones](#10-dependency-aware-milestones-and-exit-gates) · [Backlog](#11-prioritized-issue-ready-engineering-backlog) · [Team and schedule](#12-team-ownership-and-delivery-schedule) · [Operations](#13-cicd-deployment-reliability-and-operations) · [Approval](#17-decisionprogress-log-and-approval-handoff)
+**Navigate:** [Progress](#0-progress-evidence-and-how-to-maintain-this-file) · [Product](#1-product-definition-and-planning-assumptions) · [Architecture](#4-architecture-and-trust-boundaries) · [Capacity and cost](#7-capacity-performance-and-cost-model) · [Security](#8-security-requirements-and-threat-model) · [Milestones](#10-dependency-aware-milestones-and-exit-gates) · [Backlog](#11-prioritized-engineering-backlog) · [Team and schedule](#12-team-ownership-and-delivery-schedule) · [Operations](#13-cicd-deployment-reliability-and-operations) · [Approval](#17-decisionprogress-log-and-approval-handoff)
 
 ## 0. Progress, evidence, and how to maintain this file
 
@@ -36,16 +36,16 @@ A checked box means its stated scope passed, not that the whole product is produ
 | Current code checks in cloud checkout | Verified | 55 tests passed in 10.29 seconds; Ruff lint/format passed; strict mypy passed for 19 source files on 2026-10-19 |
 | Existing GitHub CI | Verified at baseline commit | Python 3.12 and 3.14 checks succeeded on PR and push; [CI run](https://github.com/spei04/strange-physics/actions/runs/37415951979), completed 2026-10-06 |
 | Baseline integration to main | Planned | PR #1 still open; passing checks do not mean merged or released |
-| Stage 2 engineering work packages | Prepared; implementation pending approval | 42 detailed issues, nine milestones and 112 native GitHub blocking relationships verified by read-back; tests, telemetry and exit evidence specified |
+| Stage 2 execution backlog | Audited; implementation awaits user approval | 168 PR tasks across 42 epic issues; 368 task/gate prerequisites; scope, exclusions, contracts, tests, confidence and done criteria; dependency/resource audit passed |
 | Initial contract pack | Draft; validation passed | Four JSON artifacts with exported core definitions, 11 proposed HTTP operations, research messages and synthetic fixtures; SP-01 freeze remains open |
-| Expanded enterprise blueprint | Awaiting approval | This document, including issue-ready work packages, staffing, capacity assumptions and exit gates |
+| Expanded enterprise execution baseline | Awaiting approval | Backlog D01–D06 cover initial scope, staffing, revised schedule, release boundary, provisional targets and later concrete paid/release gates |
 | Shared fitter, active selector, calibrated uncertainty, held-out scoring | Planned | R1; the current random agent does not learn a predictive model |
 | Authenticated HTTP service, tenant database, remote execution | Planned | R2–R3; local SQLite is not a hosted security boundary |
 | Provider gateway, LLM selector, executable predictor evaluation | Planned | R4; no provider sweep or live model calls established |
 | Browser world builder, investigation viewer, supported self-hosting | Planned | R5 |
 | Load, adversarial, restore, migration and outside-team validation | Planned | R6–R8 |
 | Production infrastructure and actual credit eligibility | Unverified / planned | No product deployment appears in this repository; this review did not inventory the cloud account |
-| Development workspace capacity | At risk | Cloud root filesystem: 193 GB total, about 538 MB free at inspection; resolve before dependency or image builds |
+| Development workspace capacity | At risk | Cloud root filesystem: 193 GB total, about 423 MiB free at inspection; resolve before dependency or image builds |
 
 The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. Its single Git checkout is retained for ongoing work. Existing migration archives and other experiments are not disposable build caches.
 
@@ -69,15 +69,15 @@ The staged workflow was requested on 2026-10-19. Preparing issues/contracts is a
 | Stage | Deliverable and gate | Current state |
 | --- | --- | --- |
 | 1 — Plan and challenge | Inspect actual code, compare options, expose assumptions, challenge risks; product owner reviews assumptions before implementation approval | Blueprint and challenge review prepared; A01–A09 and expanded targets await approval |
-| 2 — Turn the plan into engineering work | Detailed work packages, GitHub issues/milestones/dependencies, draft API/schema fixtures, tests and milestone exits; review contracts before freezing | 42 work packages, nine milestones and 112 dependency relationships published and verified; initial contract pack drafted and validated; SP-01 freeze remains open |
+| 2 — Turn the plan into engineering work | Assignable PR tasks, exact dependencies/contracts/tests, capacity model and exit gates | 168 leaf tasks/42 epics; 368 prerequisites checked in both schedule scenarios; first ten days planned; execution approval and subset freezes remain pending |
 | 3 — Implement one vertical slice at a time | Start only an approved slice; require tests, review, telemetry and updated documentation; then assess its evidence before selecting the next | Not started for the expanded roadmap |
 | 4 — Validate actual production readiness | Audit shipped implementation against REQ01–REQ16 using real test/load/security/deploy/restore evidence; block unsupported claims | Not started; R6–R8 own these gates |
 
-The roadmap remains the single planning/progress Markdown document. GitHub issues hold actionable work packages; machine-readable JSON files hold contract drafts. Creating an issue, schema or milestone never marks its implementation complete. Issue blockers describe completion/integration prerequisites; mock work may start after its explicitly approved interface boundary.
+The roadmap owns product/architecture/overall progress; EXECUTION_BACKLOG.md owns assignable task details and schedules, backed by execution-backlog.json. GitHub issues hold epic rollups; JSON contract files remain drafts. Creating an issue, schema or milestone never marks its implementation complete. Issue blockers describe completion/integration prerequisites; mock work may start after its explicitly approved interface boundary.
 
 ### 0.5 Proposed first implementation slice: fit, predict, score one spring system
 
-**Approval item:** [SP-00](https://github.com/spei04/strange-physics/issues/2). **Delivery scope:** a bounded subset of [SP-03](https://github.com/spei04/strange-physics/issues/5), [SP-04](https://github.com/spei04/strange-physics/issues/6) and [SP-06](https://github.com/spei04/strange-physics/issues/8); its effort is included in those packages, not an added milestone.
+**Approval item:** [SP-00](https://github.com/spei04/strange-physics/issues/2), execution decision D01. **Delivery units:** SP-03.a/b → SP-04.a/b → SP-06.a → SP-04.e, behind approved contracts and headroom. See the [leaf records](EXECUTION_BACKLOG.md#epic-sp-04). Effort is included in those packages; estimated integration W9 base/W11 reserve, not an added milestone.
 
 A researcher exports purchased observations, fits a shared linear-spring coefficient, saves a typed model, predicts an unseen initial condition and receives an independently computed development report. This exercises the scientific architecture through a usable SDK/CLI path before adding more methods or hosted components.
 
@@ -119,7 +119,7 @@ The commercial value is reducing the engineering and validity burden of building
 | ID | Assumption / unknown | Planning treatment | Owner / decision deadline |
 | --- | --- | --- | --- |
 | A01 | Actual named staff and availability are unknown | Reference plan uses nine engineers at 70% delivery capacity, plus fractional product/design/security | Product + lead, R0 |
-| A02 | No launch date or signed customer SLA supplied | Relative weeks from approval and staffing; pilot W19–22, enterprise GA W30–36; not a commitment | Product, R0 |
+| A02 | No launch date or signed customer SLA supplied | Relative weeks from approval and staffing; pilot onboarding W38–50, enterprise GA W52–67; not a commitment | Product, R0 |
 | A03 | Initial customers are frontier-lab research groups and AI startups | Recruit three design partners, including one external custom-agent integration | Product, before R6 exit |
 | A04 | 100 concurrent investigations is accepted; tenants/RPS/storage unknown | Separate baseline, forecast and stress assumptions in section 7 | Platform + product, R0 then R6 |
 | A05 | Exact region, credits, permissions, quotas and expiry not established | One US primary region; us-central1 is a candidate only; verify before provisioning | Platform, R0 |
@@ -358,7 +358,7 @@ All routes are under /v1. IDs are opaque and tenant-checked; a workspace path is
 | Create investigation | POST /workspaces/{w}/runs | 202 with run_id, state, operation_id, request digest and budget summary |
 | Read / cancel run | GET /workspaces/{w}/runs/{r}; POST .../{r}/cancel | Current state or 202 cancellation accepted; cancellation not completion |
 | Execute experiment | POST /runs/{r}/experiments | Run-scoped token; Idempotency-Key; 202 operation or existing committed result |
-| Observe results | GET /runs/{r}/experiments and /operations/{op} | Purchased observations only; cursor pagination |
+| Observe results | GET /runs/{r}/experiments; /runs/{r}/operations/{op}; /workspaces/{w}/runs/{r}/operations/{op} | Purchased observations only; cursor pagination |
 | Save checkpoint | PUT /runs/{r}/checkpoints/{index} | Schema/runtime/hash validation; immutable at an index; complete prefix only |
 | Submit predictor | POST /runs/{r}/models | Immutable image/model references; no evaluator score returned |
 | Model request | POST /runs/{r}/model-calls | Scoped gateway operation ID and pending/completed/ambiguous state |
@@ -366,7 +366,7 @@ All routes are under /v1. IDs are opaque and tenant-checked; a workspace path is
 | Export / publish / delete | POST .../{r}/exports, /publications; DELETE .../{r} | Explicit owner intent; async operation; sanitized publication manifest |
 | Usage / audit | GET /workspaces/{w}/usage and /audit | Authorized summaries and cursor export; no raw credentials |
 
-Use OpenAPI 3.1 with stable operation IDs, generated TS client and Python remote adapter. R0/SP-01 freezes request/response/error schemas and examples before parallel backend/frontend implementation. Clients must tolerate declared optional fields and known versioning rules, not unknown experiment fields that the existing strict contracts reject.
+Use OpenAPI 3.1 with stable operation IDs, generated TS client and Python remote adapter. R0/SP-01 freezes specific request/response/error subsets and examples before their consumers; provider and executable-predictor freezes are SP-17.a and SP-19.a, with enterprise contracts reviewed before SP-34/35 consumers. Clients must tolerate declared optional fields and known versioning rules, not unknown experiment fields that the existing strict contracts reject.
 
 Mutation idempotency keys are scoped to tenant + route + resource + caller operation. Identical canonical bodies return the original operation; changed bodies return 409. Keep run-operation deduplication records for the lifetime of the run, including partial failures. DELETE tombstones preserve the minimum deduplication identity required by the retention policy.
 
@@ -400,17 +400,17 @@ Validation performed during Stage 2: JSON Schema 2020-12 definition checks; reso
 
 JSON Schema does not implement cross-field scientific or security behavior. Runtime obligations include graph identities, impulse targets, increasing/aligned timestamps, particle/mass matching, finite numerical results, checkpoint size/prefix/runtime consistency, quota transactions, tenant/epoch authorization and evaluation-count consistency. The fixture set explicitly identifies structural-validity cases that need semantic rejection.
 
-### 5.5 Remaining contract-freeze gates (SP-01)
+### 5.5 Remaining contract-freeze gates
 
 - [ ] Review the proposed first slice and ratify its supported numerical domain and test tolerances.
-- [ ] Complete the remaining workspace/invitation/world/package/provider/export/audit/enterprise identity contracts before their dependent implementation.
+- [ ] Freeze foundational research/run/identity/artifact/world/event subsets in SP-01.a–d; provider SP-17.a and predictor SP-19.a separately; enterprise federation/SCIM in SP-34.a/35.a before consumers. Extension endpoints must update reviewed schemas before implementation.
 - [ ] Resolve exact SSE cursor expiry, archive resync transport and authorization/session lifecycle.
 - [ ] Freeze model/checkpoint compatibility and artifact/runtime identity semantics with research, backend and platform reviewers.
 - [ ] Add positive/negative/ambiguous-failure fixtures for the full agreed subset and review privacy visibility.
 - [ ] Introduce reproducible, pinned contract validation and generated-client drift checks in CI when freezing the interfaces.
 - [ ] Sign off the versioned interface subset and produce client/mock artifacts before parallel consumers depend on it.
 
-The current draft pack is review scaffolding. It does not complete SP-01, imply an API deployment, or waive implementation/production gates.
+The current draft pack is review scaffolding. It does not complete a subset freeze, imply an API deployment, or waive execution-backlog approval and production gates.
 
 ## 6. Data model, ownership, and lifecycle
 
@@ -638,182 +638,185 @@ Medium/low issues may ship only with scoped impact, compensating control, accoun
 
 ## 10. Dependency-aware milestones and exit gates
 
-Proposed baseline effort is **118 engineering person-weeks**, plus **25% contingency = 29.5 person-weeks** for integration, investigation and rework. Effort includes work-package tests/documentation; staffing availability is separately discounted to 70% for review/support/coordination. Nine engineers provide approximately 6.3 delivery person-weeks per calendar week. Capacity alone suggests about 23.4 weeks; dependencies, partner trials and the 30-day operational observation make **W30–36** a more credible GA planning window. These are estimates, not a delivery promise.
+The execution audit replaces the earlier unvalidated 118 PW/25% estimate and W30–36 GA forecast. Bottom-up work is **689 delivery engineer-days (137.8 PW)**, including four postlaunch days, plus **248.3 days (49.66 PW) of confidence-weighted contingency**. Nine engineers at 70% delivery capacity provide 6.3 PW/week collectively; prerequisite chains and specialist queues make elapsed time longer than effort divided by team size.
 
-The nine-role staffing model is in section 12. R0–R8 collectively complete accepted scope and add enterprise operations. Existing M0 maps to the verified baseline, old M1 to R1/R4, M2 to R2/R3, M3 to R4, M4 to R5, and M5 to R6–R8. Earlier sequencing is preserved where needed by contracts; workstreams overlap only behind stable interfaces.
+The [execution backlog](EXECUTION_BACKLOG.md) and [machine-readable plan](execution-backlog.json) contain 168 PR tasks, ten approval/calendar gates, 368 prerequisites and both resource-checked forecast scenarios. All implementation remains awaiting user approval. Forecast **pilot onboarding W38–50, complete R7 evidence W45–59 and GA W52–67** from a staffed approved start. This is a feasible conservative schedule, not an optimized commitment or statistical confidence interval. Unknown approval/partner delays and measured sweep execution time can extend it. Reforecast after D10, R0 and each integration checkpoint.
 
-| Milestone | Target window | Effort | Primary owner | Status |
+Old M0 is the implemented local baseline; M1 maps to R1/R4, M2 to R2/R3, M3 to R4, M4 to R5 and M5 to R6–R8. R0 uses subset contract freezes; the complete product API and enterprise protocol are not promised in two weeks.
+
+| Milestone | Earliest base work | Base / reserve exit | Delivery / reserve PW | Owner / status |
 | --- | --- | --- | --- | --- |
-| R0 [Scope, contract and environment readiness](https://github.com/spei04/strange-physics/milestone/1) | W1–2 | 4 PW | TL + product | Blueprint ready for approval; remaining work planned |
-| R1 [Scientifically valid learning/evaluation core](https://github.com/spei04/strange-physics/milestone/2) | W2–10 | 12 PW | Research | Planned |
-| R2 [Tenant-aware durable control plane](https://github.com/spei04/strange-physics/milestone/3) | W2–11 | 16 PW | Backend | Planned |
-| R3 [Isolated remote execution and delivery foundation](https://github.com/spei04/strange-physics/milestone/4) | W3–13 | 18 PW | Platform | Planned |
-| R4 [Model gateway and both discovery tracks](https://github.com/spei04/strange-physics/milestone/5) | W8–16 | 14 PW | Research + backend | Planned |
-| R5 [Researcher product, replay and self-hosting](https://github.com/spei04/strange-physics/milestone/6) | W3–16 | 12 PW | Frontend + platform | Planned |
-| R6 [Integrated security, reliability and capacity gate](https://github.com/spei04/strange-physics/milestone/7) | W13–18 | 12 PW | QE + platform | Planned |
-| R7 [Design-partner pilot and reference publication](https://github.com/spei04/strange-physics/milestone/8) | W19–22 | 10 PW | Product + lead | Planned |
-| R8 [Enterprise readiness and GA](https://github.com/spei04/strange-physics/milestone/9) | W17–30, reserve through W36 | 20 PW | Lead + platform + security | Planned |
+| R0 — Scope, contracts and environment readiness | W1 | W5 / W6 | 6.2 / 1.71 | TL + product; awaiting approval |
+| R1 — Scientifically valid learning and evaluation core | W2 | W18 / W24 | 17.2 / 6.90 | Research lead; awaiting approval |
+| R2 — Private durable control plane | W3 | W16 / W20 | 14.0 / 3.95 | Backend lead; awaiting approval |
+| R3 — Isolated execution and recoverable data | W2 | W24 / W33 | 23.8 / 8.35 | Platform lead + security; awaiting approval |
+| R4 — Provider integration and both research tracks | W3 | W27 / W36 | 16.2 / 6.30 | Research + backend; awaiting approval |
+| R5 — Researcher product and supported self-hosting | W1 | W30 / W40 | 19.4 / 5.35 | Frontend + platform; awaiting approval |
+| R6 — Integrated production pilot readiness | W18 | W35 / W45 | 14.2 / 5.55 | QE + security + platform; awaiting approval |
+| R7 — Design-partner evidence and reference publication | W35 | W45 / W59 | 8.4 / 3.80 | Product + research; awaiting approval |
+| R8 — Enterprise GA readiness and rollout | W4 | W52 / W67 | 17.6 / 7.55 | TL + security + platform; awaiting approval |
+| POST — Postlaunch reviews | W53 | W57 / W72 | 0.8 / 0.20 | TL + product; awaiting approval |
 
-Windows are resource-leveled planning ranges, not instructions to assign every package simultaneously. Research can begin pilot calibration before full hosting; frontend mocks can proceed after SP-01. R6 cannot exit until R1–R5 are integrated.
+### R0 — Scope, contracts and environment readiness
 
-### R0 — scope, contracts and environment readiness
+**Entry / dependencies:** use the [leaf prerequisite graph](EXECUTION_BACKLOG.md#task-index), not a whole-epic wait. All actual approvals and required contract subsets must exist before dependent work.
 
-**Objective/deliverables:** approved requirements, named owners, frozen interface baseline, reconciled existing PR, verified cloud prerequisites and workspace headroom.
-**Tasks/subtasks:** SP-00 (review assumptions/staffing/partners), SP-01 (schemas/error cases/mocks/compatibility), SP-02 (credits/IAM/quotas/region/disk preflight).
-**Dependencies/entry:** this plan reviewed; repository available; existing working code preserved.
-**Acceptance/tests:** all critical interfaces have example success/failure messages and owner review; baseline checks linked; no unresolved account ownership or environment access for the next provisioned step; safe disk-headroom plan recorded.
-**Risks:** actual hiring delay, billing/organization restrictions, near-full development disk.
-**Exit / done:** product approves scope/schedule assumptions; lead signs interface baseline; infrastructure owners record private preflight evidence. Gate does not itself provision unbounded resources.
+**Exit joins:** [SP-00.b](EXECUTION_BACKLOG.md#sp-00-b), [SP-00.c](EXECUTION_BACKLOG.md#sp-00-c), [SP-01.e](EXECUTION_BACKLOG.md#sp-01-e), [SP-02.b](EXECUTION_BACKLOG.md#sp-02-b), [SP-02.c](EXECUTION_BACKLOG.md#sp-02-c); every other task allocated to this milestone must also be done.
 
-### R1 — scientifically valid core
+**Acceptance / tests / done:** Signed baseline and subset contracts; named staff/partners pipeline; pinned client/mock checks; safe headroom and priced authorized staging config. Exact source/runtime/config, executed checks, reviewers and limitations are required. Owner: TL + product.
 
-**Objective/deliverables:** fitter, uncertainty, active selector, evaluator and development calibration report.
-**Tasks/subtasks:** SP-03 numerical/identifiability matrix; SP-04 fitter and conditioning; SP-05 bootstrap/adaptation/candidate policies; SP-06 scoring/failure/censoring; SP-07 freeze draft and pilot size study.
-**Dependencies/entry:** SP-01; reviewed baseline integration; development/evaluation split defined.
-**Acceptance/tests:** known solvable fixtures achieve predeclared tolerance; unsupported/ill-conditioned cases explicit; no evaluation feedback; whole-world aggregation and all failures retained; CPU/storage measurements for ensemble scoring. V01/V02/V06.
-**Risks:** unidentifiable tasks, correlated uncertainty, expensive rollouts, benchmark tuned to favor one strategy.
-**Exit / done:** independently reviewed development report and versioned numerical configuration; official scoring waits for the later full protocol/isolation gate.
+**Risks / release blockers:** No contract consumer starts until its specific subset is accepted; whole R0 exit need not serialize independent numerical work.
 
-### R2 — tenant-aware durable control plane
+### R1 — Scientifically valid learning and evaluation core
 
-**Objective/deliverables:** authenticated workspace API, PostgreSQL schema, run/experiment state machine, quotas and event stream foundation.
-**Tasks/subtasks:** SP-08 identity/membership; SP-09 reservations/state transitions; SP-10 outbox/fencing/reconciliation; SP-11 RLS/object authorization; SP-12 quota/usage ledger.
-**Dependencies/entry:** SP-01 interface freeze; SP-02 environment readiness; SP-27 deploy foundation for staging integration.
-**Acceptance/tests:** simultaneous retries produce one logical experiment/debit; stale lease cannot commit; unauthorized lookup/SSE/artifact access denied; owner revocation enforced. V02/V03/V04.
-**Risks:** confused deputy, connection exhaustion, accidental at-least-once side effects.
-**Exit / done:** full backend conformance suite passes against real PostgreSQL; no uploaded customer code enabled yet.
+**Entry / dependencies:** use the [leaf prerequisite graph](EXECUTION_BACKLOG.md#task-index), not a whole-epic wait. All actual approvals and required contract subsets must exist before dependent work.
 
-### R3 — isolated remote execution
+**Exit joins:** [SP-03.d](EXECUTION_BACKLOG.md#sp-03-d), [SP-04.e](EXECUTION_BACKLOG.md#sp-04-e), [SP-07.d](EXECUTION_BACKLOG.md#sp-07-d); every other task allocated to this milestone must also be done.
 
-**Objective/deliverables:** immutable artifact storage, isolated package builds, sandbox launcher, recoverable remote worker and safe deployment pipeline.
-**Tasks/subtasks:** SP-13 content store/checkpoint references; SP-14 build quarantine/scans; SP-15 runtime/network/resource policy; SP-16 end-to-end interruption/cancel; SP-27 IaC/keyless staging deployment.
-**Dependencies/entry:** frozen contracts and environment readiness; integrate against R2 reservation/lease APIs.
-**Acceptance/tests:** malicious builds cannot obtain deployment secrets; agent cannot reach metadata, arbitrary DNS/network, another run or evaluator; killed worker restores committed prefix with correct budget. V03/V04/V09/V11.
-**Risks:** sandbox compatibility, incomplete egress controls, poisoned build output.
-**Exit / done:** security/lead approve isolation evidence and a real remote investigation survives repeated forced interruption.
+**Acceptance / tests / done:** Independent spring slice and full numerical/identifiability report; development uncertainty/failure/precision and total evaluator-cost evidence; both candidate protocols versioned. Exact source/runtime/config, executed checks, reviewers and limitations are required. Owner: Research lead.
 
-### R4 — models and both discovery tracks
+**Risks / release blockers:** Invalid domain or uncalibrated uncertainty blocks official study; milestone may end in documented redesign.
 
-**Objective/deliverables:** durable provider gateway, controlled LLM selector, predictor package protocol and independent scoring pipeline.
-**Tasks/subtasks:** SP-17 model-attempt persistence; SP-18 provider adapters/limits/controlled LLM; SP-19 executable predictor validation; SP-20 independent evaluator runtime; SP-21 comparison integration.
-**Dependencies/entry:** R1 model/scoring interfaces, R2 durable ledger, R3 isolation; build fixtures can start before full integration.
-**Acceptance/tests:** replay uses recorded responses without paid calls; timeout ambiguity visible; no silent provider/model substitution; shared-fitter and agent-discovery results separate; malicious predictor has no truth/output channel. V06/V07/V04.
-**Risks:** external rate limits, model-version drift, invalid output and compute imbalance.
-**Exit / done:** a capped end-to-end run for every strategy/family and both tracks has a complete private manifest and reproducible evaluation.
+### R2 — Private durable control plane
 
-### R5 — researcher product and self-hosting
+**Entry / dependencies:** use the [leaf prerequisite graph](EXECUTION_BACKLOG.md#task-index), not a whole-epic wait. All actual approvals and required contract subsets must exist before dependent work.
 
-**Objective/deliverables:** accessible authenticated product UI, constrained world builder, live/replay diagnostics, exports, remote SDK and supported self-hosting.
-**Tasks/subtasks:** SP-22 workspace/builder; SP-23 live timeline/reconnect; SP-24 predictions/uncertainty/replay; SP-25 remote SDK/export; SP-26 install/upgrade/OIDC adapter.
-**Dependencies/entry:** SP-01 mocks; progressive integration with R2/R3/R4.
-**Acceptance/tests:** keyboard-accessible essential journeys; network reconnect loses no committed events; local/remote semantic parity; replay uses recorded frames; clean supported self-host install runs an investigation. V02/V05/V10.
-**Risks:** frontend races, UI leaks evaluator metadata, self-host support matrix expansion.
-**Exit / done:** a researcher completes author → run → inspect → export without operator edits; self-host limitations and isolation requirements explicit.
+**Exit joins:** [SP-08.d](EXECUTION_BACKLOG.md#sp-08-d), [SP-09.d](EXECUTION_BACKLOG.md#sp-09-d), [SP-10.c](EXECUTION_BACKLOG.md#sp-10-c), [SP-11.c](EXECUTION_BACKLOG.md#sp-11-c), [SP-12.c](EXECUTION_BACKLOG.md#sp-12-c); every other task allocated to this milestone must also be done.
 
-### R6 — integrated system gate
+**Acceptance / tests / done:** Real PostgreSQL concurrency/RLS tests; auth, invitations, basic service/run credentials, budgets, outbox, epochs and revocation verified. Exact source/runtime/config, executed checks, reviewers and limitations are required. Owner: Backend lead.
 
-**Objective/deliverables:** security, load, fault, restore, data-lifecycle and operational evidence; pilot release candidate.
-**Tasks/subtasks:** SP-28 load/fairness; SP-29 backup/restore/faults; SP-30 browser/SDK/upgrade E2E; SP-31 security/deletion/revocation matrix.
-**Dependencies/entry:** R1–R5 merged and deployed to isolated staging; signed release candidate.
-**Acceptance/tests:** pass 100-investigation synthetic provider envelope, two-hour hold/24-hour soak, no duplicate logical charges or cross-tenant leakage; pilot restore and migration gates; on-call contacts and draft runbooks. V04–V12 as relevant.
-**Risks:** expensive evaluators, production-only IAM gaps, hidden state races.
-**Exit / done:** release-readiness review approves limited design-partner production use; remaining enterprise gaps explicit.
+**Risks / release blockers:** No private or uploaded customer runtime before integrated R3 security and release review.
 
-### R7 — design-partner pilot and reference release
+### R3 — Isolated execution and recoverable data
 
-**Objective/deliverables:** monitored partner use, complete scored reference release, independent integration and operational feedback.
-**Tasks/subtasks:** SP-32 partner onboarding/support; SP-33 protocol freeze/sweep/publication; SP-36 external extension/self-host integration.
-**Dependencies/entry:** R6 pass; approved data terms; named partners; priced/capped benchmark run plan.
-**Acceptance/tests:** four weeks of partner observation, product outcome denominators recorded, one external custom extension, one independently reproduced report; all scored reference failures published after sanitization. V05/V06/V12.
-**Risks:** partner availability, procurement delays, accidental protocol changes, inference expense.
-**Exit / done:** product/research/security sign pilot review; issues triaged with owners; no fabricated adoption or research claims.
+**Entry / dependencies:** use the [leaf prerequisite graph](EXECUTION_BACKLOG.md#task-index), not a whole-epic wait. All actual approvals and required contract subsets must exist before dependent work.
 
-### R8 — enterprise production and GA
+**Exit joins:** [SP-13.d](EXECUTION_BACKLOG.md#sp-13-d), [SP-14.d](EXECUTION_BACKLOG.md#sp-14-d), [SP-15.e](EXECUTION_BACKLOG.md#sp-15-e), [SP-16.d](EXECUTION_BACKLOG.md#sp-16-d), [SP-16.e](EXECUTION_BACKLOG.md#sp-16-e), [SP-27.f](EXECUTION_BACKLOG.md#sp-27-f), [SP-37.c](EXECUTION_BACKLOG.md#sp-37-c); every other task allocated to this milestone must also be done.
 
-**Objective/deliverables:** SSO/provisioning, audit export, full deletion/DR evidence, measured operating limits, launch/support package.
-**Tasks/subtasks:** SP-34 SSO/service identities; SP-35 SCIM/revocation; SP-37 audit/retention/privacy; SP-38 regional recovery; SP-39 repeat supported-capacity validation; SP-40 independent review/on-call/30-day SLO; SP-41 release and post-launch review.
-**Dependencies/entry:** R2 security foundation allows early enterprise work; final exit requires R7 and all release blockers resolved.
-**Acceptance/tests:** every requirement traced, independent security issues resolved per policy, actual support coverage staffed, 30-day SLO record, documented recovery objectives achieved in drills, self-host upgrade verified, pilot feedback closed or risk-accepted.
-**Risks:** SSO federation edge cases, third-party assessment lead time, insufficient operations coverage, unrealistic contractual guarantees.
-**Exit / done:** signed launch checklist and immutable release/evidence manifest. “Enterprise ready” is limited to the tested envelope and supported deployment, not unlimited scale.
+**Acceptance / tests / done:** Real staged remote recovery and hostile build/runtime/network evidence; immutable artifacts/checkpoints; basic audit/delete/tombstone replay; signed deploy/rollback/telemetry. Exact source/runtime/config, executed checks, reviewers and limitations are required. Owner: Platform lead + security.
 
-### Critical path
+**Risks / release blockers:** SP-37.a–c moved here; managed runtime fail-closed and no missing committed artifacts are nonwaivable.
 
-~~~mermaid
-flowchart TD
-    R0[R0 approval and interface baseline] --> R1[R1 fitting and scientific validation]
-    R0 --> R2[R2 identity and durable state]
-    R0 --> R3[R3 execution and delivery foundation]
-    R2 --> R3
-    R1 --> R4[R4 gateway and discovery tracks]
-    R2 --> R4
-    R3 --> R4
-    R0 --> R5[R5 UI SDK and self-hosting]
-    R4 --> R5
-    R3 --> R5
-    R1 --> R6[R6 integrated evidence]
-    R4 --> R6
-    R5 --> R6
-    R6 --> R7[R7 four-week partner pilot]
-    R2 --> R8[R8 enterprise hardening]
-    R7 --> R8
-    R8 --> GA[GA release gate]
-~~~
+### R4 — Provider integration and both research tracks
 
-Arrows represent exit dependencies; prerequisite schema work can unblock earlier mock/incremental implementation. Longest likely path is contract freeze → durable state/isolation → gateway/predictors → end-to-end evidence → partner pilot and operational observation → GA. Scientific validity and customer procurement are independent paths that can become critical. Buying more compute cannot remove either.
+**Entry / dependencies:** use the [leaf prerequisite graph](EXECUTION_BACKLOG.md#task-index), not a whole-epic wait. All actual approvals and required contract subsets must exist before dependent work.
 
-## 11. Prioritized, issue-ready engineering backlog
+**Exit joins:** [SP-17.d](EXECUTION_BACKLOG.md#sp-17-d), [SP-18.d](EXECUTION_BACKLOG.md#sp-18-d), [SP-19.d](EXECUTION_BACKLOG.md#sp-19-d), [SP-20.d](EXECUTION_BACKLOG.md#sp-20-d), [SP-21.c](EXECUTION_BACKLOG.md#sp-21-c); every other task allocated to this milestone must also be done.
 
-These work packages are published as 42 GitHub issues with nine milestones and matching labels, as authorized for Stage 2. Issue creation does not approve implementation. Each row supplies title, milestone, owner, dependencies, effort, concrete subtasks and testable acceptance; every package is initially **Planned**, except SP-00 whose document draft is ready for review. P0 means release-path priority, not an incident severity.
+**Acceptance / tests / done:** Capped provider trial; ambiguous billing/replay tested; hostile executable predictor validation; complete controlled and discovery manifests with no truth feedback. Exact source/runtime/config, executed checks, reviewers and limitations are required. Owner: Research + backend.
 
-Use the linked GitHub milestones R0–R8 and the created labels priority:P0/P1/P2; area:research/backend/platform/frontend/security/quality; type:feature/test/docs/infra; status:blocked/needs-approval; gate:pilot/enterprise. Use one accountable owner; cross-team reviews are separate. Person-week estimates include tests and documentation. Before starting a multiweek package, break its named substeps into 1–3-day child issues with a concrete tested output; preserve parent dependencies and acceptance.
+**Risks / release blockers:** Paid-trial gate separate; both tracks and failed rows required, no cherry-picked demonstration.
 
-| ID / issue title | Milestone; priority; owner; effort | Dependencies | Subtasks and acceptance |
+### R5 — Researcher product and supported self-hosting
+
+**Entry / dependencies:** use the [leaf prerequisite graph](EXECUTION_BACKLOG.md#task-index), not a whole-epic wait. All actual approvals and required contract subsets must exist before dependent work.
+
+**Exit joins:** [SP-22.e](EXECUTION_BACKLOG.md#sp-22-e), [SP-23.d](EXECUTION_BACKLOG.md#sp-23-d), [SP-24.d](EXECUTION_BACKLOG.md#sp-24-d), [SP-25.e](EXECUTION_BACKLOG.md#sp-25-e), [SP-26.d](EXECUTION_BACKLOG.md#sp-26-d); every other task allocated to this milestone must also be done.
+
+**Acceptance / tests / done:** Accessible author→run→inspect→export; durable SSE/resync; offline replay; supported fresh install/upgrade with explicit trust limitations. Exact source/runtime/config, executed checks, reviewers and limitations are required. Owner: Frontend + platform.
+
+**Risks / release blockers:** World/provider/publication/SSE backend tasks precede consumers; internal install is not external adoption.
+
+### R6 — Integrated production pilot readiness
+
+**Entry / dependencies:** use the [leaf prerequisite graph](EXECUTION_BACKLOG.md#task-index), not a whole-epic wait. All actual approvals and required contract subsets must exist before dependent work.
+
+**Exit joins:** [SP-28.d](EXECUTION_BACKLOG.md#sp-28-d), [SP-29.d](EXECUTION_BACKLOG.md#sp-29-d), [SP-30.d](EXECUTION_BACKLOG.md#sp-30-d), [SP-31.e](EXECUTION_BACKLOG.md#sp-31-e); every other task allocated to this milestone must also be done.
+
+**Acceptance / tests / done:** R1–R5 integrated at exact candidate; 100-run hold/soak/fairness, real failover/restore, negative security, deletion, migration and complete journeys pass. Exact source/runtime/config, executed checks, reviewers and limitations are required. Owner: QE + security + platform.
+
+**Risks / release blockers:** Any lost acknowledged state, duplicate logical debit, critical/high exploit, leak or failed restore blocks pilot.
+
+### R7 — Design-partner evidence and reference publication
+
+**Entry / dependencies:** use the [leaf prerequisite graph](EXECUTION_BACKLOG.md#task-index), not a whole-epic wait. All actual approvals and required contract subsets must exist before dependent work.
+
+**Exit joins:** [SP-32.c](EXECUTION_BACKLOG.md#sp-32-c), [SP-33.c](EXECUTION_BACKLOG.md#sp-33-c), [SP-36.d](EXECUTION_BACKLOG.md#sp-36-d); every other task allocated to this milestone must also be done.
+
+**Acceptance / tests / done:** Actual four-week partner use and outcome denominators; external agent/law/install/upgrade/reproduction; approved scored suite with all failures sanitized. Exact source/runtime/config, executed checks, reviewers and limitations are required. Owner: Product + research.
+
+**Risks / release blockers:** External readiness, price approval and sweep wall time are real dependencies; missing evidence blocks adoption claims.
+
+### R8 — Enterprise GA readiness and rollout
+
+**Entry / dependencies:** use the [leaf prerequisite graph](EXECUTION_BACKLOG.md#task-index), not a whole-epic wait. All actual approvals and required contract subsets must exist before dependent work.
+
+**Exit joins:** [SP-34.d](EXECUTION_BACKLOG.md#sp-34-d), [SP-35.c](EXECUTION_BACKLOG.md#sp-35-c), [SP-37.f](EXECUTION_BACKLOG.md#sp-37-f), [SP-38.c](EXECUTION_BACKLOG.md#sp-38-c), [SP-39.b](EXECUTION_BACKLOG.md#sp-39-b), [SP-40.e](EXECUTION_BACKLOG.md#sp-40-e), [SP-41.b](EXECUTION_BACKLOG.md#sp-41-b); every other task allocated to this milestone must also be done.
+
+**Acceptance / tests / done:** Federation/SCIM/audit/retention validated; independent assessment resolved; regional drill; final capacity test; staffed incident drill and 30-day SLO evidence; explicit rollout approval. Exact source/runtime/config, executed checks, reviewers and limitations are required. Owner: TL + security + platform.
+
+**Risks / release blockers:** R7 and all gate evidence required. Material candidate changes invalidate affected evidence; no compliance or unlimited-scale claim.
+
+### POST — Postlaunch reviews
+
+**Entry / dependencies:** use the [leaf prerequisite graph](EXECUTION_BACKLOG.md#task-index), not a whole-epic wait. All actual approvals and required contract subsets must exist before dependent work.
+
+**Exit joins:** [SP-41.c](EXECUTION_BACKLOG.md#sp-41-c), [SP-41.d](EXECUTION_BACKLOG.md#sp-41-d); every other task allocated to this milestone must also be done.
+
+**Acceptance / tests / done:** D7 and D30 outcomes reviewed with corrective owners and new scope decisions. Exact source/runtime/config, executed checks, reviewers and limitations are required. Owner: TL + product.
+
+**Risks / release blockers:** Scheduled after GA; never used as a pre-GA dependency.
+
+### Critical path and integration
+
+The resource-constrained base chain runs through contracts/SQL/authorization, backend broker/provider/event/lifecycle work, the real world/live/replay product, integrated journeys, partner terms/final privacy controls, independent assessment, final capacity/incident review and 30 consecutive calendar days of SLO evidence before GA. Research validity, isolation and partner availability can become controlling paths. [Exact chain and parallel work](EXECUTION_BACKLOG.md#critical-path-and-parallel-work) distinguish technical edges from author-resource contention.
+
+Integration checkpoints are I0 baseline/subset contracts, I1 independent spring fit/predict/score, I2 private transactional run, I3 isolated remote recovery, I4 both tracks/product/self-hosting, I5 pilot release candidate, I6 independently assessed final candidate/operations and I7 authorized GA. Each has explicit joining tasks in the [checkpoint table](EXECUTION_BACKLOG.md#integration-checkpoints). Dates alone never pass a gate. D7/D30 reviews are postlaunch, not prerequisites of GA.
+
+## 11. Prioritized engineering backlog
+
+The 42 [GitHub issues](https://github.com/spei04/strange-physics/issues) are epic rollups. The assignable units are the **168 PR-sized task records** in [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md#task-index), each containing objective, detailed scope, explicit exclusions, prerequisites, contracts, acceptance, automated tests, security/reliability, effort/confidence, role and definition of done. [execution-backlog.json](execution-backlog.json) is the machine-readable ledger for the same records and both schedules. Keep these synchronized in every relevant PR.
+
+Legacy 112 native whole-epic blocker links are superseded by the finer 368-edge task/gate DAG. They cannot correctly represent partial contract handoffs and parallel child work; parent issue state does not establish leaf readiness. All issues remain open and marked as needing approval. Materialize child issues from the approved leaf records when assigning work; do not implement an entire parent in a single PR.
+
+| Epic / issue | Reviewable units | Delivery PW | Milestone allocation |
 | --- | --- | --- | --- |
-| SP-00 Approve scope, staff and evidence baseline ([#2](https://github.com/spei04/strange-physics/issues/2)) | R0; P0; TL/product; 1 PW | This blueprint | Confirm nine-role allocation, partners and gate owners; reconcile PR #1 status; record approved assumptions and unresolved blockers |
-| SP-01 Freeze shared schemas and mocks ([#3](https://github.com/spei04/strange-physics/issues/3)) | R0; P0; BE/TL; 2 PW | SP-00 | Version remote/predictor/event/manifest envelopes; define errors/idempotency; generate clients/mock fixtures; V02 compatibility checks pass |
-| SP-02 Verify cloud and workspace prerequisites ([#4](https://github.com/spei04/strange-physics/issues/4)) | R0; P0; PL; 1 PW | SP-00 | Private credits/expiry/IAM/quota/region review; preserve active consumers; recover safe disk headroom or resize through approved infrastructure change; no project IDs/secrets in public docs |
-| SP-03 Validate numerical domain and baseline ([#5](https://github.com/spei04/strange-physics/issues/5)) | R1; P0; RS; 3 PW | SP-01 | Integrate reviewed core; analytic/stability/identifiability matrix; determine tolerances and profile 1/3/8-particle cases; V01 evidence |
-| SP-04 Implement integrated sparse fitter ([#6](https://github.com/spei04/strange-physics/issues/6)) | R1; P0; RS; 3 PW | SP-03 | Feature dictionary and radial grid; integrated increments; conditioning/regularization; known-law recovery and explicit insufficient-support cases |
-| SP-05 Add uncertainty, adaptation and active selection ([#7](https://github.com/spei04/strange-physics/issues/7)) | R1; P0; RS; 2 PW | SP-04 | Whole-experiment bootstrap; shared candidate bank; all-history/window/reset; paired calibration and no privileged change signal tests |
-| SP-06 Implement held-out metrics and failure policy ([#8](https://github.com/spei04/strange-physics/issues/8)) | R1; P0; RS/QE; 2 PW | SP-04 | Isolated probe generation; normalized error and recovery censoring; invalid-prediction penalty; hand-computed aggregate fixtures pass |
-| SP-07 Calibrate and draft frozen study manifests ([#9](https://github.com/spei04/strange-physics/issues/9)) | R1; P0; RS; 2 PW | SP-05/06 | Development pilot, interval coverage, ensemble CPU, effect/precision study; version candidate protocol and separate public/blind manifests |
-| SP-08 Build identity and workspace memberships ([#10](https://github.com/spei04/strange-physics/issues/10)) | R2; P0; BE; 3 PW | SP-01/02 | OIDC verification, invitation lifecycle, role endpoints, account linking, owner safeguards; negative role/token tests |
-| SP-09 Implement run and experiment transactions ([#11](https://github.com/spei04/strange-physics/issues/11)) | R2; P0; BE; 4 PW | SP-01 | SQL migrations/state transitions; idempotent reservation and debit; terminal states; concurrent key/ordinal conflict tests with PostgreSQL |
-| SP-10 Add outbox, fencing and reconciliation ([#12](https://github.com/spei04/strange-physics/issues/12)) | R2; P0; BE; 3 PW | SP-09 | Deterministic launch IDs, lease epochs, duplicate dispatch, orphan/stuck recovery and failed-dispatch replay; V03/V09 |
-| SP-11 Enforce tenant and artifact authorization ([#13](https://github.com/spei04/strange-physics/issues/13)) | R2; P0; BE/SE; 3 PW | SP-08/09 | RLS runtime roles, pool reset, object broker, SSE authorization; full cross-tenant mutation/read matrix passes |
-| SP-12 Implement quotas and usage accounting ([#14](https://github.com/spei04/strange-physics/issues/14)) | R2; P0; BE; 3 PW | SP-09 | Run/workspace reservations, settlement and fair admission; bounded artifacts/CPU/tokens; concurrent exhaustion and reconciliation tests |
-| SP-13 Persist immutable artifacts and checkpoints ([#15](https://github.com/spei04/strange-physics/issues/15)) | R3; P0; PL/BE; 3 PW | SP-01/09/11 | Hash/generation references, upload validation, complete checkpoint commit, orphan cleanup; object-write/DB-commit crash matrix |
-| SP-14 Build packages in isolation ([#16](https://github.com/spei04/strange-physics/issues/16)) | R3; P0; PL; 4 PW | SP-02/27 | Quarantined builds, pinned dependencies, resource/egress bounds, scan/provenance; malicious hook cannot access trusted credentials or replace approved image |
-| SP-15 Enforce sandbox runtime and broker policy ([#17](https://github.com/spei04/strange-physics/issues/17)) | R3; P0; PL/SE; 4 PW | SP-01/02/27 | RuntimeClass enforcement, per-run identity, deny network/DNS/metadata, resource/process limits; adversarial probes and scientific-stack compatibility |
-| SP-16 Connect recoverable remote execution ([#18](https://github.com/spei04/strange-physics/issues/18)) | R3; P0; BE/PL; 4 PW | SP-10/12/13/14/15 | Coordinator launch, committed observation/checkpoint, cancellation/deadline, worker replacement; forced-death tests preserve one logical budget |
-| SP-17 Implement durable model-call ledger ([#19](https://github.com/spei04/strange-physics/issues/19)) | R4; P0; BE; 3 PW | SP-09/12/13 | Logical call/attempt states, credential reference, unknown charge and reconciliation, response replay; timeout/crash tests |
-| SP-18 Add bounded provider adapters and LLM selector ([#20](https://github.com/spei04/strange-physics/issues/20)) | R4; P0; RS/BE; 3 PW | SP-05/17 | Provider/version pin, secret gateway, context transform and rate limits; schema output validation; fake and capped live provider tests |
-| SP-19 Define executable predictor packaging ([#21](https://github.com/spei04/strange-physics/issues/21)) | R4; P0; RS/PL; 3 PW | SP-01/14/15 | Predictor input/output protocol, immutable model references, finite/shape/time/output checks; hostile/malformed predictor fixtures |
-| SP-20 Build independent evaluation execution ([#22](https://github.com/spei04/strange-physics/issues/22)) | R4; P0; RS/PL; 3 PW | SP-06/13/15/19 | Networkless predictor jobs, truth separation, snapshot scoring, cost/queue telemetry; no active-run feedback channels |
-| SP-21 Integrate the two research tracks ([#23](https://github.com/spei04/strange-physics/issues/23)) | R4; P0; RS/QE; 2 PW | SP-07/16/18/20 | Strategy/world matrix, shared-fitter fairness and complete-agent runs, failure inclusion and full manifest; V06 comparison fixtures |
-| SP-22 Build workspace and constrained world UI ([#24](https://github.com/spei04/strange-physics/issues/24)) | R5; P0; FE; 3 PW | SP-01; integrate SP-08 | Roles/run lists, supported graph/law editor, bounds validation, author/agent view distinction; accessible creation journey |
-| SP-23 Implement live event timeline and reconnection ([#25](https://github.com/spei04/strange-physics/issues/25)) | R5; P0; FE/BE; 3 PW | SP-01; integrate SP-10/11/16 | Durable sequence, Last-Event-ID/resync, bounded chunks, terminal/cancel states; reconnect/auth-expiry E2E tests |
-| SP-24 Implement prediction and replay diagnostics ([#26](https://github.com/spei04/strange-physics/issues/26)) | R5; P0; FE/RS; 2 PW | SP-22/23; integrate SP-20 | Actual/predicted/interval layers, scrub/compare/error curves, post-run truth gate; reference-frame accuracy and performance tests |
-| SP-25 Deliver remote SDK, CLI and complete export ([#27](https://github.com/spei04/strange-physics/issues/27)) | R5; P0; BE; 2 PW | SP-01/13/16/21 | Auth/session adapter, async operation polling, content manifest verification and offline replay; local/remote conformance and no-provider replay |
-| SP-26 Package supported self-host deployment ([#28](https://github.com/spei04/strange-physics/issues/28)) | R5; P0; PL; 2 PW | SP-08/15/16/27 | Document supported Kubernetes/sandbox + SQL/object/OIDC configuration; trusted dev profile separately labeled; install/upgrade smoke tests |
-| SP-27 Create IaC and trusted delivery foundation ([#29](https://github.com/spei04/strange-physics/issues/29)) | R3; P0; PL; 3 PW | SP-02 | Separate env identities/networks, DB/store/queue/registry, keyless CI and staging smoke; Terraform plan/policy and rollback check |
-| SP-28 Measure capacity and fairness ([#30](https://github.com/spei04/strange-physics/issues/30)) | R6; P0; QE/PL; 3 PW | SP-16/20/23 | Implement workload generators, numerical/IO profiles, staged load/soak/bursts, tenant fairness; section 7 acceptance evidence |
-| SP-29 Prove backup, failover and fault recovery ([#31](https://github.com/spei04/strange-physics/issues/31)) | R6; P0; PL/QE; 3 PW | SP-13/16/27 | Backup/PITR policy, restore DB+objects, worker/DB failures, corrupted object and deletion replay; pilot RPO/RTO drill |
-| SP-30 Verify integrated journeys and upgrades ([#32](https://github.com/spei04/strange-physics/issues/32)) | R6; P0; QE; 3 PW | SP-21/24/25/26 | Browser/SDK/service identity E2E, previous-version migration/rollback, export/import; V05/V10 matrix |
-| SP-31 Exercise security and data boundaries ([#33](https://github.com/spei04/strange-physics/issues/33)) | R6; P0; SE/QE; 3 PW | SP-11/14/15/18/20 | Adversarial tenant/build/runtime/evaluator and delete/revoke tests, central-log redaction; release blockers fixed |
-| SP-32 Onboard and support design partners ([#34](https://github.com/spei04/strange-physics/issues/34)) | R7; P0; TL/product; 3 PW | SP-28/29/30/31 (R6 exit) | Named contacts/data terms, onboarding sessions, four-week usage review, issue triage and operational feedback; report actual denominators |
-| SP-33 Freeze and publish scored reference release ([#35](https://github.com/spei04/strange-physics/issues/35)) | R7; P0; RS; 3 PW | SP-07/21/31; priced sweep | Sign frozen protocol, cap run plan, execute paired suite, retain failures, sanitize/publication review; reproducible release manifest |
-| SP-34 Add enterprise SSO and service identities ([#36](https://github.com/spei04/strange-physics/issues/36)) | R8; P0; BE/SE; 4 PW | SP-08/11; partner identity requirements | Workspace-bound federation, explicit link/migration, scoped machine credentials and rotation; tenant/issuer confusion and lockout tests |
-| SP-35 Add provisioning and rapid deprovisioning ([#37](https://github.com/spei04/strange-physics/issues/37)) | R8; P0; BE; 3 PW | SP-34 | SCIM group/user mapping, idempotent sync, disable/revoke across tokens/SSE/jobs; sole-owner protection and audit tests |
-| SP-36 Validate external extension and self-host adoption ([#38](https://github.com/spei04/strange-physics/issues/38)) | R7; P0; TL/PL; 4 PW | SP-25/26; partner availability | Outside team adds agent/law, installs/upgrades, reproduces report; fix documented friction; third-party evidence, not internal example |
-| SP-37 Ship enterprise audit and retention controls ([#39](https://github.com/spei04/strange-physics/issues/39)) | R8; P0; BE/SE; 3 PW | SP-11/13/29/31 | Audit export, retention jobs/tombstones, credentials lifecycle, backup-expiry report and privacy documentation; V12 |
-| SP-38 Rehearse regional disaster recovery ([#40](https://github.com/spei04/strange-physics/issues/40)) | R8; P0; PL; 3 PW | SP-29/37 | Secondary recovery location, restore ordering/epoch reset/DNS, key access and deletion reconciliation; timed target drill |
-| SP-39 Revalidate supported production envelope ([#41](https://github.com/spei04/strange-physics/issues/41)) | R8; P0; QE/PL; 2 PW | SP-28; final runtime/SSO configuration | Repeat changed-path load and cost comparison; publish measured limits and upgrade implications, no unlimited-scale claim |
-| SP-40 Complete independent assurance and operations ([#42](https://github.com/spei04/strange-physics/issues/42)) | R8; P0; TL/SE/PL; 3 PW | SP-28/29/30/31; final controls SP-34/35/37 | Pen test and remediation, staffed rota, incident/credential drill, 30-day SLO evidence; no unresolved launch blockers |
-| SP-41 Approve GA release and post-launch review ([#43](https://github.com/spei04/strange-physics/issues/43)) | R8; P0; TL/product; 2 PW | SP-32/33/36; SP-34/35/37/38/39/40 | Signed readiness manifest, release notes/support matrix, staged rollout/rollback, D7/D30 review and next-quarter priority reset |
+| [SP-00 — Approve scope, staff and evidence baseline](https://github.com/spei04/strange-physics/issues/2) | [SP-00.a](EXECUTION_BACKLOG.md#sp-00-a), [SP-00.b](EXECUTION_BACKLOG.md#sp-00-b), [SP-00.c](EXECUTION_BACKLOG.md#sp-00-c) | 1.2 | R0 |
+| [SP-01 — Freeze shared schemas and mocks](https://github.com/spei04/strange-physics/issues/3) | [SP-01.a](EXECUTION_BACKLOG.md#sp-01-a), [SP-01.b](EXECUTION_BACKLOG.md#sp-01-b), [SP-01.c](EXECUTION_BACKLOG.md#sp-01-c), [SP-01.d](EXECUTION_BACKLOG.md#sp-01-d), [SP-01.e](EXECUTION_BACKLOG.md#sp-01-e) | 3.8 | R0 |
+| [SP-02 — Verify cloud and workspace prerequisites](https://github.com/spei04/strange-physics/issues/4) | [SP-02.a](EXECUTION_BACKLOG.md#sp-02-a), [SP-02.b](EXECUTION_BACKLOG.md#sp-02-b), [SP-02.c](EXECUTION_BACKLOG.md#sp-02-c) | 1.2 | R0 |
+| [SP-03 — Validate numerical domain and baseline](https://github.com/spei04/strange-physics/issues/5) | [SP-03.a](EXECUTION_BACKLOG.md#sp-03-a), [SP-03.b](EXECUTION_BACKLOG.md#sp-03-b), [SP-03.c](EXECUTION_BACKLOG.md#sp-03-c), [SP-03.d](EXECUTION_BACKLOG.md#sp-03-d) | 3.0 | R1 |
+| [SP-04 — Implement integrated sparse fitter](https://github.com/spei04/strange-physics/issues/6) | [SP-04.a](EXECUTION_BACKLOG.md#sp-04-a), [SP-04.b](EXECUTION_BACKLOG.md#sp-04-b), [SP-04.c](EXECUTION_BACKLOG.md#sp-04-c), [SP-04.d](EXECUTION_BACKLOG.md#sp-04-d), [SP-04.e](EXECUTION_BACKLOG.md#sp-04-e) | 3.8 | R1 |
+| [SP-05 — Add uncertainty, adaptation and active selection](https://github.com/spei04/strange-physics/issues/7) | [SP-05.a](EXECUTION_BACKLOG.md#sp-05-a), [SP-05.b](EXECUTION_BACKLOG.md#sp-05-b), [SP-05.c](EXECUTION_BACKLOG.md#sp-05-c), [SP-05.d](EXECUTION_BACKLOG.md#sp-05-d) | 3.2 | R1 |
+| [SP-06 — Implement held-out metrics and failure policy](https://github.com/spei04/strange-physics/issues/8) | [SP-06.a](EXECUTION_BACKLOG.md#sp-06-a), [SP-06.b](EXECUTION_BACKLOG.md#sp-06-b), [SP-06.c](EXECUTION_BACKLOG.md#sp-06-c), [SP-06.d](EXECUTION_BACKLOG.md#sp-06-d) | 3.4 | R1 |
+| [SP-07 — Calibrate and draft frozen study manifests](https://github.com/spei04/strange-physics/issues/9) | [SP-07.a](EXECUTION_BACKLOG.md#sp-07-a), [SP-07.b](EXECUTION_BACKLOG.md#sp-07-b), [SP-07.c](EXECUTION_BACKLOG.md#sp-07-c), [SP-07.d](EXECUTION_BACKLOG.md#sp-07-d) | 3.8 | R1 |
+| [SP-08 — Build identity and workspace memberships](https://github.com/spei04/strange-physics/issues/10) | [SP-08.a](EXECUTION_BACKLOG.md#sp-08-a), [SP-08.b](EXECUTION_BACKLOG.md#sp-08-b), [SP-08.c](EXECUTION_BACKLOG.md#sp-08-c), [SP-08.d](EXECUTION_BACKLOG.md#sp-08-d) | 3.0 | R2 |
+| [SP-09 — Implement run and experiment transactions](https://github.com/spei04/strange-physics/issues/11) | [SP-09.a](EXECUTION_BACKLOG.md#sp-09-a), [SP-09.b](EXECUTION_BACKLOG.md#sp-09-b), [SP-09.c](EXECUTION_BACKLOG.md#sp-09-c), [SP-09.d](EXECUTION_BACKLOG.md#sp-09-d) | 3.4 | R2 |
+| [SP-10 — Add outbox, fencing and reconciliation](https://github.com/spei04/strange-physics/issues/12) | [SP-10.a](EXECUTION_BACKLOG.md#sp-10-a), [SP-10.b](EXECUTION_BACKLOG.md#sp-10-b), [SP-10.c](EXECUTION_BACKLOG.md#sp-10-c) | 2.8 | R2 |
+| [SP-11 — Enforce tenant and artifact authorization](https://github.com/spei04/strange-physics/issues/13) | [SP-11.a](EXECUTION_BACKLOG.md#sp-11-a), [SP-11.b](EXECUTION_BACKLOG.md#sp-11-b), [SP-11.c](EXECUTION_BACKLOG.md#sp-11-c) | 2.4 | R2 |
+| [SP-12 — Implement quotas and usage accounting](https://github.com/spei04/strange-physics/issues/14) | [SP-12.a](EXECUTION_BACKLOG.md#sp-12-a), [SP-12.b](EXECUTION_BACKLOG.md#sp-12-b), [SP-12.c](EXECUTION_BACKLOG.md#sp-12-c) | 2.4 | R2 |
+| [SP-13 — Persist immutable artifacts and checkpoints](https://github.com/spei04/strange-physics/issues/15) | [SP-13.a](EXECUTION_BACKLOG.md#sp-13-a), [SP-13.b](EXECUTION_BACKLOG.md#sp-13-b), [SP-13.c](EXECUTION_BACKLOG.md#sp-13-c), [SP-13.d](EXECUTION_BACKLOG.md#sp-13-d) | 3.0 | R3 |
+| [SP-14 — Build packages in isolation](https://github.com/spei04/strange-physics/issues/16) | [SP-14.a](EXECUTION_BACKLOG.md#sp-14-a), [SP-14.b](EXECUTION_BACKLOG.md#sp-14-b), [SP-14.c](EXECUTION_BACKLOG.md#sp-14-c), [SP-14.d](EXECUTION_BACKLOG.md#sp-14-d) | 3.6 | R3 |
+| [SP-15 — Enforce sandbox runtime and broker policy](https://github.com/spei04/strange-physics/issues/17) | [SP-15.a](EXECUTION_BACKLOG.md#sp-15-a), [SP-15.b](EXECUTION_BACKLOG.md#sp-15-b), [SP-15.c](EXECUTION_BACKLOG.md#sp-15-c), [SP-15.d](EXECUTION_BACKLOG.md#sp-15-d), [SP-15.e](EXECUTION_BACKLOG.md#sp-15-e) | 4.4 | R3 |
+| [SP-16 — Connect recoverable remote execution](https://github.com/spei04/strange-physics/issues/18) | [SP-16.a](EXECUTION_BACKLOG.md#sp-16-a), [SP-16.b](EXECUTION_BACKLOG.md#sp-16-b), [SP-16.c](EXECUTION_BACKLOG.md#sp-16-c), [SP-16.d](EXECUTION_BACKLOG.md#sp-16-d), [SP-16.e](EXECUTION_BACKLOG.md#sp-16-e) | 4.6 | R3 |
+| [SP-17 — Implement durable model-call ledger](https://github.com/spei04/strange-physics/issues/19) | [SP-17.a](EXECUTION_BACKLOG.md#sp-17-a), [SP-17.b](EXECUTION_BACKLOG.md#sp-17-b), [SP-17.c](EXECUTION_BACKLOG.md#sp-17-c), [SP-17.d](EXECUTION_BACKLOG.md#sp-17-d) | 3.4 | R4 |
+| [SP-18 — Add bounded provider adapters and LLM selector](https://github.com/spei04/strange-physics/issues/20) | [SP-18.a](EXECUTION_BACKLOG.md#sp-18-a), [SP-18.b](EXECUTION_BACKLOG.md#sp-18-b), [SP-18.c](EXECUTION_BACKLOG.md#sp-18-c), [SP-18.d](EXECUTION_BACKLOG.md#sp-18-d) | 3.0 | R4 |
+| [SP-19 — Define executable predictor packaging](https://github.com/spei04/strange-physics/issues/21) | [SP-19.a](EXECUTION_BACKLOG.md#sp-19-a), [SP-19.b](EXECUTION_BACKLOG.md#sp-19-b), [SP-19.c](EXECUTION_BACKLOG.md#sp-19-c), [SP-19.d](EXECUTION_BACKLOG.md#sp-19-d) | 3.4 | R4 |
+| [SP-20 — Build independent evaluation execution](https://github.com/spei04/strange-physics/issues/22) | [SP-20.a](EXECUTION_BACKLOG.md#sp-20-a), [SP-20.b](EXECUTION_BACKLOG.md#sp-20-b), [SP-20.c](EXECUTION_BACKLOG.md#sp-20-c), [SP-20.d](EXECUTION_BACKLOG.md#sp-20-d) | 3.6 | R4 |
+| [SP-21 — Integrate the two research tracks](https://github.com/spei04/strange-physics/issues/23) | [SP-21.a](EXECUTION_BACKLOG.md#sp-21-a), [SP-21.b](EXECUTION_BACKLOG.md#sp-21-b), [SP-21.c](EXECUTION_BACKLOG.md#sp-21-c) | 2.8 | R4 |
+| [SP-22 — Build workspace and constrained world UI](https://github.com/spei04/strange-physics/issues/24) | [SP-22.a](EXECUTION_BACKLOG.md#sp-22-a), [SP-22.b](EXECUTION_BACKLOG.md#sp-22-b), [SP-22.c](EXECUTION_BACKLOG.md#sp-22-c), [SP-22.d](EXECUTION_BACKLOG.md#sp-22-d), [SP-22.e](EXECUTION_BACKLOG.md#sp-22-e) | 4.2 | R5 |
+| [SP-23 — Implement live event timeline and reconnection](https://github.com/spei04/strange-physics/issues/25) | [SP-23.a](EXECUTION_BACKLOG.md#sp-23-a), [SP-23.b](EXECUTION_BACKLOG.md#sp-23-b), [SP-23.c](EXECUTION_BACKLOG.md#sp-23-c), [SP-23.d](EXECUTION_BACKLOG.md#sp-23-d) | 3.6 | R5 |
+| [SP-24 — Implement prediction and replay diagnostics](https://github.com/spei04/strange-physics/issues/26) | [SP-24.a](EXECUTION_BACKLOG.md#sp-24-a), [SP-24.b](EXECUTION_BACKLOG.md#sp-24-b), [SP-24.c](EXECUTION_BACKLOG.md#sp-24-c), [SP-24.d](EXECUTION_BACKLOG.md#sp-24-d) | 3.4 | R5 |
+| [SP-25 — Deliver remote SDK, CLI and complete export](https://github.com/spei04/strange-physics/issues/27) | [SP-25.a](EXECUTION_BACKLOG.md#sp-25-a), [SP-25.b](EXECUTION_BACKLOG.md#sp-25-b), [SP-25.c](EXECUTION_BACKLOG.md#sp-25-c), [SP-25.d](EXECUTION_BACKLOG.md#sp-25-d), [SP-25.e](EXECUTION_BACKLOG.md#sp-25-e) | 4.4 | R5 |
+| [SP-26 — Package supported self-host deployment](https://github.com/spei04/strange-physics/issues/28) | [SP-26.a](EXECUTION_BACKLOG.md#sp-26-a), [SP-26.b](EXECUTION_BACKLOG.md#sp-26-b), [SP-26.c](EXECUTION_BACKLOG.md#sp-26-c), [SP-26.d](EXECUTION_BACKLOG.md#sp-26-d) | 3.8 | R5 |
+| [SP-27 — Create IaC and trusted delivery foundation](https://github.com/spei04/strange-physics/issues/29) | [SP-27.a](EXECUTION_BACKLOG.md#sp-27-a), [SP-27.b](EXECUTION_BACKLOG.md#sp-27-b), [SP-27.c](EXECUTION_BACKLOG.md#sp-27-c), [SP-27.d](EXECUTION_BACKLOG.md#sp-27-d), [SP-27.e](EXECUTION_BACKLOG.md#sp-27-e), [SP-27.f](EXECUTION_BACKLOG.md#sp-27-f) | 5.2 | R3 |
+| [SP-28 — Measure capacity and fairness](https://github.com/spei04/strange-physics/issues/30) | [SP-28.a](EXECUTION_BACKLOG.md#sp-28-a), [SP-28.b](EXECUTION_BACKLOG.md#sp-28-b), [SP-28.c](EXECUTION_BACKLOG.md#sp-28-c), [SP-28.d](EXECUTION_BACKLOG.md#sp-28-d) | 3.6 | R6 |
+| [SP-29 — Prove backup, failover and fault recovery](https://github.com/spei04/strange-physics/issues/31) | [SP-29.a](EXECUTION_BACKLOG.md#sp-29-a), [SP-29.b](EXECUTION_BACKLOG.md#sp-29-b), [SP-29.c](EXECUTION_BACKLOG.md#sp-29-c), [SP-29.d](EXECUTION_BACKLOG.md#sp-29-d) | 3.6 | R6 |
+| [SP-30 — Verify integrated journeys and upgrades](https://github.com/spei04/strange-physics/issues/32) | [SP-30.a](EXECUTION_BACKLOG.md#sp-30-a), [SP-30.b](EXECUTION_BACKLOG.md#sp-30-b), [SP-30.c](EXECUTION_BACKLOG.md#sp-30-c), [SP-30.d](EXECUTION_BACKLOG.md#sp-30-d) | 3.0 | R6 |
+| [SP-31 — Exercise security and data boundaries](https://github.com/spei04/strange-physics/issues/33) | [SP-31.a](EXECUTION_BACKLOG.md#sp-31-a), [SP-31.b](EXECUTION_BACKLOG.md#sp-31-b), [SP-31.c](EXECUTION_BACKLOG.md#sp-31-c), [SP-31.d](EXECUTION_BACKLOG.md#sp-31-d), [SP-31.e](EXECUTION_BACKLOG.md#sp-31-e) | 4.0 | R6 |
+| [SP-32 — Onboard and support design partners](https://github.com/spei04/strange-physics/issues/34) | [SP-32.a](EXECUTION_BACKLOG.md#sp-32-a), [SP-32.b](EXECUTION_BACKLOG.md#sp-32-b), [SP-32.c](EXECUTION_BACKLOG.md#sp-32-c) | 2.2 | R7 |
+| [SP-33 — Freeze and publish scored reference release](https://github.com/spei04/strange-physics/issues/35) | [SP-33.a](EXECUTION_BACKLOG.md#sp-33-a), [SP-33.b](EXECUTION_BACKLOG.md#sp-33-b), [SP-33.c](EXECUTION_BACKLOG.md#sp-33-c) | 2.6 | R7 |
+| [SP-34 — Add enterprise SSO and service identities](https://github.com/spei04/strange-physics/issues/36) | [SP-34.a](EXECUTION_BACKLOG.md#sp-34-a), [SP-34.b](EXECUTION_BACKLOG.md#sp-34-b), [SP-34.c](EXECUTION_BACKLOG.md#sp-34-c), [SP-34.d](EXECUTION_BACKLOG.md#sp-34-d) | 3.2 | R8 |
+| [SP-35 — Add provisioning and rapid deprovisioning](https://github.com/spei04/strange-physics/issues/37) | [SP-35.a](EXECUTION_BACKLOG.md#sp-35-a), [SP-35.b](EXECUTION_BACKLOG.md#sp-35-b), [SP-35.c](EXECUTION_BACKLOG.md#sp-35-c) | 2.8 | R8 |
+| [SP-36 — Validate external extension and self-host adoption](https://github.com/spei04/strange-physics/issues/38) | [SP-36.a](EXECUTION_BACKLOG.md#sp-36-a), [SP-36.b](EXECUTION_BACKLOG.md#sp-36-b), [SP-36.c](EXECUTION_BACKLOG.md#sp-36-c), [SP-36.d](EXECUTION_BACKLOG.md#sp-36-d) | 3.6 | R7 |
+| [SP-37 — Ship enterprise audit and retention controls](https://github.com/spei04/strange-physics/issues/39) | [SP-37.a](EXECUTION_BACKLOG.md#sp-37-a), [SP-37.b](EXECUTION_BACKLOG.md#sp-37-b), [SP-37.c](EXECUTION_BACKLOG.md#sp-37-c), [SP-37.d](EXECUTION_BACKLOG.md#sp-37-d), [SP-37.e](EXECUTION_BACKLOG.md#sp-37-e), [SP-37.f](EXECUTION_BACKLOG.md#sp-37-f) | 5.2 | R3, R8 |
+| [SP-38 — Rehearse regional disaster recovery](https://github.com/spei04/strange-physics/issues/40) | [SP-38.a](EXECUTION_BACKLOG.md#sp-38-a), [SP-38.b](EXECUTION_BACKLOG.md#sp-38-b), [SP-38.c](EXECUTION_BACKLOG.md#sp-38-c) | 2.8 | R8 |
+| [SP-39 — Revalidate supported production envelope](https://github.com/spei04/strange-physics/issues/41) | [SP-39.a](EXECUTION_BACKLOG.md#sp-39-a), [SP-39.b](EXECUTION_BACKLOG.md#sp-39-b) | 1.6 | R8 |
+| [SP-40 — Complete independent assurance and operations](https://github.com/spei04/strange-physics/issues/42) | [SP-40.a](EXECUTION_BACKLOG.md#sp-40-a), [SP-40.b](EXECUTION_BACKLOG.md#sp-40-b), [SP-40.c](EXECUTION_BACKLOG.md#sp-40-c), [SP-40.d](EXECUTION_BACKLOG.md#sp-40-d), [SP-40.e](EXECUTION_BACKLOG.md#sp-40-e) | 3.8 | R8 |
+| [SP-41 — Approve GA release and post-launch review](https://github.com/spei04/strange-physics/issues/43) | [SP-41.a](EXECUTION_BACKLOG.md#sp-41-a), [SP-41.b](EXECUTION_BACKLOG.md#sp-41-b), [SP-41.c](EXECUTION_BACKLOG.md#sp-41-c), [SP-41.d](EXECUTION_BACKLOG.md#sp-41-d) | 2.0 | R8, POST |
 
-Post-GA P1/P2 candidates have no committed effort until customer/research evidence exists: stronger dedicated deployments/CMEK, additional regions, larger particle systems, more law-change regimes, additional language runtimes, continuous-control/RL and pixel-input tracks. Each requires its own numerical/security/cost acceptance criteria; do not mix new tracks into existing benchmark scores.
+Basic machine/run credentials are SP-08.c; SP-34.d adds enterprise lifecycle. Basic audit/deletion/recovery suppression SP-37.a–c is R3 work despite its parent issue closing at R8. World API SP-22.b, provider-secret API SP-17.c, SSE server/resync SP-23.a/b and publication SP-25.d explicitly precede consuming journeys/tests. First-spring integration is SP-04.e, not completion of the entire sparse-fitting epic.
+
+Post-GA research/scale candidates remain uncommitted: dedicated deployments/CMEK, extra regions, new laws/particle scales, more change regimes/languages, continuous control/RL and pixel input. Each requires separate numerical/security/cost criteria and a new research protocol where applicable.
 
 ## 12. Team ownership and delivery schedule
 
@@ -830,43 +833,27 @@ Post-GA P1/P2 candidates have no committed effort until customer/research eviden
 
 Additional fractional support: product/TPM about 0.5 FTE, design about 0.25–0.5 FTE, security specialist about 0.5 FTE during threat-model/isolation/release work, and independent assessor/legal review as needed. These are capacity assumptions, not appointed staff. Each engineer owns tests for their code; QE does not become a queue for all testing.
 
-For seven engineers, combine lead/backend and QE/integration duties explicitly and replan to roughly W36–44 for GA; do not keep nine-person dates. At ten engineers, add the measured bottleneck role (likely frontend or platform/security); potential W28–34 still depends on partner trials, scientific calibration and operational observation. Hiring/ramp-up is outside these elapsed windows and must be added if staff are not ready at W1.
+The resource model requires all nine named lanes at the stated availability. Seven or ten engineers changes the allocation and must be rescheduled from the task graph; the previous unsupported seven-/ten-person date ranges are withdrawn. Hiring/ramp-up and actual external lead times are additional. Reviews are covered by the 30% capacity allowance; named security and partner reviewers remain required.
 
 Proposed CODEOWNERS boundaries once directories exist: core/simulation/laws → research + lead; contracts/SDK → backend + research; API/database → backend; execution/infra → platform + security reviewer; evaluator → research + security; web → frontend; operations → platform; this roadmap → lead + product. Do not add empty directories merely to enact ownership.
 
 ### 12.2 Parallel development policy
 
-Freeze shared schemas, migrations and examples before dependent implementation. Let the frontend consume mocks, platform test launcher policy against fake broker fixtures, and research implement predictors against the frozen protocol independently. Integrate real paths at W4, W8, W12 and the R6 gate. A mock-based milestone is not a production integration milestone.
+Freeze shared schemas, migrations and examples before dependent implementation. Let the frontend consume mocks, platform test launcher policy against fake broker fixtures, and research implement predictors against the frozen protocol independently. Integrate real paths at the explicit I0–I7 task joins in EXECUTION_BACKLOG.md; fixed dates do not imply readiness. A mock-based milestone is not a production integration milestone.
 
 Use separate checkouts only for independently active writers. Reuse free cloud checkouts sequentially and install pinned dependencies in copy mode. Never switch a branch beneath another active task or share mutable virtual environments through links. At completion/integration, inspect worktrees and consumers, preserve ignored evidence, then archive unused managed worktrees using the designated archive flow. Do not touch the computer-use project's local workflow.
 
 Contract-affecting PRs need both producer and consumer review; security-boundary changes require security review; scientific protocol changes require research review. Incompatible changes pause downstream integration until fixtures/clients and migration policy are updated.
 
-### 12.3 First eight weeks
+### 12.3 First two weeks and subsequent scheduling
 
-These are weekly outcomes, not a promise that all referenced packages finish in that week. Keep work in progress to roughly one primary package per engineer, with pairing for critical interfaces. Assign actual people and weekly capacity at R0.
+The [day-by-day D1–D10 plan](EXECUTION_BACKLOG.md#first-two-weeks-day-by-day) records each lane's exact author tasks, predecessor conditions and checkpoints. Day 1 is after user approval and staffing. The machine ledger records fractional-day capacity and dependencies; every proposed start follows predecessor completion. Unassigned lanes can review rather than starting speculative dependent code.
 
-| Week | Research | Backend / lead | Platform / security | Frontend / quality | Integration decision |
-| --- | --- | --- | --- | --- | --- |
-| W1 | Audit numerical fixtures and draft identifiability matrix | Approve scope, review baseline PR, define operation/error/state schemas | Verify credits/IAM/region/quotas and disk recovery plan; threat boundaries | Sketch core journeys; define fixtures and evidence harness | SP-00 approved; blocking prerequisites named |
-| W2 | Begin domain/convergence profiling | Freeze OpenAPI/events/predictor/manifests; SQL invariant design | IaC/bootstrap plans and identity boundary review | Generate mock client; prototype workspace/builder; contract tests | SP-01 baseline signed; no incompatible parallel contracts |
-| W3 | Calibrate supported domains and fitter features | Implement invitations/roles and reservation transactions | Start isolated staging foundation and sandbox compatibility probe | Build workspace flows against mocks; seed DB integration harness | One tested invariant per workstream, preliminary costs |
-| W4 | Implement integrated-increment fitter and conditioning tests | First transactional run/experiment slice; auth negative tests | Isolated build prototype and deny-network policy tests | First create/read run integration; failure/permission UI fixtures | End-to-end schema slice, not production uploaded-code approval |
-| W5 | Bootstrap ensembles and development diagnostics | Outbox/leases, tenant policies and quota reservations | Content-store/checkpoint ordering; malicious build fixtures | Builder validation and SSE/reconnect implementation | Review information access, transaction races and numerical compute |
-| W6 | Candidate/adaptation policies; metric/censoring fixtures | Reconciler and object authorization integration | Remote worker launch prototype against durable APIs | Timeline state transitions and replay-frame tests | Demonstrate recoverable internal run as components become ready |
-| W7 | Evaluate stability/coverage; profile ensemble rollout cost | Provider-attempt ledger design; usage reconciliation | Cancellation, DNS/metadata denial, stale-worker and secret tests | Predictions UI mocks; self-host documentation starts from real stack | Scientific and sandbox risks reviewed; adjust backlog estimates |
-| W8 | Development comparison harness; protocol calibration continues | Begin gateway integration and remote SDK adapters | Fault-injection integration, image provenance and staging release | Live/replay integration, local/remote contract matrix | W8 cross-team integration review; update pilot/GA forecasts |
+After the first two weeks, schedule at milestone level using section 10. R0 is W5 base/W6 reserve; first independent spring slice W9/W11; pilot onboarding W38–50; R7 evidence W45–59; enterprise GA W52–67. Reforecast after measured cycle time and uncertain-spike outcomes. No calendar launch date is committed.
 
-Blocking dependencies: approved/frozen contracts; usable cloud projects and sufficient disk/quota; tested identity/tenant enforcement before private data; build/runtime isolation before uploaded code; science/scoring contract before official evaluation; immutable artifact/checkpoint semantics before recovery claims; model pricing/limits before paid runs; named partners before pilot; staffed response before contractual availability claims.
+### 12.4 Capacity and dependency maintenance
 
-### 12.4 Longer horizon
-
-- **Quarter 1 relative to approval (W1–13):** contracts, valid learning core, tenant control plane, isolated execution, initial UI and gateway integration. No enterprise claim.
-- **Quarter 2 (W14–26):** complete integrated product; capacity/security/restore evidence; design-partner pilot, reference release, SSO/offboarding, audit and DR hardening.
-- **Quarter 3 (W27–39):** GA gate around W30–36 if evidence permits; measured operations and support; validate demand for dedicated deployments or a new research track.
-- **Quarter 4:** scale or research expansion based on actual adoption, bottlenecks and support load. Do not commit to multi-region, GPUs or novel benchmark claims without data.
-
-Review forecasts weekly using completed acceptance outcomes and remaining critical-path risks. Reserve contingency visibly; do not quietly absorb feature additions into the original dates.
+The nine-lane plan includes 689 delivery days and 248.3 reserve days. Both scenarios have no resource overlaps or dependency-finish violations. See the [audit method](EXECUTION_BACKLOG.md#dependency-review-and-maintenance). Task-level parallelism is permitted after its specific contract gate; broad parent epic blockers are superseded. Enforce one author task per lane, keep required peer/security review, and rebaseline rather than compress evidence collection when staff or external prerequisites change.
 
 ## 13. CI/CD, deployment, reliability and operations
 
@@ -970,7 +957,7 @@ Risk ratings are planning judgments. Review dates are concrete follow-ups for th
 | RK04 Unidentifiable worlds / biased benchmark | High / medium | Development identifiability/power study, frozen fair protocol, independent scientific review | RS | 2026-10-26; open |
 | RK05 Evaluator/ensemble compute dominates cost and queue time | High / high | Measure complete scoring workload, separate pools, cap/size ensemble before freeze | RS + PL | 2026-10-26; open |
 | RK06 Credit, region, organization or quota assumptions fail | High / medium | Explicit account preflight and priced region plan before provisioning | PL | 2026-10-26; unverified |
-| RK07 Development VM fills and interrupts work | High / high | 538 MB free observed; preserve consumers/archives, recover approved safe headroom before builds | PL | Before next build; open |
+| RK07 Development VM fills and interrupts work | High / high | 423 MiB free observed; preserve consumers/archives, recover approved safe headroom before builds | PL | Before next build; open |
 | RK08 Hiring or fractional security coverage delayed | High / medium | Name owners/capacity at R0; rebaseline rather than compress test gates | Product + TL | 2026-10-26; unassigned |
 | RK09 Provider rate/version/retention policies change | High / high | Pin recorded versions, allowlisted adapters, contract review, visible circuit/fallback policy | BE + product | 2026-10-26; open |
 | RK10 HA mistaken for disaster recovery | High / medium | Independent backups and timed recovery set; disclose regional 24-hour objective | PL | 2026-10-26; open |
@@ -1002,12 +989,12 @@ Risk ratings are planning judgments. Review dates are concrete follow-ups for th
 | Does checkpointing guarantee exactly-once effects? | Only logical physics reservations/results are deduplicated; external provider attempts can be ambiguous. Checkpoints do not restore arbitrary memory or prevent every repeated CPU computation. |
 | Is a sandbox label enough? | No. Verify runtime enforcement, build isolation, IAM, DNS/network/metadata denial, resource limits and broker authorization in the deployed configuration. |
 | Is one region enterprise-ready? | It can serve a bounded single-region product with tested recovery and explicit terms. Regional 24-hour RPO/RTO is disclosed; tighter guarantees require a different design and measured evidence. |
-| Does a full team mean a very short calendar? | Nine people still depend on shared schemas, scientific calibration, security integration, partner trials and a 30-day SLO observation. Include 25% effort contingency and a W30–36 GA window. |
+| Does a full team mean a very short calendar? | Nine people still depend on shared schemas, scientific calibration, security integration, partner trials and a 30-day SLO observation. Use bottom-up PR effort, confidence-weighted reserves and a verified resource schedule; current forecast is GA W52–67. |
 | Are enterprise requirements being silently invented? | Mark SSO/SCIM, forecast load, SLOs, retention and staffing allocation as proposals; preserve accepted foundation; validate buyer requirements at R0. |
 | Could growing history break LLM fairness/cost? | Fixed disclosed context transform and token ceiling; log truncation and retries; equal experiment budget is not equal compute. |
 | Are self-hosting and hosted isolation inconsistent? | Document one supported secure deployment and a separately labeled trusted development profile. External install/upgrade evidence is required. |
 | Can diagnostics/retention create security and cost debt? | Separate research artifacts from logs/backups; scoped access, deletion tombstones, archive review dates and tested retention. |
-| Can a single file stay maintainable? | Stable IDs and section mapping, one progress ledger, links to existing detailed implementation references. Split into multiple canonical documents only after an explicit documentation decision. |
+| Can a single file stay maintainable? | Stable IDs and section mapping, one progress ledger, links to existing detailed implementation references. The execution-planning request now adds one detailed backlog and a matching machine ledger; keep the roadmap strategic and synchronize IDs/progress. |
 
 Remaining unproven assumptions are gates, not concealed conclusions: buyer adoption, generalization usefulness, uncertainty calibration, provider economics, cloud credit terms, hostile-code isolation, true load capacity, restore timings and actual staffing. No research win, deployment or compliance outcome is asserted.
 
@@ -1037,7 +1024,7 @@ The requested artifact paths are represented by useful sections in this single f
 | docs/REQUIREMENTS_TRACEABILITY.md | REQ01–REQ16 in section 2 → SP tasks → V01–V12 evidence |
 | docs/RISKS_AND_ASSUMPTIONS.md | Sections 1.3 and 14 |
 | docs/DEFINITION_OF_DONE.md | Sections 9.2–9.3 and milestone exits |
-| Prioritized engineering backlog / issue-ready Markdown | Section 11 with linked SP-00–SP-41 issues, created labels/milestones and dependency relationships |
+| Prioritized engineering backlog / issue-ready Markdown | EXECUTION_BACKLOG.md plus execution-backlog.json; section 11 maps 168 PR tasks to 42 linked epic issues |
 | CI/CD implementation plan | Sections 11 SP-27 and 13.1–13.2 |
 | Initial risk register | RK01–RK17 in section 14 |
 | Launch readiness checklist | Below |
@@ -1073,8 +1060,9 @@ The requested artifact paths are represented by useful sections in this single f
 | 2026-10-19 | Validated roadmap structure and effort | 42 work packages sum to 118 PW; dependencies checked for cycles; local links, section references and Markdown structure checked |
 | 2026-10-19 | Adopted staged delivery and published engineering work | Stage 2 issue preparation authorized; 42 work packages, nine milestone gates and 112 native dependency relationships created and read-back verified; implementation approval remains pending |
 | 2026-10-19 | Drafted initial contracts | Exported current schemas and validated proposed HTTP/research definitions and fixtures; complete interface freeze remains SP-01 |
-| 2026-10-19 | Created consolidated enterprise roadmap | R0–R8, 118 base engineering PW +25% contingency, pilot W19–22, GA W30–36; approval pending |
+| 2026-10-19 | Created original consolidated enterprise roadmap | Historical estimate: 118 PW +25%, pilot W19–22/GA W30–36; superseded by execution audit below |
+| 2026-10-19 | Audited and split execution backlog | 168 PR tasks/42 epics, 368 task/gate prerequisites; 137.8 base PW +49.66 reserve PW; pilot onboarding W38–50, GA W52–67; both scenarios dependency/resource checked; approval pending |
 
-**Approval scope:** accept this roadmap as the working baseline, including its proposed enterprise features and provisional operating targets, then begin R0. No arbitrary paid benchmark sweep, compliance claim or unlimited infrastructure spend is implied. Cloud provisioning remains tied to concrete priced configuration, verified account permissions and applicable release/approval controls.
+**Approval scope:** review execution backlog D01–D06, including 168 PR boundaries, the revised staffing/schedule and initial R0/spring slice. The user explicitly requires backlog approval before implementation. No arbitrary paid benchmark sweep, compliance claim or unlimited infrastructure spend is implied. Cloud provisioning remains tied to concrete priced configuration, verified account permissions and applicable release/approval controls.
 
-**Next executable work after approval:** finish SP-00/01/02; reconcile and integrate the already-reviewed core through the normal PR process; start R1 numerical/fitting work and the R2/R3 foundations behind the frozen contracts. Keep this file current in each subsequent implementation PR.
+**Next executable work after approval:** record D01–D06 dispositions and named capacity in SP-00.a; review/integrate the existing core in SP-00.b; follow the day-by-day first-two-week plan and then the bounded spring slice. Later slices require their own reviewed prerequisites. No implementation begins merely because this backlog has been written.

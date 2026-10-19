@@ -16,8 +16,7 @@ No infrastructure has been provisioned.
 | Trajectories, checkpoints, manifests, predictors and replay assets | Cloud Storage |
 | Short dispatch and reconciliation operations | Cloud Tasks |
 
-Artifact Registry for versioned images and Secret Manager/workload identity for
-trusted-service credentials remain proposed supporting components. Provider and
+Artifact Registry, Secret Manager and workload identity are accepted supporting components in the final design review. Their concrete configuration is not yet provisioned or verified. Provider and
 service selection do not approve a specific IAM policy or secret-access path.
 
 Use separate development and production projects linked to the eligible billing
