@@ -173,21 +173,21 @@
       "name": "HTTP operations and error envelopes",
       "owner": "Backend + SDK + frontend",
       "freeze": "SP-01.b",
-      "source": "[openapi.json](../contracts/draft/openapi.json)",
+      "source": "[openapi.json](../contracts/draft/openapi.json), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending)",
       "obligations": "OpenAPI 3.1, scoped operation polling, Idempotency-Key on applicable mutations, immutable checkpoint PUT, explicit 401/403/404/409/422/429/503 semantics, version policy. Current draft has 11 operations, not complete product API."
     },
     "ID": {
       "name": "Identity, membership and credential authority",
       "owner": "Backend + security",
       "freeze": "SP-01.b",
-      "source": "[roadmap sections 5\u20136 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze)",
+      "source": "[roadmap sections 5\u20136 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending)",
       "obligations": "Issuer/subject identity, explicit workspace roles/invitations, scoped machine and run credentials, revocation and secure browser session semantics. Enterprise federation refined by SP-34.a; SCIM frozen by SP-35.a before those consumers."
     },
     "DB": {
       "name": "Transactional relational invariants",
       "owner": "Backend",
       "freeze": "SP-01.b",
-      "source": "[roadmap data model](ROADMAP.md#6-data-model-ownership-and-lifecycle)",
+      "source": "[roadmap data model](ROADMAP.md#6-data-model-ownership-and-lifecycle), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending)",
       "obligations": "Composite tenant ownership, unique operation/ordinal, atomic debit/result/outbox, revision/epoch checks, immutable terminal state, safe migration/runtime-role separation."
     },
     "ART": {
@@ -1275,7 +1275,7 @@
         "RS2"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze the first scientific interface subset.",
-      "status": "in_progress",
+      "status": "completed",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1285,7 +1285,7 @@
       ],
       "execution_owner": "Engineer Research",
       "issue": "https://github.com/spei04/strange-physics/issues/47",
-      "evidence": "Implemented and independently accepted at 8c86e763b0e34292cae958aa87bd3f3fc3051f82; 147 tests, Ruff, strict mypy and independent JSON Schema parity checks pass. Three review findings repaired. Integration and matching CI pending."
+      "evidence": "PR #51 merged cc24aef592f3157b67024e3cab41159489c77ffa, tree identical to reviewed 6e72415; all four head CI checks and merge-main CI passed. Research authored, Quality independently reviewed three repairs, lead accepted. 147 tests and schema/static checks passed for the first local SCI subset."
     },
     {
       "id": "SP-01.b",
@@ -1314,7 +1314,7 @@
         "BE2"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze identity, run and sql contracts.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1322,7 +1322,10 @@
         "SDK",
         "frontend",
         "security"
-      ]
+      ],
+      "execution_owner": "Engineer Quality (backend contract rotation)",
+      "issue": "https://github.com/spei04/strange-physics/issues/52",
+      "evidence": "Part 1 control subset independently accepted at a9fa8cbec41a56929576113933bc22743d2c24b8; 252 total tests (105 control), lint/typing and 67 schema/header cases pass. Integration pending. Browser sessions, membership/invitation/account-linking and credential lifecycle interfaces require further reviewed PRs; full task and dependent consumers remain blocked."
     },
     {
       "id": "SP-01.c",
@@ -10525,19 +10528,22 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Project lead until delegated",
+      "BE1": "Engineer Quality (current control-contract assignment)",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
       "RS1": "Engineer Research",
       "RS2": "Engineer Research (sequential assignments)",
-      "FE": "Project lead until delegated",
+      "FE": "Engineer Platform (next journey-specification assignment)",
       "QE": "Engineer Quality"
     },
     "review_policy": "Author does not approve own change. Lead coordinates peer review and takes integration responsibility; subagent review is not independent third-party assessment.",
     "log": "EXECUTION_LOG.md",
     "integrated_baseline": "7117060d03d4e0f843d7dddc53c3e5b580b8ef3f",
     "reviewed_baseline_head": "5cb1895c280af1ac0ad16bdc954d596089e91b70",
-    "schedule_repair": "2026-10-19: technical lead accepted SP-01.b before SP-01.c freeze. One added edge (369 total); both reference schedules regenerated without changing effort, capacity, approval gates or current execution staffing."
+    "schedule_repair": "2026-10-19: technical lead accepted SP-01.b before SP-01.c freeze. One added edge (369 total); both reference schedules regenerated without changing effort, capacity, approval gates or current execution staffing.",
+    "reviewed_scientific_head": "6e724152e5c947db1662bd65cea36412a8498b22",
+    "integrated_scientific_subset": "cc24aef592f3157b67024e3cab41159489c77ffa",
+    "contract_scope_note": "SP-01.b execution is split into independently reviewed PR units. Part 1 does not complete its parent or unblock full-contract consumers. Remaining identity units are being decomposed; the four-day human reference estimate requires re-estimation before being treated as reliable."
   }
 }

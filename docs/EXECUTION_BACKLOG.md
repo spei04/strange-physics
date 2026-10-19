@@ -315,21 +315,21 @@ Versioned model/provenance, exact purchased-data-only fitter prefix, distinct in
 <a id="contract-http"></a>
 ### C-HTTP: HTTP operations and error envelopes
 
-**Owner:** Backend + SDK + frontend. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [openapi.json](../contracts/draft/openapi.json).
+**Owner:** Backend + SDK + frontend. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [openapi.json](../contracts/draft/openapi.json), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending).
 
 OpenAPI 3.1, scoped operation polling, Idempotency-Key on applicable mutations, immutable checkpoint PUT, explicit 401/403/404/409/422/429/503 semantics, version policy. Current draft has 11 operations, not complete product API.
 
 <a id="contract-id"></a>
 ### C-ID: Identity, membership and credential authority
 
-**Owner:** Backend + security. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [roadmap sections 5–6 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze).
+**Owner:** Backend + security. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [roadmap sections 5–6 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending).
 
 Issuer/subject identity, explicit workspace roles/invitations, scoped machine and run credentials, revocation and secure browser session semantics. Enterprise federation refined by SP-34.a; SCIM frozen by SP-35.a before those consumers.
 
 <a id="contract-db"></a>
 ### C-DB: Transactional relational invariants
 
-**Owner:** Backend. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [roadmap data model](ROADMAP.md#6-data-model-ownership-and-lifecycle).
+**Owner:** Backend. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [roadmap data model](ROADMAP.md#6-data-model-ownership-and-lifecycle), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending).
 
 Composite tenant ownership, unique operation/ordinal, atomic debit/result/outbox, revision/epoch checks, immutable terminal state, safe migration/runtime-role separation.
 
@@ -503,7 +503,7 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Security and reliability:** Finite/shape boundaries explicit; fixtures are not results.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; in progress. Implemented and independently accepted at 8c86e763b0e34292cae958aa87bd3f3fc3051f82; 147 tests, Ruff, strict mypy and independent JSON Schema parity checks pass. Three review findings repaired. Integration and matching CI pending. Owner: Engineer Research; [issue](https://github.com/spei04/strange-physics/issues/47).
+- **Milestone / state:** R0; completed. PR #51 merged cc24aef592f3157b67024e3cab41159489c77ffa, tree identical to reviewed 6e72415; all four head CI checks and merge-main CI passed. Research authored, Quality independently reviewed three repairs, lead accepted. 147 tests and schema/static checks passed for the first local SCI subset. Owner: Engineer Research; [issue](https://github.com/spei04/strange-physics/issues/47).
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 
@@ -520,7 +520,7 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Security and reliability:** Membership separate from identity; immutable terminal states.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; backlog approved; not started; prerequisites and slice checkpoints still apply.
+- **Milestone / state:** R0; in progress. Part 1 control subset independently accepted at a9fa8cbec41a56929576113933bc22743d2c24b8; 252 total tests (105 control), lint/typing and 67 schema/header cases pass. Integration pending. Browser sessions, membership/invitation/account-linking and credential lifecycle interfaces require further reviewed PRs; full task and dependent consumers remain blocked. Owner: Engineer Quality (backend contract rotation); [issue](https://github.com/spei04/strange-physics/issues/52).
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-01-c"></a>
