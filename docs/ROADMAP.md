@@ -3,8 +3,8 @@
 **Document owner:** product owner and engineering lead
 **Last verified:** 2026-10-19
 **Repository:** [spei04/strange-physics](https://github.com/spei04/strange-physics)
-**Status:** Execution backlog approved on 2026-10-19; baseline integration is in progress, cloud preflight is complete with a deployment NO-GO, and workspace headroom awaits concrete paid-action approval. [Assignment log](EXECUTION_LOG.md) records engineer ownership and reassignment.
-**Implementation baseline:** 428b5a698b6f5654a9b91f547c9d4e7c196d3aa9, on feat/research-core; [PR #1](https://github.com/spei04/strange-physics/pull/1) is open, not merged.
+**Status:** Execution backlog approved on 2026-10-19; baseline integration is verified, cloud preflight is complete with a deployment NO-GO, and workspace headroom awaits concrete paid-action approval. [Assignment log](EXECUTION_LOG.md) records engineer ownership and reassignment.
+**Implementation baseline:** original core 428b5a698b6f5654a9b91f547c9d4e7c196d3aa9; [PR #1](https://github.com/spei04/strange-physics/pull/1) merged to main as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f on 2026-10-19, with tree identity verified against reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70.
 
 This is the maintained enterprise roadmap, requirements register and strategic progress record. The requested blueprint remains consolidated here. The later execution-planning request adds [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md) for assignable PR tasks and [execution-backlog.json](execution-backlog.json) for their matching dependency/capacity ledger. Existing [accepted decisions](DESIGN_DECISIONS.md), [core contracts](CORE.md), [law definitions](LAWS.md), and [draft benchmark](BENCHMARK.md) remain useful detailed references. This document proposes an expanded release schedule; it does not retroactively approve new scope, change scientific settings, or claim deployed controls. Its approved R0–R8 scope supersedes the older M0–M5 plan; section 10 maps the two. The nine-person schedule remains a conditional reference, not a promise for the current lead plus three-engineer subagent execution mode.
 
@@ -30,13 +30,13 @@ A checked box means its stated scope passed, not that the whole product is produ
 | Work item | Status on 2026-10-19 | Evidence / remaining gate |
 | --- | --- | --- |
 | Personal public repository and established architecture | Verified | Repository is spei04/strange-physics; accepted decisions recorded in DESIGN_DECISIONS.md |
-| Three force families, 2D, 1–8 particles, public contracts, SDK and CLI | Verified on feature branch | Baseline commit above; src/strange_physics and numerical/contract tests |
+| Three force families, 2D, 1–8 particles, public contracts, SDK and CLI | Verified and integrated | Baseline commit above; src/strange_physics and numerical/contract tests |
 | Local transactional reservations, checkpoints, replay after interruption | Verified locally | journal.py, session.py, sdk.py; failure and concurrency tests; not distributed durability |
 | External custom agent and law example | Verified locally | examples/custom_extension.py and tests/test_extensions.py; not outside-team adoption |
 | Current code checks in cloud checkout | Verified | 55 tests passed in 10.29 seconds; Ruff lint/format passed; strict mypy passed for 19 source files on 2026-10-19 |
-| Existing GitHub CI | Verified at baseline commit | Python 3.12 and 3.14 checks succeeded on PR and push; [CI run](https://github.com/spei04/strange-physics/actions/runs/37415951979), completed 2026-10-06 |
-| Baseline integration to main | Planned | PR #1 still open; passing checks do not mean merged or released |
-| Stage 2 execution backlog | Approved 2026-10-19 | 168 PR tasks across 42 epic issues; 368 task/gate prerequisites; scope, exclusions, contracts, tests, confidence and done criteria; dependency/resource audit passed |
+| Existing GitHub CI | Verified at reviewed integration head | All four Python 3.12/3.14 PR and push checks passed at 5cb1895; 55 tests, Ruff, strict mypy, package build and CLI smoke. Merge tree matches this reviewed head; [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060 |
+| Baseline integration to main | Verified | PR #1 merged as 7117060; Quality/Research peer reviews passed and git diff confirms tree identity with 5cb1895. This is not a product release |
+| Stage 2 execution backlog | Approved 2026-10-19 | 168 PR tasks across 42 epic issues; 369 task/gate prerequisites; scope, exclusions, contracts, tests, confidence and done criteria; dependency/resource audit passed |
 | Initial contract pack | Draft; validation passed | Four JSON artifacts with exported core definitions, 11 proposed HTTP operations, research messages and synthetic fixtures; SP-01 freeze remains open |
 | Expanded enterprise execution baseline | Approved with concrete gates retained | Backlog D01–D06 cover initial scope, staffing, revised schedule, release boundary, provisional targets and later concrete paid/release gates |
 | Shared fitter, active selector, calibrated uncertainty, held-out scoring | Planned | R1; the current random agent does not learn a predictive model |
@@ -49,7 +49,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 
 The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. Its single Git checkout is retained for ongoing work. Existing migration archives and other experiments are not disposable build caches.
 
-Current execution roster: project lead owns integration and unassigned backend/frontend roles; Engineer Quality owns verification, Engineer Research owns numerical/scientific work, and Engineer Platform owns environment checks. Roles rotate only after the current assignment ends. This is not evidence of nine human staff, independent assessment or production on-call coverage. SP-00.a records the execution-mode amendment; SP-00.b integration is in progress, SP-02.a is complete with a deployment NO-GO, and SP-02.b is blocked pending concrete paid-action approval.
+Current execution roster: project lead owns integration and unassigned backend/frontend roles; Engineer Quality owns verification, Engineer Research owns numerical/scientific work, and Engineer Platform owns environment checks. Roles rotate only after the current assignment ends. This is not evidence of nine human staff, independent assessment or production on-call coverage. SP-00.a records the execution-mode amendment; SP-00.b integration is complete at 7117060; SP-01.a design is in progress under Engineer Research with Quality/lead review required. SP-02.a is complete with a deployment NO-GO, and SP-02.b is blocked pending concrete paid-action approval.
 
 ### 0.3 Update procedure for every implementation change
 
@@ -71,15 +71,15 @@ The staged workflow and execution backlog were approved on 2026-10-19. Begin the
 | Stage | Deliverable and gate | Current state |
 | --- | --- | --- |
 | 1 — Plan and challenge | Inspect actual code, compare options, expose assumptions, challenge risks; product owner reviews assumptions before implementation approval | Blueprint and challenge review accepted; unmeasured targets and external commitments remain provisional |
-| 2 — Turn the plan into engineering work | Assignable PR tasks, exact dependencies/contracts/tests, capacity model and exit gates | 168 leaf tasks/42 epics; 368 prerequisites checked in both schedule scenarios; first ten days planned; execution approval recorded; subset freezes remain pending |
-| 3 — Implement one vertical slice at a time | Start only an approved slice; require tests, review, telemetry and updated documentation; then assess its evidence before selecting the next | In progress: baseline review and environment preflight; assignment log contains actual ownership |
+| 2 — Turn the plan into engineering work | Assignable PR tasks, exact dependencies/contracts/tests, capacity model and exit gates | 168 leaf tasks/42 epics; 369 prerequisites checked in both schedule scenarios; first ten days planned; execution approval recorded; subset freezes remain pending |
+| 3 — Implement one vertical slice at a time | Start only an approved slice; require tests, review, telemetry and updated documentation; then assess its evidence before selecting the next | In progress: baseline integrated and environment preflight reviewed; contract preparation and pending headroom remediation are recorded in the assignment log |
 | 4 — Validate actual production readiness | Audit shipped implementation against REQ01–REQ16 using real test/load/security/deploy/restore evidence; block unsupported claims | Not started; R6–R8 own these gates |
 
 The roadmap owns product/architecture/overall progress; EXECUTION_BACKLOG.md owns assignable task details and schedules, backed by execution-backlog.json. GitHub issues hold epic rollups; JSON contract files remain drafts. Creating an issue, schema or milestone never marks its implementation complete. Issue blockers describe completion/integration prerequisites; mock work may start after its explicitly approved interface boundary.
 
 ### 0.5 Proposed first implementation slice: fit, predict, score one spring system
 
-**Approval item:** [SP-00](https://github.com/spei04/strange-physics/issues/2), execution decision D01. **Delivery units:** SP-03.a/b → SP-04.a/b → SP-06.a → SP-04.e, behind approved contracts and headroom. See the [leaf records](EXECUTION_BACKLOG.md#epic-sp-04). Effort is included in those packages; estimated integration W9 base/W11 reserve, not an added milestone.
+**Approval item:** [SP-00](https://github.com/spei04/strange-physics/issues/2), execution decision D01. **Delivery units:** SP-03.a/b → SP-04.a/b → SP-06.a → SP-04.e, behind approved contracts and headroom. See the [leaf records](EXECUTION_BACKLOG.md#epic-sp-04). Effort is included in those packages; estimated integration W11 base/W13 reserve, not an added milestone.
 
 A researcher exports purchased observations, fits a shared linear-spring coefficient, saves a typed model, predicts an unseen initial condition and receives an independently computed development report. This exercises the scientific architecture through a usable SDK/CLI path before adding more methods or hosted components.
 
@@ -642,21 +642,21 @@ Medium/low issues may ship only with scoped impact, compensating control, accoun
 
 The execution audit replaces the earlier unvalidated 118 PW/25% estimate and W30–36 GA forecast. Bottom-up work is **689 delivery engineer-days (137.8 PW)**, including four postlaunch days, plus **248.3 days (49.66 PW) of confidence-weighted contingency**. Nine engineers at 70% delivery capacity provide 6.3 PW/week collectively; prerequisite chains and specialist queues make elapsed time longer than effort divided by team size.
 
-The [execution backlog](EXECUTION_BACKLOG.md) and [machine-readable plan](execution-backlog.json) contain 168 PR tasks, ten approval/calendar gates, 368 prerequisites and both resource-checked forecast scenarios. Initial execution is approved; assignments and actual status are in EXECUTION_LOG.md. Later slices and concrete paid/release actions retain their gates. Forecast **pilot onboarding W38–50, complete R7 evidence W45–59 and GA W52–67** from a staffed approved start. This is a feasible conservative schedule, not an optimized commitment or statistical confidence interval. Unknown approval/partner delays and measured sweep execution time can extend it. Reforecast after D10, R0 and each integration checkpoint.
+The [execution backlog](EXECUTION_BACKLOG.md) and [machine-readable plan](execution-backlog.json) contain 168 PR tasks, ten approval/calendar gates, 369 prerequisites and both resource-checked forecast scenarios. Initial execution is approved; assignments and actual status are in EXECUTION_LOG.md. Later slices and concrete paid/release actions retain their gates. Forecast **pilot onboarding W38–50, complete R7 evidence W45–59 and GA W52–67** from a staffed approved start. This is a feasible conservative schedule, not an optimized commitment or statistical confidence interval. Unknown approval/partner delays and measured sweep execution time can extend it. Reforecast after D10, R0 and each integration checkpoint.
 
 Old M0 is the implemented local baseline; M1 maps to R1/R4, M2 to R2/R3, M3 to R4, M4 to R5 and M5 to R6–R8. R0 uses subset contract freezes; the complete product API and enterprise protocol are not promised in two weeks.
 
 | Milestone | Earliest base work | Base / reserve exit | Delivery / reserve PW | Owner / status |
 | --- | --- | --- | --- | --- |
-| R0 — Scope, contracts and environment readiness | W1 | W5 / W6 | 6.2 / 1.71 | TL + product; in progress |
-| R1 — Scientifically valid learning and evaluation core | W2 | W18 / W24 | 17.2 / 6.90 | Research lead; planned, prerequisites pending |
+| R0 — Scope, contracts and environment readiness | W1 | W6 / W7 | 6.2 / 1.71 | TL + product; in progress |
+| R1 — Scientifically valid learning and evaluation core | W2 | W18 / W26 | 17.2 / 6.90 | Research lead; planned, prerequisites pending |
 | R2 — Private durable control plane | W3 | W16 / W20 | 14.0 / 3.95 | Backend lead; planned, prerequisites pending |
 | R3 — Isolated execution and recoverable data | W2 | W24 / W33 | 23.8 / 8.35 | Platform lead + security; planned, prerequisites pending |
-| R4 — Provider integration and both research tracks | W3 | W27 / W36 | 16.2 / 6.30 | Research + backend; planned, prerequisites pending |
+| R4 — Provider integration and both research tracks | W5 | W27 / W36 | 16.2 / 6.30 | Research + backend; planned, prerequisites pending |
 | R5 — Researcher product and supported self-hosting | W1 | W30 / W40 | 19.4 / 5.35 | Frontend + platform; planned, prerequisites pending |
 | R6 — Integrated production pilot readiness | W18 | W35 / W45 | 14.2 / 5.55 | QE + security + platform; planned, prerequisites pending |
 | R7 — Design-partner evidence and reference publication | W35 | W45 / W59 | 8.4 / 3.80 | Product + research; planned, prerequisites pending |
-| R8 — Enterprise GA readiness and rollout | W4 | W52 / W67 | 17.6 / 7.55 | TL + security + platform; planned, prerequisites pending |
+| R8 — Enterprise GA readiness and rollout | W7 | W52 / W67 | 17.6 / 7.55 | TL + security + platform; planned, prerequisites pending |
 | POST — Postlaunch reviews | W53 | W57 / W72 | 0.8 / 0.20 | TL + product; planned, prerequisites pending |
 
 ### R0 — Scope, contracts and environment readiness
@@ -769,7 +769,7 @@ Integration checkpoints are I0 baseline/subset contracts, I1 independent spring 
 
 The 42 [GitHub issues](https://github.com/spei04/strange-physics/issues) are epic rollups. The assignable units are the **168 PR-sized task records** in [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md#task-index), each containing objective, detailed scope, explicit exclusions, prerequisites, contracts, acceptance, automated tests, security/reliability, effort/confidence, role and definition of done. [execution-backlog.json](execution-backlog.json) is the machine-readable ledger for the same records and both schedules. Keep these synchronized in every relevant PR.
 
-Legacy 112 native whole-epic blocker links are superseded by the finer 368-edge task/gate DAG. They cannot correctly represent partial contract handoffs and parallel child work; parent issue state does not establish leaf readiness. All issues remain open and marked as needing approval. Materialize child issues from the approved leaf records when assigning work; do not implement an entire parent in a single PR.
+Legacy 112 native whole-epic blocker links are superseded by the finer 369-edge task/gate DAG. They cannot correctly represent partial contract handoffs and parallel child work; parent issue state does not establish leaf readiness. Epic issues remain rollups; current leaf assignments and evidence are recorded in the backlog and execution log. Materialize child issues from the approved leaf records when assigning work; do not implement an entire parent in a single PR.
 
 | Epic / issue | Reviewable units | Delivery PW | Milestone allocation |
 | --- | --- | --- | --- |
@@ -851,7 +851,7 @@ Contract-affecting PRs need both producer and consumer review; security-boundary
 
 The [day-by-day D1–D10 plan](EXECUTION_BACKLOG.md#first-two-weeks-day-by-day) records each lane's exact author tasks, predecessor conditions and checkpoints. Day 1 is after user approval and staffing. The machine ledger records fractional-day capacity and dependencies; every proposed start follows predecessor completion. Unassigned lanes can review rather than starting speculative dependent code.
 
-After the first two weeks, schedule at milestone level using section 10. R0 is W5 base/W6 reserve; first independent spring slice W9/W11; pilot onboarding W38–50; R7 evidence W45–59; enterprise GA W52–67. Reforecast after measured cycle time and uncertain-spike outcomes. No calendar launch date is committed.
+After the first two weeks, schedule at milestone level using section 10. R0 is W6 base/W7 reserve; first independent spring slice W11/W13; pilot onboarding W38–50; R7 evidence W45–59; enterprise GA W52–67. Reforecast after measured cycle time and uncertain-spike outcomes. No calendar launch date is committed.
 
 ### 12.4 Capacity and dependency maintenance
 
@@ -1065,7 +1065,9 @@ The requested artifact paths are represented by useful sections in this single f
 | 2026-10-19 | Created original consolidated enterprise roadmap | Historical estimate: 118 PW +25%, pilot W19–22/GA W30–36; superseded by execution audit below |
 | 2026-10-19 | Audited and split execution backlog | 168 PR tasks/42 epics, 368 prerequisites; reference forecasts validated; subsequently approved below |
 | 2026-10-19 | Approved execution and dispatched independent engineers | SP-00.a complete for amended roster; Quality/Research baseline reviews pass, factual doc repairs in 9833e6f; Platform preflight complete with deployment NO-GO; SP-02.b pending exact disk/snapshot approval. See EXECUTION_LOG.md |
+| 2026-10-19 | Integrated reviewed baseline | SP-00.b complete: PR #1 merged as 7117060; tree matches reviewed 5cb1895, with four passing CI checks and both peer review scopes |
+| 2026-10-19 | Repaired DB-to-artifact freeze dependency | SP-01.b now precedes SP-01.c freeze; 369 edges, both reference schedules regenerated. R0 W6–7, spring W11–13 and R1 W18–26; GA W52–67 unchanged. Effort and current execution staffing unchanged |
 
 **Approval scope:** execution backlog D01–D06 and initial R0/spring scope approved on 2026-10-19. Current execution uses a lead and up to three engineer subagents; the nine-human-team schedule remains conditional. No arbitrary paid benchmark sweep, compliance claim or unlimited infrastructure spend is implied. Cloud provisioning remains tied to concrete priced configuration, verified account permissions and applicable release/approval controls.
 
-**Next executable outcome:** finish SP-00.b baseline integration; resolve SP-02.b headroom with the prepared paid-action proposal; then freeze SCI and deliver the bounded spring observe→fit→predict→score slice. Independent contract work may proceed after its own prerequisites. Actual assignments and evidence are in EXECUTION_LOG.md.
+**Next executable outcome:** resolve SP-02.b headroom with the prepared paid-action proposal; then freeze SCI and deliver the bounded spring observe→fit→predict→score slice. Independent contract work may proceed after its own prerequisites. Actual assignments and evidence are in EXECUTION_LOG.md.

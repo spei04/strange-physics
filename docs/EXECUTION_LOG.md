@@ -16,14 +16,18 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-19 23:25 | Project lead | SP-00.a — approval/roster; integration and dependency coordination | Completed; actual assignment log maintained here |
 | 2026-10-19 23:23 | Research | SP-00.b — repair factual law/change-timing documentation | Committed 9833e6f; Quality peer review passed; writer ownership relinquished |
 | 2026-10-19 23:24 | Quality | SP-00.a/b — review approval/roster and documentation repair | Peer review passed; 168 Markdown/JSON task states and prerequisites agree |
-| 2026-10-19 23:24 | Research | SP-01.a — read-only SCI preparation | Draft only; freeze waits for baseline integration and safe write capacity |
+| 2026-10-19 23:24 | Research | SP-01.a — read-only SCI preparation | Queued while engineer idle; actual design start recorded below |
 | 2026-10-19 23:24 | Quality | SP-01.b — read-only HTTP/identity/SQL preparation | Six concrete gaps identified; implementation/freeze not started |
 | 2026-10-19 23:25 | Platform | SP-02.b — concrete capacity remediation proposal | Ready: 200→300 GiB boot disk plus regional recovery snapshot; explicit approval pending |
+| 2026-10-19 23:29 | Research | SP-01.a — SCI contract design | Design accepted; implementation awaits exclusive writer handoff; Quality/lead review required; [#47](https://github.com/spei04/strange-physics/issues/47) |
+| 2026-10-19 23:28 | Project lead | SP-00.b — integrate reviewed baseline | Completed: PR #1 merge 7117060, tree-equivalent to reviewed 5cb1895; four CI checks pass |
+| 2026-10-19 23:30 | Platform | SP-01.c preparation — audit ART/EXEC boundary and repair DB freeze dependency | Added SP-01.b prerequisite; 369 edges and both reference forecasts regenerated; Quality review queued |
 
 ## Review evidence and management checkpoint
 
 - Outcome: an enterprise research product that measures discovery and adaptation. Next evidence-producing milestone is the approved noiseless spring path: purchased observations → fit → unseen-condition predictions → independently scored report.
-- Baseline delta: research and recovery reviews at 2d78e35; 55 tests, lint/format and strict mypy pass; same-head CI covers Python 3.12/3.14, packaging and eight-particle CLI smoke. Two factual documentation corrections committed as 9833e6f and peer reviewed. PR #1 integration is still pending.
+- Baseline delta: research and recovery reviews at 2d78e35; 55 tests, lint/format and strict mypy pass; same-head CI covers Python 3.12/3.14, packaging and eight-particle CLI smoke. Two factual documentation corrections committed as 9833e6f and peer reviewed. PR #1 merged as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f; git diff verified its tree matches reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70. All four GitHub CI checks at that head passed on Python 3.12/3.14. [Merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060. SP-00.b is complete; this is not a product release.
+- Forecast repair: adding the DB-to-artifact freeze edge changes R0 to W6–7 and first spring integration to W11–13; R1 reserve becomes W26. GA remains W52–67. These remain nine-human-team reference estimates; actual engineer assignments are separate.
 - Preparatory analysis is not implementation: no SCI/HTTP subset frozen, fitter built, hosted service deployed or benchmark result established.
 - Cloud audit: current shared project/billing accessible; target projects/IAM/quota and credit eligibility/expiry unknown. Deployment NO-GO, Platform owns remediation; product/billing owner supplies private credit evidence. Private raw records remain outside the checkout; no account IDs published.
 - Shared storage: free space fell to 57.7 MiB and fluctuates near 100 MiB. Only ~18 MB is project-owned disposable cache. Other projects, active consumers and migration archives are excluded from cleanup.
@@ -34,7 +38,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 ## Current blockers and rules
 
 - Cloud filesystem had 215 MiB free at execution start. SP-02.b gates installs/builds; preserve migration archives and other active projects.
-- Baseline integration must pass both review scopes and required checks before SP-01 consumers begin.
+- Baseline integration passed both review scopes and required checks at 7117060. Specific contract freezes remain prerequisites; SP-01.c additionally waits for SP-01.b DB acceptance.
 - Root coordinates every checkout write; independent writers get separate cloud checkouts. No local project copies.
 - Partner/assessor/human operations availability is unconfirmed. No outreach or contractual commitment is implied.
 - No priced staging, provider trial, official sweep or production release is approved yet.
