@@ -563,11 +563,13 @@
             "name": "Idempotency-Key",
             "required": true,
             "schema": {
-              "maxLength": 64,
+              "maxLength": 128,
+              "minLength": 1,
               "not": {
-                "pattern": "[^A-Za-z0-9_-]"
+                "pattern": "[^!-~]"
               },
-              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "pattern": "^[!-~]+$",
+              "title": "Key",
               "type": "string"
             }
           }
@@ -718,11 +720,13 @@
             "name": "Idempotency-Key",
             "required": true,
             "schema": {
-              "maxLength": 64,
+              "maxLength": 128,
+              "minLength": 1,
               "not": {
-                "pattern": "[^A-Za-z0-9_-]"
+                "pattern": "[^!-~]"
               },
-              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "pattern": "^[!-~]+$",
+              "title": "Key",
               "type": "string"
             }
           }
@@ -1131,11 +1135,13 @@
             "name": "Idempotency-Key",
             "required": true,
             "schema": {
-              "maxLength": 64,
+              "maxLength": 128,
+              "minLength": 1,
               "not": {
-                "pattern": "[^A-Za-z0-9_-]"
+                "pattern": "[^!-~]"
               },
-              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "pattern": "^[!-~]+$",
+              "title": "Key",
               "type": "string"
             }
           }
@@ -1399,7 +1405,7 @@
     },
     "/v1/workspaces/{workspace_id}/runs/{run_id}/cancel": {
       "post": {
-        "description": "Asynchronous cancellation. Reauthorize before deduplication. Atomically revoke launch/broker authority and enter cancelling; terminal cancelled requires worker termination and reservation reconciliation. Accepted experiment slots are never refunded. Queued runs without work may become cancelled directly. Terminal runs reject new cancellations; exact authorized retries return the original operation.",
+        "description": "Asynchronous cancellation. Reauthorize before deduplication. Atomically revoke launch/broker/result/checkpoint authority and enter cancelling; terminal cancelled requires worker termination and reservation reconciliation. Accepted experiment slots are never refunded. Queued runs without work may become cancelled directly. Terminal runs reject new cancellations; exact authorized retries return the original operation. Only results committed before cancellation acceptance survive; later worker output is rejected even before settlement.",
         "operationId": "cancelRun",
         "parameters": [
           {
@@ -1434,11 +1440,13 @@
             "name": "Idempotency-Key",
             "required": true,
             "schema": {
-              "maxLength": 64,
+              "maxLength": 128,
+              "minLength": 1,
               "not": {
-                "pattern": "[^A-Za-z0-9_-]"
+                "pattern": "[^!-~]"
               },
-              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "pattern": "^[!-~]+$",
+              "title": "Key",
               "type": "string"
             }
           }

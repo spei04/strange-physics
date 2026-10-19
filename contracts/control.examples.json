@@ -13,6 +13,23 @@
     "through_index": 0
   },
   "checkpoint_digest": "98eefb07d2b6fb9e73f7cbfab085528fcba4cba198769cee03068545241f7856",
+  "idempotency_keys": {
+    "invalid": [
+      "",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "has space",
+      "key\n",
+      "\u03b2",
+      "a\tb"
+    ],
+    "valid": [
+      "a",
+      "trial:repeat/1",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+      "~"
+    ]
+  },
   "notice": "Synthetic conformance data only; not credentials, operational evidence or scientific results.",
   "run_credential": {
     "attempt_id": "attempt-1",
@@ -118,7 +135,7 @@
           "error": null,
           "kind": "experiment",
           "operation_id": "op-0",
-          "request_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
           "result": {
             "kind": "experiment",
             "value": {
@@ -204,7 +221,7 @@
           "error": null,
           "kind": "experiment",
           "operation_id": "op-1",
-          "request_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
           "result": {
             "kind": "experiment",
             "value": {
@@ -242,7 +259,7 @@
           "error": null,
           "kind": "experiment",
           "operation_id": "op-2",
-          "request_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
           "result": null,
           "run_id": "run-1",
           "status": "pending",
@@ -253,7 +270,7 @@
           "error": null,
           "kind": "experiment",
           "operation_id": "op-3",
-          "request_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
           "result": null,
           "run_id": "run-1",
           "status": "cancelled",
@@ -270,7 +287,7 @@
           },
           "kind": "experiment",
           "operation_id": "op-4",
-          "request_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
           "result": null,
           "run_id": "run-1",
           "status": "failed",

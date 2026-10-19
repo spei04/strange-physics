@@ -1,6 +1,8 @@
-# Identity, run and SQL contract v1
+# Identity, run and SQL contract v1 — first control subset
 
-SP-01.b / issue #52. This bounded contract covers the eleven routes in the
+SP-01.b / issue #52, part 1. The full task remains in progress until remaining
+C-ID contracts are reviewed; downstream full-contract consumers remain blocked.
+This bounded contract covers the eleven routes in the
 [partial OpenAPI draft](../contracts/draft/openapi.json).
 [Schema](../contracts/control.schema.json),
 [pure conformance checks](../src/strange_physics/control_contracts.py),
@@ -104,6 +106,12 @@ Identity and experiment space remain immutable. State transitions cannot change
 accepted counters. Admission is a separate serialized transaction incrementing
 revision with ordinal/debit; the state predicate is not that transaction.
 
+Entering evaluating/completed additionally requires a transaction-derived committed
+prefix equal to experiments_accepted - 1. Settled resource counts cannot prove
+that every accepted slot produced an observation. Compute this prefix from the
+complete authoritative accepted ledger, not a page or client assertion.
+Failure/cancellation can settle with incomplete observations.
+
 Terminal states require zero active workers and zero unsettled resource
 reservations, from the same authoritative transaction. Failure/expiry may need
 prior termination/reconciliation; expired authority is not proof a worker
@@ -113,7 +121,15 @@ passes. Timeouts cannot bypass reconciliation.
 Operations move pending → running/completed/failed/cancelled; running →
 completed/failed/cancelled. Exact terminal snapshots may replay; changed terminal
 payloads and reopening are rejected. Workspace/run/operation ID, kind, normalized
-request digest and accepted ordinal are immutable. Completed requires a typed
+request digest and accepted ordinal are immutable. Every completed experiment
+record must hash to the normalized request digest, including physical failures.
+Before durable result commit, the adapter must also apply existing CORE
+ExperimentSpace/ObservationBundle validation against pinned RunView.space:
+action bounds/topology/ordered particle identity, trajectory shape and full
+published sampling count/times. Operation alone has no pinned space and does
+not certify those properties. Out-of-order results require equivalent per-record
+CORE checks before persistence and full bundle validation before prefix export;
+that adapter remains later integration work. Completed requires a typed
 result of its own kind and no Error; failed requires Error and no result;
 pending/running/cancelled have neither. Result tenant/run or operation/ordinal
 must match the envelope. Cancellation completes only with a cancelled RunView.
@@ -201,7 +217,7 @@ provider prices/quota enforcement are not implemented here.
 
 ## Cancellation and commit races
 
-Accepting cancellation atomically revokes new launch/broker authority and
+Accepting cancellation atomically revokes new launch/broker/result/checkpoint authority and
 records transition/dispatch intent. It is not worker termination proof.
 Committed records persist; in-flight resources remain explicit until settlement.
 Only unused resource reservations can release after reconciliation; accepted
@@ -210,10 +226,10 @@ experiment count never refunds.
 The first valid locked/CAS commit wins:
 
 - Cancel before experiment acceptance: no ordinal/debit.
-- Real result before cancellation settlement: preserve completed Operation and
+- Real result committed before cancellation acceptance: preserve completed Operation and
   record even if the run later becomes cancelled.
-- Terminal cancellation/abort before result: retain ordinal/debit, produce no
-  fictitious observation and reject late output.
+- Cancellation acceptance before result: retain ordinal/debit, produce no
+  fictitious observation and reject late output, even before settlement.
 - Completion/expiry winning the run revision prevents a new cancellation.
   Exact authorized retries may return their original immutable operation;
   fresh terminal-run cancellation conflicts.
@@ -279,7 +295,7 @@ row/current attempt under an explicit locking/isolation strategy. Recheck
 revision, current authority, attempt/epoch and server deadline inside each
 transaction. Acceptance commits request/operation/ordinal/debit/counters/revision/
 outbox together. Checkpoint commit compares natural key/full content and latest
-under one lock. Cancellation revokes launch and emits reconciliation together.
+under one lock. Cancellation fences launch/broker/result/checkpoint writes and emits reconciliation together.
 Unique/CAS conflicts re-read under current authority; never ack partial commits.
 
 Runtime DB roles cannot own tables, bypass RLS or grant privileges. Migration
@@ -288,6 +304,24 @@ verified authority transaction-locally, never client body/SQL; reset on pooled
 connection reuse. RLS supplements explicit object authorization and composite
 FKs. Error, rollback and nested transaction paths must not retain tenant state.
 Workers/evaluators receive least privilege.
+
+## Remaining C-ID freeze checklist
+
+A separate coherent SP-01.b follow-up must specify public browser session,
+invitation/membership, and service credential management contracts before the
+whole C-ID freeze or its dependent tasks can complete:
+
+- Browser login/callback/session introspection/logout and expiry/renewal shapes;
+  secure cookie, origin/CSRF, callback state/nonce and explicit account linking.
+- Invitation creation/redemption/expiry/revocation and identity binding;
+  membership list/change/remove authorization, role changes and last-owner rules.
+- Service principal/credential create/list/rotate/revoke scopes, secret handling,
+  authority ancestry and revocation propagation.
+- Concrete routes, request/response/errors, concurrency/idempotency examples,
+  schema/runtime fixtures, security test obligations and producer/consumer review.
+
+This subset neither invents those unfinished route shapes nor counts them as
+accepted. No handlers are implied by their later contract freeze.
 
 ## Required later integration evidence
 

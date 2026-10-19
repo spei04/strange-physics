@@ -8,7 +8,7 @@ from typing import Any
 import pytest
 from pydantic import ValidationError
 
-from strange_physics.contracts import Checkpoint, Experiment, Message
+from strange_physics.contracts import Checkpoint, Experiment, Message, ObservationBundle
 from strange_physics.control_contracts import (
     CONTROL_MODELS,
     ROUTE_PERMISSIONS,
@@ -371,6 +371,7 @@ def test_terminal_run_immutable_and_cancel_complete_race_uses_revision(status: s
         expected_revision=2,
         active_workers=0,
         unsettled_reservations=0,
+        committed_prefix=contiguous_record_prefix(experiments()[:2]),
     )
     with pytest.raises(ContractViolation):
         validate_run_transition(
@@ -658,4 +659,153 @@ def test_server_time_projection_rejects_invalid_values(now: Any) -> None:
 @pytest.mark.parametrize("field", ["path_index", "committed_prefix", "latest_index"])
 def test_checkpoint_integer_metadata_does_not_coerce_booleans(field: str) -> None:
     with pytest.raises(ValidationError):
-        check_write(**{field: False})
+        check_write(None, **{field: False})
+
+
+@pytest.mark.parametrize("index", [0, 1])
+def test_completed_experiment_binds_the_actual_action_to_its_request_digest(index: int) -> None:
+    op = experiments()[index]
+    assert op.result is not None and op.result.kind == "experiment"
+    assert message_sha256(op.result.value.experiment) == op.request_sha256
+    with pytest.raises(ValidationError, match="request digest"):
+        changed(op, request_sha256="0" * 64)
+    result = op.result.model_dump(mode="json")
+    result["value"]["experiment"]["particles"][0]["mass"] = 2.0
+    with pytest.raises(ValidationError, match="request digest"):
+        changed(op, result=result)
+
+
+@pytest.mark.parametrize("key", FIXTURES["idempotency_keys"]["valid"])
+def test_printable_idempotency_key_edges_are_accepted(key: str) -> None:
+    assert parse(IdempotencyScope, key=key).key == key
+
+
+@pytest.mark.parametrize("key", FIXTURES["idempotency_keys"]["invalid"])
+def test_nonportable_idempotency_keys_are_rejected(key: str) -> None:
+    with pytest.raises(ValidationError):
+        parse(IdempotencyScope, key=key)
+
+
+def test_all_post_header_key_schemas_equal_runtime_schema() -> None:
+    schema = control_json_schema()["$defs"]["IdempotencyScope"]["properties"]["key"]
+    api = json.loads((ROOT / "contracts/draft/openapi.json").read_text())
+    headers = [
+        parameter
+        for path in api["paths"].values()
+        if "post" in path
+        for parameter in path["post"]["parameters"]
+        if parameter.get("name") == "Idempotency-Key"
+    ]
+    assert len(headers) == 4
+    assert all(header["required"] and header["schema"] == schema for header in headers)
+
+
+def test_cancellation_acceptance_fences_result_and_checkpoint_before_settlement() -> None:
+    credential, membership, lease = run_credential(), parse(Membership), parse(RunLease)
+    completed = experiments()[0]
+    running = changed(completed, status="running", result=None)
+    authorize(
+        credential,
+        membership,
+        permission="experiments:write",
+        workspace_id="ws-1",
+        run_id="run-1",
+        now=100,
+        lease=lease,
+    )
+    validate_operation_update(running, completed)
+    # Acceptance closes writes before worker termination/resource reconciliation.
+    cancelling_lease = changed(lease, status="cancelling")
+    with pytest.raises(ContractViolation, match="incompatible_state"):
+        authorize(
+            credential,
+            membership,
+            permission="experiments:write",
+            workspace_id="ws-1",
+            run_id="run-1",
+            now=100,
+            lease=cancelling_lease,
+        )
+    with pytest.raises(ContractViolation, match="incompatible_state"):
+        authorize(
+            credential,
+            membership,
+            permission="checkpoints:write",
+            workspace_id="ws-1",
+            run_id="run-1",
+            now=100,
+            lease=cancelling_lease,
+        )
+    # A prior committed result survives; pending slots settle without fake output.
+    with pytest.raises(ContractViolation):
+        validate_operation_update(completed, changed(running, status="cancelled"))
+    validate_operation_update(running, changed(running, status="cancelled"))
+
+
+@pytest.mark.parametrize("target", ["evaluating", "completed"])
+def test_settled_observation_gap_prevents_successful_progress(target: str) -> None:
+    before = parse(RunView, status="running" if target == "evaluating" else "evaluating")
+    after = changed(before, status=target, revision=3)
+    gap = changed(experiments()[0], status="cancelled", result=None)
+    ledger = (gap, experiments()[1])
+    prefix = contiguous_record_prefix(ledger)
+    assert prefix == -1
+    with pytest.raises(ContractViolation, match="incompatible_state"):
+        validate_run_transition(
+            before,
+            after,
+            expected_revision=2,
+            active_workers=0,
+            unsettled_reservations=0,
+            committed_prefix=prefix,
+        )
+    with pytest.raises(ValueError, match="authoritative committed prefix"):
+        validate_run_transition(
+            before, after, expected_revision=2, active_workers=0, unsettled_reservations=0
+        )
+    validate_run_transition(
+        before,
+        changed(before, status="failed", revision=3),
+        expected_revision=2,
+        active_workers=0,
+        unsettled_reservations=0,
+    )
+
+
+def test_core_validation_is_required_in_addition_to_operation_shape_and_hash() -> None:
+    op = experiments()[0]
+    assert op.result is not None and op.result.kind == "experiment"
+    run = parse(RunView)
+
+    def bundle(record: dict[str, Any]) -> ObservationBundle:
+        return ObservationBundle.model_validate_json(
+            json.dumps(
+                {
+                    "run_id": run.run_id,
+                    "engine_version": "synthetic",
+                    "engine_fingerprint": "1" * 64,
+                    "space": run.space.model_dump(mode="json"),
+                    "records": [record],
+                }
+            )
+        )
+
+    bundle(op.result.value.model_dump(mode="json"))
+    for mutation in ("mass", "identity", "count", "time"):
+        payload = op.model_dump(mode="json")
+        record = payload["result"]["value"]
+        if mutation == "mass":
+            record["experiment"]["particles"][0]["mass"] = 3.0
+        elif mutation == "identity":
+            record["experiment"]["particles"][0]["id"] = "other-particle"
+        elif mutation == "count":
+            record["trajectory"]["frames"].pop()
+        else:
+            record["trajectory"]["frames"][1]["time"] = 0.04
+        payload["request_sha256"] = message_sha256(
+            Experiment.model_validate_json(json.dumps(record["experiment"]))
+        )
+        # The envelope cannot know pinned space. The existing CORE validator can.
+        Operation.model_validate_json(json.dumps(payload))
+        with pytest.raises(ValidationError):
+            bundle(record)

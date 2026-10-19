@@ -233,6 +233,7 @@ def validate_run_transition(
     expected_revision: int,
     active_workers: int,
     unsettled_reservations: int,
+    committed_prefix: int | None = None,
 ) -> None:
     """CAS/state check; counts must come from the same authoritative transaction."""
     TypeAdapter(Count).validate_python(expected_revision, strict=True)
@@ -250,8 +251,12 @@ def validate_run_transition(
         raise ValueError("state transitions cannot change experiment reservations")
     if after.status not in RUN_EDGES.get(before.status, frozenset()):
         raise ContractViolation("incompatible_state", 409)
-    if active_workers < 0 or unsettled_reservations < 0:
-        raise ValueError("transaction counts must be nonnegative")
+    if after.status in {"evaluating", "completed"}:
+        if committed_prefix is None:
+            raise ValueError("successful progress requires an authoritative committed prefix")
+        TypeAdapter(PrefixIndex).validate_python(committed_prefix, strict=True)
+        if committed_prefix != before.experiments_accepted - 1:
+            raise ContractViolation("incompatible_state", 409)
     if after.status in TERMINAL_RUNS and (active_workers or unsettled_reservations):
         raise ContractViolation("incompatible_state", 409)
 
@@ -336,6 +341,8 @@ class Operation(Message):
                 if self.kind == "cancellation" and value.status != "cancelled":
                     raise ValueError("cancellation completes only after the run is cancelled")
             elif isinstance(value, ExperimentRecord):
+                if message_sha256(value.experiment) != self.request_sha256:
+                    raise ValueError("experiment result must match the normalized request digest")
                 if (value.operation_id, value.index) != (
                     self.operation_id,
                     self.accepted_experiment_index,
@@ -352,6 +359,7 @@ class Operation(Message):
 
 
 def validate_operation_update(before: Operation, after: Operation) -> None:
+    """Validate payload transition after current commit authority and CORE result checks."""
     immutable = (
         "workspace_id",
         "run_id",
