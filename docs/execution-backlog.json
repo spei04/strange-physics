@@ -166,8 +166,8 @@
       "name": "Model, prediction and scoring messages",
       "owner": "Research + QE",
       "freeze": "SP-01.a",
-      "source": "[research.schema.json](../contracts/draft/research.schema.json), [BENCHMARK.md](BENCHMARK.md)",
-      "obligations": "Versioned model/provenance, purchased-data-only fitter input, monotonic times, finite ordered trajectories, failure counts, fixed normalizer. First-slice RMSE is a development diagnostic; full benchmark primary score remains normalized MSE."
+      "source": "[research.schema.json](../contracts/research.schema.json), [SCI_CONTRACT.md](SCI_CONTRACT.md), [BENCHMARK.md](BENCHMARK.md)",
+      "obligations": "Versioned model/provenance, exact purchased-data-only fitter prefix, distinct integration steps, finite ordered trajectories, explicit failure counts and fixed coordinate normalizer. The first local subset reports development MSE and normalized MSE; any failed probe makes it unscorable. Full benchmark scoring remains unfrozen."
     },
     "HTTP": {
       "name": "HTTP operations and error envelopes",
@@ -1285,7 +1285,7 @@
       ],
       "execution_owner": "Engineer Research",
       "issue": "https://github.com/spei04/strange-physics/issues/47",
-      "evidence": "2026-10-19 design started after baseline integration 7117060; implementation queued for exclusive checkout ownership. Quality/project-lead review and contract validation are required before completion."
+      "evidence": "Implemented and independently accepted at 8c86e763b0e34292cae958aa87bd3f3fc3051f82; 147 tests, Ruff, strict mypy and independent JSON Schema parity checks pass. Three review findings repaired. Integration and matching CI pending."
     },
     {
       "id": "SP-01.b",
@@ -1547,7 +1547,7 @@
         "PL2"
       ],
       "objective": "Make development and deployment prerequisites concrete, affordable and safe to use. This PR delivers approve a priced staging configuration.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1556,7 +1556,10 @@
         "security",
         "Technical lead",
         "product"
-      ]
+      ],
+      "execution_owner": "Engineer Platform",
+      "issue": "https://github.com/spei04/strange-physics/issues/49",
+      "evidence": "Priced staging proposal prepared; target-project/credit details and concrete configuration/spend approval remain open. No resources provisioned."
     },
     {
       "id": "SP-03.a",
@@ -4397,7 +4400,7 @@
         "FE"
       ],
       "objective": "Let researchers create private worlds and run investigations through an accessible product. This PR delivers specify accessible workspace journeys.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -4405,7 +4408,10 @@
         "backend",
         "Backend",
         "security"
-      ]
+      ],
+      "execution_owner": "Engineer Platform (frontend design rotation)",
+      "issue": "https://github.com/spei04/strange-physics/issues/50",
+      "evidence": "Seven journeys and acceptance inventory designed; Research truth-boundary review active. Documentation writer handoff and lead/product review pending."
     },
     {
       "id": "SP-22.b",

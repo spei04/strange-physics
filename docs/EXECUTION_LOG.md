@@ -23,12 +23,21 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-19 23:28 | Project lead | SP-00.b — integrate reviewed baseline | Completed: PR #1 merge 7117060, tree-equivalent to reviewed 5cb1895; four CI checks pass |
 | 2026-10-19 23:30 | Platform | SP-01.c preparation — audit ART/EXEC boundary and repair DB freeze dependency | Added SP-01.b prerequisite; 369 edges and both reference forecasts regenerated; Quality review queued |
 
+
+| 2026-10-19 23:33 | Research | SP-01.a — implement local SCI subset | b4f8505; Quality review found grid aliasing and two schema/runtime gaps |
+| 2026-10-19 23:38 | Research | SP-01.a — repair three review findings | 8c86e76; 147 tests, Ruff and strict mypy pass; Quality independently accepted; writer released |
+| 2026-10-19 23:41 | Project lead | SP-01.a — accept repair and prepare integration | Accepted source 8c86e76; PR and matching CI next |
+| 2026-10-19 23:34 | Platform | SP-02.c — prepare priced staging configuration | Proposal ready; configuration/credit evidence and approval pending; [#49](https://github.com/spei04/strange-physics/issues/49) |
+| 2026-10-19 23:37 | Platform | SP-22.a — specify workspace journeys | Seven journeys prepared; bounded documentation writer slot pending; [#50](https://github.com/spei04/strange-physics/issues/50) |
+| 2026-10-19 23:42 | Research | SP-22.a — independent truth-boundary review | Active, read-only; author preview, held-out access and prediction/failure semantics |
+| Next | Quality | SP-01.b — identity/run/SQL contracts | Queued for exclusive writer handoff after SCI integration; no handlers, migrations or deployment |
+
 ## Review evidence and management checkpoint
 
 - Outcome: an enterprise research product that measures discovery and adaptation. Next evidence-producing milestone is the approved noiseless spring path: purchased observations → fit → unseen-condition predictions → independently scored report.
 - Baseline delta: research and recovery reviews at 2d78e35; 55 tests, lint/format and strict mypy pass; same-head CI covers Python 3.12/3.14, packaging and eight-particle CLI smoke. Two factual documentation corrections committed as 9833e6f and peer reviewed. PR #1 merged as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f; git diff verified its tree matches reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70. All four GitHub CI checks at that head passed on Python 3.12/3.14. [Merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060. SP-00.b is complete; this is not a product release.
 - Forecast repair: adding the DB-to-artifact freeze edge changes R0 to W6–7 and first spring integration to W11–13; R1 reserve becomes W26. GA remains W52–67. These remain nine-human-team reference estimates; actual engineer assignments are separate.
-- Preparatory analysis is not implementation: no SCI/HTTP subset frozen, fitter built, hosted service deployed or benchmark result established.
+- SCI delta: implemented and independently accepted at 8c86e76; 147 tests pass, with 54 independent JSON Schema boundary assertions and five positive fixtures. Three review findings were repaired. Freeze ledger awaits matching CI/integration. No fitter, hosted service or benchmark result is claimed.
 - Cloud audit: current shared project/billing accessible; target projects/IAM/quota and credit eligibility/expiry unknown. Deployment NO-GO, Platform owns remediation; product/billing owner supplies private credit evidence. Private raw records remain outside the checkout; no account IDs published.
 - Shared storage: free space fell to 57.7 MiB and fluctuates near 100 MiB. Only ~18 MB is project-owned disposable cache. Other projects, active consumers and migration archives are excluded from cleanup.
 - Exact pending action: existing balanced boot disk 200→300 GiB (~+$10/month) with a regional recovery snapshot (up to roughly +$10/month while retained), before credits/tax. No reboot, detach or formatting; verify snapshot READY, exact disk/partition layout, running consumers and >=20 GiB free. Snapshot retention review after seven days; effective recycle retention remains to be verified. Official [pricing](https://cloud.google.com/compute/disks-image-pricing) and [resize procedure](https://docs.cloud.google.com/compute/docs/disks/resize-persistent-disk).
