@@ -1,0 +1,231 @@
+{
+  "$defs": {
+    "ArtifactRef": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "type": "string"
+        },
+        "media_type": {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "sha256",
+        "size_bytes",
+        "media_type"
+      ],
+      "type": "object"
+    },
+    "EvaluationReport": {
+      "additionalProperties": false,
+      "description": "Evaluator-private until authorized release. Counts must sum to probe_count. Null primary errors mean unscorable, never a successful zero. Failure penalties and normalizer are development-calibrated and frozen before scoring.",
+      "properties": {
+        "evaluation_runtime_ms": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "failed_prediction_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "failure_policy_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "model_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "normalization_scale": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "normalized_position_mse": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "position_mse": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "probe_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "protocol_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.evaluation-report.draft1"
+        },
+        "split": {
+          "enum": [
+            "development",
+            "reference",
+            "blind"
+          ]
+        },
+        "valid_prediction_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "model_sha256",
+        "protocol_sha256",
+        "split",
+        "probe_count",
+        "valid_prediction_count",
+        "failed_prediction_count",
+        "position_mse",
+        "normalized_position_mse",
+        "normalization_scale",
+        "failure_policy_sha256",
+        "evaluation_runtime_ms"
+      ],
+      "type": "object"
+    },
+    "LinearSpringModel": {
+      "additionalProperties": false,
+      "description": "Shared zero-rest-length linear spring coefficient fitted from purchased observations. The finite-value, rank and provenance checks are runtime obligations; this artifact is not hidden ground truth.",
+      "properties": {
+        "fit_config_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "fitter_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        },
+        "linear": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "observation_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.linear-spring-model.draft1"
+        },
+        "through_index": {
+          "maximum": 9999,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "linear",
+        "through_index",
+        "observation_sha256",
+        "fitter_version",
+        "fit_config_sha256"
+      ],
+      "type": "object"
+    },
+    "PredictionRequest": {
+      "additionalProperties": false,
+      "description": "Only public prediction inputs. Times must start at zero, strictly increase and align to integration_dt. Particle identities/order must match structure. Prediction probes may lie outside legal intervention bounds; do not validate them as purchased actions.",
+      "properties": {
+        "experiment": {
+          "$ref": "../core.schema.json#/$defs/Experiment"
+        },
+        "integration_dt": {
+          "maximum": 0.05,
+          "minimum": 0.0001,
+          "type": "number"
+        },
+        "model_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.prediction-request.draft1"
+        },
+        "structure": {
+          "$ref": "../core.schema.json#/$defs/Structure"
+        },
+        "times": {
+          "items": {
+            "maximum": 10,
+            "minimum": 0,
+            "type": "number"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "model_sha256",
+        "structure",
+        "experiment",
+        "times",
+        "integration_dt"
+      ],
+      "type": "object"
+    },
+    "PredictionResponse": {
+      "additionalProperties": false,
+      "description": "Initial draft supports point predictions. Output particle order, times and model hash must match the request exactly. Invalid/divergent responses are scored under the frozen evaluator policy.",
+      "properties": {
+        "model_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.prediction-response.draft1"
+        },
+        "trajectory": {
+          "$ref": "../core.schema.json#/$defs/Trajectory"
+        }
+      },
+      "required": [
+        "schema_version",
+        "model_sha256",
+        "trajectory"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "PROPOSED definitions for the first learning/prediction/scoring slice. These are not frozen research settings or an implemented predictor runtime. Validate against a named definition.",
+  "x-contract-status": "draft"
+}

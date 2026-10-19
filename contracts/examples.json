@@ -1,0 +1,327 @@
+{
+  "description": "Synthetic contract fixtures, not benchmark results. Runtime-only invalid cases intentionally pass structural JSON Schema and must fail semantic validation.",
+  "invalid": [
+    {
+      "reason": "Unknown fields forbidden.",
+      "schema": "core.schema.json#/$defs/Experiment",
+      "value": {
+        "hidden_law": "spring",
+        "impulse": null,
+        "particles": [
+          {
+            "id": "p",
+            "mass": 1.0,
+            "position": [
+              1.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "schema_version": "strange-physics.experiment.v1"
+      }
+    },
+    {
+      "reason": "First slice supports nonnegative linear spring coefficient.",
+      "schema": "draft/research.schema.json#/$defs/LinearSpringModel",
+      "value": {
+        "fit_config_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "fitter_version": "example-fitter-v0",
+        "linear": -1,
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "schema_version": "strange-physics.linear-spring-model.draft1",
+        "through_index": 3
+      }
+    },
+    {
+      "reason": "Completed operation requires a typed result.",
+      "schema": "draft/openapi.json#/components/schemas/Operation",
+      "value": {
+        "error": null,
+        "operation_id": "op-example",
+        "result": null,
+        "run_id": "run-example",
+        "status": "completed"
+      }
+    }
+  ],
+  "runtime_invalid": [
+    {
+      "reason": "Impulse target must exist.",
+      "schema": "core.schema.json#/$defs/Experiment",
+      "value": {
+        "impulse": {
+          "particle_id": "missing",
+          "vector": [
+            0.5,
+            0.0
+          ]
+        },
+        "particles": [
+          {
+            "id": "p",
+            "mass": 1.0,
+            "position": [
+              1.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "schema_version": "strange-physics.experiment.v1"
+      }
+    },
+    {
+      "reason": "Prediction timestamps must begin at zero and increase strictly.",
+      "schema": "draft/research.schema.json#/$defs/PredictionRequest",
+      "value": {
+        "experiment": {
+          "impulse": null,
+          "particles": [
+            {
+              "id": "p",
+              "mass": 1.0,
+              "position": [
+                1.0,
+                0.0
+              ],
+              "velocity": [
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "schema_version": "strange-physics.experiment.v1"
+        },
+        "integration_dt": 0.01,
+        "model_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "schema_version": "strange-physics.prediction-request.draft1",
+        "structure": {
+          "anchors": [
+            {
+              "id": "anchor",
+              "position": [
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "connections": [
+            {
+              "a": "p",
+              "b": "anchor"
+            }
+          ],
+          "particle_ids": [
+            "p"
+          ]
+        },
+        "times": [
+          0.05,
+          0.0
+        ]
+      }
+    }
+  ],
+  "valid": [
+    {
+      "schema": "core.schema.json#/$defs/Experiment",
+      "value": {
+        "impulse": null,
+        "particles": [
+          {
+            "id": "p",
+            "mass": 1.0,
+            "position": [
+              1.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "schema_version": "strange-physics.experiment.v1"
+      }
+    },
+    {
+      "schema": "core.schema.json#/$defs/Checkpoint",
+      "value": {
+        "agent_id": "agent-example",
+        "schema_version": "strange-physics.checkpoint.v1",
+        "state": {},
+        "through_index": -1
+      }
+    },
+    {
+      "schema": "draft/research.schema.json#/$defs/LinearSpringModel",
+      "value": {
+        "fit_config_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "fitter_version": "example-fitter-v0",
+        "linear": 1.0,
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "schema_version": "strange-physics.linear-spring-model.draft1",
+        "through_index": 3
+      }
+    },
+    {
+      "schema": "draft/research.schema.json#/$defs/PredictionRequest",
+      "value": {
+        "experiment": {
+          "impulse": null,
+          "particles": [
+            {
+              "id": "p",
+              "mass": 1.0,
+              "position": [
+                1.0,
+                0.0
+              ],
+              "velocity": [
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "schema_version": "strange-physics.experiment.v1"
+        },
+        "integration_dt": 0.01,
+        "model_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "schema_version": "strange-physics.prediction-request.draft1",
+        "structure": {
+          "anchors": [
+            {
+              "id": "anchor",
+              "position": [
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "connections": [
+            {
+              "a": "p",
+              "b": "anchor"
+            }
+          ],
+          "particle_ids": [
+            "p"
+          ]
+        },
+        "times": [
+          0.0,
+          0.05
+        ]
+      }
+    },
+    {
+      "schema": "draft/openapi.json#/components/schemas/Operation",
+      "value": {
+        "error": null,
+        "operation_id": "op-example",
+        "result": null,
+        "run_id": "run-example",
+        "status": "pending"
+      }
+    },
+    {
+      "schema": "draft/research.schema.json#/$defs/PredictionResponse",
+      "value": {
+        "model_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "schema_version": "strange-physics.prediction-response.draft1",
+        "trajectory": {
+          "frames": [
+            {
+              "positions": [
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "time": 0.0,
+              "velocities": [
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            {
+              "positions": [
+                [
+                  0.9987502603949663,
+                  0.0
+                ]
+              ],
+              "time": 0.05,
+              "velocities": [
+                [
+                  -0.04997916927067833,
+                  0.0
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "schema": "draft/research.schema.json#/$defs/EvaluationReport",
+      "value": {
+        "evaluation_runtime_ms": 0,
+        "failed_prediction_count": 0,
+        "failure_policy_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "model_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "normalization_scale": 1.0,
+        "normalized_position_mse": 0.0,
+        "position_mse": 0.0,
+        "probe_count": 3,
+        "protocol_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "schema_version": "strange-physics.evaluation-report.draft1",
+        "split": "development",
+        "valid_prediction_count": 3
+      }
+    },
+    {
+      "schema": "draft/openapi.json#/components/schemas/CreateRunRequest",
+      "value": {
+        "agent_package_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "experiment_budget": 40,
+        "limits": {
+          "max_artifact_bytes": 1000000,
+          "max_cpu_seconds": 60,
+          "max_input_tokens": 0,
+          "max_model_calls": 0,
+          "max_output_tokens": 0,
+          "max_provider_cost_microusd": 0,
+          "max_wall_seconds": 300
+        },
+        "track": "controlled_selection",
+        "world_version_id": "world-example"
+      }
+    },
+    {
+      "schema": "draft/openapi.json#/components/schemas/RunEvent",
+      "value": {
+        "event_id": "event-000001",
+        "occurred_at": "2026-10-19T00:00:00Z",
+        "operation_id": null,
+        "payload": {
+          "through_index": -1
+        },
+        "run_id": "run-example",
+        "schema_version": "strange-physics.run-event.draft1",
+        "sequence": 1,
+        "type": "checkpoint.committed",
+        "workspace_id": "workspace-example"
+      }
+    }
+  ]
+}
