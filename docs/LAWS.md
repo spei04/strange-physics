@@ -25,8 +25,11 @@ coefficients, observation seed and change boundary stay in the private definitio
 | Velocity force | `F = -(c1 + c3 * dot(v,v)) * v + omega * R(v)` | Vary speed and direction; include nonzero velocity | Activate transverse deflection |
 
 `R(vx, vy) = (-vy, vx)`. Spring and drag coefficients are nonnegative in the
-initial bounded domain. Radial polarity `s` is -1 or +1; `eps` is a known positive
-softening radius. Far from the origin, radial force magnitude scales as `r^-p`.
+initial bounded domain. Radial polarity `s` is -1 or +1; `eps` is a positive
+softening radius stored in the private law configuration. The development generator
+uses the implementation default of 0.25; the public observation contract does not
+expose a world's softening value. Far from the origin, radial force magnitude scales
+as `r^-p`.
 The transverse velocity term does no instantaneous work because `v dot R(v)=0`.
 
 Mass and impulse are known interventions. An initial impulse `J` changes velocity
