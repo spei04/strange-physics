@@ -17,7 +17,7 @@
       "FE",
       "QE"
     ],
-    "fractional_roles": "Product/TPM 0.5, design 0.25–0.5, security 0.5; independent assessment separately booked"
+    "fractional_roles": "Product/TPM 0.5, design 0.25\u20130.5, security 0.5; independent assessment separately booked"
   },
   "estimate": {
     "base_days": 689,
@@ -50,7 +50,7 @@
     [
       "D03",
       "Accept the revised conditional horizon",
-      "Recommended: plan pilot onboarding W38–50, pilot evidence exit W45–59 and GA W52–67; reforecast after two weeks, R0 and each integration checkpoint.",
+      "Recommended: plan pilot onboarding W38\u201350, pilot evidence exit W45\u201359 and GA W52\u201367; reforecast after two weeks, R0 and each integration checkpoint.",
       "Accepted as a conditional reference horizon, not a promise for subagent execution. Reforecast from actual throughput and external capacity."
     ],
     [
@@ -91,11 +91,11 @@
     [
       "AR04",
       "SP-01 tried to freeze all present/future interfaces in two weeks and blocked unrelated work.",
-      "Subset freezes owned by SP-01.a–d, SP-17.a, SP-19.a, SP-34.a/SP-35.a; consumer dependencies explicit."
+      "Subset freezes owned by SP-01.a\u2013d, SP-17.a, SP-19.a, SP-34.a/SP-35.a; consumer dependencies explicit."
     ],
     [
       "AR05",
-      "42 epics of 1–4 person-weeks were not independently assignable PR tasks.",
+      "42 epics of 1\u20134 person-weeks were not independently assignable PR tasks.",
       "Replace assignment unit with 168 leaf records; parent issues become rollups, not implementation tickets."
     ],
     [
@@ -111,17 +111,17 @@
     [
       "AR08",
       "Pilot delete/recovery tests needed tombstones/audit assigned to GA.",
-      "Move SP-37.a–c to R3; keep audit export/enterprise retention in R8."
+      "Move SP-37.a\u2013c to R3; keep audit export/enterprise retention in R8."
     ],
     [
       "AR09",
       "First spring slice depended on complete three-family research packages.",
-      "SP-03.b→04.a/b→06.a→04.e creates early independent evidence; later fitting cannot hide its failure."
+      "SP-03.b\u219204.a/b\u219206.a\u219204.e creates early independent evidence; later fitting cannot hide its failure."
     ],
     [
       "AR10",
       "Early integration dates and 118 PW estimate did not model reviewer capacity, missing endpoints or specialist queues.",
-      "Bottom-up 689 delivery days, confidence-weighted contingency and nine explicit resource lanes replace unverified dates; one feasible plan forecasts GA W52–67, pilot onboarding W38–50."
+      "Bottom-up 689 delivery days, confidence-weighted contingency and nine explicit resource lanes replace unverified dates; one feasible plan forecasts GA W52\u201367, pilot onboarding W38\u201350."
     ],
     [
       "AR11",
@@ -147,6 +147,11 @@
       "AR15",
       "Full sweep engineering effort hid unmeasured execution time and design-partner recruitment.",
       "Separate external runtime/participation gates; forecast conditional on measurement and appointments."
+    ],
+    [
+      "AR16",
+      "SP-01.c lists DB obligations but its freeze could precede SP-01.b acceptance.",
+      "Add SP-01.b as a prerequisite to SP-01.c; drafting may proceed earlier, but freeze waits for DB acceptance. Regenerate both reference schedules: R0 W6\u20137, spring slice W11\u201313, R1 W18\u201326; GA remains W52\u201367."
     ]
   ],
   "contracts": {
@@ -175,7 +180,7 @@
       "name": "Identity, membership and credential authority",
       "owner": "Backend + security",
       "freeze": "SP-01.b",
-      "source": "[roadmap sections 5–6 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze)",
+      "source": "[roadmap sections 5\u20136 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze)",
       "obligations": "Issuer/subject identity, explicit workspace roles/invitations, scoped machine and run credentials, revocation and secure browser session semantics. Enterprise federation refined by SP-34.a; SCIM frozen by SP-35.a before those consumers."
     },
     "DB": {
@@ -968,8 +973,8 @@
       "effortDays": 31,
       "reserveDays": 8.55,
       "startWeek": 1,
-      "baseExitWeek": 5,
-      "bufferedExitWeek": 6
+      "baseExitWeek": 6,
+      "bufferedExitWeek": 7
     },
     {
       "id": "R1",
@@ -986,7 +991,7 @@
       "reserveDays": 34.5,
       "startWeek": 2,
       "baseExitWeek": 18,
-      "bufferedExitWeek": 24
+      "bufferedExitWeek": 26
     },
     {
       "id": "R2",
@@ -1021,7 +1026,7 @@
         "SP-37.c"
       ],
       "exit": "Real staged remote recovery and hostile build/runtime/network evidence; immutable artifacts/checkpoints; basic audit/delete/tombstone replay; signed deploy/rollback/telemetry.",
-      "risk": "SP-37.a–c moved here; managed runtime fail-closed and no missing committed artifacts are nonwaivable.",
+      "risk": "SP-37.a\u2013c moved here; managed runtime fail-closed and no missing committed artifacts are nonwaivable.",
       "effortDays": 119,
       "reserveDays": 41.75,
       "startWeek": 2,
@@ -1043,7 +1048,7 @@
       "risk": "Paid-trial gate separate; both tracks and failed rows required, no cherry-picked demonstration.",
       "effortDays": 81,
       "reserveDays": 31.5,
-      "startWeek": 3,
+      "startWeek": 5,
       "baseExitWeek": 27,
       "bufferedExitWeek": 36
     },
@@ -1058,7 +1063,7 @@
         "SP-25.e",
         "SP-26.d"
       ],
-      "exit": "Accessible author→run→inspect→export; durable SSE/resync; offline replay; supported fresh install/upgrade with explicit trust limitations.",
+      "exit": "Accessible author\u2192run\u2192inspect\u2192export; durable SSE/resync; offline replay; supported fresh install/upgrade with explicit trust limitations.",
       "risk": "World/provider/publication/SSE backend tasks precede consumers; internal install is not external adoption.",
       "effortDays": 97,
       "reserveDays": 26.75,
@@ -1076,7 +1081,7 @@
         "SP-30.d",
         "SP-31.e"
       ],
-      "exit": "R1–R5 integrated at exact candidate; 100-run hold/soak/fairness, real failover/restore, negative security, deletion, migration and complete journeys pass.",
+      "exit": "R1\u2013R5 integrated at exact candidate; 100-run hold/soak/fairness, real failover/restore, negative security, deletion, migration and complete journeys pass.",
       "risk": "Any lost acknowledged state, duplicate logical debit, critical/high exploit, leak or failed restore blocks pilot.",
       "effortDays": 71,
       "reserveDays": 27.75,
@@ -1118,7 +1123,7 @@
       "risk": "R7 and all gate evidence required. Material candidate changes invalidate affected evidence; no compliance or unlimited-scale claim.",
       "effortDays": 88,
       "reserveDays": 37.75,
-      "startWeek": 4,
+      "startWeek": 7,
       "baseExitWeek": 52,
       "bufferedExitWeek": 67
     },
@@ -1153,7 +1158,7 @@
       "contracts": [
         "GOV"
       ],
-      "scope": "Record D01–D06 dispositions, current execution lane owners, reviewer availability and start conditions. Preserve the nine-person forecast as a reference until human staffing exists.",
+      "scope": "Record D01\u2013D06 dispositions, current execution lane owners, reviewer availability and start conditions. Preserve the nine-person forecast as a reference until human staffing exists.",
       "accept": "Each current execution lane has a responsible owner and assignments obey the three-engineer concurrency limit; external human staffing remains an explicit release dependency.",
       "tests": "Validate decision IDs, accountable execution roles, three-engineer concurrency, independent review and approval evidence.",
       "risk": "No implied infrastructure-spend authority; private staffing evidence.",
@@ -1200,7 +1205,7 @@
         "TL"
       ],
       "objective": "Establish a reviewed, staffed and evidence-backed start without implying execution approval. This PR delivers review and integrate the existing baseline.",
-      "status": "in_progress",
+      "status": "completed",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1210,7 +1215,7 @@
         "product"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/45",
-      "evidence": "Quality and research reviews passed at 2d78e35; 55 tests, Ruff, strict mypy and matching CI passed. Documentation findings repaired in 9833e6f and peer reviewed. Awaiting reviewed integration identity."
+      "evidence": "2026-10-19 Quality and Research peer reviews passed; documentation repairs peer reviewed. PR #1 merged as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f; git diff verified its tree identical to reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70. All four GitHub CI checks passed at that head on Python 3.12/3.14, including 55 tests, Ruff, strict mypy, package build and CLI smoke. See EXECUTION_LOG.md. Merge-main CI also passed at 7117060: https://github.com/spei04/strange-physics/actions/runs/39341809891."
     },
     {
       "id": "SP-00.c",
@@ -1270,14 +1275,17 @@
         "RS2"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze the first scientific interface subset.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
         "Research",
         "SDK",
         "QE"
-      ]
+      ],
+      "execution_owner": "Engineer Research",
+      "issue": "https://github.com/spei04/strange-physics/issues/47",
+      "evidence": "2026-10-19 design started after baseline integration 7117060; implementation queued for exclusive checkout ownership. Quality/project-lead review and contract validation are required before completion."
     },
     {
       "id": "SP-01.b",
@@ -1324,7 +1332,8 @@
       "days": 4,
       "confidence": "medium",
       "deps": [
-        "SP-00.b"
+        "SP-00.b",
+        "SP-01.b"
       ],
       "contracts": [
         "ART",
@@ -1332,7 +1341,7 @@
         "DB"
       ],
       "scope": "Specify object generations, checkpoint prefixes, lease/broker epochs, build quarantine and predictor envelopes.",
-      "accept": "Signed version covers partial object/DB writes and stale leases.",
+      "accept": "Signed version covers partial object/DB writes and stale leases after DB contract acceptance in SP-01.b; earlier drafting does not count as freeze.",
       "tests": "Hash/size/epoch/checkpoint fixtures with corrupt and incomplete cases.",
       "risk": "No trusted pickle; bounded inputs and scoped identities.",
       "out": "Provisioning or proving isolation.",
@@ -1510,7 +1519,7 @@
         "QE",
         "security"
       ],
-      "evidence": "Inventory complete; project-only caches <18 MB cannot satisfy >=20 GiB requirement. Exact 200→300 GiB disk and recovery snapshot proposal prepared; explicit paid-action approval pending."
+      "evidence": "Inventory complete; project-only caches <18 MB cannot satisfy >=20 GiB requirement. Exact 200\u2192300 GiB disk and recovery snapshot proposal prepared; explicit paid-action approval pending."
     },
     {
       "id": "SP-02.c",
@@ -1599,7 +1608,7 @@
         "SCI"
       ],
       "scope": "Calibrate excitation/mass cases, timestep refinements and conditioning.",
-      "accept": "Ratify or justify ≤1% coefficient error and ≤0.001 position RMSE over two seconds before fit acceptance.",
+      "accept": "Ratify or justify \u22641% coefficient error and \u22640.001 position RMSE over two seconds before fit acceptance.",
       "tests": "Analytic convergence, zero excitation and mass/order boundary fixtures.",
       "risk": "Failed tests require numerical justification, not arbitrary loosening.",
       "out": "Full-family calibration.",
@@ -2189,8 +2198,8 @@
         "SCI",
         "OPS"
       ],
-      "scope": "Measure snapshots×probes×ensemble workload, failures and limits; update compute model.",
-      "accept": "40×64 rollout count and ensemble multiplier explicit.",
+      "scope": "Measure snapshots\u00d7probes\u00d7ensemble workload, failures and limits; update compute model.",
+      "accept": "40\u00d764 rollout count and ensemble multiplier explicit.",
       "tests": "Repeatable count, timeout, memory and estimator checks.",
       "risk": "Do not size from simulator-only timing.",
       "out": "Production capacity or GPU training.",
@@ -2790,7 +2799,7 @@
         "WEB"
       ],
       "scope": "Check current membership/credential status on requests and define periodic SSE reauthorization hooks.",
-      "accept": "Revoked caller denied new work; event authorization refresh ≤30 seconds.",
+      "accept": "Revoked caller denied new work; event authorization refresh \u226430 seconds.",
       "tests": "Revocation races, stale token, sole-owner and safe audit/redaction tests.",
       "risk": "No stale membership cache bypass.",
       "out": "SCIM provisioning.",
@@ -3522,7 +3531,7 @@
         "OPS"
       ],
       "scope": "Revoke launch/broker access, terminate attempts, reconcile held allowances and preserve accepted results.",
-      "accept": "New work revoked ≤5s; controlled workers terminate ≤60s or explicit fault recorded.",
+      "accept": "New work revoked \u22645s; controlled workers terminate \u226460s or explicit fault recorded.",
       "tests": "Cancel/complete races, uncooperative agent, deadline and orphan reconciliation.",
       "risk": "Do not refund pending usage before settlement.",
       "out": "Excludes SP-16.a coordinate one remote investigation; SP-16.b resume an agent from committed checkpoints; SP-16.d prove end-to-end interruption invariants; SP-16.e instrument remote execution and recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -4612,7 +4621,7 @@
         "ID"
       ],
       "scope": "Support Last-Event-ID, cursor expiry, authoritative snapshot and archived history pagination with reauthorization.",
-      "accept": "Reconnect has no silent committed-event gaps; revoked stream closes ≤30s.",
+      "accept": "Reconnect has no silent committed-event gaps; revoked stream closes \u226430s.",
       "tests": "Duplicate/gap/expired cursor, archive outage and membership revocation tests.",
       "risk": "Archive and snapshot use same tenant/privacy policy.",
       "out": "Excludes SP-23.a publish committed event and replay endpoints; SP-23.c render live investigation timeline; SP-23.d integrate reconnect and cancellation ux. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -4720,7 +4729,7 @@
         "ART"
       ],
       "scope": "Load bounded immutable frame chunks; interpolate server data with play/pause/scrub/speed controls.",
-      "accept": "Reference frames exact at timestamps; reference-device interaction ≤100ms and ≥30fps target measured.",
+      "accept": "Reference frames exact at timestamps; reference-device interaction \u2264100ms and \u226530fps target measured.",
       "tests": "Frame alignment, seek/end boundaries, malformed chunk and performance fixtures.",
       "risk": "No second physics solver; bound memory and sanitize content.",
       "out": "Excludes SP-24.b overlay prediction and uncertainty diagnostics; SP-24.c compare recorded strategies and failures; SP-24.d verify accessible diagnostic journeys. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -5487,7 +5496,7 @@
       "contracts": [
         "OPS"
       ],
-      "scope": "Run 10→25→50→100 investigations, 100 viewers and declared API mix; measure DB/queue/event budgets.",
+      "scope": "Run 10\u219225\u219250\u2192100 investigations, 100 viewers and declared API mix; measure DB/queue/event budgets.",
       "accept": "Two-hour target hold meets section 7 envelope or fails with bottleneck evidence.",
       "tests": "Automated latency, throughput, integrity and zero-duplicate budget assertions.",
       "risk": "Do not equate offered load or connected sockets with completed capacity.",
@@ -5522,7 +5531,7 @@
         "OPS",
         "EXEC"
       ],
-      "scope": "Execute 24-hour soak and 300 offered-run/5× burst with slow and malicious workloads.",
+      "scope": "Execute 24-hour soak and 300 offered-run/5\u00d7 burst with slow and malicious workloads.",
       "accept": "Bounded queue/memory growth; fair rejection and evaluator backlog <24h within supported envelope.",
       "tests": "Long-run leak, overload rejection, backlog and persistence integrity checks.",
       "risk": "300 offered is stress, not capacity promise; stop on corruption.",
@@ -5639,7 +5648,7 @@
         "DB"
       ],
       "scope": "Restore into isolation, fence old leases/tokens and reapply deletion/revocation records before access.",
-      "accept": "Pilot ≤15min RPO/≤4h RTO measured; no deleted object resurrected to users.",
+      "accept": "Pilot \u226415min RPO/\u22644h RTO measured; no deleted object resurrected to users.",
       "tests": "Timed restore, corrupt object, interrupted replay and revoked identity tests.",
       "risk": "No production data exposed during drill; preserve private evidence.",
       "out": "Excludes SP-29.a implement backup and recovery-set manifests; SP-29.c exercise worker loss and database failover; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -5679,7 +5688,7 @@
         "EXEC"
       ],
       "scope": "Force worker/process loss and real HA failover; validate reconnection, epochs, artifact and budget integrity.",
-      "accept": "Worker p95 recovery ≤5min; DB failover ≤15min target with committed-state validation.",
+      "accept": "Worker p95 recovery \u22645min; DB failover \u226415min target with committed-state validation.",
       "tests": "Fault matrix, stale worker, pool exhaustion and no-duplicate invariants.",
       "risk": "Targets measured in deployed configuration, not assumed from service SLA.",
       "out": "Excludes SP-29.a implement backup and recovery-set manifests; SP-29.b restore sql and objects with tombstone replay; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -6561,7 +6570,7 @@
         "WEB"
       ],
       "scope": "Revoke account/service/run access, close streams and stop unauthorized new work; reconcile active jobs.",
-      "accept": "Disabled principal denied new calls immediately; stream ≤30s and job launch ≤5s revocation targets.",
+      "accept": "Disabled principal denied new calls immediately; stream \u226430s and job launch \u22645s revocation targets.",
       "tests": "Active session/token/job/SSE disable races and sole-owner exceptions.",
       "risk": "No stale authorization caches or forgotten machine keys.",
       "out": "Excludes SP-35.a freeze scim mapping and lifecycle semantics; SP-35.b implement bounded provisioning and reconciliation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -6788,7 +6797,7 @@
         "DB"
       ],
       "scope": "Add owner delete/retention configuration, immediate access tombstone and bounded background active-object removal.",
-      "accept": "Interactive access revoked on accepted delete; removal target ≤7 days with retriable state.",
+      "accept": "Interactive access revoked on accepted delete; removal target \u22647 days with retriable state.",
       "tests": "Concurrent read/delete, shared artifact refs, legal-hold flag and repeated job tests.",
       "risk": "Keep minimum tombstone identity; no silent auto-expiry.",
       "out": "Excludes SP-37.a persist basic security audit events; SP-37.c preserve deletion and revocation across recovery; SP-37.d export tamper-evident enterprise audit history; SP-37.e verify enterprise retention and privacy operations; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -6985,7 +6994,7 @@
         "DB"
       ],
       "scope": "Copy recoverable DB/object generations and suppression ledger into approved secondary US location with independent access.",
-      "accept": "Copy completion and consistency measured; recovery set age ≤24h.",
+      "accept": "Copy completion and consistency measured; recovery set age \u226424h.",
       "tests": "Missing-generation, key/IAM denial and lag/copy integrity tests.",
       "risk": "Residency/key requirements reviewed before replication.",
       "out": "Excludes SP-38.b perform timed secondary-region recovery; SP-38.c resolve and repeat failed recovery steps. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -7024,7 +7033,7 @@
         "EXEC"
       ],
       "scope": "Restore isolated services, fence former region, reapply tombstones/credentials and rehearse endpoint cutover.",
-      "accept": "Measured regional RPO/RTO ≤24h with tenant/integrity suite passing.",
+      "accept": "Measured regional RPO/RTO \u226424h with tenant/integrity suite passing.",
       "tests": "Timed failover, stale worker, DNS/cutover and duplicate-launch tests.",
       "risk": "No active-active claim; preserve original incident evidence.",
       "out": "Excludes SP-38.a create an independent regional recovery set; SP-38.c resolve and repeat failed recovery steps. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -7172,7 +7181,7 @@
         "GOV",
         "OPS"
       ],
-      "scope": "Reserve assessor window, scope APIs/build/runtime/evaluator and appoint ≥4 trained responders with explicit coverage.",
+      "scope": "Reserve assessor window, scope APIs/build/runtime/evaluator and appoint \u22654 trained responders with explicit coverage.",
       "accept": "External assessment slot and actual on-call plan confirmed before GA window.",
       "tests": "Checklist validates trained primary/secondary and escalation coverage.",
       "risk": "No unsupported 24/7 commitment; lead time external.",
@@ -7362,7 +7371,7 @@
         "GOV",
         "OPS"
       ],
-      "scope": "Reconcile REQ01–16, support/data terms, release identity, residual risks and signed gate owners.",
+      "scope": "Reconcile REQ01\u201316, support/data terms, release identity, residual risks and signed gate owners.",
       "accept": "No blocking requirement unresolved; product/security/research/platform sign exact candidate.",
       "tests": "Traceability, artifact hash, required-gate and exception-expiry checks.",
       "risk": "GA approval is separate from backlog approval.",
@@ -7601,7 +7610,7 @@
       "I1",
       "First independent learning slice",
       "SP-04.e",
-      "Observe→fit→predict→independent development score; analytic accuracy, explicit failure and provenance. Stop research expansion if architecture fails."
+      "Observe\u2192fit\u2192predict\u2192independent development score; analytic accuracy, explicit failure and provenance. Stop research expansion if architecture fails."
     ],
     [
       "I2",
@@ -7625,7 +7634,7 @@
       "I5",
       "Production pilot release candidate",
       "SP-30.d SP-32.a",
-      "R1–R6 gates, security specialist and actual support/partner/data readiness; explicit pilot release authorization."
+      "R1\u2013R6 gates, security specialist and actual support/partner/data readiness; explicit pilot release authorization."
     ],
     [
       "I6",
@@ -7755,12 +7764,6 @@
         "lane": "PL1",
         "resource_predecessor": "SP-02.c"
       },
-      "SP-01.c": {
-        "start": 7.142857142857142,
-        "finish": 12.857142857142858,
-        "lane": "PL2",
-        "resource_predecessor": "SP-02.b"
-      },
       "SP-03.a": {
         "start": 7.142857142857142,
         "finish": 11.428571428571427,
@@ -7779,6 +7782,12 @@
         "lane": "BE1",
         "resource_predecessor": "SP-01.b"
       },
+      "SP-01.c": {
+        "start": 10,
+        "finish": 15.714285714285715,
+        "lane": "PL2",
+        "resource_predecessor": "SP-02.b"
+      },
       "SP-03.b": {
         "start": 11.428571428571427,
         "finish": 15.714285714285712,
@@ -7791,21 +7800,15 @@
         "lane": "PL1",
         "resource_predecessor": "SP-27.a"
       },
-      "SP-01.d": {
-        "start": 12.857142857142858,
-        "finish": 18.571428571428573,
-        "lane": "FE",
-        "resource_predecessor": "SP-22.a"
-      },
-      "SP-19.a": {
-        "start": 12.857142857142858,
-        "finish": 18.571428571428573,
-        "lane": "RS2",
-        "resource_predecessor": "SP-03.a"
-      },
       "SP-04.a": {
         "start": 15.714285714285712,
         "finish": 19.999999999999996,
+        "lane": "RS2",
+        "resource_predecessor": "SP-03.a"
+      },
+      "SP-03.c": {
+        "start": 15.714285714285712,
+        "finish": 22.857142857142854,
         "lane": "RS1",
         "resource_predecessor": "SP-03.b"
       },
@@ -7821,28 +7824,16 @@
         "lane": "BE2",
         "resource_predecessor": "SP-09.a"
       },
-      "SP-03.c": {
-        "start": 18.571428571428573,
-        "finish": 25.714285714285715,
-        "lane": "RS2",
-        "resource_predecessor": "SP-19.a"
-      },
-      "SP-01.e": {
-        "start": 18.571428571428573,
-        "finish": 24.28571428571429,
-        "lane": "QE",
-        "resource_predecessor": "SP-00.b"
-      },
-      "SP-40.a": {
-        "start": 18.571428571428573,
-        "finish": 22.857142857142858,
-        "lane": "TL",
-        "resource_predecessor": "SP-00.c"
+      "SP-01.d": {
+        "start": 15.714285714285715,
+        "finish": 21.42857142857143,
+        "lane": "FE",
+        "resource_predecessor": "SP-22.a"
       },
       "SP-04.b": {
         "start": 19.999999999999996,
         "finish": 24.28571428571428,
-        "lane": "RS1",
+        "lane": "RS2",
         "resource_predecessor": "SP-04.a"
       },
       "SP-27.c": {
@@ -7857,29 +7848,35 @@
         "lane": "BE2",
         "resource_predecessor": "SP-08.b"
       },
+      "SP-01.e": {
+        "start": 21.42857142857143,
+        "finish": 27.142857142857146,
+        "lane": "QE",
+        "resource_predecessor": "SP-00.b"
+      },
+      "SP-19.a": {
+        "start": 22.857142857142854,
+        "finish": 28.57142857142857,
+        "lane": "RS1",
+        "resource_predecessor": "SP-03.c"
+      },
       "SP-09.c": {
         "start": 22.857142857142858,
         "finish": 28.571428571428573,
         "lane": "BE1",
         "resource_predecessor": "SP-09.b"
       },
+      "SP-04.c": {
+        "start": 24.28571428571428,
+        "finish": 31.428571428571423,
+        "lane": "RS2",
+        "resource_predecessor": "SP-04.b"
+      },
       "SP-06.a": {
         "start": 24.28571428571428,
         "finish": 29.999999999999996,
         "lane": "TL",
-        "resource_predecessor": "SP-40.a"
-      },
-      "SP-04.c": {
-        "start": 25.714285714285715,
-        "finish": 32.85714285714286,
-        "lane": "RS1",
-        "resource_predecessor": "SP-04.b"
-      },
-      "SP-03.d": {
-        "start": 25.714285714285715,
-        "finish": 31.42857142857143,
-        "lane": "RS2",
-        "resource_predecessor": "SP-03.c"
+        "resource_predecessor": "SP-00.c"
       },
       "SP-13.a": {
         "start": 27.142857142857142,
@@ -7899,11 +7896,29 @@
         "lane": "BE2",
         "resource_predecessor": "SP-08.c"
       },
+      "SP-03.d": {
+        "start": 28.57142857142857,
+        "finish": 34.285714285714285,
+        "lane": "RS1",
+        "resource_predecessor": "SP-19.a"
+      },
       "SP-09.d": {
         "start": 28.571428571428573,
         "finish": 34.285714285714285,
         "lane": "BE1",
         "resource_predecessor": "SP-09.c"
+      },
+      "SP-40.a": {
+        "start": 29.999999999999996,
+        "finish": 34.285714285714285,
+        "lane": "TL",
+        "resource_predecessor": "SP-06.a"
+      },
+      "SP-04.d": {
+        "start": 31.428571428571423,
+        "finish": 38.57142857142857,
+        "lane": "RS2",
+        "resource_predecessor": "SP-04.c"
       },
       "SP-15.b": {
         "start": 31.428571428571427,
@@ -7911,23 +7926,11 @@
         "lane": "PL2",
         "resource_predecessor": "SP-15.a"
       },
-      "SP-06.b": {
-        "start": 31.42857142857143,
-        "finish": 38.57142857142858,
-        "lane": "RS2",
-        "resource_predecessor": "SP-03.d"
-      },
       "SP-27.d": {
         "start": 32.857142857142854,
         "finish": 38.57142857142857,
         "lane": "PL1",
         "resource_predecessor": "SP-13.a"
-      },
-      "SP-04.d": {
-        "start": 32.85714285714286,
-        "finish": 40.00000000000001,
-        "lane": "RS1",
-        "resource_predecessor": "SP-04.c"
       },
       "SP-12.a": {
         "start": 32.85714285714286,
@@ -7941,29 +7944,29 @@
         "lane": "BE1",
         "resource_predecessor": "SP-09.d"
       },
+      "SP-06.b": {
+        "start": 34.285714285714285,
+        "finish": 41.42857142857143,
+        "lane": "RS1",
+        "resource_predecessor": "SP-03.d"
+      },
+      "SP-05.a": {
+        "start": 38.57142857142857,
+        "finish": 44.285714285714285,
+        "lane": "RS2",
+        "resource_predecessor": "SP-04.d"
+      },
       "SP-27.e": {
         "start": 38.57142857142857,
         "finish": 44.285714285714285,
         "lane": "PL1",
         "resource_predecessor": "SP-27.d"
       },
-      "SP-04.e": {
-        "start": 38.57142857142858,
-        "finish": 42.85714285714286,
-        "lane": "RS2",
-        "resource_predecessor": "SP-06.b"
-      },
       "SP-11.b": {
         "start": 40,
         "finish": 45.714285714285715,
         "lane": "BE1",
         "resource_predecessor": "SP-11.a"
-      },
-      "SP-05.a": {
-        "start": 40.00000000000001,
-        "finish": 45.71428571428572,
-        "lane": "RS1",
-        "resource_predecessor": "SP-04.d"
       },
       "SP-10.a": {
         "start": 40.00000000000001,
@@ -7972,10 +7975,16 @@
         "resource_predecessor": "SP-12.a"
       },
       "SP-05.b": {
-        "start": 42.85714285714286,
-        "finish": 47.142857142857146,
+        "start": 41.42857142857143,
+        "finish": 45.714285714285715,
+        "lane": "RS1",
+        "resource_predecessor": "SP-06.b"
+      },
+      "SP-06.c": {
+        "start": 44.285714285714285,
+        "finish": 50,
         "lane": "RS2",
-        "resource_predecessor": "SP-04.e"
+        "resource_predecessor": "SP-05.a"
       },
       "SP-13.b": {
         "start": 45.714285714285715,
@@ -7989,16 +7998,10 @@
         "lane": "BE1",
         "resource_predecessor": "SP-11.b"
       },
-      "SP-06.c": {
-        "start": 45.71428571428572,
-        "finish": 51.42857142857144,
-        "lane": "RS1",
-        "resource_predecessor": "SP-05.a"
-      },
       "SP-05.c": {
-        "start": 47.142857142857146,
-        "finish": 54.28571428571429,
-        "lane": "RS2",
+        "start": 45.714285714285715,
+        "finish": 52.85714285714286,
+        "lane": "RS1",
         "resource_predecessor": "SP-05.b"
       },
       "SP-10.c": {
@@ -8006,6 +8009,18 @@
         "finish": 54.2857142857143,
         "lane": "BE2",
         "resource_predecessor": "SP-10.a"
+      },
+      "SP-06.d": {
+        "start": 50,
+        "finish": 55.714285714285715,
+        "lane": "QE",
+        "resource_predecessor": "SP-01.e"
+      },
+      "SP-04.e": {
+        "start": 50,
+        "finish": 54.285714285714285,
+        "lane": "RS2",
+        "resource_predecessor": "SP-06.c"
       },
       "SP-14.a": {
         "start": 51.42857142857143,
@@ -8025,17 +8040,11 @@
         "lane": "PL2",
         "resource_predecessor": "SP-13.b"
       },
-      "SP-06.d": {
-        "start": 51.42857142857144,
-        "finish": 57.14285714285715,
-        "lane": "QE",
-        "resource_predecessor": "SP-01.e"
-      },
       "SP-05.d": {
-        "start": 54.28571428571429,
-        "finish": 60.00000000000001,
+        "start": 52.85714285714286,
+        "finish": 58.57142857142858,
         "lane": "RS1",
-        "resource_predecessor": "SP-06.c"
+        "resource_predecessor": "SP-05.c"
       },
       "SP-12.b": {
         "start": 54.2857142857143,
@@ -8062,10 +8071,10 @@
         "resource_predecessor": "SP-15.c"
       },
       "SP-07.a": {
-        "start": 60.00000000000001,
-        "finish": 67.14285714285715,
+        "start": 58.57142857142858,
+        "finish": 65.71428571428572,
         "lane": "RS2",
-        "resource_predecessor": "SP-05.c"
+        "resource_predecessor": "SP-04.e"
       },
       "SP-12.c": {
         "start": 60.000000000000014,
@@ -8104,8 +8113,8 @@
         "resource_predecessor": "SP-12.c"
       },
       "SP-07.b": {
-        "start": 67.14285714285715,
-        "finish": 74.28571428571429,
+        "start": 65.71428571428572,
+        "finish": 72.85714285714286,
         "lane": "RS2",
         "resource_predecessor": "SP-07.a"
       },
@@ -8125,7 +8134,7 @@
         "start": 70,
         "finish": 77.14285714285714,
         "lane": "TL",
-        "resource_predecessor": "SP-06.a"
+        "resource_predecessor": "SP-40.a"
       },
       "SP-08.d": {
         "start": 71.42857142857144,
@@ -8134,8 +8143,8 @@
         "resource_predecessor": "SP-17.b"
       },
       "SP-07.c": {
-        "start": 74.28571428571429,
-        "finish": 81.42857142857143,
+        "start": 72.85714285714286,
+        "finish": 80,
         "lane": "RS1",
         "resource_predecessor": "SP-18.b"
       },
@@ -8169,17 +8178,17 @@
         "lane": "PL1",
         "resource_predecessor": "SP-14.c"
       },
+      "SP-07.d": {
+        "start": 80,
+        "finish": 85.71428571428571,
+        "lane": "RS2",
+        "resource_predecessor": "SP-07.b"
+      },
       "SP-37.a": {
         "start": 81.42857142857142,
         "finish": 88.57142857142856,
         "lane": "BE1",
         "resource_predecessor": "SP-17.d"
-      },
-      "SP-07.d": {
-        "start": 81.42857142857143,
-        "finish": 87.14285714285714,
-        "lane": "RS2",
-        "resource_predecessor": "SP-07.b"
       },
       "SP-18.a": {
         "start": 81.42857142857144,
@@ -8801,12 +8810,6 @@
         "lane": "RS1",
         "resource_predecessor": null
       },
-      "SP-01.c": {
-        "start": 4.714285714285715,
-        "finish": 11.857142857142858,
-        "lane": "PL2",
-        "resource_predecessor": null
-      },
       "SP-22.a": {
         "start": 4.714285714285715,
         "finish": 10.071428571428573,
@@ -8816,20 +8819,26 @@
       "SP-02.b": {
         "start": 5.142857142857143,
         "finish": 8.714285714285715,
-        "lane": "PL1",
-        "resource_predecessor": "SP-02.a"
+        "lane": "PL2",
+        "resource_predecessor": null
       },
       "SP-02.c": {
-        "start": 8.714285714285715,
-        "finish": 13,
+        "start": 5.142857142857143,
+        "finish": 9.428571428571429,
         "lane": "PL1",
-        "resource_predecessor": "SP-02.b"
+        "resource_predecessor": "SP-02.a"
       },
       "SP-03.a": {
         "start": 8.714285714285715,
         "finish": 14.071428571428573,
         "lane": "RS2",
         "resource_predecessor": null
+      },
+      "SP-27.a": {
+        "start": 9.428571428571429,
+        "finish": 16.571428571428573,
+        "lane": "PL2",
+        "resource_predecessor": "SP-02.b"
       },
       "SP-09.a": {
         "start": 11.857142857142858,
@@ -8843,29 +8852,23 @@
         "lane": "BE1",
         "resource_predecessor": "SP-01.b"
       },
-      "SP-01.d": {
+      "SP-01.c": {
         "start": 11.857142857142858,
         "finish": 19,
-        "lane": "FE",
-        "resource_predecessor": "SP-22.a"
-      },
-      "SP-19.a": {
-        "start": 11.857142857142858,
-        "finish": 19,
-        "lane": "RS1",
-        "resource_predecessor": "SP-01.a"
-      },
-      "SP-27.a": {
-        "start": 13,
-        "finish": 20.142857142857142,
-        "lane": "PL2",
-        "resource_predecessor": "SP-01.c"
+        "lane": "PL1",
+        "resource_predecessor": "SP-02.c"
       },
       "SP-03.b": {
         "start": 14.071428571428573,
         "finish": 19.42857142857143,
-        "lane": "RS2",
-        "resource_predecessor": "SP-03.a"
+        "lane": "RS1",
+        "resource_predecessor": "SP-01.a"
+      },
+      "SP-27.b": {
+        "start": 16.571428571428573,
+        "finish": 25.5,
+        "lane": "PL2",
+        "resource_predecessor": "SP-27.a"
       },
       "SP-09.b": {
         "start": 19,
@@ -8879,41 +8882,35 @@
         "lane": "BE2",
         "resource_predecessor": "SP-09.a"
       },
-      "SP-01.e": {
+      "SP-01.d": {
         "start": 19,
         "finish": 26.142857142857142,
-        "lane": "QE",
-        "resource_predecessor": "SP-00.b"
+        "lane": "FE",
+        "resource_predecessor": "SP-22.a"
       },
-      "SP-40.a": {
+      "SP-19.a": {
         "start": 19,
-        "finish": 25.42857142857143,
-        "lane": "TL",
-        "resource_predecessor": "SP-00.c"
+        "finish": 26.142857142857142,
+        "lane": "RS2",
+        "resource_predecessor": "SP-03.a"
       },
       "SP-03.c": {
         "start": 19.42857142857143,
         "finish": 30.142857142857146,
         "lane": "RS1",
-        "resource_predecessor": "SP-19.a"
-      },
-      "SP-04.a": {
-        "start": 19.42857142857143,
-        "finish": 24.78571428571429,
-        "lane": "RS2",
         "resource_predecessor": "SP-03.b"
       },
-      "SP-27.b": {
-        "start": 20.142857142857142,
-        "finish": 29.07142857142857,
+      "SP-27.c": {
+        "start": 25.5,
+        "finish": 34.42857142857143,
         "lane": "PL1",
-        "resource_predecessor": "SP-02.c"
+        "resource_predecessor": "SP-01.c"
       },
-      "SP-04.b": {
-        "start": 24.78571428571429,
-        "finish": 30.142857142857146,
+      "SP-04.a": {
+        "start": 26.142857142857142,
+        "finish": 31.5,
         "lane": "RS2",
-        "resource_predecessor": "SP-04.a"
+        "resource_predecessor": "SP-19.a"
       },
       "SP-08.c": {
         "start": 26.142857142857142,
@@ -8921,35 +8918,35 @@
         "lane": "BE2",
         "resource_predecessor": "SP-08.b"
       },
+      "SP-01.e": {
+        "start": 26.142857142857142,
+        "finish": 33.285714285714285,
+        "lane": "QE",
+        "resource_predecessor": "SP-00.b"
+      },
+      "SP-40.a": {
+        "start": 26.142857142857142,
+        "finish": 32.57142857142857,
+        "lane": "TL",
+        "resource_predecessor": "SP-00.c"
+      },
       "SP-09.c": {
         "start": 27.92857142857143,
         "finish": 35.07142857142858,
         "lane": "BE1",
         "resource_predecessor": "SP-09.b"
       },
-      "SP-27.c": {
-        "start": 29.07142857142857,
-        "finish": 38,
-        "lane": "PL2",
-        "resource_predecessor": "SP-27.a"
-      },
-      "SP-04.c": {
-        "start": 30.142857142857146,
-        "finish": 40.85714285714286,
-        "lane": "RS1",
-        "resource_predecessor": "SP-03.c"
-      },
-      "SP-06.a": {
-        "start": 30.142857142857146,
-        "finish": 37.28571428571429,
-        "lane": "TL",
-        "resource_predecessor": "SP-40.a"
-      },
       "SP-03.d": {
         "start": 30.142857142857146,
         "finish": 37.28571428571429,
+        "lane": "RS1",
+        "resource_predecessor": "SP-03.c"
+      },
+      "SP-04.b": {
+        "start": 31.5,
+        "finish": 36.85714285714286,
         "lane": "RS2",
-        "resource_predecessor": "SP-04.b"
+        "resource_predecessor": "SP-04.a"
       },
       "SP-10.b": {
         "start": 33.285714285714285,
@@ -8957,29 +8954,35 @@
         "lane": "BE2",
         "resource_predecessor": "SP-08.c"
       },
+      "SP-13.a": {
+        "start": 34.42857142857143,
+        "finish": 41.57142857142858,
+        "lane": "PL2",
+        "resource_predecessor": "SP-27.b"
+      },
+      "SP-15.a": {
+        "start": 34.42857142857143,
+        "finish": 40.85714285714286,
+        "lane": "PL1",
+        "resource_predecessor": "SP-27.c"
+      },
       "SP-09.d": {
         "start": 35.07142857142858,
         "finish": 42.21428571428572,
         "lane": "BE1",
         "resource_predecessor": "SP-09.c"
       },
-      "SP-06.b": {
-        "start": 37.28571428571429,
-        "finish": 48.00000000000001,
+      "SP-04.c": {
+        "start": 36.85714285714286,
+        "finish": 47.57142857142858,
         "lane": "RS2",
-        "resource_predecessor": "SP-03.d"
+        "resource_predecessor": "SP-04.b"
       },
-      "SP-13.a": {
-        "start": 38,
-        "finish": 45.142857142857146,
-        "lane": "PL1",
-        "resource_predecessor": "SP-27.b"
-      },
-      "SP-15.a": {
-        "start": 38,
-        "finish": 44.42857142857143,
-        "lane": "PL2",
-        "resource_predecessor": "SP-27.c"
+      "SP-06.a": {
+        "start": 36.85714285714286,
+        "finish": 44.00000000000001,
+        "lane": "TL",
+        "resource_predecessor": "SP-40.a"
       },
       "SP-12.a": {
         "start": 40.42857142857143,
@@ -8987,11 +8990,17 @@
         "lane": "BE2",
         "resource_predecessor": "SP-10.b"
       },
-      "SP-04.d": {
+      "SP-15.b": {
         "start": 40.85714285714286,
         "finish": 51.57142857142858,
-        "lane": "RS1",
-        "resource_predecessor": "SP-04.c"
+        "lane": "PL1",
+        "resource_predecessor": "SP-15.a"
+      },
+      "SP-27.d": {
+        "start": 41.57142857142858,
+        "finish": 48.71428571428572,
+        "lane": "PL2",
+        "resource_predecessor": "SP-13.a"
       },
       "SP-11.a": {
         "start": 42.21428571428572,
@@ -8999,23 +9008,23 @@
         "lane": "BE1",
         "resource_predecessor": "SP-09.d"
       },
-      "SP-15.b": {
-        "start": 44.42857142857143,
-        "finish": 55.142857142857146,
-        "lane": "PL2",
-        "resource_predecessor": "SP-15.a"
+      "SP-06.b": {
+        "start": 44.00000000000001,
+        "finish": 54.71428571428572,
+        "lane": "RS1",
+        "resource_predecessor": "SP-03.d"
       },
-      "SP-27.d": {
-        "start": 45.142857142857146,
-        "finish": 52.28571428571429,
-        "lane": "PL1",
-        "resource_predecessor": "SP-13.a"
-      },
-      "SP-04.e": {
-        "start": 48.00000000000001,
-        "finish": 53.35714285714286,
+      "SP-04.d": {
+        "start": 47.57142857142858,
+        "finish": 58.28571428571429,
         "lane": "RS2",
-        "resource_predecessor": "SP-06.b"
+        "resource_predecessor": "SP-04.c"
+      },
+      "SP-27.e": {
+        "start": 48.71428571428572,
+        "finish": 55.85714285714287,
+        "lane": "PL2",
+        "resource_predecessor": "SP-27.d"
       },
       "SP-10.a": {
         "start": 49.35714285714286,
@@ -9029,28 +9038,16 @@
         "lane": "BE1",
         "resource_predecessor": "SP-11.a"
       },
-      "SP-05.a": {
-        "start": 51.57142857142858,
-        "finish": 60.142857142857146,
+      "SP-04.e": {
+        "start": 54.71428571428572,
+        "finish": 60.071428571428584,
         "lane": "RS1",
-        "resource_predecessor": "SP-04.d"
-      },
-      "SP-27.e": {
-        "start": 52.28571428571429,
-        "finish": 59.42857142857144,
-        "lane": "PL1",
-        "resource_predecessor": "SP-27.d"
-      },
-      "SP-05.b": {
-        "start": 53.35714285714286,
-        "finish": 58.71428571428572,
-        "lane": "RS2",
-        "resource_predecessor": "SP-04.e"
+        "resource_predecessor": "SP-06.b"
       },
       "SP-13.b": {
         "start": 56.500000000000014,
         "finish": 63.64285714285716,
-        "lane": "PL2",
+        "lane": "PL1",
         "resource_predecessor": "SP-15.b"
       },
       "SP-11.c": {
@@ -9059,28 +9056,28 @@
         "lane": "BE1",
         "resource_predecessor": "SP-11.b"
       },
+      "SP-05.a": {
+        "start": 58.28571428571429,
+        "finish": 66.85714285714286,
+        "lane": "RS2",
+        "resource_predecessor": "SP-04.d"
+      },
       "SP-10.c": {
         "start": 58.28571428571429,
         "finish": 69,
         "lane": "BE2",
         "resource_predecessor": "SP-10.a"
       },
-      "SP-06.c": {
-        "start": 58.71428571428572,
-        "finish": 67.28571428571429,
-        "lane": "RS2",
-        "resource_predecessor": "SP-05.b"
-      },
-      "SP-05.c": {
-        "start": 60.142857142857146,
-        "finish": 70.85714285714286,
+      "SP-05.b": {
+        "start": 60.071428571428584,
+        "finish": 65.42857142857144,
         "lane": "RS1",
-        "resource_predecessor": "SP-05.a"
+        "resource_predecessor": "SP-04.e"
       },
       "SP-14.a": {
         "start": 63.64285714285716,
         "finish": 70.7857142857143,
-        "lane": "PL1",
+        "lane": "PL2",
         "resource_predecessor": "SP-27.e"
       },
       "SP-15.c": {
@@ -9092,14 +9089,20 @@
       "SP-13.c": {
         "start": 63.64285714285716,
         "finish": 70.7857142857143,
-        "lane": "PL2",
+        "lane": "PL1",
         "resource_predecessor": "SP-13.b"
       },
-      "SP-06.d": {
-        "start": 67.28571428571429,
-        "finish": 74.42857142857143,
-        "lane": "QE",
-        "resource_predecessor": "SP-01.e"
+      "SP-06.c": {
+        "start": 65.42857142857144,
+        "finish": 74.00000000000001,
+        "lane": "RS1",
+        "resource_predecessor": "SP-05.b"
+      },
+      "SP-05.c": {
+        "start": 66.85714285714286,
+        "finish": 77.57142857142858,
+        "lane": "RS2",
+        "resource_predecessor": "SP-05.a"
       },
       "SP-12.b": {
         "start": 69,
@@ -9111,13 +9114,13 @@
         "start": 70.7857142857143,
         "finish": 81.50000000000003,
         "lane": "PL1",
-        "resource_predecessor": "SP-14.a"
+        "resource_predecessor": "SP-13.c"
       },
       "SP-15.d": {
         "start": 70.7857142857143,
         "finish": 81.50000000000003,
         "lane": "PL2",
-        "resource_predecessor": "SP-13.c"
+        "resource_predecessor": "SP-14.a"
       },
       "SP-17.a": {
         "start": 70.7857142857143,
@@ -9125,11 +9128,11 @@
         "lane": "BE1",
         "resource_predecessor": "SP-15.c"
       },
-      "SP-05.d": {
-        "start": 70.85714285714286,
-        "finish": 79.42857142857143,
-        "lane": "RS2",
-        "resource_predecessor": "SP-06.c"
+      "SP-06.d": {
+        "start": 74.00000000000001,
+        "finish": 81.14285714285715,
+        "lane": "QE",
+        "resource_predecessor": "SP-01.e"
       },
       "SP-12.c": {
         "start": 77.57142857142857,
@@ -9137,23 +9140,17 @@
         "lane": "BE2",
         "resource_predecessor": "SP-12.b"
       },
+      "SP-05.d": {
+        "start": 77.57142857142858,
+        "finish": 86.14285714285715,
+        "lane": "RS1",
+        "resource_predecessor": "SP-06.c"
+      },
       "SP-17.c": {
         "start": 77.92857142857144,
         "finish": 85.07142857142858,
         "lane": "BE1",
         "resource_predecessor": "SP-17.a"
-      },
-      "SP-07.a": {
-        "start": 79.42857142857143,
-        "finish": 90.14285714285714,
-        "lane": "RS1",
-        "resource_predecessor": "SP-05.c"
-      },
-      "SP-18.b": {
-        "start": 79.42857142857143,
-        "finish": 88,
-        "lane": "RS2",
-        "resource_predecessor": "SP-05.d"
       },
       "SP-14.c": {
         "start": 81.50000000000003,
@@ -9179,6 +9176,18 @@
         "lane": "BE1",
         "resource_predecessor": "SP-17.c"
       },
+      "SP-07.a": {
+        "start": 86.14285714285715,
+        "finish": 96.85714285714286,
+        "lane": "RS2",
+        "resource_predecessor": "SP-05.c"
+      },
+      "SP-18.b": {
+        "start": 86.14285714285715,
+        "finish": 94.71428571428572,
+        "lane": "RS1",
+        "resource_predecessor": "SP-05.d"
+      },
       "SP-20.a": {
         "start": 86.85714285714289,
         "finish": 94.00000000000003,
@@ -9191,12 +9200,6 @@
         "lane": "TL",
         "resource_predecessor": "SP-06.a"
       },
-      "SP-07.b": {
-        "start": 90.14285714285714,
-        "finish": 100.85714285714286,
-        "lane": "RS2",
-        "resource_predecessor": "SP-18.b"
-      },
       "SP-17.d": {
         "start": 93.64285714285714,
         "finish": 100.78571428571428,
@@ -9208,6 +9211,12 @@
         "finish": 99.35714285714288,
         "lane": "BE1",
         "resource_predecessor": "SP-23.a"
+      },
+      "SP-07.b": {
+        "start": 96.85714285714286,
+        "finish": 107.57142857142858,
+        "lane": "RS1",
+        "resource_predecessor": "SP-18.b"
       },
       "SP-37.a": {
         "start": 99.35714285714288,
@@ -9239,16 +9248,16 @@
         "lane": "BE2",
         "resource_predecessor": "SP-17.d"
       },
-      "SP-07.c": {
-        "start": 100.85714285714286,
-        "finish": 111.57142857142858,
-        "lane": "RS1",
-        "resource_predecessor": "SP-07.a"
-      },
       "SP-19.c": {
         "start": 106.50000000000003,
         "finish": 117.21428571428575,
         "lane": "RS2",
+        "resource_predecessor": "SP-07.a"
+      },
+      "SP-07.c": {
+        "start": 107.57142857142858,
+        "finish": 118.2857142857143,
+        "lane": "RS1",
         "resource_predecessor": "SP-07.b"
       },
       "SP-18.a": {
@@ -9274,12 +9283,6 @@
         "finish": 115.42857142857144,
         "lane": "PL2",
         "resource_predecessor": "SP-20.a"
-      },
-      "SP-07.d": {
-        "start": 111.57142857142858,
-        "finish": 118.71428571428572,
-        "lane": "RS1",
-        "resource_predecessor": "SP-07.c"
       },
       "SP-16.a": {
         "start": 115.07142857142856,
@@ -9311,6 +9314,12 @@
         "lane": "RS2",
         "resource_predecessor": "SP-19.c"
       },
+      "SP-07.d": {
+        "start": 118.2857142857143,
+        "finish": 125.42857142857144,
+        "lane": "RS1",
+        "resource_predecessor": "SP-07.c"
+      },
       "SP-34.b": {
         "start": 123.64285714285717,
         "finish": 134.3571428571429,
@@ -9326,8 +9335,8 @@
       "SP-18.d": {
         "start": 124.35714285714289,
         "finish": 130.7857142857143,
-        "lane": "RS1",
-        "resource_predecessor": "SP-07.d"
+        "lane": "RS2",
+        "resource_predecessor": "SP-18.c"
       },
       "SP-16.b": {
         "start": 125.78571428571428,
@@ -9368,8 +9377,8 @@
       "SP-20.c": {
         "start": 138.64285714285717,
         "finish": 149.3571428571429,
-        "lane": "RS2",
-        "resource_predecessor": "SP-18.c"
+        "lane": "RS1",
+        "resource_predecessor": "SP-07.d"
       },
       "SP-29.b": {
         "start": 138.64285714285717,
@@ -9452,7 +9461,7 @@
       "SP-21.a": {
         "start": 157.92857142857147,
         "finish": 168.6428571428572,
-        "lane": "RS1",
+        "lane": "RS2",
         "resource_predecessor": "SP-18.d"
       },
       "SP-28.a": {
@@ -9476,7 +9485,7 @@
       "SP-21.b": {
         "start": 161.5,
         "finish": 172.21428571428572,
-        "lane": "RS2",
+        "lane": "RS1",
         "resource_predecessor": "SP-20.c"
       },
       "SP-29.c": {
@@ -9554,7 +9563,7 @@
       "SP-31.c": {
         "start": 179.35714285714286,
         "finish": 187.92857142857144,
-        "lane": "RS1",
+        "lane": "RS2",
         "resource_predecessor": "SP-21.a"
       },
       "SP-22.e": {
@@ -9662,7 +9671,7 @@
       "SP-33.a": {
         "start": 223.6428571428571,
         "finish": 232.2142857142857,
-        "lane": "RS2",
+        "lane": "RS1",
         "resource_predecessor": "SP-21.b"
       },
       "SP-37.f": {
@@ -9686,7 +9695,7 @@
       "SP-33.b": {
         "start": 232.2142857142857,
         "finish": 242.92857142857142,
-        "lane": "RS1",
+        "lane": "RS2",
         "resource_predecessor": "SP-31.c"
       },
       "ASSESSMENT": {
@@ -9704,13 +9713,13 @@
       "SP-33.c": {
         "start": 242.92857142857142,
         "finish": 250.07142857142856,
-        "lane": "RS2",
+        "lane": "RS1",
         "resource_predecessor": "SP-33.a"
       },
       "SP-36.a": {
         "start": 245.07142857142853,
         "finish": 255.78571428571425,
-        "lane": "RS1",
+        "lane": "RS2",
         "resource_predecessor": "SP-33.b"
       },
       "SP-36.b": {
@@ -9833,7 +9842,7 @@
     "taskCount": 168,
     "epicCount": 42,
     "gateCount": 10,
-    "dependencyEdges": 368,
+    "dependencyEdges": 369,
     "duplicateIds": 0,
     "missingDependencies": 0,
     "cycles": 0,
@@ -9841,7 +9850,7 @@
     "resourceOverlaps": 0,
     "missingContractGates": 0,
     "verifiedAt": "2026-10-19",
-    "note": "Forecast DAG validation unchanged. Execution approval is recorded separately; actual completions require reviewed evidence and remaining external gates are pending."
+    "note": "Both reference forecasts regenerated after the SP-01.b to SP-01.c dependency repair and validated for IDs, ancestry, timing and resource overlap. SP-22.a remains the explicit draft journey-design exception. Actual execution completion is recorded separately; paid and release gates remain pending."
   },
   "superseded_native_epic_dependencies": [
     {
@@ -10520,6 +10529,9 @@
       "QE": "Engineer Quality"
     },
     "review_policy": "Author does not approve own change. Lead coordinates peer review and takes integration responsibility; subagent review is not independent third-party assessment.",
-    "log": "EXECUTION_LOG.md"
+    "log": "EXECUTION_LOG.md",
+    "integrated_baseline": "7117060d03d4e0f843d7dddc53c3e5b580b8ef3f",
+    "reviewed_baseline_head": "5cb1895c280af1ac0ad16bdc954d596089e91b70",
+    "schedule_repair": "2026-10-19: technical lead accepted SP-01.b before SP-01.c freeze. One added edge (369 total); both reference schedules regenerated without changing effort, capacity, approval gates or current execution staffing."
   }
 }
