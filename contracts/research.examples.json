@@ -1,0 +1,287 @@
+{
+  "canonical_model": {
+    "profile": "strange-physics.python-json.v1",
+    "sha256": "98f56998da2d44f81bbe474c883279c4614d392dd9da25ef5e80ecc8e6f6a2eb",
+    "utf8_text": "{\"fit_config_sha256\":\"2222222222222222222222222222222222222222222222222222222222222222\",\"fit_record_indices\":[0],\"fitter_version\":\"fixture-\\u03b2-v1\",\"linear\":1.0,\"observation_sha256\":\"2552fdbc6ce1bfe8796ac9a02387fe9baffe1925249fce171812fab54beefc20\",\"schema_version\":\"strange-physics.linear-spring-model.v1\",\"through_index\":1}"
+  },
+  "description": "Synthetic interface fixtures, not simulator output, fitted results or benchmark evidence. Negative semantic and cross-message cases are exercised in tests/test_research_contracts.py.",
+  "valid": {
+    "EvaluationReport": {
+      "evaluation_runtime_ms": 0,
+      "failed_prediction_count": 0,
+      "failure_policy": "unscorable-on-any-failure.v1",
+      "model_sha256": "98f56998da2d44f81bbe474c883279c4614d392dd9da25ef5e80ecc8e6f6a2eb",
+      "normalization_scale": 2.0,
+      "normalized_position_mse": 1.0,
+      "position_mse": 4.0,
+      "probe_count": 2,
+      "protocol_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "schema_version": "strange-physics.evaluation-report.v1",
+      "split": "development",
+      "status": "scored",
+      "valid_prediction_count": 2
+    },
+    "LinearSpringModel": {
+      "fit_config_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "fit_record_indices": [
+        0
+      ],
+      "fitter_version": "fixture-\u03b2-v1",
+      "linear": 1.0,
+      "observation_sha256": "2552fdbc6ce1bfe8796ac9a02387fe9baffe1925249fce171812fab54beefc20",
+      "schema_version": "strange-physics.linear-spring-model.v1",
+      "through_index": 1
+    },
+    "PredictionRequest": {
+      "experiment": {
+        "impulse": null,
+        "particles": [
+          {
+            "id": "p",
+            "mass": 1.0,
+            "position": [
+              1.0,
+              0.0
+            ],
+            "velocity": [
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "schema_version": "strange-physics.experiment.v1"
+      },
+      "integration_dt": 0.01,
+      "model_sha256": "98f56998da2d44f81bbe474c883279c4614d392dd9da25ef5e80ecc8e6f6a2eb",
+      "schema_version": "strange-physics.prediction-request.v1",
+      "structure": {
+        "anchors": [
+          {
+            "id": "a",
+            "position": [
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "connections": [
+          {
+            "a": "p",
+            "b": "a"
+          }
+        ],
+        "particle_ids": [
+          "p"
+        ]
+      },
+      "times": [
+        0.0,
+        0.05,
+        0.1
+      ]
+    },
+    "PredictionResponse": {
+      "model_sha256": "98f56998da2d44f81bbe474c883279c4614d392dd9da25ef5e80ecc8e6f6a2eb",
+      "schema_version": "strange-physics.prediction-response.v1",
+      "trajectory": {
+        "frames": [
+          {
+            "positions": [
+              [
+                1.0,
+                0.0
+              ]
+            ],
+            "time": 0.0,
+            "velocities": [
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          {
+            "positions": [
+              [
+                1.0,
+                0.0
+              ]
+            ],
+            "time": 0.05,
+            "velocities": [
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          },
+          {
+            "positions": [
+              [
+                1.0,
+                0.0
+              ]
+            ],
+            "time": 0.1,
+            "velocities": [
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    "SpringFitInput": {
+      "fit_config_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "observations": {
+        "engine_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "engine_version": "fixture-v1",
+        "records": [
+          {
+            "error": null,
+            "experiment": {
+              "impulse": null,
+              "particles": [
+                {
+                  "id": "p",
+                  "mass": 1.0,
+                  "position": [
+                    1.0,
+                    0.0
+                  ],
+                  "velocity": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "schema_version": "strange-physics.experiment.v1"
+            },
+            "index": 0,
+            "operation_id": "op-0",
+            "status": "completed",
+            "trajectory": {
+              "frames": [
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.0,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.05,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.1,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "error": "simulation_failed",
+            "experiment": {
+              "impulse": null,
+              "particles": [
+                {
+                  "id": "p",
+                  "mass": 1.0,
+                  "position": [
+                    1.0,
+                    0.0
+                  ],
+                  "velocity": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "schema_version": "strange-physics.experiment.v1"
+            },
+            "index": 1,
+            "operation_id": "op-1",
+            "status": "failed",
+            "trajectory": null
+          }
+        ],
+        "run_id": "synthetic-run",
+        "schema_version": "strange-physics.observations.v1",
+        "space": {
+          "budget": 6,
+          "calibration_experiments": 2,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 0.1,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        }
+      },
+      "schema_version": "strange-physics.spring-fit-input.v1",
+      "through_index": 1
+    }
+  }
+}
