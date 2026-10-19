@@ -37,7 +37,7 @@ Current public source constraints were rechecked on 2026-10-19: dispatch must to
 
 | Decision | Recommendation | Status / boundary |
 | --- | --- | --- |
-| D01 — Approve this execution baseline and initial work | Recommended: accept the 168-task backlog and authorize R0 plus the bounded spring slice SP-03.a/b, SP-04.a/b/e, SP-06.a when their prerequisites pass. Select subsequent vertical slices at integration reviews. | Pending user approval; no implementation in this change. |
+| D01 — Approve this execution baseline and initial work | Recommended: accept the 168-task backlog; begin with R0, the first-ten-day design/foundation work SP-22.a and SP-27.a, and the bounded spring slice SP-03.a/b, SP-04.a/b/e, SP-06.a when their prerequisites pass. Review each later vertical slice at its integration checkpoint; concrete paid/release gates still require their stated approval. | Pending user approval; no implementation in this change. |
 | D02 — Confirm real staffing and specialist capacity | Recommended: nine named engineers, 70% delivery availability, fractional product/design/security and independent assessment; retain two backend, two platform, two research, one frontend, one QE and one lead. | Names/start date not known. Seven or ten people requires rerunning resource scheduling, not retaining these dates. |
 | D03 — Accept the revised conditional horizon | Recommended: plan pilot onboarding W38–50, pilot evidence exit W45–59 and GA W52–67; reforecast after two weeks, R0 and each integration checkpoint. | Supersedes unsupported W19–22 pilot/W30–36 GA estimate. This is a feasible conservative schedule, not an optimized promise or statistical confidence interval. |
 | D04 — Confirm the enterprise release boundary | Recommended: retain both research tracks, secure hosted user code, SDK/CLI/browser, one supported self-host target, federation/SCIM, audit export and external adoption before GA. | Inherited architecture is not reopened. Customer-specific federation scope and supported self-host environment must be verified. |
@@ -991,7 +991,7 @@ Parent: [#10](https://github.com/spei04/strange-physics/issues/10). This issue c
 
 - **Objective:** Provide private workspaces and usable human/machine authentication. This PR delivers verify oidc identities and sessions.
 - **Implementation scope:** Implement issuer/audience/signature/expiry verification and session lifecycle; separate hosted and generic OIDC configuration.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-08.b implement workspaces, invitations and roles; SP-08.c issue scoped machine and run credentials; SP-08.d implement secure browser authentication endpoints. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-01.b](#sp-01-b), [SP-02.b](#sp-02-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Forged/wrong-issuer/expired tokens denied; logout and key rotation behavior defined.
@@ -1007,7 +1007,7 @@ Parent: [#10](https://github.com/spei04/strange-physics/issues/10). This issue c
 
 - **Objective:** Provide private workspaces and usable human/machine authentication. This PR delivers implement workspaces, invitations and roles.
 - **Implementation scope:** Add owner/researcher/viewer memberships, single-use expiring invites and explicit identity linking.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-08.a verify oidc identities and sessions; SP-08.c issue scoped machine and run credentials; SP-08.d implement secure browser authentication endpoints. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-08.a](#sp-08-a), [SP-09.a](#sp-09-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-DB](#contract-db), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Role matrix enforced; sole-owner removal and invite replay rejected.
@@ -1039,7 +1039,7 @@ Parent: [#10](https://github.com/spei04/strange-physics/issues/10). This issue c
 
 - **Objective:** Provide private workspaces and usable human/machine authentication. This PR delivers implement secure browser authentication endpoints.
 - **Implementation scope:** Expose callback/session/logout and membership bootstrap with documented CORS/cookie/CSRF choices.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-08.a verify oidc identities and sessions; SP-08.b implement workspaces, invitations and roles; SP-08.c issue scoped machine and run credentials. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-08.c](#sp-08-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Browser and API sessions agree on current role and revocation.
@@ -1060,7 +1060,7 @@ Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue c
 
 - **Objective:** Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers create tenant sql schema and migration harness.
 - **Implementation scope:** Add versioned PostgreSQL migrations, composite tenant foreign keys and constraint/index fixtures.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-09.b reserve experiments and budgets atomically; SP-09.c implement run and operation state transitions; SP-09.d connect trusted simulator results to run transactions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-01.b](#sp-01-b), [SP-02.b](#sp-02-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-DB](#contract-db), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Schema enforces run/operation/ordinal uniqueness; rollback/forward behavior documented.
@@ -1076,7 +1076,7 @@ Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue c
 
 - **Objective:** Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers reserve experiments and budgets atomically.
 - **Implementation scope:** Commit validated request, ordinal, debit and outbox in one transaction; canonicalize operation keys.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-09.a create tenant sql schema and migration harness; SP-09.c implement run and operation state transitions; SP-09.d connect trusted simulator results to run transactions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-09.a](#sp-09-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-DB](#contract-db), [C-HTTP](#contract-http), [C-CORE](#contract-core); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Concurrent duplicate returns same logical result; changed request conflicts; invalid request not charged.
@@ -1092,7 +1092,7 @@ Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue c
 
 - **Objective:** Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers implement run and operation state transitions.
 - **Implementation scope:** Add create/read/cancel/operation routes, revision checks, deadlines and terminal-state immutability.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-09.a create tenant sql schema and migration harness; SP-09.b reserve experiments and budgets atomically; SP-09.d connect trusted simulator results to run transactions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-09.b](#sp-09-b), [SP-08.b](#sp-08-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-HTTP](#contract-http), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Legal transitions and async cancellation observable; unauthorized IDs hidden.
@@ -1108,7 +1108,7 @@ Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue c
 
 - **Objective:** Preserve one logical experiment and budget debit under concurrency and failure. This PR delivers connect trusted simulator results to run transactions.
 - **Implementation scope:** Adapt public observations to durable result commits and safe numerical failure records.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-09.a create tenant sql schema and migration harness; SP-09.b reserve experiments and budgets atomically; SP-09.c implement run and operation state transitions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-09.c](#sp-09-c), [SP-01.a](#sp-01-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-CORE](#contract-core), [C-DB](#contract-db), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** One accepted experiment has one terminal result/debit and no hidden parameter fields.
@@ -1129,7 +1129,7 @@ Parent: [#12](https://github.com/spei04/strange-physics/issues/12). This issue c
 
 - **Objective:** Recover remote work reliably despite duplicate delivery and stale workers. This PR delivers dispatch transactional outbox intents.
 - **Implementation scope:** Implement short idempotent Cloud Tasks handlers, deterministic launch IDs and failed-dispatch records.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-10.b fence worker leases and heartbeats; SP-10.c reconcile abandoned launches and results. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-09.d](#sp-09-d), [SP-27.c](#sp-27-c), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-DB](#contract-db), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Duplicate/reordered/delayed delivery does not duplicate logical launch.
@@ -1145,7 +1145,7 @@ Parent: [#12](https://github.com/spei04/strange-physics/issues/12). This issue c
 
 - **Objective:** Recover remote work reliably despite duplicate delivery and stale workers. This PR delivers fence worker leases and heartbeats.
 - **Implementation scope:** Allocate monotonic epochs, renew leases and reject stale result/checkpoint commits.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-10.a dispatch transactional outbox intents; SP-10.c reconcile abandoned launches and results. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-09.b](#sp-09-b), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-DB](#contract-db), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Partitioned old worker cannot write after replacement lease.
@@ -1161,7 +1161,7 @@ Parent: [#12](https://github.com/spei04/strange-physics/issues/12). This issue c
 
 - **Objective:** Recover remote work reliably despite duplicate delivery and stale workers. This PR delivers reconcile abandoned launches and results.
 - **Implementation scope:** Recover missed dispatch/expired leases and expose audited retry/deadline decisions.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-10.a dispatch transactional outbox intents; SP-10.b fence worker leases and heartbeats. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-10.a](#sp-10-a), [SP-10.b](#sp-10-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-DB](#contract-db), [C-EXEC](#contract-exec), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Reconciliation converges without resurrecting terminal or cancelled runs.
@@ -1182,7 +1182,7 @@ Parent: [#13](https://github.com/spei04/strange-physics/issues/13). This issue c
 
 - **Objective:** Prevent cross-tenant access and honor current authorization on every surface. This PR delivers enforce tenant row policies and safe pool reuse.
 - **Implementation scope:** Apply RLS to tenant tables with nonowner runtime role and transaction-local tenant context.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-11.b authorize every operation and artifact reference; SP-11.c enforce live revocation and audit decisions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-08.b](#sp-08-b), [SP-09.d](#sp-09-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Cross-tenant reads/writes denied even under omitted filter and pooled reuse.
@@ -1198,7 +1198,7 @@ Parent: [#13](https://github.com/spei04/strange-physics/issues/13). This issue c
 
 - **Objective:** Prevent cross-tenant access and honor current authorization on every surface. This PR delivers authorize every operation and artifact reference.
 - **Implementation scope:** Centralize scoped route/object policy, property allowlists and nonenumerating denied lookup.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-11.a enforce tenant row policies and safe pool reuse; SP-11.c enforce live revocation and audit decisions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-11.a](#sp-11-a), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-HTTP](#contract-http), [C-ID](#contract-id), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Every route/field has role decision; hashes alone confer no access.
@@ -1235,7 +1235,7 @@ Parent: [#14](https://github.com/spei04/strange-physics/issues/14). This issue c
 
 - **Objective:** Bound resource consumption and account for usage fairly across tenants. This PR delivers reserve and settle resource allowances.
 - **Implementation scope:** Add atomic run/workspace CPU, token, artifact and execution reservations with attempt linkage.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-12.b implement fair bounded admission; SP-12.c expose usage reconciliation and safe summaries. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-09.b](#sp-09-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-DB](#contract-db), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No concurrent budget overspend; unknown amounts remain explicit.
@@ -1251,7 +1251,7 @@ Parent: [#14](https://github.com/spei04/strange-physics/issues/14). This issue c
 
 - **Objective:** Bound resource consumption and account for usage fairly across tenants. This PR delivers implement fair bounded admission.
 - **Implementation scope:** Separate build, run and evaluation queues; workspace caps and weighted admission with bounded backlog.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-12.a reserve and settle resource allowances; SP-12.c expose usage reconciliation and safe summaries. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-12.a](#sp-12-a), [SP-10.c](#sp-10-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-DB](#contract-db), [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** One tenant cannot monopolize slots; overload yields explicit queued/429 outcome.
@@ -1267,7 +1267,7 @@ Parent: [#14](https://github.com/spei04/strange-physics/issues/14). This issue c
 
 - **Objective:** Bound resource consumption and account for usage fairly across tenants. This PR delivers expose usage reconciliation and safe summaries.
 - **Implementation scope:** Create usage query API and reconciler for reserved/settled/unknown amounts and attributable costs.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-12.a reserve and settle resource allowances; SP-12.b implement fair bounded admission. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-12.b](#sp-12-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-HTTP](#contract-http), [C-DB](#contract-db), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Totals reconcile to immutable attempts without claiming estimated costs as billed.
@@ -1288,7 +1288,7 @@ Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue c
 
 - **Objective:** Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers implement immutable content storage adapter.
 - **Implementation scope:** Write bounded hash/generation-verified objects and typed references behind portable storage interface.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-13.b expose authorized artifact and package upload lifecycle; SP-13.c commit checkpoint and model references safely; SP-13.d collect abandoned uploads without deleting live state. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-01.c](#sp-01-c), [SP-27.c](#sp-27-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ART](#contract-art), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Corrupt/incomplete objects cannot become committed references.
@@ -1304,7 +1304,7 @@ Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue c
 
 - **Objective:** Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers expose authorized artifact and package upload lifecycle.
 - **Implementation scope:** Stage uploads, validate size/digest/media/archive metadata and expose operation status and authorized read path.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-13.a implement immutable content storage adapter; SP-13.c commit checkpoint and model references safely; SP-13.d collect abandoned uploads without deleting live state. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-13.a](#sp-13-a), [SP-11.b](#sp-11-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ART](#contract-art), [C-HTTP](#contract-http), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Only owner workspace can finalize/read; pending objects remain quarantined.
@@ -1320,7 +1320,7 @@ Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue c
 
 - **Objective:** Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers commit checkpoint and model references safely.
 - **Implementation scope:** Commit completed-prefix checkpoint/model references after durable object verification; enforce index/runtime rules.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-13.a implement immutable content storage adapter; SP-13.b expose authorized artifact and package upload lifecycle; SP-13.d collect abandoned uploads without deleting live state. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-13.b](#sp-13-b), [SP-10.b](#sp-10-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ART](#contract-art), [C-DB](#contract-db), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Crash between object and SQL leaves recoverable orphan, never missing committed artifact.
@@ -1336,7 +1336,7 @@ Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue c
 
 - **Objective:** Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers collect abandoned uploads without deleting live state.
 - **Implementation scope:** Implement grace-period reference scan, active-build/run guards and audited scratch cleanup.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-13.a implement immutable content storage adapter; SP-13.b expose authorized artifact and package upload lifecycle; SP-13.c commit checkpoint and model references safely. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-13.c](#sp-13-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ART](#contract-art), [C-DB](#contract-db), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Only unreferenced inactive objects removed; immutable retained artifacts remain.
@@ -1357,7 +1357,7 @@ Parent: [#16](https://github.com/spei04/strange-physics/issues/16). This issue c
 
 - **Objective:** Build customer packages without exposing trusted deployment credentials. This PR delivers validate package manifests and safe extraction.
 - **Implementation scope:** Validate pinned lockfiles, source digests, archive paths and build resource declarations.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-14.b execute isolated quarantined builds; SP-14.c scan and promote digest-pinned runtime images; SP-14.d review hostile-build evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-13.b](#sp-13-b), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Invalid or unpinned packages fail before build; accepted source immutable.
@@ -1373,7 +1373,7 @@ Parent: [#16](https://github.com/spei04/strange-physics/issues/16). This issue c
 
 - **Objective:** Build customer packages without exposing trusted deployment credentials. This PR delivers execute isolated quarantined builds.
 - **Implementation scope:** Launch build sandbox with constrained dependency fetch, private scratch and no deploy/runtime credentials.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-14.a validate package manifests and safe extraction; SP-14.c scan and promote digest-pinned runtime images; SP-14.d review hostile-build evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-14.a](#sp-14-a), [SP-27.d](#sp-27-d), [SP-15.b](#sp-15-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Build can access only approved mirror/registry paths; timeout and resource kill enforced.
@@ -1389,7 +1389,7 @@ Parent: [#16](https://github.com/spei04/strange-physics/issues/16). This issue c
 
 - **Objective:** Build customer packages without exposing trusted deployment credentials. This PR delivers scan and promote digest-pinned runtime images.
 - **Implementation scope:** Produce provenance/SBOM, scan results and quarantine-to-approved transition tied to immutable digest.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-14.a validate package manifests and safe extraction; SP-14.b execute isolated quarantined builds; SP-14.d review hostile-build evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-14.b](#sp-14-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-ART](#contract-art), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Only approved matching image launches; rejected scan stays quarantined.
@@ -1405,7 +1405,7 @@ Parent: [#16](https://github.com/spei04/strange-physics/issues/16). This issue c
 
 - **Objective:** Build customer packages without exposing trusted deployment credentials. This PR delivers review hostile-build evidence.
 - **Implementation scope:** Run malicious build corpus in staging and verify credential/network/storage boundaries plus cleanup.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-14.a validate package manifests and safe extraction; SP-14.b execute isolated quarantined builds; SP-14.c scan and promote digest-pinned runtime images. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-14.c](#sp-14-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No secret/exfiltration path; failures block uploaded-code enablement.
@@ -1442,7 +1442,7 @@ Parent: [#17](https://github.com/spei04/strange-physics/issues/17). This issue c
 
 - **Objective:** Enforce hostile-code isolation rather than relying on a container label. This PR delivers enforce sandbox and resource admission policy.
 - **Implementation scope:** Require approved RuntimeClass, digest, read-only base, user/process/disk/CPU/memory/time limits; reject privileged mounts/tokens.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-15.a probe scientific runtime compatibility; SP-15.c implement epoch-scoped run broker permissions; SP-15.d enforce broker-only network and dns; SP-15.e validate hostile-runtime isolation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-15.a](#sp-15-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Invalid pod configurations fail closed; bounded malicious workloads terminated.
@@ -1458,7 +1458,7 @@ Parent: [#17](https://github.com/spei04/strange-physics/issues/17). This issue c
 
 - **Objective:** Enforce hostile-code isolation rather than relying on a container label. This PR delivers implement epoch-scoped run broker permissions.
 - **Implementation scope:** Expose only allowed experiment/checkpoint/model-call operations with run/attempt-bound tokens.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-15.a probe scientific runtime compatibility; SP-15.b enforce sandbox and resource admission policy; SP-15.d enforce broker-only network and dns; SP-15.e validate hostile-runtime isolation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-08.c](#sp-08-c), [SP-11.c](#sp-11-c), [SP-10.b](#sp-10-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-HTTP](#contract-http), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Agent cannot access full workspace API or another run/epoch.
@@ -1474,7 +1474,7 @@ Parent: [#17](https://github.com/spei04/strange-physics/issues/17). This issue c
 
 - **Objective:** Enforce hostile-code isolation rather than relying on a container label. This PR delivers enforce broker-only network and dns.
 - **Implementation scope:** Apply runtime egress/DNS/metadata policy and networkless predictor variant with independently verified routing.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-15.a probe scientific runtime compatibility; SP-15.b enforce sandbox and resource admission policy; SP-15.c implement epoch-scoped run broker permissions; SP-15.e validate hostile-runtime isolation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-15.b](#sp-15-b), [SP-15.c](#sp-15-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Agent reaches broker only; predictor has no outbound path including DNS.
@@ -1490,7 +1490,7 @@ Parent: [#17](https://github.com/spei04/strange-physics/issues/17). This issue c
 
 - **Objective:** Enforce hostile-code isolation rather than relying on a container label. This PR delivers validate hostile-runtime isolation.
 - **Implementation scope:** Run adversarial tenant/runtime corpus and verify process termination and credential separation.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-15.a probe scientific runtime compatibility; SP-15.b enforce sandbox and resource admission policy; SP-15.c implement epoch-scoped run broker permissions; SP-15.d enforce broker-only network and dns. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-15.d](#sp-15-d), [SP-14.d](#sp-14-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Security reviewer signs exact deployed image/network/runtime evidence before uploads enabled.
@@ -1511,7 +1511,7 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 
 - **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers coordinate one remote investigation.
 - **Implementation scope:** Connect launch, scoped broker, trusted simulation and committed result/checkpoint loop for one approved image.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-16.b resume an agent from committed checkpoints; SP-16.c cancel, expire and reconcile remote work; SP-16.d prove end-to-end interruption invariants; SP-16.e instrument remote execution and recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-10.c](#sp-10-c), [SP-12.c](#sp-12-c), [SP-13.c](#sp-13-c), [SP-14.d](#sp-14-d), [SP-15.e](#sp-15-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-DB](#contract-db), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Remote run produces same logical observations/budgets as trusted local fixture.
@@ -1527,7 +1527,7 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 
 - **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers resume an agent from committed checkpoints.
 - **Implementation scope:** Restore declared state, replay committed-but-unobserved result and continue with immutable runtime.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-16.a coordinate one remote investigation; SP-16.c cancel, expire and reconcile remote work; SP-16.d prove end-to-end interruption invariants; SP-16.e instrument remote execution and recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-16.a](#sp-16-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-ART](#contract-art), [C-CORE](#contract-core); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Replacement never buys/debits an already committed experiment.
@@ -1543,7 +1543,7 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 
 - **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers cancel, expire and reconcile remote work.
 - **Implementation scope:** Revoke launch/broker access, terminate attempts, reconcile held allowances and preserve accepted results.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-16.a coordinate one remote investigation; SP-16.b resume an agent from committed checkpoints; SP-16.d prove end-to-end interruption invariants; SP-16.e instrument remote execution and recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-16.b](#sp-16-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-DB](#contract-db), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** New work revoked ≤5s; controlled workers terminate ≤60s or explicit fault recorded.
@@ -1559,7 +1559,7 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 
 - **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers prove end-to-end interruption invariants.
 - **Implementation scope:** Automate process/network failures across commit boundaries in staging with repeated replacement.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-16.a coordinate one remote investigation; SP-16.b resume an agent from committed checkpoints; SP-16.c cancel, expire and reconcile remote work; SP-16.e instrument remote execution and recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-16.e](#sp-16-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-DB](#contract-db), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No lost acknowledged result or duplicate logical charge; p95 recovery target measured.
@@ -1575,7 +1575,7 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 
 - **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers instrument remote execution and recovery.
 - **Implementation scope:** Add bounded-cardinality launch/recovery/cancel metrics, correlated traces and stuck-run runbook dashboards.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-16.a coordinate one remote investigation; SP-16.b resume an agent from committed checkpoints; SP-16.c cancel, expire and reconcile remote work; SP-16.d prove end-to-end interruption invariants. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-16.c](#sp-16-c), [SP-27.e](#sp-27-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Alerts detect a deliberately stuck run and identify epoch/operation without private payload.
@@ -1612,7 +1612,7 @@ Parent: [#19](https://github.com/spei04/strange-physics/issues/19). This issue c
 
 - **Objective:** Make model calls replayable and their potentially ambiguous costs visible. This PR delivers persist provider attempts and ambiguous usage.
 - **Implementation scope:** Implement durable operation/attempt ledger and request/response artifacts with bounded retries and reconciliation.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-17.a freeze model-call and credential-management contracts; SP-17.c manage workspace provider secrets; SP-17.d replay recorded model responses offline. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-17.a](#sp-17-a), [SP-12.c](#sp-12-c), [SP-13.c](#sp-13-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-PROVIDER](#contract-provider), [C-DB](#contract-db), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Crash after send yields explicit ambiguity; identical key never creates hidden new attempt.
@@ -1628,7 +1628,7 @@ Parent: [#19](https://github.com/spei04/strange-physics/issues/19). This issue c
 
 - **Objective:** Make model calls replayable and their potentially ambiguous costs visible. This PR delivers manage workspace provider secrets.
 - **Implementation scope:** Implement owner-only connect/test/rotate/revoke API with Secret Manager references and fixed approved destinations.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-17.a freeze model-call and credential-management contracts; SP-17.b persist provider attempts and ambiguous usage; SP-17.d replay recorded model responses offline. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-17.a](#sp-17-a), [SP-11.c](#sp-11-c), [SP-27.c](#sp-27-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-PROVIDER](#contract-provider), [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Keys only accessible to gateway identity; callers receive redacted status.
@@ -1644,7 +1644,7 @@ Parent: [#19](https://github.com/spei04/strange-physics/issues/19). This issue c
 
 - **Objective:** Make model calls replayable and their potentially ambiguous costs visible. This PR delivers replay recorded model responses offline.
 - **Implementation scope:** Return stored result for repeat operation; expose billed/estimated/unknown usage and explicit unresolved attempts.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-17.a freeze model-call and credential-management contracts; SP-17.b persist provider attempts and ambiguous usage; SP-17.c manage workspace provider secrets. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-17.b](#sp-17-b), [SP-17.c](#sp-17-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-PROVIDER](#contract-provider), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Replay consumes no network/provider request; ambiguity persists until resolved.
@@ -1665,7 +1665,7 @@ Parent: [#20](https://github.com/spei04/strange-physics/issues/20). This issue c
 
 - **Objective:** Connect an LLM selector fairly and safely within declared compute limits. This PR delivers implement bounded provider transport.
 - **Implementation scope:** Add approved provider/version adapter, token/rate budgets, timeouts, circuit breaker and bounded parsing.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-18.b version the llm information transform; SP-18.c implement controlled llm candidate selection; SP-18.d validate a capped real-provider integration. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-17.d](#sp-17-d), [SP-15.c](#sp-15-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-PROVIDER](#contract-provider), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** 429/5xx/malformed responses have visible controlled outcomes without model substitution.
@@ -1681,7 +1681,7 @@ Parent: [#20](https://github.com/spei04/strange-physics/issues/20). This issue c
 
 - **Objective:** Connect an LLM selector fairly and safely within declared compute limits. This PR delivers version the llm information transform.
 - **Implementation scope:** Define purchased-history/fit/candidate transform with context ceiling, truncation record and hypothesis annotations.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-18.a implement bounded provider transport; SP-18.c implement controlled llm candidate selection; SP-18.d validate a capped real-provider integration. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-05.d](#sp-05-d), [SP-17.a](#sp-17-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-PROVIDER](#contract-provider); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Inputs contain same disclosed information and candidate set; transform version immutable.
@@ -1697,7 +1697,7 @@ Parent: [#20](https://github.com/spei04/strange-physics/issues/20). This issue c
 
 - **Objective:** Connect an LLM selector fairly and safely within declared compute limits. This PR delivers implement controlled llm candidate selection.
 - **Implementation scope:** Parse candidate-ID actions; bound invalid proposals to two retries then declared valid fallback.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-18.a implement bounded provider transport; SP-18.b version the llm information transform; SP-18.d validate a capped real-provider integration. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-18.a](#sp-18-a), [SP-18.b](#sp-18-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-PROVIDER](#contract-provider); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Same calibration/fitter/adaptation/budget as other selectors; costs separately recorded.
@@ -1750,7 +1750,7 @@ Parent: [#21](https://github.com/spei04/strange-physics/issues/21). This issue c
 
 - **Objective:** Accept executable predictive models under a strict untrusted-code contract. This PR delivers build predictor images through approved pipeline.
 - **Implementation scope:** Package predictor entrypoint and immutable references; reuse quarantined build pipeline with approved base runtime.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-19.a freeze executable predictor protocol; SP-19.c validate bounded predictor outputs; SP-19.d exercise hostile predictor fixtures. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-19.a](#sp-19-a), [SP-14.d](#sp-14-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-PRED](#contract-pred), [C-EXEC](#contract-exec), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Predictor digest and protocol identity recorded and verified before invocation.
@@ -1766,7 +1766,7 @@ Parent: [#21](https://github.com/spei04/strange-physics/issues/21). This issue c
 
 - **Objective:** Accept executable predictive models under a strict untrusted-code contract. This PR delivers validate bounded predictor outputs.
 - **Implementation scope:** Validate finite/order/shape/time/interval outputs and enforce CPU/output envelope independently of predictor.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-19.a freeze executable predictor protocol; SP-19.b build predictor images through approved pipeline; SP-19.d exercise hostile predictor fixtures. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-19.b](#sp-19-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-PRED](#contract-pred), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Malformed/nonfinite/oversize results become explicit scored failures.
@@ -1782,7 +1782,7 @@ Parent: [#21](https://github.com/spei04/strange-physics/issues/21). This issue c
 
 - **Objective:** Accept executable predictive models under a strict untrusted-code contract. This PR delivers exercise hostile predictor fixtures.
 - **Implementation scope:** Run malicious/malformed predictors in deployed networkless sandbox and verify no truth feedback.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-19.a freeze executable predictor protocol; SP-19.b build predictor images through approved pipeline; SP-19.c validate bounded predictor outputs. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-19.c](#sp-19-c), [SP-15.e](#sp-15-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-PRED](#contract-pred), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No filesystem/network/error side channel to restricted evaluator material.
@@ -1803,7 +1803,7 @@ Parent: [#22](https://github.com/spei04/strange-physics/issues/22). This issue c
 
 - **Objective:** Score models without disclosing hidden evaluation truth to active agents. This PR delivers isolate evaluation truth and job ownership.
 - **Implementation scope:** Create evaluator-only storage/identity and snapshot job metadata with separate quota and access.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-20.b run networkless predictor jobs; SP-20.c persist complete snapshot scoring; SP-20.d audit evaluation information flow. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-06.b](#sp-06-b), [SP-13.d](#sp-13-d), [SP-27.c](#sp-27-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-ART](#contract-art), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Agent, viewer and gateway roles cannot read blind world/probe state.
@@ -1819,7 +1819,7 @@ Parent: [#22](https://github.com/spei04/strange-physics/issues/22). This issue c
 
 - **Objective:** Score models without disclosing hidden evaluation truth to active agents. This PR delivers run networkless predictor jobs.
 - **Implementation scope:** Stage only public predictor inputs, execute bounded jobs and collect outputs under trusted controller.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-20.a isolate evaluation truth and job ownership; SP-20.c persist complete snapshot scoring; SP-20.d audit evaluation information flow. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-20.a](#sp-20-a), [SP-19.d](#sp-19-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-PRED](#contract-pred), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Truth stays outside sandbox; duplicate job yields one authoritative output.
@@ -1835,7 +1835,7 @@ Parent: [#22](https://github.com/spei04/strange-physics/issues/22). This issue c
 
 - **Objective:** Score models without disclosing hidden evaluation truth to active agents. This PR delivers persist complete snapshot scoring.
 - **Implementation scope:** Score required snapshots/probes with immutable manifests, failures and evaluator queue/cost telemetry.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-20.a isolate evaluation truth and job ownership; SP-20.b run networkless predictor jobs; SP-20.d audit evaluation information flow. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-20.b](#sp-20-b), [SP-06.d](#sp-06-d), [SP-07.d](#sp-07-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-DB](#contract-db), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Run is scored only when all required jobs terminal; counters reconcile.
@@ -1851,7 +1851,7 @@ Parent: [#22](https://github.com/spei04/strange-physics/issues/22). This issue c
 
 - **Objective:** Score models without disclosing hidden evaluation truth to active agents. This PR delivers audit evaluation information flow.
 - **Implementation scope:** Exercise API/event/error/artifact paths while a hostile agent is active; verify post-run viewer gating.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-20.a isolate evaluation truth and job ownership; SP-20.b run networkless predictor jobs; SP-20.c persist complete snapshot scoring. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-20.c](#sp-20-c), [SP-23.b](#sp-23-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-WEB](#contract-web), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No hidden labels/change markers/scores exposed through any active surface.
@@ -1872,7 +1872,7 @@ Parent: [#23](https://github.com/spei04/strange-physics/issues/23). This issue c
 
 - **Objective:** Demonstrate both accepted research tracks with complete provenance and failures. This PR delivers integrate controlled-selector comparisons.
 - **Implementation scope:** Run capped development strategy/family matrix with paired worlds, shared fitter and adaptation.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-21.b integrate complete agent-discovery track; SP-21.c verify cross-track provenance and comparison reports. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-07.d](#sp-07-d), [SP-16.e](#sp-16-e), [SP-18.d](#sp-18-d), [SP-20.d](#sp-20-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-PROVIDER](#contract-provider); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Manifest proves equal purchased information/budget and separate compute costs.
@@ -1888,7 +1888,7 @@ Parent: [#23](https://github.com/spei04/strange-physics/issues/23). This issue c
 
 - **Objective:** Demonstrate both accepted research tracks with complete provenance and failures. This PR delivers integrate complete agent-discovery track.
 - **Implementation scope:** Run independent custom agent and predictor through experiment/checkpoint/evaluation flow with declared limits.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-21.a integrate controlled-selector comparisons; SP-21.c verify cross-track provenance and comparison reports. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-07.d](#sp-07-d), [SP-16.d](#sp-16-d), [SP-19.d](#sp-19-d), [SP-20.d](#sp-20-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-PRED](#contract-pred), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Complete-agent results separately labeled and reproducible from artifacts.
@@ -1904,7 +1904,7 @@ Parent: [#23](https://github.com/spei04/strange-physics/issues/23). This issue c
 
 - **Objective:** Demonstrate both accepted research tracks with complete provenance and failures. This PR delivers verify cross-track provenance and comparison reports.
 - **Implementation scope:** Cross-check immutable study manifests and paired reporting across both tracks with independently calculated fixtures.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-21.a integrate controlled-selector comparisons; SP-21.b integrate complete agent-discovery track. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-21.a](#sp-21-a), [SP-21.b](#sp-21-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** All counts, versions, failures and costs trace to source records.
@@ -1941,7 +1941,7 @@ Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue c
 
 - **Objective:** Let researchers create private worlds and run investigations through an accessible product. This PR delivers implement versioned world and suite catalog api.
 - **Implementation scope:** Create/read/list immutable supported world definitions and suite references with author preview and restricted agent projection.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-22.a specify accessible workspace journeys; SP-22.c implement authenticated workspace shell; SP-22.d build constrained world editor; SP-22.e integrate world-to-run product journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-01.d](#sp-01-d), [SP-11.c](#sp-11-c), [SP-13.b](#sp-13-b), [SP-03.c](#sp-03-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web), [C-HTTP](#contract-http), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Builder can save/reload valid world; author rights never reveal official blind truth.
@@ -1957,7 +1957,7 @@ Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue c
 
 - **Objective:** Let researchers create private worlds and run investigations through an accessible product. This PR delivers implement authenticated workspace shell.
 - **Implementation scope:** Build navigation, membership/run lists and authenticated client with role/error states.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-22.a specify accessible workspace journeys; SP-22.b implement versioned world and suite catalog api; SP-22.d build constrained world editor; SP-22.e integrate world-to-run product journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-01.e](#sp-01-e), [SP-22.a](#sp-22-a), [SP-08.d](#sp-08-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web), [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Real session bootstrap and list operations work across supported roles.
@@ -1973,7 +1973,7 @@ Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue c
 
 - **Objective:** Let researchers create private worlds and run investigations through an accessible product. This PR delivers build constrained world editor.
 - **Implementation scope:** Edit graph/initial ranges/approved laws and changes with server validation and immutable save.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-22.a specify accessible workspace journeys; SP-22.b implement versioned world and suite catalog api; SP-22.c implement authenticated workspace shell; SP-22.e integrate world-to-run product journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-22.b](#sp-22-b), [SP-22.c](#sp-22-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Keyboard user creates/reloads supported world with clear author/agent separation.
@@ -1989,7 +1989,7 @@ Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue c
 
 - **Objective:** Let researchers create private worlds and run investigations through an accessible product. This PR delivers integrate world-to-run product journey.
 - **Implementation scope:** Connect world version and approved package selection to create/read/cancel run with durable operation status.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-22.a specify accessible workspace journeys; SP-22.b implement versioned world and suite catalog api; SP-22.c implement authenticated workspace shell; SP-22.d build constrained world editor. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-22.d](#sp-22-d), [SP-16.e](#sp-16-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Run references exact world/package versions; failed/cancelled state displayed honestly.
@@ -2010,7 +2010,7 @@ Parent: [#25](https://github.com/spei04/strange-physics/issues/25). This issue c
 
 - **Objective:** Expose live progress and history without gaps or privacy violations. This PR delivers publish committed event and replay endpoints.
 - **Implementation scope:** Implement per-run sequence events in transaction, bounded SSE batches and authorized replay chunks.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-23.b implement cursor expiry and archive resynchronization; SP-23.c render live investigation timeline; SP-23.d integrate reconnect and cancellation ux. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-01.d](#sp-01-d), [SP-09.d](#sp-09-d), [SP-11.c](#sp-11-c), [SP-13.c](#sp-13-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web), [C-HTTP](#contract-http), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No event before commit; no DB connection held per viewer; event freshness instrumented.
@@ -2026,7 +2026,7 @@ Parent: [#25](https://github.com/spei04/strange-physics/issues/25). This issue c
 
 - **Objective:** Expose live progress and history without gaps or privacy violations. This PR delivers implement cursor expiry and archive resynchronization.
 - **Implementation scope:** Support Last-Event-ID, cursor expiry, authoritative snapshot and archived history pagination with reauthorization.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-23.a publish committed event and replay endpoints; SP-23.c render live investigation timeline; SP-23.d integrate reconnect and cancellation ux. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-23.a](#sp-23-a), [SP-13.d](#sp-13-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web), [C-ART](#contract-art), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Reconnect has no silent committed-event gaps; revoked stream closes ≤30s.
@@ -2042,7 +2042,7 @@ Parent: [#25](https://github.com/spei04/strange-physics/issues/25). This issue c
 
 - **Objective:** Expose live progress and history without gaps or privacy violations. This PR delivers render live investigation timeline.
 - **Implementation scope:** Render experiment/budget/model revisions and terminal/pending states from committed sequence.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-23.a publish committed event and replay endpoints; SP-23.b implement cursor expiry and archive resynchronization; SP-23.d integrate reconnect and cancellation ux. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-22.c](#sp-22-c), [SP-23.b](#sp-23-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Replay is deterministic; duplicates and reconnect do not double-count budget.
@@ -2058,7 +2058,7 @@ Parent: [#25](https://github.com/spei04/strange-physics/issues/25). This issue c
 
 - **Objective:** Expose live progress and history without gaps or privacy violations. This PR delivers integrate reconnect and cancellation ux.
 - **Implementation scope:** Handle lost network, auth expiry, archive resync and cancellation progress without misleading completion.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-23.a publish committed event and replay endpoints; SP-23.b implement cursor expiry and archive resynchronization; SP-23.c render live investigation timeline. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-23.c](#sp-23-c), [SP-16.e](#sp-16-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** User sees gap recovery and explicit failed resync; real cancellation path works.
@@ -2079,7 +2079,7 @@ Parent: [#26](https://github.com/spei04/strange-physics/issues/26). This issue c
 
 - **Objective:** Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers implement indexed frame replay and scrubbing.
 - **Implementation scope:** Load bounded immutable frame chunks; interpolate server data with play/pause/scrub/speed controls.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-24.b overlay prediction and uncertainty diagnostics; SP-24.c compare recorded strategies and failures; SP-24.d verify accessible diagnostic journeys. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-23.d](#sp-23-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Reference frames exact at timestamps; reference-device interaction ≤100ms and ≥30fps target measured.
@@ -2095,7 +2095,7 @@ Parent: [#26](https://github.com/spei04/strange-physics/issues/26). This issue c
 
 - **Objective:** Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers overlay prediction and uncertainty diagnostics.
 - **Implementation scope:** Show actual/predicted trajectories, interval levels, errors and insufficient-support states with post-run truth gating.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-24.a implement indexed frame replay and scrubbing; SP-24.c compare recorded strategies and failures; SP-24.d verify accessible diagnostic journeys. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-24.a](#sp-24-a), [SP-20.d](#sp-20-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Viewer distinguishes model uncertainty and failed/missing prediction from truth.
@@ -2111,7 +2111,7 @@ Parent: [#26](https://github.com/spei04/strange-physics/issues/26). This issue c
 
 - **Objective:** Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers compare recorded strategies and failures.
 - **Implementation scope:** Synchronize paired run timelines, budget/error curves and failure/cost indicators from manifest.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-24.a implement indexed frame replay and scrubbing; SP-24.b overlay prediction and uncertainty diagnostics; SP-24.d verify accessible diagnostic journeys. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-24.b](#sp-24-b), [SP-07.d](#sp-07-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Compare only compatible protocol/conditions and disclose mismatches.
@@ -2127,7 +2127,7 @@ Parent: [#26](https://github.com/spei04/strange-physics/issues/26). This issue c
 
 - **Objective:** Make actual motion, predictions, uncertainty and failures diagnosable. This PR delivers verify accessible diagnostic journeys.
 - **Implementation scope:** Complete keyboard/screen-reader alternatives, error descriptions and supported-browser rendering checks.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-24.a implement indexed frame replay and scrubbing; SP-24.b overlay prediction and uncertainty diagnostics; SP-24.c compare recorded strategies and failures. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-24.c](#sp-24-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Essential investigation/replay usable without canvas-only interaction.
@@ -2148,7 +2148,7 @@ Parent: [#27](https://github.com/spei04/strange-physics/issues/27). This issue c
 
 - **Objective:** Support programmatic use, complete exports and explicit safe publication. This PR delivers implement remote sdk session adapter.
 - **Implementation scope:** Implement scoped auth, async operation polling, idempotent experiments and checkpoint restoration through frozen interfaces.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-25.b deliver remote cli operations; SP-25.c build complete export manifest and retrieval api; SP-25.d implement explicit sanitized publication lifecycle; SP-25.e verify offline reconstruction across clients. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-01.e](#sp-01-e), [SP-08.c](#sp-08-c), [SP-16.e](#sp-16-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-HTTP](#contract-http), [C-CORE](#contract-core), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Trusted local and remote semantic conformance passes.
@@ -2164,7 +2164,7 @@ Parent: [#27](https://github.com/spei04/strange-physics/issues/27). This issue c
 
 - **Objective:** Support programmatic use, complete exports and explicit safe publication. This PR delivers deliver remote cli operations.
 - **Implementation scope:** Add login/config/run/status/cancel/export command paths with secure credential references and meaningful exit codes.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-25.a implement remote sdk session adapter; SP-25.c build complete export manifest and retrieval api; SP-25.d implement explicit sanitized publication lifecycle; SP-25.e verify offline reconstruction across clients. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-25.a](#sp-25-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-HTTP](#contract-http), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** CLI completes real remote run and resumes without duplicate experiment.
@@ -2180,7 +2180,7 @@ Parent: [#27](https://github.com/spei04/strange-physics/issues/27). This issue c
 
 - **Objective:** Support programmatic use, complete exports and explicit safe publication. This PR delivers build complete export manifest and retrieval api.
 - **Implementation scope:** Assemble authorized run package including runtime/config, observations, models, attempts and scores; hash every reference.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-25.a implement remote sdk session adapter; SP-25.b deliver remote cli operations; SP-25.d implement explicit sanitized publication lifecycle; SP-25.e verify offline reconstruction across clients. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-19.a](#sp-19-a), [SP-13.d](#sp-13-d), [SP-11.c](#sp-11-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ART](#contract-art), [C-HTTP](#contract-http), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Export complete or explicitly incomplete; offline verifier detects missing content.
@@ -2196,7 +2196,7 @@ Parent: [#27](https://github.com/spei04/strange-physics/issues/27). This issue c
 
 - **Objective:** Support programmatic use, complete exports and explicit safe publication. This PR delivers implement explicit sanitized publication lifecycle.
 - **Implementation scope:** Add owner-requested publication review, visibility transition and withdrawal/takedown metadata.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-25.a implement remote sdk session adapter; SP-25.b deliver remote cli operations; SP-25.c build complete export manifest and retrieval api; SP-25.e verify offline reconstruction across clients. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-25.c](#sp-25-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ART](#contract-art), [C-HTTP](#contract-http), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No automatic publication; sanitized release retains failed scored rows.
@@ -2212,7 +2212,7 @@ Parent: [#27](https://github.com/spei04/strange-physics/issues/27). This issue c
 
 - **Objective:** Support programmatic use, complete exports and explicit safe publication. This PR delivers verify offline reconstruction across clients.
 - **Implementation scope:** Reconstruct recorded outputs in CLI/browser without provider/network calls; verify every manifest hash.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-25.a implement remote sdk session adapter; SP-25.b deliver remote cli operations; SP-25.c build complete export manifest and retrieval api; SP-25.d implement explicit sanitized publication lifecycle. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-25.b](#sp-25-b), [SP-25.d](#sp-25-d), [SP-21.c](#sp-21-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ART](#contract-art), [C-SCI](#contract-sci), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Independent environment reproduces reports and replay from export.
@@ -2233,7 +2233,7 @@ Parent: [#28](https://github.com/spei04/strange-physics/issues/28). This issue c
 
 - **Objective:** Allow independent deployment within one documented support matrix. This PR delivers package one supported secure self-host installation.
 - **Implementation scope:** Create versioned installer/config for documented Kubernetes sandbox, SQL/object/OIDC stack and separately labeled trusted dev mode.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-26.b validate portable identity and storage adapters; SP-26.c implement self-host upgrade and recovery procedure; SP-26.d verify clean install-to-investigation journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-16.e](#sp-16-e), [SP-27.f](#sp-27-f), [SP-15.e](#sp-15-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Fresh supported environment completes health and isolation preflight.
@@ -2249,7 +2249,7 @@ Parent: [#28](https://github.com/spei04/strange-physics/issues/28). This issue c
 
 - **Objective:** Allow independent deployment within one documented support matrix. This PR delivers validate portable identity and storage adapters.
 - **Implementation scope:** Exercise standard OIDC and supported SQL/object configuration without managed-only assumptions.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-26.a package one supported secure self-host installation; SP-26.c implement self-host upgrade and recovery procedure; SP-26.d verify clean install-to-investigation journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-26.a](#sp-26-a), [SP-08.d](#sp-08-d), [SP-13.d](#sp-13-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-ART](#contract-art), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Document explicit supported compatibility matrix and deny unsafe config.
@@ -2265,7 +2265,7 @@ Parent: [#28](https://github.com/spei04/strange-physics/issues/28). This issue c
 
 - **Objective:** Allow independent deployment within one documented support matrix. This PR delivers implement self-host upgrade and recovery procedure.
 - **Implementation scope:** Automate backup/preflight, expand-contract upgrade, client compatibility and rollback/forward recovery.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-26.a package one supported secure self-host installation; SP-26.b validate portable identity and storage adapters; SP-26.d verify clean install-to-investigation journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-26.b](#sp-26-b), [SP-29.b](#sp-29-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Seeded supported previous release upgrades/restores without lost committed data.
@@ -2281,7 +2281,7 @@ Parent: [#28](https://github.com/spei04/strange-physics/issues/28). This issue c
 
 - **Objective:** Allow independent deployment within one documented support matrix. This PR delivers verify clean install-to-investigation journey.
 - **Implementation scope:** Run documented fresh install and upgrade on supported target without operator edits; retain sanitized evidence.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-26.a package one supported secure self-host installation; SP-26.b validate portable identity and storage adapters; SP-26.c implement self-host upgrade and recovery procedure. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-26.c](#sp-26-c), [SP-25.e](#sp-25-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-WEB](#contract-web), [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Run, interruption, export and recovery succeed using published instructions.
@@ -2302,7 +2302,7 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 
 - **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers create keyless environment bootstrap and policy checks.
 - **Implementation scope:** Define separate environment identities, Terraform state and narrowly scoped repository/workflow federation with policy checks.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-27.b provision versioned staging data and dispatch services; SP-27.c deploy trusted staging api and worker test substrate; SP-27.d sign trusted images and enforce release provenance; SP-27.e implement telemetry, slo counters and alerts; SP-27.f rehearse progressive deploy and rollback. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-02.b](#sp-02-b), [SP-02.c](#sp-02-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Unauthorized repo/ref/environment cannot obtain deployment authority.
@@ -2318,7 +2318,7 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 
 - **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers provision versioned staging data and dispatch services.
 - **Implementation scope:** Deploy approved SQL/storage/queue/registry/secret/network configuration through IaC with private endpoints and bounded pools.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-27.a create keyless environment bootstrap and policy checks; SP-27.c deploy trusted staging api and worker test substrate; SP-27.d sign trusted images and enforce release provenance; SP-27.e implement telemetry, slo counters and alerts; SP-27.f rehearse progressive deploy and rollback. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-27.a](#sp-27-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Configuration readback matches plan; no public storage or unintended identity grants.
@@ -2334,7 +2334,7 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 
 - **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers deploy trusted staging api and worker test substrate.
 - **Implementation scope:** Deploy service skeleton/health checks and controlled runtime trial substrate with environment identities.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-27.a create keyless environment bootstrap and policy checks; SP-27.b provision versioned staging data and dispatch services; SP-27.d sign trusted images and enforce release provenance; SP-27.e implement telemetry, slo counters and alerts; SP-27.f rehearse progressive deploy and rollback. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-27.b](#sp-27-b), [SP-09.a](#sp-09-a), [SP-01.c](#sp-01-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Smoke deployment/rollback recorded; no uploaded code enabled.
@@ -2350,7 +2350,7 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 
 - **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers sign trusted images and enforce release provenance.
 - **Implementation scope:** Add locked build/scanning/SBOM/signature/provenance pipeline and digest verification for trusted images.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-27.a create keyless environment bootstrap and policy checks; SP-27.b provision versioned staging data and dispatch services; SP-27.c deploy trusted staging api and worker test substrate; SP-27.e implement telemetry, slo counters and alerts; SP-27.f rehearse progressive deploy and rollback. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-27.c](#sp-27-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Only intended reviewed source produces accepted deployable artifact.
@@ -2366,7 +2366,7 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 
 - **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers implement telemetry, slo counters and alerts.
 - **Implementation scope:** Define structured logs/traces, bounded metric labels, eligible-request SLI counters and burn-rate/synthetic alerts.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-27.a create keyless environment bootstrap and policy checks; SP-27.b provision versioned staging data and dispatch services; SP-27.c deploy trusted staging api and worker test substrate; SP-27.d sign trusted images and enforce release provenance; SP-27.f rehearse progressive deploy and rollback. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-27.c](#sp-27-c), [SP-09.c](#sp-09-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Injected failure reaches named test receiver; dashboards reconcile denominators.
@@ -2382,7 +2382,7 @@ Parent: [#29](https://github.com/spei04/strange-physics/issues/29). This issue c
 
 - **Objective:** Create reproducible delivery, monitoring and rollback foundations. This PR delivers rehearse progressive deploy and rollback.
 - **Implementation scope:** Implement canary gate, migration ordering and compatible image/client rollback with release manifest.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-27.a create keyless environment bootstrap and policy checks; SP-27.b provision versioned staging data and dispatch services; SP-27.c deploy trusted staging api and worker test substrate; SP-27.d sign trusted images and enforce release provenance; SP-27.e implement telemetry, slo counters and alerts. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-27.d](#sp-27-d), [SP-27.e](#sp-27-e), [SP-16.c](#sp-16-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Failed canary halts expansion; seeded previous version remains recoverable.
@@ -2403,7 +2403,7 @@ Parent: [#30](https://github.com/spei04/strange-physics/issues/30). This issue c
 
 - **Objective:** Establish the supported capacity and fair-overload envelope with measurements. This PR delivers build representative capacity workload generators.
 - **Implementation scope:** Generate 1/3/8-particle family mix, viewers/builds, artifact sizes and fake-provider latencies; isolate evaluator pool.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-28.b measure stepped load and latency budgets; SP-28.c run mixed soak and saturation characterization; SP-28.d verify fair admission under faults. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-16.e](#sp-16-e), [SP-20.c](#sp-20-c), [SP-23.b](#sp-23-b), [SP-07.b](#sp-07-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-SCI](#contract-sci), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Workload manifest separates investigations/API/viewers/builds/evaluation and matches declared envelope.
@@ -2419,7 +2419,7 @@ Parent: [#30](https://github.com/spei04/strange-physics/issues/30). This issue c
 
 - **Objective:** Establish the supported capacity and fair-overload envelope with measurements. This PR delivers measure stepped load and latency budgets.
 - **Implementation scope:** Run 10→25→50→100 investigations, 100 viewers and declared API mix; measure DB/queue/event budgets.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-28.a build representative capacity workload generators; SP-28.c run mixed soak and saturation characterization; SP-28.d verify fair admission under faults. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-28.a](#sp-28-a), [SP-37.c](#sp-37-c), [SP-27.f](#sp-27-f). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Two-hour target hold meets section 7 envelope or fails with bottleneck evidence.
@@ -2435,7 +2435,7 @@ Parent: [#30](https://github.com/spei04/strange-physics/issues/30). This issue c
 
 - **Objective:** Establish the supported capacity and fair-overload envelope with measurements. This PR delivers run mixed soak and saturation characterization.
 - **Implementation scope:** Execute 24-hour soak and 300 offered-run/5× burst with slow and malicious workloads.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-28.a build representative capacity workload generators; SP-28.b measure stepped load and latency budgets; SP-28.d verify fair admission under faults. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-28.b](#sp-28-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Bounded queue/memory growth; fair rejection and evaluator backlog <24h within supported envelope.
@@ -2451,7 +2451,7 @@ Parent: [#30](https://github.com/spei04/strange-physics/issues/30). This issue c
 
 - **Objective:** Establish the supported capacity and fair-overload envelope with measurements. This PR delivers verify fair admission under faults.
 - **Implementation scope:** Mix noisy tenants, provider outages and worker failures at supported load; compare fairness and recovery.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-28.a build representative capacity workload generators; SP-28.b measure stepped load and latency budgets; SP-28.c run mixed soak and saturation characterization. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-28.c](#sp-28-c), [SP-29.c](#sp-29-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No monopolization or duplicate charge; latency/recovery thresholds measured.
@@ -2472,7 +2472,7 @@ Parent: [#31](https://github.com/spei04/strange-physics/issues/31). This issue c
 
 - **Objective:** Prove recoverability of acknowledged work and deletion state. This PR delivers implement backup and recovery-set manifests.
 - **Implementation scope:** Configure actual PITR/backup policies and verified database+object generation manifests with isolated restore identity.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-29.b restore sql and objects with tombstone replay; SP-29.c exercise worker loss and database failover; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-13.d](#sp-13-d), [SP-27.b](#sp-27-b), [SP-37.a](#sp-37-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-ART](#contract-art), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Recovery point maps every referenced object; lag/expiry visible.
@@ -2488,7 +2488,7 @@ Parent: [#31](https://github.com/spei04/strange-physics/issues/31). This issue c
 
 - **Objective:** Prove recoverability of acknowledged work and deletion state. This PR delivers restore sql and objects with tombstone replay.
 - **Implementation scope:** Restore into isolation, fence old leases/tokens and reapply deletion/revocation records before access.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-29.a implement backup and recovery-set manifests; SP-29.c exercise worker loss and database failover; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-29.a](#sp-29-a), [SP-37.c](#sp-37-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-ART](#contract-art), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Pilot ≤15min RPO/≤4h RTO measured; no deleted object resurrected to users.
@@ -2504,7 +2504,7 @@ Parent: [#31](https://github.com/spei04/strange-physics/issues/31). This issue c
 
 - **Objective:** Prove recoverability of acknowledged work and deletion state. This PR delivers exercise worker loss and database failover.
 - **Implementation scope:** Force worker/process loss and real HA failover; validate reconnection, epochs, artifact and budget integrity.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-29.a implement backup and recovery-set manifests; SP-29.b restore sql and objects with tombstone replay; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-29.b](#sp-29-b), [SP-16.e](#sp-16-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Worker p95 recovery ≤5min; DB failover ≤15min target with committed-state validation.
@@ -2520,7 +2520,7 @@ Parent: [#31](https://github.com/spei04/strange-physics/issues/31). This issue c
 
 - **Objective:** Prove recoverability of acknowledged work and deletion state. This PR delivers rehearse deployment rollback under load.
 - **Implementation scope:** Exercise bad deploy/migration under bounded workload and validate compatible rollback or forward fix.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-29.a implement backup and recovery-set manifests; SP-29.b restore sql and objects with tombstone replay; SP-29.c exercise worker loss and database failover. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-29.c](#sp-29-c), [SP-27.f](#sp-27-f). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Committed data, old clients and current leases survive documented recovery path.
@@ -2541,7 +2541,7 @@ Parent: [#32](https://github.com/spei04/strange-physics/issues/32). This issue c
 
 - **Objective:** Validate complete customer journeys and supported upgrades on one candidate. This PR delivers test authenticated end-to-end researcher journeys.
 - **Implementation scope:** Automate invite/build/run/interrupt/cancel/replay/export/delete using human and scoped machine identities.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-30.b verify version compatibility matrix; SP-30.c verify install, upgrade and recovery as one journey; SP-30.d review integrated release-candidate evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-21.c](#sp-21-c), [SP-24.d](#sp-24-d), [SP-25.e](#sp-25-e), [SP-26.d](#sp-26-d), [SP-37.c](#sp-37-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-WEB](#contract-web), [C-HTTP](#contract-http), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** All supported roles and terminal outcomes verified on release candidate.
@@ -2557,7 +2557,7 @@ Parent: [#32](https://github.com/spei04/strange-physics/issues/32). This issue c
 
 - **Objective:** Validate complete customer journeys and supported upgrades on one candidate. This PR delivers verify version compatibility matrix.
 - **Implementation scope:** Exercise current/previous supported schema/client/worker/replay versions and declared deprecation policy.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-30.a test authenticated end-to-end researcher journeys; SP-30.c verify install, upgrade and recovery as one journey; SP-30.d review integrated release-candidate evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-30.a](#sp-30-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-HTTP](#contract-http), [C-SCI](#contract-sci), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Unsupported versions fail explicitly; no silent artifact reinterpretation.
@@ -2573,7 +2573,7 @@ Parent: [#32](https://github.com/spei04/strange-physics/issues/32). This issue c
 
 - **Objective:** Validate complete customer journeys and supported upgrades on one candidate. This PR delivers verify install, upgrade and recovery as one journey.
 - **Implementation scope:** Run clean and seeded previous-release installations through upgrade/restore using published self-host instructions.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-30.a test authenticated end-to-end researcher journeys; SP-30.b verify version compatibility matrix; SP-30.d review integrated release-candidate evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-30.b](#sp-30-b), [SP-29.d](#sp-29-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No manual undocumented intervention; export hashes/budgets preserved.
@@ -2610,7 +2610,7 @@ Parent: [#33](https://github.com/spei04/strange-physics/issues/33). This issue c
 
 - **Objective:** Detect and resolve exploitable security and data-boundary failures. This PR delivers audit tenant and session boundary matrix.
 - **Implementation scope:** Run route/property/object/SSE/session authorization corpus including pooled RLS and service credentials.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-31.b audit build and runtime boundary in release configuration; SP-31.c audit research leakage and provider controls; SP-31.d verify deletion, revocation and log privacy; SP-31.e resolve security review and release blockers. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-11.c](#sp-11-c), [SP-22.e](#sp-22-e), [SP-25.d](#sp-25-d), [SP-23.b](#sp-23-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Every supported identity/route has deny and allow evidence.
@@ -2626,7 +2626,7 @@ Parent: [#33](https://github.com/spei04/strange-physics/issues/33). This issue c
 
 - **Objective:** Detect and resolve exploitable security and data-boundary failures. This PR delivers audit build and runtime boundary in release configuration.
 - **Implementation scope:** Repeat hostile build/runtime/network/DNS/metadata corpus with actual release deployment identities.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-31.a audit tenant and session boundary matrix; SP-31.c audit research leakage and provider controls; SP-31.d verify deletion, revocation and log privacy; SP-31.e resolve security review and release blockers. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-15.e](#sp-15-e), [SP-16.e](#sp-16-e), [SP-27.f](#sp-27-f). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-EXEC](#contract-exec), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No trusted secret/evaluator/cloud access; policy fails closed.
@@ -2642,7 +2642,7 @@ Parent: [#33](https://github.com/spei04/strange-physics/issues/33). This issue c
 
 - **Objective:** Detect and resolve exploitable security and data-boundary failures. This PR delivers audit research leakage and provider controls.
 - **Implementation scope:** Exercise hostile prompts/predictors and gateway limits across UI/API/error/manifest paths.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-31.a audit tenant and session boundary matrix; SP-31.b audit build and runtime boundary in release configuration; SP-31.d verify deletion, revocation and log privacy; SP-31.e resolve security review and release blockers. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-20.d](#sp-20-d), [SP-18.d](#sp-18-d), [SP-21.c](#sp-21-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-PROVIDER](#contract-provider); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No hidden truth or credential exposure; all attempts/fallbacks disclosed.
@@ -2658,7 +2658,7 @@ Parent: [#33](https://github.com/spei04/strange-physics/issues/33). This issue c
 
 - **Objective:** Detect and resolve exploitable security and data-boundary failures. This PR delivers verify deletion, revocation and log privacy.
 - **Implementation scope:** Exercise owner delete, revoked credentials, active stream/job access and restored tombstones; inspect telemetry redaction.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-31.a audit tenant and session boundary matrix; SP-31.b audit build and runtime boundary in release configuration; SP-31.c audit research leakage and provider controls; SP-31.e resolve security review and release blockers. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-37.c](#sp-37-c), [SP-31.a](#sp-31-a), [SP-29.b](#sp-29-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-ART](#contract-art), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Active access revoked immediately; seven-day active removal policy executable; backups honor disclosed expiry.
@@ -2711,7 +2711,7 @@ Parent: [#34](https://github.com/spei04/strange-physics/issues/34). This issue c
 
 - **Objective:** Obtain real design-partner adoption and operational feedback. This PR delivers onboard partner investigations.
 - **Implementation scope:** Observe genuine first-run sessions and capture private numerator/denominator, support friction and repeat-study intent.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-32.a finalize partner data terms and pilot support scope; SP-32.c review four weeks of partner usage. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-32.a](#sp-32-a), [PILOT_RELEASE](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-GOV](#contract-gov), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Named participating organizations can run private studies; deviations recorded.
@@ -2727,7 +2727,7 @@ Parent: [#34](https://github.com/spei04/strange-physics/issues/34). This issue c
 
 - **Objective:** Obtain real design-partner adoption and operational feedback. This PR delivers review four weeks of partner usage.
 - **Implementation scope:** Assess adoption, repeated studies, support load and failure patterns; assign scoped fixes and acceptance decisions.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-32.a finalize partner data terms and pilot support scope; SP-32.b onboard partner investigations. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [PILOT_OBSERVATION](#external-and-calendar-gates), [SP-36.d](#sp-36-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Actual partner outcomes recorded against proposed targets; launch-impacting gaps resolved.
@@ -2748,7 +2748,7 @@ Parent: [#35](https://github.com/spei04/strange-physics/issues/35). This issue c
 
 - **Objective:** Publish a trustworthy reference study including failures and reproducibility artifacts. This PR delivers approve official protocol and priced sweep.
 - **Implementation scope:** Freeze both scored-track manifests and exclusions before collection; obtain explicit cost/credential/publication authority.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-33.b execute and verify scored reference collection; SP-33.c publish sanitized complete reference artifacts. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-07.d](#sp-07-d), [SP-21.c](#sp-21-c), [SP-31.e](#sp-31-e), [SP-30.d](#sp-30-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Signed immutable protocol and capped run plan; no tuning afterward.
@@ -2764,7 +2764,7 @@ Parent: [#35](https://github.com/spei04/strange-physics/issues/35). This issue c
 
 - **Objective:** Publish a trustworthy reference study including failures and reproducibility artifacts. This PR delivers execute and verify scored reference collection.
 - **Implementation scope:** Run approved bounded paired suite; retain all scored attempts/failures and exact identities; reconcile costs.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-33.a approve official protocol and priced sweep; SP-33.c publish sanitized complete reference artifacts. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-33.a](#sp-33-a), [OFFICIAL_SWEEP](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-EXEC](#contract-exec), [C-PROVIDER](#contract-provider); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** All scheduled rows accounted for or explicitly failed; no selective redraw.
@@ -2780,7 +2780,7 @@ Parent: [#35](https://github.com/spei04/strange-physics/issues/35). This issue c
 
 - **Objective:** Publish a trustworthy reference study including failures and reproducibility artifacts. This PR delivers publish sanitized complete reference artifacts.
 - **Implementation scope:** Review and publish reference manifests/results/failures and sanitized provider transcripts with independent reproduction.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-33.a approve official protocol and priced sweep; SP-33.b execute and verify scored reference collection. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-33.b](#sp-33-b), [SP-25.d](#sp-25-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** All scored outcomes available without secrets; claims match measured scope.
@@ -2801,7 +2801,7 @@ Parent: [#36](https://github.com/spei04/strange-physics/issues/36). This issue c
 
 - **Objective:** Support enterprise federation and scoped credential administration. This PR delivers validate enterprise federation requirements and entitlement.
 - **Implementation scope:** Verify required partner OIDC/SAML federation flows, IdP entitlements, tenant mapping and failure/lockout design.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-34.b implement workspace-bound enterprise federation; SP-34.c migrate linked identities without lockout; SP-34.d harden enterprise service-credential lifecycle. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-08.d](#sp-08-d), [SP-00.c](#sp-00-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Chosen provider supports concrete partner scenarios or documented ADR change.
@@ -2817,7 +2817,7 @@ Parent: [#36](https://github.com/spei04/strange-physics/issues/36). This issue c
 
 - **Objective:** Support enterprise federation and scoped credential administration. This PR delivers implement workspace-bound enterprise federation.
 - **Implementation scope:** Add federation connection management, issuer binding and safe login/session mapping without domain auto-join.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-34.a validate enterprise federation requirements and entitlement; SP-34.c migrate linked identities without lockout; SP-34.d harden enterprise service-credential lifecycle. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-34.a](#sp-34-a), [SP-11.c](#sp-11-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Wrong-tenant/issuer login denied; approved member authenticates with enterprise IdP.
@@ -2833,7 +2833,7 @@ Parent: [#36](https://github.com/spei04/strange-physics/issues/36). This issue c
 
 - **Objective:** Support enterprise federation and scoped credential administration. This PR delivers migrate linked identities without lockout.
 - **Implementation scope:** Implement explicit verified linking/migration, recovery admin path and sole-owner protection.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-34.a validate enterprise federation requirements and entitlement; SP-34.b implement workspace-bound enterprise federation; SP-34.d harden enterprise service-credential lifecycle. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-34.b](#sp-34-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Existing users migrate safely without account takeover or ownership loss.
@@ -2849,7 +2849,7 @@ Parent: [#36](https://github.com/spei04/strange-physics/issues/36). This issue c
 
 - **Objective:** Support enterprise federation and scoped credential administration. This PR delivers harden enterprise service-credential lifecycle.
 - **Implementation scope:** Add enterprise scope policy, expiry/rotation reporting and administrator credential audit.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-34.a validate enterprise federation requirements and entitlement; SP-34.b implement workspace-bound enterprise federation; SP-34.c migrate linked identities without lockout. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-34.c](#sp-34-c), [SP-08.c](#sp-08-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Scoped machine identities rotate/revoke without widening privilege.
@@ -2870,7 +2870,7 @@ Parent: [#37](https://github.com/spei04/strange-physics/issues/37). This issue c
 
 - **Objective:** Keep enterprise identity provisioning and revocation consistent across live resources. This PR delivers freeze scim mapping and lifecycle semantics.
 - **Implementation scope:** Specify Users/Groups mapping, idempotency, version conflict, disable/delete and owner-protection behavior.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-35.b implement bounded provisioning and reconciliation; SP-35.c enforce rapid end-to-end deprovisioning. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-34.d](#sp-34-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Partner/security accept scope and bounded reconciliation semantics.
@@ -2886,7 +2886,7 @@ Parent: [#37](https://github.com/spei04/strange-physics/issues/37). This issue c
 
 - **Objective:** Keep enterprise identity provisioning and revocation consistent across live resources. This PR delivers implement bounded provisioning and reconciliation.
 - **Implementation scope:** Implement SCIM endpoints, group role mapping, paginated sync and replay-safe audit.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-35.a freeze scim mapping and lifecycle semantics; SP-35.c enforce rapid end-to-end deprovisioning. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-35.a](#sp-35-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Repeated/out-of-order operations converge without escalation.
@@ -2902,7 +2902,7 @@ Parent: [#37](https://github.com/spei04/strange-physics/issues/37). This issue c
 
 - **Objective:** Keep enterprise identity provisioning and revocation consistent across live resources. This PR delivers enforce rapid end-to-end deprovisioning.
 - **Implementation scope:** Revoke account/service/run access, close streams and stop unauthorized new work; reconcile active jobs.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-35.a freeze scim mapping and lifecycle semantics; SP-35.b implement bounded provisioning and reconciliation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-35.b](#sp-35-b), [SP-37.e](#sp-37-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-EXEC](#contract-exec), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Disabled principal denied new calls immediately; stream ≤30s and job launch ≤5s revocation targets.
@@ -2923,7 +2923,7 @@ Parent: [#38](https://github.com/spei04/strange-physics/issues/38). This issue c
 
 - **Objective:** Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers validate an outside team's agent and law extension.
 - **Implementation scope:** Observe external author adding agent/law without core changes; record actual friction and review bounded fixes.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-36.b validate independent self-host install and upgrade; SP-36.c independently reproduce a released report; SP-36.d close partner integration findings. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-25.e](#sp-25-e), [SP-26.d](#sp-26-d), [SP-32.b](#sp-32-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-CORE](#contract-core), [C-SCI](#contract-sci), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** External code runs and recovers using supported interfaces; independent author evidence.
@@ -2939,7 +2939,7 @@ Parent: [#38](https://github.com/spei04/strange-physics/issues/38). This issue c
 
 - **Objective:** Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers validate independent self-host install and upgrade.
 - **Implementation scope:** Support outside team using documented target; verify fresh install, upgrade and restore without hidden operator edits.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-36.a validate an outside team's agent and law extension; SP-36.c independently reproduce a released report; SP-36.d close partner integration findings. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-26.d](#sp-26-d), [SP-32.b](#sp-32-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** External operator signs observed install/upgrade results and limitations.
@@ -2955,7 +2955,7 @@ Parent: [#38](https://github.com/spei04/strange-physics/issues/38). This issue c
 
 - **Objective:** Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers independently reproduce a released report.
 - **Implementation scope:** External consumer reconstructs manifest/report without model calls; compare hashes and numerical tolerances.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-36.a validate an outside team's agent and law extension; SP-36.b validate independent self-host install and upgrade; SP-36.d close partner integration findings. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-36.a](#sp-36-a), [SP-36.b](#sp-36-b), [SP-33.c](#sp-33-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Independent reproduction succeeds or limitation blocks claim.
@@ -2971,7 +2971,7 @@ Parent: [#38](https://github.com/spei04/strange-physics/issues/38). This issue c
 
 - **Objective:** Prove that an outside team can extend, deploy and reproduce the platform. This PR delivers close partner integration findings.
 - **Implementation scope:** Triage observed adoption issues, assign reviewable fixes from contingency and obtain retest acceptance.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-36.a validate an outside team's agent and law extension; SP-36.b validate independent self-host install and upgrade; SP-36.c independently reproduce a released report. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-36.c](#sp-36-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No unresolved adoption blocker; scope and external evidence explicit.
@@ -2992,7 +2992,7 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 
 - **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers persist basic security audit events.
 - **Implementation scope:** Record actor/action/target/outcome for membership, secrets, publication, deletion and operator changes with restricted append-only role.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-37.b implement authorized deletion and retention jobs; SP-37.c preserve deletion and revocation across recovery; SP-37.d export tamper-evident enterprise audit history; SP-37.e verify enterprise retention and privacy operations; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-11.c](#sp-11-c), [SP-13.c](#sp-13-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-DB](#contract-db), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** All pilot-sensitive mutations produce safe immutable audit record.
@@ -3008,7 +3008,7 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 
 - **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers implement authorized deletion and retention jobs.
 - **Implementation scope:** Add owner delete/retention configuration, immediate access tombstone and bounded background active-object removal.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-37.a persist basic security audit events; SP-37.c preserve deletion and revocation across recovery; SP-37.d export tamper-evident enterprise audit history; SP-37.e verify enterprise retention and privacy operations; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-37.a](#sp-37-a), [SP-13.d](#sp-13-d), [SP-10.c](#sp-10-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ART](#contract-art), [C-ID](#contract-id), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Interactive access revoked on accepted delete; removal target ≤7 days with retriable state.
@@ -3024,7 +3024,7 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 
 - **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers preserve deletion and revocation across recovery.
 - **Implementation scope:** Replicate protected tombstone/revocation ledger outside restored snapshot and block reopening until replay complete.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-37.a persist basic security audit events; SP-37.b implement authorized deletion and retention jobs; SP-37.d export tamper-evident enterprise audit history; SP-37.e verify enterprise retention and privacy operations; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-37.b](#sp-37-b), [SP-27.b](#sp-27-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-ART](#contract-art), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Restored old DB cannot resurrect access; backup expiry policy accurately reported.
@@ -3040,7 +3040,7 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 
 - **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers export tamper-evident enterprise audit history.
 - **Implementation scope:** Add scoped paginated audit export with integrity manifest and one-year proposed lifecycle controls.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-37.a persist basic security audit events; SP-37.b implement authorized deletion and retention jobs; SP-37.c preserve deletion and revocation across recovery; SP-37.e verify enterprise retention and privacy operations; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-37.c](#sp-37-c), [SP-34.d](#sp-34-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ID](#contract-id), [C-HTTP](#contract-http), [C-ART](#contract-art); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Authorized admin can verify completeness/integrity; other roles denied.
@@ -3056,7 +3056,7 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 
 - **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers verify enterprise retention and privacy operations.
 - **Implementation scope:** Exercise configured retention, key rotation, backup expiry and deletion reporting; document exceptions and supported limits.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-37.a persist basic security audit events; SP-37.b implement authorized deletion and retention jobs; SP-37.c preserve deletion and revocation across recovery; SP-37.d export tamper-evident enterprise audit history; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-37.d](#sp-37-d), [SP-29.b](#sp-29-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-ART](#contract-art), [C-OPS](#contract-ops), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Active deletion and disclosed backup lifecycle verified; no stale access through export.
@@ -3072,7 +3072,7 @@ Parent: [#39](https://github.com/spei04/strange-physics/issues/39). This issue c
 
 - **Objective:** Make access changes, deletion and retention auditable and recoverable. This PR delivers review customer data and support documentation.
 - **Implementation scope:** Complete reviewed data flows, subprocessors, deletion/support limitations and security questionnaire evidence with specialists.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-37.a persist basic security audit events; SP-37.b implement authorized deletion and retention jobs; SP-37.c preserve deletion and revocation across recovery; SP-37.d export tamper-evident enterprise audit history; SP-37.e verify enterprise retention and privacy operations. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-37.e](#sp-37-e), [SP-32.a](#sp-32-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Terms and product claims reflect actual controls and measured support scope.
@@ -3093,7 +3093,7 @@ Parent: [#40](https://github.com/spei04/strange-physics/issues/40). This issue c
 
 - **Objective:** Recover service and consistent data after primary-region loss. This PR delivers create an independent regional recovery set.
 - **Implementation scope:** Copy recoverable DB/object generations and suppression ledger into approved secondary US location with independent access.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-38.b perform timed secondary-region recovery; SP-38.c resolve and repeat failed recovery steps. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-29.b](#sp-29-b), [SP-37.e](#sp-37-e). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-ART](#contract-art), [C-DB](#contract-db); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Copy completion and consistency measured; recovery set age ≤24h.
@@ -3109,7 +3109,7 @@ Parent: [#40](https://github.com/spei04/strange-physics/issues/40). This issue c
 
 - **Objective:** Recover service and consistent data after primary-region loss. This PR delivers perform timed secondary-region recovery.
 - **Implementation scope:** Restore isolated services, fence former region, reapply tombstones/credentials and rehearse endpoint cutover.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-38.a create an independent regional recovery set; SP-38.c resolve and repeat failed recovery steps. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-38.a](#sp-38-a), [SP-26.d](#sp-26-d). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Measured regional RPO/RTO ≤24h with tenant/integrity suite passing.
@@ -3125,7 +3125,7 @@ Parent: [#40](https://github.com/spei04/strange-physics/issues/40). This issue c
 
 - **Objective:** Recover service and consistent data after primary-region loss. This PR delivers resolve and repeat failed recovery steps.
 - **Implementation scope:** Turn drill defects into scoped fixes, repeat failed steps and update runbook/evidence manifest.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-38.a create an independent regional recovery set; SP-38.b perform timed secondary-region recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-38.b](#sp-38-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** All regional restore blockers resolved at exact candidate revision.
@@ -3146,7 +3146,7 @@ Parent: [#41](https://github.com/spei04/strange-physics/issues/41). This issue c
 
 - **Objective:** Publish measured limits for the final enterprise configuration. This PR delivers revalidate final supported capacity envelope.
 - **Implementation scope:** Repeat changed-path 100-run load/soak with final identity/retention/runtime configuration and compare baselines.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-39.b publish measured cost and operating limits. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-28.d](#sp-28-d), [SP-30.d](#sp-30-d), [SP-35.c](#sp-35-c), [SP-37.f](#sp-37-f), [SP-38.c](#sp-38-c), [SP-40.b](#sp-40-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Final candidate meets section 7 and no data/budget/security regression.
@@ -3162,7 +3162,7 @@ Parent: [#41](https://github.com/spei04/strange-physics/issues/41). This issue c
 
 - **Objective:** Publish measured limits for the final enterprise configuration. This PR delivers publish measured cost and operating limits.
 - **Implementation scope:** Reconcile compute/storage/provider costs and publish supported quotas, queue/capacity limits and scaling triggers.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-39.a revalidate final supported capacity envelope. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-39.a](#sp-39-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Cost separates measured/estimated/unknown and provider versus platform.
@@ -3183,7 +3183,7 @@ Parent: [#42](https://github.com/spei04/strange-physics/issues/42). This issue c
 
 - **Objective:** Obtain independent assurance and demonstrated operational support. This PR delivers book independent assessment and support roster.
 - **Implementation scope:** Reserve assessor window, scope APIs/build/runtime/evaluator and appoint ≥4 trained responders with explicit coverage.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-40.b remediate independent assessment findings; SP-40.c exercise incident and credential response; SP-40.d start final-candidate slo evidence collection; SP-40.e review 30 calendar days of slo evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-00.c](#sp-00-c), [SP-19.a](#sp-19-a). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** External assessment slot and actual on-call plan confirmed before GA window.
@@ -3199,7 +3199,7 @@ Parent: [#42](https://github.com/spei04/strange-physics/issues/42). This issue c
 
 - **Objective:** Obtain independent assurance and demonstrated operational support. This PR delivers remediate independent assessment findings.
 - **Implementation scope:** Triage actual assessment, implement bounded fixes and independent retests with exact artifact references.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-40.a book independent assessment and support roster; SP-40.c exercise incident and credential response; SP-40.d start final-candidate slo evidence collection; SP-40.e review 30 calendar days of slo evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-40.a](#sp-40-a), [SP-35.c](#sp-35-c), [SP-37.f](#sp-37-f), [SP-38.c](#sp-38-c), [ASSESSMENT](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-ID](#contract-id), [C-EXEC](#contract-exec); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** No exploitable critical/high finding; approved lower-risk exceptions dated.
@@ -3215,7 +3215,7 @@ Parent: [#42](https://github.com/spei04/strange-physics/issues/42). This issue c
 
 - **Objective:** Obtain independent assurance and demonstrated operational support. This PR delivers exercise incident and credential response.
 - **Implementation scope:** Run outage/credential-compromise exercise with real roster, communication templates and recovery actions.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-40.a book independent assessment and support roster; SP-40.b remediate independent assessment findings; SP-40.d start final-candidate slo evidence collection; SP-40.e review 30 calendar days of slo evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-40.b](#sp-40-b), [SP-39.b](#sp-39-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-ID](#contract-id); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Operators demonstrate target acknowledgement/containment under agreed coverage.
@@ -3231,7 +3231,7 @@ Parent: [#42](https://github.com/spei04/strange-physics/issues/42). This issue c
 
 - **Objective:** Obtain independent assurance and demonstrated operational support. This PR delivers start final-candidate slo evidence collection.
 - **Implementation scope:** Verify counters/denominators and synthetic checks on production pilot release candidate; freeze observation identity.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-40.a book independent assessment and support roster; SP-40.b remediate independent assessment findings; SP-40.c exercise incident and credential response; SP-40.e review 30 calendar days of slo evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-40.c](#sp-40-c), [SP-32.b](#sp-32-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Collection covers eligible requests, launch and execution metrics with private evidence.
@@ -3247,7 +3247,7 @@ Parent: [#42](https://github.com/spei04/strange-physics/issues/42). This issue c
 
 - **Objective:** Obtain independent assurance and demonstrated operational support. This PR delivers review 30 calendar days of slo evidence.
 - **Implementation scope:** Review complete rolling-window history, outages/exclusions, error budget and configuration changes.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-40.a book independent assessment and support roster; SP-40.b remediate independent assessment findings; SP-40.c exercise incident and credential response; SP-40.d start final-candidate slo evidence collection. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SLO_OBSERVATION](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops), [C-GOV](#contract-gov); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** 30 calendar days complete; objectives and incident evidence satisfy GA gate or window restarts/rebaselines.
@@ -3284,7 +3284,7 @@ Parent: [#43](https://github.com/spei04/strange-physics/issues/43). This issue c
 
 - **Objective:** Release only against verified gates and learn from actual launch outcomes. This PR delivers execute approved progressive ga rollout.
 - **Implementation scope:** Run canary/progressive deployment with monitored health, bounded expansion and rehearsed rollback.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-41.a sign evidence-based ga readiness; SP-41.c conduct day-seven launch review; SP-41.d conduct day-thirty planning reset. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [SP-41.a](#sp-41-a), [GA_RELEASE](#external-and-calendar-gates). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Supported deployment passes canary and release manifest records actual outcome.
@@ -3316,7 +3316,7 @@ Parent: [#43](https://github.com/spei04/strange-physics/issues/43). This issue c
 
 - **Objective:** Release only against verified gates and learn from actual launch outcomes. This PR delivers conduct day-thirty planning reset.
 - **Implementation scope:** Compare 30-day outcomes to objectives and propose evidence-driven next-quarter work.
-- **Out of scope:** Other PR units in this epic; release approval; new law families or expanded deployment support.
+- **Out of scope:** Excludes SP-41.a sign evidence-based ga readiness; SP-41.b execute approved progressive ga rollout; SP-41.c conduct day-seven launch review. Also excludes release authorization and expansion beyond the accepted law/deployment scope.
 - **Prerequisites and dependencies:** [POST_LAUNCH_D30](#external-and-calendar-gates), [SP-41.c](#sp-41-c). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-GOV](#contract-gov), [C-OPS](#contract-ops); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Product reviews actual outcomes and approves changed priorities separately.

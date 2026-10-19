@@ -38,7 +38,7 @@
     [
       "D01",
       "Approve this execution baseline and initial work",
-      "Recommended: accept the 168-task backlog and authorize R0 plus the bounded spring slice SP-03.a/b, SP-04.a/b/e, SP-06.a when their prerequisites pass. Select subsequent vertical slices at integration reviews.",
+      "Recommended: accept the 168-task backlog; begin with R0, the first-ten-day design/foundation work SP-22.a and SP-27.a, and the bounded spring slice SP-03.a/b, SP-04.a/b/e, SP-06.a when their prerequisites pass. Review each later vertical slice at its integration checkpoint; concrete paid/release gates still require their stated approval.",
       "Pending user approval; no implementation in this change."
     ],
     [
@@ -2299,7 +2299,7 @@
       "accept": "Forged/wrong-issuer/expired tokens denied; logout and key rotation behavior defined.",
       "tests": "Fake issuer, key rollover, nonce/state/CSRF and token validation tests.",
       "risk": "No email-domain membership; safe token errors.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-08.b implement workspaces, invitations and roles; SP-08.c issue scoped machine and run credentials; SP-08.d implement secure browser authentication endpoints. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 1,
       "eligible": [
@@ -2337,7 +2337,7 @@
       "accept": "Role matrix enforced; sole-owner removal and invite replay rejected.",
       "tests": "Concurrent accept, expiry, cross-workspace invite and account-linking tests.",
       "risk": "Prevent role escalation and confused identity merges.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-08.a verify oidc identities and sessions; SP-08.c issue scoped machine and run credentials; SP-08.d implement secure browser authentication endpoints. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 1,
       "eligible": [
@@ -2410,7 +2410,7 @@
       "accept": "Browser and API sessions agree on current role and revocation.",
       "tests": "CSRF/origin, logout, refresh and session fixation tests.",
       "risk": "Fail closed on unknown issuer or session state.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-08.a verify oidc identities and sessions; SP-08.b implement workspaces, invitations and roles; SP-08.c issue scoped machine and run credentials. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 0.75,
       "eligible": [
@@ -2447,7 +2447,7 @@
       "accept": "Schema enforces run/operation/ordinal uniqueness; rollback/forward behavior documented.",
       "tests": "Real PostgreSQL fresh/upgrade, FK, unique and transaction tests.",
       "risk": "Separate migration and runtime roles; parameterized access.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-09.b reserve experiments and budgets atomically; SP-09.c implement run and operation state transitions; SP-09.d connect trusted simulator results to run transactions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 1,
       "eligible": [
@@ -2483,7 +2483,7 @@
       "accept": "Concurrent duplicate returns same logical result; changed request conflicts; invalid request not charged.",
       "tests": "Parallel retries, crash boundaries, exhausted budget and hash-conflict tests.",
       "risk": "No acknowledgement before durable commit; no duplicate debit.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-09.a create tenant sql schema and migration harness; SP-09.c implement run and operation state transitions; SP-09.d connect trusted simulator results to run transactions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 1.25,
       "eligible": [
@@ -2520,7 +2520,7 @@
       "accept": "Legal transitions and async cancellation observable; unauthorized IDs hidden.",
       "tests": "Race cancel/complete/expire, stale revision and cross-tenant operation tests.",
       "risk": "Accepting cancel is not proof worker stopped.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-09.a create tenant sql schema and migration harness; SP-09.b reserve experiments and budgets atomically; SP-09.d connect trusted simulator results to run transactions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 1,
       "eligible": [
@@ -2557,7 +2557,7 @@
       "accept": "One accepted experiment has one terminal result/debit and no hidden parameter fields.",
       "tests": "Schema parity, failed integration, duplicate result and malicious error-message tests.",
       "risk": "Trusted simulator identity separate from user code.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-09.a create tenant sql schema and migration harness; SP-09.b reserve experiments and budgets atomically; SP-09.c implement run and operation state transitions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 1,
       "eligible": [
@@ -2595,7 +2595,7 @@
       "accept": "Duplicate/reordered/delayed delivery does not duplicate logical launch.",
       "tests": "Duplicate delivery, crash after enqueue, retry exhaustion and replay tests.",
       "risk": "Queue never owns authoritative state; bounded retries.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-10.b fence worker leases and heartbeats; SP-10.c reconcile abandoned launches and results. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 1.25,
       "eligible": [
@@ -2632,7 +2632,7 @@
       "accept": "Partitioned old worker cannot write after replacement lease.",
       "tests": "Lease expiry, heartbeat race, clock-skew and stale-commit tests.",
       "risk": "Use server timestamps and transaction guards.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-10.a dispatch transactional outbox intents; SP-10.c reconcile abandoned launches and results. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 1,
       "eligible": [
@@ -2670,7 +2670,7 @@
       "accept": "Reconciliation converges without resurrecting terminal or cancelled runs.",
       "tests": "Process death, orphan launch, terminal race and replay idempotency tests.",
       "risk": "Retry bounded by run deadline; no invisible restart.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-10.a dispatch transactional outbox intents; SP-10.b fence worker leases and heartbeats. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 2.5,
       "eligible": [
@@ -2708,7 +2708,7 @@
       "accept": "Cross-tenant reads/writes denied even under omitted filter and pooled reuse.",
       "tests": "Role-bypass, unset context, FK traversal and connection reuse tests.",
       "risk": "Runtime cannot own tables or bypass RLS.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-11.b authorize every operation and artifact reference; SP-11.c enforce live revocation and audit decisions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 1,
       "eligible": [
@@ -2744,7 +2744,7 @@
       "accept": "Every route/field has role decision; hashes alone confer no access.",
       "tests": "Endpoint/ID substitution, mass assignment and future-object policy fixtures.",
       "risk": "Signed access grants short-lived and authorized; no raw bucket access.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-11.a enforce tenant row policies and safe pool reuse; SP-11.c enforce live revocation and audit decisions. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 1,
       "eligible": [
@@ -2824,7 +2824,7 @@
       "accept": "No concurrent budget overspend; unknown amounts remain explicit.",
       "tests": "Parallel exhaustion, partial settlement, negative amount and crash-retry tests.",
       "risk": "Limit enforcement independent of agent honesty.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-12.b implement fair bounded admission; SP-12.c expose usage reconciliation and safe summaries. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 1.25,
       "eligible": [
@@ -2862,7 +2862,7 @@
       "accept": "One tenant cannot monopolize slots; overload yields explicit queued/429 outcome.",
       "tests": "Starvation, burst, cancellation release and scheduler replay tests.",
       "risk": "No unbounded in-memory queue or silent dropping.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-12.a reserve and settle resource allowances; SP-12.c expose usage reconciliation and safe summaries. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 2,
       "eligible": [
@@ -2900,7 +2900,7 @@
       "accept": "Totals reconcile to immutable attempts without claiming estimated costs as billed.",
       "tests": "Sum/replay/missing usage, tenant access and pagination tests.",
       "risk": "No prompts or credentials in usage output.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-12.a reserve and settle resource allowances; SP-12.b implement fair bounded admission. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R2",
       "contingency": 0.75,
       "eligible": [
@@ -2939,7 +2939,7 @@
       "accept": "Corrupt/incomplete objects cannot become committed references.",
       "tests": "Hash mismatch, conditional write, interrupted upload and storage outage tests.",
       "risk": "Private buckets; no user-specified arbitrary filesystem path.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-13.b expose authorized artifact and package upload lifecycle; SP-13.c commit checkpoint and model references safely; SP-13.d collect abandoned uploads without deleting live state. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -2978,7 +2978,7 @@
       "accept": "Only owner workspace can finalize/read; pending objects remain quarantined.",
       "tests": "Traversal/decompression/oversize, expired grant and cross-tenant object tests.",
       "risk": "Do not execute uploaded content; bounded reads.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-13.a implement immutable content storage adapter; SP-13.c commit checkpoint and model references safely; SP-13.d collect abandoned uploads without deleting live state. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -3019,7 +3019,7 @@
       "accept": "Crash between object and SQL leaves recoverable orphan, never missing committed artifact.",
       "tests": "Write/commit crash matrix, hash tamper, stale epoch and prefix mismatch.",
       "risk": "Agent state interpreted only in sandbox; bound JSON size.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-13.a implement immutable content storage adapter; SP-13.b expose authorized artifact and package upload lifecycle; SP-13.d collect abandoned uploads without deleting live state. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -3058,7 +3058,7 @@
       "accept": "Only unreferenced inactive objects removed; immutable retained artifacts remain.",
       "tests": "Concurrent finalize, active lease, repeated cleanup and storage-error tests.",
       "risk": "No broad bucket deletion; preserve legal/retention exceptions.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-13.a implement immutable content storage adapter; SP-13.b expose authorized artifact and package upload lifecycle; SP-13.c commit checkpoint and model references safely. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 0.75,
       "eligible": [
@@ -3097,7 +3097,7 @@
       "accept": "Invalid or unpinned packages fail before build; accepted source immutable.",
       "tests": "Symlink/path escape, archive bomb, missing lock and digest-change tests.",
       "risk": "Treat install hooks as arbitrary code.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-14.b execute isolated quarantined builds; SP-14.c scan and promote digest-pinned runtime images; SP-14.d review hostile-build evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -3135,7 +3135,7 @@
       "accept": "Build can access only approved mirror/registry paths; timeout and resource kill enforced.",
       "tests": "Malicious install hooks, metadata/DNS/egress probes and exhaustion tests.",
       "risk": "Never reuse trusted CI runner identity or mutable shared volume.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-14.a validate package manifests and safe extraction; SP-14.c scan and promote digest-pinned runtime images; SP-14.d review hostile-build evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 2.5,
       "eligible": [
@@ -3172,7 +3172,7 @@
       "accept": "Only approved matching image launches; rejected scan stays quarantined.",
       "tests": "Image substitution, unsigned provenance, stale scan and failed promotion tests.",
       "risk": "Promotion identity cannot overwrite trusted base images.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-14.a validate package manifests and safe extraction; SP-14.b execute isolated quarantined builds; SP-14.d review hostile-build evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -3209,7 +3209,7 @@
       "accept": "No secret/exfiltration path; failures block uploaded-code enablement.",
       "tests": "End-to-end hostile hook, fork/disk exhaustion and poisoned cache tests.",
       "risk": "Real environment evidence required; mocks insufficient.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-14.a validate package manifests and safe extraction; SP-14.b execute isolated quarantined builds; SP-14.c scan and promote digest-pinned runtime images. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 2.5,
       "eligible": [
@@ -3284,7 +3284,7 @@
       "accept": "Invalid pod configurations fail closed; bounded malicious workloads terminated.",
       "tests": "Admission policy, runtime-unavailable, host mount, service-token and exhaustion tests.",
       "risk": "Sandbox layer alone is insufficient; enforce full configuration.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-15.a probe scientific runtime compatibility; SP-15.c implement epoch-scoped run broker permissions; SP-15.d enforce broker-only network and dns; SP-15.e validate hostile-runtime isolation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 2.5,
       "eligible": [
@@ -3323,7 +3323,7 @@
       "accept": "Agent cannot access full workspace API or another run/epoch.",
       "tests": "Audience/scope/epoch substitution, expired token and terminal-run tests.",
       "risk": "No provider/evaluator credentials or privileged diagnostic messages.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-15.a probe scientific runtime compatibility; SP-15.b enforce sandbox and resource admission policy; SP-15.d enforce broker-only network and dns; SP-15.e validate hostile-runtime isolation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -3362,7 +3362,7 @@
       "accept": "Agent reaches broker only; predictor has no outbound path including DNS.",
       "tests": "Metadata/private-IP/public-DNS/redirect/IPv6 and broker spoof tests.",
       "risk": "Fail closed when policy unavailable; record policy version.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-15.a probe scientific runtime compatibility; SP-15.b enforce sandbox and resource admission policy; SP-15.c implement epoch-scoped run broker permissions; SP-15.e validate hostile-runtime isolation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 2.5,
       "eligible": [
@@ -3399,7 +3399,7 @@
       "accept": "Security reviewer signs exact deployed image/network/runtime evidence before uploads enabled.",
       "tests": "Cross-run filesystem, secret probes, resource attack and stale-token tests.",
       "risk": "Unresolved critical/high isolation issue blocks release.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-15.a probe scientific runtime compatibility; SP-15.b enforce sandbox and resource admission policy; SP-15.c implement epoch-scoped run broker permissions; SP-15.d enforce broker-only network and dns. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 2.5,
       "eligible": [
@@ -3440,7 +3440,7 @@
       "accept": "Remote run produces same logical observations/budgets as trusted local fixture.",
       "tests": "Local/remote conformance and one complete remote investigation.",
       "risk": "Only approved image and current epoch launch.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-16.b resume an agent from committed checkpoints; SP-16.c cancel, expire and reconcile remote work; SP-16.d prove end-to-end interruption invariants; SP-16.e instrument remote execution and recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 2.5,
       "eligible": [
@@ -3479,7 +3479,7 @@
       "accept": "Replacement never buys/debits an already committed experiment.",
       "tests": "Kill before/after reserve/result/checkpoint with deterministic replay tests.",
       "risk": "Incompatible runtime or corrupt checkpoint fails visibly.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-16.a coordinate one remote investigation; SP-16.c cancel, expire and reconcile remote work; SP-16.d prove end-to-end interruption invariants; SP-16.e instrument remote execution and recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 2.5,
       "eligible": [
@@ -3518,7 +3518,7 @@
       "accept": "New work revoked ≤5s; controlled workers terminate ≤60s or explicit fault recorded.",
       "tests": "Cancel/complete races, uncooperative agent, deadline and orphan reconciliation.",
       "risk": "Do not refund pending usage before settlement.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-16.a coordinate one remote investigation; SP-16.b resume an agent from committed checkpoints; SP-16.d prove end-to-end interruption invariants; SP-16.e instrument remote execution and recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -3556,7 +3556,7 @@
       "accept": "No lost acknowledged result or duplicate logical charge; p95 recovery target measured.",
       "tests": "Forced-death matrix, partitioned stale worker and replay hash consistency.",
       "risk": "Private exact-runtime evidence; failure blocks remote availability claims.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-16.a coordinate one remote investigation; SP-16.b resume an agent from committed checkpoints; SP-16.c cancel, expire and reconcile remote work; SP-16.e instrument remote execution and recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 2.5,
       "eligible": [
@@ -3594,7 +3594,7 @@
       "accept": "Alerts detect a deliberately stuck run and identify epoch/operation without private payload.",
       "tests": "Synthetic stuck/failed/cancelled runs and telemetry redaction assertions.",
       "risk": "No run IDs as unbounded metric labels; trace access controlled.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-16.a coordinate one remote investigation; SP-16.b resume an agent from committed checkpoints; SP-16.c cancel, expire and reconcile remote work; SP-16.d prove end-to-end interruption invariants. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -3671,7 +3671,7 @@
       "accept": "Crash after send yields explicit ambiguity; identical key never creates hidden new attempt.",
       "tests": "Send/commit timeout/crash, duplicate key and usage reconciliation tests.",
       "risk": "External billing is not exactly-once; never blindly resend.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-17.a freeze model-call and credential-management contracts; SP-17.c manage workspace provider secrets; SP-17.d replay recorded model responses offline. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 2.5,
       "eligible": [
@@ -3711,7 +3711,7 @@
       "accept": "Keys only accessible to gateway identity; callers receive redacted status.",
       "tests": "Cross-workspace access, revoked key, SSRF/redirect and logging tests.",
       "risk": "Never return stored keys or place secrets in agent images.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-17.a freeze model-call and credential-management contracts; SP-17.b persist provider attempts and ambiguous usage; SP-17.d replay recorded model responses offline. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 1,
       "eligible": [
@@ -3749,7 +3749,7 @@
       "accept": "Replay consumes no network/provider request; ambiguity persists until resolved.",
       "tests": "Offline network-denial, response tamper, missing body and repeat replay tests.",
       "risk": "Private prompts retained under run policy; no silent fallback.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-17.a freeze model-call and credential-management contracts; SP-17.b persist provider attempts and ambiguous usage; SP-17.c manage workspace provider secrets. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 1,
       "eligible": [
@@ -3787,7 +3787,7 @@
       "accept": "429/5xx/malformed responses have visible controlled outcomes without model substitution.",
       "tests": "Fake provider retries/timeout/overflow/circuit and credential denial tests.",
       "risk": "All attempts metered; request destinations fixed.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-18.b version the llm information transform; SP-18.c implement controlled llm candidate selection; SP-18.d validate a capped real-provider integration. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 1,
       "eligible": [
@@ -3825,7 +3825,7 @@
       "accept": "Inputs contain same disclosed information and candidate set; transform version immutable.",
       "tests": "Long history, injected annotation, hidden-field and token-ceiling fixtures.",
       "risk": "Treat content as data; hypothesis text is not correctness evidence.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-18.a implement bounded provider transport; SP-18.c implement controlled llm candidate selection; SP-18.d validate a capped real-provider integration. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 2,
       "eligible": [
@@ -3863,7 +3863,7 @@
       "accept": "Same calibration/fitter/adaptation/budget as other selectors; costs separately recorded.",
       "tests": "Malformed/hallucinated ID, repeated invalid, budget exhaustion and checkpoint replay.",
       "risk": "No unconstrained tool execution or privileged summaries.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-18.a implement bounded provider transport; SP-18.b version the llm information transform; SP-18.d validate a capped real-provider integration. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 1,
       "eligible": [
@@ -3981,7 +3981,7 @@
       "accept": "Predictor digest and protocol identity recorded and verified before invocation.",
       "tests": "Digest substitution, missing entrypoint, lock mismatch and rejected build tests.",
       "risk": "No separate less-secure build path.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-19.a freeze executable predictor protocol; SP-19.c validate bounded predictor outputs; SP-19.d exercise hostile predictor fixtures. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 1,
       "eligible": [
@@ -4019,7 +4019,7 @@
       "accept": "Malformed/nonfinite/oversize results become explicit scored failures.",
       "tests": "NaN, reordered particles, reversed times, invalid intervals and timeout fixtures.",
       "risk": "Never deserialize executable objects in evaluator controller.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-19.a freeze executable predictor protocol; SP-19.b build predictor images through approved pipeline; SP-19.d exercise hostile predictor fixtures. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 2.5,
       "eligible": [
@@ -4056,7 +4056,7 @@
       "accept": "No filesystem/network/error side channel to restricted evaluator material.",
       "tests": "Exfiltration, secret scan, timing/output overflow and process persistence tests.",
       "risk": "Security reviewer inspects deployed evidence.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-19.a freeze executable predictor protocol; SP-19.b build predictor images through approved pipeline; SP-19.c validate bounded predictor outputs. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 2,
       "eligible": [
@@ -4096,7 +4096,7 @@
       "accept": "Agent, viewer and gateway roles cannot read blind world/probe state.",
       "tests": "IAM/role substitution, object enumeration and misconfigured startup tests.",
       "risk": "Explicitly public suites separated from blind/customer data.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-20.b run networkless predictor jobs; SP-20.c persist complete snapshot scoring; SP-20.d audit evaluation information flow. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 1,
       "eligible": [
@@ -4136,7 +4136,7 @@
       "accept": "Truth stays outside sandbox; duplicate job yields one authoritative output.",
       "tests": "Predictor death, deadline, duplicate launch and input/output staging tests.",
       "risk": "No feedback or long-lived evaluator credentials in sandbox.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-20.a isolate evaluation truth and job ownership; SP-20.c persist complete snapshot scoring; SP-20.d audit evaluation information flow. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 2.5,
       "eligible": [
@@ -4176,7 +4176,7 @@
       "accept": "Run is scored only when all required jobs terminal; counters reconcile.",
       "tests": "Missing snapshot, duplicate result, all-failure and incomplete evaluation tests.",
       "risk": "No active-agent score events or artifacts.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-20.a isolate evaluation truth and job ownership; SP-20.b run networkless predictor jobs; SP-20.d audit evaluation information flow. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 2.5,
       "eligible": [
@@ -4216,7 +4216,7 @@
       "accept": "No hidden labels/change markers/scores exposed through any active surface.",
       "tests": "Leak canaries in fields, paths, errors, SSE and object broker.",
       "risk": "Leak contaminates suite and blocks scoring; record incident procedure.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-20.a isolate evaluation truth and job ownership; SP-20.b run networkless predictor jobs; SP-20.c persist complete snapshot scoring. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 2,
       "eligible": [
@@ -4257,7 +4257,7 @@
       "accept": "Manifest proves equal purchased information/budget and separate compute costs.",
       "tests": "Pairing, calibration, fallback, failure denominator and replay checks.",
       "risk": "No conclusion that LLM must win.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-21.b integrate complete agent-discovery track; SP-21.c verify cross-track provenance and comparison reports. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 2.5,
       "eligible": [
@@ -4298,7 +4298,7 @@
       "accept": "Complete-agent results separately labeled and reproducible from artifacts.",
       "tests": "Custom model, interrupted agent, invalid predictor and resource-cap journey.",
       "risk": "Do not pool discovery and controlled-selection rankings.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-21.a integrate controlled-selector comparisons; SP-21.c verify cross-track provenance and comparison reports. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 2.5,
       "eligible": [
@@ -4337,7 +4337,7 @@
       "accept": "All counts, versions, failures and costs trace to source records.",
       "tests": "Manifest tamper, missing scored row, split collision and offline reproduction.",
       "risk": "Sanitize fixture data; no public customer results.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-21.a integrate controlled-selector comparisons; SP-21.b integrate complete agent-discovery track. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R4",
       "contingency": 1,
       "eligible": [
@@ -4413,7 +4413,7 @@
       "accept": "Builder can save/reload valid world; author rights never reveal official blind truth.",
       "tests": "Bounds/version conflict, tenant traversal, unsupported laws and projection leakage.",
       "risk": "Hosted arbitrary law uploads not trusted; approved catalog only.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-22.a specify accessible workspace journeys; SP-22.c implement authenticated workspace shell; SP-22.d build constrained world editor; SP-22.e integrate world-to-run product journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1.25,
       "eligible": [
@@ -4455,7 +4455,7 @@
       "accept": "Real session bootstrap and list operations work across supported roles.",
       "tests": "Browser login/logout, wrong role, CSRF/session expiry and empty/error fixtures.",
       "risk": "No credentials in URL/local logs; sanitize user text.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-22.a specify accessible workspace journeys; SP-22.b implement versioned world and suite catalog api; SP-22.d build constrained world editor; SP-22.e integrate world-to-run product journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1,
       "eligible": [
@@ -4493,7 +4493,7 @@
       "accept": "Keyboard user creates/reloads supported world with clear author/agent separation.",
       "tests": "Invalid bounds, topology, stale version and accessibility journey tests.",
       "risk": "Client validation complements server; no executable upload path.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-22.a specify accessible workspace journeys; SP-22.b implement versioned world and suite catalog api; SP-22.c implement authenticated workspace shell; SP-22.e integrate world-to-run product journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1.25,
       "eligible": [
@@ -4529,7 +4529,7 @@
       "accept": "Run references exact world/package versions; failed/cancelled state displayed honestly.",
       "tests": "Browser create conflict, permission removal, unavailable worker and cancel race.",
       "risk": "No promise of completion from 202 acceptance.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-22.a specify accessible workspace journeys; SP-22.b implement versioned world and suite catalog api; SP-22.c implement authenticated workspace shell; SP-22.d build constrained world editor. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1,
       "eligible": [
@@ -4569,7 +4569,7 @@
       "accept": "No event before commit; no DB connection held per viewer; event freshness instrumented.",
       "tests": "Rollback event absence, sequence uniqueness, tenant access and slow viewer tests.",
       "risk": "No truth/evaluator metadata in active event schemas.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-23.b implement cursor expiry and archive resynchronization; SP-23.c render live investigation timeline; SP-23.d integrate reconnect and cancellation ux. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1.25,
       "eligible": [
@@ -4608,7 +4608,7 @@
       "accept": "Reconnect has no silent committed-event gaps; revoked stream closes ≤30s.",
       "tests": "Duplicate/gap/expired cursor, archive outage and membership revocation tests.",
       "risk": "Archive and snapshot use same tenant/privacy policy.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-23.a publish committed event and replay endpoints; SP-23.c render live investigation timeline; SP-23.d integrate reconnect and cancellation ux. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1,
       "eligible": [
@@ -4646,7 +4646,7 @@
       "accept": "Replay is deterministic; duplicates and reconnect do not double-count budget.",
       "tests": "Recorded feed, duplicate/out-of-order events and terminal transition browser tests.",
       "risk": "Treat annotations as untrusted; bounded client memory.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-23.a publish committed event and replay endpoints; SP-23.b implement cursor expiry and archive resynchronization; SP-23.d integrate reconnect and cancellation ux. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1.25,
       "eligible": [
@@ -4680,7 +4680,7 @@
       "accept": "User sees gap recovery and explicit failed resync; real cancellation path works.",
       "tests": "Browser offline/reconnect/revoke/expired-cursor and slow-consumer tests.",
       "risk": "No cached private data after workspace logout.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-23.a publish committed event and replay endpoints; SP-23.b implement cursor expiry and archive resynchronization; SP-23.c render live investigation timeline. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1,
       "eligible": [
@@ -4716,7 +4716,7 @@
       "accept": "Reference frames exact at timestamps; reference-device interaction ≤100ms and ≥30fps target measured.",
       "tests": "Frame alignment, seek/end boundaries, malformed chunk and performance fixtures.",
       "risk": "No second physics solver; bound memory and sanitize content.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-24.b overlay prediction and uncertainty diagnostics; SP-24.c compare recorded strategies and failures; SP-24.d verify accessible diagnostic journeys. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1,
       "eligible": [
@@ -4752,7 +4752,7 @@
       "accept": "Viewer distinguishes model uncertainty and failed/missing prediction from truth.",
       "tests": "Layer alignment, absent intervals, failed model and active-truth denial tests.",
       "risk": "No fabricated confidence or hidden evaluation during run.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-24.a implement indexed frame replay and scrubbing; SP-24.c compare recorded strategies and failures; SP-24.d verify accessible diagnostic journeys. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1.25,
       "eligible": [
@@ -4788,7 +4788,7 @@
       "accept": "Compare only compatible protocol/conditions and disclose mismatches.",
       "tests": "Protocol mismatch, missing/failing run and paired time alignment tests.",
       "risk": "No successful-only filtering by default.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-24.a implement indexed frame replay and scrubbing; SP-24.b overlay prediction and uncertainty diagnostics; SP-24.d verify accessible diagnostic journeys. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1,
       "eligible": [
@@ -4822,7 +4822,7 @@
       "accept": "Essential investigation/replay usable without canvas-only interaction.",
       "tests": "Automated accessibility, keyboard and browser visual-reference tests.",
       "risk": "No sensitive data in screenshots or diagnostics.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-24.a implement indexed frame replay and scrubbing; SP-24.b overlay prediction and uncertainty diagnostics; SP-24.c compare recorded strategies and failures. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1,
       "eligible": [
@@ -4858,7 +4858,7 @@
       "accept": "Trusted local and remote semantic conformance passes.",
       "tests": "Retry/cancel/expiry/version/duplicate checkpoint and budget parity tests.",
       "risk": "Tokens redacted; bounded retry and explicit incompatible runtime.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-25.b deliver remote cli operations; SP-25.c build complete export manifest and retrieval api; SP-25.d implement explicit sanitized publication lifecycle; SP-25.e verify offline reconstruction across clients. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1.25,
       "eligible": [
@@ -4897,7 +4897,7 @@
       "accept": "CLI completes real remote run and resumes without duplicate experiment.",
       "tests": "Subprocess CLI success/failure, interrupted polling and secret-redaction tests.",
       "risk": "No keys in argv/history or exported manifests.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-25.a implement remote sdk session adapter; SP-25.c build complete export manifest and retrieval api; SP-25.d implement explicit sanitized publication lifecycle; SP-25.e verify offline reconstruction across clients. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1,
       "eligible": [
@@ -4938,7 +4938,7 @@
       "accept": "Export complete or explicitly incomplete; offline verifier detects missing content.",
       "tests": "Tamper/missing artifact, large export, cross-tenant and pending-evaluation tests.",
       "risk": "Restricted truth/provider secrets excluded from ordinary export.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-25.a implement remote sdk session adapter; SP-25.b deliver remote cli operations; SP-25.d implement explicit sanitized publication lifecycle; SP-25.e verify offline reconstruction across clients. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1.25,
       "eligible": [
@@ -4979,7 +4979,7 @@
       "accept": "No automatic publication; sanitized release retains failed scored rows.",
       "tests": "Role/replay publication, secret canary, incomplete release and withdraw tests.",
       "risk": "Public copies not promised fully retractable.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-25.a implement remote sdk session adapter; SP-25.b deliver remote cli operations; SP-25.c build complete export manifest and retrieval api; SP-25.e verify offline reconstruction across clients. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1,
       "eligible": [
@@ -5021,7 +5021,7 @@
       "accept": "Independent environment reproduces reports and replay from export.",
       "tests": "Network-denied replay, version mismatch, tamper and missing member tests.",
       "risk": "Never load private journal as public replay.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-25.a implement remote sdk session adapter; SP-25.b deliver remote cli operations; SP-25.c build complete export manifest and retrieval api; SP-25.d implement explicit sanitized publication lifecycle. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1,
       "eligible": [
@@ -5062,7 +5062,7 @@
       "accept": "Fresh supported environment completes health and isolation preflight.",
       "tests": "Install validation, missing runtime/secret and insecure-profile rejection tests.",
       "risk": "Do not advertise trusted development profile for hostile code.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-26.b validate portable identity and storage adapters; SP-26.c implement self-host upgrade and recovery procedure; SP-26.d verify clean install-to-investigation journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 2.5,
       "eligible": [
@@ -5101,7 +5101,7 @@
       "accept": "Document explicit supported compatibility matrix and deny unsafe config.",
       "tests": "Issuer mapping, object generation semantics and adapter conformance tests.",
       "risk": "Portable deployment must preserve auth/immutability boundaries.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-26.a package one supported secure self-host installation; SP-26.c implement self-host upgrade and recovery procedure; SP-26.d verify clean install-to-investigation journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1.25,
       "eligible": [
@@ -5141,7 +5141,7 @@
       "accept": "Seeded supported previous release upgrades/restores without lost committed data.",
       "tests": "Schema upgrade, old worker/client, interrupted migration and restore tests.",
       "risk": "Do not call seeded predecessor a real published version.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-26.a package one supported secure self-host installation; SP-26.b validate portable identity and storage adapters; SP-26.d verify clean install-to-investigation journey. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 2.5,
       "eligible": [
@@ -5181,7 +5181,7 @@
       "accept": "Run, interruption, export and recovery succeed using published instructions.",
       "tests": "Automated install/upgrade/remote journey and invalid-config tests.",
       "risk": "External adoption remains a separate partner gate.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-26.a package one supported secure self-host installation; SP-26.b validate portable identity and storage adapters; SP-26.c implement self-host upgrade and recovery procedure. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R5",
       "contingency": 1,
       "eligible": [
@@ -5219,7 +5219,7 @@
       "accept": "Unauthorized repo/ref/environment cannot obtain deployment authority.",
       "tests": "Terraform validate/plan, IAM policy and forged federation-context tests.",
       "risk": "No long-lived service keys; public CI never runs untrusted package hooks.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-27.b provision versioned staging data and dispatch services; SP-27.c deploy trusted staging api and worker test substrate; SP-27.d sign trusted images and enforce release provenance; SP-27.e implement telemetry, slo counters and alerts; SP-27.f rehearse progressive deploy and rollback. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -5253,7 +5253,7 @@
       "accept": "Configuration readback matches plan; no public storage or unintended identity grants.",
       "tests": "IaC drift, connectivity, pool bound and deny-access smoke tests.",
       "risk": "Pricing/cap approval remains precondition; backups enabled from first persistent data.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-27.a create keyless environment bootstrap and policy checks; SP-27.c deploy trusted staging api and worker test substrate; SP-27.d sign trusted images and enforce release provenance; SP-27.e implement telemetry, slo counters and alerts; SP-27.f rehearse progressive deploy and rollback. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1.25,
       "eligible": [
@@ -5290,7 +5290,7 @@
       "accept": "Smoke deployment/rollback recorded; no uploaded code enabled.",
       "tests": "Health/config/identity failure, rollback and isolation preflight tests.",
       "risk": "Fail closed on missing configuration; keep stage independent of prod.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-27.a create keyless environment bootstrap and policy checks; SP-27.b provision versioned staging data and dispatch services; SP-27.d sign trusted images and enforce release provenance; SP-27.e implement telemetry, slo counters and alerts; SP-27.f rehearse progressive deploy and rollback. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1.25,
       "eligible": [
@@ -5327,7 +5327,7 @@
       "accept": "Only intended reviewed source produces accepted deployable artifact.",
       "tests": "Dependency/secret scan, image substitution and provenance policy tests.",
       "risk": "Trusted deployment CI never executes customer hooks.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-27.a create keyless environment bootstrap and policy checks; SP-27.b provision versioned staging data and dispatch services; SP-27.c deploy trusted staging api and worker test substrate; SP-27.e implement telemetry, slo counters and alerts; SP-27.f rehearse progressive deploy and rollback. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -5365,7 +5365,7 @@
       "accept": "Injected failure reaches named test receiver; dashboards reconcile denominators.",
       "tests": "Redaction, cardinality, latency/error denominator and alert-fire/clear tests.",
       "risk": "Do not log raw prompts/world truth; low traffic handled explicitly.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-27.a create keyless environment bootstrap and policy checks; SP-27.b provision versioned staging data and dispatch services; SP-27.c deploy trusted staging api and worker test substrate; SP-27.d sign trusted images and enforce release provenance; SP-27.f rehearse progressive deploy and rollback. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -5405,7 +5405,7 @@
       "accept": "Failed canary halts expansion; seeded previous version remains recoverable.",
       "tests": "Bad image, interrupted migration, mixed worker versions and rollback smoke.",
       "risk": "No production release authorization inferred from staging rehearsal.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-27.a create keyless environment bootstrap and policy checks; SP-27.b provision versioned staging data and dispatch services; SP-27.c deploy trusted staging api and worker test substrate; SP-27.d sign trusted images and enforce release provenance; SP-27.e implement telemetry, slo counters and alerts. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1,
       "eligible": [
@@ -5445,7 +5445,7 @@
       "accept": "Workload manifest separates investigations/API/viewers/builds/evaluation and matches declared envelope.",
       "tests": "Generator determinism, numerical/IO distribution and count checks.",
       "risk": "No paid provider stress; keep load artifacts private.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-28.b measure stepped load and latency budgets; SP-28.c run mixed soak and saturation characterization; SP-28.d verify fair admission under faults. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 1,
       "eligible": [
@@ -5484,7 +5484,7 @@
       "accept": "Two-hour target hold meets section 7 envelope or fails with bottleneck evidence.",
       "tests": "Automated latency, throughput, integrity and zero-duplicate budget assertions.",
       "risk": "Do not equate offered load or connected sockets with completed capacity.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-28.a build representative capacity workload generators; SP-28.c run mixed soak and saturation characterization; SP-28.d verify fair admission under faults. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 2.5,
       "eligible": [
@@ -5519,7 +5519,7 @@
       "accept": "Bounded queue/memory growth; fair rejection and evaluator backlog <24h within supported envelope.",
       "tests": "Long-run leak, overload rejection, backlog and persistence integrity checks.",
       "risk": "300 offered is stress, not capacity promise; stop on corruption.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-28.a build representative capacity workload generators; SP-28.b measure stepped load and latency budgets; SP-28.d verify fair admission under faults. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 2.5,
       "eligible": [
@@ -5556,7 +5556,7 @@
       "accept": "No monopolization or duplicate charge; latency/recovery thresholds measured.",
       "tests": "Starvation, provider throttling, cancellation and crash-in-load tests.",
       "risk": "Unknown provider costs remain visible.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-28.a build representative capacity workload generators; SP-28.b measure stepped load and latency budgets; SP-28.c run mixed soak and saturation characterization. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 2,
       "eligible": [
@@ -5595,7 +5595,7 @@
       "accept": "Recovery point maps every referenced object; lag/expiry visible.",
       "tests": "Backup completeness, missing object, permissions and lag alert tests.",
       "risk": "A successful scheduled job alone is not recoverability evidence.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-29.b restore sql and objects with tombstone replay; SP-29.c exercise worker loss and database failover; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 1,
       "eligible": [
@@ -5635,7 +5635,7 @@
       "accept": "Pilot ≤15min RPO/≤4h RTO measured; no deleted object resurrected to users.",
       "tests": "Timed restore, corrupt object, interrupted replay and revoked identity tests.",
       "risk": "No production data exposed during drill; preserve private evidence.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-29.a implement backup and recovery-set manifests; SP-29.c exercise worker loss and database failover; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 2.5,
       "eligible": [
@@ -5675,7 +5675,7 @@
       "accept": "Worker p95 recovery ≤5min; DB failover ≤15min target with committed-state validation.",
       "tests": "Fault matrix, stale worker, pool exhaustion and no-duplicate invariants.",
       "risk": "Targets measured in deployed configuration, not assumed from service SLA.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-29.a implement backup and recovery-set manifests; SP-29.b restore sql and objects with tombstone replay; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 2.5,
       "eligible": [
@@ -5713,7 +5713,7 @@
       "accept": "Committed data, old clients and current leases survive documented recovery path.",
       "tests": "Mixed-version upgrade, partial migration and health-regression rollback tests.",
       "risk": "Destructive schema change cannot bypass recovery review.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-29.a implement backup and recovery-set manifests; SP-29.b restore sql and objects with tombstone replay; SP-29.c exercise worker loss and database failover. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 2,
       "eligible": [
@@ -5754,7 +5754,7 @@
       "accept": "All supported roles and terminal outcomes verified on release candidate.",
       "tests": "Browser/SDK/CLI cross-tenant negative and interruption journeys.",
       "risk": "Private run data never crosses workspace or public view.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-30.b verify version compatibility matrix; SP-30.c verify install, upgrade and recovery as one journey; SP-30.d review integrated release-candidate evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 1,
       "eligible": [
@@ -5796,7 +5796,7 @@
       "accept": "Unsupported versions fail explicitly; no silent artifact reinterpretation.",
       "tests": "Generated-client drift, old checkpoint and replay migration fixtures.",
       "risk": "Seeded predecessor labeled honestly before second real release.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-30.a test authenticated end-to-end researcher journeys; SP-30.c verify install, upgrade and recovery as one journey; SP-30.d review integrated release-candidate evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 1,
       "eligible": [
@@ -5838,7 +5838,7 @@
       "accept": "No manual undocumented intervention; export hashes/budgets preserved.",
       "tests": "Interrupted install, config mismatch, rollback and restored-client tests.",
       "risk": "No blanket support outside documented matrix.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-30.a test authenticated end-to-end researcher journeys; SP-30.b verify version compatibility matrix; SP-30.d review integrated release-candidate evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 1,
       "eligible": [
@@ -5917,7 +5917,7 @@
       "accept": "Every supported identity/route has deny and allow evidence.",
       "tests": "ID substitution, CSRF, mass assignment, object grants and revoked stream tests.",
       "risk": "Any cross-tenant access is release blocker.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-31.b audit build and runtime boundary in release configuration; SP-31.c audit research leakage and provider controls; SP-31.d verify deletion, revocation and log privacy; SP-31.e resolve security review and release blockers. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 1,
       "eligible": [
@@ -5957,7 +5957,7 @@
       "accept": "No trusted secret/evaluator/cloud access; policy fails closed.",
       "tests": "Admission bypass, untrusted build, IPv6/DNS/metadata and resource attacks.",
       "risk": "Independent security specialist reviews evidence.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-31.a audit tenant and session boundary matrix; SP-31.c audit research leakage and provider controls; SP-31.d verify deletion, revocation and log privacy; SP-31.e resolve security review and release blockers. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 2,
       "eligible": [
@@ -5995,7 +5995,7 @@
       "accept": "No hidden truth or credential exposure; all attempts/fallbacks disclosed.",
       "tests": "Canary leaks, injected text, malformed output and ambiguity/cap tests.",
       "risk": "Compromised suite quarantined; no silent result reuse.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-31.a audit tenant and session boundary matrix; SP-31.b audit build and runtime boundary in release configuration; SP-31.d verify deletion, revocation and log privacy; SP-31.e resolve security review and release blockers. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 2,
       "eligible": [
@@ -6035,7 +6035,7 @@
       "accept": "Active access revoked immediately; seven-day active removal policy executable; backups honor disclosed expiry.",
       "tests": "Delete/revoke races, replayed backup, token expiry and secret/log canaries.",
       "risk": "No promise deletion instantly erases offline public copies.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-31.a audit tenant and session boundary matrix; SP-31.b audit build and runtime boundary in release configuration; SP-31.c audit research leakage and provider controls; SP-31.e resolve security review and release blockers. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R6",
       "contingency": 1,
       "eligible": [
@@ -6150,7 +6150,7 @@
       "accept": "Named participating organizations can run private studies; deviations recorded.",
       "tests": "Run onboarding smoke and telemetry completeness checks.",
       "risk": "Real external attendance required; no internal substitution.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-32.a finalize partner data terms and pilot support scope; SP-32.c review four weeks of partner usage. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R7",
       "contingency": 2,
       "eligible": [
@@ -6186,7 +6186,7 @@
       "accept": "Actual partner outcomes recorded against proposed targets; launch-impacting gaps resolved.",
       "tests": "Usage denominator, evidence completeness and regression checks for pilot fixes.",
       "risk": "Partner absence blocks evidence, never counted as success.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-32.a finalize partner data terms and pilot support scope; SP-32.b onboard partner investigations. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R7",
       "contingency": 2,
       "eligible": [
@@ -6225,7 +6225,7 @@
       "accept": "Signed immutable protocol and capped run plan; no tuning afterward.",
       "tests": "Frozen manifest, seed separation, limits and estimated-count checks.",
       "risk": "Paid sweep approval separate from development approval.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-33.b execute and verify scored reference collection; SP-33.c publish sanitized complete reference artifacts. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R7",
       "contingency": 2,
       "eligible": [
@@ -6263,7 +6263,7 @@
       "accept": "All scheduled rows accounted for or explicitly failed; no selective redraw.",
       "tests": "Automatic completeness, frozen identity, failure denominator and report reproduction.",
       "risk": "Estimate is engineering effort; measured sweep wall time added at freeze.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-33.a approve official protocol and priced sweep; SP-33.c publish sanitized complete reference artifacts. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R7",
       "contingency": 2.5,
       "eligible": [
@@ -6303,7 +6303,7 @@
       "accept": "All scored outcomes available without secrets; claims match measured scope.",
       "tests": "Secret canaries, missing-row detection, hashes and offline report checks.",
       "risk": "Never publish private customer artifacts under reference-release authority.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-33.a approve official protocol and priced sweep; SP-33.b execute and verify scored reference collection. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R7",
       "contingency": 1,
       "eligible": [
@@ -6341,7 +6341,7 @@
       "accept": "Chosen provider supports concrete partner scenarios or documented ADR change.",
       "tests": "Configuration/schema fixtures and fake-IdP capability tests.",
       "risk": "Do not assume SCIM/federation is included in existing credits.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-34.b implement workspace-bound enterprise federation; SP-34.c migrate linked identities without lockout; SP-34.d harden enterprise service-credential lifecycle. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 1.5,
       "eligible": [
@@ -6378,7 +6378,7 @@
       "accept": "Wrong-tenant/issuer login denied; approved member authenticates with enterprise IdP.",
       "tests": "Issuer confusion, assertion replay/expiry, key rotation and session tests.",
       "risk": "Security review required; no implicit membership from email.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-34.a validate enterprise federation requirements and entitlement; SP-34.c migrate linked identities without lockout; SP-34.d harden enterprise service-credential lifecycle. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 2.5,
       "eligible": [
@@ -6414,7 +6414,7 @@
       "accept": "Existing users migrate safely without account takeover or ownership loss.",
       "tests": "Duplicate subject/email, concurrent linking, lost IdP and sole-owner tests.",
       "risk": "Audit every link/admin override; no shared break-glass credential.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-34.a validate enterprise federation requirements and entitlement; SP-34.b implement workspace-bound enterprise federation; SP-34.d harden enterprise service-credential lifecycle. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 2,
       "eligible": [
@@ -6449,7 +6449,7 @@
       "accept": "Scoped machine identities rotate/revoke without widening privilege.",
       "tests": "Old/new key overlap, expiry, revoke race and least-scope tests.",
       "risk": "Basic service identity already exists in R2; no late prerequisite for pilot.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-34.a validate enterprise federation requirements and entitlement; SP-34.b implement workspace-bound enterprise federation; SP-34.c migrate linked identities without lockout. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 1,
       "eligible": [
@@ -6485,7 +6485,7 @@
       "accept": "Partner/security accept scope and bounded reconciliation semantics.",
       "tests": "SCIM schema fixtures, duplicate mappings and conflicting version cases.",
       "risk": "Disable policy must cover API, stream, job and credential access.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-35.b implement bounded provisioning and reconciliation; SP-35.c enforce rapid end-to-end deprovisioning. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 2,
       "eligible": [
@@ -6521,7 +6521,7 @@
       "accept": "Repeated/out-of-order operations converge without escalation.",
       "tests": "Bulk limits, duplicate provisioning, stale updates and retry tests.",
       "risk": "Service credential narrowly scoped; rate-limit sync.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-35.a freeze scim mapping and lifecycle semantics; SP-35.c enforce rapid end-to-end deprovisioning. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 2.5,
       "eligible": [
@@ -6557,7 +6557,7 @@
       "accept": "Disabled principal denied new calls immediately; stream ≤30s and job launch ≤5s revocation targets.",
       "tests": "Active session/token/job/SSE disable races and sole-owner exceptions.",
       "risk": "No stale authorization caches or forgotten machine keys.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-35.a freeze scim mapping and lifecycle semantics; SP-35.b implement bounded provisioning and reconciliation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 2.5,
       "eligible": [
@@ -6597,7 +6597,7 @@
       "accept": "External code runs and recovers using supported interfaces; independent author evidence.",
       "tests": "Contract/extension regression and published example replay tests.",
       "risk": "Trusted local law extension differs from reviewed hosted catalog.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-36.b validate independent self-host install and upgrade; SP-36.c independently reproduce a released report; SP-36.d close partner integration findings. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R7",
       "contingency": 2.5,
       "eligible": [
@@ -6635,7 +6635,7 @@
       "accept": "External operator signs observed install/upgrade results and limitations.",
       "tests": "Independent install/upgrade smoke and reported-friction regressions.",
       "risk": "Partner environment/access must be available; no simulated adoption.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-36.a validate an outside team's agent and law extension; SP-36.c independently reproduce a released report; SP-36.d close partner integration findings. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R7",
       "contingency": 2.5,
       "eligible": [
@@ -6674,7 +6674,7 @@
       "accept": "Independent reproduction succeeds or limitation blocks claim.",
       "tests": "Offline replay, compatibility and artifact integrity checks.",
       "risk": "Keep private access paths out of public evidence.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-36.a validate an outside team's agent and law extension; SP-36.b validate independent self-host install and upgrade; SP-36.d close partner integration findings. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R7",
       "contingency": 1,
       "eligible": [
@@ -6710,7 +6710,7 @@
       "accept": "No unresolved adoption blocker; scope and external evidence explicit.",
       "tests": "Regression suite for fixed defects and traceability checker.",
       "risk": "Do not hide additional feature work inside documentation-only closure.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-36.a validate an outside team's agent and law extension; SP-36.b validate independent self-host install and upgrade; SP-36.c independently reproduce a released report. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R7",
       "contingency": 2,
       "eligible": [
@@ -6745,7 +6745,7 @@
       "accept": "All pilot-sensitive mutations produce safe immutable audit record.",
       "tests": "Audit omission, tamper permissions, redaction and transaction rollback tests.",
       "risk": "Basic audit is pilot prerequisite, not deferred to enterprise.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-37.b implement authorized deletion and retention jobs; SP-37.c preserve deletion and revocation across recovery; SP-37.d export tamper-evident enterprise audit history; SP-37.e verify enterprise retention and privacy operations; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1.25,
       "eligible": [
@@ -6784,7 +6784,7 @@
       "accept": "Interactive access revoked on accepted delete; removal target ≤7 days with retriable state.",
       "tests": "Concurrent read/delete, shared artifact refs, legal-hold flag and repeated job tests.",
       "risk": "Keep minimum tombstone identity; no silent auto-expiry.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-37.a persist basic security audit events; SP-37.c preserve deletion and revocation across recovery; SP-37.d export tamper-evident enterprise audit history; SP-37.e verify enterprise retention and privacy operations; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 1.25,
       "eligible": [
@@ -6823,7 +6823,7 @@
       "accept": "Restored old DB cannot resurrect access; backup expiry policy accurately reported.",
       "tests": "Older-backup restore, missing ledger, interrupted replay and expired-object tests.",
       "risk": "Fail closed if latest suppression ledger unavailable.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-37.a persist basic security audit events; SP-37.b implement authorized deletion and retention jobs; SP-37.d export tamper-evident enterprise audit history; SP-37.e verify enterprise retention and privacy operations; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R3",
       "contingency": 2.5,
       "eligible": [
@@ -6863,7 +6863,7 @@
       "accept": "Authorized admin can verify completeness/integrity; other roles denied.",
       "tests": "Pagination gap, tamper, tenant traversal and export interruption tests.",
       "risk": "Personal data minimized; immutable does not mean publicly readable.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-37.a persist basic security audit events; SP-37.b implement authorized deletion and retention jobs; SP-37.c preserve deletion and revocation across recovery; SP-37.e verify enterprise retention and privacy operations; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 1,
       "eligible": [
@@ -6904,7 +6904,7 @@
       "accept": "Active deletion and disclosed backup lifecycle verified; no stale access through export.",
       "tests": "Time-controlled retention/expiry, rotation and resurrected-object regression tests.",
       "risk": "35-day lifecycle is proposal requiring real service configuration proof.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-37.a persist basic security audit events; SP-37.b implement authorized deletion and retention jobs; SP-37.c preserve deletion and revocation across recovery; SP-37.d export tamper-evident enterprise audit history; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 1,
       "eligible": [
@@ -6943,7 +6943,7 @@
       "accept": "Terms and product claims reflect actual controls and measured support scope.",
       "tests": "Link/evidence completeness and stale-version checks.",
       "risk": "No compliance certification inferred from code or synthetic data.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-37.a persist basic security audit events; SP-37.b implement authorized deletion and retention jobs; SP-37.c preserve deletion and revocation across recovery; SP-37.d export tamper-evident enterprise audit history; SP-37.e verify enterprise retention and privacy operations. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 1.5,
       "eligible": [
@@ -6981,7 +6981,7 @@
       "accept": "Copy completion and consistency measured; recovery set age ≤24h.",
       "tests": "Missing-generation, key/IAM denial and lag/copy integrity tests.",
       "risk": "Residency/key requirements reviewed before replication.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-38.b perform timed secondary-region recovery; SP-38.c resolve and repeat failed recovery steps. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 2.5,
       "eligible": [
@@ -7020,7 +7020,7 @@
       "accept": "Measured regional RPO/RTO ≤24h with tenant/integrity suite passing.",
       "tests": "Timed failover, stale worker, DNS/cutover and duplicate-launch tests.",
       "risk": "No active-active claim; preserve original incident evidence.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-38.a create an independent regional recovery set; SP-38.c resolve and repeat failed recovery steps. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 2.5,
       "eligible": [
@@ -7055,7 +7055,7 @@
       "accept": "All regional restore blockers resolved at exact candidate revision.",
       "tests": "Regression tests and repeated failed recovery sequence.",
       "risk": "Additional architectural changes consume explicit contingency/rebaseline.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-38.a create an independent regional recovery set; SP-38.b perform timed secondary-region recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 2,
       "eligible": [
@@ -7095,7 +7095,7 @@
       "accept": "Final candidate meets section 7 and no data/budget/security regression.",
       "tests": "Automated percentile, soak, fairness and invariants versus prior baseline.",
       "risk": "No stale pre-enterprise performance evidence.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-39.b publish measured cost and operating limits. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 2.5,
       "eligible": [
@@ -7131,7 +7131,7 @@
       "accept": "Cost separates measured/estimated/unknown and provider versus platform.",
       "tests": "Usage sum, manifest identity and limit/config consistency checks.",
       "risk": "No unlimited scale or future price promises.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-39.a revalidate final supported capacity envelope. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 0.75,
       "eligible": [
@@ -7169,7 +7169,7 @@
       "accept": "External assessment slot and actual on-call plan confirmed before GA window.",
       "tests": "Checklist validates trained primary/secondary and escalation coverage.",
       "risk": "No unsupported 24/7 commitment; lead time external.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-40.b remediate independent assessment findings; SP-40.c exercise incident and credential response; SP-40.d start final-candidate slo evidence collection; SP-40.e review 30 calendar days of slo evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 1.5,
       "eligible": [
@@ -7210,7 +7210,7 @@
       "accept": "No exploitable critical/high finding; approved lower-risk exceptions dated.",
       "tests": "Reproduce/retest each accepted finding plus relevant regression suites.",
       "risk": "Five days is triage/initial reserve, not a cap on required remediation.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-40.a book independent assessment and support roster; SP-40.c exercise incident and credential response; SP-40.d start final-candidate slo evidence collection; SP-40.e review 30 calendar days of slo evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 2.5,
       "eligible": [
@@ -7248,7 +7248,7 @@
       "accept": "Operators demonstrate target acknowledgement/containment under agreed coverage.",
       "tests": "Automated alert routing, revocation and runbook command checks.",
       "risk": "No live customer notification during drill without authorization.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-40.a book independent assessment and support roster; SP-40.b remediate independent assessment findings; SP-40.d start final-candidate slo evidence collection; SP-40.e review 30 calendar days of slo evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 2,
       "eligible": [
@@ -7283,7 +7283,7 @@
       "accept": "Collection covers eligible requests, launch and execution metrics with private evidence.",
       "tests": "Counter reconciliation, failure injection and missing-data detection.",
       "risk": "Low traffic includes disclosed synthetics; data gaps invalidate window.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-40.a book independent assessment and support roster; SP-40.b remediate independent assessment findings; SP-40.c exercise incident and credential response; SP-40.e review 30 calendar days of slo evidence. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 1,
       "eligible": [
@@ -7318,7 +7318,7 @@
       "accept": "30 calendar days complete; objectives and incident evidence satisfy GA gate or window restarts/rebaselines.",
       "tests": "Window continuity, denominator, SLI and source-identity checks.",
       "risk": "Material affecting change requires fresh relevant evidence; no fabricated uptime.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-40.a book independent assessment and support roster; SP-40.b remediate independent assessment findings; SP-40.c exercise incident and credential response; SP-40.d start final-candidate slo evidence collection. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 1.5,
       "eligible": [
@@ -7395,7 +7395,7 @@
       "accept": "Supported deployment passes canary and release manifest records actual outcome.",
       "tests": "Canary synthetic journey, invariant and rollback-trigger checks.",
       "risk": "Stop on security/state/availability regression.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-41.a sign evidence-based ga readiness; SP-41.c conduct day-seven launch review; SP-41.d conduct day-thirty planning reset. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "R8",
       "contingency": 0.75,
       "eligible": [
@@ -7467,7 +7467,7 @@
       "accept": "Product reviews actual outcomes and approves changed priorities separately.",
       "tests": "Window/usage/incident evidence reconciliation.",
       "risk": "No automatic expansion to new regions/GPU/RL.",
-      "out": "Other PR units in this epic; release approval; new law families or expanded deployment support.",
+      "out": "Excludes SP-41.a sign evidence-based ga readiness; SP-41.b execute approved progressive ga rollout; SP-41.c conduct day-seven launch review. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
       "milestone": "POST",
       "contingency": 0.5,
       "eligible": [
