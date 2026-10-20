@@ -274,6 +274,13 @@
           "pattern": "^[0-9a-f]{64}$",
           "title": "Request Sha256",
           "type": "string"
+        },
+        "snapshot_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Snapshot Sha256",
+          "type": "string"
         }
       },
       "required": [
@@ -282,9 +289,33 @@
         "actor_generation",
         "actor_grant_incarnation",
         "request_sha256",
-        "outcome"
+        "outcome",
+        "snapshot_sha256"
       ],
       "title": "ServiceAudit",
+      "type": "object"
+    },
+    "ServiceCommitSnapshot": {
+      "additionalProperties": false,
+      "description": "Original safe principal and affected key projections, retained with the receipt.",
+      "properties": {
+        "keys": {
+          "items": {
+            "$ref": "#/$defs/ServiceKeyState"
+          },
+          "maxItems": 2,
+          "title": "Keys",
+          "type": "array"
+        },
+        "principal": {
+          "$ref": "#/$defs/ServicePrincipalView"
+        }
+      },
+      "required": [
+        "principal",
+        "keys"
+      ],
+      "title": "ServiceCommitSnapshot",
       "type": "object"
     },
     "ServiceCreateRequest": {
@@ -482,6 +513,33 @@
         "secret"
       ],
       "title": "ServiceKeyIssuedResponse",
+      "type": "object"
+    },
+    "ServiceKeyMaterial": {
+      "additionalProperties": false,
+      "description": "Fresh server-generated material; plaintext stays outside durable proposals.",
+      "properties": {
+        "credential_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Credential Id",
+          "type": "string"
+        },
+        "verifier_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Verifier Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "credential_id",
+        "verifier_sha256"
+      ],
+      "title": "ServiceKeyMaterial",
       "type": "object"
     },
     "ServiceKeyPage": {
@@ -990,6 +1048,36 @@
       "title": "ServiceMutationResponse",
       "type": "object"
     },
+    "ServicePlan": {
+      "additionalProperties": false,
+      "description": "One atomic SQL proposal, not evidence of commit or permission to deliver a secret.",
+      "properties": {
+        "audit": {
+          "$ref": "#/$defs/ServiceAudit"
+        },
+        "key_set": {
+          "$ref": "#/$defs/ServiceKeySet"
+        },
+        "receipt": {
+          "$ref": "#/$defs/ServiceReceipt"
+        },
+        "response": {
+          "$ref": "#/$defs/ServiceMutationResponse"
+        },
+        "workspace": {
+          "$ref": "#/$defs/WorkspaceAuthority"
+        }
+      },
+      "required": [
+        "workspace",
+        "key_set",
+        "receipt",
+        "audit",
+        "response"
+      ],
+      "title": "ServicePlan",
+      "type": "object"
+    },
     "ServicePrincipalPage": {
       "additionalProperties": false,
       "properties": {
@@ -1134,6 +1222,14 @@
           "title": "Actor Id",
           "type": "string"
         },
+        "audit_event_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Audit Event Id",
+          "type": "string"
+        },
         "key": {
           "maxLength": 128,
           "minLength": 1,
@@ -1179,6 +1275,9 @@
           "minimum": 0,
           "title": "Retain Until",
           "type": "integer"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/ServiceCommitSnapshot"
         },
         "target_credential_id": {
           "anyOf": [
@@ -1231,9 +1330,53 @@
         "key",
         "request_sha256",
         "outcome",
+        "snapshot",
+        "audit_event_id",
         "retain_until"
       ],
       "title": "ServiceReceipt",
+      "type": "object"
+    },
+    "ServiceReceiptLookup": {
+      "additionalProperties": false,
+      "description": "Complete locked lookup; absent means never reserved, not expired-and-deleted.",
+      "properties": {
+        "audit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ServiceAudit"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ServiceReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "enum": [
+            "absent",
+            "committed",
+            "recovery_required"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "receipt",
+        "audit"
+      ],
+      "title": "ServiceReceiptLookup",
       "type": "object"
     },
     "ServiceStateRequest": {
@@ -1363,6 +1506,91 @@
         "principal_active"
       ],
       "title": "SessionRecord",
+      "type": "object"
+    },
+    "WorkspaceAuthority": {
+      "additionalProperties": false,
+      "description": "Complete current owner set from the same locked workspace revision.\n\nSQL producers establish completeness and currency under the shared lock.\nactive_owner_ids counts active human owner membership rows; disabled_owner_ids\nidentifies rows whose principals are currently disabled. During security fan-out,\nstored workspace state can lag; composed authorization checks both facts.",
+      "properties": {
+        "active_owner_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Active Owner Ids",
+          "type": "array"
+        },
+        "disabled_owner_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Disabled Owner Ids",
+          "type": "array"
+        },
+        "workspace": {
+          "$ref": "#/$defs/WorkspaceView"
+        }
+      },
+      "required": [
+        "workspace",
+        "active_owner_ids",
+        "disabled_owner_ids"
+      ],
+      "title": "WorkspaceAuthority",
+      "type": "object"
+    },
+    "WorkspaceView": {
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "quarantined"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "visibility": {
+          "const": "private",
+          "title": "Visibility",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "display_name",
+        "visibility",
+        "state",
+        "revision"
+      ],
+      "title": "WorkspaceView",
       "type": "object"
     }
   },

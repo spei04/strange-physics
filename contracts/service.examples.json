@@ -107,6 +107,34 @@
       "field": "target_credential_id",
       "model": "ServiceReceipt",
       "value": "wrong"
+    },
+    {
+      "field": "state",
+      "model": "ServiceReceiptLookup",
+      "value": "absent"
+    },
+    {
+      "field": "audit",
+      "model": "ServicePlan",
+      "value": {
+        "actor_generation": 0,
+        "actor_grant_incarnation": 0,
+        "actor_id": "principal-1",
+        "event_id": "other",
+        "outcome": {
+          "authority_generation": 0,
+          "committed_at": 1100,
+          "committed_revision": 1,
+          "credential_id": "key-1",
+          "grant_incarnation": 0,
+          "operation": "key_issue",
+          "principal_id": "service-1",
+          "replaced_credential_id": null,
+          "workspace_id": "workspace-1"
+        },
+        "request_sha256": "4b55c7eb52c97b713799b80d624f7ce068163f5dab47605c91a264843d2f35e5",
+        "snapshot_sha256": "0d8910367c58ba64412d673234034d330eda7908249e5669f8560b09937d8bd9"
+      }
     }
   ],
   "schema_negative": [
@@ -180,7 +208,7 @@
       "actor_generation": 0,
       "actor_grant_incarnation": 0,
       "actor_id": "principal-1",
-      "event_id": "audit-1",
+      "event_id": "audit-1100-ServiceKeyIssueRequest",
       "outcome": {
         "authority_generation": 0,
         "committed_at": 1100,
@@ -192,7 +220,54 @@
         "replaced_credential_id": null,
         "workspace_id": "workspace-1"
       },
-      "request_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      "request_sha256": "4b55c7eb52c97b713799b80d624f7ce068163f5dab47605c91a264843d2f35e5",
+      "snapshot_sha256": "0d8910367c58ba64412d673234034d330eda7908249e5669f8560b09937d8bd9"
+    },
+    "ServiceCommitSnapshot": {
+      "keys": [
+        {
+          "authority_generation": 0,
+          "created_at": 1100,
+          "credential_id": "key-1",
+          "expires_at": 2000,
+          "grant_incarnation": 0,
+          "issued_by": "principal-1",
+          "key_generation": 1,
+          "policy_id": "service-policy-1",
+          "principal_id": "service-1",
+          "retain_until": 87500,
+          "retire_at": null,
+          "revoked_at": null,
+          "scopes": [
+            "runs:read"
+          ],
+          "workspace_id": "workspace-1"
+        }
+      ],
+      "principal": {
+        "active": true,
+        "authority_generation": 0,
+        "display_name": "Synthetic investigator",
+        "grant": {
+          "incarnation": 0,
+          "membership": {
+            "active": true,
+            "principal_id": "service-1",
+            "revision": 0,
+            "role": "researcher",
+            "workspace_id": "workspace-1"
+          }
+        },
+        "last_key_generation": 1,
+        "principal_id": "service-1",
+        "revision": 1,
+        "scope_ceiling": [
+          "runs:cancel",
+          "runs:create",
+          "runs:read"
+        ],
+        "workspace_id": "workspace-1"
+      }
     },
     "ServiceCreateRequest": {
       "display_name": "Synthetic investigator",
@@ -284,7 +359,11 @@
           "workspace_id": "workspace-1"
         }
       },
-      "secret": "spk1.key-1.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      "secret": "spk1.key-1.AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQE"
+    },
+    "ServiceKeyMaterial": {
+      "credential_id": "key-1",
+      "verifier_sha256": "72cd6e8422c407fb6d098690f1130b7ded7ec2f7f5e1d30bd9d521f015363793"
     },
     "ServiceKeyPage": {
       "items": [
@@ -356,7 +435,7 @@
         ],
         "workspace_id": "workspace-1"
       },
-      "verifier_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+      "verifier_sha256": "72cd6e8422c407fb6d098690f1130b7ded7ec2f7f5e1d30bd9d521f015363793"
     },
     "ServiceKeyRecoverRequest": {
       "expected_revision": 1
@@ -480,7 +559,7 @@
             ],
             "workspace_id": "workspace-1"
           },
-          "verifier_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+          "verifier_sha256": "72cd6e8422c407fb6d098690f1130b7ded7ec2f7f5e1d30bd9d521f015363793"
         }
       ]
     },
@@ -643,6 +722,220 @@
         "workspace_id": "workspace-1"
       }
     },
+    "ServicePlan": {
+      "audit": {
+        "actor_generation": 0,
+        "actor_grant_incarnation": 0,
+        "actor_id": "principal-1",
+        "event_id": "audit-1100-ServiceKeyIssueRequest",
+        "outcome": {
+          "authority_generation": 0,
+          "committed_at": 1100,
+          "committed_revision": 1,
+          "credential_id": "key-1",
+          "grant_incarnation": 0,
+          "operation": "key_issue",
+          "principal_id": "service-1",
+          "replaced_credential_id": null,
+          "workspace_id": "workspace-1"
+        },
+        "request_sha256": "4b55c7eb52c97b713799b80d624f7ce068163f5dab47605c91a264843d2f35e5",
+        "snapshot_sha256": "0d8910367c58ba64412d673234034d330eda7908249e5669f8560b09937d8bd9"
+      },
+      "key_set": {
+        "principal": {
+          "active": true,
+          "authority_generation": 0,
+          "display_name": "Synthetic investigator",
+          "grant": {
+            "incarnation": 0,
+            "membership": {
+              "active": true,
+              "principal_id": "service-1",
+              "revision": 0,
+              "role": "researcher",
+              "workspace_id": "workspace-1"
+            }
+          },
+          "last_key_generation": 1,
+          "principal_id": "service-1",
+          "revision": 1,
+          "scope_ceiling": [
+            "runs:cancel",
+            "runs:create",
+            "runs:read"
+          ],
+          "workspace_id": "workspace-1"
+        },
+        "records": [
+          {
+            "key": {
+              "authority_generation": 0,
+              "created_at": 1100,
+              "credential_id": "key-1",
+              "expires_at": 2000,
+              "grant_incarnation": 0,
+              "issued_by": "principal-1",
+              "key_generation": 1,
+              "policy_id": "service-policy-1",
+              "principal_id": "service-1",
+              "retain_until": 87500,
+              "retire_at": null,
+              "revoked_at": null,
+              "scopes": [
+                "runs:read"
+              ],
+              "workspace_id": "workspace-1"
+            },
+            "verifier_sha256": "72cd6e8422c407fb6d098690f1130b7ded7ec2f7f5e1d30bd9d521f015363793"
+          }
+        ]
+      },
+      "receipt": {
+        "actor_generation": 0,
+        "actor_grant_incarnation": 0,
+        "actor_id": "principal-1",
+        "audit_event_id": "audit-1100-ServiceKeyIssueRequest",
+        "key": "request-1",
+        "operation": "key_issue",
+        "outcome": {
+          "authority_generation": 0,
+          "committed_at": 1100,
+          "committed_revision": 1,
+          "credential_id": "key-1",
+          "grant_incarnation": 0,
+          "operation": "key_issue",
+          "principal_id": "service-1",
+          "replaced_credential_id": null,
+          "workspace_id": "workspace-1"
+        },
+        "policy_id": "service-policy-1",
+        "request_sha256": "4b55c7eb52c97b713799b80d624f7ce068163f5dab47605c91a264843d2f35e5",
+        "retain_until": 87500,
+        "snapshot": {
+          "keys": [
+            {
+              "authority_generation": 0,
+              "created_at": 1100,
+              "credential_id": "key-1",
+              "expires_at": 2000,
+              "grant_incarnation": 0,
+              "issued_by": "principal-1",
+              "key_generation": 1,
+              "policy_id": "service-policy-1",
+              "principal_id": "service-1",
+              "retain_until": 87500,
+              "retire_at": null,
+              "revoked_at": null,
+              "scopes": [
+                "runs:read"
+              ],
+              "workspace_id": "workspace-1"
+            }
+          ],
+          "principal": {
+            "active": true,
+            "authority_generation": 0,
+            "display_name": "Synthetic investigator",
+            "grant": {
+              "incarnation": 0,
+              "membership": {
+                "active": true,
+                "principal_id": "service-1",
+                "revision": 0,
+                "role": "researcher",
+                "workspace_id": "workspace-1"
+              }
+            },
+            "last_key_generation": 1,
+            "principal_id": "service-1",
+            "revision": 1,
+            "scope_ceiling": [
+              "runs:cancel",
+              "runs:create",
+              "runs:read"
+            ],
+            "workspace_id": "workspace-1"
+          }
+        },
+        "target_credential_id": null,
+        "target_principal_id": "service-1",
+        "workspace_id": "workspace-1"
+      },
+      "response": {
+        "credential": {
+          "key": {
+            "authority_generation": 0,
+            "created_at": 1100,
+            "credential_id": "key-1",
+            "expires_at": 2000,
+            "grant_incarnation": 0,
+            "issued_by": "principal-1",
+            "key_generation": 1,
+            "policy_id": "service-policy-1",
+            "principal_id": "service-1",
+            "retain_until": 87500,
+            "retire_at": null,
+            "revoked_at": null,
+            "scopes": [
+              "runs:read"
+            ],
+            "workspace_id": "workspace-1"
+          },
+          "principal_revision": 1,
+          "valid_now": true
+        },
+        "disposition": "committed",
+        "outcome": {
+          "authority_generation": 0,
+          "committed_at": 1100,
+          "committed_revision": 1,
+          "credential_id": "key-1",
+          "grant_incarnation": 0,
+          "operation": "key_issue",
+          "principal_id": "service-1",
+          "replaced_credential_id": null,
+          "workspace_id": "workspace-1"
+        },
+        "principal": {
+          "active": true,
+          "authority_generation": 0,
+          "display_name": "Synthetic investigator",
+          "grant": {
+            "incarnation": 0,
+            "membership": {
+              "active": true,
+              "principal_id": "service-1",
+              "revision": 0,
+              "role": "researcher",
+              "workspace_id": "workspace-1"
+            }
+          },
+          "last_key_generation": 1,
+          "principal_id": "service-1",
+          "revision": 1,
+          "scope_ceiling": [
+            "runs:cancel",
+            "runs:create",
+            "runs:read"
+          ],
+          "workspace_id": "workspace-1"
+        }
+      },
+      "workspace": {
+        "active_owner_ids": [
+          "principal-1"
+        ],
+        "disabled_owner_ids": [],
+        "workspace": {
+          "display_name": "Research lab",
+          "revision": 2,
+          "state": "active",
+          "visibility": "private",
+          "workspace_id": "workspace-1"
+        }
+      }
+    },
     "ServicePrincipalPage": {
       "items": [
         {
@@ -701,7 +994,8 @@
       "actor_generation": 0,
       "actor_grant_incarnation": 0,
       "actor_id": "principal-1",
-      "key": "issue-1",
+      "audit_event_id": "audit-1100-ServiceKeyIssueRequest",
+      "key": "request-1",
       "operation": "key_issue",
       "outcome": {
         "authority_generation": 0,
@@ -715,11 +1009,150 @@
         "workspace_id": "workspace-1"
       },
       "policy_id": "service-policy-1",
-      "request_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "request_sha256": "4b55c7eb52c97b713799b80d624f7ce068163f5dab47605c91a264843d2f35e5",
       "retain_until": 87500,
+      "snapshot": {
+        "keys": [
+          {
+            "authority_generation": 0,
+            "created_at": 1100,
+            "credential_id": "key-1",
+            "expires_at": 2000,
+            "grant_incarnation": 0,
+            "issued_by": "principal-1",
+            "key_generation": 1,
+            "policy_id": "service-policy-1",
+            "principal_id": "service-1",
+            "retain_until": 87500,
+            "retire_at": null,
+            "revoked_at": null,
+            "scopes": [
+              "runs:read"
+            ],
+            "workspace_id": "workspace-1"
+          }
+        ],
+        "principal": {
+          "active": true,
+          "authority_generation": 0,
+          "display_name": "Synthetic investigator",
+          "grant": {
+            "incarnation": 0,
+            "membership": {
+              "active": true,
+              "principal_id": "service-1",
+              "revision": 0,
+              "role": "researcher",
+              "workspace_id": "workspace-1"
+            }
+          },
+          "last_key_generation": 1,
+          "principal_id": "service-1",
+          "revision": 1,
+          "scope_ceiling": [
+            "runs:cancel",
+            "runs:create",
+            "runs:read"
+          ],
+          "workspace_id": "workspace-1"
+        }
+      },
       "target_credential_id": null,
       "target_principal_id": "service-1",
       "workspace_id": "workspace-1"
+    },
+    "ServiceReceiptLookup": {
+      "audit": {
+        "actor_generation": 0,
+        "actor_grant_incarnation": 0,
+        "actor_id": "principal-1",
+        "event_id": "audit-1100-ServiceKeyIssueRequest",
+        "outcome": {
+          "authority_generation": 0,
+          "committed_at": 1100,
+          "committed_revision": 1,
+          "credential_id": "key-1",
+          "grant_incarnation": 0,
+          "operation": "key_issue",
+          "principal_id": "service-1",
+          "replaced_credential_id": null,
+          "workspace_id": "workspace-1"
+        },
+        "request_sha256": "4b55c7eb52c97b713799b80d624f7ce068163f5dab47605c91a264843d2f35e5",
+        "snapshot_sha256": "0d8910367c58ba64412d673234034d330eda7908249e5669f8560b09937d8bd9"
+      },
+      "receipt": {
+        "actor_generation": 0,
+        "actor_grant_incarnation": 0,
+        "actor_id": "principal-1",
+        "audit_event_id": "audit-1100-ServiceKeyIssueRequest",
+        "key": "request-1",
+        "operation": "key_issue",
+        "outcome": {
+          "authority_generation": 0,
+          "committed_at": 1100,
+          "committed_revision": 1,
+          "credential_id": "key-1",
+          "grant_incarnation": 0,
+          "operation": "key_issue",
+          "principal_id": "service-1",
+          "replaced_credential_id": null,
+          "workspace_id": "workspace-1"
+        },
+        "policy_id": "service-policy-1",
+        "request_sha256": "4b55c7eb52c97b713799b80d624f7ce068163f5dab47605c91a264843d2f35e5",
+        "retain_until": 87500,
+        "snapshot": {
+          "keys": [
+            {
+              "authority_generation": 0,
+              "created_at": 1100,
+              "credential_id": "key-1",
+              "expires_at": 2000,
+              "grant_incarnation": 0,
+              "issued_by": "principal-1",
+              "key_generation": 1,
+              "policy_id": "service-policy-1",
+              "principal_id": "service-1",
+              "retain_until": 87500,
+              "retire_at": null,
+              "revoked_at": null,
+              "scopes": [
+                "runs:read"
+              ],
+              "workspace_id": "workspace-1"
+            }
+          ],
+          "principal": {
+            "active": true,
+            "authority_generation": 0,
+            "display_name": "Synthetic investigator",
+            "grant": {
+              "incarnation": 0,
+              "membership": {
+                "active": true,
+                "principal_id": "service-1",
+                "revision": 0,
+                "role": "researcher",
+                "workspace_id": "workspace-1"
+              }
+            },
+            "last_key_generation": 1,
+            "principal_id": "service-1",
+            "revision": 1,
+            "scope_ceiling": [
+              "runs:cancel",
+              "runs:create",
+              "runs:read"
+            ],
+            "workspace_id": "workspace-1"
+          }
+        },
+        "target_credential_id": null,
+        "target_principal_id": "service-1",
+        "workspace_id": "workspace-1"
+      },
+      "state": "committed"
     },
     "ServiceStateRequest": {
       "active": false,

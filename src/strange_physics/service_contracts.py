@@ -14,7 +14,13 @@ from pydantic.json_schema import JsonSchemaValue, models_json_schema
 from strange_physics.contracts import Identifier, Message
 from strange_physics.credential_authority import CredentialOwner, GrantAuthority
 from strange_physics.research_contracts import Count, Digest
-from strange_physics.workspace_contracts import BrowserActor, Cursor, DisplayName, IdempotencyKey
+from strange_physics.workspace_contracts import (
+    BrowserActor,
+    Cursor,
+    DisplayName,
+    IdempotencyKey,
+    WorkspaceAuthority,
+)
 
 ServicePermission = Literal["runs:read", "runs:create", "runs:cancel"]
 ServiceRole = Literal["researcher", "viewer"]
@@ -328,6 +334,28 @@ class ServiceKeyReplayResponse(Message):
         return self
 
 
+class ServiceCommitSnapshot(Message):
+    """Original safe principal and affected key projections, retained with the receipt."""
+
+    principal: ServicePrincipalView
+    keys: Annotated[tuple[ServiceKeyState, ...], Field(max_length=2)]
+
+    @model_validator(mode="after")
+    def same_principal(self) -> Self:
+        if (
+            tuple(sorted(key.credential_id for key in self.keys))
+            != tuple(key.credential_id for key in self.keys)
+            or len({key.credential_id for key in self.keys}) != len(self.keys)
+            or any(
+                key.workspace_id != self.principal.workspace_id
+                or key.principal_id != self.principal.principal_id
+                for key in self.keys
+            )
+        ):
+            raise ValueError("Commit snapshot must bind sorted unique affected keys")
+        return self
+
+
 class ServiceReceipt(Message):
     """Scoped secret-free deduplication record; never retain an issued response."""
 
@@ -342,6 +370,8 @@ class ServiceReceipt(Message):
     key: IdempotencyKey
     request_sha256: Digest
     outcome: ServiceMutationOutcome
+    snapshot: ServiceCommitSnapshot
+    audit_event_id: Identifier
     retain_until: Count
 
     @model_validator(mode="after")
@@ -353,6 +383,11 @@ class ServiceReceipt(Message):
             or (self.target_credential_id is not None)
             != (self.operation in {"key_rotate", "key_recover", "key_revoke"})
             or self.retain_until <= self.outcome.committed_at
+            or self.snapshot.principal.workspace_id != self.workspace_id
+            or self.snapshot.principal.principal_id != self.outcome.principal_id
+            or self.snapshot.principal.revision != self.outcome.committed_revision
+            or self.snapshot.principal.authority_generation != self.outcome.authority_generation
+            or self.snapshot.principal.grant.incarnation != self.outcome.grant_incarnation
         ):
             raise ValueError("Receipt must bind its complete operation scope and lifetime")
         if self.target_principal_id is not None and (
@@ -378,6 +413,7 @@ class ServiceAudit(Message):
     actor_grant_incarnation: Count
     request_sha256: Digest
     outcome: ServiceMutationOutcome
+    snapshot_sha256: Digest
 
 
 class ServiceError(Message):
@@ -399,7 +435,55 @@ class ServiceError(Message):
     request_id: Identifier
 
 
+class ServiceKeyMaterial(Message):
+    """Fresh server-generated material; plaintext stays outside durable proposals."""
+
+    credential_id: Identifier
+    verifier_sha256: Digest = Field(repr=False)
+
+
+class ServiceReceiptLookup(Message):
+    """Complete locked lookup; absent means never reserved, not expired-and-deleted."""
+
+    state: Literal["absent", "committed", "recovery_required"]
+    receipt: ServiceReceipt | None
+    audit: ServiceAudit | None
+
+    @model_validator(mode="after")
+    def absence(self) -> Self:
+        if self.state == "absent" and (self.receipt is not None or self.audit is not None):
+            raise ValueError("An absent request cannot contain committed evidence")
+        return self
+
+
+class ServicePlan(Message):
+    """One atomic SQL proposal, not evidence of commit or permission to deliver a secret."""
+
+    workspace: WorkspaceAuthority
+    key_set: ServiceKeySet
+    receipt: ServiceReceipt
+    audit: ServiceAudit
+    response: ServiceMutationResponse
+
+    @model_validator(mode="after")
+    def proposal_binding(self) -> Self:
+        if (
+            self.workspace.workspace.workspace_id != self.key_set.principal.workspace_id
+            or self.key_set.principal != self.response.principal
+            or self.response.disposition != "committed"
+            or self.receipt.outcome != self.response.outcome
+            or self.audit.outcome != self.response.outcome
+            or self.receipt.audit_event_id != self.audit.event_id
+        ):
+            raise ValueError("Atomic proposal must bind its state, receipt, audit and response")
+        return self
+
+
 SERVICE_MODELS: tuple[type[Message], ...] = (
+    ServiceCommitSnapshot,
+    ServiceKeyMaterial,
+    ServiceReceiptLookup,
+    ServicePlan,
     ServiceCredentialPolicy,
     ServiceManager,
     ServicePrincipalView,

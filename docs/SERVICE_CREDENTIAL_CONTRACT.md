@@ -1,7 +1,7 @@
 # Service principal and API-key contracts — ID-C/C1
 
-Status: early API/schema review checkpoint. Lifecycle predicates and their
-adversarial tests follow this checkpoint; these interfaces are not a hosted
+Status: lifecycle conformance review checkpoint. Pure admission/replay proposals
+and adversarial tests are implemented; these interfaces are not a hosted
 issuer, HTTP service, verifier or SQL implementation. ID-C/C2 run credentials
 and full C-ID producer/consumer acceptance remain separate gates.
 
@@ -86,7 +86,8 @@ original expiry and the approved overlap deadline. Retry never extends overlap.
 
 A fresh recovery requires a currently valid unrevoked target under the same
 current principal generation and grant incarnation. Its replacement inherits
-the exact original scopes and expiry, uses a fresh key identity/verifier and
+the exact original scopes, expiry and any earlier retirement deadline, uses a
+fresh key identity/verifier and
 monotonic issuance generation, and revokes the target immediately in the same
 commit. Near-expiry recovery yields a short-lived replacement. Recovery cannot
 extend authority; ordinary issuance/rotation is the deliberate lifecycle path.
@@ -98,3 +99,121 @@ recovery retry finds the original receipt before testing the now-revoked target.
 Retained records, deduplication receipts and audit evidence must outlive all
 corresponding authority/retry deadlines. SQL transactions, retention enforcement,
 concurrent-write tests and recovery drills remain producer obligations.
+
+
+## Executable conformance boundary
+
+[service_credentials.py](../src/strange_physics/service_credentials.py) exposes
+plan_service_operation for all six mutations. The request type determines the
+operation; path identities and idempotency scope must match it. It authorizes
+the current human owner, resolves the complete locked receipt lookup, returns
+an exact metadata-only replay when available, or returns a ServicePlan. A plan
+is a proposed state transition, not evidence that anything committed.
+
+The plan includes the new workspace revision for creation, the complete service
+keyset, a secret-free original outcome, affected-key snapshots, the receipt and
+an audit/outbox event. Committed key snapshots retain original expiry, scopes,
+retirement and parent authority metadata. The audit binds their canonical digest.
+Replay requires all of that evidence and compatible current key projections;
+missing receipt/audit/key state, changed immutable key data, rolled-back counters
+or altered retention is recovery_required. Recovery never issues from surviving
+partial evidence. Expired or unresolved request tombstones must not be presented
+as an absent request.
+
+The original committed revision and current principal/keyset revision are
+different fields in a retry response. A later revoked, retired or expired leaf
+key may be described with valid_now=false. No secret reappears. A changed parent
+generation or grant incarnation prevents replay entirely. Current actor
+revocation likewise denies before receipt details or freshness guidance.
+
+get_service_principal and get_service_key apply owner authorization before
+lookup/projection. List producers use the same authorize_service_management
+boundary plus the bounded same-workspace/principal page validators and their
+snapshot-bound cursor implementation. service_key_valid is only an ancestry,
+scope and lifetime predicate; it does not verify a presented bearer. C2 must
+compose actual verified credentials with these current facts before product
+authorization. The separate initial-response validator only binds a transient
+secret to a proposed verifier digest; it proves neither current authority nor a
+SQL commit and is never a replay path.
+
+The additive [authority wrappers](../src/strange_physics/credential_authority.py)
+include producer checks for principal active-state transitions and grant
+updates. Disabling and re-enabling each advance the principal generation.
+Removing and regranting each advance the grant incarnation. A role/revision
+change preserves incarnation and follows current per-operation permissions.
+Adapters must update these counters in the same transaction as the existing
+principal/membership state. Parsing an active snapshot alone cannot enforce
+that obligation. These wrappers do not alter accepted session/B1 wire shapes.
+
+## SQL, secret handling and retention obligations
+
+Before serving these routes, the producer must demonstrate the following real
+transaction behavior; pure tests are not evidence of its implementation:
+
+1. Verify the cookie/session and original session principal-generation binding.
+   Read the current principal, owner grant, enabled-owner set, workspace and
+   target service under a consistent lock order. Apply current authority before
+   receipt lookup and repeat it at the commit boundary.
+2. Use the full deduplication tuple and preserve the normalized request hash.
+   Lookups distinguish never-reserved, committed and unresolved/expired tombstone
+   states. Only never-reserved permits a fresh proposal. A corrupt or partial
+   commit requires reconciliation.
+3. Allocate globally unique principal, key and event IDs. A service principal
+   cannot reuse a human identity. Create its independent grant atomically.
+   Preserve complete current keysets, not paginated subsets, for key counts.
+4. Store the keyset revision, immutable issuance counter, authority generations,
+   key verifier record, affected-key snapshots, receipt and audit/outbox in one
+   transaction. Existing verifier digests are immutable per key identity.
+   Apply database uniqueness constraints for IDs, scope/request identity and
+   principal/key generation; compare shared revision under the same lock.
+5. Only the original successful handler may serialize the transient initial
+   secret after commit confirmation and current authorization. Do not persist
+   its response body. A crash before commit has no authority; a crash after
+   commit or lost acknowledgment permits only metadata reconciliation. Recovery
+   is a distinct authorized fresh request that replaces an eligible key.
+6. Keep each receipt until the maximum of commit time plus the explicit policy
+   retention and every affected key's original expiry. Keep referenced key
+   records and audit evidence at least that long. Every mutation extends the
+   affected record's retain_until as needed; it never shortens it. The second
+   untouched overlap key retains its original retirement.
+7. After full receipt/key details become eligible for cleanup, preserve the
+   deduplication tombstone while that principal's scope remains addressable.
+   Never reuse expired request identities as fresh admission, reset generation
+   counters, or delete records still referenced by retained receipts, incident
+   evidence or active consumers. Destructive principal lifecycle and its final
+   retention policy remain separate work.
+8. Enforce deployment policy, bounded pagination, quotas and rate limiting.
+   Responses use Cache-Control: no-store. Fixed ServiceError codes map to the
+   exact OpenAPI status; reauthentication guidance only accompanies the explicit
+   freshness error, and a 429 requires bounded Retry-After.
+
+Policy IDs identify immutable reviewed settings; changing a policy in place is
+not supported. Key retention and counter exhaustion block fresh issuance rather
+than deleting evidence or resetting counters. Routine rotation requires exactly
+one currently valid key, even for zero overlap; recovery is the bounded path
+that can preserve a valid second key. New key material must differ from all
+retained identities and verifier hashes; secure random generation and global
+uniqueness remain real producer obligations.
+
+Required runtime evidence includes concurrent issue/rotate/recover/revoke versus
+state/grant changes, idempotency races, crash injection at every transaction
+boundary, no plaintext logging/storage, tenant-isolation checks, actual verifier
+tests, retention cleanup with referenced receipts, and recovery drills. C2 run
+credentials, mandatory product-authority composition, HTTP handlers, SQL,
+provider integration and production-readiness gates remain open.
+
+## Focused verification
+
+Run:
+
+```sh
+.venv/bin/pytest tests/test_service_contracts.py tests/test_service_credentials.py
+.venv/bin/python scripts/validate_contracts.py
+```
+
+The synthetic cases cover public/runtime schema boundaries, current authority
+before retry/freshness, shared CAS, monotonic generations/incarnations, secret
+response binding, explicit metadata-only retries, key count/lifetime limits,
+retirement of both sides of overlap, near-expiry recovery, partial atomic
+evidence, immutable snapshots and fixed safe errors. They do not exercise a
+database, real key verifier, distributed race or hosted service.

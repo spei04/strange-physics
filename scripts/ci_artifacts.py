@@ -37,6 +37,7 @@ MODULES = frozenset(
         "session.py",
         "session_contracts.py",
         "service_contracts.py",
+        "service_credentials.py",
         "simulation.py",
         "worlds.py",
         "workspace_contracts.py",
