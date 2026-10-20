@@ -689,7 +689,12 @@ def test_durable_ownership_admission_uses_actual_human_and_service_ancestry() ->
             )
         call = product(authority, "runs:create")
         run = changed(
-            value(RunView), workspace_id=call["workspace_id"], status="queued", revision=0
+            value(RunView),
+            workspace_id=call["workspace_id"],
+            status="queued",
+            revision=0,
+            experiments_accepted=0,
+            budget_remaining=value(RunView).space.budget,
         )
         ownership = admit_run_ownership(
             call["workspace"],
@@ -918,3 +923,21 @@ def test_session_policy_failure_uses_existing_public_error_envelope() -> None:
     status, error = workspace_session_error(caught.value, request_id="request-1")
     assert status == 503 and error.code == "temporarily_unavailable"
     assert error.retryable and error.operation_id is None
+
+
+def test_original_admission_requires_untouched_experiment_budget() -> None:
+    authority = value(c.HumanProductAuthority)
+    call = product(authority, "runs:create")
+    run = changed(value(RunView), workspace_id=call["workspace_id"], status="queued", revision=0)
+    assert run.experiments_accepted > 0
+    with denied("incompatible_state", 409):
+        admit_run_ownership(
+            call["workspace"],
+            call["credential"],
+            call["membership"],
+            run,
+            authority=authority,
+            run_deadline=2000,
+            worker_scopes=("experiments:read",),
+            now=1200,
+        )

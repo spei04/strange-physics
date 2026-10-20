@@ -111,7 +111,7 @@ readiness or full C-ID freeze is implied.
 ## Producer and replay details
 
 admit_run_ownership is called during original run admission under the same
-transaction as a queued, revision-zero RunView. It calls the complete runs:create
+transaction as a queued, revision-zero RunView with no accepted experiments. It calls the complete runs:create
 guard and derives the stable principal, original principal generation and grant
 incarnation from actual current authority. The original deadline and fixed
 WorkerScopes subset are trusted server policy inputs; the public CreateRunRequest

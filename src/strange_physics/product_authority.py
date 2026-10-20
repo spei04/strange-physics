@@ -206,7 +206,12 @@ def admit_run_ownership(
         workspace_id=run.workspace_id,
         now=now,
     )
-    if authority.kind == "run" or run.status != "queued" or run.revision != 0:
+    if (
+        authority.kind == "run"
+        or run.status != "queued"
+        or run.revision != 0
+        or run.experiments_accepted != 0
+    ):
         raise ContractViolation("incompatible_state", 409)
     if authority.kind == "user":
         owner = authority.owner
