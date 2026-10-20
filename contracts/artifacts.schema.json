@@ -231,6 +231,54 @@
       "title": "CheckpointArtifacts",
       "type": "object"
     },
+    "CheckpointAttempt": {
+      "additionalProperties": false,
+      "description": "Trusted pinned attempt identity/configuration from the current authorized run.",
+      "properties": {
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "binding": {
+          "$ref": "#/$defs/CheckpointBinding"
+        },
+        "lease_epoch": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Lease Epoch",
+          "type": "integer"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "attempt_id",
+        "lease_epoch",
+        "binding"
+      ],
+      "title": "CheckpointAttempt",
+      "type": "object"
+    },
     "CheckpointBinding": {
       "additionalProperties": false,
       "properties": {

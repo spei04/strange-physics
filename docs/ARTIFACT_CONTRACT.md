@@ -1,8 +1,8 @@
 # Artifact and checkpoint contract — ART1 API checkpoint
 
-SP-01.c / issue #89, first review unit. This checkpoint defines typed messages
-and cross-message invariants. Complete admission, recovery predicates and their
-runtime review follow; this is not final ART/EXEC acceptance.
+SP-01.c / issue #89, first review unit. Typed messages and pure admission/recovery
+predicates are implemented for review. Full ART/EXEC acceptance still requires
+the package/worker unit and final composition; this is not hosted enforcement.
 
 [Schema](../contracts/artifacts.schema.json),
 [synthetic examples](../contracts/artifacts.examples.json) and
@@ -57,12 +57,20 @@ allowlist. Examples are test policy values, not approved deployment defaults.
 CORE's existing 256 KiB cap still applies independently. Adapters must enforce
 bounded transport/decode limits before constructing Python objects.
 
-The upcoming complete checkpoint entry point will compose current
-`authorize_product(checkpoints:write)` before replay, join actual typed
-verification to the exact workspace/run/request/ref list, recompute the full
-request hash and derive the completed prefix from the complete accepted ledger.
+The complete [checkpoint entry point](../src/strange_physics/artifact_checkpoints.py) composes current
+`authorize_product(checkpoints:write)` before replay, joins actual typed
+verification to the exact workspace/run/request/ref list, recomputes the full
+request hash and derives the completed prefix from the complete accepted ledger.
 No client `artifacts_verified` boolean or optional current-authority bypass is
-allowed. The existing metadata predicate is not complete hosted admission.
+allowed. The old internal producer interface is amended explicitly:
+`control_contracts.validate_checkpoint_write` is replaced by the clearly
+incomplete `validate_checkpoint_metadata` helper, with no artifact boolean.
+The named complete `artifact_checkpoints.validate_checkpoint_write` requires
+authority, actual request, policy, current attempt binding, exact verification,
+complete accepted ledger and natural-key lookup. There is no optional binder.
+Repository inventory found only the old control test helper as a caller; it
+now exercises the renamed low-level primitive. No HTTP/SDK consumer is hidden
+behind a compatibility shim.
 
 `CheckpointArtifacts` binds an ordered current catalog/readback set to a
 request and actual policy digest. Verification must cover every referenced
@@ -91,7 +99,7 @@ objects, lost acknowledgement and corrupt/partial DB evidence. Cleanup requires
 configured retention/grace, no active consumer and a current reference scan;
 the roadmap's proposed retention numbers are not approved by this contract.
 
-Restore-candidate validation will be explicitly non-authorizing. The later
+Restore-candidate validation is explicitly non-authorizing. The later
 restore adapter must establish current read authority before any payload
 delivery; this slice adds no read route, role or controller permission.
 Choosing an earlier complete compatible checkpoint is an explicit recovery
@@ -102,3 +110,50 @@ No pickle or agent-specific executable deserialization runs in a trusted
 process. This slice implements no storage adapter, SQL/HTTP handler, sandbox,
 retention worker, token verifier or live concurrency guarantee. Package/worker
 envelopes are the next SP-01.c unit; full executable predictors remain SP-19.a.
+
+## Producer ordering and safe failures
+
+The complete boundary first composes the current workspace, verified credential,
+durable owner/generation/grant incarnation and current lease. This includes
+expired/revoked/replaced worker tokens and role downgrades before any replay.
+The trusted `CheckpointAttempt` must match that run/attempt/lease and supplies
+the pinned package/config/runtime. Then the boundary enforces actual policy and
+CORE limits, exact ordered object evidence, complete accepted ledger and retained
+record/head/outbox consistency. Failed physical records advance the completed
+prefix; pending, missing and aborted slots do not.
+
+Current policy bounds apply to historical replay as well: a retry cannot use
+a previously accepted body to bypass current parse/resource or visibility
+constraints. Request identity remains the entire normalized public body;
+policy and private storage proofs do not secretly alter its replay key.
+Quota accounting and resource reservations still require their later SQL
+producers; these predicates never debit or refund.
+
+The producer locks current artifact catalog rows in a deterministic order and
+compares available state/revision while installing checkpoint references.
+Orphan cleanup uses the same lock/CAS boundary: after current reference and
+consumer checks it transitions the row to tombstoned before deleting the exact
+generation. Thus either admission installs a reference first and cleanup
+must retain it, or tombstoning wins and admission fails. A no-reference scan
+followed by an unlocked delete is insufficient, even with a generation
+precondition. The proposed record retains each exact artifact revision for
+this comparison. Out-of-band deletion is prohibited by the later IAM/storage
+adapter; this pure contract cannot make an object durable.
+
+Immutable history, latest pointer and retained outbox identity commit atomically.
+A retry with one missing projection yields `409 recovery_required`; an exact
+historical request returns its original body without changing latest. Changed
+existing content yields `409 idempotency_conflict`. Incompatible prefix/runtime
+or lifecycle changes yield `409 incompatible_state`; invalid object evidence
+or actual bounds yield `422 invalid_request`. Missing policy yields
+`503 policy_unavailable`. Existing current-authority errors remain
+401/403/non-enumerating 404 as specified by C2. No error embeds a private locator,
+artifact bytes, secrets, evaluator data or request state.
+
+The pure raw-buffer helper independently checks actual byte length and SHA-256;
+it does not read cloud storage or prove a location. The lifecycle predicate
+allows uploading → available or tombstoned, available → tombstoned, and
+tombstoned → deleted, with revision CAS and immutable identity/visibility.
+It never resurrects deleted/tombstoned state. Promotion to available still
+requires trusted storage completion evidence; visibility changes need a
+separately authorized publication/sharing flow, not this lifecycle helper.

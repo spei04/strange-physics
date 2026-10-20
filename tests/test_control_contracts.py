@@ -29,7 +29,7 @@ from strange_physics.control_contracts import (
     checkpoint_request_sha256,
     contiguous_record_prefix,
     control_json_schema,
-    validate_checkpoint_write,
+    validate_checkpoint_metadata,
     validate_experiment_admission,
     validate_operation_update,
     validate_run_transition,
@@ -80,10 +80,9 @@ def check_write(value: Checkpoint | None = None, **changes: Any) -> str:
         "stored_request_sha256": None,
         "latest_index": -1,
         "committed_prefix": 1,
-        "artifacts_verified": True,
     }
     args.update(changes)
-    return validate_checkpoint_write(checkpoint() if value is None else value, **args)
+    return validate_checkpoint_metadata(checkpoint() if value is None else value, **args)
 
 
 @pytest.mark.parametrize("model", CONTROL_MODELS)
@@ -538,7 +537,6 @@ def test_historical_checkpoint_retry_does_not_move_latest_and_changed_payload_co
     [
         ({"path_index": 1}, "invalid_request"),
         ({"committed_prefix": -1}, "incompatible_state"),
-        ({"artifacts_verified": False}, "invalid_request"),
         ({"binding": {"runtime_image_sha256": "4" * 64}}, "incompatible_state"),
     ],
 )

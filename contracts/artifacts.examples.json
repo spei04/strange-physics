@@ -97,6 +97,21 @@
     {
       "field": "generation",
       "model": "ArtifactRef",
+      "value": "1\n"
+    },
+    {
+      "field": "media_type",
+      "model": "ArtifactRef",
+      "value": "application/json\n"
+    },
+    {
+      "field": "object_key",
+      "model": "StorageLocator",
+      "value": "ws/key\n"
+    },
+    {
+      "field": "generation",
+      "model": "ArtifactRef",
       "value": 9007199254740993
     },
     {
@@ -229,6 +244,19 @@
       ],
       "policy_sha256": "812faff2ad7164c0a67c826a97a803bd7a6cb16ac39d3378d668a55a01d52017",
       "request_sha256": "07a211d8c72353273aef9c1da19bb7cc5840e70715641046d66296b694898031",
+      "run_id": "run-1",
+      "workspace_id": "ws-1"
+    },
+    "CheckpointAttempt": {
+      "attempt_id": "attempt-1",
+      "binding": {
+        "agent_config_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "agent_id": "agent-1",
+        "agent_package_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "checkpoint_protocol": "strange-physics.checkpoint.v1",
+        "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "lease_epoch": 1,
       "run_id": "run-1",
       "workspace_id": "ws-1"
     },

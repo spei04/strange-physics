@@ -166,3 +166,10 @@ def test_verification_is_explicitly_not_a_storage_reader() -> None:
     proof = parse(ObjectVerification, EXAMPLES["valid"]["ObjectVerification"])
     assert proof.completeness == "complete"
     assert "does not do I/O" in (ObjectVerification.__doc__ or "")
+
+
+def test_draft_checkpoint_route_uses_public_artifact_schema_only() -> None:
+    api = json.loads((ROOT / "contracts/draft/openapi.json").read_text())
+    assert api["components"]["schemas"]["CheckpointRequest"] == {
+        "$ref": "../artifacts.schema.json#/$defs/CheckpointRequest"
+    }

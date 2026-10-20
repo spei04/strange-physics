@@ -174,6 +174,16 @@ class CheckpointArtifacts(Message):
         return self
 
 
+class CheckpointAttempt(Message):
+    """Trusted pinned attempt identity/configuration from the current authorized run."""
+
+    workspace_id: Identifier
+    run_id: Identifier
+    attempt_id: Identifier
+    lease_epoch: Number
+    binding: CheckpointBinding
+
+
 class CheckpointRecord(Message):
     """Immutable committed history; its entire verified snapshot is retained privately."""
 
@@ -295,6 +305,7 @@ ARTIFACT_MODELS: tuple[type[Message], ...] = (
     VerifiedArtifact,
     CheckpointRequest,
     CheckpointArtifacts,
+    CheckpointAttempt,
     CheckpointRecord,
     CheckpointHead,
     CheckpointOutbox,

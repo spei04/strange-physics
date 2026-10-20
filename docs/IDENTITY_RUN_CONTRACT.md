@@ -270,14 +270,16 @@ Changed existing content or a new decreasing index conflicts (409);
 path mismatch/oversize is invalid (422). Hosted immutable per-index history
 extends the unchanged local journal, which stores latest only.
 
-The pure checkpoint predicate receives trusted binding, prefix/latest state,
-stored/full digests and an externally derived artifact-validation outcome.
-A client flag or digest is not evidence. Success proves no durable bytes,
-generation/hash, tenant visibility, membership or lease. The handler must
-validate ART, compute digests, verify durable generation/hash/size and current
-authority, and run the predicates in the same commit context. Object-first
+The [ART1 checkpoint boundary](ARTIFACT_CONTRACT.md) replaces the old external
+artifact-validation boolean with mandatory typed actual-object evidence and
+current C2 authority. It recomputes the full request hash and completed ledger
+prefix, then proposes immutable history/latest/outbox or an authorized replay.
+The renamed control metadata helper remains explicitly incomplete. Success is
+still not proof of durable bytes or SQL commit: the handler verifies generation,
+hash, size and current catalog state, serializes reference admission with cleanup,
+and rechecks all authority/lease/CAS fences in the actual transaction. Object-first
 upload followed by SQL failure may leave an orphan; never acknowledge a
-reference to missing bytes.
+reference to missing bytes. ART1 review does not complete the full SP-01.c freeze.
 
 ## Required SQL schema and transactions
 
