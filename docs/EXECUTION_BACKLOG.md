@@ -643,7 +643,7 @@ Parent: [#5](https://github.com/spei04/strange-physics/issues/5). This issue clo
 - **Security and reliability:** Do not export hidden law state or clip failures.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R1; in progress under Research, issue #73; SP-00.b/SP-02.b accepted and existing checkout reconciled. Quality/Platform review remains required.
+- **Milestone / state:** R1; completed with independently accepted source 66016cf, 53 new cases and 613 local tests; exact-head CI is required before integration. See NUMERICAL_VALIDATION.md and issue #73.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-03-b"></a>
@@ -3364,4 +3364,6 @@ slice. Enterprise work and its actual consumer gates remain unchanged. I1 needs
 purchased-prefix-only fitting, unseen-condition predictions and independent
 analytic scoring with explicit failures; existing simulation/schema/CI evidence
 does not satisfy it. The concrete disk/snapshot action is approved and complete;
-SP-03.a is in progress, with independent review and exact-head checks still required.
+SP-03.a source 66016cf is independently accepted with 53 new analytic cases and
+613 local tests; exact-head CI is enforced before integration. Research prepares
+SP-03.b/#75, with authoring held until the dependency and writer handoff pass.

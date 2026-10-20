@@ -48,7 +48,9 @@ restarts preserve the regime index.
 Pairwise spring and radial forces are equal and opposite. Anchors remain fixed,
 so an anchored system need not preserve the movable particles' total momentum.
 Velocity drag dissipates energy; its transverse component rotates velocity.
-See [law equations](LAWS.md).
+See [law equations](LAWS.md) and the [independent analytic fixture evidence](NUMERICAL_VALIDATION.md).
+The fixtures validate selected deterministic cases; SP-03.b still owns scientific
+domain and tolerance ratification before fitting or scoring.
 
 ## Agent interface and checkpoints
 
