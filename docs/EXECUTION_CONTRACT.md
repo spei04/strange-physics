@@ -1,7 +1,7 @@
 # Package and worker execution contract
 
-Status: EXEC1 API and pure runtime independently reviewed; local checks pass.
-Integration, matching hosted CI, real package processing, hosted producers and
+Status: EXEC1 API and pure runtime are integrated through PR #92 with matching
+PR and protected-main checks. Real package processing, hosted producers and
 the full SP-01.c freeze remain pending.
 [ART1](ARTIFACT_CONTRACT.md), [C2](RUN_CREDENTIAL_CONTRACT.md), CORE and SCI
 retain their accepted boundaries. This document defines typed inputs and pure
@@ -346,8 +346,9 @@ histories and receipts that cannot reach the retained state, while preserving
 legal original/later receipt replay and late instance discovery during stop
 reconciliation.
 
-These are local pure-contract checks. Integration and matching hosted CI,
-including the installed-wheel and dependency audit jobs, remain required.
+These are pure-contract checks. Matching PR CI39375391014 and protected-main
+CI39375611645 passed, including installed-wheel, dependency audit and candidate
+packaging. Merge750db158 matches reviewed671f109/tree13894d9c exactly.
 They do not establish live token verification, SQL atomicity, safe extraction,
 sandbox isolation, resource accounting, provider-process control or recovery
 drill evidence. The full SP-01.c freeze still requires COMP1.

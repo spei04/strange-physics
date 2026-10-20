@@ -1365,10 +1365,10 @@
         "security",
         "Backend"
       ],
-      "execution_owner": "Project lead integrates reviewed EXEC1; Quality reviews integration. Research queued for COMP1 after exact PR/main CI; Platform reviews its build/runtime boundary.",
+      "execution_owner": "Research authors COMP1 after this reviewed handoff; Platform and Quality independently review. Lead owns progress/integration. ART1 and EXEC1 are integrated.",
       "issue": "https://github.com/spei04/strange-physics/issues/89",
       "execution_plan": "ART1 artifact/checkpoint admission and recovery; EXEC1 package quarantine and worker/broker authority; COMP1 predictor/DB composition. Accepted SP-01.b integration precedes source. Three review units preserve the baseline task/effort/gates.",
-      "evidence": "ART1 complete via PR91/main95bdd85 matching reviewed8c282eb/treecb539fa2; PRCI39370833204 and all five mainCI39370975462 jobs passed. EXEC1 API/runtime independently accepted atfe3b008 and doc-onlyc66b6a0:2281 tests/722schemas/static/security/package checks passed. Final PR92/main CI and COMP1 remain before full SP-01.c freeze."
+      "evidence": "ART1 complete via PR91/main95bdd85. EXEC1 complete via PR92/main750db15810f4a58a4a8d34776cb3708dc310ef5a matching reviewed671f109/tree13894d9c. PRCI39375391014 and all five mainCI39375611645 jobs passed;2281 tests/722 schemas/static/security/package checks. Full SP-01.c freeze still requires COMP1."
     },
     {
       "id": "SP-01.d",
@@ -10562,7 +10562,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Lead integrates reviewed EXEC1; Research queued for COMP1 after exact PR/main CI, with Platform/Quality independent review.",
+      "BE1": "Research authors COMP1 after reviewed handoff; Platform/Quality review, lead integrates.",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10918,7 +10918,7 @@
     },
     "checkout_ownership": {
       "scientific": "Project lead owns primary progress/integration; Quality and Research independently review immutable source.",
-      "identity": "Platform released clean after EXEC1 review; reserved for sequential Research COMP1 authoring after exact PR/main acceptance and explicit handoff. No checkout/dependency copy created.",
+      "identity": "Released by Platform and reserved for Research COMP1 after this reviewed handoff; reuse clean checkout and its independently owned pinned environment.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11151,7 +11151,7 @@
     },
     "artifact_worker_contracts": {
       "issue": 89,
-      "owner": "Project lead coordinates integration; Research queued for COMP1, Platform/Quality review.",
+      "owner": "Research authors COMP1; Platform/Quality review, project lead coordinates integration.",
       "reviewers": [
         "Engineer Quality",
         "Engineer Research",
@@ -11169,17 +11169,18 @@
         {
           "id": "EXEC1",
           "title": "Quarantined package/build and launch/broker envelopes",
-          "status": "in_progress",
+          "status": "complete",
           "depends_on": [
             "ART1"
           ],
-          "preparation": "API and runtime independently accepted; final PR/main CI pending.",
-          "phase": "Accepted pure predicates; lead integrates, Research queued for COMP1 after exact CI acceptance.",
+          "preparation": "API/runtime/final progress reviewed; exact PR and protected-main checks passed.",
+          "phase": "Integrated pure contracts/predicates; live producers remain later tasks.",
           "api_source": "57f2f303a5fec4b65b1df022b4239a64f537f6bc",
           "api_tree": "ecd3facfcd1f3e5086ef3fca9c30a4c29f8a0b3a",
           "runtime_source": "fe3b0088d4bca0623459f9024eceb42036e8d491",
           "author_source": "c66b6a0d6bc82a81195797c742353718bc155136",
-          "pull_request": "https://github.com/spei04/strange-physics/pull/92"
+          "pull_request": "https://github.com/spei04/strange-physics/pull/92",
+          "merge_commit": "750db15810f4a58a4a8d34776cb3708dc310ef5a"
         },
         {
           "id": "COMP1",
@@ -11189,7 +11190,14 @@
             "ART1",
             "EXEC1"
           ],
-          "preparation": "Research and Platform prepare SCI identity/recovery composition read-only; source/freeze waits ART1 and EXEC1."
+          "preparation": "Early API plan accepted after Research/Platform/Quality review; source starts after this progress handoff is reviewed.",
+          "owner": "Engineer Research",
+          "reviewers": [
+            "Engineer Platform",
+            "Engineer Quality",
+            "Project lead"
+          ],
+          "phase": "Assigned; exclusive identity checkout writer handoff pending."
         }
       ],
       "decisions": [
@@ -11303,7 +11311,7 @@
       },
       "exec1_runtime_evidence": {
         "source": "fe3b0088d4bca0623459f9024eceb42036e8d491",
-        "tree": "f1a0b88e2d3fad2232536be8a6a45faf66a7304c",
+        "tree": "13894d9c09bdde0ae8278a5a331c56b377a485fc",
         "initial": "77da80b06f6f07173d6950d5ff64f65969f4ee6f",
         "focused": 615,
         "lead_tests": 202,
@@ -11318,7 +11326,7 @@
         "lead_index": "a5d52b8bd1ea77fa9d4112ce5b1d6146d603b37c722a7a61272540815c2218c1",
         "quality_index": "8aa1f6f8de57c3d64439aad62775a4c7235e182a48ad11ffd083a94df3ef684b",
         "research_index": "ccf4e744a227b907e08a72a196fbcaa0a8b9980099a8ac127682d05b7f602bd2",
-        "status": "source_accepted_final_ci_pending",
+        "status": "complete",
         "author_source": "c66b6a0d6bc82a81195797c742353718bc155136",
         "author_index": "05f71a072fd3721cefc339d70997e7e7cf1007e0b1f9d605a84fc87530bf4f18",
         "integrated_source": "5f643665000a08cad1eedc0f011910ec70c0ad34",
@@ -11326,7 +11334,35 @@
         "full_tests": 2281,
         "format_files": 112,
         "mypy_files": 74,
-        "external_schema_checks": 722
+        "external_schema_checks": 722,
+        "reviewed_head": "671f10930a743acfb9da888a0eb2c97c6e7f471f",
+        "merge_commit": "750db15810f4a58a4a8d34776cb3708dc310ef5a",
+        "pr_ci": 39375391014,
+        "main_ci": 39375611645,
+        "integration_index_sha256": "bf98163b959a260f23f2c5412818855d26dacd326b8ff267206abafc91ddd5c0",
+        "candidate_artifact_id": 12242708007,
+        "candidate_sha256": "2d6b7d08d4be5d49049bed08b5e6544cbf77940ee5a9a73c0d2bdd6b302b3f3a"
+      },
+      "comp1_plan": {
+        "owner": "Engineer Research",
+        "reviewers": [
+          "Engineer Platform",
+          "Engineer Quality",
+          "Project lead"
+        ],
+        "status": "approved_unstarted",
+        "api_checkpoint_before_runtime": true,
+        "required_worker_boundary": "Mandatory authorize_worker_broker submit_model before private parse/lookup/replay, with actual current environment and launch closure; separate native analytic approval.",
+        "immutable_binding": "Actual original admission/request/world-version and scope/space joined to a trusted retained engine binding; actual SCI ObservationBundle identity, not an asserted prefix digest.",
+        "reference_bounds": {
+          "model_raw_bytes": 262144,
+          "ledger_raw_bytes": 8388608,
+          "canonical_prefix_bytes": 8388608
+        },
+        "bound_scope": "Explicit conformance-envelope maxima, with stricter policy; reject before decoding/allocation and hash incrementally byte-equivalent to frozen SCI. Not scalable indexed storage proof.",
+        "recovery": "Separate pending/running/failed/cancelled from completed exact StoredRequest/Operation/ModelReceipt/model-record/outbox closure. No latest model pointer.",
+        "preserved": "Frozen ModelReceipt/SCI/CORE; valid poor-fit or unsupported-domain learned artifacts; fit_config digest remains provenance, not fitter authenticity.",
+        "excluded": "No custom predictor execution, evaluator/provider authority, live adapters, deployment or paid calls."
       }
     },
     "spring_workflow_evidence": {

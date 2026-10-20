@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | EXEC1 source released; next COMP1 build/runtime review | Reused identity checkout reserved for Research handoff after CI |
-| Research | COMP1 native-model identity/recovery authoring next | EXEC1 accepted; source waits exact PR/main acceptance |
-| Quality | Final EXEC1 integration/CI review | Retains prerequisite-gated SP-01.e tooling preparation |
-| Project lead | Integrate EXEC1 and assign COMP1 | Exclusive primary progress owner; exact reviewed-source and CI gates |
+| Research | COMP1 native-model registration API, then predicates | Early immutable API review before runtime; identity writer after reviewed handoff |
+| Platform | COMP1 build/runtime/persistence review | Read-only independent reviewer; EXEC1 writer released |
+| Quality | COMP1 authority/recovery review | Read-only independent reviewer; retains SP-01.e preparation |
+| Project lead | Coordinate COMP1 and maintain progress | Exclusive primary owner; integrate only reviewed exact source and CI |
 
 ## Assignments
 
@@ -309,3 +309,11 @@ EXEC1 runtime fe3b0088d4bca0623459f9024eceb42036e8d491 and doc-only author c66b6
 Platform released the existing identity checkout clean after Quality accepted the final documentation. Lead owns primary integration; Quality checks the source/progress union, and Research takes COMP1 only after exact PR/main acceptance. Original CORE/SCI/C2 contracts and dependency pins remain unchanged. The current closure checks establish neither live transactional storage nor sandbox/provider enforcement; no deployment or paid gate is advanced.
 
 Private evidence remains outside checkouts, owner-only, with review2026-11-19: author index SHA25605f71a072fd3721cefc339d70997e7e7cf1007e0b1f9d605a84fc87530bf4f18, Quality 8aa1f6f8de57c3d64439aad62775a4c7235e182a48ad11ffd083a94df3ef684b, Research ccf4e744a227b907e08a72a196fbcaa0a8b9980099a8ac127682d05b7f602bd2, lead a5d52b8bd1ea77fa9d4112ce5b1d6146d603b37c722a7a61272540815c2218c1. Initial diagnostics remain linked to their original source; the initial wheel-smoke strict-JSON fixture correction and review error-code expectation correction did not weaken source assertions. Same-VM evidence is not an off-device backup.
+
+## EXEC1 integrated; COMP1 engineering assignment
+
+2026-10-20 05:37 UTC — EXEC1 is complete through PR #92/main750db15810f4a58a4a8d34776cb3708dc310ef5a, matching reviewed671f10930a743acfb9da888a0eb2c97c6e7f471f/tree13894d9c09bdde0ae8278a5a331c56b377a485fc. All four PR CI39375391014 and all five main CI39375611645 jobs passed. Local2,281 tests,722 schemas,full typing/static/security/package checks and independent lifecycle/provenance review are accepted. The verified candidate artifact12242708007 is retained privately outside checkouts; this is not a published release or live hosted readiness claim.
+
+Research is assigned COMP1 API contracts in the reused identity checkout after this record is independently reviewed. Platform is assigned current analytic provenance, artifact and persistence joins; Quality is assigned mandatory broker authorization, byte bounds and recovery failure cases. Lead owns primary progress/integration. API review precedes runtime. Model input is bounded at256KiB, private ledger and canonical prefix at8MiB each, with stricter policy allowed; these are reference-envelope limits, not scalable storage proof. The original engine binding joins actual original admission/world-version/scope, and canonical hashing must match unchanged SCI bytes. Pending/failed outcomes stay distinct from completed full record/outbox closure; valid poor-fit models remain artifacts.
+
+Private integration index SHA256bf98163b959a260f23f2c5412818855d26dacd326b8ff267206abafc91ddd5c0 and candidate SHA2562d6b7d08d4be5d49049bed08b5e6544cbf77940ee5a9a73c0d2bdd6b302b3f3a are retained outside checkouts, owner-only, review2026-11-19. Snapshot/unique release evidence retention remains separate from reproducible diagnostics; same-VM storage is not an off-device backup. Both existing cloud checkouts are reused with independent environments. Available space after integration was103,563,276,288 bytes; no additional checkout/dependency copy or cleanup was needed. Full SP-01.c, hosted production, paid and release gates remain open.
