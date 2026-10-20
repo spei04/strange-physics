@@ -49,8 +49,10 @@ Pairwise spring and radial forces are equal and opposite. Anchors remain fixed,
 so an anchored system need not preserve the movable particles' total momentum.
 Velocity drag dissipates energy; its transverse component rotates velocity.
 See [law equations](LAWS.md) and the [independent analytic fixture evidence](NUMERICAL_VALIDATION.md).
-The fixtures validate selected deterministic cases; SP-03.b still owns scientific
-domain and tolerance ratification before fitting or scoring.
+The fixtures validate selected deterministic cases. The separate
+[first-spring calibration](SPRING_DOMAIN.md) records a bounded noiseless domain,
+quadrature/solver error and noisy failures. Actual fitting, production prediction
+and independent scoring still require their own implementation and acceptance.
 
 ## Agent interface and checkpoints
 

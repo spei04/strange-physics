@@ -2,8 +2,9 @@
 
 SP-03.a extends deterministic regression evidence for the existing simulator.
 It does not ratify a scientific domain, the default grid over every legal input,
-coefficient-recovery tolerances, a fitter, a predictor or an evaluator. SP-03.b
-remains the next numerical acceptance task. Study distributions, production
+coefficient-recovery tolerances, a fitter, a predictor or an evaluator. The
+separate [first-spring calibration](SPRING_DOMAIN.md) records SP-03.b domain,
+quadrature, solver and noise evidence. Study distributions, production
 force implementations, integration code and dependencies are unchanged.
 
 The fixtures live in [test_analytic_physics.py](../tests/test_analytic_physics.py).
@@ -192,5 +193,6 @@ raise SystemExit(
 
 The capture code is diagnostic instrumentation, not a production API or a second
 scorer. The test's closed-form references and acceptance assertions remain the
-authority. Additional tolerances and supported spring domains must be ratified
-in SP-03.b before accepting fitted coefficients or predictions.
+authority. The separate [SP-03.b calibration](SPRING_DOMAIN.md) declares the first-spring
+domain and joint coefficient/prediction criteria; it keeps finite numerical
+evidence distinct from analytic bounds and production-fitting acceptance.
