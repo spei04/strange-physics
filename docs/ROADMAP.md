@@ -51,7 +51,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 | Browser world builder, investigation viewer, supported self-hosting | Planned | R5 |
 | Load, adversarial, restore, migration and outside-team validation | Planned | R6–R8 |
 | Production infrastructure and actual credit eligibility | Preflight complete; deployment NO-GO | Shared project/billing readbacks verified; credits/expiry, dedicated target project permissions and quotas remain unknown. Platform owns remediation; no provisioning performed |
-| Development workspace capacity | Blocked for builds | Shared root free space fell below 100 MiB; project-owned cleanup cannot recover 20 GiB. Prepared disk/snapshot proposal awaits explicit approval; no resizing or deletions performed |
+| Development workspace capacity | Blocked for source writes and builds | Shared root free space fell below 100 MiB; project-owned cleanup cannot recover 20 GiB. Prepared disk/snapshot proposal awaits explicit approval; no resizing or deletions performed |
 
 The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. Its single Git checkout is retained for ongoing work. Existing migration archives and other experiments are not disposable build caches.
 

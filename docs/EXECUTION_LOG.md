@@ -60,7 +60,6 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-20 00:57 | Research + Quality | B1 — independent source/security/HTTP review | Accepted b9c4754 after owner-status, pending security-fence and human-owner boundary repairs |
 | 2026-10-20 00:57 | Project lead | B1 integration and next assignment | Merge/review tree 0e9c0a4 matches; PR CI39350544354 passed; #63 and #52 remain open |
 | Next handoff | Platform | ID-B/B2 — invitations and safe redemption/recovery | Bounded plan preparation; Research/Quality review before B3 linking |
-
 | 2026-10-20 01:02 | Quality | B3 linking threat-boundary preparation | Read-only; purpose-separated proof claims and tenant-aware identity namespace; no implementation |
 | 2026-10-20 01:03 | Research + Quality | B2 independent source review | Found tenant/profile and issuing-owner revision gaps; Platform repaired both |
 | 2026-10-20 01:07 | Research | Final SP-01.b integration checklist | Authority composition, global proof claims, secret retries, schemas and current stream delivery; parent remains open |
