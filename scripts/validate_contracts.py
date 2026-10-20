@@ -48,6 +48,42 @@ def main() -> None:
             raise ValueError(f"Unexpected schema result for {reference}: {errors[:1]}")
         count += 1
 
+    web = json.loads((ROOT / "web.examples.json").read_text())
+    for name, fixture in web["valid"].items():
+        check(f"web.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in web[group]:
+            value = copy.deepcopy(web["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(f"web.schema.json#/$defs/{fixture['model']}", value, group == "runtime_negative")
+    for value in web["events"]:
+        check("web.schema.json#/$defs/RunEvent", value)
+        wrong = copy.deepcopy(value)
+        wrong["type"] = (
+            "checkpoint.committed"
+            if value["type"] != "checkpoint.committed"
+            else "run.state_changed"
+        )
+        check("web.schema.json#/$defs/RunEvent", wrong, False)
+    web_api = documents[ROOT / "web.openapi.json"]
+    for path, routes in web_api["paths"].items():
+        escaped = path.replace("~", "~0").replace("/", "~1")
+        for method, operation in routes.items():
+            for index, parameter in enumerate(operation["parameters"]):
+                reference = f"web.openapi.json#/paths/{escaped}/{method}/parameters/{index}/schema"
+                good = (
+                    ["1", "18446744073709551616"]
+                    if parameter["name"] == "generation"
+                    else ["token", "A" * 64]
+                )
+                bad = ["", "a\n", "a\r", "a\x00", "a" * 65]
+                for value in good:
+                    check(reference, value)
+                for value in bad:
+                    check(reference, value, False)
+            if "410" in operation["responses"]:
+                check("web.schema.json#/$defs/ResyncRequired", web["valid"]["ResyncRequired"])
+
     world = json.loads((ROOT / "world.examples.json").read_text())
     for name, fixture in world["valid"].items():
         check(f"world.schema.json#/$defs/{name}", fixture)

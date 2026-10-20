@@ -39,133 +39,7 @@
         "$ref": "../control.schema.json#/$defs/ResourceLimits"
       },
       "RunEvent": {
-        "additionalProperties": false,
-        "oneOf": [
-          {
-            "properties": {
-              "payload": {
-                "$ref": "#/components/schemas/RunView"
-              },
-              "type": {
-                "const": "run.state_changed"
-              }
-            }
-          },
-          {
-            "properties": {
-              "payload": {
-                "$ref": "../core.schema.json#/$defs/ExperimentRecord"
-              },
-              "type": {
-                "const": "experiment.committed"
-              }
-            }
-          },
-          {
-            "properties": {
-              "payload": {
-                "additionalProperties": false,
-                "properties": {
-                  "through_index": {
-                    "minimum": -1,
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "through_index"
-                ],
-                "type": "object"
-              },
-              "type": {
-                "const": "checkpoint.committed"
-              }
-            }
-          },
-          {
-            "properties": {
-              "payload": {
-                "$ref": "#/components/schemas/ModelReceipt"
-              },
-              "type": {
-                "const": "model.submitted"
-              }
-            }
-          }
-        ],
-        "properties": {
-          "event_id": {
-            "maxLength": 64,
-            "not": {
-              "pattern": "[^A-Za-z0-9_-]"
-            },
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-            "type": "string"
-          },
-          "occurred_at": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "operation_id": {
-            "anyOf": [
-              {
-                "maxLength": 64,
-                "not": {
-                  "pattern": "[^A-Za-z0-9_-]"
-                },
-                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "payload": {},
-          "run_id": {
-            "maxLength": 64,
-            "not": {
-              "pattern": "[^A-Za-z0-9_-]"
-            },
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-            "type": "string"
-          },
-          "schema_version": {
-            "const": "strange-physics.run-event.draft1"
-          },
-          "sequence": {
-            "maximum": 9007199254740991,
-            "minimum": 0,
-            "type": "integer"
-          },
-          "type": {
-            "enum": [
-              "run.state_changed",
-              "experiment.committed",
-              "checkpoint.committed",
-              "model.submitted"
-            ]
-          },
-          "workspace_id": {
-            "maxLength": 64,
-            "not": {
-              "pattern": "[^A-Za-z0-9_-]"
-            },
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-            "type": "string"
-          }
-        },
-        "required": [
-          "schema_version",
-          "event_id",
-          "workspace_id",
-          "run_id",
-          "sequence",
-          "occurred_at",
-          "operation_id",
-          "type",
-          "payload"
-        ],
-        "type": "object",
+        "$ref": "../web.schema.json#/$defs/RunEvent",
         "x-pending-contracts": [
           "WEB"
         ]
@@ -194,7 +68,7 @@
         "type": "apiKey"
       },
       "workspaceBearer": {
-        "description": "Verified user/service identity, with current workspace authorization.",
+        "description": "Verified current workspace service identity; human browser access uses sessionCookie where explicitly allowed.",
         "scheme": "bearer",
         "type": "http"
       }
@@ -1662,15 +1536,15 @@
           "200": {
             "content": {
               "text/event-stream": {
-                "example": "id: event-000001\nevent: checkpoint.committed\ndata: {\"schema_version\":\"strange-physics.run-event.draft1\",\"event_id\":\"event-000001\",\"workspace_id\":\"workspace-example\",\"run_id\":\"run-example\",\"sequence\":1,\"occurred_at\":\"2026-10-19T00:00:00Z\",\"operation_id\":null,\"type\":\"checkpoint.committed\",\"payload\":{\"through_index\":-1}}\n\n",
+                "example": "id: cursor-0\nevent: experiment.committed\ndata: {\"event\":{\"event_id\":\"event-0\",\"namespace\":{\"event_schema_version\":\"strange-physics.run-event.v1\",\"projection_version\":\"agent-safe.v1\",\"run_id\":\"run-1\",\"workspace_id\":\"ws-1\"},\"occurred_at\":100,\"operation_id\":\"experiment-1\",\"payload\":{\"artifact\":{\"artifact_id\":\"record-1\",\"generation\":\"1\",\"media_type\":\"application/json\",\"sha256\":\"fc714f11f764cc3dd09c46f942462bb5d48a22d45c67402a458dc4f973c8116a\",\"size_bytes\":430},\"index\":0,\"operation_id\":\"experiment-1\",\"record_sha256\":\"6e2c23f65d7c626b6403069e714d7cb5c72ce0c0630c3c0a05780ce06dc00fab\",\"status\":\"failed\"},\"schema_version\":\"strange-physics.run-event.v1\",\"sequence\":0,\"type\":\"experiment.committed\"},\"event_sha256\":\"30291c89daca89487801134197027fd45fab4f3d55a663da73d83cd76ceeae4f\",\"resume_cursor\":\"cursor-0\"}\n\n",
                 "schema": {
                   "type": "string"
                 }
               }
             },
-            "description": "Resumable SSE. Each data payload validates as RunEvent. Sequence orders events; at-least-once replay requires deduplication. No hidden evaluation fields.",
+            "description": "Fetch-stream SSE. The id is the opaque resume cursor; canonical data validates as EventDelivery. The committed event uses zero-based sequence and agent-safe immutable scientific references. WEB1 runtime remains pending.",
             "x-event-schema": {
-              "$ref": "#/components/schemas/RunEvent"
+              "$ref": "../web.schema.json#/$defs/EventDelivery"
             }
           },
           "400": {
@@ -1727,11 +1601,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "../web.schema.json#/$defs/ResyncRequired"
                 }
               }
             },
-            "description": "Cursor expired; fetch the authoritative run snapshot and archived history, then reconnect. Exact resync transport is a freeze blocker in SP-01."
+            "description": "Cursor expiry: inspect application/json before parsing SSE and resolve scoped snapshot/history route IDs. WEB1 producers remain pending."
           },
           "422": {
             "content": {
@@ -1808,7 +1682,8 @@
             "code": "unauthenticated",
             "status": 401
           }
-        }
+        },
+        "x-web-contract": "../web.openapi.json"
       }
     },
     "/v1/workspaces/{workspace_id}/runs/{run_id}/operations/{operation_id}": {
