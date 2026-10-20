@@ -69,7 +69,7 @@
       "D06",
       "Approve concrete paid and release actions at their gates",
       "Recommended: separate priced staging configuration, capped real-provider trial, official sweep, pilot release and GA rollout approvals.",
-      "Separate concrete approvals retained; no staging provisioning, provider spend, official sweep or release approval supplied by backlog approval."
+      "Separate concrete approvals retained; no staging provisioning, provider spend, official sweep or release approval supplied by backlog approval. The separate 2026-10-20 disk expansion and recovery snapshot approval is executed and accepted under SP-02.b."
     ]
   ],
   "audit": [
@@ -1505,7 +1505,7 @@
       "scope": "Inventory active consumers/archives; perform only approved resize or verified reproducible-cache cleanup.",
       "accept": "At least 20 GiB free or measured larger build need; needed consumers preserved.",
       "tests": "Free-space, consumer-path and dependency-integrity readbacks.",
-      "risk": "423 MiB observed; no builds before headroom gate.",
+      "risk": "Capacity restored with independently verified ~96.96 GiB free; maintain the 20 GiB gate and preserve active consumers.",
       "out": "Deleting migration archives, active worktrees or recreating project on Mac.",
       "milestone": "R0",
       "contingency": 0.5,
@@ -1514,7 +1514,7 @@
         "PL2"
       ],
       "objective": "Make development and deployment prerequisites concrete, affordable and safe to use. This PR delivers recover safe workspace headroom.",
-      "status": "blocked",
+      "status": "completed",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1522,7 +1522,8 @@
         "QE",
         "security"
       ],
-      "evidence": "Inventory complete; project-only caches <18 MB cannot satisfy >=20 GiB requirement. Exact 200→300 GiB disk and recovery snapshot proposal prepared; explicit paid-action approval pending."
+      "evidence": "2026-10-20: separately approved recovery snapshot and online 200-to-300 GiB expansion completed by Platform; independently accepted by Quality at 01:58 UTC. Quality read 104113758208 bytes free; source, protected archive, pinned uv, all 3414 venv entries and recorded consumers preserved. Private owner-only evidence is indexed outside checkout. Snapshot review 2026-10-27; no automatic deletion or restore rehearsal. See EXECUTION_LOG.md.",
+      "issue": "https://github.com/spei04/strange-physics/issues/72"
     },
     {
       "id": "SP-02.c",
@@ -1590,13 +1591,16 @@
         "RS2"
       ],
       "objective": "Ensure numerical results and supported interventions are scientifically defensible. This PR delivers extend independent analytic physics fixtures.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
         "Research",
         "SDK"
-      ]
+      ],
+      "issue": "https://github.com/spei04/strange-physics/issues/73",
+      "execution_owner": "Engineer Research; exclusive existing-cloud-checkout writer; Quality/Platform independently review.",
+      "evidence": "Assigned 2026-10-20 01:59 UTC after SP-02.b acceptance and clean checkout reconciliation to main89a44ed. Analytic validation authoring started; no completed fixture, fit/predict/score or research-result claim."
     },
     {
       "id": "SP-03.b",
@@ -10528,7 +10532,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Engineer Platform (B3 identity linking; blocked on capacity)",
+      "BE1": "Engineer Platform (B3 identity linking queued)",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10560,7 +10564,7 @@
       {
         "id": "SP-01.b/ID-B",
         "title": "Membership, invitations and explicit account linking",
-        "status": "blocked",
+        "status": "in_progress",
         "depends_on": [
           "SP-01.b/ID-A"
         ],
@@ -10587,12 +10591,12 @@
           {
             "id": "B3",
             "title": "Explicit identity linking",
-            "status": "blocked",
+            "status": "queued",
             "depends_on": [
               "B1",
               "B2"
             ],
-            "blocker": "Cloud capacity; authoring stopped below 100 MiB emergency write floor"
+            "queue": "Research SP-03.a has the first source writer slot; capacity prerequisite is now accepted."
           }
         ]
       },
@@ -10605,7 +10609,7 @@
         ],
         "owner": "Engineer Quality",
         "issue": "https://github.com/spei04/strange-physics/issues/64",
-        "blocker": "Accepted ID-B/B3 and restored cloud capacity"
+        "blocker": "Accepted ID-B/B3"
       }
     ],
     "estimate_adjustments": [
@@ -10698,14 +10702,15 @@
       "checkout_branch": "feat/invitation-contracts",
       "checkout_clean": true,
       "active_author_processes": false,
-      "remediation": "200-to-300 GiB disk plus recovery snapshot; explicit paid-action approval pending",
-      "resume": "After approved capacity recovery, verify consumers and headroom, then fetch/reconcile the preserved clean cloud checkout with current main. Research receives the first writer slot for SP-03.a; Platform retains B3. No simultaneous writers in one checkout or local project copy."
+      "remediation": "Explicitly approved 200-to-300 GiB expansion and recovery snapshot completed and independently accepted 2026-10-20.",
+      "resume": "Lead fetched and reconciled the preserved clean checkout to main89a44ed after acceptance; manifests unchanged. Research received SP-03.a writer ownership at 01:59 UTC. Platform retains queued B3; one source writer and no local project copy.",
+      "status": "resolved"
     },
     "next_identity_review": "Purpose-bound global proof ownership, tenant-aware stable namespace, composed human/service/run authority and secret-safe retries; authoritative checks before every streamed delivery batch, <=30 seconds only for idle connections.",
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "blocked_on_SP-02.b",
+      "status": "SP-03.a_in_progress",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
       "next_authoring_task": "SP-03.a",
@@ -10731,7 +10736,37 @@
       "identity_boundary": "SP-01.b/c/d/e, B3, ID-C, SP-08, staging and whole R0 exit are not prerequisites for the local slice; their hosted/later consumer gates remain.",
       "acceptance": "Purchased-prefix-only fit, unseen-condition predictions, independent analytic development score and SDK/CLI evidence; any failed probe unscorable, primary MSE null; derive RMSE from position_mse.",
       "evidence_gap": "Existing simulation/journal/random CLI, schemas and 560 tests do not yet implement fit/predict/score or prove generalization/recovery.",
-      "capacity_approval": "Unchanged; pending"
+      "capacity_approval": "Concrete disk expansion and snapshot approved and independently accepted 2026-10-20; other paid/release gates unchanged."
+    },
+    "capacity_recovery": {
+      "status": "accepted",
+      "issue": 72,
+      "approved_at": "2026-10-20",
+      "completed_at": "2026-10-20 01:57 UTC",
+      "reviewed_at": "2026-10-20 01:58 UTC",
+      "author": "Engineer Platform",
+      "reviewer": "Engineer Quality",
+      "lead_acceptance": "Project lead",
+      "disk_before_gib": 200,
+      "disk_after_gib": 300,
+      "filesystem_bytes": 310911414272,
+      "platform_available_bytes": 104103600128,
+      "reviewer_available_bytes": 104113758208,
+      "readiness_floor_bytes": 21474836480,
+      "snapshot": "READY STANDARD globally scoped snapshot with storage in us-central1; original 200 GiB disk state",
+      "snapshot_completed_at": "2026-10-20 01:54:35 UTC",
+      "snapshot_review_date": "2026-10-27",
+      "recycle_retention_days_after_deletion": 3,
+      "automatic_deletion": false,
+      "verification": "Full archive, pinned uv, runtime/manifests and all 3414 venv entries rehashed independently; source, recorded long-lived consumers, boot identity, service states and protected directories preserved. Owner-only private evidence indexed outside checkout.",
+      "limitations": "Crash-consistent snapshot; no restore rehearsal or application-health probes. Same-VM evidence is not an off-device backup.",
+      "diagnostic_review_date": "2026-11-19",
+      "incremental_monthly_estimate_usd": {
+        "disk": 10,
+        "snapshot_upper_estimate": 10
+      },
+      "billing_boundary": "Before credits/tax; estimate, not measured invoice. No staging, provider, official sweep or release authorization.",
+      "reconciled_head": "89a44ed348537f312914b66c8cdd71076e7d2bdf"
     }
   }
 }
