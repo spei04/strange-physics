@@ -51,7 +51,7 @@ jobs:
         run: uv run --no-sync python scripts/validate_contracts.py
       - name: Build and inspect package archives offline
         run: |
-          uv build --no-build-isolation --offline --python .venv/bin/python --out-dir "$RUNNER_TEMP/packages"
+          uv build --no-create-gitignore --no-build-isolation --offline --python .venv/bin/python --out-dir "$RUNNER_TEMP/packages"
           uv run --no-sync python scripts/ci_artifacts.py --dist "$RUNNER_TEMP/packages"
       - name: Scientific CLI smoke
         run: |
@@ -124,7 +124,7 @@ jobs:
       - name: Build the unpublished candidate with locked dependencies
         run: |
           uv sync --locked --all-groups --no-install-project
-          uv build --no-build-isolation --offline --python .venv/bin/python --out-dir "$RUNNER_TEMP/candidate"
+          uv build --no-create-gitignore --no-build-isolation --offline --python .venv/bin/python --out-dir "$RUNNER_TEMP/candidate"
           .venv/bin/python scripts/ci_artifacts.py --dist "$RUNNER_TEMP/candidate"
       - name: Install only locked runtime dependencies and the candidate wheel
         run: |

@@ -80,6 +80,8 @@ reviewed package version. It is not a public release or a deployed service.
 Before delivery, the archive validator enforces an exact package-file allowlist,
 compares package bytes with the checkout, checks metadata identity and rejects
 extra archive files, links, duplicate/unsafe paths and oversized members.
+Build commands use uv's supported `--no-create-gitignore` option so its default
+output-directory marker does not relax that allowlist.
 The source distribution deliberately excludes tests, docs, runs, private
 evidence and environment files. New package modules require an explicit
 allowlist review.

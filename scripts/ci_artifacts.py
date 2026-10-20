@@ -104,8 +104,14 @@ def validate_archives(dist: Path, source_root: Path) -> tuple[Path, Path]:
     stem = f"strange_physics-{version}"
     wheel = dist / f"{stem}-py3-none-any.whl"
     sdist = dist / f"{stem}.tar.gz"
-    if {p.name for p in dist.iterdir()} != {wheel.name, sdist.name}:
-        raise ValueError("Distribution directory must contain exactly the wheel and sdist")
+    actual = {p.name for p in dist.iterdir()}
+    expected = {wheel.name, sdist.name}
+    if actual != expected:
+        raise ValueError(
+            "Distribution directory must contain exactly the wheel and sdist; "
+            f"unexpected={sorted(actual - expected)[:10]!r}; "
+            f"missing={sorted(expected - actual)!r}"
+        )
     source = {name: (source_root / "src/strange_physics" / name).read_bytes() for name in MODULES}
     info = f"{stem}.dist-info"
     wheel_files = read_archive(wheel)

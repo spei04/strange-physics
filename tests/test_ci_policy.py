@@ -150,7 +150,8 @@ def test_candidate_rejects_unlisted_or_unsafe_archive_content(
         validate_archives(tmp_path / "dist", root)
 
 
-def test_candidate_rejects_source_drift_and_extra_files(tmp_path: Path) -> None:
+@pytest.mark.parametrize("extra", ["debug.json", ".gitignore"])
+def test_candidate_rejects_source_drift_and_extra_files(tmp_path: Path, extra: str) -> None:
     root = tmp_path / "source"
     make_source(root)
     wheel, sdist = archive_contents(root)
@@ -158,9 +159,10 @@ def test_candidate_rejects_source_drift_and_extra_files(tmp_path: Path) -> None:
     write_archives(tmp_path / "dist", wheel, sdist)
     with pytest.raises(ValueError, match="differs from reviewed source"):
         validate_archives(tmp_path / "dist", root)
-    (tmp_path / "dist/debug.json").write_text("{}")
-    with pytest.raises(ValueError, match="exactly"):
+    (tmp_path / "dist" / extra).write_text("{}")
+    with pytest.raises(ValueError, match="unexpected=") as error:
         validate_archives(tmp_path / "dist", root)
+    assert repr(extra) in str(error.value)
 
 
 @pytest.mark.parametrize("kind", ["zip", "tar"])
