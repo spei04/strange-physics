@@ -1410,9 +1410,9 @@
         "research"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/94",
-      "execution_owner": "Lead integrates accepted WORLD1; Research prepares WEB1 read-only, Platform reviews stream/artifact provenance, Quality reviews composition and current authority/recovery.",
+      "execution_owner": "Research owns final WORLD1 supplied-pair/allocation repairs in identity; Platform/Quality review; lead holds publication.",
       "execution_plan": "WORLD1 immutable world/version, safe and granted views, browser capability and exact run selection; WEB1 bounded streams/snapshots/cursors/replay/artifact retrieval. API checkpoint before predicates in each independent PR.",
-      "evidence": "WORLD1 runtime 9267733 is independently accepted by lead, Platform and Quality after 2,768 full tests, 345 WORLD1 cases, 542 broader focused cases, 1,201 schema checks, Ruff/format127 and strict mypy87. Retained predecessor/ancestor ID and chronology checks, grant renewal-distance consistency and safe head reads were repaired and regression-tested. Exact final PR #95 and protected-main CI remain before integration acceptance. WEB1 and the SP-01.d parent freeze remain open."
+      "evidence": "Final composition qualified the earlier 9267733 acceptance: the original receipt parent/version pair also needs validation. Research repaired that supplied pair at6abdb3 and retains the identity writer while Platform checks visible version-ID reuse at fresh append allocation; Quality verifies all six supplied-record pairs. Publication and full final acceptance remain held for the replacement. Existing full-test evidence stays attached to its original source."
     },
     {
       "id": "SP-01.e",
@@ -11524,7 +11524,7 @@
     },
     "web_contract_preparation": {
       "owner": "Engineer Research",
-      "status": "world1_reviewed_integration_pending",
+      "status": "world1_final_composition_repairs",
       "task": "SP-01.d",
       "depends_on": [
         "SP-01.b",
@@ -11535,7 +11535,7 @@
       "pr_units": [
         {
           "id": "WORLD1",
-          "status": "reviewed_integration_pending",
+          "status": "final_composition_repairs",
           "scope": "Immutable world/version, safe and granted views, browser-only capability and exact run selection.",
           "api_source": "fd6bac2d76b1cf83f5935bb214d0cb13802af13d",
           "api_tree": "f27d83fe78debc42ee8bd41485b5b7339ce99003",
@@ -11630,7 +11630,7 @@
       "world1_runtime_evidence": {
         "source": "926773379afa3e30d9bcf454a44e0041598a26b8",
         "tree": "e560aec4f8d5b236a9ba29a6bda29bc7a24bf5c1",
-        "status": "independently_accepted_integration_pending",
+        "status": "prior_acceptance_qualified_by_final_composition",
         "author_head": "f23f92ff5ed1533575ac8bf18b6969f60ebd66b5",
         "author_tree": "679799197e47667629296d53e60af4516072978a",
         "full_tests": 2768,
@@ -11679,7 +11679,8 @@
           "Compare grant receipt against current predecessor and outcome; irreversible revocation and strict integer expiry growth for each intervening renewal.",
           "Apply the same bounded current-parent consistency check to safe head reads."
         ],
-        "boundary": "Pure trusted-projection contracts/proposals, not live HTTP/SQL/storage/UI or full-history authenticity. Review suites overlap. Final exact PR/main acceptance remains required."
+        "boundary": "Pure trusted-projection contracts/proposals, not live HTTP/SQL/storage/UI or full-history authenticity. Review suites overlap. Final exact PR/main acceptance remains required.",
+        "qualification": "Final composition qualified the earlier 9267733 acceptance: the original receipt parent/version pair also needs validation. Research repaired that supplied pair at6abdb3 and retains the identity writer while Platform checks visible version-ID reuse at fresh append allocation; Quality verifies all six supplied-record pairs. Publication and full final acceptance remain held for the replacement. Existing full-test evidence stays attached to its original source."
       }
     },
     "contract_tooling_preparation": {

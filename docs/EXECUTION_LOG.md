@@ -10,9 +10,9 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | Prepare WEB1 API read-only after releasing WORLD1 | Identity source waits exact WORLD1 integration and explicit handoff |
-| Platform | WEB1 stream, replay and artifact provenance review preparation | Independent reviewer; WORLD1 runtime accepted |
-| Quality | Final WORLD1 composition; WEB1 authority/recovery preparation | Independent reviewer; SP-01.e stays preparation only |
+| Research | Final WORLD1 supplied-pair and allocation repairs | Reassigned exclusive identity writer; WEB1 waits accepted integration |
+| Platform | WORLD1 allocation and all-pair review; WEB1 preparation retained | Independent reviewer; replacement acceptance required |
+| Quality | WORLD1 six-pair composition review; WEB1 preparation retained | Independent reviewer; SP-01.e stays preparation only |
 | Project lead | Integrate reviewed WORLD1 and update progress | Exclusive primary owner; exact PR/main acceptance before WEB1 handoff |
 
 ## Assignments
@@ -391,3 +391,5 @@ Platform independently passed 345 focused, 33 witness cases, five original/rever
 Assignments: lead owns primary integration; Research prepares WEB1 API read-only; Platform prepares stream/artifact joins; Quality reviews the final source/progress union and prepares WEB1 authority/recovery. WEB1 source starts only after exact WORLD1 integration and explicit writer handoff. SP-01.e stays preparation only. Both checkouts remain active/reserved for immediate reuse; available space 103,449,563,136 bytes. No additional checkout or dependency copy was created.
 
 Evidence indices are recorded in execution-backlog.json, owner-readable outside checkouts with diagnostic review 2026-11-19. Same-VM storage is not an off-device backup. Task graph, estimates, research-amendment, paid/deployment and release gates remain unchanged.
+
+Final composition qualified the earlier 9267733 acceptance: the original receipt parent/version pair also needs validation. Research repaired that supplied pair at6abdb3 and retains the identity writer while Platform checks visible version-ID reuse at fresh append allocation; Quality verifies all six supplied-record pairs. Publication and full final acceptance remain held for the replacement. Existing full-test evidence stays attached to its original source.
