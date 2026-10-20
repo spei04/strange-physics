@@ -242,8 +242,8 @@ byte-identical. Creation replay additionally requires a current workspace
 revision at least the committed creation revision derived from its exact
 request, so a missing workspace-side commit cannot appear successful.
 
-At the same shared revision, the current principal must equal its committed
-snapshot. Later key mutations may advance the shared revision and issuance
+At the same shared revision, the current principal and every affected key must
+equal their committed snapshots. Later key mutations may advance the shared revision and issuance
 counter. Later role changes must advance both membership revision and the
 shared principal/keyset revision. Creation identity/name/ceiling are immutable
 in C1. Active state cannot change under the same principal generation; grant

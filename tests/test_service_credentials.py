@@ -1104,3 +1104,21 @@ def test_later_role_and_shared_cas_evolution_allows_metadata_replay_without_perm
     assert replay.principal.grant.membership.role == "viewer"
     assert replay.credential is not None and replay.credential.valid_now
     assert replay.outcome.committed_revision == 1 and replay.principal.revision == 2
+
+
+@pytest.mark.parametrize("field", ("revoked_at", "retire_at", "retain_until"))
+def test_key_evolution_requires_the_shared_revision_to_advance(field: str) -> None:
+    request, initial = issue()
+    record = initial.key_set.records[0]
+    value = record.key.retain_until + 1 if field == "retain_until" else 1110
+    altered = changed(record, key=changed(record.key, **{field: value}))
+    current = changed(initial.key_set, records=(altered,))
+    assert_denied(
+        "recovery_required", 409, call, current, request, stored=lookup(initial), now=1120
+    )
+    current = changed(current, principal=changed(current.principal, revision=2))
+    replay = call(current, request, stored=lookup(initial), now=1120)
+    assert isinstance(replay, ServiceMutationResponse)
+    assert replay.disposition == "replayed"
+    assert replay.credential is not None
+    assert replay.credential.key == altered.key

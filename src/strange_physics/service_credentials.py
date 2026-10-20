@@ -369,7 +369,11 @@ def _replay(
             ),
             None,
         )
-        if found is None or not _current_key_follows_snapshot(found, committed):
+        if (
+            found is None
+            or (principal.revision == snapshot.principal.revision and found != committed)
+            or not _current_key_follows_snapshot(found, committed)
+        ):
             raise ContractViolation("recovery_required", 409)
     return _response(bound, receipt.outcome, replayed=True, now=now)
 
