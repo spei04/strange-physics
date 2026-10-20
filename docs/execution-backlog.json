@@ -11830,6 +11830,12 @@
           "status": "passed",
           "index_sha256": "3dc15b90248b16259639d179853cfa8989462d13409e50580bc4c09f543e2423",
           "note": "Lead supplement corrects the narrower author src-only/high-confidence command; original evidence retained."
+        },
+        "draft_integration": {
+          "pull_request": 97,
+          "source": "f2614ac014f3b4637a76ac8422e26d58a20bd531",
+          "ci": 39396521384,
+          "status": "four_applicable_jobs_passed_candidate_skipped"
         }
       },
       "web1_runtime_assignment": {
@@ -11844,6 +11850,22 @@
         "recorded_at": "2026-10-20T08:49:09.121885+00:00",
         "source_started_at": "2026-10-20T08:48:46Z",
         "authorization": "Explicit lead continuation after full c066900 API checks and independent acceptance."
+      },
+      "web1_runtime_review": {
+        "source": "bc82a23c2116c2f3bf42159e766ee5fb86d6301c",
+        "tree": "fa5dda4a73bdabfdc6517e03f4b68d3e5a9a91de",
+        "status": "partial_runtime_review_repairs",
+        "scope": "Viewer authority, cursor/resync, snapshots and event batches; actual-byte bodies and complete history still being authored.",
+        "new_tests": 70,
+        "focused": 378,
+        "author_index_sha256": "08c6d48accf22310f0a2d88e6003521baa652fed3f93d555937017d36baa5ffc",
+        "lead_chronology_index_sha256": "55f1e1f934df69f9e5179fc347714c3d09ee0317f6e935783e25f48a63d3d378",
+        "open_findings": [
+          "Supplied actual event must not postdate its cursor issuance.",
+          "Supplied actual final event must not postdate its snapshot capture."
+        ],
+        "assignment": "Research repairs source while completing the separate body/history unit; Platform and Quality independently review the immutable partial checkpoint.",
+        "boundary": "No runtime acceptance or full SP-01.d completion. Original source evidence retained; valid same-second chronology must stay supported."
       }
     },
     "contract_tooling_preparation": {
