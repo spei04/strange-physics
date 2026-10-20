@@ -20,9 +20,15 @@ force and agent plugins, a CLI, and a durable local journal with checkpoint
 recovery. The core supports all three reference force families and up to eight
 interacting particles.
 
-**This is not yet a production service or a scored discovery benchmark.** Model
-fitting, LLM integration, hosted isolation/authentication, the browser interface
-and deployment remain on the implementation plan. No research results are claimed.
+The bounded local spring workflow also fits a coefficient from purchased
+observations, predicts 24 fixed unseen conditions and scores them independently.
+It retains failures and checks every probe against a development target. See the
+[SDK/CLI workflow and evidence](docs/LOCAL_SCIENTIFIC_WORKFLOW.md).
+
+**This is not yet a production service or a scored discovery benchmark.**
+Adaptive investigation, LLM integration, hosted isolation/authentication, the
+browser interface and deployment remain on the implementation plan. Local
+acceptance fixtures do not establish generalization across a benchmark population.
 
 The scientific scope includes three force families, two-dimensional systems with
 up to eight interacting particles, fixed-cost experiments, seeded observation
