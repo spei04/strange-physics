@@ -11524,7 +11524,7 @@
     },
     "web_contract_preparation": {
       "owner": "Engineer Research",
-      "status": "web1_api_authoring",
+      "status": "web1_api_review_repairs",
       "task": "SP-01.d",
       "depends_on": [
         "SP-01.b",
@@ -11547,7 +11547,7 @@
         },
         {
           "id": "WEB1",
-          "status": "api_authoring",
+          "status": "api_review_repairs",
           "depends_on": [
             "WORLD1"
           ],
@@ -11757,7 +11757,35 @@
         }
       ],
       "web1_starting_commit": "69c027cdfa85468ddab79ab7dc533015c6aac1e0",
-      "web1_started_at": "2026-10-20T08:15:54.588377+00:00"
+      "web1_started_at": "2026-10-20T08:15:54.588377+00:00",
+      "web1_api_review": {
+        "source": "3b01cfca44d61127927ca396ae54a04f06a0026d",
+        "tree": "afc27fc746785d8f9a4eacbc0db512bca4b0d43b",
+        "status": "replacement_required_before_runtime",
+        "full_tests": 2928,
+        "focused": 371,
+        "web_cases": 145,
+        "schemas": 1373,
+        "ruff_files": 130,
+        "mypy_files": 89,
+        "author_index_sha256": "5e38a762435dc86e0d43aa2f72df2df968fd023c00f023fed0c373811226a61d",
+        "lead_wire_cases": 102,
+        "lead_index_sha256": "f0a43055900c9e61e4ece8265ed135c31b50ab4ba9ffafb3e33233e09a40ebe6",
+        "findings": [
+          "Join the immutable root to an available predecessor page zero and reject known page/event identity reuse.",
+          "Constrain supplied prefix/suffix page/chunk counts and feasible remaining nonempty chunk bytes.",
+          "Match the recovery JSON Schema to its runtime code/nonretryable/no-operation constraints.",
+          "Reject control characters in Retry-After header schemas."
+        ],
+        "assignments": {
+          "Research": "Bounded source/schema/fixture repairs; runtime waits replacement acceptance.",
+          "Platform": "Independent history, artifact and stream provenance review.",
+          "Quality": "Independent authority, recovery and schema review; native proposal review separately.",
+          "Lead": "Independent wire/counter review, primary progress and integration."
+        },
+        "boundary": "API/source evidence only. Existing full-test results remain tied to their exact checkpoint; replacement requires review. No hosted producer, SP-01.d completion or native research gate acceptance.",
+        "review_date": "2026-11-19"
+      }
     },
     "contract_tooling_preparation": {
       "owner": "Engineer Quality",
