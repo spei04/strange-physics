@@ -11823,7 +11823,14 @@
           "index_sha256": "c707adb8349d3cede3098bb84ef6f3f4ad49c63658cb1ca4a1489631a4d0c589"
         },
         "boundary": "Typed API, intrinsic supplied joins and synthetic fixtures only. Runtime, hosted producers and complete SP-01.d remain pending. Suites overlap and are not additive unique totals.",
-        "review_date": "2026-11-19"
+        "review_date": "2026-11-19",
+        "configured_security": {
+          "source": "c066900b875c4393f74d6e34b7b9fec09e15a83f",
+          "command": "bandit -r src scripts -ll",
+          "status": "passed",
+          "index_sha256": "3dc15b90248b16259639d179853cfa8989462d13409e50580bc4c09f543e2423",
+          "note": "Lead supplement corrects the narrower author src-only/high-confidence command; original evidence retained."
+        }
       },
       "web1_runtime_assignment": {
         "owner": "Engineer Research",
@@ -12084,7 +12091,8 @@
           "tree": "31925740d9bfa8cc642a4d41fa8ae2861a26ebd0",
           "pr_ci": 39395368138,
           "main_ci": 39395654760,
-          "status": "published_proposal_only"
+          "status": "published_proposal_only",
+          "index_sha256": "5233e10240b72bf5a5ea352d2ae7ab9fb965633af5c18243f4e04578c4ed5fde"
         }
       },
       "proposal_document": "docs/research/NATIVE_COMPARISON_PROPOSAL.md"
