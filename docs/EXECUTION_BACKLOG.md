@@ -9,6 +9,14 @@ The 42 existing GitHub issues become epic rollups. **168 reviewable PR tasks, 36
 
 **Navigate:** [Audit](#planning-audit) · [Decisions](#decisions-requiring-approval) · [Estimate](#effort-confidence-and-capacity) · [Milestones](#milestone-schedule-and-exit-gates) · [Critical path](#critical-path-and-parallel-work) · [First ten days](#first-two-weeks-day-by-day) · [Contracts](#contract-register) · [PR tasks](#task-index) · [Dependency review](#dependency-review-and-maintenance)
 
+## Research methods amendment (2026-10-19 cutoff)
+
+The [dated method decision record](research/2026-10-19-METHOD_DECISIONS.md) adds18 proposed PR tasks, explicit sources/license checks and separate comparisons for shared-model selection, richer symbolic models and law-change recovery. Existing random/classical controls and the current I1/C2 assignments continue. New runtime remains behind RA_EXEC; provider, sizing, official-study and release gates remain separate.
+
+The first new result is a local fixed-pool linear-model comparison after its scientific prerequisites:36 development episodes,432 purchased slots maximum,8 CPU-core-hours,1GiB new artifacts and zero provider calls. It does not wait for hosted deployment or all paper-inspired profiles. The optional later feasibility pilot has at most162 episodes; replicated-world sizing requires a separate approval and evidence before confirmatory freeze.
+
+The18-task extension totals48–78 human engineering days plus25% reserve (60–97.5 days). It is recorded separately in execution-backlog.json; the approved168-task/369-edge/ten-gate graph and its conditional W52–67 GA reference remain unchanged. Added scope is not included in that forecast. The dated record owns detailed task contracts, exclusions, tests, effort, dependencies and exit gates.
+
 ## Planning audit
 
 Inspected README, CONTRIBUTING, all ten preexisting docs, four JSON contract artifacts, dependency/CI configuration and public interfaces in contracts/session/journal/sdk. Existing implementation is the local trusted 55-test research core; no fitter, hosted runtime or enterprise controls were implemented by this review. Existing assertions were compared with source and public issue/milestone state. Draft checkpoint PUT already agrees with the design; it is not a discovered defect.

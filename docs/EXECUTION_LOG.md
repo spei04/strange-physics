@@ -11,8 +11,8 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
 | Platform | ID-C/C2 run credentials and product authority | Exclusive identity writer after C1 PR/main acceptance; early interface and independent review required |
-| Research | SP-04.e/I1 SDK/CLI preparation and scorer review | Read-only preparation; SDK/CLI source waits accepted scorer |
-| Quality | Scorer integration and planning review | Authoring released at17be197; independently verified merged source464c73a |
+| Research | Research amendment review; SP-04.e SDK/CLI next | Read-only scientific/dependency review; SDK source follows scorer main acceptance and primary handoff |
+| Quality | C2 independent runtime review | Read-only review of Platform952f95c; scorer source/integration accepted |
 | Project lead | Integrate scorer; save research amendment | Exclusive primary writer; Platform owns identity; exact-head review/CI and main acceptance before handoff |
 
 ## Assignments
@@ -206,3 +206,7 @@ action is approved and complete; it grants no additional staging or release auth
 Source17be197a1499c7619718b4e5141aa34a6523e519 retains runtime82fc9145b576fcb01e58815989bc2c1ebd1087a0. The independent Decimal reference uses fixed precision/context, a proven bounded series and exact request identities; it shares no predictor or simulator math. Complete-manifest validation preserves missing, invalid and failed outputs without survivor averaging. All168 direct-model probes passed; maximum component difference2.6645352591003757e-15 and per-probe MSE4.249608827306303e-31 are finite synthetic evidence, not fitted SDK/CLI I1. Final public/private boundary and timing-bearing report bytes are documented in EVALUATION.md.
 
 Private evidence stays outside disposable checkouts at /home/serenapei/.local/state/strange-physics-evidence/evaluation/2026-10-20. Sealed index82fc9145b576-index.json SHA2561c8d43550c8b618039a6b82236f879e1d13dafd388fcd84bea44969aca991c20 identifies source, task and checks. Owner-readable only; review2026-11-19, same-VM storage is not an off-device backup. Do not mutate this record; add integration evidence separately.
+
+## Research amendment review checkpoint
+
+2026-10-20 — Lead saved research/2026-10-19-METHOD_DECISIONS.md and linked it from the roadmap, benchmark and backlog. Research challenged shared-posterior wording, mixed adapter scope, missing symbolic execution responsibility and feasibility-versus-population inference; the18-task revision addresses those findings. The first offline result is independent of provider profiles/hosted deployment. Current scorer/I1 and C2 work continues. These are proposed runtime tasks, not executed methods or approved paid experiments. Exact-commit review and CI are recorded at integration.

@@ -12,6 +12,14 @@ No broad implementation, new infrastructure, paid sweep, or compliance certifica
 
 **Navigate:** [Progress](#0-progress-evidence-and-how-to-maintain-this-file) · [Product](#1-product-definition-and-planning-assumptions) · [Architecture](#4-architecture-and-trust-boundaries) · [Capacity and cost](#7-capacity-performance-and-cost-model) · [Security](#8-security-requirements-and-threat-model) · [Milestones](#10-dependency-aware-milestones-and-exit-gates) · [Backlog](#11-prioritized-engineering-backlog) · [Team and schedule](#12-team-ownership-and-delivery-schedule) · [Operations](#13-cicd-deployment-reliability-and-operations) · [Approval](#17-decisionprogress-log-and-approval-handoff)
 
+## Research methods amendment (2026-10-19 cutoff)
+
+The [dated method decision record](research/2026-10-19-METHOD_DECISIONS.md) adds18 proposed PR tasks, explicit sources/license checks and separate comparisons for shared-model selection, richer symbolic models and law-change recovery. Existing random/classical controls and the current I1/C2 assignments continue. New runtime remains behind RA_EXEC; provider, sizing, official-study and release gates remain separate.
+
+The first new result is a local fixed-pool linear-model comparison after its scientific prerequisites:36 development episodes,432 purchased slots maximum,8 CPU-core-hours,1GiB new artifacts and zero provider calls. It does not wait for hosted deployment or all paper-inspired profiles. The optional later feasibility pilot has at most162 episodes; replicated-world sizing requires a separate approval and evidence before confirmatory freeze.
+
+The18-task extension totals48–78 human engineering days plus25% reserve (60–97.5 days). It is recorded separately in execution-backlog.json; the approved168-task/369-edge/ten-gate graph and its conditional W52–67 GA reference remain unchanged. Added scope is not included in that forecast. The dated record owns detailed task contracts, exclusions, tests, effort, dependencies and exit gates.
+
 ## 0. Progress, evidence, and how to maintain this file
 
 ### 0.1 Status vocabulary
