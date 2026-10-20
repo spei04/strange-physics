@@ -10,7 +10,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | WEB1 bounded runtime from accepted APIc066900 | Current viewer/cursor/events first, then actual-byte bodies and complete bounded history |
+| Research | WEB1 actual-byte bodies and complete bounded history | Guard/cursor/snapshot/event runtime accepted at ac70f69; next unit needs independent review |
 | Platform | WEB1 state, provenance and budget composition review | Immutable source checkpoints; native prerequisite proposal review is complete |
 | Quality | WEB1 current authority, recovery and raw-byte safety review | Independent reviewer; SP-01.e remains preparation-only |
 | Project lead | WEB1 primary integration and progress; native proposal scope decision | Exclusive primary owner; PR #96 integrated, RA_EXEC remains pending |
@@ -431,3 +431,5 @@ Planning PR #96 is integrated as ee4831a with reviewed tree3192574; all four app
 2026-10-20 — Final evidence review identified that the author security command was narrower than CI. Lead ran the exact configured bandit -r src scripts -ll against immutable APIc066900; it passed with zero medium/high findings. The supplementary private index is recorded in execution-backlog.json and the original author log remains unchanged. Research will use the configured scope/threshold for subsequent runtime checks. Actual runtime source began08:48:46 UTC; the later08:49:09 timestamp records the assignment in the ledger.
 
 2026-10-20 — Draft PR #97/API integrationf2614ac passed all four applicable CI39396521384 jobs. Partial runtimebc82a23 (70 new tests,378 focused cases) is under independent review. Lead reproduced two missing supplied chronology checks: an event later than its cursor issuance, and a final event later than snapshot capture. Research owns the repairs and separate actual-byte/history unit; Platform checks provenance/state and Quality current authority/recovery. Valid same-second records remain required. Runtime acceptance and full SP-01.d remain open.
+
+2026-10-20 — Partial WEB1 runtimeac70f69 is independently accepted for current viewer authority, cursor recovery, historical snapshots and event batches. All reported chronology, recent-head consistency and error-ordering repairs pass;83 replay and179 API cases pass. Platform verifies the final head guards; Quality authority/outcome and lead chronology evidence remain bound to their reviewed sources. Research now completes actual-byte body/history runtime, Platform reviews provenance/budgets, Quality authorization/recovery and lead primary integration. Full WEB1, SP-01.d and SP-01.e remain pending; this is not hosted enforcement.
