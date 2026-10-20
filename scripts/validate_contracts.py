@@ -48,6 +48,63 @@ def main() -> None:
             raise ValueError(f"Unexpected schema result for {reference}: {errors[:1]}")
         count += 1
 
+    world = json.loads((ROOT / "world.examples.json").read_text())
+    for name, fixture in world["valid"].items():
+        check(f"world.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in world[group]:
+            value = copy.deepcopy(world["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"world.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+    for name in ["renewal_commit", "revocation_commit"]:
+        check("world.schema.json#/$defs/PreviewMutationCommit", world[name])
+
+    check("control.schema.json#/$defs/Error", world["service_unavailable"])
+    world_api = documents[ROOT / "world.openapi.json"]
+    first_world = world["valid"]["CreateWorldVersionRequest"]
+    append_world = copy.deepcopy(first_world)
+    append_world.update(expected_head_revision=1, expected_version_id="world-version-1")
+    for name, good, wrong in [
+        ("InitialWorldRequest", first_world, append_world),
+        ("AppendWorldRequest", append_world, first_world),
+    ]:
+        check(f"world.openapi.json#/components/schemas/{name}", good)
+        check(f"world.openapi.json#/components/schemas/{name}", wrong, False)
+    path_values = json.loads((ROOT / "session.examples.json").read_text())["path_identifiers"]
+    key_values = json.loads((ROOT / "control.examples.json").read_text())["idempotency_keys"]
+    for path, routes in world_api["paths"].items():
+        escaped = path.replace("~", "~0").replace("/", "~1")
+        for method, operation in routes.items():
+            unavailable = operation["responses"]["503"]["content"]["application/json"]["schema"]
+            check(unavailable["$ref"], world["service_unavailable"])
+            response_schema = operation["responses"]["200"]["content"]["application/json"]["schema"]
+            response_name = response_schema["$ref"].rsplit("/", 1)[-1]
+            check(response_schema["$ref"], world["valid"][response_name])
+            for index, parameter in enumerate(operation["parameters"]):
+                reference = (
+                    f"world.openapi.json#/paths/{escaped}/{method}/parameters/{index}/schema"
+                )
+                values = (
+                    key_values
+                    if parameter["name"] == "Idempotency-Key"
+                    else path_values
+                    if parameter["in"] == "path" or parameter["name"] == "grant_id"
+                    else None
+                )
+                if values is not None:
+                    for group, items in values.items():
+                        for item in items:
+                            check(reference, item, group == "valid")
+                elif parameter["name"] == "page_size":
+                    for value in (1, 128):
+                        check(reference, value)
+                    for value in (0, 129, True):
+                        check(reference, value, False)
+
     registration = json.loads((ROOT / "model-registration.examples.json").read_text())
     for name, fixture in registration["valid"].items():
         check(f"model-registration.schema.json#/$defs/{name}", fixture)

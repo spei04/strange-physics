@@ -1,8 +1,8 @@
 # Native model registration — COMP1
 
-Status: native contracts and pure admission/completion/replay proposals independently
-reviewed; hosted producers remain pending. The current integration and parent
-freeze gates are recorded in the execution backlog. Actual storage/SQL producers
+Status: native contracts and pure admission/completion/replay proposals are
+integrated through PR #93 with exact PR and protected-main checks; SP-01.c is
+complete. Actual storage/SQL producers
 are not implemented by this slice. Synthetic fixtures do
 not establish deployed approval, process isolation, fitting accuracy or production
 readiness.
@@ -260,8 +260,9 @@ Prior API and runtime diagnostics remain retained separately; final status prose
 does not relabel those earlier checkpoints as proof of the final source.
 
 The final documentation/schema-status change preserves all contract definitions
-and runtime behavior. Hosted exact-head CI, protected-main acceptance and the
-parent contract freeze are separate integration gates. The local wheel smoke is
+and runtime behavior. Exact PR CI39379345399 and protected-main
+CI39379544409 passed at reviewed a75ac1b and merge11e2002, whose trees
+match ec01b963; SP-01.c is accepted. The local wheel smoke is
 not a fresh dependency-install proof, live persistence test, worker isolation
 proof, predictor invocation or deployment.
 

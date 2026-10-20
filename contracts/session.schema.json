@@ -1188,7 +1188,7 @@
   "$id": "https://strange-physics.dev/contracts/session.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Browser session shapes plus pure conformance checks. Internal trusted projections must never be populated from public bodies. No verifier, handler or persistence proof.",
-  "x-contract-status": "session-v1; SP-01.b remains partial",
+  "x-contract-status": "session-v1; bounded SP-01.b freeze accepted",
   "x-public-models": [
     "LoginOption",
     "LoginOptions",

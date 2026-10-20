@@ -1,0 +1,2385 @@
+{
+  "components": {
+    "schemas": {
+      "AppendWorldRequest": {
+        "allOf": [
+          {
+            "$ref": "world.schema.json#/$defs/CreateWorldVersionRequest"
+          },
+          {
+            "properties": {
+              "expected_head_revision": {
+                "maximum": 9999,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "expected_version_id": {
+                "not": {
+                  "pattern": "[^A-Za-z0-9_-]"
+                },
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "InitialWorldRequest": {
+        "allOf": [
+          {
+            "$ref": "world.schema.json#/$defs/CreateWorldVersionRequest"
+          },
+          {
+            "properties": {
+              "expected_head_revision": {
+                "const": 0,
+                "type": "integer"
+              },
+              "expected_version_id": {
+                "type": "null"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "csrfHeader": {
+        "in": "header",
+        "name": "X-CSRF-Token",
+        "type": "apiKey"
+      },
+      "sessionCookie": {
+        "in": "cookie",
+        "name": "__Host-sp_session",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "Browser HTTP contract backed by reviewed pure authorization and recovery predicates; hosted HTTP and persistence producers remain unimplemented. Sensitive author and granted-definition routes are separate from agent-safe catalog metadata. WEB1 follows independently.",
+    "title": "World versions and explicit preview grants \u2014 WORLD1",
+    "version": "1.0.0-api-review"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/workspaces/{workspace_id}/worlds": {
+      "get": {
+        "description": "List current eligible safe world heads in one workspace. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "listWorlds",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Configured maximum may be stricter; total page bytes must also fit policy.",
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "maximum": 128,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Opaque actor/workspace/filter/snapshot-bound expiring cursor; never permission. Reauthorize every page.",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/WorldPage"
+                }
+              }
+            },
+            "description": "Safe original metadata after a committed mutation/replay, or the current authorized read projection.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": false,
+        "x-world-capability": "worlds:read"
+      },
+      "post": {
+        "description": "Create a customer-authored world and first immutable version. Null parent/revision zero and workspace-scoped key precede server allocation; retained receipt reuses the same IDs. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "createWorld",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace/principal/operation-kind/key namespace. Resource target is bound in retained scope; it does not create another key namespace.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^[!-~]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InitialWorldRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/WorldVersionResult"
+                }
+              }
+            },
+            "description": "Safe original metadata after a committed mutation/replay, or the current authorized read projection.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": false,
+        "x-world-capability": "worlds:write"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/worlds/{world_id}/head": {
+      "get": {
+        "description": "Read the safe head used for append CAS; recheck its revision at commit. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "readWorldHead",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "world_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/WorldHead"
+                }
+              }
+            },
+            "description": "Safe original metadata after a committed mutation/replay, or the current authorized read projection.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": false,
+        "x-world-capability": "worlds:read"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/worlds/{world_id}/preview-grants": {
+      "get": {
+        "description": "Owner-only safe grant metadata. Current owner authority is required; recent authentication is not required for this GET. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "listWorldPreviewGrants",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "world_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Configured maximum may be stricter; total page bytes must also fit policy.",
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "maximum": 128,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Opaque actor/workspace/filter/snapshot-bound expiring cursor; never permission. Reauthorize every page.",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/PreviewGrantPage"
+                }
+              }
+            },
+            "description": "Safe original metadata after a committed mutation/replay, or the current authorized read projection.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": false,
+        "x-world-capability": "worlds:preview-grants:manage"
+      },
+      "post": {
+        "description": "Owner issues a TTL-bound exact customer version/recipient grant under current policy, ancestry and recent authentication. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "issueWorldPreview",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "world_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace/principal/operation-kind/key namespace. Resource target is bound in retained scope; it does not create another key namespace.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^[!-~]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "world.schema.json#/$defs/IssuePreviewRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/PreviewGrantView"
+                }
+              }
+            },
+            "description": "Safe original metadata after a committed mutation/replay, or the current authorized read projection.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "Only after all current identity/workspace/role checks pass and actual authentication is stale. Never on disabled/stale-generation/removed authority.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": true,
+        "x-world-capability": "worlds:preview-grants:manage"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/worlds/{world_id}/preview-grants/{grant_id}": {
+      "get": {
+        "description": "Owner-only safe grant metadata exposing revision. This read is never definition authorization and does not require recent authentication. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "readWorldPreviewGrant",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "world_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "grant_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/PreviewGrantView"
+                }
+              }
+            },
+            "description": "Safe original metadata after a committed mutation/replay, or the current authorized read projection.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": false,
+        "x-world-capability": "worlds:preview-grants:manage"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/worlds/{world_id}/preview-grants/{grant_id}/renew": {
+      "post": {
+        "description": "Path/body grant ID must agree. Renew a still-live unrevoked grant under expected revision and current TTL/recipient policy. Preserve immutable target/recipient/issuer. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "renewWorldPreview",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "world_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "grant_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace/principal/operation-kind/key namespace. Resource target is bound in retained scope; it does not create another key namespace.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^[!-~]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "world.schema.json#/$defs/RenewPreviewRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/PreviewGrantView"
+                }
+              }
+            },
+            "description": "Safe original metadata after a committed mutation/replay, or the current authorized read projection.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "Only after all current identity/workspace/role checks pass and actual authentication is stale. Never on disabled/stale-generation/removed authority.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": true,
+        "x-world-capability": "worlds:preview-grants:manage"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/worlds/{world_id}/preview-grants/{grant_id}/revoke": {
+      "post": {
+        "description": "Path/body grant ID must agree. Permanently revoke under expected revision; preserve expiry, allow recipient departure, return metadata only. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "revokeWorldPreview",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "world_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "grant_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace/principal/operation-kind/key namespace. Resource target is bound in retained scope; it does not create another key namespace.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^[!-~]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "world.schema.json#/$defs/RevokePreviewRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/PreviewGrantView"
+                }
+              }
+            },
+            "description": "Safe original metadata after a committed mutation/replay, or the current authorized read projection.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "Only after all current identity/workspace/role checks pass and actual authentication is stale. Never on disabled/stale-generation/removed authority.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": true,
+        "x-world-capability": "worlds:preview-grants:manage"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/worlds/{world_id}/versions": {
+      "get": {
+        "description": "List safe immutable versions in one world. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "listWorldVersions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "world_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Configured maximum may be stricter; total page bytes must also fit policy.",
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "maximum": 128,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Opaque actor/workspace/filter/snapshot-bound expiring cursor; never permission. Reauthorize every page.",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/WorldPage"
+                }
+              }
+            },
+            "description": "Safe original metadata after a committed mutation/replay, or the current authorized read projection.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": false,
+        "x-world-capability": "worlds:read"
+      },
+      "post": {
+        "description": "Append exactly one customer-authored version under expected head ID/revision CAS; body cannot reset or fork the world. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "appendWorldVersion",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "world_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Workspace/principal/operation-kind/key namespace. Resource target is bound in retained scope; it does not create another key namespace.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^[!-~]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppendWorldRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/WorldVersionResult"
+                }
+              }
+            },
+            "description": "Safe original metadata after a committed mutation/replay, or the current authorized read projection.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": false,
+        "x-world-capability": "worlds:write"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/worlds/{world_id}/versions/{version_id}": {
+      "get": {
+        "description": "Read safe version metadata/public space, without definition or its digest. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "readWorldVersion",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "world_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/WorldVersionView"
+                }
+              }
+            },
+            "description": "Safe original metadata after a committed mutation/replay, or the current authorized read projection.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": false,
+        "x-world-capability": "worlds:read"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/worlds/{world_id}/versions/{version_id}/definition": {
+      "get": {
+        "description": "Sensitive exact-version definition. Require current explicit unexpired/unrevoked grant to the caller's current principal generation and membership incarnation, current reader role/policy and customer-authored classification. Official-blind definitions are unavailable. Current browser authority precedes private lookup and retry. Reject bearer-only or mixed credentials. No automatic owner/creator/terminal truth disclosure.",
+        "operationId": "readGrantedWorldDefinition",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "world_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Exact current recipient grant, not a permission-bearing capability.",
+            "in": "query",
+            "name": "grant_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "world.schema.json#/$defs/GrantedWorldDefinition"
+                }
+              }
+            },
+            "description": "Sensitive definition only after complete current exact-version recipient-grant authorization.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed or unsupported request/credential presentation; fixed safe error."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Missing/invalid current browser session, or valid owner mutation needing recent actual authentication."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role/workspace/CSRF/policy denies this operation; no resource contents."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Scoped resource unavailable after current authorization; never a cross-workspace existence oracle."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Stale expected revision or inconsistent retained closure: incompatible_state. Changed body under an existing key: idempotency_conflict. Matching expired receipt key: incompatible_state with fixed receipt-expired meaning, not session expiry or automatic reallocation."
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Configured raw/canonical/envelope byte bound exceeded; no partial success."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Supported definition/schedule or request join validation failed."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Rate limited; honor bounded Retry-After.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
+                "schema": {
+                  "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "x-current-authorization-before-lookup": true,
+        "x-implemented": false,
+        "x-recent-authentication": false,
+        "x-world-capability": "worlds:preview"
+      }
+    }
+  },
+  "x-browser-origin": "Use exact accepted ID-A/C2 Origin and CSRF policy. Mutation freshness never precedes current identity/workspace/role denial.",
+  "x-contract-status": "WORLD1 reviewed pure contracts and proposals; hosted producers and WEB1 pending",
+  "x-idempotency-error-mapping": {
+    "changed_request": {
+      "code": "idempotency_conflict",
+      "retryable": false,
+      "status": 409
+    },
+    "matching_expired_key": {
+      "code": "incompatible_state",
+      "message": "Mutation receipt has expired.",
+      "retryable": false,
+      "status": 409
+    },
+    "partial_or_contradictory_closure": {
+      "code": "incompatible_state",
+      "message": "Mutation recovery is required.",
+      "retryable": false,
+      "status": 409
+    }
+  },
+  "x-no-new-service-or-worker-scopes": true,
+  "x-reference-policy": {
+    "definition_bytes": 65536,
+    "metadata_bytes": 4194304,
+    "page_bytes": 1048576,
+    "page_items": 128
+  }
+}

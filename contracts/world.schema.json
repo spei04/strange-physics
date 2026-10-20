@@ -1,0 +1,3722 @@
+{
+  "$defs": {
+    "Anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "Anchor",
+      "type": "object"
+    },
+    "BrowserActor": {
+      "additionalProperties": false,
+      "description": "Verified human session lookup and HTTP context; never a public body.",
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/BrowserContext"
+        },
+        "credential": {
+          "$ref": "#/$defs/SessionCredential"
+        },
+        "session": {
+          "$ref": "#/$defs/SessionRecord"
+        }
+      },
+      "required": [
+        "session",
+        "credential",
+        "context"
+      ],
+      "title": "BrowserActor",
+      "type": "object"
+    },
+    "BrowserContext": {
+      "additionalProperties": false,
+      "description": "Trusted HTTP adapter projection; CSRF comparisons must be constant-time.",
+      "properties": {
+        "browser_binding_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Browser Binding Sha256"
+        },
+        "csrf_matches": {
+          "title": "Csrf Matches",
+          "type": "boolean"
+        },
+        "csrf_scope": {
+          "anyOf": [
+            {
+              "enum": [
+                "preauth",
+                "session"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Csrf Scope"
+        },
+        "has_bearer": {
+          "title": "Has Bearer",
+          "type": "boolean"
+        },
+        "has_session_cookie": {
+          "title": "Has Session Cookie",
+          "type": "boolean"
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 9,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^https://[!-~]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Origin"
+        },
+        "target_origin": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Target Origin",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_origin",
+        "origin",
+        "has_session_cookie",
+        "has_bearer",
+        "csrf_scope",
+        "csrf_matches",
+        "browser_binding_sha256"
+      ],
+      "title": "BrowserContext",
+      "type": "object"
+    },
+    "BrowserRadialLaw": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "radial",
+          "title": "Kind",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": false,
+          "maxProperties": 3,
+          "properties": {
+            "exponent": {
+              "default": 2.0,
+              "maximum": 3,
+              "minimum": 0.5,
+              "title": "Exponent",
+              "type": "number"
+            },
+            "softening": {
+              "default": 0.25,
+              "maximum": 1,
+              "minimum": 0.1,
+              "title": "Softening",
+              "type": "number"
+            },
+            "strength": {
+              "default": -0.1,
+              "maximum": 1,
+              "minimum": -1,
+              "title": "Strength",
+              "type": "number"
+            }
+          },
+          "title": "Parameters",
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "parameters"
+      ],
+      "title": "BrowserRadialLaw",
+      "type": "object"
+    },
+    "BrowserSpringLaw": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "spring",
+          "title": "Kind",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": false,
+          "maxProperties": 2,
+          "properties": {
+            "cubic": {
+              "default": 0.0,
+              "maximum": 2,
+              "minimum": 0,
+              "title": "Cubic",
+              "type": "number"
+            },
+            "linear": {
+              "default": 1.0,
+              "maximum": 4,
+              "minimum": 0,
+              "title": "Linear",
+              "type": "number"
+            }
+          },
+          "title": "Parameters",
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "parameters"
+      ],
+      "title": "BrowserSpringLaw",
+      "type": "object"
+    },
+    "BrowserVelocityLaw": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "velocity",
+          "title": "Kind",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": false,
+          "maxProperties": 3,
+          "properties": {
+            "cubic": {
+              "default": 0.0,
+              "maximum": 1,
+              "minimum": 0,
+              "title": "Cubic",
+              "type": "number"
+            },
+            "linear": {
+              "default": 0.2,
+              "maximum": 2,
+              "minimum": 0,
+              "title": "Linear",
+              "type": "number"
+            },
+            "transverse": {
+              "default": 0.0,
+              "maximum": 3,
+              "minimum": -3,
+              "title": "Transverse",
+              "type": "number"
+            }
+          },
+          "title": "Parameters",
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "parameters"
+      ],
+      "title": "BrowserVelocityLaw",
+      "type": "object"
+    },
+    "BrowserWorldDefinition": {
+      "additionalProperties": false,
+      "description": "Sensitive author input/granted output. Never an agent-safe catalog projection.",
+      "properties": {
+        "change_after": {
+          "anyOf": [
+            {
+              "maximum": 9999,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Change After"
+        },
+        "changed_law": {
+          "anyOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "radial": "#/$defs/BrowserRadialLaw",
+                  "spring": "#/$defs/BrowserSpringLaw",
+                  "velocity": "#/$defs/BrowserVelocityLaw"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/BrowserSpringLaw"
+                },
+                {
+                  "$ref": "#/$defs/BrowserRadialLaw"
+                },
+                {
+                  "$ref": "#/$defs/BrowserVelocityLaw"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Changed Law"
+        },
+        "initial_law": {
+          "discriminator": {
+            "mapping": {
+              "radial": "#/$defs/BrowserRadialLaw",
+              "spring": "#/$defs/BrowserSpringLaw",
+              "velocity": "#/$defs/BrowserVelocityLaw"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BrowserSpringLaw"
+            },
+            {
+              "$ref": "#/$defs/BrowserRadialLaw"
+            },
+            {
+              "$ref": "#/$defs/BrowserVelocityLaw"
+            }
+          ],
+          "title": "Initial Law"
+        },
+        "noise_seed": {
+          "maxLength": 20,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^0-9]"
+          },
+          "pattern": "^(?:0|[1-9][0-9]{0,18}|1[0-7][0-9]{18}|18[0-3][0-9]{17}|184[0-3][0-9]{16}|1844[0-5][0-9]{15}|18446[0-6][0-9]{14}|184467[0-3][0-9]{13}|1844674[0-3][0-9]{12}|184467440[0-6][0-9]{10}|1844674407[0-2][0-9]{9}|18446744073[0-6][0-9]{8}|1844674407370[0-8][0-9]{6}|18446744073709[0-4][0-9]{5}|184467440737095[0-4][0-9]{4}|18446744073709550[0-9]{3}|18446744073709551[0-5][0-9]{2}|1844674407370955160[0-9]{1}|1844674407370955161[0-4]|18446744073709551615)$",
+          "title": "Noise Seed",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.browser-world.v1",
+          "default": "strange-physics.browser-world.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "space": {
+          "$ref": "#/$defs/ExperimentSpace"
+        }
+      },
+      "required": [
+        "space",
+        "noise_seed",
+        "initial_law"
+      ],
+      "title": "BrowserWorldDefinition",
+      "type": "object"
+    },
+    "CancellationResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "cancellation",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/RunView"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "CancellationResult",
+      "type": "object"
+    },
+    "CheckpointBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Config Sha256",
+          "type": "string"
+        },
+        "agent_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "agent_package_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Package Sha256",
+          "type": "string"
+        },
+        "checkpoint_protocol": {
+          "const": "strange-physics.checkpoint.v1",
+          "default": "strange-physics.checkpoint.v1",
+          "title": "Checkpoint Protocol",
+          "type": "string"
+        },
+        "runtime_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Image Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_id",
+        "agent_package_sha256",
+        "agent_config_sha256",
+        "runtime_image_sha256"
+      ],
+      "title": "CheckpointBinding",
+      "type": "object"
+    },
+    "Connection": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "A",
+          "type": "string"
+        },
+        "b": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "B",
+          "type": "string"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "title": "Connection",
+      "type": "object"
+    },
+    "CreateRunRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_package_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Package Sha256",
+          "type": "string"
+        },
+        "experiment_budget": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Experiment Budget",
+          "type": "integer"
+        },
+        "limits": {
+          "$ref": "#/$defs/ResourceLimits"
+        },
+        "track": {
+          "enum": [
+            "controlled_selection",
+            "agent_discovery"
+          ],
+          "title": "Track",
+          "type": "string"
+        },
+        "world_version_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Version Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "world_version_id",
+        "agent_package_sha256",
+        "track",
+        "experiment_budget",
+        "limits"
+      ],
+      "title": "CreateRunRequest",
+      "type": "object"
+    },
+    "CreateWorldVersionRequest": {
+      "additionalProperties": false,
+      "description": "First version uses null/zero; later versions use the exact displayed head.",
+      "properties": {
+        "definition": {
+          "$ref": "#/$defs/BrowserWorldDefinition"
+        },
+        "expected_head_revision": {
+          "maximum": 9999,
+          "minimum": 0,
+          "title": "Expected Head Revision",
+          "type": "integer"
+        },
+        "expected_version_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected Version Id"
+        },
+        "title": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "definition",
+        "expected_version_id",
+        "expected_head_revision"
+      ],
+      "title": "CreateWorldVersionRequest",
+      "type": "object"
+    },
+    "CredentialOwner": {
+      "additionalProperties": false,
+      "properties": {
+        "grant": {
+          "$ref": "#/$defs/GrantAuthority"
+        },
+        "principal": {
+          "$ref": "#/$defs/PrincipalAuthority"
+        }
+      },
+      "required": [
+        "principal",
+        "grant"
+      ],
+      "title": "CredentialOwner",
+      "type": "object"
+    },
+    "DeploymentSessionPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "absolute_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Absolute Seconds",
+          "type": "integer"
+        },
+        "app_origins": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 9,
+            "not": {
+              "pattern": "[^!-~]"
+            },
+            "pattern": "^https://[!-~]+$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "App Origins",
+          "type": "array"
+        },
+        "clock_skew_seconds": {
+          "maximum": 300,
+          "minimum": 0,
+          "title": "Clock Skew Seconds",
+          "type": "integer"
+        },
+        "idle_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Idle Seconds",
+          "type": "integer"
+        },
+        "login_ttl_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Login Ttl Seconds",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "providers": {
+          "items": {
+            "$ref": "#/$defs/ProviderPolicy"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Providers",
+          "type": "array"
+        },
+        "recent_auth_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Recent Auth Seconds",
+          "type": "integer"
+        },
+        "return_uris": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 9,
+            "not": {
+              "pattern": "[^!-~]"
+            },
+            "pattern": "^https://[!-~]+$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Return Uris",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "strange-physics.session-policy.v1",
+          "default": "strange-physics.session-policy.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "transaction_retention_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Transaction Retention Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "policy_id",
+        "app_origins",
+        "return_uris",
+        "providers",
+        "idle_seconds",
+        "absolute_seconds",
+        "recent_auth_seconds",
+        "login_ttl_seconds",
+        "clock_skew_seconds",
+        "transaction_retention_seconds"
+      ],
+      "title": "DeploymentSessionPolicy",
+      "type": "object"
+    },
+    "Error": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "unauthenticated",
+            "forbidden",
+            "not_found",
+            "idempotency_conflict",
+            "incompatible_state",
+            "invalid_request",
+            "budget_exhausted",
+            "quota_exceeded",
+            "temporarily_unavailable",
+            "cursor_expired",
+            "unsupported_version",
+            "execution_failed"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "operation_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Operation Id"
+        },
+        "request_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Request Id",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "request_id",
+        "retryable",
+        "operation_id"
+      ],
+      "title": "Error",
+      "type": "object"
+    },
+    "Experiment": {
+      "additionalProperties": false,
+      "properties": {
+        "impulse": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Impulse"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "particles": {
+          "items": {
+            "$ref": "#/$defs/ParticleInitial"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particles",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "strange-physics.experiment.v1",
+          "default": "strange-physics.experiment.v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "particles"
+      ],
+      "title": "Experiment",
+      "type": "object"
+    },
+    "ExperimentRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "anyOf": [
+            {
+              "const": "simulation_failed",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        },
+        "experiment": {
+          "$ref": "#/$defs/Experiment"
+        },
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "failed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "trajectory": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Trajectory"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "operation_id",
+        "index",
+        "experiment",
+        "status"
+      ],
+      "title": "ExperimentRecord",
+      "type": "object"
+    },
+    "ExperimentResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "experiment",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/ExperimentRecord"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "ExperimentResult",
+      "type": "object"
+    },
+    "ExperimentSpace": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "default": 40,
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Budget",
+          "type": "integer"
+        },
+        "calibration_experiments": {
+          "default": 4,
+          "minimum": 0,
+          "title": "Calibration Experiments",
+          "type": "integer"
+        },
+        "limits": {
+          "$ref": "#/$defs/Limits",
+          "default": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          }
+        },
+        "sampling": {
+          "$ref": "#/$defs/Sampling"
+        },
+        "schema_version": {
+          "const": "strange-physics.space.v1",
+          "default": "strange-physics.space.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "structure": {
+          "$ref": "#/$defs/Structure"
+        }
+      },
+      "required": [
+        "structure",
+        "sampling"
+      ],
+      "title": "ExperimentSpace",
+      "type": "object"
+    },
+    "Frame": {
+      "additionalProperties": false,
+      "properties": {
+        "positions": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Positions",
+          "type": "array"
+        },
+        "time": {
+          "minimum": 0,
+          "title": "Time",
+          "type": "number"
+        },
+        "velocities": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Velocities",
+          "type": "array"
+        }
+      },
+      "required": [
+        "time",
+        "positions",
+        "velocities"
+      ],
+      "title": "Frame",
+      "type": "object"
+    },
+    "GrantAuthority": {
+      "additionalProperties": false,
+      "description": "Incarnation advances on remove/regrant; membership revision is ordinary CAS.",
+      "properties": {
+        "incarnation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Incarnation",
+          "type": "integer"
+        },
+        "membership": {
+          "$ref": "#/$defs/Membership"
+        }
+      },
+      "required": [
+        "membership",
+        "incarnation"
+      ],
+      "title": "GrantAuthority",
+      "type": "object"
+    },
+    "GrantedWorldDefinition": {
+      "additionalProperties": false,
+      "description": "Sensitive browser output only after actual current version-specific recipient grant.",
+      "properties": {
+        "definition": {
+          "$ref": "#/$defs/BrowserWorldDefinition"
+        },
+        "grant_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Grant Id",
+          "type": "string"
+        },
+        "version": {
+          "$ref": "#/$defs/WorldVersionView"
+        }
+      },
+      "required": [
+        "version",
+        "grant_id",
+        "definition"
+      ],
+      "title": "GrantedWorldDefinition",
+      "type": "object"
+    },
+    "HumanProductAuthority": {
+      "additionalProperties": false,
+      "properties": {
+        "actor": {
+          "$ref": "#/$defs/BrowserActor"
+        },
+        "kind": {
+          "const": "user",
+          "title": "Kind",
+          "type": "string"
+        },
+        "owner": {
+          "$ref": "#/$defs/CredentialOwner"
+        },
+        "policy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DeploymentSessionPolicy"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "session_principal_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Session Principal Generation",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind",
+        "policy",
+        "actor",
+        "owner",
+        "session_principal_generation"
+      ],
+      "title": "HumanProductAuthority",
+      "type": "object"
+    },
+    "IdempotencyScope": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^[!-~]+$",
+          "title": "Key",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "run_creation",
+            "experiment",
+            "cancellation",
+            "model_submission"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "resource_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Resource Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "kind",
+        "resource_id",
+        "key"
+      ],
+      "title": "IdempotencyScope",
+      "type": "object"
+    },
+    "Impulse": {
+      "additionalProperties": false,
+      "properties": {
+        "particle_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Particle Id",
+          "type": "string"
+        },
+        "vector": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Vector",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_id",
+        "vector"
+      ],
+      "title": "Impulse",
+      "type": "object"
+    },
+    "IssuePreviewRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "const": "issue_preview",
+          "default": "issue_preview",
+          "title": "Operation",
+          "type": "string"
+        },
+        "recipient_principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Recipient Principal Id",
+          "type": "string"
+        },
+        "ttl_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Ttl Seconds",
+          "type": "integer"
+        },
+        "version_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Version Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version_id",
+        "recipient_principal_id",
+        "ttl_seconds"
+      ],
+      "title": "IssuePreviewRequest",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "LawSpec": {
+      "additionalProperties": false,
+      "description": "Private configuration: never include this in an observation message.",
+      "properties": {
+        "kind": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Kind",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Parameters",
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "parameters"
+      ],
+      "title": "LawSpec",
+      "type": "object"
+    },
+    "Limits": {
+      "additionalProperties": false,
+      "properties": {
+        "impulse_norm": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Impulse Norm",
+          "type": "number"
+        },
+        "max_mass": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Max Mass",
+          "type": "number"
+        },
+        "min_mass": {
+          "default": 0.5,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Min Mass",
+          "type": "number"
+        },
+        "position_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Position Norm",
+          "type": "number"
+        },
+        "velocity_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Velocity Norm",
+          "type": "number"
+        }
+      },
+      "title": "Limits",
+      "type": "object"
+    },
+    "Membership": {
+      "additionalProperties": false,
+      "description": "Current application grant, loaded independently of credential claims.",
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "role": {
+          "enum": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "role",
+        "active",
+        "revision"
+      ],
+      "title": "Membership",
+      "type": "object"
+    },
+    "ModelReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "model_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "through_index": {
+          "maximum": 9999,
+          "minimum": -1,
+          "title": "Through Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "model_id",
+        "model_sha256",
+        "through_index"
+      ],
+      "title": "ModelReceipt",
+      "type": "object"
+    },
+    "ModelSubmissionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "model_submission",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/ModelReceipt"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "ModelSubmissionResult",
+      "type": "object"
+    },
+    "Operation": {
+      "additionalProperties": false,
+      "properties": {
+        "accepted_experiment_index": {
+          "anyOf": [
+            {
+              "maximum": 9999,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Accepted Experiment Index"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Error"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "kind": {
+          "enum": [
+            "run_creation",
+            "experiment",
+            "cancellation",
+            "model_submission"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "result": {
+          "anyOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "cancellation": "#/$defs/CancellationResult",
+                  "experiment": "#/$defs/ExperimentResult",
+                  "model_submission": "#/$defs/ModelSubmissionResult",
+                  "run_creation": "#/$defs/RunCreationResult"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/RunCreationResult"
+                },
+                {
+                  "$ref": "#/$defs/ExperimentResult"
+                },
+                {
+                  "$ref": "#/$defs/CancellationResult"
+                },
+                {
+                  "$ref": "#/$defs/ModelSubmissionResult"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Result"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed",
+            "cancelled"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "operation_id",
+        "kind",
+        "request_sha256",
+        "status",
+        "accepted_experiment_index",
+        "result",
+        "error"
+      ],
+      "title": "Operation",
+      "type": "object"
+    },
+    "OriginalExecutionAdmission": {
+      "additionalProperties": false,
+      "description": "Original atomic producer record, never assembled from a launch caller's current values.",
+      "properties": {
+        "admission_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Admission Id",
+          "type": "string"
+        },
+        "admitted_run": {
+          "$ref": "#/$defs/RunView"
+        },
+        "agent_configuration": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Agent Configuration",
+          "type": "object"
+        },
+        "checkpoint_binding": {
+          "$ref": "#/$defs/CheckpointBinding"
+        },
+        "ownership": {
+          "$ref": "#/$defs/RunOwnership"
+        },
+        "request": {
+          "$ref": "#/$defs/CreateRunRequest"
+        },
+        "stored_request": {
+          "$ref": "#/$defs/StoredRequest"
+        }
+      },
+      "required": [
+        "admission_id",
+        "request",
+        "stored_request",
+        "admitted_run",
+        "ownership",
+        "agent_configuration",
+        "checkpoint_binding"
+      ],
+      "title": "OriginalExecutionAdmission",
+      "type": "object"
+    },
+    "ParticleInitial": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "mass": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "title": "Mass",
+          "type": "number"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        },
+        "velocity": {
+          "default": [
+            0.0,
+            0.0
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Velocity",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "ParticleInitial",
+      "type": "object"
+    },
+    "PreviewGrantLookup": {
+      "additionalProperties": false,
+      "description": "Scoped partial persistence evidence; runtime must reject missing/inconsistent closure.",
+      "properties": {
+        "expired": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldExpiredMutation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "grant": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PreviewGrantRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "latest_commit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PreviewMutationCommit"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PreviewMutationCommit"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/WorldMutationScope"
+        }
+      },
+      "required": [
+        "scope",
+        "receipt",
+        "expired",
+        "grant",
+        "latest_commit"
+      ],
+      "title": "PreviewGrantLookup",
+      "type": "object"
+    },
+    "PreviewGrantPage": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/PreviewGrantView"
+          },
+          "maxItems": 128,
+          "title": "Items",
+          "type": "array"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "title": "PreviewGrantPage",
+      "type": "object"
+    },
+    "PreviewGrantRecord": {
+      "additionalProperties": false,
+      "description": "Private recipient ancestry; issuer audit is distinct from current recipient authority.",
+      "properties": {
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "decision_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Decision Policy Sha256",
+          "type": "string"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "grant_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Grant Id",
+          "type": "string"
+        },
+        "issuance_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Issuance Policy Sha256",
+          "type": "string"
+        },
+        "issued_by": {
+          "$ref": "#/$defs/WorldActorAncestry"
+        },
+        "recipient": {
+          "$ref": "#/$defs/PreviewRecipient"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "revoked_at": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Revoked At"
+        },
+        "updated_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Updated At",
+          "type": "integer"
+        },
+        "updated_by": {
+          "$ref": "#/$defs/WorldActorAncestry"
+        },
+        "version_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Version Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "world_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "grant_id",
+        "workspace_id",
+        "world_id",
+        "version_id",
+        "recipient",
+        "issued_by",
+        "updated_by",
+        "issuance_policy_sha256",
+        "decision_policy_sha256",
+        "created_at",
+        "updated_at",
+        "expires_at",
+        "revision",
+        "revoked_at"
+      ],
+      "title": "PreviewGrantRecord",
+      "type": "object"
+    },
+    "PreviewGrantView": {
+      "additionalProperties": false,
+      "description": "Safe management metadata exposes CAS revision, never law, seed or definition digest.",
+      "properties": {
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "grant_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Grant Id",
+          "type": "string"
+        },
+        "recipient_principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Recipient Principal Id",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "revoked_at": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Revoked At"
+        },
+        "updated_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Updated At",
+          "type": "integer"
+        },
+        "version_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Version Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "world_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "grant_id",
+        "workspace_id",
+        "world_id",
+        "version_id",
+        "recipient_principal_id",
+        "revision",
+        "created_at",
+        "updated_at",
+        "expires_at",
+        "revoked_at"
+      ],
+      "title": "PreviewGrantView",
+      "type": "object"
+    },
+    "PreviewMutationCommit": {
+      "additionalProperties": false,
+      "description": "Immutable metadata-only receipt plus atomic grant transition. Not an authority proof.",
+      "properties": {
+        "actor": {
+          "$ref": "#/$defs/WorldActorAncestry"
+        },
+        "after": {
+          "$ref": "#/$defs/PreviewGrantRecord"
+        },
+        "before": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PreviewGrantRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "committed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Committed At",
+          "type": "integer"
+        },
+        "policy": {
+          "$ref": "#/$defs/WorldPolicy"
+        },
+        "receipt_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Receipt Expires At",
+          "type": "integer"
+        },
+        "receipt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Receipt Id",
+          "type": "string"
+        },
+        "recipient_at_commit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CredentialOwner"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "request": {
+          "discriminator": {
+            "mapping": {
+              "issue_preview": "#/$defs/IssuePreviewRequest",
+              "renew_preview": "#/$defs/RenewPreviewRequest",
+              "revoke_preview": "#/$defs/RevokePreviewRequest"
+            },
+            "propertyName": "operation"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/IssuePreviewRequest"
+            },
+            {
+              "$ref": "#/$defs/RenewPreviewRequest"
+            },
+            {
+              "$ref": "#/$defs/RevokePreviewRequest"
+            }
+          ],
+          "title": "Request"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/PreviewGrantView"
+        },
+        "scope": {
+          "$ref": "#/$defs/WorldMutationScope"
+        },
+        "version": {
+          "$ref": "#/$defs/WorldVersionRecord"
+        }
+      },
+      "required": [
+        "receipt_id",
+        "scope",
+        "request",
+        "request_sha256",
+        "version",
+        "actor",
+        "recipient_at_commit",
+        "policy",
+        "before",
+        "after",
+        "result",
+        "committed_at",
+        "receipt_expires_at"
+      ],
+      "title": "PreviewMutationCommit",
+      "type": "object"
+    },
+    "PreviewRecipient": {
+      "additionalProperties": false,
+      "properties": {
+        "grant_incarnation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Grant Incarnation",
+          "type": "integer"
+        },
+        "principal_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Principal Generation",
+          "type": "integer"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "principal_generation",
+        "grant_incarnation"
+      ],
+      "title": "PreviewRecipient",
+      "type": "object"
+    },
+    "PrincipalAuthority": {
+      "additionalProperties": false,
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "kind": {
+          "enum": [
+            "human",
+            "service"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "principal_id",
+        "active",
+        "generation"
+      ],
+      "title": "PrincipalAuthority",
+      "type": "object"
+    },
+    "ProviderPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "audience": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Audience",
+          "type": "string"
+        },
+        "callback_method": {
+          "anyOf": [
+            {
+              "const": "GET",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Callback Method"
+        },
+        "callback_uri": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 9,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^https://[!-~]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Callback Uri"
+        },
+        "flow": {
+          "enum": [
+            "managed_broker",
+            "oidc_code"
+          ],
+          "title": "Flow",
+          "type": "string"
+        },
+        "issuer": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Issuer",
+          "type": "string"
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        },
+        "response_mode": {
+          "anyOf": [
+            {
+              "const": "query",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Response Mode"
+        },
+        "tenant_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tenant Id"
+        },
+        "upstream_providers": {
+          "items": {
+            "enum": [
+              "google.com",
+              "github.com"
+            ],
+            "type": "string"
+          },
+          "title": "Upstream Providers",
+          "type": "array"
+        }
+      },
+      "required": [
+        "provider_id",
+        "flow",
+        "issuer",
+        "audience",
+        "tenant_id",
+        "callback_uri",
+        "callback_method",
+        "response_mode",
+        "upstream_providers"
+      ],
+      "title": "ProviderPolicy",
+      "type": "object"
+    },
+    "RenewPreviewRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Expected Revision",
+          "type": "integer"
+        },
+        "grant_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Grant Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "renew_preview",
+          "default": "renew_preview",
+          "title": "Operation",
+          "type": "string"
+        },
+        "ttl_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Ttl Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "grant_id",
+        "expected_revision",
+        "ttl_seconds"
+      ],
+      "title": "RenewPreviewRequest",
+      "type": "object"
+    },
+    "ResourceLimits": {
+      "additionalProperties": false,
+      "properties": {
+        "max_artifact_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Artifact Bytes",
+          "type": "integer"
+        },
+        "max_cpu_seconds": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Max Cpu Seconds",
+          "type": "integer"
+        },
+        "max_input_tokens": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Input Tokens",
+          "type": "integer"
+        },
+        "max_model_calls": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Model Calls",
+          "type": "integer"
+        },
+        "max_output_tokens": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "max_provider_cost_microusd": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Provider Cost Microusd",
+          "type": "integer"
+        },
+        "max_wall_seconds": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Max Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_cpu_seconds",
+        "max_wall_seconds",
+        "max_model_calls",
+        "max_input_tokens",
+        "max_output_tokens",
+        "max_artifact_bytes",
+        "max_provider_cost_microusd"
+      ],
+      "title": "ResourceLimits",
+      "type": "object"
+    },
+    "RevokePreviewRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Expected Revision",
+          "type": "integer"
+        },
+        "grant_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Grant Id",
+          "type": "string"
+        },
+        "operation": {
+          "const": "revoke_preview",
+          "default": "revoke_preview",
+          "title": "Operation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "grant_id",
+        "expected_revision"
+      ],
+      "title": "RevokePreviewRequest",
+      "type": "object"
+    },
+    "RunCreationResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "run_creation",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/RunView"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "RunCreationResult",
+      "type": "object"
+    },
+    "RunOwnership": {
+      "additionalProperties": false,
+      "description": "Immutable admission record; creator leaf credentials are audit metadata only.",
+      "properties": {
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "created_by_credential_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Created By Credential Id",
+          "type": "string"
+        },
+        "grant_incarnation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Grant Incarnation",
+          "type": "integer"
+        },
+        "principal_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Principal Generation",
+          "type": "integer"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "principal_kind": {
+          "enum": [
+            "human",
+            "service"
+          ],
+          "title": "Principal Kind",
+          "type": "string"
+        },
+        "run_deadline": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Run Deadline",
+          "type": "integer"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "scopes": {
+          "items": {
+            "enum": [
+              "experiments:read",
+              "experiments:write",
+              "checkpoints:write",
+              "models:write"
+            ],
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Scopes",
+          "type": "array"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "principal_id",
+        "principal_kind",
+        "principal_generation",
+        "grant_incarnation",
+        "created_at",
+        "run_deadline",
+        "scopes",
+        "created_by_credential_id"
+      ],
+      "title": "RunOwnership",
+      "type": "object"
+    },
+    "RunView": {
+      "additionalProperties": false,
+      "properties": {
+        "budget_remaining": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Budget Remaining",
+          "type": "integer"
+        },
+        "experiments_accepted": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Experiments Accepted",
+          "type": "integer"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "space": {
+          "$ref": "#/$defs/ExperimentSpace"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "preparing",
+            "running",
+            "recovering",
+            "evaluating",
+            "cancelling",
+            "completed",
+            "failed",
+            "cancelled",
+            "expired"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "status",
+        "revision",
+        "space",
+        "experiments_accepted",
+        "budget_remaining"
+      ],
+      "title": "RunView",
+      "type": "object"
+    },
+    "Sampling": {
+      "additionalProperties": false,
+      "properties": {
+        "dt": {
+          "default": 0.01,
+          "maximum": 0.05,
+          "minimum": 0.0001,
+          "title": "Dt",
+          "type": "number"
+        },
+        "duration": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Duration",
+          "type": "number"
+        },
+        "position_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Position Noise",
+          "type": "number"
+        },
+        "sample_interval": {
+          "default": 0.05,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Sample Interval",
+          "type": "number"
+        },
+        "velocity_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Velocity Noise",
+          "type": "number"
+        }
+      },
+      "title": "Sampling",
+      "type": "object"
+    },
+    "SessionCredential": {
+      "additionalProperties": false,
+      "description": "Trusted hash lookup result, including narrowly retained logout-only history.",
+      "properties": {
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "generation"
+      ],
+      "title": "SessionCredential",
+      "type": "object"
+    },
+    "SessionRecord": {
+      "additionalProperties": false,
+      "description": "Current server session family; no opaque cookie secret is stored here.",
+      "properties": {
+        "absolute_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Absolute Expires At",
+          "type": "integer"
+        },
+        "authenticated_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authenticated At",
+          "type": "integer"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "last_seen_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Last Seen At",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "principal_active": {
+          "title": "Principal Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revoked": {
+          "title": "Revoked",
+          "type": "boolean"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "policy_id",
+        "principal_id",
+        "generation",
+        "created_at",
+        "authenticated_at",
+        "last_seen_at",
+        "absolute_expires_at",
+        "revoked",
+        "principal_active"
+      ],
+      "title": "SessionRecord",
+      "type": "object"
+    },
+    "StoredRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "$ref": "#/$defs/Operation"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/IdempotencyScope"
+        }
+      },
+      "required": [
+        "scope",
+        "request_sha256",
+        "operation"
+      ],
+      "title": "StoredRequest",
+      "type": "object"
+    },
+    "Structure": {
+      "additionalProperties": false,
+      "properties": {
+        "anchors": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Anchor"
+          },
+          "maxItems": 8,
+          "title": "Anchors",
+          "type": "array"
+        },
+        "connections": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Connection"
+          },
+          "maxItems": 120,
+          "title": "Connections",
+          "type": "array"
+        },
+        "particle_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particle Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_ids"
+      ],
+      "title": "Structure",
+      "type": "object"
+    },
+    "Trajectory": {
+      "additionalProperties": false,
+      "properties": {
+        "frames": {
+          "items": {
+            "$ref": "#/$defs/Frame"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "title": "Frames",
+          "type": "array"
+        }
+      },
+      "required": [
+        "frames"
+      ],
+      "title": "Trajectory",
+      "type": "object"
+    },
+    "WorkspaceAuthority": {
+      "additionalProperties": false,
+      "description": "Complete current owner set from the same locked workspace revision.\n\nSQL producers establish completeness and currency under the shared lock.\nactive_owner_ids counts active human owner membership rows; disabled_owner_ids\nidentifies rows whose principals are currently disabled. During security fan-out,\nstored workspace state can lag; composed authorization checks both facts.",
+      "properties": {
+        "active_owner_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Active Owner Ids",
+          "type": "array"
+        },
+        "disabled_owner_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Disabled Owner Ids",
+          "type": "array"
+        },
+        "workspace": {
+          "$ref": "#/$defs/WorkspaceView"
+        }
+      },
+      "required": [
+        "workspace",
+        "active_owner_ids",
+        "disabled_owner_ids"
+      ],
+      "title": "WorkspaceAuthority",
+      "type": "object"
+    },
+    "WorkspaceView": {
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "quarantined"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "visibility": {
+          "const": "private",
+          "title": "Visibility",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "display_name",
+        "visibility",
+        "state",
+        "revision"
+      ],
+      "title": "WorkspaceView",
+      "type": "object"
+    },
+    "WorldActorAncestry": {
+      "additionalProperties": false,
+      "description": "Historical issuer/author audit identity; never current recipient authorization.",
+      "properties": {
+        "grant_incarnation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Grant Incarnation",
+          "type": "integer"
+        },
+        "membership_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Membership Revision",
+          "type": "integer"
+        },
+        "principal_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Principal Generation",
+          "type": "integer"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "principal_generation",
+        "grant_incarnation",
+        "membership_revision"
+      ],
+      "title": "WorldActorAncestry",
+      "type": "object"
+    },
+    "WorldBrowserAuthority": {
+      "additionalProperties": false,
+      "description": "Current C2 human identity + workspace snapshot; shape is not complete authorization.",
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/HumanProductAuthority"
+        },
+        "workspace": {
+          "$ref": "#/$defs/WorkspaceAuthority"
+        }
+      },
+      "required": [
+        "identity",
+        "workspace"
+      ],
+      "title": "WorldBrowserAuthority",
+      "type": "object"
+    },
+    "WorldCatalogEligibility": {
+      "additionalProperties": false,
+      "description": "Trusted current catalog decision for NEW run selection only, not an author preview grant.",
+      "properties": {
+        "definition_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Definition Sha256",
+          "type": "string"
+        },
+        "eligible_for_new_runs": {
+          "title": "Eligible For New Runs",
+          "type": "boolean"
+        },
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "space_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Space Sha256",
+          "type": "string"
+        },
+        "version_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Version Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "world_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "world_id",
+        "version_id",
+        "definition_sha256",
+        "space_sha256",
+        "revision",
+        "eligible_for_new_runs",
+        "observed_at"
+      ],
+      "title": "WorldCatalogEligibility",
+      "type": "object"
+    },
+    "WorldDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "change_after": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Change After"
+        },
+        "changed_law": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LawSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "initial_law": {
+          "$ref": "#/$defs/LawSpec"
+        },
+        "noise_seed": {
+          "exclusiveMaximum": 18446744073709551616,
+          "minimum": 0,
+          "title": "Noise Seed",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "strange-physics.world.v1",
+          "default": "strange-physics.world.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "space": {
+          "$ref": "#/$defs/ExperimentSpace"
+        }
+      },
+      "required": [
+        "space",
+        "noise_seed",
+        "initial_law"
+      ],
+      "title": "WorldDefinition",
+      "type": "object"
+    },
+    "WorldExpiredMutation": {
+      "additionalProperties": false,
+      "description": "Private uniqueness tombstone for the retained namespace lifetime, not deletion authority.",
+      "properties": {
+        "allocated_world_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Allocated World Id",
+          "type": "string"
+        },
+        "committed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Committed At",
+          "type": "integer"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "receipt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Receipt Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "retention_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Retention Seconds",
+          "type": "integer"
+        },
+        "scope": {
+          "$ref": "#/$defs/WorldMutationScope"
+        }
+      },
+      "required": [
+        "scope",
+        "request_sha256",
+        "receipt_id",
+        "allocated_world_id",
+        "policy_sha256",
+        "retention_seconds",
+        "committed_at",
+        "expires_at"
+      ],
+      "title": "WorldExpiredMutation",
+      "type": "object"
+    },
+    "WorldHead": {
+      "additionalProperties": false,
+      "properties": {
+        "changed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Changed At",
+          "type": "integer"
+        },
+        "revision": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "version_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Version Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "world_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "world_id",
+        "version_id",
+        "revision",
+        "changed_at"
+      ],
+      "title": "WorldHead",
+      "type": "object"
+    },
+    "WorldMutationScope": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^[!-~]+$",
+          "title": "Key",
+          "type": "string"
+        },
+        "operation": {
+          "enum": [
+            "create_version",
+            "issue_preview",
+            "renew_preview",
+            "revoke_preview"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "world_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "World Id"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "world_id",
+        "operation",
+        "key"
+      ],
+      "title": "WorldMutationScope",
+      "type": "object"
+    },
+    "WorldPage": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/WorldVersionView"
+          },
+          "maxItems": 128,
+          "title": "Items",
+          "type": "array"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "title": "WorldPage",
+      "type": "object"
+    },
+    "WorldPolicy": {
+      "additionalProperties": false,
+      "description": "Configured bounds and current role policy; no production defaults or client control.",
+      "properties": {
+        "max_definition_bytes": {
+          "maximum": 65536,
+          "minimum": 1,
+          "title": "Max Definition Bytes",
+          "type": "integer"
+        },
+        "max_metadata_bytes": {
+          "maximum": 4194304,
+          "minimum": 1,
+          "title": "Max Metadata Bytes",
+          "type": "integer"
+        },
+        "max_page_bytes": {
+          "maximum": 1048576,
+          "minimum": 1,
+          "title": "Max Page Bytes",
+          "type": "integer"
+        },
+        "max_page_items": {
+          "maximum": 128,
+          "minimum": 1,
+          "title": "Max Page Items",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "preview_reader_roles": {
+          "items": {
+            "enum": [
+              "owner",
+              "researcher",
+              "viewer"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 1,
+          "title": "Preview Reader Roles",
+          "type": "array"
+        },
+        "preview_ttl_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Preview Ttl Seconds",
+          "type": "integer"
+        },
+        "receipt_retention_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Receipt Retention Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "policy_id",
+        "max_definition_bytes",
+        "max_metadata_bytes",
+        "max_page_bytes",
+        "max_page_items",
+        "preview_ttl_seconds",
+        "receipt_retention_seconds",
+        "preview_reader_roles"
+      ],
+      "title": "WorldPolicy",
+      "type": "object"
+    },
+    "WorldReceiptExpiration": {
+      "additionalProperties": false,
+      "description": "Original full receipt to exact tombstone proposal; no cleanup or deletion authorization.",
+      "properties": {
+        "expired": {
+          "$ref": "#/$defs/WorldExpiredMutation"
+        },
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
+        },
+        "receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldVersionCommit"
+            },
+            {
+              "$ref": "#/$defs/PreviewMutationCommit"
+            }
+          ],
+          "title": "Receipt"
+        }
+      },
+      "required": [
+        "receipt",
+        "expired",
+        "observed_at"
+      ],
+      "title": "WorldReceiptExpiration",
+      "type": "object"
+    },
+    "WorldRunSelection": {
+      "additionalProperties": false,
+      "description": "Retained exact selection; later catalog withdrawal does not rewrite an admitted run.",
+      "properties": {
+        "admission": {
+          "$ref": "#/$defs/OriginalExecutionAdmission"
+        },
+        "catalog": {
+          "$ref": "#/$defs/WorldCatalogEligibility"
+        },
+        "creation_request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Creation Request Sha256",
+          "type": "string"
+        },
+        "selected_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Selected At",
+          "type": "integer"
+        },
+        "selection_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Selection Id",
+          "type": "string"
+        },
+        "version": {
+          "$ref": "#/$defs/WorldVersionRecord"
+        }
+      },
+      "required": [
+        "selection_id",
+        "version",
+        "catalog",
+        "admission",
+        "creation_request_sha256",
+        "selected_at"
+      ],
+      "title": "WorldRunSelection",
+      "type": "object"
+    },
+    "WorldVersionCommit": {
+      "additionalProperties": false,
+      "description": "Immutable atomic version/head/receipt proposal; no DB writes or authorization.",
+      "properties": {
+        "before": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldHead"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "committed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Committed At",
+          "type": "integer"
+        },
+        "parent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldVersionRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "policy": {
+          "$ref": "#/$defs/WorldPolicy"
+        },
+        "policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "receipt_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Receipt Expires At",
+          "type": "integer"
+        },
+        "receipt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Receipt Id",
+          "type": "string"
+        },
+        "request": {
+          "$ref": "#/$defs/CreateWorldVersionRequest"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/WorldVersionResult"
+        },
+        "scope": {
+          "$ref": "#/$defs/WorldMutationScope"
+        },
+        "version": {
+          "$ref": "#/$defs/WorldVersionRecord"
+        }
+      },
+      "required": [
+        "receipt_id",
+        "scope",
+        "request",
+        "request_sha256",
+        "parent",
+        "before",
+        "version",
+        "result",
+        "policy",
+        "policy_sha256",
+        "committed_at",
+        "receipt_expires_at"
+      ],
+      "title": "WorldVersionCommit",
+      "type": "object"
+    },
+    "WorldVersionLookup": {
+      "additionalProperties": false,
+      "description": "Partial states stay representable for later recovery checks, never normalized to absence.",
+      "properties": {
+        "current_commit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldVersionCommit"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "current_head": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldHead"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expired": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldExpiredMutation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldVersionCommit"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/WorldMutationScope"
+        },
+        "target": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldVersionRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "scope",
+        "receipt",
+        "expired",
+        "target",
+        "current_head",
+        "current_commit"
+      ],
+      "title": "WorldVersionLookup",
+      "type": "object"
+    },
+    "WorldVersionRecord": {
+      "additionalProperties": false,
+      "description": "Immutable private definition. This record is world-owned, never a fake run artifact.",
+      "properties": {
+        "author": {
+          "$ref": "#/$defs/WorldActorAncestry"
+        },
+        "classification": {
+          "enum": [
+            "customer_authored",
+            "official_blind"
+          ],
+          "title": "Classification",
+          "type": "string"
+        },
+        "definition": {
+          "$ref": "#/$defs/WorldDefinition"
+        },
+        "definition_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Definition Sha256",
+          "type": "string"
+        },
+        "view": {
+          "$ref": "#/$defs/WorldVersionView"
+        }
+      },
+      "required": [
+        "view",
+        "classification",
+        "definition",
+        "definition_sha256",
+        "author"
+      ],
+      "title": "WorldVersionRecord",
+      "type": "object"
+    },
+    "WorldVersionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "head": {
+          "$ref": "#/$defs/WorldHead"
+        },
+        "version": {
+          "$ref": "#/$defs/WorldVersionView"
+        }
+      },
+      "required": [
+        "version",
+        "head"
+      ],
+      "title": "WorldVersionResult",
+      "type": "object"
+    },
+    "WorldVersionView": {
+      "additionalProperties": false,
+      "description": "Agent-safe immutable version metadata; titles are author-supplied, not a blindness proof.",
+      "properties": {
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "parent_version_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Parent Version Id"
+        },
+        "space": {
+          "$ref": "#/$defs/ExperimentSpace"
+        },
+        "title": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "version_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Version Id",
+          "type": "string"
+        },
+        "version_number": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Version Number",
+          "type": "integer"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "world_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "world_id",
+        "version_id",
+        "version_number",
+        "parent_version_id",
+        "title",
+        "space",
+        "created_at"
+      ],
+      "title": "WorldVersionView",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/world.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Sensitive author input and granted definition roots are distinct from agent-safe views. Private authority, catalog, lineage and commit models require trusted producers. No schema establishes authorization, persistence, blindness or worker readiness.",
+  "x-agent-safe-models": [
+    "WorldVersionView",
+    "WorldHead",
+    "WorldPage",
+    "WorldVersionResult"
+  ],
+  "x-author-input-models": [
+    "CreateWorldVersionRequest"
+  ],
+  "x-contract-status": "WORLD1 reviewed pure contracts and proposals; hosted producers and WEB1 pending",
+  "x-granted-definition-models": [
+    "GrantedWorldDefinition"
+  ],
+  "x-management-output-models": [
+    "PreviewGrantView",
+    "PreviewGrantPage"
+  ],
+  "x-public-models": [
+    "WorldVersionView",
+    "WorldHead",
+    "WorldPage",
+    "WorldVersionResult",
+    "PreviewGrantView",
+    "PreviewGrantPage",
+    "CreateWorldVersionRequest",
+    "GrantedWorldDefinition",
+    "IssuePreviewRequest",
+    "RenewPreviewRequest",
+    "RevokePreviewRequest"
+  ]
+}

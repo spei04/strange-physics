@@ -2,8 +2,9 @@
 
 SP-01.c / issue #89, first review unit. Typed messages and pure admission/recovery
 predicates are accepted through [PR #91](https://github.com/spei04/strange-physics/pull/91).
-The [package/worker unit](EXECUTION_CONTRACT.md) is also integrated; full SP-01.c
-acceptance still requires [native model runtime/composition](MODEL_REGISTRATION.md).
+The [package/worker unit](EXECUTION_CONTRACT.md) and
+[native model runtime/composition](MODEL_REGISTRATION.md) are also integrated.
+SP-01.c is accepted through PRs #91–93 and their exact PR/main checks.
 These interfaces do not establish hosted enforcement.
 
 [Schema](../contracts/artifacts.schema.json),
@@ -205,5 +206,5 @@ validation and raw-byte hash verification. These are local executable contract
 checks. They do not establish real object availability, transactional SQL,
 current-state adapter enforcement, crash recovery, storage/IAM isolation, or
 hosted production readiness. Exact integrated-head and hosted CI checks passed
-for ART1 through PR #91 and EXEC1 through PR #92. SP-01.c remains open through
-the native model runtime and final composition unit.
+for ART1 through PR #91, EXEC1 through PR #92 and COMP1 through PR #93.
+The pure SP-01.c contract freeze is complete; live producers remain later work.

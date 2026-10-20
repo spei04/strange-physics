@@ -36,7 +36,7 @@ from strange_physics.session_contracts import server_time
 from strange_physics.workspace_contracts import (
     IdempotencyKey,
     WorkspaceAuthority,
-    _product_workspace,
+    validate_product_workspace,
 )
 
 type RunCredentialRequest = (
@@ -75,7 +75,7 @@ def authorize_coordinator(
     ):
         raise ContractViolation("not_found", 404)
     validate_run_authority(current, now=now)
-    _product_workspace(workspace, current.run.workspace_id, current.owner.grant.membership)
+    validate_product_workspace(workspace, current.run.workspace_id, current.owner.grant.membership)
     return policy
 
 
