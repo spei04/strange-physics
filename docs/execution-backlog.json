@@ -1325,7 +1325,7 @@
       ],
       "execution_owner": "Engineer Quality (backend contract rotation)",
       "issue": "https://github.com/spei04/strange-physics/issues/52",
-      "evidence": "Part 1 control subset independently accepted at a9fa8cbec41a56929576113933bc22743d2c24b8; 252 total tests (105 control), lint/typing and 67 schema/header cases pass. Integration pending. Browser sessions, membership/invitation/account-linking and credential lifecycle interfaces require further reviewed PRs; full task and dependent consumers remain blocked."
+      "evidence": "Part 1 integrated by PR #53 at d6204aaab82e1b100532f40bae00e224d9334c65, matching reviewed f6cead9 tree. Four head CI checks and merge-main CI passed; 252 tests, 67 external schema/header cases and independent Research/Platform reviews passed. ID-A sessions/bootstrap, ID-B membership/invitation/linking and ID-C credential lifecycle remain open; consumers remain blocked."
     },
     {
       "id": "SP-01.c",
@@ -1562,7 +1562,7 @@
       ],
       "execution_owner": "Engineer Platform",
       "issue": "https://github.com/spei04/strange-physics/issues/49",
-      "evidence": "Priced staging proposal prepared; target-project/credit details and concrete configuration/spend approval remain open. No resources provisioned."
+      "evidence": "Priced proposal saved in STAGING_PROPOSAL.md at 0eba987; approximately $450\u2013550/month low traffic, proposed seven-day $250 operational envelope, neither approved. Target project/credit/IAM/quota facts, exact IaC and concrete authorization remain gates; no provisioning."
     },
     {
       "id": "SP-03.a",
@@ -4414,7 +4414,7 @@
       ],
       "execution_owner": "Engineer Platform (frontend design rotation)",
       "issue": "https://github.com/spei04/strange-physics/issues/50",
-      "evidence": "Seven journeys and acceptance inventory designed; Research truth-boundary review active. Documentation writer handoff and lead/product review pending."
+      "evidence": "Journey specification/inventory at 90c010c: seven journeys, 28 scenarios, eight accessibility checks and three passing consistency tests. Research reviewed truth boundaries; Quality reviewed inventory. Product/full ID/WEB/ART acceptance remains pending; no UI or accessibility conformance claimed."
     },
     {
       "id": "SP-22.b",
@@ -10544,6 +10544,60 @@
     "schedule_repair": "2026-10-19: technical lead accepted SP-01.b before SP-01.c freeze. One added edge (369 total); both reference schedules regenerated without changing effort, capacity, approval gates or current execution staffing.",
     "reviewed_scientific_head": "6e724152e5c947db1662bd65cea36412a8498b22",
     "integrated_scientific_subset": "cc24aef592f3157b67024e3cab41159489c77ffa",
-    "contract_scope_note": "SP-01.b execution is split into independently reviewed PR units. Part 1 does not complete its parent or unblock full-contract consumers. Remaining identity units are being decomposed; the four-day human reference estimate requires re-estimation before being treated as reliable."
+    "contract_scope_note": "SP-01.b execution is split into independently reviewed PR units. Part 1 does not complete its parent or unblock full-contract consumers. Remaining identity units are being decomposed; the four-day human reference estimate requires re-estimation before being treated as reliable.",
+    "integrated_control_subset": "d6204aaab82e1b100532f40bae00e224d9334c65",
+    "identity_remaining_units": [
+      {
+        "id": "SP-01.b/ID-A",
+        "title": "Browser sessions and bootstrap",
+        "status": "prepared_not_authored",
+        "owner": "Engineer Research",
+        "depends_on": [
+          "SP-01.b control part 1"
+        ]
+      },
+      {
+        "id": "SP-01.b/ID-B",
+        "title": "Membership, invitations and explicit account linking",
+        "status": "queued",
+        "depends_on": [
+          "SP-01.b/ID-A"
+        ]
+      },
+      {
+        "id": "SP-01.b/ID-C",
+        "title": "Service and run credential lifecycle",
+        "status": "queued",
+        "depends_on": [
+          "SP-01.b/ID-B"
+        ]
+      }
+    ],
+    "estimate_adjustments": [
+      {
+        "task": "SP-01.b",
+        "remaining_engineer_days": [
+          6,
+          8
+        ],
+        "confidence": "medium",
+        "status": "reforecast_required",
+        "note": "Reference four-day estimate is superseded for execution planning; retained forecast is a historical nine-human-team comparison, not a current delivery promise. Agent elapsed time is not engineer-day evidence."
+      }
+    ],
+    "additional_work": [
+      {
+        "id": "CI-01",
+        "issue": "https://github.com/spei04/strange-physics/issues/54",
+        "status": "in_progress",
+        "owner": "Engineer Quality",
+        "scope": "Coordinated CI/CD hardening and protected-main release-candidate delivery; preparation started, writer handoff next. Research/Platform review. No publishing/deployment/settings mutation. Does not complete cloud SP-27.a or waive SP-02.b/c.",
+        "prerequisites": [
+          "Existing reviewed CI and code baseline",
+          "Protected main for candidate delivery"
+        ],
+        "gate_owner": "Repository-settings coordination owns branch/Actions controls; product owner retains deployment/publication gates."
+      }
+    ]
   }
 }

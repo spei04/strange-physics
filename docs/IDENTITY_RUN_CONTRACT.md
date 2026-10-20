@@ -323,6 +323,31 @@ whole C-ID freeze or its dependent tasks can complete:
 This subset neither invents those unfinished route shapes nor counts them as
 accepted. No handlers are implied by their later contract freeze.
 
+
+### Remaining PR units and planning estimate
+
+| Unit | Owner / dependency | Reviewable result |
+| --- | --- | --- |
+| SP-01.b/ID-A | Research; after control part 1 | Browser sessions/bootstrap, managed broker proof versus OIDC callback, origin/CSRF, renewal/logout and required versioned deployment policy |
+| SP-01.b/ID-B | Next backend author; after ID-A | Workspace membership, single-use invitations, last-owner safety and explicit two-identity linking |
+| SP-01.b/ID-C | Next backend author; after ID-B | Service/run credential issuance, rotation, revocation ancestry, safe metadata and one-time secret delivery semantics |
+
+Research's remaining estimate is 6–8 engineer-days, medium confidence; this
+supersedes the original four-day task estimate for execution planning. Reforecast
+at the next planning checkpoint; do not convert agent elapsed time into human
+staffing or use the historical comparison schedule as a current promise.
+ID-A preparation is complete; authoring is queued behind CI-01. Concrete
+origins/callbacks and lifetime values remain explicit deployment-policy inputs.
+Missing policy fails closed; no implicit production defaults are approved.
+
+Retain Identity Platform Google/GitHub sign-in and the portable OIDC adapter.
+The app verifies the configured broker, not a raw GitHub OAuth token as its own
+OIDC identity. Avoid automatic email-based merging, including at the configured
+broker; manual linking requires explicit proof.
+[Identity Platform GitHub sign-in](https://docs.cloud.google.com/identity-platform/docs/web/github),
+[account-linking configuration](https://docs.cloud.google.com/identity-platform/docs/link-accounts),
+[token verification](https://firebase.google.com/docs/auth/admin/verify-id-tokens).
+
 ## Required later integration evidence
 
 Independent review accepts shapes/examples, not production readiness.

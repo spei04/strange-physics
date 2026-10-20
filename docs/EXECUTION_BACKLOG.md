@@ -520,7 +520,7 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Security and reliability:** Membership separate from identity; immutable terminal states.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; in progress. Part 1 control subset independently accepted at a9fa8cbec41a56929576113933bc22743d2c24b8; 252 total tests (105 control), lint/typing and 67 schema/header cases pass. Integration pending. Browser sessions, membership/invitation/account-linking and credential lifecycle interfaces require further reviewed PRs; full task and dependent consumers remain blocked. Owner: Engineer Quality (backend contract rotation); [issue](https://github.com/spei04/strange-physics/issues/52).
+- **Milestone / state:** R0; in progress. Part 1 integrated by PR #53 at d6204aaab82e1b100532f40bae00e224d9334c65, matching reviewed f6cead9 tree. Four head CI checks and merge-main CI passed; 252 tests, 67 external schema/header cases and independent Research/Platform reviews passed. ID-A sessions/bootstrap, ID-B membership/invitation/linking and ID-C credential lifecycle remain open; consumers remain blocked.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-01-c"></a>
@@ -621,7 +621,7 @@ Parent: [#4](https://github.com/spei04/strange-physics/issues/4). This issue clo
 - **Security and reliability:** Credit is not unlimited spend; unsupported combinations block.
 - **Effort and confidence:** 2 delivery engineer-days; low confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, QE, security, Technical lead, product. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; in progress. Priced staging proposal prepared; target-project/credit details and concrete configuration/spend approval remain open. No resources provisioned. Owner: Engineer Platform; [issue](https://github.com/spei04/strange-physics/issues/49).
+- **Milestone / state:** R0; in progress. Priced proposal saved in STAGING_PROPOSAL.md at 0eba987; approximately $450–550/month low traffic, proposed seven-day $250 operational envelope, neither approved. Target project/credit/IAM/quota facts, exact IaC and concrete authorization remain gates; no provisioning.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 
@@ -1938,7 +1938,7 @@ Parent: [#24](https://github.com/spei04/strange-physics/issues/24). This issue c
 - **Security and reliability:** Do not reveal world truth in active-agent view.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R5; in progress. Seven journeys and acceptance inventory designed; Research truth-boundary review active. Documentation writer handoff and lead/product review pending. Owner: Engineer Platform (frontend design rotation); [issue](https://github.com/spei04/strange-physics/issues/50).
+- **Milestone / state:** R5; in progress. Journey specification/inventory at 90c010c: seven journeys, 28 scenarios, eight accessibility checks and three passing consistency tests. Research reviewed truth boundaries; Quality reviewed inventory. Product/full ID/WEB/ART acceptance remains pending; no UI or accessibility conformance claimed.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 
@@ -3342,3 +3342,9 @@ To reproduce: parse execution-backlog.json, validate IDs and fields, topological
 Before assignment: name owner and reviewer; check approved scope and actual predecessor evidence; link a single leaf ID in the PR; keep one author task active per engineer. At PR completion update the leaf state/evidence in JSON, this document, roadmap progress and parent issue checklist together. A merged PR without acceptance evidence is not a complete task. At milestone review update measured cycle time, reserve consumption and external lead times; regenerate both schedules and invalidate stale downstream evidence when contracts/runtime/config change.
 
 No implementation was started by this planning review. No new checkout, dependency installation, cloud deployment or paid model run was created.
+
+## Current execution refinements
+
+SP-01.b is being delivered as smaller PR units under its existing completion gate: control part 1 is integrated; ID-A sessions/bootstrap, ID-B membership/invitations/linking and ID-C credential lifecycle remain. Remaining effort is estimated at 6–8 engineer-days (medium confidence), so the original four-day reference estimate must not be used as the current delivery forecast. All full-contract consumers remain blocked until the parent freeze passes.
+
+The coordinated [CI-01 request](https://github.com/spei04/strange-physics/issues/54) adds bounded repository CI/CD maintenance. It does not waive the cloud storage/provisioning gates or complete SP-27.a. Repository-settings coordination owns branch protection; candidate delivery requires protected main and successful required checks. Publication/deployment remain separately gated.
