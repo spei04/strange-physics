@@ -11,7 +11,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
 | Platform | B2 complete; next ID-B/B3 identity linking (#63), blocked on capacity | No new authoring until headroom is restored; Research/Quality review |
-| Research | B2 review complete; next B3 and final cross-contract review | Prepared authority, proof, namespace and stream-delivery checklist |
+| Research | I1 dependency review complete; SP-03.a gets first authoring slot after capacity recovery | Quality reviews analytic evidence; B3 review remains an independent assignment |
 | Quality | B2 security review complete; ID-C/#64 follows accepted B3 | No credential authoring before dependency and capacity gates pass |
 | Project lead | Preserve reviewed work, update evidence and manage capacity handoff | Local checkout writes stopped; paid disk/snapshot approval remains pending |
 
@@ -66,6 +66,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-20 01:09 | Platform | B2 authoring handoff and capacity stop | Clean committed c773946; 86 focused tests/static checks passed; writer released below 100 MiB floor |
 | 2026-10-20 01:12 | Project lead + reviewers | B2 remote integration after capacity stop | PR #69 merged 89e6117; exact reviewed tree f51c487 matches 8267865; 560 tests and all PR/main checks passed |
 | Next after capacity recovery | Platform | ID-B/B3 explicit identity linking | Assigned, blocked; Quality owns ID-C after accepted B3; no source writes or new checkout |
+| 2026-10-20 01:21 | Research | Read-only I1 dependency and scientific gap review | Complete; SP-03.a queued on SP-02.b, then six existing scientific PR tasks; Quality owns SP-06.a after SP-04.b |
 
 ## Review evidence and management checkpoint
 
@@ -84,9 +85,53 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 - Budget: no new cloud/provider spend incurred or reserved. Disk/snapshot proposal remains unapproved. Existing VM billing is outside this new-work spend record.
 - Tracking: SP-00.a [#44](https://github.com/spei04/strange-physics/issues/44), SP-00.b [#45](https://github.com/spei04/strange-physics/issues/45), SP-02.a [#46](https://github.com/spei04/strange-physics/issues/46).
 
+## Next scientific acceptance checkpoint — I1
+
+Research owns the local spring proof; Quality independently authors its development
+scorer. The next writer slot after verified SP-02.b capacity recovery goes to
+Research's SP-03.a. Platform retains B3 linking and Quality retains ID-C after
+accepted ID-B; neither enterprise stream is removed.
+
+The approved dependency path is SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b →
+SP-06.a → SP-04.e/I1. SP-03.a also requires completed SP-00.b; SP-03.b requires
+completed SP-01.a; SP-04.a also requires SP-02.b; SP-04.e requires both SP-04.b and
+SP-06.a. Their transitive predecessors APPROVAL, SP-00.a/b and SP-02.a are complete.
+These six scientific PR tasks total 19 reference engineering days plus 4.75 reserve,
+not a subagent delivery forecast. Preserve SP-03.a's full analytic fixture scope.
+
+I1 must demonstrate a documented SDK/CLI sequence: buy and retain an exact public
+spring observation prefix, fit only that prefix, predict initial conditions or
+impulses absent from it within the ratified domain, and produce an independently
+scored development report. Labels come from independent analytic references,
+not the predictor or simulator under validation. Retain source/environment,
+purchased indices, model/configuration/protocol/report hashes, unseen-input
+manifest, analytic derivation, counts, errors, timings and CLI round-trip evidence.
+
+SP-03.b must ratify coefficient and trajectory bounds before acceptance; existing
+provisional targets are <=1% coefficient error and <=0.001 position RMSE over two
+seconds. SCI reports retain MSE and normalized MSE; derive sqrt(position_mse) for
+the RMSE acceptance check and document averaging dimensions and normalization.
+Insufficient excitation, mass/order mismatch, tampering, divergence and missing
+outputs require explicit failures. Any failed probe makes primary MSE fields null
+and the report unscorable; never average only surviving probes. A correctly
+reported negative result is valid evidence, not permission to relax tolerances.
+
+The accepted simulation/journal/random-investigation CLI and 560 passing tests
+do not yet supply a fitter, predictor, independent scorer, generalization result
+or recovery result. I1 is a local development proof, not the full held-out
+benchmark, hosted execution or a product release.
+
+Unfinished SP-01.b/c/d/e, B3, ID-C, SP-08 identity implementation, staging and whole
+R0 exit are not prerequisites in this local path. They remain prerequisites for
+their hosted/later consumers (for example SP-06.b requires SP-01.c). Use the leaf
+DAG; do not turn their schedule order into a new scientific dependency. With one
+checkout, parallel work means independent preparation/review and sequential
+writer handoffs. Scorer implementation waits for SP-04.b; no source work starts
+while capacity is blocked. Disk approval remains unchanged and pending.
+
 ## Current blockers and rules
 
-- Capacity stop: the single cloud checkout remains clean on feat/invitation-contracts at c773946f0e9800b5ce8373a3f73f3266d50608a7, while newer reviewed commits are safely on GitHub. No author/test processes remain. Do not archive/remove this checkout: it is the authoritative working path needed for resumption. No additional checkout or project copy was created. After approved capacity remediation, verify consumers/free space, fetch and reconcile the clean checkout with current main before handing Platform B3. Do not confuse the 100 MiB emergency write floor with the >=20 GiB readiness gate.
+- Capacity stop: the single cloud checkout remains clean on feat/invitation-contracts at c773946f0e9800b5ce8373a3f73f3266d50608a7, while newer reviewed commits are safely on GitHub. No author/test processes remain. Do not archive/remove this checkout: it is the authoritative working path needed for resumption. No additional checkout or project copy was created. After approved capacity remediation, verify consumers/free space, fetch and reconcile the clean checkout with current main before handing Research SP-03.a the first authoring slot. Platform retains B3; writers remain sequential unless separate safe checkouts are available. Do not confuse the 100 MiB emergency write floor with the >=20 GiB readiness gate.
 - Final identity review must reconcile issuer + verified tenant/null + subject, global purpose-bound proof ownership, composed human/service/run authority and current authorization before every streamed delivery batch. The <=30-second check applies only to idle connections. B3/ID-C remain implementation assignments, not completed interfaces.
 - Cloud filesystem had 215 MiB free at execution start. SP-02.b gates installs/builds; preserve migration archives and other active projects.
 - Baseline integration passed both review scopes and required checks at 7117060. Specific contract freezes remain prerequisites; SP-01.c additionally waits for SP-01.b DB acceptance.

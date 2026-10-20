@@ -861,7 +861,7 @@ Parent: [#8](https://github.com/spei04/strange-physics/issues/8). This issue clo
 - **Out of scope:** Full benchmark penalty freeze.
 - **Prerequisites and dependencies:** [SP-04.b](#sp-04-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-SCI](#contract-sci); the registered semantics, fixtures and runtime obligations apply.
-- **Acceptance criteria:** Hand-calculated RMSE/counts match; missing output remains failure.
+- **Acceptance criteria:** Hand-calculated MSE/normalized MSE/counts match the SCI report; sqrt(position_mse) supplies the ratified RMSE acceptance check; missing output remains failure and unscorable.
 - **Required automated tests:** Known errors, all invalid/missing output, normalization and tamper cases.
 - **Security and reliability:** Separate evaluator labels from fitter; report failures.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
@@ -3350,3 +3350,17 @@ SP-01.b is being delivered as smaller PR units under its existing completion gat
 The coordinated [CI-01 request](https://github.com/spei04/strange-physics/issues/54) adds bounded repository CI/CD maintenance. It does not waive the cloud storage/provisioning gates or complete SP-27.a. Repository-settings coordination owns branch protection; candidate delivery requires protected main and successful required checks. Publication/deployment remain separately gated.
 
 Execution checkpoint 2026-10-20: CI-01 is complete for the current package via PR #56 and protected-main run 39347053265; [DELIVERY_RECORD.md](DELIVERY_RECORD.md) preserves exact evidence and limitations. [ID-A/#57](https://github.com/spei04/strange-physics/issues/57) is integrated through PR #65, merge cc576da and reviewed head 34d26d9; both independent reviews and PR/main CI passed. Platform delivered ID-B/B1 in PR #67 at 1ec45aa after both peer reviews; required PR CI39350544354 and protected-main CI39350659100 passed with 474 tests. Platform delivered B2 in [PR #69](https://github.com/spei04/strange-physics/pull/69), main 89e6117 matching reviewed 8267865; PR CI39351960120 and main CI39352075786 passed with 560 tests. Platform is assigned B3/#63 next, blocked because cloud storage fell below the 100 MiB no-write floor. The single clean checkout is preserved at c773946 and newer reviewed work is on GitHub; no source writes resume before capacity is restored and the checkout is reconciled with main. Quality owns [ID-C/#64](https://github.com/spei04/strange-physics/issues/64) after all ID-B producers are accepted. The full SP-01.b freeze, ID-B/C, cloud capacity/provisioning gates and human forecast re-estimation remain open. PR #55 integrated journey/staging documentation without approving UI or provisioning.
+
+
+Scientific execution checkpoint 2026-10-20: Research's read-only dependency review
+confirms SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b → SP-06.a → SP-04.e/I1,
+with the additional approved joins and accepted predecessors recorded in
+[EXECUTION_LOG.md](EXECUTION_LOG.md#next-scientific-acceptance-checkpoint--i1).
+Research takes the first writer slot after verified capacity recovery; Quality
+independently authors SP-06.a only after SP-04.b. The six scientific tasks retain
+19 reference engineering days plus 4.75 reserve, not a subagent schedule promise.
+No unfinished identity contract or whole-R0 gate is a prerequisite for this local
+slice. Enterprise work and its actual consumer gates remain unchanged. I1 needs
+purchased-prefix-only fitting, unseen-condition predictions and independent
+analytic scoring with explicit failures; existing simulation/schema/CI evidence
+does not satisfy it. Disk approval remains pending; no source work is started.
