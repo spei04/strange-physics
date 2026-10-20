@@ -149,3 +149,67 @@ target misses. Existing assertions and frozen SCI bytes remain unchanged.
 Passing this gate establishes the bounded local I1 vertical slice. It does not
 establish broader scientific generalization, a benchmark study, hosted security
 or enterprise production readiness.
+
+## Implemented SDK and artifacts
+
+The shared adapters are `fit_spring`, `prepare_spring_evaluation`,
+`predict_spring` and `score_spring` in `strange_physics.scientific_workflow`.
+Call `fit_spring(observations, SpringFitConfig())`, retain the returned
+`SpringFitArtifact`, and stop if its model is absent. Preparation takes the
+private journal path and fit artifact. Only its successful public protocol
+and the fitted model go to `predict_spring(model, protocol, SpringPredictionConfig())`.
+Pass the journal path, fit, preparation and prediction artifacts to `score_spring`.
+The full score is private; `score.result.report` is its explicit public-safe
+SCI projection. Inspect all `score.probes` and `score.target_passed`.
+
+| Stage directory | Exact outputs on success |
+| --- | --- |
+| fit | fit.json, config.json, input.json, model.json, completion.json |
+| evaluation | preparation.json, protocol.json, completion.json |
+| predictions | predictions.json, config.json, submissions.json, completion.json |
+| score | score.json, report.json, completion.json |
+
+Failed fitting omits model.json; no-completed-input rejection also omits input.json.
+Rejected preparation omits protocol.json. Every typed prediction failure stays in
+predictions.json and submissions.json. Scoring with no SCI report omits report.json.
+Malformed/provenance/I/O rejection writes failure.json and completion.json when
+a safe new destination is available. Existing or unwritable outputs are preserved;
+stderr explicitly records whether the failure artifact could be retained.
+
+fit.json includes the actual public bundle/config/input/result; preparation.json
+binds it and the exact private journal bytes. predictions.json includes the actual
+model/config/protocol and every ordered outcome. score.json includes private labels
+and truth provenance, plus all derived per-probe MSE/RMSE and the worst-probe target.
+Matching hashes are neither publication permission nor numerical authenticity.
+
+Completion consumers verify exact filenames, raw bytes, input message joins,
+projection equality and retained elapsed time. The manifest is first flushed to
+a private pending file, then published by an exclusive link after all payloads
+are flushed. Interrupted outputs remain incomplete and cannot be consumed.
+
+The journal must remain quiescent throughout evaluation. The reader compares
+the source fingerprint with the current runtime and verifies initial/final
+journal bytes. This local consistency check is not a distributed lease or a
+sandbox against hostile same-user filesystem races. It never recovers a live run.
+An independently supplied malformed/missing predictions stage is an artifact
+failure; it never silently removes a requested probe. The lower-level independent
+scorer separately supports explicit missing/invalid external submissions.
+
+## Evidence record
+
+Preregistration: `4678c514f3d20a1401f2ff7822e7ff3d16b56ce9`.
+Runtime: `0587c333806655732b442beb00461f9f8a1f8541`; extended failure tests and
+duration binding: `ed3ce1d09106788501391aca8987fc18862a6ef4`.
+The full source check passed 1,609 tests; the subsequent explicit elapsed-time
+regression brings focused workflow coverage to 79 passing cases. Ruff and
+format checks (94 files), strict mypy (59 files), 586 external schema fixtures
+and the configured Bandit medium/high severity gate. Hosted checks remain
+an integration requirement. No probe, threshold or normalization changed.
+
+The above-range failure fixture initially attempted an illegal true coefficient
+of 5; the simulator correctly rejected it. The corrected fixture explicitly
+constructs a synthetic mistaken learned coefficient with consistent provenance
+to test all-24 failure accounting. A separate synthetic wrong model tests a
+fully scored miss. Neither is claimed as an actual fitter estimate.
+
+Installed-wheel execution evidence and measured per-probe extrema follow below.

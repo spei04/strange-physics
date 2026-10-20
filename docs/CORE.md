@@ -16,7 +16,9 @@ does not supply a production service, a trained investigator or benchmark result
 | `journal` | Transactional local experiment reservations, outcomes and checkpoints |
 | `session` | Trusted local execution adapter; public observation export |
 | `sdk` | Agent protocol, common calibration, random selector and recovery driver |
-| `cli` | Local investigation, resume, observation validation and schema export |
+| `cli` | Local investigations and the four scientific workflow stages |
+| `scientific_workflow` | Purchased fitting, frozen held-out probes, prediction and independent scoring |
+| `workflow_contracts`, `workflow_io`, `workflow_journal`, `workflow_cli` | Retained artifacts, bounded private files, read-only journal joins and CLI adapters |
 
 Python dependencies are locked in `uv.lock`; installation owns its files rather
 than hard-linking mutable dependencies from another checkout. The first core uses
@@ -51,8 +53,9 @@ Velocity drag dissipates energy; its transverse component rotates velocity.
 See [law equations](LAWS.md) and the [independent analytic fixture evidence](NUMERICAL_VALIDATION.md).
 The fixtures validate selected deterministic cases. The separate
 [first-spring calibration](SPRING_DOMAIN.md) records a bounded noiseless domain,
-quadrature/solver error and noisy failures. Actual fitting, production prediction
-and independent scoring still require their own implementation and acceptance.
+quadrature/solver error and noisy failures. The implemented [fitter](FITTING.md), [predictor](PREDICTION.md) and
+[independent scorer](EVALUATION.md) are connected by the bounded
+[local scientific workflow](LOCAL_SCIENTIFIC_WORKFLOW.md).
 
 ## Agent interface and checkpoints
 
@@ -119,10 +122,13 @@ The random investigator does not fit or discover a model. The reference worlds
 and common calibration generator are development fixtures. The separate local
 spring fitting API estimates one shared linear coefficient under an explicit
 assumption, and the [local analytic predictor](PREDICTION.md) propagates supported
-unseen initial conditions. Uncertainty, active selection, independent scoring,
-SDK/CLI integration, LLM calls, the browser UI and cloud deployment remain
-implementation milestones.
+unseen initial conditions. The [local workflow](LOCAL_SCIENTIFIC_WORKFLOW.md) connects these to the
+independent scorer through SDK and CLI stages with full failure accounting.
+Uncertainty, active selection, LLM calls, the browser UI and cloud deployment
+remain implementation milestones.
 
 The local production fitting API and its fixed configuration, explicit failure
 results and evidence limits are documented in [FITTING.md](FITTING.md).
-Independent scoring and SDK/CLI integration remain separate gates.
+The [local I1 workflow](LOCAL_SCIENTIFIC_WORKFLOW.md) checks every held-out
+probe and preserves the private evaluator boundary. Its bounded development
+evidence does not establish a discovery benchmark or hosted readiness.

@@ -527,7 +527,7 @@ def test_failed_cli_input_retains_safe_failure(
 
 
 @pytest.mark.parametrize(
-    "case", ["tamper_file", "extra_file", "missing_completion", "wrong_input_hash"]
+    "case", ["tamper_file", "extra_file", "missing_completion", "wrong_input_hash", "wrong_elapsed"]
 )
 def test_cli_rejects_incomplete_or_tampered_fit_stage(tmp_path: Path, case: str) -> None:
     journal, observations = run(tmp_path)
@@ -544,7 +544,10 @@ def test_cli_rejects_incomplete_or_tampered_fit_stage(tmp_path: Path, case: str)
         (output / "completion.json").unlink()
     else:
         d = json.loads((output / "completion.json").read_text())
-        d["input_message_sha256"] = ["f" * 64]
+        if case == "wrong_elapsed":
+            d["elapsed_ms"] += 1
+        else:
+            d["input_message_sha256"] = ["f" * 64]
         (output / "completion.json").write_text(json.dumps(d))
     before = state(journal)
     assert (
