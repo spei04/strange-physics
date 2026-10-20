@@ -133,7 +133,10 @@ identity is HTTP 409/idempotency_conflict; a matching expired key is HTTP
 409/incompatible_state with fixed receipt-expired meaning, never session expiry
 or automatic key reuse. A partial/contradictory lookup is HTTP
 409/incompatible_state with fixed recovery-required meaning. No historical definition or allocated ID is disclosed by
-that expiry error. Existing control error vocabulary is unchanged.
+that expiry error. Existing control error vocabulary is unchanged. Unavailable current session/world
+policy or transactional authority maps explicitly to HTTP 503/temporarily_unavailable
+on every route and fails closed; internal policy_unavailable is not a new wire
+code, and stale policy never supplies fallback permission.
 
 ## Preview grant lifecycle
 
@@ -190,7 +193,10 @@ the exact selected version/definition/space with run creation under the same
 transaction. A successful earlier catalog read is insufficient. Selection composes existing current
 C2 runs:create authority for either a browser human or an authorized workspace
 service; browser-only authoring/preview is not a new run-creation requirement.
-World author and run creator need not be the same principal. This does not
+World author and run creator need not be the same principal. The retained creation
+result may have later status/revision than the original queued admitted snapshot
+under accepted EXEC1 semantics; WORLD1 adds exact canonical space identity, not
+whole-RunView equality. This does not
 grant definition disclosure to the agent. Retained selection is immutable
 provenance for an already admitted run; later withdrawal of NEW-run eligibility
 does not add an availability condition to accepted worker/model replay.
@@ -234,7 +240,18 @@ OpenAPI contract, original-policy receipt expiration proposals and regressions.
 It still contains no authorization or persistence runtime predicates. Full
 repository, runtime-boundary and hosted integration checks remain separate gates.
 
-The revised typed API passes 175 focused cases, 1,188 external JSON Schema
+The 913f386 typed API passed 175 focused cases, 1,188 external JSON Schema
 checks (including route input/status projection references), full Ruff checks
 and strict mypy over 81 source/test/example files. These are contract/codec
 checks, not proof of deployed permissions, durable commits or recovery.
+
+An exact 913f386 author run passed all 2,598 tests, Ruff/format, strict mypy81
+and 1,188 external schema checks. Subsequent API review correctly narrowed the
+additional retained-run comparison to canonical space identity (preserving
+EXEC1 later result status/revision) and added an explicit 503 unavailable-policy
+route contract. These later changes are validated separately at their exact
+checkpoint; the earlier full-run identity is preserved.
+
+The compatibility/503 replacement passes 177 focused cases, 1,201 external
+schema checks, full Ruff and strict mypy81. The current review checkpoint still
+has no runtime authorization/persistence predicates.

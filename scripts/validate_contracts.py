@@ -63,6 +63,7 @@ def main() -> None:
     for name in ["renewal_commit", "revocation_commit"]:
         check("world.schema.json#/$defs/PreviewMutationCommit", world[name])
 
+    check("control.schema.json#/$defs/Error", world["service_unavailable"])
     world_api = documents[ROOT / "world.openapi.json"]
     first_world = world["valid"]["CreateWorldVersionRequest"]
     append_world = copy.deepcopy(first_world)
@@ -78,6 +79,8 @@ def main() -> None:
     for path, routes in world_api["paths"].items():
         escaped = path.replace("~", "~0").replace("/", "~1")
         for method, operation in routes.items():
+            unavailable = operation["responses"]["503"]["content"]["application/json"]["schema"]
+            check(unavailable["$ref"], world["service_unavailable"])
             response_schema = operation["responses"]["200"]["content"]["application/json"]["schema"]
             response_name = response_schema["$ref"].rsplit("/", 1)[-1]
             check(response_schema["$ref"], world["valid"][response_name])

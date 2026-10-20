@@ -214,6 +214,24 @@
                 }
               }
             }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -375,6 +393,24 @@
                 }
               }
             }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -522,6 +558,24 @@
                 "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
                 "schema": {
                   "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
                   "type": "string"
                 }
               }
@@ -696,6 +750,24 @@
                 "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
                 "schema": {
                   "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
                   "type": "string"
                 }
               }
@@ -882,6 +954,24 @@
                 }
               }
             }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -1041,6 +1131,24 @@
                 "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
                 "schema": {
                   "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
                   "type": "string"
                 }
               }
@@ -1237,6 +1345,24 @@
                 "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
                 "schema": {
                   "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
                   "type": "string"
                 }
               }
@@ -1438,6 +1564,24 @@
                 }
               }
             }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -1609,6 +1753,24 @@
                 "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
                 "schema": {
                   "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
                   "type": "string"
                 }
               }
@@ -1786,6 +1948,24 @@
                 }
               }
             }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -1945,6 +2125,24 @@
                 "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
                 "schema": {
                   "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
                   "type": "string"
                 }
               }
@@ -2120,6 +2318,24 @@
                 "description": "Bounded nonnegative seconds, not an arbitrary retry URL.",
                 "schema": {
                   "pattern": "^[0-9]{1,10}$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current session/world policy or transactional authority is unavailable. Fail closed before private lookup/commit; no stale-policy or authorization fallback. Existing temporarily_unavailable wire code; internal policy_unavailable is not a new public code.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
                   "type": "string"
                 }
               }

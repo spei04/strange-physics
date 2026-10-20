@@ -460,7 +460,8 @@ class WorldRunSelection(Message):
         if (
             result is None
             or not isinstance(result.value, RunView)
-            or message_sha256(result.value) != message_sha256(self.admission.admitted_run)
+            or message_sha256(result.value.space)
+            != message_sha256(self.admission.admitted_run.space)
             or (self.catalog.workspace_id, self.catalog.world_id, self.catalog.version_id)
             != (view.workspace_id, view.world_id, view.version_id)
             or self.catalog.definition_sha256 != self.version.definition_sha256

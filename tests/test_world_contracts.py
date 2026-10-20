@@ -732,3 +732,32 @@ def test_opaque_version_id_is_unique_even_across_worlds_in_a_page() -> None:
     page = w.WorldPage.model_validate_json(json.dumps(value))
     assert len(page.items) == 2
     assert len({item.world_id for item in page.items}) == 2
+
+
+def test_later_creation_result_keeps_original_admitted_snapshot_compatible() -> None:
+    value = fixture("WorldRunSelection")
+    result = value["admission"]["stored_request"]["operation"]["result"]["value"]
+    result.update(status="running", revision=1)
+    selection = w.WorldRunSelection.model_validate_json(json.dumps(value))
+    retained = selection.admission.stored_request.operation.result
+    assert retained is not None
+    assert selection.admission.admitted_run.status == "queued"
+    assert selection.admission.admitted_run.revision == 0
+    assert retained.value.model_dump()["status"] == "running"
+    assert retained.value.model_dump()["revision"] == 1
+
+
+def test_unavailable_current_policy_or_authority_has_explicit_503_contract() -> None:
+    from strange_physics.control_contracts import Error
+
+    error = Error.model_validate_json(json.dumps(FIXTURES["service_unavailable"]))
+    assert error.code == "temporarily_unavailable"
+    assert error.retryable is True
+    api = json.loads((ROOT / "contracts/world.openapi.json").read_text())
+    for routes in api["paths"].values():
+        for operation in routes.values():
+            response = operation["responses"]["503"]
+            assert response["content"]["application/json"]["schema"] == {
+                "$ref": "control.schema.json#/$defs/Error"
+            }
+            assert response["headers"]["Cache-Control"]["schema"]["const"] == "no-store"

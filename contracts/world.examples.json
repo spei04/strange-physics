@@ -668,6 +668,13 @@
       "value": true
     }
   ],
+  "service_unavailable": {
+    "code": "temporarily_unavailable",
+    "message": "Required current policy or authority is unavailable.",
+    "operation_id": null,
+    "request_id": "synthetic-world-unavailable",
+    "retryable": true
+  },
   "valid": {
     "BrowserRadialLaw": {
       "kind": "radial",
