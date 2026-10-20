@@ -188,12 +188,136 @@ passes 1%. The axial-aligned radius-3 probe above has coordinate RMSE about
 0.00633124, which fails 0.001. The paired-Simpson counterpart is about 8.44936e-6.
 These are analytic planning calculations, not measured solver results.
 
-## Measurement and integration status
+## Recorded local evidence
 
-Preregistered; implementation and measured results pending. The report will keep
-exact-sample quadrature, actual RK4-observation bias, refinement, floating-point
-stress and noise outcomes distinct. Tests must also cover mass/order/topology,
-partial-window rejection, failed-record accounting and absence of hidden inputs.
-Exact-source local tests, full CI and independent review are required before
-SP-03.b is accepted. Neither this document nor finite successful fixtures close
-SP-04.a, SP-04.b, SP-06.a, I1 or the full R1 milestone.
+Measured 2026-10-20 on Linux x86_64, Python 3.12.3, NumPy 2.5.3 and Pydantic
+2.13.5. Preregistration: `5e524a10e4decbd362e779ffaf95d983a0083e3b`;
+mixed-mass clarification: `f55d38fcecd5ed08c8d6ec73f21e70680569ba57`.
+The unchanged matrices and thresholds preceded measurements.
+
+Harness source: `418c6cb622e48cf2a10eb0bed2b43df389788796`,
+[test_spring_domain.py](../tests/test_spring_domain.py), SHA-256
+`95e20fbac32ed4da401d2e21d3b46db64aa97b10e747841480a17ae4b7f8ce4a`.
+Its deterministic JSON report retains every case, configuration, public-prefix
+hash, raw estimate/status, completed/failed counts, coefficient error and
+individual probe RMSE. It is synthetic calibration output, **not an
+EvaluationReport or official score**. It writes no journals or private data.
+
+### Noiseless finite matrix
+
+All 63 primary prefixes (21 parameter pairs at each of three RK4 steps) meet
+both predeclared criteria across all 1,512 probe evaluations. All seven
+mixed-mass prefixes also pass, with 168 probe evaluations and worst RMSE
+7.50131e-6. The maximum sampled errors below are Euclidean position/velocity
+errors against exact trajectories on the four purchased-condition fixtures;
+they are not extrapolation-predictor solver tests.
+
+| RK4 step | Max sampled position error | Max sampled velocity error | Max coefficient effect from RK4 observations | Max total coefficient error | Worst per-probe RMSE |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 0.01 | 3.16841e-8 | 8.67008e-8 | 2.13456e-8 | 8.93142e-6 | 8.46960e-6 |
+| 0.005 | 1.97432e-9 | 5.46226e-9 | 1.33381e-9 | 8.91141e-6 | 8.45062e-6 |
+| 0.0025 | 1.23204e-10 | 3.42734e-10 | 8.33493e-11 | 8.91016e-6 | 8.44943e-6 |
+
+The maximum exact-sample quadrature coefficient bias is 8.91008e-6 at every
+step: reducing the internal solver step does not change observation spacing.
+The RK4 coefficient effect is the difference between estimates using numerical
+and exact samples, not total coefficient error. It improves about sixteenfold
+per halving, while the fixed observation-quadrature bias remains.
+
+The measured RMS residual difference
+`(y_rk4-y_exact)-k*(g_rk4-g_exact)` has maxima 2.11099e-9, 1.31876e-10 and
+8.24049e-12 at these three steps. These are finite-fixture RK4/roundoff effects,
+not the separately declared 1e-14 perturbation stress. At the default step,
+zero-stiffness fixtures recover exactly zero; the k=1e-8 fixtures have maximum
+absolute coefficient error 1.29241e-16 and maximum probe RMSE 1.10207e-15.
+Those measured values do not turn the absolute floor into a relative guarantee.
+
+The preregistered exact-sample counterexample is reproduced: trapezoid returns
+4.006680027 with worst RMSE 0.0063312404; Simpson returns 3.999991090 with
+worst RMSE 8.4493556e-6. Both pass the coefficient criterion, but trapezoid
+fails 21 of 24 probes. No failure is removed or relabeled.
+
+### Weak excitation and numerical support
+
+Of 48 physical weak-excitation prefixes, 34 are explicitly unsupported and
+14 meet both accuracy criteria across their 336 probes. Unsupported cases
+retain 816 failed probe outcomes; they do not receive invented predictions.
+The worst supported RMSE is 8.46961e-6.
+
+| Initial displacement amplitude | Supported / total | Minimum pooled G | Maximum pooled G |
+| --- | ---: | ---: | ---: |
+| 0 | 0 / 6 | 0 | 0 |
+| 1e-12 | 0 / 6 | 2.36439e-14 | 1.41418e-13 |
+| 1e-10 | 0 / 6 | 2.36451e-12 | 1.41421e-11 |
+| 1e-8 | 0 / 6 | 2.36450e-10 | 1.41421e-9 |
+| 1e-6 | 0 / 6 | 2.36450e-8 | 1.41421e-7 |
+| 1e-5 | 2 / 6 | 2.36450e-7 | 1.41421e-6 |
+| 1e-4 | 6 / 6 | 2.36450e-6 | 1.41421e-5 |
+| 1e-2 | 6 / 6 | 2.36450e-4 | 1.41421e-3 |
+
+The near-zero residual difference reaches 2.23212e-17 at amplitude 1e-8 and
+2.03405e-15 at amplitude 1e-6. It reaches 2.03699e-14 at amplitude 1e-5 and
+2.03706e-11 at amplitude 1e-2. The 1e-14 perturbation stress therefore **does
+not bound all observed RK4 residuals**. It supports the predeclared numerical
+guard independently of quadrature and discretization errors.
+
+Separate boundary fixtures exercise G immediately below, at and above 1e-6
+and signed residual stresses of 1e-14. Negative estimates remain negative
+failures; they are never clamped to zero. A failed record remains in the
+prefix hash/counts, a completed zero-design record contributes its zero rows
+to N, and an all-failed prefix is rejected by the existing SpringFitInput
+contract before estimation. Partial windows, mismatched configuration,
+unsupported topology/mass, wrong public particle identity and purchased versus
+prediction bounds have explicit rejection tests.
+
+### Noise sensitivity: failures retained
+
+All 64 prefixes and 256 records remain in the report. There are six negative
+estimates and 58 valid nonnegative estimates. Only 13/64 prefixes meet the
+joint accuracy criteria; coefficient-only acceptance would count 48/64.
+This is a negative sensitivity result under the fixed seeds, not a violation
+of a preregistered noisy-success guarantee.
+
+| True k (evaluator only) | Negative estimates / 16 | Coefficient passes / 16 | Joint passes / 16 | Computed probes above 0.001 | Worst computed RMSE |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 0 | 6 | 0 | 0 | 73 | 0.0144729 |
+| 0.3 | 0 | 16 | 2 | 115 | 0.0137608 |
+| 0.9 | 0 | 16 | 5 | 115 | 0.0116662 |
+| 4 | 0 | 16 | 6 | 103 | 0.00489382 |
+
+There are 1,392 computed probe values, of which 406 exceed the RMSE bound,
+plus 144 failed probes from the six negative estimates: all 1,536 outcomes
+are accounted for. Zero-state probes are retained. No noisy prefix is silently
+excluded on the basis of coefficient error or held-out accuracy.
+
+### Reproduction and integration boundary
+
+Use the existing locked environment from the repository root:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/pytest -p no:cacheprovider tests/test_spring_domain.py
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python tests/test_spring_domain.py
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/pytest -p no:cacheprovider
+.venv/bin/ruff check --no-cache .
+.venv/bin/ruff format --check .
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/mypy --cache-dir=/dev/null src tests examples
+```
+
+The second command recomputes the full report on stdout, including source hash,
+environment, preregistration identities and per-probe errors. No output file,
+new package, training GPU or hosted service is required.
+
+The focused suite passed 199 cases and the full suite passed 812 tests.
+Repository-wide Ruff and formatting passed (61 files), as did strict mypy
+(33 checked files). Required Python 3.12/3.14 hosted CI and exact-head
+independent review remain integration acceptance gates.
+
+The finite results support the declared noiseless first-spring slice and its
+fixed manifests. The continuous proof covers exact-sample quadrature only;
+the finite RK4 evidence does not certify all continuous inputs or all platforms.
+The default noisy generator remains unchanged and does not gain a blanket
+accuracy guarantee. SP-04.a must implement the actual versioned fitter and
+failure diagnostics. SP-04.b must separately validate production prediction,
+including extrapolation and its integration error. SP-06.a owns independent
+scoring, and I1 still requires a genuine purchased-observation-to-score path.
+No entire R1 milestone or production-readiness gate closes through this report.
