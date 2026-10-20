@@ -11200,7 +11200,8 @@
           "phase": "Runtime authoring in reused identity checkout; independent runtime review and exact integration checks required.",
           "starting_commit": "6933f2faa5a7fa769f2b4812047cfa0eee674276",
           "api_source": "21cb20146bea3ff42aa15dafe43136ff24ff6081",
-          "api_tree": "d3e0b3417dfc518215e19123a7fb5c185268e420"
+          "api_tree": "d3e0b3417dfc518215e19123a7fb5c185268e420",
+          "pull_request": "https://github.com/spei04/strange-physics/pull/93"
         }
       ],
       "decisions": [
@@ -11395,7 +11396,16 @@
           "Later-epoch committing worker revision cannot predate accepted submission.",
           "Private BuiltinPredictionProfile uses actual frozen PredictorVersion; no alias or public worker change."
         ],
-        "scope": "API and intrinsic consistency only. Current runtime authorization, bytes/prefix checks, approval renewal and real producers remain unverified."
+        "scope": "API and intrinsic consistency only. Current runtime authorization, bytes/prefix checks, approval renewal and real producers remain unverified.",
+        "draft_integration": {
+          "source": "a62972996b9fdaa53b102386daccf30756a85d45",
+          "tree": "b87d988f4a5c72f127fb2b2461a84256e0fcc55f",
+          "pull_request": 93,
+          "ci": 39377520114,
+          "status": "all_four_applicable_jobs_passed",
+          "union_index_sha256": "7965a8d9cb93c297200dbb6525c57772dad9b39859c043668ff55237df39def8",
+          "boundary": "API only; protected-main candidate skipped. Runtime/full freeze remain pending."
+        }
       }
     },
     "spring_workflow_evidence": {
