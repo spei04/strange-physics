@@ -53,6 +53,7 @@ def configuration_sha256(value: dict[str, JsonValue]) -> str:
     """Bound structure before canonical serialization; adapters also cap predecode bytes."""
     pending: list[tuple[JsonValue, int]] = [(value, 1)]
     nodes = 0
+    text_characters = 0
     while pending:
         item, depth = pending.pop()
         nodes += 1
@@ -62,15 +63,18 @@ def configuration_sha256(value: dict[str, JsonValue]) -> str:
             if nodes + len(pending) + 2 * len(item) > 10_000:
                 raise ValueError("Agent configuration exceeds structural bounds")
             nodes += len(item)
-            if any(len(key) > 262_144 for key in item):
-                raise ValueError("Agent configuration key exceeds byte budget")
+            text_characters += sum(len(key) for key in item)
+            if text_characters > 262_144:
+                raise ValueError("Agent configuration exceeds aggregate byte budget")
             pending.extend((child, depth + 1) for child in item.values())
         elif isinstance(item, list):
             if nodes + len(pending) + len(item) > 10_000:
                 raise ValueError("Agent configuration exceeds structural bounds")
             pending.extend((child, depth + 1) for child in item)
-        elif isinstance(item, str) and len(item) > 262_144:
-            raise ValueError("Agent configuration value exceeds byte budget")
+        elif isinstance(item, str):
+            text_characters += len(item)
+            if text_characters > 262_144:
+                raise ValueError("Agent configuration exceeds aggregate byte budget")
     content = canonical_json(value).encode("utf-8")
     if len(content) > 262_144:
         raise ValueError("Agent configuration exceeds protocol byte budget")
@@ -261,6 +265,8 @@ class WorkerLaunchRecord(Message):
             or message_sha256(source.manifest) != admission.request.agent_package_sha256
             or build.runtime_image_sha256 != admission.checkpoint_binding.runtime_image_sha256
             or self.approval.approval.state != "approved"
+            or self.created_at < self.approval.approval.decided_at
+            or self.created_at >= self.approval.scan.valid_until
             or self.created_at < owner.created_at
             or not self.created_at < self.deadline <= owner.run_deadline
             or self.deadline - self.created_at > request.resources.wall_seconds
@@ -356,11 +362,36 @@ class WorkerCommandOutbox(Message):
 
 
 class WorkerLaunchLookup(Message):
-    """Partial projections are representable so runtime reconciliation can fail closed."""
+    """Keyed authoritative lookup; partial projections remain representable for recovery.
 
+    A matching key does not prove absence. Atomic unique attempt admission is required.
+    """
+
+    workspace_id: Identifier
+    run_id: Identifier
+    attempt_id: Identifier
+    lease_epoch: Number
     record: WorkerLaunchRecord | None
     lifecycle: WorkerLaunchLifecycle | None
     outbox: WorkerCommandOutbox | None
+
+    @model_validator(mode="after")
+    def scope(self) -> Self:
+        if self.record is not None:
+            request = self.record.request
+            if (self.workspace_id, self.run_id, self.attempt_id, self.lease_epoch) != (
+                request.workspace_id,
+                request.run_id,
+                request.attempt_id,
+                request.lease_epoch,
+            ):
+                raise ValueError("Launch lookup must bind its exact run/attempt/epoch key")
+        if self.outbox is not None and (self.workspace_id, self.run_id) != (
+            self.outbox.workspace_id,
+            self.outbox.run_id,
+        ):
+            raise ValueError("Launch lookup outbox belongs to a different run")
+        return self
 
 
 class WorkerLaunchPlan(Message):
@@ -466,6 +497,8 @@ class WorkerTerminationPlan(Message):
             or transition.after.revision != record.fenced_lifecycle_revision
             or transition.after.state not in {"fenced", "stopping"}
             or transition.after.first_fenced_at is None
+            or transition.after.first_fenced_at < launch.created_at
+            or record.accepted_at < launch.created_at
             or transition.after.first_fenced_at > record.accepted_at
             or outbox.kind != "terminate"
             or outbox.command_id != record.termination_id
@@ -533,6 +566,8 @@ class WorkerTerminationCompletion(Message):
             or after.stop_outcome != proof.outcome
             or after.instance != proof.instance
             or after.stopped_at != proof.observed_at
+            or after.first_fenced_at is None
+            or after.first_fenced_at > record.accepted_at
         ):
             raise ValueError("Acknowledgement must close only its fenced immutable launch")
         return self

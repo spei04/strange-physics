@@ -1131,6 +1131,8 @@
       "stopped_at": null
     },
     "WorkerLaunchLookup": {
+      "attempt_id": "attempt-1",
+      "lease_epoch": 3,
       "lifecycle": {
         "first_fenced_at": null,
         "instance": null,
@@ -1501,7 +1503,9 @@
         },
         "request_sha256": "638699d3aca957ab2356e5214ada7049bc5b26ce8c443b7fd2fe35d27f65796c",
         "run_revision": 4
-      }
+      },
+      "run_id": "run-1",
+      "workspace_id": "workspace-1"
     },
     "WorkerLaunchPlan": {
       "expected_credential_revision": 1,

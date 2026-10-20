@@ -58,9 +58,15 @@ deserializer is permitted.
 Agent configuration is bounded by canonical UTF-8 bytes (protocol maximum
 262144), depth (32) and structural nodes (10000, including keys). Deployment
 policy can be stricter. A decoded structure alone cannot enforce a transport
-cap, so adapters must apply predecode byte limits independently. Resource
+cap, so adapters must apply predecode byte limits independently. The structural
+walk rejects aggregate key/string characters beyond the canonical byte ceiling
+before calling the serializer, then applies exact final UTF-8 byte validation.
+Resource
 limits separately bound CPU, wall time, memory, processes, scratch and output;
-actual enforcement belongs to later producers.
+actual enforcement belongs to later producers. Per-launch ceilings do not
+prove remaining cumulative run/workspace resources across replacement attempts:
+SP-11 resource reservation and settlement remains mandatory at actual admission
+and dispatch. This slice introduces no accounting ledger.
 
 Package inspection retains the exact verified archive and detached manifest,
 canonical source-envelope and policy identities, sorted entry metadata and
@@ -135,13 +141,26 @@ The producer sequence is:
 4. Dispatch by that immutable launch identity, retain unknown outcomes, and
    confirm the exact provider instance before enabling broker work.
 
+Fresh launch requires an authoritative lookup and a database uniqueness
+invariant on `(workspace_id, run_id, attempt_id, lease_epoch)` (or an equivalent
+exact key). The producer atomically guards that unique row, the current run/
+keyset CAS and the launch/lifecycle/outbox insertion. An existing immutable
+launch wins; partial evidence requires recovery and cannot justify a second
+launch. The private lookup always carries the exact workspace/run/attempt/epoch
+key, including for an empty result. A caller-supplied empty lookup is not proof
+of authoritative absence. There is one immutable dispatch outbox per launch.
+An insertion conflict requires rereading the retained launch and comparing the
+actual full request hash, rather than relying on unchanged run/keyset CAS.
+
 Logical `RunStatus.running` is not proof of a running process. `prepared`
 and `dispatch_unknown` are not work-authorized states; `active` requires an
 exact bound instance. Cancellation, lost acknowledgements or replacement
 between any two stages must fence the exact launch and reconcile durable
 outbox/instance evidence. Missing or partial projections fail closed, not as
 permission to dispatch again. A current launch receipt is metadata, not an
-execution capability.
+execution capability. Launch creation cannot predate its retained approval
+decision and must fall before that retained scan expires; current approval
+validity is an additional runtime requirement.
 
 Internal launch and termination authority is purpose-bound
 (`workers:launch` or `workers:terminate`), with current trusted issuer,
@@ -194,8 +213,11 @@ Normal exit must not masquerade as operator cancellation.
 
 A termination proposal binds the exact launch and body hash, expected
 per-launch lifecycle revision, irreversible fence, retained termination record
-and exact command outbox. The completion model binds the original request,
-fence and trusted outcome evidence to that same lifecycle. A known instance
+and exact command outbox. Its acceptance and first irreversible fence cannot
+predate the retained launch creation. The completion model binds the original request,
+fence and trusted outcome evidence to that same lifecycle. Completion requires
+the retained first fence to exist by the original acceptance time, even when
+subsequent per-launch lifecycle revisions have advanced. A known instance
 must match its provider namespace, instance and launch identity. A
 `terminated` outcome requires that exact instance; `never_started` requires
 positive reconciliation after dispatch of that launch is fenced. Unknown

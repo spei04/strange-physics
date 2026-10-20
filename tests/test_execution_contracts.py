@@ -387,3 +387,96 @@ def test_normal_completion_uses_exact_launch_fence(body: dict[str, Any]) -> None
     assert plan.transition.after.state == "fenced"
     assert plan.transition.after.stop_outcome is None
     assert plan.termination.request.reason in {"completed", "budget_exhausted"}
+
+
+@pytest.mark.parametrize(
+    "created_at,valid", [(1012, False), (1013, True), (1799, True), (1800, False)]
+)
+def test_launch_creation_joins_retained_approval_window(created_at: int, valid: bool) -> None:
+    value = fixture("WorkerLaunchRecord")
+    value["created_at"] = created_at
+    value["deadline"] = created_at + 1
+    if valid:
+        assert parse(w.WorkerLaunchRecord, value).created_at == created_at
+    else:
+        with pytest.raises(ValidationError):
+            parse(w.WorkerLaunchRecord, value)
+
+
+@pytest.mark.parametrize(
+    "fenced_at,accepted_at,valid",
+    [(1199, 1199, False), (1199, 1201, False), (1200, 1200, True), (1200, 1201, True)],
+)
+def test_termination_cannot_predate_exact_launch(
+    fenced_at: int, accepted_at: int, valid: bool
+) -> None:
+    value = fixture("WorkerTerminationPlan")
+    value["termination"]["accepted_at"] = accepted_at
+    value["transition"]["after"]["first_fenced_at"] = fenced_at
+    if valid:
+        assert parse(w.WorkerTerminationPlan, value).termination.accepted_at == accepted_at
+    else:
+        with pytest.raises(ValidationError):
+            parse(w.WorkerTerminationPlan, value)
+
+
+@pytest.mark.parametrize("fenced_at,valid", [(1200, True), (1201, True), (1202, False)])
+def test_completion_fence_must_exist_by_original_acceptance(fenced_at: int, valid: bool) -> None:
+    value = fixture("WorkerTerminationCompletion")
+    for phase in ["before", "after"]:
+        value["transition"][phase]["first_fenced_at"] = fenced_at
+    if valid:
+        assert parse(w.WorkerTerminationCompletion, value)
+    else:
+        with pytest.raises(ValidationError):
+            parse(w.WorkerTerminationCompletion, value)
+
+
+def test_completion_allows_later_per_launch_lifecycle_revision() -> None:
+    value = fixture("WorkerTerminationCompletion")
+    value["transition"]["before"].update(state="stopping", revision=3)
+    value["transition"]["after"]["revision"] = 4
+    assert parse(w.WorkerTerminationCompletion, value).transition.after.revision == 4
+
+
+@pytest.mark.parametrize("kind", ["values", "keys"])
+def test_aggregate_configuration_rejects_before_serialization(
+    monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
+    def forbidden(value: Any) -> str:
+        raise AssertionError("Canonical serialization must not run beyond the aggregate bound")
+
+    monkeypatch.setattr(w, "canonical_json", forbidden)
+    value: dict[str, Any] = (
+        {"items": ["a" * 100_000 for _ in range(3)]}
+        if kind == "values"
+        else {str(n) + "a" * 3000: 0 for n in range(100)}
+    )
+    with pytest.raises(ValueError, match="aggregate byte budget"):
+        w.configuration_sha256(value)
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("workspace_id", "other-workspace"),
+        ("run_id", "other-run"),
+        ("attempt_id", "other-attempt"),
+        ("lease_epoch", 99),
+    ],
+)
+def test_lookup_key_must_join_retained_record(field: str, value: Any) -> None:
+    data = fixture("WorkerLaunchLookup")
+    data[field] = value
+    with pytest.raises(ValidationError):
+        parse(w.WorkerLaunchLookup, data)
+
+
+def test_empty_lookup_still_requires_an_explicit_target_key() -> None:
+    data = fixture("WorkerLaunchLookup")
+    data.update(record=None, lifecycle=None, outbox=None)
+    lookup = parse(w.WorkerLaunchLookup, data)
+    assert lookup.attempt_id == fixture("WorkerLaunchRequest")["attempt_id"]
+    del data["attempt_id"]
+    with pytest.raises(ValidationError):
+        parse(w.WorkerLaunchLookup, data)
