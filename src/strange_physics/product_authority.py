@@ -16,6 +16,7 @@ from strange_physics.control_contracts import (
     VerifiedCredential,
 )
 from strange_physics.run_credential_contracts import (
+    HumanProductAuthority,
     ProductAuthority,
     RunAuthorityState,
     RunCredentialPolicy,
@@ -81,6 +82,23 @@ def run_key_valid(
     )
 
 
+def validate_human_product_identity(
+    authority: HumanProductAuthority, *, mutation: bool, now: int
+) -> Membership:
+    """Incomplete current browser identity seam, without product permission/workspace checks."""
+    server_time(now)
+    configured = require_policy(authority.policy)
+    browser_request(configured, authority.actor.context, mutation=mutation)
+    validate_human_actor(configured, authority.actor, now=now, mutation=False)
+    owner = authority.owner
+    if (
+        not owner.principal.active
+        or authority.session_principal_generation != owner.principal.generation
+    ):
+        raise ContractViolation("unauthenticated", 401)
+    return owner.grant.membership
+
+
 def validate_product_authority(
     authority: ProductAuthority,
     credential: VerifiedCredential,
@@ -97,23 +115,17 @@ def validate_product_authority(
     if authority.kind != credential.kind:
         raise ContractViolation("unauthenticated", 401)
     if authority.kind == "user":
-        configured = require_policy(authority.policy)
-        browser_request(
-            configured, authority.actor.context, mutation=permission not in READ_PERMISSIONS
+        current_member = validate_human_product_identity(
+            authority, mutation=permission not in READ_PERMISSIONS, now=now
         )
-        validate_human_actor(configured, authority.actor, now=now, mutation=False)
-        owner = authority.owner
         session = authority.actor.session
         if (
-            not owner.principal.active
-            or authority.session_principal_generation != owner.principal.generation
-            or credential.credential_id != session.session_id
+            credential.credential_id != session.session_id
             or credential.principal_id != session.principal_id
             or credential.expires_at != session.absolute_expires_at
             or credential.revoked != session.revoked
         ):
             raise ContractViolation("unauthenticated", 401)
-        current_member = owner.grant.membership
     elif authority.kind == "service":
         if authority.policy is None:
             raise ContractViolation("policy_unavailable", 503)

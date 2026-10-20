@@ -12,6 +12,7 @@ import pytest
 from strange_physics import model_submission_contracts as m
 from strange_physics import model_submissions as s
 from strange_physics import worker_contracts as w
+from strange_physics.bounded_json import bounded_canonical
 from strange_physics.contracts import Message, ObservationBundle
 from strange_physics.control_contracts import ContractViolation, VerifiedCredential
 from strange_physics.package_contracts import PackagePolicy
@@ -318,16 +319,16 @@ def test_canonical_bytes_are_exact_sci_with_unicode_and_signed_zero() -> None:
         engine_version="historical-\u03bb-\U0001f680",
         records=(changed(first, experiment=experiment), *observations.records[1:]),
     )
-    digest, size = s._bounded_canonical(observations, m.PREFIX_BYTES)
+    digest, size = bounded_canonical(observations, m.PREFIX_BYTES)
     from strange_physics.serialization import canonical_json
 
     exact = canonical_json(observations.model_dump(mode="json")).encode()
     assert digest == message_sha256(observations) == hashlib.sha256(exact).hexdigest()
     assert size == len(exact)
     assert b"-0.0" in exact and b"\\u03bb" in exact
-    assert s._bounded_canonical(observations, size) == (digest, size)
+    assert bounded_canonical(observations, size) == (digest, size)
     with denied("invalid_request", 422):
-        s._bounded_canonical(observations, size - 1)
+        bounded_canonical(observations, size - 1)
 
 
 def test_original_engine_and_raw_bytes_mismatch_fail() -> None:

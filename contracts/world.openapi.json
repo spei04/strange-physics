@@ -59,7 +59,7 @@
     }
   },
   "info": {
-    "description": "Typed browser contract only; current authorization/persistence/HTTP producers are pending. Sensitive author and granted-definition routes are separate from agent-safe catalog metadata. WEB1 follows independently.",
+    "description": "Browser HTTP contract backed by reviewed pure authorization and recovery predicates; hosted HTTP and persistence producers remain unimplemented. Sensitive author and granted-definition routes are separate from agent-safe catalog metadata. WEB1 follows independently.",
     "title": "World versions and explicit preview grants \u2014 WORLD1",
     "version": "1.0.0-api-review"
   },
@@ -2355,7 +2355,7 @@
     }
   },
   "x-browser-origin": "Use exact accepted ID-A/C2 Origin and CSRF policy. Mutation freshness never precedes current identity/workspace/role denial.",
-  "x-contract-status": "WORLD1 typed API review; runtime producers pending",
+  "x-contract-status": "WORLD1 reviewed pure contracts and proposals; hosted producers and WEB1 pending",
   "x-idempotency-error-mapping": {
     "changed_request": {
       "code": "idempotency_conflict",

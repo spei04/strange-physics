@@ -3698,7 +3698,7 @@
   "x-author-input-models": [
     "CreateWorldVersionRequest"
   ],
-  "x-contract-status": "WORLD1 typed API review; authorization/persistence predicates pending",
+  "x-contract-status": "WORLD1 reviewed pure contracts and proposals; hosted producers and WEB1 pending",
   "x-granted-definition-models": [
     "GrantedWorldDefinition"
   ],

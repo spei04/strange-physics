@@ -356,7 +356,7 @@ def world_json_schema() -> JsonSchemaValue:
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
     schema["$id"] = "https://strange-physics.dev/contracts/world.schema.json"
     schema["x-contract-status"] = (
-        "WORLD1 typed API review; authorization/persistence predicates pending"
+        "WORLD1 reviewed pure contracts and proposals; hosted producers and WEB1 pending"
     )
     schema["x-agent-safe-models"] = [
         "WorldVersionView",
