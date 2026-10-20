@@ -150,7 +150,7 @@
         "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
         "build_sha256": "575b6c4cfd4679763cf6ee6aba53840023dd6c7b502505a513c0df838c4767f4",
         "decided_at": 1013,
-        "profile_sha256": "e401b994a653bb327790b4f71009d896249d1ecbfc1e45eb614667526b9fdbad",
+        "profile_sha256": "e25170b0efd24cc24160d325e08de0a719e39b8c2d1c32e5a3207cf6d753b6b2",
         "revision": 1,
         "scan_sha256": "5ed2b427ff1e1f2861ff7d4bd95e71142a29e5f0455a56a3ee2409371ff5eb71",
         "state": "approved"
@@ -182,9 +182,9 @@
       "kind": "builtin_analytic",
       "profile": {
         "kind": "builtin_analytic",
-        "prediction_config_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f",
         "predictor_profile": "strange-physics.linear-spring-prediction.v1",
-        "predictor_version": "linear-spring-analytic-v1",
+        "predictor_version": "strange-physics.linear-spring.analytic.v1",
         "purpose": "native_prediction"
       },
       "scan": {
@@ -224,9 +224,9 @@
     },
     "BuiltinPredictionProfile": {
       "kind": "builtin_analytic",
-      "prediction_config_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f",
       "predictor_profile": "strange-physics.linear-spring-prediction.v1",
-      "predictor_version": "linear-spring-analytic-v1",
+      "predictor_version": "strange-physics.linear-spring.analytic.v1",
       "purpose": "native_prediction"
     },
     "BuiltinSource": {

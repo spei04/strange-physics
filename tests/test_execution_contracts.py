@@ -480,3 +480,20 @@ def test_empty_lookup_still_requires_an_explicit_target_key() -> None:
     del data["attempt_id"]
     with pytest.raises(ValidationError):
         parse(w.WorkerLaunchLookup, data)
+
+
+def test_native_profile_accepts_actual_fixed_prediction_config_version() -> None:
+    from strange_physics.prediction_contracts import SpringPredictionConfig
+
+    config = SpringPredictionConfig()
+    profile = p.BuiltinPredictionProfile(
+        kind="builtin_analytic",
+        purpose="native_prediction",
+        predictor_profile="strange-physics.linear-spring-prediction.v1",
+        predictor_version=config.predictor_version,
+        prediction_config_sha256=message_sha256(config),
+    )
+    assert profile.predictor_version == "strange-physics.linear-spring.analytic.v1"
+    assert profile.prediction_config_sha256 == message_sha256(config)
+    actual = parse(p.BuiltinAnalyticApproval, fixture("BuiltinAnalyticApproval"))
+    assert actual.profile == profile

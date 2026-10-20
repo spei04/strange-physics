@@ -290,10 +290,7 @@
           "type": "string"
         },
         "predictor_version": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "const": "strange-physics.linear-spring.analytic.v1",
           "title": "Predictor Version",
           "type": "string"
         },

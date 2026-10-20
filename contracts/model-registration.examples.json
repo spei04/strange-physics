@@ -1,0 +1,4512 @@
+{
+  "note": "Synthetic contract fixtures, not deployed approval or scientific accuracy evidence. The model intentionally has k>4 and an unsupported fitter, and remains registrable.",
+  "valid": {
+    "SubmitModelRequest": {
+      "model_artifact": {
+        "artifact_id": "artifact-1",
+        "generation": "9007199254740993",
+        "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+        "size_bytes": 377,
+        "media_type": "application/json"
+      },
+      "model_sha256": "ddcaa7f826d4cd5d4a27db1c41be8f02c5f52b07c77af847901a8f8f5df06189",
+      "through_index": 1,
+      "predictor_profile": "strange-physics.linear-spring-prediction.v1",
+      "predictor_version": "strange-physics.linear-spring.analytic.v1",
+      "prediction_request_schema": "strange-physics.prediction-request.v1",
+      "prediction_response_schema": "strange-physics.prediction-response.v1",
+      "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f",
+      "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    "ModelRegistrationPolicy": {
+      "policy_id": "native-model-policy-1",
+      "max_model_bytes": 262144,
+      "max_ledger_bytes": 8388608,
+      "max_canonical_prefix_bytes": 8388608,
+      "max_metadata_bytes": 4194304,
+      "max_json_depth": 32,
+      "max_json_nodes": 1000000,
+      "trusted_repository_id": "synthetic-trusted-source",
+      "recipe_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+      "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+      "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+    },
+    "RunEngineBinding": {
+      "workspace_id": "workspace-1",
+      "run_id": "run-1",
+      "admission_id": "admission-1",
+      "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+      "creation_request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+      "world_version_id": "world-version-1",
+      "ownership_sha256": "59283eaae819d20bdc24596fa98cd56e978ede039440658e9aa629303a33d4ee",
+      "space_sha256": "3fa943a87fba379f8f5b81cdb2ada8ab9c1b23333ba1b29d674890c30e9cc84c",
+      "engine_version": "synthetic-original-engine",
+      "engine_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+      "committed_at": 1000
+    },
+    "ModelLedgerSnapshot": {
+      "engine": {
+        "workspace_id": "workspace-1",
+        "run_id": "run-1",
+        "admission_id": "admission-1",
+        "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+        "creation_request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+        "world_version_id": "world-version-1",
+        "ownership_sha256": "59283eaae819d20bdc24596fa98cd56e978ede039440658e9aa629303a33d4ee",
+        "space_sha256": "3fa943a87fba379f8f5b81cdb2ada8ab9c1b23333ba1b29d674890c30e9cc84c",
+        "engine_version": "synthetic-original-engine",
+        "engine_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "committed_at": 1000
+      },
+      "run_revision": 4,
+      "operations": [
+        {
+          "workspace_id": "workspace-1",
+          "run_id": "run-1",
+          "operation_id": "op-0",
+          "kind": "experiment",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
+          "status": "completed",
+          "accepted_experiment_index": 0,
+          "result": {
+            "kind": "experiment",
+            "value": {
+              "operation_id": "op-0",
+              "index": 0,
+              "experiment": {
+                "schema_version": "strange-physics.experiment.v1",
+                "particles": [
+                  {
+                    "id": "p",
+                    "position": [
+                      1.0,
+                      0.0
+                    ],
+                    "velocity": [
+                      0.0,
+                      0.0
+                    ],
+                    "mass": 1.0
+                  }
+                ],
+                "impulse": null
+              },
+              "status": "completed",
+              "trajectory": {
+                "frames": [
+                  {
+                    "time": 0.0,
+                    "positions": [
+                      [
+                        1.0,
+                        0.0
+                      ]
+                    ],
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "time": 0.05,
+                    "positions": [
+                      [
+                        1.0,
+                        0.0
+                      ]
+                    ],
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "time": 0.1,
+                    "positions": [
+                      [
+                        1.0,
+                        0.0
+                      ]
+                    ],
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  }
+                ]
+              },
+              "error": null
+            }
+          },
+          "error": null
+        },
+        {
+          "workspace_id": "workspace-1",
+          "run_id": "run-1",
+          "operation_id": "op-1",
+          "kind": "experiment",
+          "request_sha256": "eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb",
+          "status": "completed",
+          "accepted_experiment_index": 1,
+          "result": {
+            "kind": "experiment",
+            "value": {
+              "operation_id": "op-1",
+              "index": 1,
+              "experiment": {
+                "schema_version": "strange-physics.experiment.v1",
+                "particles": [
+                  {
+                    "id": "p",
+                    "position": [
+                      1.0,
+                      0.0
+                    ],
+                    "velocity": [
+                      0.0,
+                      0.0
+                    ],
+                    "mass": 1.0
+                  }
+                ],
+                "impulse": null
+              },
+              "status": "failed",
+              "trajectory": null,
+              "error": "simulation_failed"
+            }
+          },
+          "error": null
+        }
+      ]
+    },
+    "ModelSubmissionAdmission": {
+      "request": {
+        "model_artifact": {
+          "artifact_id": "artifact-1",
+          "generation": "9007199254740993",
+          "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+          "size_bytes": 377,
+          "media_type": "application/json"
+        },
+        "model_sha256": "ddcaa7f826d4cd5d4a27db1c41be8f02c5f52b07c77af847901a8f8f5df06189",
+        "through_index": 1,
+        "predictor_profile": "strange-physics.linear-spring-prediction.v1",
+        "predictor_version": "strange-physics.linear-spring.analytic.v1",
+        "prediction_request_schema": "strange-physics.prediction-request.v1",
+        "prediction_response_schema": "strange-physics.prediction-response.v1",
+        "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f",
+        "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+      "scope": {
+        "workspace_id": "workspace-1",
+        "principal_id": "principal-1",
+        "kind": "model_submission",
+        "resource_id": "run-1",
+        "key": "synthetic-model-key"
+      },
+      "operation_id": "model-operation-1",
+      "worker": {
+        "launch_id": "launch-1",
+        "request": {
+          "workspace_id": "workspace-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "lease_epoch": 3,
+          "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+          "approval_sha256": "7ce815d42e632a9be3a3173a97e6d89d12ffd3d3fd1c7cadead08691dcda8fd0",
+          "worker_policy_sha256": "ec0b1addf3be8277ee036edc06883c40664806fc3f679a3680cd27800fa5fd81",
+          "resources": {
+            "cpu_seconds": 60,
+            "wall_seconds": 100,
+            "memory_bytes": 134217728,
+            "process_count": 16,
+            "scratch_bytes": 1048576,
+            "output_bytes": 100000
+          },
+          "restore": null
+        },
+        "request_sha256": "638699d3aca957ab2356e5214ada7049bc5b26ce8c443b7fd2fe35d27f65796c",
+        "admission": {
+          "admission_id": "admission-1",
+          "request": {
+            "world_version_id": "world-version-1",
+            "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+            "track": "agent_discovery",
+            "experiment_budget": 6,
+            "limits": {
+              "max_cpu_seconds": 1000,
+              "max_wall_seconds": 1000,
+              "max_model_calls": 0,
+              "max_input_tokens": 0,
+              "max_output_tokens": 0,
+              "max_artifact_bytes": 1000000,
+              "max_provider_cost_microusd": 0
+            }
+          },
+          "stored_request": {
+            "scope": {
+              "workspace_id": "workspace-1",
+              "principal_id": "principal-1",
+              "kind": "run_creation",
+              "resource_id": "workspace-1",
+              "key": "create-run"
+            },
+            "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+            "operation": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "operation_id": "creation-operation",
+              "kind": "run_creation",
+              "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+              "status": "completed",
+              "accepted_experiment_index": null,
+              "result": {
+                "kind": "run_creation",
+                "value": {
+                  "workspace_id": "workspace-1",
+                  "run_id": "run-1",
+                  "status": "queued",
+                  "revision": 0,
+                  "space": {
+                    "schema_version": "strange-physics.space.v1",
+                    "structure": {
+                      "particle_ids": [
+                        "p"
+                      ],
+                      "anchors": [
+                        {
+                          "id": "a",
+                          "position": [
+                            0.0,
+                            0.0
+                          ]
+                        }
+                      ],
+                      "connections": [
+                        {
+                          "a": "p",
+                          "b": "a"
+                        }
+                      ]
+                    },
+                    "sampling": {
+                      "duration": 0.1,
+                      "dt": 0.01,
+                      "sample_interval": 0.05,
+                      "position_noise": 0.0,
+                      "velocity_noise": 0.0
+                    },
+                    "limits": {
+                      "position_norm": 2.0,
+                      "velocity_norm": 2.0,
+                      "impulse_norm": 1.0,
+                      "min_mass": 0.5,
+                      "max_mass": 2.0
+                    },
+                    "budget": 6,
+                    "calibration_experiments": 2
+                  },
+                  "experiments_accepted": 0,
+                  "budget_remaining": 6
+                }
+              },
+              "error": null
+            }
+          },
+          "admitted_run": {
+            "workspace_id": "workspace-1",
+            "run_id": "run-1",
+            "status": "queued",
+            "revision": 0,
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "p"
+                ],
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 0.1,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 6,
+              "calibration_experiments": 2
+            },
+            "experiments_accepted": 0,
+            "budget_remaining": 6
+          },
+          "ownership": {
+            "workspace_id": "workspace-1",
+            "run_id": "run-1",
+            "principal_id": "principal-1",
+            "principal_kind": "human",
+            "principal_generation": 0,
+            "grant_incarnation": 0,
+            "created_at": 1000,
+            "run_deadline": 2000,
+            "scopes": [
+              "checkpoints:write",
+              "experiments:read",
+              "experiments:write",
+              "models:write"
+            ],
+            "created_by_credential_id": "session-1"
+          },
+          "agent_configuration": {
+            "seed": 1
+          },
+          "checkpoint_binding": {
+            "agent_id": "synthetic-agent-seed1",
+            "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+            "agent_config_sha256": "fbe47f6d82b435a89f6e6fca65ad16138195de06c5fc3ffb66826a76e64e479f",
+            "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "checkpoint_protocol": "strange-physics.checkpoint.v1"
+          }
+        },
+        "approval": {
+          "kind": "submitted_agent",
+          "profile": {
+            "kind": "submitted_agent",
+            "agent_protocol": "strange-physics.agent.v1"
+          },
+          "build": {
+            "kind": "submitted_agent",
+            "inspection": {
+              "inspection_id": "inspection-1",
+              "inspector_id": "synthetic-inspector",
+              "source": {
+                "archive": {
+                  "record": {
+                    "workspace_id": "workspace-1",
+                    "package_id": "package-1",
+                    "ref": {
+                      "artifact_id": "package-archive",
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip"
+                    },
+                    "locator": {
+                      "provider": "gcs",
+                      "namespace_id": "synthetic-package-space",
+                      "object_key": "package-1/package-archive"
+                    },
+                    "state": "available",
+                    "revision": 1,
+                    "created_at": 1000
+                  },
+                  "verification": {
+                    "verification_id": "verify-package-archive",
+                    "verifier_id": "synthetic-reader",
+                    "locator": {
+                      "provider": "gcs",
+                      "namespace_id": "synthetic-package-space",
+                      "object_key": "package-1/package-archive"
+                    },
+                    "generation": "9007199254740993",
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "size_bytes": 500,
+                    "media_type": "application/gzip",
+                    "observed_at": 1001,
+                    "completeness": "complete"
+                  }
+                },
+                "manifest_object": {
+                  "record": {
+                    "workspace_id": "workspace-1",
+                    "package_id": "package-1",
+                    "ref": {
+                      "artifact_id": "package-manifest",
+                      "generation": "2",
+                      "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                      "size_bytes": 528,
+                      "media_type": "application/json"
+                    },
+                    "locator": {
+                      "provider": "gcs",
+                      "namespace_id": "synthetic-package-space",
+                      "object_key": "package-1/package-manifest"
+                    },
+                    "state": "available",
+                    "revision": 1,
+                    "created_at": 1000
+                  },
+                  "verification": {
+                    "verification_id": "verify-package-manifest",
+                    "verifier_id": "synthetic-reader",
+                    "locator": {
+                      "provider": "gcs",
+                      "namespace_id": "synthetic-package-space",
+                      "object_key": "package-1/package-manifest"
+                    },
+                    "generation": "2",
+                    "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                    "size_bytes": 528,
+                    "media_type": "application/json",
+                    "observed_at": 1001,
+                    "completeness": "complete"
+                  }
+                },
+                "manifest": {
+                  "schema_version": "strange-physics.python-agent.v1",
+                  "source": {
+                    "artifact_id": "package-archive",
+                    "generation": "9007199254740993",
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "size_bytes": 500,
+                    "media_type": "application/gzip"
+                  },
+                  "agent_protocol": "strange-physics.agent.v1",
+                  "entrypoint": "agent:make_agent",
+                  "lock_profile": "uv-lock.v1",
+                  "lock_path": "uv.lock",
+                  "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              },
+              "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+              "entries": [
+                {
+                  "path": "agent.py",
+                  "kind": "file",
+                  "expanded_bytes": 100,
+                  "bytes_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+                },
+                {
+                  "path": "uv.lock",
+                  "kind": "file",
+                  "expanded_bytes": 200,
+                  "bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              ],
+              "observed_at": 1002
+            },
+            "lock": {
+              "verification_id": "lock-verification-1",
+              "verifier_id": "synthetic-lock-verifier",
+              "inspection_sha256": "ba3abe13f6ebffd9bf04e39fa1eabbf222fe6351427fcc91cf573d0635903324",
+              "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+              "outcome": "complete_pinned",
+              "observed_at": 1003
+            },
+            "build": {
+              "build_id": "build-1",
+              "verifier_id": "synthetic-build-verifier",
+              "provenance_verification_id": "provenance-1",
+              "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "source_sha256": "3afb08f34c4cdb39260b2ee62799d6c2d34434772d153bb3104ff61450b1dff5",
+              "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "recipe_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+              "completed_at": 1010,
+              "verified_at": 1011
+            }
+          },
+          "scan": {
+            "scan_id": "scan-submitted",
+            "verifier_id": "synthetic-scanner",
+            "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+            "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+            "outcome": "passed",
+            "observed_at": 1012,
+            "valid_until": 1800
+          },
+          "approval": {
+            "approval_id": "approval-submitted",
+            "revision": 1,
+            "state": "approved",
+            "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+            "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+            "scan_sha256": "527fe30fe4d1e72b7c5e1e52ef56ebd79a1a08d8ac0412192fbb621bae2bbe98",
+            "profile_sha256": "34fa3702ef516a0858b7b2ba3b51a5e10436a82ff4811cb1dcba8dc95e6993fa",
+            "decided_at": 1013
+          }
+        },
+        "original_credential_id": "worker-key-1",
+        "original_credential_generation": 1,
+        "run_revision": 4,
+        "credential_revision": 1,
+        "created_at": 1200,
+        "deadline": 1300
+      },
+      "run_revision": 4,
+      "accepted_at": 1202
+    },
+    "ModelRegistrationRecord": {
+      "model_id": "model-1",
+      "submission": {
+        "request": {
+          "model_artifact": {
+            "artifact_id": "artifact-1",
+            "generation": "9007199254740993",
+            "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+            "size_bytes": 377,
+            "media_type": "application/json"
+          },
+          "model_sha256": "ddcaa7f826d4cd5d4a27db1c41be8f02c5f52b07c77af847901a8f8f5df06189",
+          "through_index": 1,
+          "predictor_profile": "strange-physics.linear-spring-prediction.v1",
+          "predictor_version": "strange-physics.linear-spring.analytic.v1",
+          "prediction_request_schema": "strange-physics.prediction-request.v1",
+          "prediction_response_schema": "strange-physics.prediction-response.v1",
+          "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f",
+          "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+        "scope": {
+          "workspace_id": "workspace-1",
+          "principal_id": "principal-1",
+          "kind": "model_submission",
+          "resource_id": "run-1",
+          "key": "synthetic-model-key"
+        },
+        "operation_id": "model-operation-1",
+        "worker": {
+          "launch_id": "launch-1",
+          "request": {
+            "workspace_id": "workspace-1",
+            "run_id": "run-1",
+            "attempt_id": "attempt-1",
+            "lease_epoch": 3,
+            "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+            "approval_sha256": "7ce815d42e632a9be3a3173a97e6d89d12ffd3d3fd1c7cadead08691dcda8fd0",
+            "worker_policy_sha256": "ec0b1addf3be8277ee036edc06883c40664806fc3f679a3680cd27800fa5fd81",
+            "resources": {
+              "cpu_seconds": 60,
+              "wall_seconds": 100,
+              "memory_bytes": 134217728,
+              "process_count": 16,
+              "scratch_bytes": 1048576,
+              "output_bytes": 100000
+            },
+            "restore": null
+          },
+          "request_sha256": "638699d3aca957ab2356e5214ada7049bc5b26ce8c443b7fd2fe35d27f65796c",
+          "admission": {
+            "admission_id": "admission-1",
+            "request": {
+              "world_version_id": "world-version-1",
+              "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+              "track": "agent_discovery",
+              "experiment_budget": 6,
+              "limits": {
+                "max_cpu_seconds": 1000,
+                "max_wall_seconds": 1000,
+                "max_model_calls": 0,
+                "max_input_tokens": 0,
+                "max_output_tokens": 0,
+                "max_artifact_bytes": 1000000,
+                "max_provider_cost_microusd": 0
+              }
+            },
+            "stored_request": {
+              "scope": {
+                "workspace_id": "workspace-1",
+                "principal_id": "principal-1",
+                "kind": "run_creation",
+                "resource_id": "workspace-1",
+                "key": "create-run"
+              },
+              "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+              "operation": {
+                "workspace_id": "workspace-1",
+                "run_id": "run-1",
+                "operation_id": "creation-operation",
+                "kind": "run_creation",
+                "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+                "status": "completed",
+                "accepted_experiment_index": null,
+                "result": {
+                  "kind": "run_creation",
+                  "value": {
+                    "workspace_id": "workspace-1",
+                    "run_id": "run-1",
+                    "status": "queued",
+                    "revision": 0,
+                    "space": {
+                      "schema_version": "strange-physics.space.v1",
+                      "structure": {
+                        "particle_ids": [
+                          "p"
+                        ],
+                        "anchors": [
+                          {
+                            "id": "a",
+                            "position": [
+                              0.0,
+                              0.0
+                            ]
+                          }
+                        ],
+                        "connections": [
+                          {
+                            "a": "p",
+                            "b": "a"
+                          }
+                        ]
+                      },
+                      "sampling": {
+                        "duration": 0.1,
+                        "dt": 0.01,
+                        "sample_interval": 0.05,
+                        "position_noise": 0.0,
+                        "velocity_noise": 0.0
+                      },
+                      "limits": {
+                        "position_norm": 2.0,
+                        "velocity_norm": 2.0,
+                        "impulse_norm": 1.0,
+                        "min_mass": 0.5,
+                        "max_mass": 2.0
+                      },
+                      "budget": 6,
+                      "calibration_experiments": 2
+                    },
+                    "experiments_accepted": 0,
+                    "budget_remaining": 6
+                  }
+                },
+                "error": null
+              }
+            },
+            "admitted_run": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "status": "queued",
+              "revision": 0,
+              "space": {
+                "schema_version": "strange-physics.space.v1",
+                "structure": {
+                  "particle_ids": [
+                    "p"
+                  ],
+                  "anchors": [
+                    {
+                      "id": "a",
+                      "position": [
+                        0.0,
+                        0.0
+                      ]
+                    }
+                  ],
+                  "connections": [
+                    {
+                      "a": "p",
+                      "b": "a"
+                    }
+                  ]
+                },
+                "sampling": {
+                  "duration": 0.1,
+                  "dt": 0.01,
+                  "sample_interval": 0.05,
+                  "position_noise": 0.0,
+                  "velocity_noise": 0.0
+                },
+                "limits": {
+                  "position_norm": 2.0,
+                  "velocity_norm": 2.0,
+                  "impulse_norm": 1.0,
+                  "min_mass": 0.5,
+                  "max_mass": 2.0
+                },
+                "budget": 6,
+                "calibration_experiments": 2
+              },
+              "experiments_accepted": 0,
+              "budget_remaining": 6
+            },
+            "ownership": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "principal_id": "principal-1",
+              "principal_kind": "human",
+              "principal_generation": 0,
+              "grant_incarnation": 0,
+              "created_at": 1000,
+              "run_deadline": 2000,
+              "scopes": [
+                "checkpoints:write",
+                "experiments:read",
+                "experiments:write",
+                "models:write"
+              ],
+              "created_by_credential_id": "session-1"
+            },
+            "agent_configuration": {
+              "seed": 1
+            },
+            "checkpoint_binding": {
+              "agent_id": "synthetic-agent-seed1",
+              "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+              "agent_config_sha256": "fbe47f6d82b435a89f6e6fca65ad16138195de06c5fc3ffb66826a76e64e479f",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "checkpoint_protocol": "strange-physics.checkpoint.v1"
+            }
+          },
+          "approval": {
+            "kind": "submitted_agent",
+            "profile": {
+              "kind": "submitted_agent",
+              "agent_protocol": "strange-physics.agent.v1"
+            },
+            "build": {
+              "kind": "submitted_agent",
+              "inspection": {
+                "inspection_id": "inspection-1",
+                "inspector_id": "synthetic-inspector",
+                "source": {
+                  "archive": {
+                    "record": {
+                      "workspace_id": "workspace-1",
+                      "package_id": "package-1",
+                      "ref": {
+                        "artifact_id": "package-archive",
+                        "generation": "9007199254740993",
+                        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "size_bytes": 500,
+                        "media_type": "application/gzip"
+                      },
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-archive"
+                      },
+                      "state": "available",
+                      "revision": 1,
+                      "created_at": 1000
+                    },
+                    "verification": {
+                      "verification_id": "verify-package-archive",
+                      "verifier_id": "synthetic-reader",
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-archive"
+                      },
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip",
+                      "observed_at": 1001,
+                      "completeness": "complete"
+                    }
+                  },
+                  "manifest_object": {
+                    "record": {
+                      "workspace_id": "workspace-1",
+                      "package_id": "package-1",
+                      "ref": {
+                        "artifact_id": "package-manifest",
+                        "generation": "2",
+                        "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                        "size_bytes": 528,
+                        "media_type": "application/json"
+                      },
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-manifest"
+                      },
+                      "state": "available",
+                      "revision": 1,
+                      "created_at": 1000
+                    },
+                    "verification": {
+                      "verification_id": "verify-package-manifest",
+                      "verifier_id": "synthetic-reader",
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-manifest"
+                      },
+                      "generation": "2",
+                      "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                      "size_bytes": 528,
+                      "media_type": "application/json",
+                      "observed_at": 1001,
+                      "completeness": "complete"
+                    }
+                  },
+                  "manifest": {
+                    "schema_version": "strange-physics.python-agent.v1",
+                    "source": {
+                      "artifact_id": "package-archive",
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip"
+                    },
+                    "agent_protocol": "strange-physics.agent.v1",
+                    "entrypoint": "agent:make_agent",
+                    "lock_profile": "uv-lock.v1",
+                    "lock_path": "uv.lock",
+                    "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                },
+                "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "entries": [
+                  {
+                    "path": "agent.py",
+                    "kind": "file",
+                    "expanded_bytes": 100,
+                    "bytes_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+                  },
+                  {
+                    "path": "uv.lock",
+                    "kind": "file",
+                    "expanded_bytes": 200,
+                    "bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                ],
+                "observed_at": 1002
+              },
+              "lock": {
+                "verification_id": "lock-verification-1",
+                "verifier_id": "synthetic-lock-verifier",
+                "inspection_sha256": "ba3abe13f6ebffd9bf04e39fa1eabbf222fe6351427fcc91cf573d0635903324",
+                "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "outcome": "complete_pinned",
+                "observed_at": 1003
+              },
+              "build": {
+                "build_id": "build-1",
+                "verifier_id": "synthetic-build-verifier",
+                "provenance_verification_id": "provenance-1",
+                "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                "source_sha256": "3afb08f34c4cdb39260b2ee62799d6c2d34434772d153bb3104ff61450b1dff5",
+                "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "recipe_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "completed_at": 1010,
+                "verified_at": 1011
+              }
+            },
+            "scan": {
+              "scan_id": "scan-submitted",
+              "verifier_id": "synthetic-scanner",
+              "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+              "outcome": "passed",
+              "observed_at": 1012,
+              "valid_until": 1800
+            },
+            "approval": {
+              "approval_id": "approval-submitted",
+              "revision": 1,
+              "state": "approved",
+              "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+              "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+              "scan_sha256": "527fe30fe4d1e72b7c5e1e52ef56ebd79a1a08d8ac0412192fbb621bae2bbe98",
+              "profile_sha256": "34fa3702ef516a0858b7b2ba3b51a5e10436a82ff4811cb1dcba8dc95e6993fa",
+              "decided_at": 1013
+            }
+          },
+          "original_credential_id": "worker-key-1",
+          "original_credential_generation": 1,
+          "run_revision": 4,
+          "credential_revision": 1,
+          "created_at": 1200,
+          "deadline": 1300
+        },
+        "run_revision": 4,
+        "accepted_at": 1202
+      },
+      "model": {
+        "schema_version": "strange-physics.linear-spring-model.v1",
+        "linear": 5.0,
+        "through_index": 1,
+        "fit_record_indices": [
+          0
+        ],
+        "observation_sha256": "1efd8c85a69f77a4b134a5aebbd7cde03b4f084769ea22a1c253292c86e238c7",
+        "fitter_version": "unrecognized-but-valid-fitter",
+        "fit_config_sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "artifact": {
+        "record": {
+          "workspace_id": "workspace-1",
+          "run_id": "run-1",
+          "ref": {
+            "artifact_id": "artifact-1",
+            "generation": "9007199254740993",
+            "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+            "size_bytes": 377,
+            "media_type": "application/json"
+          },
+          "locator": {
+            "provider": "gcs",
+            "namespace_id": "checkpoint-storage",
+            "object_key": "ws-1/run-1/artifact-1"
+          },
+          "visibility": "agent-visible",
+          "state": "available",
+          "revision": 2,
+          "created_at": 100
+        },
+        "verification": {
+          "verification_id": "verification-1",
+          "verifier_id": "storage-reader-1",
+          "locator": {
+            "provider": "gcs",
+            "namespace_id": "checkpoint-storage",
+            "object_key": "ws-1/run-1/artifact-1"
+          },
+          "generation": "9007199254740993",
+          "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+          "size_bytes": 377,
+          "media_type": "application/json",
+          "observed_at": 1203,
+          "completeness": "complete"
+        }
+      },
+      "prediction_config": {
+        "schema_version": "strange-physics.spring-prediction-config.v1",
+        "predictor_version": "strange-physics.linear-spring.analytic.v1",
+        "supported_model_version": "strange-physics.linear-spring-model.v1",
+        "supported_fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+        "supported_fit_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+        "equation": "stationary-shared-zero-rest-linear-spring.v1",
+        "algorithm": "closed-form-oscillator-sinc.v1",
+        "time_policy": "exact-requested-times.v1",
+        "step_policy": "alignment-replay-metadata-only.v1",
+        "failure_policy": "no-partial-response.v1",
+        "particle_count": 1,
+        "anchor_count": 1,
+        "connection_count": 1,
+        "coordinates": 2,
+        "min_coefficient": 0.0,
+        "max_coefficient": 4.0,
+        "min_mass": 0.5,
+        "max_mass": 2.0,
+        "max_anchor_norm": 0.5,
+        "max_initial_position_norm": 3.0,
+        "max_initial_velocity_norm": 2.0,
+        "max_impulse_norm": 1.0,
+        "max_horizon": 2.0,
+        "min_integration_dt": 0.0001,
+        "max_integration_dt": 0.05,
+        "max_reference_steps": 20000,
+        "max_output_frames": 2001,
+        "max_output_position_norm": 12.0,
+        "max_output_velocity_norm": 14.0
+      },
+      "approval": {
+        "kind": "builtin_analytic",
+        "profile": {
+          "kind": "builtin_analytic",
+          "purpose": "native_prediction",
+          "predictor_profile": "strange-physics.linear-spring-prediction.v1",
+          "predictor_version": "strange-physics.linear-spring.analytic.v1",
+          "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f"
+        },
+        "build": {
+          "kind": "builtin_analytic",
+          "source": {
+            "repository_id": "synthetic-trusted-source",
+            "commit": "6666666666666666666666666666666666666666",
+            "tree": "7777777777777777777777777777777777777777",
+            "lock_bytes_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+            "recipe_sha256": "9999999999999999999999999999999999999999999999999999999999999999"
+          },
+          "build": {
+            "build_id": "builtin-build-1",
+            "verifier_id": "synthetic-build-verifier",
+            "provenance_verification_id": "builtin-provenance-1",
+            "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "source_sha256": "d225ef16dc1afab3dc3868b230e1206ef020d942fb0ba079d9e194398c64ac1c",
+            "lock_bytes_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+            "recipe_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+            "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+            "completed_at": 1010,
+            "verified_at": 1011
+          }
+        },
+        "scan": {
+          "scan_id": "scan-builtin",
+          "verifier_id": "synthetic-scanner",
+          "build_sha256": "575b6c4cfd4679763cf6ee6aba53840023dd6c7b502505a513c0df838c4767f4",
+          "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+          "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "outcome": "passed",
+          "observed_at": 1012,
+          "valid_until": 1800
+        },
+        "approval": {
+          "approval_id": "approval-builtin",
+          "revision": 1,
+          "state": "approved",
+          "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+          "build_sha256": "575b6c4cfd4679763cf6ee6aba53840023dd6c7b502505a513c0df838c4767f4",
+          "scan_sha256": "5ed2b427ff1e1f2861ff7d4bd95e71142a29e5f0455a56a3ee2409371ff5eb71",
+          "profile_sha256": "e25170b0efd24cc24160d325e08de0a719e39b8c2d1c32e5a3207cf6d753b6b2",
+          "decided_at": 1013
+        }
+      },
+      "engine": {
+        "workspace_id": "workspace-1",
+        "run_id": "run-1",
+        "admission_id": "admission-1",
+        "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+        "creation_request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+        "world_version_id": "world-version-1",
+        "ownership_sha256": "59283eaae819d20bdc24596fa98cd56e978ede039440658e9aa629303a33d4ee",
+        "space_sha256": "3fa943a87fba379f8f5b81cdb2ada8ab9c1b23333ba1b29d674890c30e9cc84c",
+        "engine_version": "synthetic-original-engine",
+        "engine_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "committed_at": 1000
+      },
+      "worker": {
+        "launch_id": "launch-1",
+        "request": {
+          "workspace_id": "workspace-1",
+          "run_id": "run-1",
+          "attempt_id": "attempt-1",
+          "lease_epoch": 3,
+          "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+          "approval_sha256": "7ce815d42e632a9be3a3173a97e6d89d12ffd3d3fd1c7cadead08691dcda8fd0",
+          "worker_policy_sha256": "ec0b1addf3be8277ee036edc06883c40664806fc3f679a3680cd27800fa5fd81",
+          "resources": {
+            "cpu_seconds": 60,
+            "wall_seconds": 100,
+            "memory_bytes": 134217728,
+            "process_count": 16,
+            "scratch_bytes": 1048576,
+            "output_bytes": 100000
+          },
+          "restore": null
+        },
+        "request_sha256": "638699d3aca957ab2356e5214ada7049bc5b26ce8c443b7fd2fe35d27f65796c",
+        "admission": {
+          "admission_id": "admission-1",
+          "request": {
+            "world_version_id": "world-version-1",
+            "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+            "track": "agent_discovery",
+            "experiment_budget": 6,
+            "limits": {
+              "max_cpu_seconds": 1000,
+              "max_wall_seconds": 1000,
+              "max_model_calls": 0,
+              "max_input_tokens": 0,
+              "max_output_tokens": 0,
+              "max_artifact_bytes": 1000000,
+              "max_provider_cost_microusd": 0
+            }
+          },
+          "stored_request": {
+            "scope": {
+              "workspace_id": "workspace-1",
+              "principal_id": "principal-1",
+              "kind": "run_creation",
+              "resource_id": "workspace-1",
+              "key": "create-run"
+            },
+            "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+            "operation": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "operation_id": "creation-operation",
+              "kind": "run_creation",
+              "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+              "status": "completed",
+              "accepted_experiment_index": null,
+              "result": {
+                "kind": "run_creation",
+                "value": {
+                  "workspace_id": "workspace-1",
+                  "run_id": "run-1",
+                  "status": "queued",
+                  "revision": 0,
+                  "space": {
+                    "schema_version": "strange-physics.space.v1",
+                    "structure": {
+                      "particle_ids": [
+                        "p"
+                      ],
+                      "anchors": [
+                        {
+                          "id": "a",
+                          "position": [
+                            0.0,
+                            0.0
+                          ]
+                        }
+                      ],
+                      "connections": [
+                        {
+                          "a": "p",
+                          "b": "a"
+                        }
+                      ]
+                    },
+                    "sampling": {
+                      "duration": 0.1,
+                      "dt": 0.01,
+                      "sample_interval": 0.05,
+                      "position_noise": 0.0,
+                      "velocity_noise": 0.0
+                    },
+                    "limits": {
+                      "position_norm": 2.0,
+                      "velocity_norm": 2.0,
+                      "impulse_norm": 1.0,
+                      "min_mass": 0.5,
+                      "max_mass": 2.0
+                    },
+                    "budget": 6,
+                    "calibration_experiments": 2
+                  },
+                  "experiments_accepted": 0,
+                  "budget_remaining": 6
+                }
+              },
+              "error": null
+            }
+          },
+          "admitted_run": {
+            "workspace_id": "workspace-1",
+            "run_id": "run-1",
+            "status": "queued",
+            "revision": 0,
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "p"
+                ],
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 0.1,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 6,
+              "calibration_experiments": 2
+            },
+            "experiments_accepted": 0,
+            "budget_remaining": 6
+          },
+          "ownership": {
+            "workspace_id": "workspace-1",
+            "run_id": "run-1",
+            "principal_id": "principal-1",
+            "principal_kind": "human",
+            "principal_generation": 0,
+            "grant_incarnation": 0,
+            "created_at": 1000,
+            "run_deadline": 2000,
+            "scopes": [
+              "checkpoints:write",
+              "experiments:read",
+              "experiments:write",
+              "models:write"
+            ],
+            "created_by_credential_id": "session-1"
+          },
+          "agent_configuration": {
+            "seed": 1
+          },
+          "checkpoint_binding": {
+            "agent_id": "synthetic-agent-seed1",
+            "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+            "agent_config_sha256": "fbe47f6d82b435a89f6e6fca65ad16138195de06c5fc3ffb66826a76e64e479f",
+            "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "checkpoint_protocol": "strange-physics.checkpoint.v1"
+          }
+        },
+        "approval": {
+          "kind": "submitted_agent",
+          "profile": {
+            "kind": "submitted_agent",
+            "agent_protocol": "strange-physics.agent.v1"
+          },
+          "build": {
+            "kind": "submitted_agent",
+            "inspection": {
+              "inspection_id": "inspection-1",
+              "inspector_id": "synthetic-inspector",
+              "source": {
+                "archive": {
+                  "record": {
+                    "workspace_id": "workspace-1",
+                    "package_id": "package-1",
+                    "ref": {
+                      "artifact_id": "package-archive",
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip"
+                    },
+                    "locator": {
+                      "provider": "gcs",
+                      "namespace_id": "synthetic-package-space",
+                      "object_key": "package-1/package-archive"
+                    },
+                    "state": "available",
+                    "revision": 1,
+                    "created_at": 1000
+                  },
+                  "verification": {
+                    "verification_id": "verify-package-archive",
+                    "verifier_id": "synthetic-reader",
+                    "locator": {
+                      "provider": "gcs",
+                      "namespace_id": "synthetic-package-space",
+                      "object_key": "package-1/package-archive"
+                    },
+                    "generation": "9007199254740993",
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "size_bytes": 500,
+                    "media_type": "application/gzip",
+                    "observed_at": 1001,
+                    "completeness": "complete"
+                  }
+                },
+                "manifest_object": {
+                  "record": {
+                    "workspace_id": "workspace-1",
+                    "package_id": "package-1",
+                    "ref": {
+                      "artifact_id": "package-manifest",
+                      "generation": "2",
+                      "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                      "size_bytes": 528,
+                      "media_type": "application/json"
+                    },
+                    "locator": {
+                      "provider": "gcs",
+                      "namespace_id": "synthetic-package-space",
+                      "object_key": "package-1/package-manifest"
+                    },
+                    "state": "available",
+                    "revision": 1,
+                    "created_at": 1000
+                  },
+                  "verification": {
+                    "verification_id": "verify-package-manifest",
+                    "verifier_id": "synthetic-reader",
+                    "locator": {
+                      "provider": "gcs",
+                      "namespace_id": "synthetic-package-space",
+                      "object_key": "package-1/package-manifest"
+                    },
+                    "generation": "2",
+                    "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                    "size_bytes": 528,
+                    "media_type": "application/json",
+                    "observed_at": 1001,
+                    "completeness": "complete"
+                  }
+                },
+                "manifest": {
+                  "schema_version": "strange-physics.python-agent.v1",
+                  "source": {
+                    "artifact_id": "package-archive",
+                    "generation": "9007199254740993",
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "size_bytes": 500,
+                    "media_type": "application/gzip"
+                  },
+                  "agent_protocol": "strange-physics.agent.v1",
+                  "entrypoint": "agent:make_agent",
+                  "lock_profile": "uv-lock.v1",
+                  "lock_path": "uv.lock",
+                  "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              },
+              "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+              "entries": [
+                {
+                  "path": "agent.py",
+                  "kind": "file",
+                  "expanded_bytes": 100,
+                  "bytes_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+                },
+                {
+                  "path": "uv.lock",
+                  "kind": "file",
+                  "expanded_bytes": 200,
+                  "bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                }
+              ],
+              "observed_at": 1002
+            },
+            "lock": {
+              "verification_id": "lock-verification-1",
+              "verifier_id": "synthetic-lock-verifier",
+              "inspection_sha256": "ba3abe13f6ebffd9bf04e39fa1eabbf222fe6351427fcc91cf573d0635903324",
+              "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+              "outcome": "complete_pinned",
+              "observed_at": 1003
+            },
+            "build": {
+              "build_id": "build-1",
+              "verifier_id": "synthetic-build-verifier",
+              "provenance_verification_id": "provenance-1",
+              "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "source_sha256": "3afb08f34c4cdb39260b2ee62799d6c2d34434772d153bb3104ff61450b1dff5",
+              "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "recipe_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+              "completed_at": 1010,
+              "verified_at": 1011
+            }
+          },
+          "scan": {
+            "scan_id": "scan-submitted",
+            "verifier_id": "synthetic-scanner",
+            "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+            "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+            "outcome": "passed",
+            "observed_at": 1012,
+            "valid_until": 1800
+          },
+          "approval": {
+            "approval_id": "approval-submitted",
+            "revision": 1,
+            "state": "approved",
+            "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+            "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+            "scan_sha256": "527fe30fe4d1e72b7c5e1e52ef56ebd79a1a08d8ac0412192fbb621bae2bbe98",
+            "profile_sha256": "34fa3702ef516a0858b7b2ba3b51a5e10436a82ff4811cb1dcba8dc95e6993fa",
+            "decided_at": 1013
+          }
+        },
+        "original_credential_id": "worker-key-1",
+        "original_credential_generation": 1,
+        "run_revision": 4,
+        "credential_revision": 1,
+        "created_at": 1200,
+        "deadline": 1300
+      },
+      "run_revision": 4,
+      "committed_at": 1203,
+      "policy_sha256": "798c86d1a9fa38113bd51a87bf3b5b0497d8cc2333ed3552648edeffb2164f11",
+      "ledger_bytes_sha256": "51950a6d49e31872832d3ca5af81554464439d4f5a1604feccefc8c8c6731ea8",
+      "ledger_size_bytes": 1903,
+      "canonical_prefix_bytes": 1316
+    },
+    "ModelRegistrationOutbox": {
+      "event_id": "model-event-1",
+      "workspace_id": "workspace-1",
+      "run_id": "run-1",
+      "operation_id": "model-operation-1",
+      "model_id": "model-1",
+      "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+      "record_sha256": "87a3431732819cad6052c21daf210d9c82093f175af569437a35f52d84a9f6a3",
+      "committed_at": 1203
+    },
+    "ModelRegistrationLookup": {
+      "scope": {
+        "workspace_id": "workspace-1",
+        "principal_id": "principal-1",
+        "kind": "model_submission",
+        "resource_id": "run-1",
+        "key": "synthetic-model-key"
+      },
+      "stored": {
+        "scope": {
+          "workspace_id": "workspace-1",
+          "principal_id": "principal-1",
+          "kind": "model_submission",
+          "resource_id": "run-1",
+          "key": "synthetic-model-key"
+        },
+        "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+        "operation": {
+          "workspace_id": "workspace-1",
+          "run_id": "run-1",
+          "operation_id": "model-operation-1",
+          "kind": "model_submission",
+          "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+          "status": "completed",
+          "accepted_experiment_index": null,
+          "result": {
+            "kind": "model_submission",
+            "value": {
+              "model_id": "model-1",
+              "model_sha256": "ddcaa7f826d4cd5d4a27db1c41be8f02c5f52b07c77af847901a8f8f5df06189",
+              "through_index": 1
+            }
+          },
+          "error": null
+        }
+      },
+      "admission": {
+        "request": {
+          "model_artifact": {
+            "artifact_id": "artifact-1",
+            "generation": "9007199254740993",
+            "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+            "size_bytes": 377,
+            "media_type": "application/json"
+          },
+          "model_sha256": "ddcaa7f826d4cd5d4a27db1c41be8f02c5f52b07c77af847901a8f8f5df06189",
+          "through_index": 1,
+          "predictor_profile": "strange-physics.linear-spring-prediction.v1",
+          "predictor_version": "strange-physics.linear-spring.analytic.v1",
+          "prediction_request_schema": "strange-physics.prediction-request.v1",
+          "prediction_response_schema": "strange-physics.prediction-response.v1",
+          "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f",
+          "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+        "scope": {
+          "workspace_id": "workspace-1",
+          "principal_id": "principal-1",
+          "kind": "model_submission",
+          "resource_id": "run-1",
+          "key": "synthetic-model-key"
+        },
+        "operation_id": "model-operation-1",
+        "worker": {
+          "launch_id": "launch-1",
+          "request": {
+            "workspace_id": "workspace-1",
+            "run_id": "run-1",
+            "attempt_id": "attempt-1",
+            "lease_epoch": 3,
+            "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+            "approval_sha256": "7ce815d42e632a9be3a3173a97e6d89d12ffd3d3fd1c7cadead08691dcda8fd0",
+            "worker_policy_sha256": "ec0b1addf3be8277ee036edc06883c40664806fc3f679a3680cd27800fa5fd81",
+            "resources": {
+              "cpu_seconds": 60,
+              "wall_seconds": 100,
+              "memory_bytes": 134217728,
+              "process_count": 16,
+              "scratch_bytes": 1048576,
+              "output_bytes": 100000
+            },
+            "restore": null
+          },
+          "request_sha256": "638699d3aca957ab2356e5214ada7049bc5b26ce8c443b7fd2fe35d27f65796c",
+          "admission": {
+            "admission_id": "admission-1",
+            "request": {
+              "world_version_id": "world-version-1",
+              "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+              "track": "agent_discovery",
+              "experiment_budget": 6,
+              "limits": {
+                "max_cpu_seconds": 1000,
+                "max_wall_seconds": 1000,
+                "max_model_calls": 0,
+                "max_input_tokens": 0,
+                "max_output_tokens": 0,
+                "max_artifact_bytes": 1000000,
+                "max_provider_cost_microusd": 0
+              }
+            },
+            "stored_request": {
+              "scope": {
+                "workspace_id": "workspace-1",
+                "principal_id": "principal-1",
+                "kind": "run_creation",
+                "resource_id": "workspace-1",
+                "key": "create-run"
+              },
+              "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+              "operation": {
+                "workspace_id": "workspace-1",
+                "run_id": "run-1",
+                "operation_id": "creation-operation",
+                "kind": "run_creation",
+                "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+                "status": "completed",
+                "accepted_experiment_index": null,
+                "result": {
+                  "kind": "run_creation",
+                  "value": {
+                    "workspace_id": "workspace-1",
+                    "run_id": "run-1",
+                    "status": "queued",
+                    "revision": 0,
+                    "space": {
+                      "schema_version": "strange-physics.space.v1",
+                      "structure": {
+                        "particle_ids": [
+                          "p"
+                        ],
+                        "anchors": [
+                          {
+                            "id": "a",
+                            "position": [
+                              0.0,
+                              0.0
+                            ]
+                          }
+                        ],
+                        "connections": [
+                          {
+                            "a": "p",
+                            "b": "a"
+                          }
+                        ]
+                      },
+                      "sampling": {
+                        "duration": 0.1,
+                        "dt": 0.01,
+                        "sample_interval": 0.05,
+                        "position_noise": 0.0,
+                        "velocity_noise": 0.0
+                      },
+                      "limits": {
+                        "position_norm": 2.0,
+                        "velocity_norm": 2.0,
+                        "impulse_norm": 1.0,
+                        "min_mass": 0.5,
+                        "max_mass": 2.0
+                      },
+                      "budget": 6,
+                      "calibration_experiments": 2
+                    },
+                    "experiments_accepted": 0,
+                    "budget_remaining": 6
+                  }
+                },
+                "error": null
+              }
+            },
+            "admitted_run": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "status": "queued",
+              "revision": 0,
+              "space": {
+                "schema_version": "strange-physics.space.v1",
+                "structure": {
+                  "particle_ids": [
+                    "p"
+                  ],
+                  "anchors": [
+                    {
+                      "id": "a",
+                      "position": [
+                        0.0,
+                        0.0
+                      ]
+                    }
+                  ],
+                  "connections": [
+                    {
+                      "a": "p",
+                      "b": "a"
+                    }
+                  ]
+                },
+                "sampling": {
+                  "duration": 0.1,
+                  "dt": 0.01,
+                  "sample_interval": 0.05,
+                  "position_noise": 0.0,
+                  "velocity_noise": 0.0
+                },
+                "limits": {
+                  "position_norm": 2.0,
+                  "velocity_norm": 2.0,
+                  "impulse_norm": 1.0,
+                  "min_mass": 0.5,
+                  "max_mass": 2.0
+                },
+                "budget": 6,
+                "calibration_experiments": 2
+              },
+              "experiments_accepted": 0,
+              "budget_remaining": 6
+            },
+            "ownership": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "principal_id": "principal-1",
+              "principal_kind": "human",
+              "principal_generation": 0,
+              "grant_incarnation": 0,
+              "created_at": 1000,
+              "run_deadline": 2000,
+              "scopes": [
+                "checkpoints:write",
+                "experiments:read",
+                "experiments:write",
+                "models:write"
+              ],
+              "created_by_credential_id": "session-1"
+            },
+            "agent_configuration": {
+              "seed": 1
+            },
+            "checkpoint_binding": {
+              "agent_id": "synthetic-agent-seed1",
+              "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+              "agent_config_sha256": "fbe47f6d82b435a89f6e6fca65ad16138195de06c5fc3ffb66826a76e64e479f",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "checkpoint_protocol": "strange-physics.checkpoint.v1"
+            }
+          },
+          "approval": {
+            "kind": "submitted_agent",
+            "profile": {
+              "kind": "submitted_agent",
+              "agent_protocol": "strange-physics.agent.v1"
+            },
+            "build": {
+              "kind": "submitted_agent",
+              "inspection": {
+                "inspection_id": "inspection-1",
+                "inspector_id": "synthetic-inspector",
+                "source": {
+                  "archive": {
+                    "record": {
+                      "workspace_id": "workspace-1",
+                      "package_id": "package-1",
+                      "ref": {
+                        "artifact_id": "package-archive",
+                        "generation": "9007199254740993",
+                        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "size_bytes": 500,
+                        "media_type": "application/gzip"
+                      },
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-archive"
+                      },
+                      "state": "available",
+                      "revision": 1,
+                      "created_at": 1000
+                    },
+                    "verification": {
+                      "verification_id": "verify-package-archive",
+                      "verifier_id": "synthetic-reader",
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-archive"
+                      },
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip",
+                      "observed_at": 1001,
+                      "completeness": "complete"
+                    }
+                  },
+                  "manifest_object": {
+                    "record": {
+                      "workspace_id": "workspace-1",
+                      "package_id": "package-1",
+                      "ref": {
+                        "artifact_id": "package-manifest",
+                        "generation": "2",
+                        "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                        "size_bytes": 528,
+                        "media_type": "application/json"
+                      },
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-manifest"
+                      },
+                      "state": "available",
+                      "revision": 1,
+                      "created_at": 1000
+                    },
+                    "verification": {
+                      "verification_id": "verify-package-manifest",
+                      "verifier_id": "synthetic-reader",
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-manifest"
+                      },
+                      "generation": "2",
+                      "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                      "size_bytes": 528,
+                      "media_type": "application/json",
+                      "observed_at": 1001,
+                      "completeness": "complete"
+                    }
+                  },
+                  "manifest": {
+                    "schema_version": "strange-physics.python-agent.v1",
+                    "source": {
+                      "artifact_id": "package-archive",
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip"
+                    },
+                    "agent_protocol": "strange-physics.agent.v1",
+                    "entrypoint": "agent:make_agent",
+                    "lock_profile": "uv-lock.v1",
+                    "lock_path": "uv.lock",
+                    "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                },
+                "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "entries": [
+                  {
+                    "path": "agent.py",
+                    "kind": "file",
+                    "expanded_bytes": 100,
+                    "bytes_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+                  },
+                  {
+                    "path": "uv.lock",
+                    "kind": "file",
+                    "expanded_bytes": 200,
+                    "bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                ],
+                "observed_at": 1002
+              },
+              "lock": {
+                "verification_id": "lock-verification-1",
+                "verifier_id": "synthetic-lock-verifier",
+                "inspection_sha256": "ba3abe13f6ebffd9bf04e39fa1eabbf222fe6351427fcc91cf573d0635903324",
+                "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "outcome": "complete_pinned",
+                "observed_at": 1003
+              },
+              "build": {
+                "build_id": "build-1",
+                "verifier_id": "synthetic-build-verifier",
+                "provenance_verification_id": "provenance-1",
+                "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                "source_sha256": "3afb08f34c4cdb39260b2ee62799d6c2d34434772d153bb3104ff61450b1dff5",
+                "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "recipe_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "completed_at": 1010,
+                "verified_at": 1011
+              }
+            },
+            "scan": {
+              "scan_id": "scan-submitted",
+              "verifier_id": "synthetic-scanner",
+              "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+              "outcome": "passed",
+              "observed_at": 1012,
+              "valid_until": 1800
+            },
+            "approval": {
+              "approval_id": "approval-submitted",
+              "revision": 1,
+              "state": "approved",
+              "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+              "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+              "scan_sha256": "527fe30fe4d1e72b7c5e1e52ef56ebd79a1a08d8ac0412192fbb621bae2bbe98",
+              "profile_sha256": "34fa3702ef516a0858b7b2ba3b51a5e10436a82ff4811cb1dcba8dc95e6993fa",
+              "decided_at": 1013
+            }
+          },
+          "original_credential_id": "worker-key-1",
+          "original_credential_generation": 1,
+          "run_revision": 4,
+          "credential_revision": 1,
+          "created_at": 1200,
+          "deadline": 1300
+        },
+        "run_revision": 4,
+        "accepted_at": 1202
+      },
+      "record": {
+        "model_id": "model-1",
+        "submission": {
+          "request": {
+            "model_artifact": {
+              "artifact_id": "artifact-1",
+              "generation": "9007199254740993",
+              "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+              "size_bytes": 377,
+              "media_type": "application/json"
+            },
+            "model_sha256": "ddcaa7f826d4cd5d4a27db1c41be8f02c5f52b07c77af847901a8f8f5df06189",
+            "through_index": 1,
+            "predictor_profile": "strange-physics.linear-spring-prediction.v1",
+            "predictor_version": "strange-physics.linear-spring.analytic.v1",
+            "prediction_request_schema": "strange-physics.prediction-request.v1",
+            "prediction_response_schema": "strange-physics.prediction-response.v1",
+            "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f",
+            "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+          "scope": {
+            "workspace_id": "workspace-1",
+            "principal_id": "principal-1",
+            "kind": "model_submission",
+            "resource_id": "run-1",
+            "key": "synthetic-model-key"
+          },
+          "operation_id": "model-operation-1",
+          "worker": {
+            "launch_id": "launch-1",
+            "request": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "attempt_id": "attempt-1",
+              "lease_epoch": 3,
+              "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+              "approval_sha256": "7ce815d42e632a9be3a3173a97e6d89d12ffd3d3fd1c7cadead08691dcda8fd0",
+              "worker_policy_sha256": "ec0b1addf3be8277ee036edc06883c40664806fc3f679a3680cd27800fa5fd81",
+              "resources": {
+                "cpu_seconds": 60,
+                "wall_seconds": 100,
+                "memory_bytes": 134217728,
+                "process_count": 16,
+                "scratch_bytes": 1048576,
+                "output_bytes": 100000
+              },
+              "restore": null
+            },
+            "request_sha256": "638699d3aca957ab2356e5214ada7049bc5b26ce8c443b7fd2fe35d27f65796c",
+            "admission": {
+              "admission_id": "admission-1",
+              "request": {
+                "world_version_id": "world-version-1",
+                "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+                "track": "agent_discovery",
+                "experiment_budget": 6,
+                "limits": {
+                  "max_cpu_seconds": 1000,
+                  "max_wall_seconds": 1000,
+                  "max_model_calls": 0,
+                  "max_input_tokens": 0,
+                  "max_output_tokens": 0,
+                  "max_artifact_bytes": 1000000,
+                  "max_provider_cost_microusd": 0
+                }
+              },
+              "stored_request": {
+                "scope": {
+                  "workspace_id": "workspace-1",
+                  "principal_id": "principal-1",
+                  "kind": "run_creation",
+                  "resource_id": "workspace-1",
+                  "key": "create-run"
+                },
+                "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+                "operation": {
+                  "workspace_id": "workspace-1",
+                  "run_id": "run-1",
+                  "operation_id": "creation-operation",
+                  "kind": "run_creation",
+                  "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+                  "status": "completed",
+                  "accepted_experiment_index": null,
+                  "result": {
+                    "kind": "run_creation",
+                    "value": {
+                      "workspace_id": "workspace-1",
+                      "run_id": "run-1",
+                      "status": "queued",
+                      "revision": 0,
+                      "space": {
+                        "schema_version": "strange-physics.space.v1",
+                        "structure": {
+                          "particle_ids": [
+                            "p"
+                          ],
+                          "anchors": [
+                            {
+                              "id": "a",
+                              "position": [
+                                0.0,
+                                0.0
+                              ]
+                            }
+                          ],
+                          "connections": [
+                            {
+                              "a": "p",
+                              "b": "a"
+                            }
+                          ]
+                        },
+                        "sampling": {
+                          "duration": 0.1,
+                          "dt": 0.01,
+                          "sample_interval": 0.05,
+                          "position_noise": 0.0,
+                          "velocity_noise": 0.0
+                        },
+                        "limits": {
+                          "position_norm": 2.0,
+                          "velocity_norm": 2.0,
+                          "impulse_norm": 1.0,
+                          "min_mass": 0.5,
+                          "max_mass": 2.0
+                        },
+                        "budget": 6,
+                        "calibration_experiments": 2
+                      },
+                      "experiments_accepted": 0,
+                      "budget_remaining": 6
+                    }
+                  },
+                  "error": null
+                }
+              },
+              "admitted_run": {
+                "workspace_id": "workspace-1",
+                "run_id": "run-1",
+                "status": "queued",
+                "revision": 0,
+                "space": {
+                  "schema_version": "strange-physics.space.v1",
+                  "structure": {
+                    "particle_ids": [
+                      "p"
+                    ],
+                    "anchors": [
+                      {
+                        "id": "a",
+                        "position": [
+                          0.0,
+                          0.0
+                        ]
+                      }
+                    ],
+                    "connections": [
+                      {
+                        "a": "p",
+                        "b": "a"
+                      }
+                    ]
+                  },
+                  "sampling": {
+                    "duration": 0.1,
+                    "dt": 0.01,
+                    "sample_interval": 0.05,
+                    "position_noise": 0.0,
+                    "velocity_noise": 0.0
+                  },
+                  "limits": {
+                    "position_norm": 2.0,
+                    "velocity_norm": 2.0,
+                    "impulse_norm": 1.0,
+                    "min_mass": 0.5,
+                    "max_mass": 2.0
+                  },
+                  "budget": 6,
+                  "calibration_experiments": 2
+                },
+                "experiments_accepted": 0,
+                "budget_remaining": 6
+              },
+              "ownership": {
+                "workspace_id": "workspace-1",
+                "run_id": "run-1",
+                "principal_id": "principal-1",
+                "principal_kind": "human",
+                "principal_generation": 0,
+                "grant_incarnation": 0,
+                "created_at": 1000,
+                "run_deadline": 2000,
+                "scopes": [
+                  "checkpoints:write",
+                  "experiments:read",
+                  "experiments:write",
+                  "models:write"
+                ],
+                "created_by_credential_id": "session-1"
+              },
+              "agent_configuration": {
+                "seed": 1
+              },
+              "checkpoint_binding": {
+                "agent_id": "synthetic-agent-seed1",
+                "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+                "agent_config_sha256": "fbe47f6d82b435a89f6e6fca65ad16138195de06c5fc3ffb66826a76e64e479f",
+                "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                "checkpoint_protocol": "strange-physics.checkpoint.v1"
+              }
+            },
+            "approval": {
+              "kind": "submitted_agent",
+              "profile": {
+                "kind": "submitted_agent",
+                "agent_protocol": "strange-physics.agent.v1"
+              },
+              "build": {
+                "kind": "submitted_agent",
+                "inspection": {
+                  "inspection_id": "inspection-1",
+                  "inspector_id": "synthetic-inspector",
+                  "source": {
+                    "archive": {
+                      "record": {
+                        "workspace_id": "workspace-1",
+                        "package_id": "package-1",
+                        "ref": {
+                          "artifact_id": "package-archive",
+                          "generation": "9007199254740993",
+                          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                          "size_bytes": 500,
+                          "media_type": "application/gzip"
+                        },
+                        "locator": {
+                          "provider": "gcs",
+                          "namespace_id": "synthetic-package-space",
+                          "object_key": "package-1/package-archive"
+                        },
+                        "state": "available",
+                        "revision": 1,
+                        "created_at": 1000
+                      },
+                      "verification": {
+                        "verification_id": "verify-package-archive",
+                        "verifier_id": "synthetic-reader",
+                        "locator": {
+                          "provider": "gcs",
+                          "namespace_id": "synthetic-package-space",
+                          "object_key": "package-1/package-archive"
+                        },
+                        "generation": "9007199254740993",
+                        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "size_bytes": 500,
+                        "media_type": "application/gzip",
+                        "observed_at": 1001,
+                        "completeness": "complete"
+                      }
+                    },
+                    "manifest_object": {
+                      "record": {
+                        "workspace_id": "workspace-1",
+                        "package_id": "package-1",
+                        "ref": {
+                          "artifact_id": "package-manifest",
+                          "generation": "2",
+                          "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                          "size_bytes": 528,
+                          "media_type": "application/json"
+                        },
+                        "locator": {
+                          "provider": "gcs",
+                          "namespace_id": "synthetic-package-space",
+                          "object_key": "package-1/package-manifest"
+                        },
+                        "state": "available",
+                        "revision": 1,
+                        "created_at": 1000
+                      },
+                      "verification": {
+                        "verification_id": "verify-package-manifest",
+                        "verifier_id": "synthetic-reader",
+                        "locator": {
+                          "provider": "gcs",
+                          "namespace_id": "synthetic-package-space",
+                          "object_key": "package-1/package-manifest"
+                        },
+                        "generation": "2",
+                        "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                        "size_bytes": 528,
+                        "media_type": "application/json",
+                        "observed_at": 1001,
+                        "completeness": "complete"
+                      }
+                    },
+                    "manifest": {
+                      "schema_version": "strange-physics.python-agent.v1",
+                      "source": {
+                        "artifact_id": "package-archive",
+                        "generation": "9007199254740993",
+                        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "size_bytes": 500,
+                        "media_type": "application/gzip"
+                      },
+                      "agent_protocol": "strange-physics.agent.v1",
+                      "entrypoint": "agent:make_agent",
+                      "lock_profile": "uv-lock.v1",
+                      "lock_path": "uv.lock",
+                      "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                    }
+                  },
+                  "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                  "entries": [
+                    {
+                      "path": "agent.py",
+                      "kind": "file",
+                      "expanded_bytes": 100,
+                      "bytes_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+                    },
+                    {
+                      "path": "uv.lock",
+                      "kind": "file",
+                      "expanded_bytes": 200,
+                      "bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                    }
+                  ],
+                  "observed_at": 1002
+                },
+                "lock": {
+                  "verification_id": "lock-verification-1",
+                  "verifier_id": "synthetic-lock-verifier",
+                  "inspection_sha256": "ba3abe13f6ebffd9bf04e39fa1eabbf222fe6351427fcc91cf573d0635903324",
+                  "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                  "outcome": "complete_pinned",
+                  "observed_at": 1003
+                },
+                "build": {
+                  "build_id": "build-1",
+                  "verifier_id": "synthetic-build-verifier",
+                  "provenance_verification_id": "provenance-1",
+                  "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_sha256": "3afb08f34c4cdb39260b2ee62799d6c2d34434772d153bb3104ff61450b1dff5",
+                  "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "recipe_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                  "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                  "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                  "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                  "completed_at": 1010,
+                  "verified_at": 1011
+                }
+              },
+              "scan": {
+                "scan_id": "scan-submitted",
+                "verifier_id": "synthetic-scanner",
+                "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+                "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+                "outcome": "passed",
+                "observed_at": 1012,
+                "valid_until": 1800
+              },
+              "approval": {
+                "approval_id": "approval-submitted",
+                "revision": 1,
+                "state": "approved",
+                "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+                "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+                "scan_sha256": "527fe30fe4d1e72b7c5e1e52ef56ebd79a1a08d8ac0412192fbb621bae2bbe98",
+                "profile_sha256": "34fa3702ef516a0858b7b2ba3b51a5e10436a82ff4811cb1dcba8dc95e6993fa",
+                "decided_at": 1013
+              }
+            },
+            "original_credential_id": "worker-key-1",
+            "original_credential_generation": 1,
+            "run_revision": 4,
+            "credential_revision": 1,
+            "created_at": 1200,
+            "deadline": 1300
+          },
+          "run_revision": 4,
+          "accepted_at": 1202
+        },
+        "model": {
+          "schema_version": "strange-physics.linear-spring-model.v1",
+          "linear": 5.0,
+          "through_index": 1,
+          "fit_record_indices": [
+            0
+          ],
+          "observation_sha256": "1efd8c85a69f77a4b134a5aebbd7cde03b4f084769ea22a1c253292c86e238c7",
+          "fitter_version": "unrecognized-but-valid-fitter",
+          "fit_config_sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "artifact": {
+          "record": {
+            "workspace_id": "workspace-1",
+            "run_id": "run-1",
+            "ref": {
+              "artifact_id": "artifact-1",
+              "generation": "9007199254740993",
+              "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+              "size_bytes": 377,
+              "media_type": "application/json"
+            },
+            "locator": {
+              "provider": "gcs",
+              "namespace_id": "checkpoint-storage",
+              "object_key": "ws-1/run-1/artifact-1"
+            },
+            "visibility": "agent-visible",
+            "state": "available",
+            "revision": 2,
+            "created_at": 100
+          },
+          "verification": {
+            "verification_id": "verification-1",
+            "verifier_id": "storage-reader-1",
+            "locator": {
+              "provider": "gcs",
+              "namespace_id": "checkpoint-storage",
+              "object_key": "ws-1/run-1/artifact-1"
+            },
+            "generation": "9007199254740993",
+            "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+            "size_bytes": 377,
+            "media_type": "application/json",
+            "observed_at": 1203,
+            "completeness": "complete"
+          }
+        },
+        "prediction_config": {
+          "schema_version": "strange-physics.spring-prediction-config.v1",
+          "predictor_version": "strange-physics.linear-spring.analytic.v1",
+          "supported_model_version": "strange-physics.linear-spring-model.v1",
+          "supported_fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+          "supported_fit_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+          "equation": "stationary-shared-zero-rest-linear-spring.v1",
+          "algorithm": "closed-form-oscillator-sinc.v1",
+          "time_policy": "exact-requested-times.v1",
+          "step_policy": "alignment-replay-metadata-only.v1",
+          "failure_policy": "no-partial-response.v1",
+          "particle_count": 1,
+          "anchor_count": 1,
+          "connection_count": 1,
+          "coordinates": 2,
+          "min_coefficient": 0.0,
+          "max_coefficient": 4.0,
+          "min_mass": 0.5,
+          "max_mass": 2.0,
+          "max_anchor_norm": 0.5,
+          "max_initial_position_norm": 3.0,
+          "max_initial_velocity_norm": 2.0,
+          "max_impulse_norm": 1.0,
+          "max_horizon": 2.0,
+          "min_integration_dt": 0.0001,
+          "max_integration_dt": 0.05,
+          "max_reference_steps": 20000,
+          "max_output_frames": 2001,
+          "max_output_position_norm": 12.0,
+          "max_output_velocity_norm": 14.0
+        },
+        "approval": {
+          "kind": "builtin_analytic",
+          "profile": {
+            "kind": "builtin_analytic",
+            "purpose": "native_prediction",
+            "predictor_profile": "strange-physics.linear-spring-prediction.v1",
+            "predictor_version": "strange-physics.linear-spring.analytic.v1",
+            "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f"
+          },
+          "build": {
+            "kind": "builtin_analytic",
+            "source": {
+              "repository_id": "synthetic-trusted-source",
+              "commit": "6666666666666666666666666666666666666666",
+              "tree": "7777777777777777777777777777777777777777",
+              "lock_bytes_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+              "recipe_sha256": "9999999999999999999999999999999999999999999999999999999999999999"
+            },
+            "build": {
+              "build_id": "builtin-build-1",
+              "verifier_id": "synthetic-build-verifier",
+              "provenance_verification_id": "builtin-provenance-1",
+              "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "source_sha256": "d225ef16dc1afab3dc3868b230e1206ef020d942fb0ba079d9e194398c64ac1c",
+              "lock_bytes_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+              "recipe_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+              "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+              "completed_at": 1010,
+              "verified_at": 1011
+            }
+          },
+          "scan": {
+            "scan_id": "scan-builtin",
+            "verifier_id": "synthetic-scanner",
+            "build_sha256": "575b6c4cfd4679763cf6ee6aba53840023dd6c7b502505a513c0df838c4767f4",
+            "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+            "outcome": "passed",
+            "observed_at": 1012,
+            "valid_until": 1800
+          },
+          "approval": {
+            "approval_id": "approval-builtin",
+            "revision": 1,
+            "state": "approved",
+            "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+            "build_sha256": "575b6c4cfd4679763cf6ee6aba53840023dd6c7b502505a513c0df838c4767f4",
+            "scan_sha256": "5ed2b427ff1e1f2861ff7d4bd95e71142a29e5f0455a56a3ee2409371ff5eb71",
+            "profile_sha256": "e25170b0efd24cc24160d325e08de0a719e39b8c2d1c32e5a3207cf6d753b6b2",
+            "decided_at": 1013
+          }
+        },
+        "engine": {
+          "workspace_id": "workspace-1",
+          "run_id": "run-1",
+          "admission_id": "admission-1",
+          "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+          "creation_request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+          "world_version_id": "world-version-1",
+          "ownership_sha256": "59283eaae819d20bdc24596fa98cd56e978ede039440658e9aa629303a33d4ee",
+          "space_sha256": "3fa943a87fba379f8f5b81cdb2ada8ab9c1b23333ba1b29d674890c30e9cc84c",
+          "engine_version": "synthetic-original-engine",
+          "engine_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+          "committed_at": 1000
+        },
+        "worker": {
+          "launch_id": "launch-1",
+          "request": {
+            "workspace_id": "workspace-1",
+            "run_id": "run-1",
+            "attempt_id": "attempt-1",
+            "lease_epoch": 3,
+            "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+            "approval_sha256": "7ce815d42e632a9be3a3173a97e6d89d12ffd3d3fd1c7cadead08691dcda8fd0",
+            "worker_policy_sha256": "ec0b1addf3be8277ee036edc06883c40664806fc3f679a3680cd27800fa5fd81",
+            "resources": {
+              "cpu_seconds": 60,
+              "wall_seconds": 100,
+              "memory_bytes": 134217728,
+              "process_count": 16,
+              "scratch_bytes": 1048576,
+              "output_bytes": 100000
+            },
+            "restore": null
+          },
+          "request_sha256": "638699d3aca957ab2356e5214ada7049bc5b26ce8c443b7fd2fe35d27f65796c",
+          "admission": {
+            "admission_id": "admission-1",
+            "request": {
+              "world_version_id": "world-version-1",
+              "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+              "track": "agent_discovery",
+              "experiment_budget": 6,
+              "limits": {
+                "max_cpu_seconds": 1000,
+                "max_wall_seconds": 1000,
+                "max_model_calls": 0,
+                "max_input_tokens": 0,
+                "max_output_tokens": 0,
+                "max_artifact_bytes": 1000000,
+                "max_provider_cost_microusd": 0
+              }
+            },
+            "stored_request": {
+              "scope": {
+                "workspace_id": "workspace-1",
+                "principal_id": "principal-1",
+                "kind": "run_creation",
+                "resource_id": "workspace-1",
+                "key": "create-run"
+              },
+              "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+              "operation": {
+                "workspace_id": "workspace-1",
+                "run_id": "run-1",
+                "operation_id": "creation-operation",
+                "kind": "run_creation",
+                "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+                "status": "completed",
+                "accepted_experiment_index": null,
+                "result": {
+                  "kind": "run_creation",
+                  "value": {
+                    "workspace_id": "workspace-1",
+                    "run_id": "run-1",
+                    "status": "queued",
+                    "revision": 0,
+                    "space": {
+                      "schema_version": "strange-physics.space.v1",
+                      "structure": {
+                        "particle_ids": [
+                          "p"
+                        ],
+                        "anchors": [
+                          {
+                            "id": "a",
+                            "position": [
+                              0.0,
+                              0.0
+                            ]
+                          }
+                        ],
+                        "connections": [
+                          {
+                            "a": "p",
+                            "b": "a"
+                          }
+                        ]
+                      },
+                      "sampling": {
+                        "duration": 0.1,
+                        "dt": 0.01,
+                        "sample_interval": 0.05,
+                        "position_noise": 0.0,
+                        "velocity_noise": 0.0
+                      },
+                      "limits": {
+                        "position_norm": 2.0,
+                        "velocity_norm": 2.0,
+                        "impulse_norm": 1.0,
+                        "min_mass": 0.5,
+                        "max_mass": 2.0
+                      },
+                      "budget": 6,
+                      "calibration_experiments": 2
+                    },
+                    "experiments_accepted": 0,
+                    "budget_remaining": 6
+                  }
+                },
+                "error": null
+              }
+            },
+            "admitted_run": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "status": "queued",
+              "revision": 0,
+              "space": {
+                "schema_version": "strange-physics.space.v1",
+                "structure": {
+                  "particle_ids": [
+                    "p"
+                  ],
+                  "anchors": [
+                    {
+                      "id": "a",
+                      "position": [
+                        0.0,
+                        0.0
+                      ]
+                    }
+                  ],
+                  "connections": [
+                    {
+                      "a": "p",
+                      "b": "a"
+                    }
+                  ]
+                },
+                "sampling": {
+                  "duration": 0.1,
+                  "dt": 0.01,
+                  "sample_interval": 0.05,
+                  "position_noise": 0.0,
+                  "velocity_noise": 0.0
+                },
+                "limits": {
+                  "position_norm": 2.0,
+                  "velocity_norm": 2.0,
+                  "impulse_norm": 1.0,
+                  "min_mass": 0.5,
+                  "max_mass": 2.0
+                },
+                "budget": 6,
+                "calibration_experiments": 2
+              },
+              "experiments_accepted": 0,
+              "budget_remaining": 6
+            },
+            "ownership": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "principal_id": "principal-1",
+              "principal_kind": "human",
+              "principal_generation": 0,
+              "grant_incarnation": 0,
+              "created_at": 1000,
+              "run_deadline": 2000,
+              "scopes": [
+                "checkpoints:write",
+                "experiments:read",
+                "experiments:write",
+                "models:write"
+              ],
+              "created_by_credential_id": "session-1"
+            },
+            "agent_configuration": {
+              "seed": 1
+            },
+            "checkpoint_binding": {
+              "agent_id": "synthetic-agent-seed1",
+              "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+              "agent_config_sha256": "fbe47f6d82b435a89f6e6fca65ad16138195de06c5fc3ffb66826a76e64e479f",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "checkpoint_protocol": "strange-physics.checkpoint.v1"
+            }
+          },
+          "approval": {
+            "kind": "submitted_agent",
+            "profile": {
+              "kind": "submitted_agent",
+              "agent_protocol": "strange-physics.agent.v1"
+            },
+            "build": {
+              "kind": "submitted_agent",
+              "inspection": {
+                "inspection_id": "inspection-1",
+                "inspector_id": "synthetic-inspector",
+                "source": {
+                  "archive": {
+                    "record": {
+                      "workspace_id": "workspace-1",
+                      "package_id": "package-1",
+                      "ref": {
+                        "artifact_id": "package-archive",
+                        "generation": "9007199254740993",
+                        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "size_bytes": 500,
+                        "media_type": "application/gzip"
+                      },
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-archive"
+                      },
+                      "state": "available",
+                      "revision": 1,
+                      "created_at": 1000
+                    },
+                    "verification": {
+                      "verification_id": "verify-package-archive",
+                      "verifier_id": "synthetic-reader",
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-archive"
+                      },
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip",
+                      "observed_at": 1001,
+                      "completeness": "complete"
+                    }
+                  },
+                  "manifest_object": {
+                    "record": {
+                      "workspace_id": "workspace-1",
+                      "package_id": "package-1",
+                      "ref": {
+                        "artifact_id": "package-manifest",
+                        "generation": "2",
+                        "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                        "size_bytes": 528,
+                        "media_type": "application/json"
+                      },
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-manifest"
+                      },
+                      "state": "available",
+                      "revision": 1,
+                      "created_at": 1000
+                    },
+                    "verification": {
+                      "verification_id": "verify-package-manifest",
+                      "verifier_id": "synthetic-reader",
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-manifest"
+                      },
+                      "generation": "2",
+                      "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                      "size_bytes": 528,
+                      "media_type": "application/json",
+                      "observed_at": 1001,
+                      "completeness": "complete"
+                    }
+                  },
+                  "manifest": {
+                    "schema_version": "strange-physics.python-agent.v1",
+                    "source": {
+                      "artifact_id": "package-archive",
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip"
+                    },
+                    "agent_protocol": "strange-physics.agent.v1",
+                    "entrypoint": "agent:make_agent",
+                    "lock_profile": "uv-lock.v1",
+                    "lock_path": "uv.lock",
+                    "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                },
+                "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "entries": [
+                  {
+                    "path": "agent.py",
+                    "kind": "file",
+                    "expanded_bytes": 100,
+                    "bytes_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+                  },
+                  {
+                    "path": "uv.lock",
+                    "kind": "file",
+                    "expanded_bytes": 200,
+                    "bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                ],
+                "observed_at": 1002
+              },
+              "lock": {
+                "verification_id": "lock-verification-1",
+                "verifier_id": "synthetic-lock-verifier",
+                "inspection_sha256": "ba3abe13f6ebffd9bf04e39fa1eabbf222fe6351427fcc91cf573d0635903324",
+                "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "outcome": "complete_pinned",
+                "observed_at": 1003
+              },
+              "build": {
+                "build_id": "build-1",
+                "verifier_id": "synthetic-build-verifier",
+                "provenance_verification_id": "provenance-1",
+                "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                "source_sha256": "3afb08f34c4cdb39260b2ee62799d6c2d34434772d153bb3104ff61450b1dff5",
+                "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "recipe_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "completed_at": 1010,
+                "verified_at": 1011
+              }
+            },
+            "scan": {
+              "scan_id": "scan-submitted",
+              "verifier_id": "synthetic-scanner",
+              "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+              "outcome": "passed",
+              "observed_at": 1012,
+              "valid_until": 1800
+            },
+            "approval": {
+              "approval_id": "approval-submitted",
+              "revision": 1,
+              "state": "approved",
+              "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+              "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+              "scan_sha256": "527fe30fe4d1e72b7c5e1e52ef56ebd79a1a08d8ac0412192fbb621bae2bbe98",
+              "profile_sha256": "34fa3702ef516a0858b7b2ba3b51a5e10436a82ff4811cb1dcba8dc95e6993fa",
+              "decided_at": 1013
+            }
+          },
+          "original_credential_id": "worker-key-1",
+          "original_credential_generation": 1,
+          "run_revision": 4,
+          "credential_revision": 1,
+          "created_at": 1200,
+          "deadline": 1300
+        },
+        "run_revision": 4,
+        "committed_at": 1203,
+        "policy_sha256": "798c86d1a9fa38113bd51a87bf3b5b0497d8cc2333ed3552648edeffb2164f11",
+        "ledger_bytes_sha256": "51950a6d49e31872832d3ca5af81554464439d4f5a1604feccefc8c8c6731ea8",
+        "ledger_size_bytes": 1903,
+        "canonical_prefix_bytes": 1316
+      },
+      "outbox": {
+        "event_id": "model-event-1",
+        "workspace_id": "workspace-1",
+        "run_id": "run-1",
+        "operation_id": "model-operation-1",
+        "model_id": "model-1",
+        "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+        "record_sha256": "87a3431732819cad6052c21daf210d9c82093f175af569437a35f52d84a9f6a3",
+        "committed_at": 1203
+      }
+    },
+    "ModelAdmissionPlan": {
+      "admission": {
+        "request": {
+          "model_artifact": {
+            "artifact_id": "artifact-1",
+            "generation": "9007199254740993",
+            "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+            "size_bytes": 377,
+            "media_type": "application/json"
+          },
+          "model_sha256": "ddcaa7f826d4cd5d4a27db1c41be8f02c5f52b07c77af847901a8f8f5df06189",
+          "through_index": 1,
+          "predictor_profile": "strange-physics.linear-spring-prediction.v1",
+          "predictor_version": "strange-physics.linear-spring.analytic.v1",
+          "prediction_request_schema": "strange-physics.prediction-request.v1",
+          "prediction_response_schema": "strange-physics.prediction-response.v1",
+          "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f",
+          "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+        "scope": {
+          "workspace_id": "workspace-1",
+          "principal_id": "principal-1",
+          "kind": "model_submission",
+          "resource_id": "run-1",
+          "key": "synthetic-model-key"
+        },
+        "operation_id": "model-operation-1",
+        "worker": {
+          "launch_id": "launch-1",
+          "request": {
+            "workspace_id": "workspace-1",
+            "run_id": "run-1",
+            "attempt_id": "attempt-1",
+            "lease_epoch": 3,
+            "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+            "approval_sha256": "7ce815d42e632a9be3a3173a97e6d89d12ffd3d3fd1c7cadead08691dcda8fd0",
+            "worker_policy_sha256": "ec0b1addf3be8277ee036edc06883c40664806fc3f679a3680cd27800fa5fd81",
+            "resources": {
+              "cpu_seconds": 60,
+              "wall_seconds": 100,
+              "memory_bytes": 134217728,
+              "process_count": 16,
+              "scratch_bytes": 1048576,
+              "output_bytes": 100000
+            },
+            "restore": null
+          },
+          "request_sha256": "638699d3aca957ab2356e5214ada7049bc5b26ce8c443b7fd2fe35d27f65796c",
+          "admission": {
+            "admission_id": "admission-1",
+            "request": {
+              "world_version_id": "world-version-1",
+              "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+              "track": "agent_discovery",
+              "experiment_budget": 6,
+              "limits": {
+                "max_cpu_seconds": 1000,
+                "max_wall_seconds": 1000,
+                "max_model_calls": 0,
+                "max_input_tokens": 0,
+                "max_output_tokens": 0,
+                "max_artifact_bytes": 1000000,
+                "max_provider_cost_microusd": 0
+              }
+            },
+            "stored_request": {
+              "scope": {
+                "workspace_id": "workspace-1",
+                "principal_id": "principal-1",
+                "kind": "run_creation",
+                "resource_id": "workspace-1",
+                "key": "create-run"
+              },
+              "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+              "operation": {
+                "workspace_id": "workspace-1",
+                "run_id": "run-1",
+                "operation_id": "creation-operation",
+                "kind": "run_creation",
+                "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+                "status": "completed",
+                "accepted_experiment_index": null,
+                "result": {
+                  "kind": "run_creation",
+                  "value": {
+                    "workspace_id": "workspace-1",
+                    "run_id": "run-1",
+                    "status": "queued",
+                    "revision": 0,
+                    "space": {
+                      "schema_version": "strange-physics.space.v1",
+                      "structure": {
+                        "particle_ids": [
+                          "p"
+                        ],
+                        "anchors": [
+                          {
+                            "id": "a",
+                            "position": [
+                              0.0,
+                              0.0
+                            ]
+                          }
+                        ],
+                        "connections": [
+                          {
+                            "a": "p",
+                            "b": "a"
+                          }
+                        ]
+                      },
+                      "sampling": {
+                        "duration": 0.1,
+                        "dt": 0.01,
+                        "sample_interval": 0.05,
+                        "position_noise": 0.0,
+                        "velocity_noise": 0.0
+                      },
+                      "limits": {
+                        "position_norm": 2.0,
+                        "velocity_norm": 2.0,
+                        "impulse_norm": 1.0,
+                        "min_mass": 0.5,
+                        "max_mass": 2.0
+                      },
+                      "budget": 6,
+                      "calibration_experiments": 2
+                    },
+                    "experiments_accepted": 0,
+                    "budget_remaining": 6
+                  }
+                },
+                "error": null
+              }
+            },
+            "admitted_run": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "status": "queued",
+              "revision": 0,
+              "space": {
+                "schema_version": "strange-physics.space.v1",
+                "structure": {
+                  "particle_ids": [
+                    "p"
+                  ],
+                  "anchors": [
+                    {
+                      "id": "a",
+                      "position": [
+                        0.0,
+                        0.0
+                      ]
+                    }
+                  ],
+                  "connections": [
+                    {
+                      "a": "p",
+                      "b": "a"
+                    }
+                  ]
+                },
+                "sampling": {
+                  "duration": 0.1,
+                  "dt": 0.01,
+                  "sample_interval": 0.05,
+                  "position_noise": 0.0,
+                  "velocity_noise": 0.0
+                },
+                "limits": {
+                  "position_norm": 2.0,
+                  "velocity_norm": 2.0,
+                  "impulse_norm": 1.0,
+                  "min_mass": 0.5,
+                  "max_mass": 2.0
+                },
+                "budget": 6,
+                "calibration_experiments": 2
+              },
+              "experiments_accepted": 0,
+              "budget_remaining": 6
+            },
+            "ownership": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "principal_id": "principal-1",
+              "principal_kind": "human",
+              "principal_generation": 0,
+              "grant_incarnation": 0,
+              "created_at": 1000,
+              "run_deadline": 2000,
+              "scopes": [
+                "checkpoints:write",
+                "experiments:read",
+                "experiments:write",
+                "models:write"
+              ],
+              "created_by_credential_id": "session-1"
+            },
+            "agent_configuration": {
+              "seed": 1
+            },
+            "checkpoint_binding": {
+              "agent_id": "synthetic-agent-seed1",
+              "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+              "agent_config_sha256": "fbe47f6d82b435a89f6e6fca65ad16138195de06c5fc3ffb66826a76e64e479f",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "checkpoint_protocol": "strange-physics.checkpoint.v1"
+            }
+          },
+          "approval": {
+            "kind": "submitted_agent",
+            "profile": {
+              "kind": "submitted_agent",
+              "agent_protocol": "strange-physics.agent.v1"
+            },
+            "build": {
+              "kind": "submitted_agent",
+              "inspection": {
+                "inspection_id": "inspection-1",
+                "inspector_id": "synthetic-inspector",
+                "source": {
+                  "archive": {
+                    "record": {
+                      "workspace_id": "workspace-1",
+                      "package_id": "package-1",
+                      "ref": {
+                        "artifact_id": "package-archive",
+                        "generation": "9007199254740993",
+                        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "size_bytes": 500,
+                        "media_type": "application/gzip"
+                      },
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-archive"
+                      },
+                      "state": "available",
+                      "revision": 1,
+                      "created_at": 1000
+                    },
+                    "verification": {
+                      "verification_id": "verify-package-archive",
+                      "verifier_id": "synthetic-reader",
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-archive"
+                      },
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip",
+                      "observed_at": 1001,
+                      "completeness": "complete"
+                    }
+                  },
+                  "manifest_object": {
+                    "record": {
+                      "workspace_id": "workspace-1",
+                      "package_id": "package-1",
+                      "ref": {
+                        "artifact_id": "package-manifest",
+                        "generation": "2",
+                        "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                        "size_bytes": 528,
+                        "media_type": "application/json"
+                      },
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-manifest"
+                      },
+                      "state": "available",
+                      "revision": 1,
+                      "created_at": 1000
+                    },
+                    "verification": {
+                      "verification_id": "verify-package-manifest",
+                      "verifier_id": "synthetic-reader",
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-manifest"
+                      },
+                      "generation": "2",
+                      "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                      "size_bytes": 528,
+                      "media_type": "application/json",
+                      "observed_at": 1001,
+                      "completeness": "complete"
+                    }
+                  },
+                  "manifest": {
+                    "schema_version": "strange-physics.python-agent.v1",
+                    "source": {
+                      "artifact_id": "package-archive",
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip"
+                    },
+                    "agent_protocol": "strange-physics.agent.v1",
+                    "entrypoint": "agent:make_agent",
+                    "lock_profile": "uv-lock.v1",
+                    "lock_path": "uv.lock",
+                    "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                },
+                "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "entries": [
+                  {
+                    "path": "agent.py",
+                    "kind": "file",
+                    "expanded_bytes": 100,
+                    "bytes_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+                  },
+                  {
+                    "path": "uv.lock",
+                    "kind": "file",
+                    "expanded_bytes": 200,
+                    "bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                ],
+                "observed_at": 1002
+              },
+              "lock": {
+                "verification_id": "lock-verification-1",
+                "verifier_id": "synthetic-lock-verifier",
+                "inspection_sha256": "ba3abe13f6ebffd9bf04e39fa1eabbf222fe6351427fcc91cf573d0635903324",
+                "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "outcome": "complete_pinned",
+                "observed_at": 1003
+              },
+              "build": {
+                "build_id": "build-1",
+                "verifier_id": "synthetic-build-verifier",
+                "provenance_verification_id": "provenance-1",
+                "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                "source_sha256": "3afb08f34c4cdb39260b2ee62799d6c2d34434772d153bb3104ff61450b1dff5",
+                "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "recipe_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "completed_at": 1010,
+                "verified_at": 1011
+              }
+            },
+            "scan": {
+              "scan_id": "scan-submitted",
+              "verifier_id": "synthetic-scanner",
+              "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+              "outcome": "passed",
+              "observed_at": 1012,
+              "valid_until": 1800
+            },
+            "approval": {
+              "approval_id": "approval-submitted",
+              "revision": 1,
+              "state": "approved",
+              "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+              "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+              "scan_sha256": "527fe30fe4d1e72b7c5e1e52ef56ebd79a1a08d8ac0412192fbb621bae2bbe98",
+              "profile_sha256": "34fa3702ef516a0858b7b2ba3b51a5e10436a82ff4811cb1dcba8dc95e6993fa",
+              "decided_at": 1013
+            }
+          },
+          "original_credential_id": "worker-key-1",
+          "original_credential_generation": 1,
+          "run_revision": 4,
+          "credential_revision": 1,
+          "created_at": 1200,
+          "deadline": 1300
+        },
+        "run_revision": 4,
+        "accepted_at": 1202
+      },
+      "stored": {
+        "scope": {
+          "workspace_id": "workspace-1",
+          "principal_id": "principal-1",
+          "kind": "model_submission",
+          "resource_id": "run-1",
+          "key": "synthetic-model-key"
+        },
+        "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+        "operation": {
+          "workspace_id": "workspace-1",
+          "run_id": "run-1",
+          "operation_id": "model-operation-1",
+          "kind": "model_submission",
+          "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+          "status": "pending",
+          "accepted_experiment_index": null,
+          "result": null,
+          "error": null
+        }
+      }
+    },
+    "ModelCommitPlan": {
+      "before": {
+        "scope": {
+          "workspace_id": "workspace-1",
+          "principal_id": "principal-1",
+          "kind": "model_submission",
+          "resource_id": "run-1",
+          "key": "synthetic-model-key"
+        },
+        "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+        "operation": {
+          "workspace_id": "workspace-1",
+          "run_id": "run-1",
+          "operation_id": "model-operation-1",
+          "kind": "model_submission",
+          "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+          "status": "pending",
+          "accepted_experiment_index": null,
+          "result": null,
+          "error": null
+        }
+      },
+      "after": {
+        "scope": {
+          "workspace_id": "workspace-1",
+          "principal_id": "principal-1",
+          "kind": "model_submission",
+          "resource_id": "run-1",
+          "key": "synthetic-model-key"
+        },
+        "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+        "operation": {
+          "workspace_id": "workspace-1",
+          "run_id": "run-1",
+          "operation_id": "model-operation-1",
+          "kind": "model_submission",
+          "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+          "status": "completed",
+          "accepted_experiment_index": null,
+          "result": {
+            "kind": "model_submission",
+            "value": {
+              "model_id": "model-1",
+              "model_sha256": "ddcaa7f826d4cd5d4a27db1c41be8f02c5f52b07c77af847901a8f8f5df06189",
+              "through_index": 1
+            }
+          },
+          "error": null
+        }
+      },
+      "record": {
+        "model_id": "model-1",
+        "submission": {
+          "request": {
+            "model_artifact": {
+              "artifact_id": "artifact-1",
+              "generation": "9007199254740993",
+              "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+              "size_bytes": 377,
+              "media_type": "application/json"
+            },
+            "model_sha256": "ddcaa7f826d4cd5d4a27db1c41be8f02c5f52b07c77af847901a8f8f5df06189",
+            "through_index": 1,
+            "predictor_profile": "strange-physics.linear-spring-prediction.v1",
+            "predictor_version": "strange-physics.linear-spring.analytic.v1",
+            "prediction_request_schema": "strange-physics.prediction-request.v1",
+            "prediction_response_schema": "strange-physics.prediction-response.v1",
+            "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f",
+            "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+          "scope": {
+            "workspace_id": "workspace-1",
+            "principal_id": "principal-1",
+            "kind": "model_submission",
+            "resource_id": "run-1",
+            "key": "synthetic-model-key"
+          },
+          "operation_id": "model-operation-1",
+          "worker": {
+            "launch_id": "launch-1",
+            "request": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "attempt_id": "attempt-1",
+              "lease_epoch": 3,
+              "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+              "approval_sha256": "7ce815d42e632a9be3a3173a97e6d89d12ffd3d3fd1c7cadead08691dcda8fd0",
+              "worker_policy_sha256": "ec0b1addf3be8277ee036edc06883c40664806fc3f679a3680cd27800fa5fd81",
+              "resources": {
+                "cpu_seconds": 60,
+                "wall_seconds": 100,
+                "memory_bytes": 134217728,
+                "process_count": 16,
+                "scratch_bytes": 1048576,
+                "output_bytes": 100000
+              },
+              "restore": null
+            },
+            "request_sha256": "638699d3aca957ab2356e5214ada7049bc5b26ce8c443b7fd2fe35d27f65796c",
+            "admission": {
+              "admission_id": "admission-1",
+              "request": {
+                "world_version_id": "world-version-1",
+                "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+                "track": "agent_discovery",
+                "experiment_budget": 6,
+                "limits": {
+                  "max_cpu_seconds": 1000,
+                  "max_wall_seconds": 1000,
+                  "max_model_calls": 0,
+                  "max_input_tokens": 0,
+                  "max_output_tokens": 0,
+                  "max_artifact_bytes": 1000000,
+                  "max_provider_cost_microusd": 0
+                }
+              },
+              "stored_request": {
+                "scope": {
+                  "workspace_id": "workspace-1",
+                  "principal_id": "principal-1",
+                  "kind": "run_creation",
+                  "resource_id": "workspace-1",
+                  "key": "create-run"
+                },
+                "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+                "operation": {
+                  "workspace_id": "workspace-1",
+                  "run_id": "run-1",
+                  "operation_id": "creation-operation",
+                  "kind": "run_creation",
+                  "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+                  "status": "completed",
+                  "accepted_experiment_index": null,
+                  "result": {
+                    "kind": "run_creation",
+                    "value": {
+                      "workspace_id": "workspace-1",
+                      "run_id": "run-1",
+                      "status": "queued",
+                      "revision": 0,
+                      "space": {
+                        "schema_version": "strange-physics.space.v1",
+                        "structure": {
+                          "particle_ids": [
+                            "p"
+                          ],
+                          "anchors": [
+                            {
+                              "id": "a",
+                              "position": [
+                                0.0,
+                                0.0
+                              ]
+                            }
+                          ],
+                          "connections": [
+                            {
+                              "a": "p",
+                              "b": "a"
+                            }
+                          ]
+                        },
+                        "sampling": {
+                          "duration": 0.1,
+                          "dt": 0.01,
+                          "sample_interval": 0.05,
+                          "position_noise": 0.0,
+                          "velocity_noise": 0.0
+                        },
+                        "limits": {
+                          "position_norm": 2.0,
+                          "velocity_norm": 2.0,
+                          "impulse_norm": 1.0,
+                          "min_mass": 0.5,
+                          "max_mass": 2.0
+                        },
+                        "budget": 6,
+                        "calibration_experiments": 2
+                      },
+                      "experiments_accepted": 0,
+                      "budget_remaining": 6
+                    }
+                  },
+                  "error": null
+                }
+              },
+              "admitted_run": {
+                "workspace_id": "workspace-1",
+                "run_id": "run-1",
+                "status": "queued",
+                "revision": 0,
+                "space": {
+                  "schema_version": "strange-physics.space.v1",
+                  "structure": {
+                    "particle_ids": [
+                      "p"
+                    ],
+                    "anchors": [
+                      {
+                        "id": "a",
+                        "position": [
+                          0.0,
+                          0.0
+                        ]
+                      }
+                    ],
+                    "connections": [
+                      {
+                        "a": "p",
+                        "b": "a"
+                      }
+                    ]
+                  },
+                  "sampling": {
+                    "duration": 0.1,
+                    "dt": 0.01,
+                    "sample_interval": 0.05,
+                    "position_noise": 0.0,
+                    "velocity_noise": 0.0
+                  },
+                  "limits": {
+                    "position_norm": 2.0,
+                    "velocity_norm": 2.0,
+                    "impulse_norm": 1.0,
+                    "min_mass": 0.5,
+                    "max_mass": 2.0
+                  },
+                  "budget": 6,
+                  "calibration_experiments": 2
+                },
+                "experiments_accepted": 0,
+                "budget_remaining": 6
+              },
+              "ownership": {
+                "workspace_id": "workspace-1",
+                "run_id": "run-1",
+                "principal_id": "principal-1",
+                "principal_kind": "human",
+                "principal_generation": 0,
+                "grant_incarnation": 0,
+                "created_at": 1000,
+                "run_deadline": 2000,
+                "scopes": [
+                  "checkpoints:write",
+                  "experiments:read",
+                  "experiments:write",
+                  "models:write"
+                ],
+                "created_by_credential_id": "session-1"
+              },
+              "agent_configuration": {
+                "seed": 1
+              },
+              "checkpoint_binding": {
+                "agent_id": "synthetic-agent-seed1",
+                "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+                "agent_config_sha256": "fbe47f6d82b435a89f6e6fca65ad16138195de06c5fc3ffb66826a76e64e479f",
+                "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                "checkpoint_protocol": "strange-physics.checkpoint.v1"
+              }
+            },
+            "approval": {
+              "kind": "submitted_agent",
+              "profile": {
+                "kind": "submitted_agent",
+                "agent_protocol": "strange-physics.agent.v1"
+              },
+              "build": {
+                "kind": "submitted_agent",
+                "inspection": {
+                  "inspection_id": "inspection-1",
+                  "inspector_id": "synthetic-inspector",
+                  "source": {
+                    "archive": {
+                      "record": {
+                        "workspace_id": "workspace-1",
+                        "package_id": "package-1",
+                        "ref": {
+                          "artifact_id": "package-archive",
+                          "generation": "9007199254740993",
+                          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                          "size_bytes": 500,
+                          "media_type": "application/gzip"
+                        },
+                        "locator": {
+                          "provider": "gcs",
+                          "namespace_id": "synthetic-package-space",
+                          "object_key": "package-1/package-archive"
+                        },
+                        "state": "available",
+                        "revision": 1,
+                        "created_at": 1000
+                      },
+                      "verification": {
+                        "verification_id": "verify-package-archive",
+                        "verifier_id": "synthetic-reader",
+                        "locator": {
+                          "provider": "gcs",
+                          "namespace_id": "synthetic-package-space",
+                          "object_key": "package-1/package-archive"
+                        },
+                        "generation": "9007199254740993",
+                        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "size_bytes": 500,
+                        "media_type": "application/gzip",
+                        "observed_at": 1001,
+                        "completeness": "complete"
+                      }
+                    },
+                    "manifest_object": {
+                      "record": {
+                        "workspace_id": "workspace-1",
+                        "package_id": "package-1",
+                        "ref": {
+                          "artifact_id": "package-manifest",
+                          "generation": "2",
+                          "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                          "size_bytes": 528,
+                          "media_type": "application/json"
+                        },
+                        "locator": {
+                          "provider": "gcs",
+                          "namespace_id": "synthetic-package-space",
+                          "object_key": "package-1/package-manifest"
+                        },
+                        "state": "available",
+                        "revision": 1,
+                        "created_at": 1000
+                      },
+                      "verification": {
+                        "verification_id": "verify-package-manifest",
+                        "verifier_id": "synthetic-reader",
+                        "locator": {
+                          "provider": "gcs",
+                          "namespace_id": "synthetic-package-space",
+                          "object_key": "package-1/package-manifest"
+                        },
+                        "generation": "2",
+                        "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                        "size_bytes": 528,
+                        "media_type": "application/json",
+                        "observed_at": 1001,
+                        "completeness": "complete"
+                      }
+                    },
+                    "manifest": {
+                      "schema_version": "strange-physics.python-agent.v1",
+                      "source": {
+                        "artifact_id": "package-archive",
+                        "generation": "9007199254740993",
+                        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "size_bytes": 500,
+                        "media_type": "application/gzip"
+                      },
+                      "agent_protocol": "strange-physics.agent.v1",
+                      "entrypoint": "agent:make_agent",
+                      "lock_profile": "uv-lock.v1",
+                      "lock_path": "uv.lock",
+                      "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                    }
+                  },
+                  "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                  "entries": [
+                    {
+                      "path": "agent.py",
+                      "kind": "file",
+                      "expanded_bytes": 100,
+                      "bytes_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+                    },
+                    {
+                      "path": "uv.lock",
+                      "kind": "file",
+                      "expanded_bytes": 200,
+                      "bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                    }
+                  ],
+                  "observed_at": 1002
+                },
+                "lock": {
+                  "verification_id": "lock-verification-1",
+                  "verifier_id": "synthetic-lock-verifier",
+                  "inspection_sha256": "ba3abe13f6ebffd9bf04e39fa1eabbf222fe6351427fcc91cf573d0635903324",
+                  "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                  "outcome": "complete_pinned",
+                  "observed_at": 1003
+                },
+                "build": {
+                  "build_id": "build-1",
+                  "verifier_id": "synthetic-build-verifier",
+                  "provenance_verification_id": "provenance-1",
+                  "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "source_sha256": "3afb08f34c4cdb39260b2ee62799d6c2d34434772d153bb3104ff61450b1dff5",
+                  "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "recipe_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                  "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                  "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                  "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                  "completed_at": 1010,
+                  "verified_at": 1011
+                }
+              },
+              "scan": {
+                "scan_id": "scan-submitted",
+                "verifier_id": "synthetic-scanner",
+                "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+                "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+                "outcome": "passed",
+                "observed_at": 1012,
+                "valid_until": 1800
+              },
+              "approval": {
+                "approval_id": "approval-submitted",
+                "revision": 1,
+                "state": "approved",
+                "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+                "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+                "scan_sha256": "527fe30fe4d1e72b7c5e1e52ef56ebd79a1a08d8ac0412192fbb621bae2bbe98",
+                "profile_sha256": "34fa3702ef516a0858b7b2ba3b51a5e10436a82ff4811cb1dcba8dc95e6993fa",
+                "decided_at": 1013
+              }
+            },
+            "original_credential_id": "worker-key-1",
+            "original_credential_generation": 1,
+            "run_revision": 4,
+            "credential_revision": 1,
+            "created_at": 1200,
+            "deadline": 1300
+          },
+          "run_revision": 4,
+          "accepted_at": 1202
+        },
+        "model": {
+          "schema_version": "strange-physics.linear-spring-model.v1",
+          "linear": 5.0,
+          "through_index": 1,
+          "fit_record_indices": [
+            0
+          ],
+          "observation_sha256": "1efd8c85a69f77a4b134a5aebbd7cde03b4f084769ea22a1c253292c86e238c7",
+          "fitter_version": "unrecognized-but-valid-fitter",
+          "fit_config_sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "artifact": {
+          "record": {
+            "workspace_id": "workspace-1",
+            "run_id": "run-1",
+            "ref": {
+              "artifact_id": "artifact-1",
+              "generation": "9007199254740993",
+              "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+              "size_bytes": 377,
+              "media_type": "application/json"
+            },
+            "locator": {
+              "provider": "gcs",
+              "namespace_id": "checkpoint-storage",
+              "object_key": "ws-1/run-1/artifact-1"
+            },
+            "visibility": "agent-visible",
+            "state": "available",
+            "revision": 2,
+            "created_at": 100
+          },
+          "verification": {
+            "verification_id": "verification-1",
+            "verifier_id": "storage-reader-1",
+            "locator": {
+              "provider": "gcs",
+              "namespace_id": "checkpoint-storage",
+              "object_key": "ws-1/run-1/artifact-1"
+            },
+            "generation": "9007199254740993",
+            "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+            "size_bytes": 377,
+            "media_type": "application/json",
+            "observed_at": 1203,
+            "completeness": "complete"
+          }
+        },
+        "prediction_config": {
+          "schema_version": "strange-physics.spring-prediction-config.v1",
+          "predictor_version": "strange-physics.linear-spring.analytic.v1",
+          "supported_model_version": "strange-physics.linear-spring-model.v1",
+          "supported_fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+          "supported_fit_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+          "equation": "stationary-shared-zero-rest-linear-spring.v1",
+          "algorithm": "closed-form-oscillator-sinc.v1",
+          "time_policy": "exact-requested-times.v1",
+          "step_policy": "alignment-replay-metadata-only.v1",
+          "failure_policy": "no-partial-response.v1",
+          "particle_count": 1,
+          "anchor_count": 1,
+          "connection_count": 1,
+          "coordinates": 2,
+          "min_coefficient": 0.0,
+          "max_coefficient": 4.0,
+          "min_mass": 0.5,
+          "max_mass": 2.0,
+          "max_anchor_norm": 0.5,
+          "max_initial_position_norm": 3.0,
+          "max_initial_velocity_norm": 2.0,
+          "max_impulse_norm": 1.0,
+          "max_horizon": 2.0,
+          "min_integration_dt": 0.0001,
+          "max_integration_dt": 0.05,
+          "max_reference_steps": 20000,
+          "max_output_frames": 2001,
+          "max_output_position_norm": 12.0,
+          "max_output_velocity_norm": 14.0
+        },
+        "approval": {
+          "kind": "builtin_analytic",
+          "profile": {
+            "kind": "builtin_analytic",
+            "purpose": "native_prediction",
+            "predictor_profile": "strange-physics.linear-spring-prediction.v1",
+            "predictor_version": "strange-physics.linear-spring.analytic.v1",
+            "prediction_config_sha256": "cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f"
+          },
+          "build": {
+            "kind": "builtin_analytic",
+            "source": {
+              "repository_id": "synthetic-trusted-source",
+              "commit": "6666666666666666666666666666666666666666",
+              "tree": "7777777777777777777777777777777777777777",
+              "lock_bytes_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+              "recipe_sha256": "9999999999999999999999999999999999999999999999999999999999999999"
+            },
+            "build": {
+              "build_id": "builtin-build-1",
+              "verifier_id": "synthetic-build-verifier",
+              "provenance_verification_id": "builtin-provenance-1",
+              "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+              "source_sha256": "d225ef16dc1afab3dc3868b230e1206ef020d942fb0ba079d9e194398c64ac1c",
+              "lock_bytes_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+              "recipe_sha256": "9999999999999999999999999999999999999999999999999999999999999999",
+              "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+              "completed_at": 1010,
+              "verified_at": 1011
+            }
+          },
+          "scan": {
+            "scan_id": "scan-builtin",
+            "verifier_id": "synthetic-scanner",
+            "build_sha256": "575b6c4cfd4679763cf6ee6aba53840023dd6c7b502505a513c0df838c4767f4",
+            "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+            "outcome": "passed",
+            "observed_at": 1012,
+            "valid_until": 1800
+          },
+          "approval": {
+            "approval_id": "approval-builtin",
+            "revision": 1,
+            "state": "approved",
+            "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+            "build_sha256": "575b6c4cfd4679763cf6ee6aba53840023dd6c7b502505a513c0df838c4767f4",
+            "scan_sha256": "5ed2b427ff1e1f2861ff7d4bd95e71142a29e5f0455a56a3ee2409371ff5eb71",
+            "profile_sha256": "e25170b0efd24cc24160d325e08de0a719e39b8c2d1c32e5a3207cf6d753b6b2",
+            "decided_at": 1013
+          }
+        },
+        "engine": {
+          "workspace_id": "workspace-1",
+          "run_id": "run-1",
+          "admission_id": "admission-1",
+          "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+          "creation_request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+          "world_version_id": "world-version-1",
+          "ownership_sha256": "59283eaae819d20bdc24596fa98cd56e978ede039440658e9aa629303a33d4ee",
+          "space_sha256": "3fa943a87fba379f8f5b81cdb2ada8ab9c1b23333ba1b29d674890c30e9cc84c",
+          "engine_version": "synthetic-original-engine",
+          "engine_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+          "committed_at": 1000
+        },
+        "worker": {
+          "launch_id": "launch-1",
+          "request": {
+            "workspace_id": "workspace-1",
+            "run_id": "run-1",
+            "attempt_id": "attempt-1",
+            "lease_epoch": 3,
+            "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+            "approval_sha256": "7ce815d42e632a9be3a3173a97e6d89d12ffd3d3fd1c7cadead08691dcda8fd0",
+            "worker_policy_sha256": "ec0b1addf3be8277ee036edc06883c40664806fc3f679a3680cd27800fa5fd81",
+            "resources": {
+              "cpu_seconds": 60,
+              "wall_seconds": 100,
+              "memory_bytes": 134217728,
+              "process_count": 16,
+              "scratch_bytes": 1048576,
+              "output_bytes": 100000
+            },
+            "restore": null
+          },
+          "request_sha256": "638699d3aca957ab2356e5214ada7049bc5b26ce8c443b7fd2fe35d27f65796c",
+          "admission": {
+            "admission_id": "admission-1",
+            "request": {
+              "world_version_id": "world-version-1",
+              "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+              "track": "agent_discovery",
+              "experiment_budget": 6,
+              "limits": {
+                "max_cpu_seconds": 1000,
+                "max_wall_seconds": 1000,
+                "max_model_calls": 0,
+                "max_input_tokens": 0,
+                "max_output_tokens": 0,
+                "max_artifact_bytes": 1000000,
+                "max_provider_cost_microusd": 0
+              }
+            },
+            "stored_request": {
+              "scope": {
+                "workspace_id": "workspace-1",
+                "principal_id": "principal-1",
+                "kind": "run_creation",
+                "resource_id": "workspace-1",
+                "key": "create-run"
+              },
+              "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+              "operation": {
+                "workspace_id": "workspace-1",
+                "run_id": "run-1",
+                "operation_id": "creation-operation",
+                "kind": "run_creation",
+                "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+                "status": "completed",
+                "accepted_experiment_index": null,
+                "result": {
+                  "kind": "run_creation",
+                  "value": {
+                    "workspace_id": "workspace-1",
+                    "run_id": "run-1",
+                    "status": "queued",
+                    "revision": 0,
+                    "space": {
+                      "schema_version": "strange-physics.space.v1",
+                      "structure": {
+                        "particle_ids": [
+                          "p"
+                        ],
+                        "anchors": [
+                          {
+                            "id": "a",
+                            "position": [
+                              0.0,
+                              0.0
+                            ]
+                          }
+                        ],
+                        "connections": [
+                          {
+                            "a": "p",
+                            "b": "a"
+                          }
+                        ]
+                      },
+                      "sampling": {
+                        "duration": 0.1,
+                        "dt": 0.01,
+                        "sample_interval": 0.05,
+                        "position_noise": 0.0,
+                        "velocity_noise": 0.0
+                      },
+                      "limits": {
+                        "position_norm": 2.0,
+                        "velocity_norm": 2.0,
+                        "impulse_norm": 1.0,
+                        "min_mass": 0.5,
+                        "max_mass": 2.0
+                      },
+                      "budget": 6,
+                      "calibration_experiments": 2
+                    },
+                    "experiments_accepted": 0,
+                    "budget_remaining": 6
+                  }
+                },
+                "error": null
+              }
+            },
+            "admitted_run": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "status": "queued",
+              "revision": 0,
+              "space": {
+                "schema_version": "strange-physics.space.v1",
+                "structure": {
+                  "particle_ids": [
+                    "p"
+                  ],
+                  "anchors": [
+                    {
+                      "id": "a",
+                      "position": [
+                        0.0,
+                        0.0
+                      ]
+                    }
+                  ],
+                  "connections": [
+                    {
+                      "a": "p",
+                      "b": "a"
+                    }
+                  ]
+                },
+                "sampling": {
+                  "duration": 0.1,
+                  "dt": 0.01,
+                  "sample_interval": 0.05,
+                  "position_noise": 0.0,
+                  "velocity_noise": 0.0
+                },
+                "limits": {
+                  "position_norm": 2.0,
+                  "velocity_norm": 2.0,
+                  "impulse_norm": 1.0,
+                  "min_mass": 0.5,
+                  "max_mass": 2.0
+                },
+                "budget": 6,
+                "calibration_experiments": 2
+              },
+              "experiments_accepted": 0,
+              "budget_remaining": 6
+            },
+            "ownership": {
+              "workspace_id": "workspace-1",
+              "run_id": "run-1",
+              "principal_id": "principal-1",
+              "principal_kind": "human",
+              "principal_generation": 0,
+              "grant_incarnation": 0,
+              "created_at": 1000,
+              "run_deadline": 2000,
+              "scopes": [
+                "checkpoints:write",
+                "experiments:read",
+                "experiments:write",
+                "models:write"
+              ],
+              "created_by_credential_id": "session-1"
+            },
+            "agent_configuration": {
+              "seed": 1
+            },
+            "checkpoint_binding": {
+              "agent_id": "synthetic-agent-seed1",
+              "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+              "agent_config_sha256": "fbe47f6d82b435a89f6e6fca65ad16138195de06c5fc3ffb66826a76e64e479f",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "checkpoint_protocol": "strange-physics.checkpoint.v1"
+            }
+          },
+          "approval": {
+            "kind": "submitted_agent",
+            "profile": {
+              "kind": "submitted_agent",
+              "agent_protocol": "strange-physics.agent.v1"
+            },
+            "build": {
+              "kind": "submitted_agent",
+              "inspection": {
+                "inspection_id": "inspection-1",
+                "inspector_id": "synthetic-inspector",
+                "source": {
+                  "archive": {
+                    "record": {
+                      "workspace_id": "workspace-1",
+                      "package_id": "package-1",
+                      "ref": {
+                        "artifact_id": "package-archive",
+                        "generation": "9007199254740993",
+                        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "size_bytes": 500,
+                        "media_type": "application/gzip"
+                      },
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-archive"
+                      },
+                      "state": "available",
+                      "revision": 1,
+                      "created_at": 1000
+                    },
+                    "verification": {
+                      "verification_id": "verify-package-archive",
+                      "verifier_id": "synthetic-reader",
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-archive"
+                      },
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip",
+                      "observed_at": 1001,
+                      "completeness": "complete"
+                    }
+                  },
+                  "manifest_object": {
+                    "record": {
+                      "workspace_id": "workspace-1",
+                      "package_id": "package-1",
+                      "ref": {
+                        "artifact_id": "package-manifest",
+                        "generation": "2",
+                        "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                        "size_bytes": 528,
+                        "media_type": "application/json"
+                      },
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-manifest"
+                      },
+                      "state": "available",
+                      "revision": 1,
+                      "created_at": 1000
+                    },
+                    "verification": {
+                      "verification_id": "verify-package-manifest",
+                      "verifier_id": "synthetic-reader",
+                      "locator": {
+                        "provider": "gcs",
+                        "namespace_id": "synthetic-package-space",
+                        "object_key": "package-1/package-manifest"
+                      },
+                      "generation": "2",
+                      "sha256": "76587c9ec0315fff0e1687663ea212332cd3a84f3bf8666e6ae0671597e113c9",
+                      "size_bytes": 528,
+                      "media_type": "application/json",
+                      "observed_at": 1001,
+                      "completeness": "complete"
+                    }
+                  },
+                  "manifest": {
+                    "schema_version": "strange-physics.python-agent.v1",
+                    "source": {
+                      "artifact_id": "package-archive",
+                      "generation": "9007199254740993",
+                      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size_bytes": 500,
+                      "media_type": "application/gzip"
+                    },
+                    "agent_protocol": "strange-physics.agent.v1",
+                    "entrypoint": "agent:make_agent",
+                    "lock_profile": "uv-lock.v1",
+                    "lock_path": "uv.lock",
+                    "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                },
+                "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "entries": [
+                  {
+                    "path": "agent.py",
+                    "kind": "file",
+                    "expanded_bytes": 100,
+                    "bytes_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+                  },
+                  {
+                    "path": "uv.lock",
+                    "kind": "file",
+                    "expanded_bytes": 200,
+                    "bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                ],
+                "observed_at": 1002
+              },
+              "lock": {
+                "verification_id": "lock-verification-1",
+                "verifier_id": "synthetic-lock-verifier",
+                "inspection_sha256": "ba3abe13f6ebffd9bf04e39fa1eabbf222fe6351427fcc91cf573d0635903324",
+                "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "outcome": "complete_pinned",
+                "observed_at": 1003
+              },
+              "build": {
+                "build_id": "build-1",
+                "verifier_id": "synthetic-build-verifier",
+                "provenance_verification_id": "provenance-1",
+                "provenance_bytes_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                "source_sha256": "3afb08f34c4cdb39260b2ee62799d6c2d34434772d153bb3104ff61450b1dff5",
+                "lock_bytes_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "recipe_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "builder_image_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+                "build_policy_sha256": "ea7dc8a9b4e76f165d3edefe26ab1a8cd3c5fd4aa8d3af2c2434665c88d9856f",
+                "completed_at": 1010,
+                "verified_at": 1011
+              }
+            },
+            "scan": {
+              "scan_id": "scan-submitted",
+              "verifier_id": "synthetic-scanner",
+              "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+              "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+              "scan_policy_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+              "outcome": "passed",
+              "observed_at": 1012,
+              "valid_until": 1800
+            },
+            "approval": {
+              "approval_id": "approval-submitted",
+              "revision": 1,
+              "state": "approved",
+              "approval_policy_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+              "build_sha256": "7528472d618c5050f37c9426e44cd0965fb982df8e41b598b0ec632910f4abc7",
+              "scan_sha256": "527fe30fe4d1e72b7c5e1e52ef56ebd79a1a08d8ac0412192fbb621bae2bbe98",
+              "profile_sha256": "34fa3702ef516a0858b7b2ba3b51a5e10436a82ff4811cb1dcba8dc95e6993fa",
+              "decided_at": 1013
+            }
+          },
+          "original_credential_id": "worker-key-1",
+          "original_credential_generation": 1,
+          "run_revision": 4,
+          "credential_revision": 1,
+          "created_at": 1200,
+          "deadline": 1300
+        },
+        "run_revision": 4,
+        "committed_at": 1203,
+        "policy_sha256": "798c86d1a9fa38113bd51a87bf3b5b0497d8cc2333ed3552648edeffb2164f11",
+        "ledger_bytes_sha256": "51950a6d49e31872832d3ca5af81554464439d4f5a1604feccefc8c8c6731ea8",
+        "ledger_size_bytes": 1903,
+        "canonical_prefix_bytes": 1316
+      },
+      "outbox": {
+        "event_id": "model-event-1",
+        "workspace_id": "workspace-1",
+        "run_id": "run-1",
+        "operation_id": "model-operation-1",
+        "model_id": "model-1",
+        "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+        "record_sha256": "87a3431732819cad6052c21daf210d9c82093f175af569437a35f52d84a9f6a3",
+        "committed_at": 1203
+      }
+    },
+    "ModelSubmissionReplay": {
+      "operation": {
+        "workspace_id": "workspace-1",
+        "run_id": "run-1",
+        "operation_id": "model-operation-1",
+        "kind": "model_submission",
+        "request_sha256": "6bc18a94e43c29513f502ba30aa0fc4eb3e527febafc2ff785b65ac64fed8a0c",
+        "status": "completed",
+        "accepted_experiment_index": null,
+        "result": {
+          "kind": "model_submission",
+          "value": {
+            "model_id": "model-1",
+            "model_sha256": "ddcaa7f826d4cd5d4a27db1c41be8f02c5f52b07c77af847901a8f8f5df06189",
+            "through_index": 1
+          }
+        },
+        "error": null
+      }
+    }
+  },
+  "model_bytes_utf8": "{\n  \"schema_version\": \"strange-physics.linear-spring-model.v1\",\n  \"linear\": 5.0,\n  \"through_index\": 1,\n  \"fit_record_indices\": [\n    0\n  ],\n  \"observation_sha256\": \"1efd8c85a69f77a4b134a5aebbd7cde03b4f084769ea22a1c253292c86e238c7\",\n  \"fitter_version\": \"unrecognized-but-valid-fitter\",\n  \"fit_config_sha256\": \"2222222222222222222222222222222222222222222222222222222222222222\"\n}\n",
+  "ledger_bytes_utf8": "{\"engine\":{\"workspace_id\":\"workspace-1\",\"run_id\":\"run-1\",\"admission_id\":\"admission-1\",\"admission_sha256\":\"9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49\",\"creation_request_sha256\":\"844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee\",\"world_version_id\":\"world-version-1\",\"ownership_sha256\":\"59283eaae819d20bdc24596fa98cd56e978ede039440658e9aa629303a33d4ee\",\"space_sha256\":\"3fa943a87fba379f8f5b81cdb2ada8ab9c1b23333ba1b29d674890c30e9cc84c\",\"engine_version\":\"synthetic-original-engine\",\"engine_fingerprint\":\"1111111111111111111111111111111111111111111111111111111111111111\",\"committed_at\":1000},\"run_revision\":4,\"operations\":[{\"workspace_id\":\"workspace-1\",\"run_id\":\"run-1\",\"operation_id\":\"op-0\",\"kind\":\"experiment\",\"request_sha256\":\"eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb\",\"status\":\"completed\",\"accepted_experiment_index\":0,\"result\":{\"kind\":\"experiment\",\"value\":{\"operation_id\":\"op-0\",\"index\":0,\"experiment\":{\"schema_version\":\"strange-physics.experiment.v1\",\"particles\":[{\"id\":\"p\",\"position\":[1.0,0.0],\"velocity\":[0.0,0.0],\"mass\":1.0}],\"impulse\":null},\"status\":\"completed\",\"trajectory\":{\"frames\":[{\"time\":0.0,\"positions\":[[1.0,0.0]],\"velocities\":[[0.0,0.0]]},{\"time\":0.05,\"positions\":[[1.0,0.0]],\"velocities\":[[0.0,0.0]]},{\"time\":0.1,\"positions\":[[1.0,0.0]],\"velocities\":[[0.0,0.0]]}]},\"error\":null}},\"error\":null},{\"workspace_id\":\"workspace-1\",\"run_id\":\"run-1\",\"operation_id\":\"op-1\",\"kind\":\"experiment\",\"request_sha256\":\"eed624bba48b312bf385312b567deb0ac3a511362463aa4b489c2077cb7a65eb\",\"status\":\"completed\",\"accepted_experiment_index\":1,\"result\":{\"kind\":\"experiment\",\"value\":{\"operation_id\":\"op-1\",\"index\":1,\"experiment\":{\"schema_version\":\"strange-physics.experiment.v1\",\"particles\":[{\"id\":\"p\",\"position\":[1.0,0.0],\"velocity\":[0.0,0.0],\"mass\":1.0}],\"impulse\":null},\"status\":\"failed\",\"trajectory\":null,\"error\":\"simulation_failed\"}},\"error\":null}]}",
+  "observations": {
+    "schema_version": "strange-physics.observations.v1",
+    "run_id": "run-1",
+    "engine_version": "synthetic-original-engine",
+    "engine_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+    "space": {
+      "schema_version": "strange-physics.space.v1",
+      "structure": {
+        "particle_ids": [
+          "p"
+        ],
+        "anchors": [
+          {
+            "id": "a",
+            "position": [
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "connections": [
+          {
+            "a": "p",
+            "b": "a"
+          }
+        ]
+      },
+      "sampling": {
+        "duration": 0.1,
+        "dt": 0.01,
+        "sample_interval": 0.05,
+        "position_noise": 0.0,
+        "velocity_noise": 0.0
+      },
+      "limits": {
+        "position_norm": 2.0,
+        "velocity_norm": 2.0,
+        "impulse_norm": 1.0,
+        "min_mass": 0.5,
+        "max_mass": 2.0
+      },
+      "budget": 6,
+      "calibration_experiments": 2
+    },
+    "records": [
+      {
+        "operation_id": "op-0",
+        "index": 0,
+        "experiment": {
+          "schema_version": "strange-physics.experiment.v1",
+          "particles": [
+            {
+              "id": "p",
+              "position": [
+                1.0,
+                0.0
+              ],
+              "velocity": [
+                0.0,
+                0.0
+              ],
+              "mass": 1.0
+            }
+          ],
+          "impulse": null
+        },
+        "status": "completed",
+        "trajectory": {
+          "frames": [
+            {
+              "time": 0.0,
+              "positions": [
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "velocities": [
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            {
+              "time": 0.05,
+              "positions": [
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "velocities": [
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            {
+              "time": 0.1,
+              "positions": [
+                [
+                  1.0,
+                  0.0
+                ]
+              ],
+              "velocities": [
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            }
+          ]
+        },
+        "error": null
+      },
+      {
+        "operation_id": "op-1",
+        "index": 1,
+        "experiment": {
+          "schema_version": "strange-physics.experiment.v1",
+          "particles": [
+            {
+              "id": "p",
+              "position": [
+                1.0,
+                0.0
+              ],
+              "velocity": [
+                0.0,
+                0.0
+              ],
+              "mass": 1.0
+            }
+          ],
+          "impulse": null
+        },
+        "status": "failed",
+        "trajectory": null,
+        "error": "simulation_failed"
+      }
+    ]
+  },
+  "schema_negative": [
+    {
+      "model": "SubmitModelRequest",
+      "field": "through_index",
+      "value": -1
+    },
+    {
+      "model": "SubmitModelRequest",
+      "field": "through_index",
+      "value": true
+    },
+    {
+      "model": "SubmitModelRequest",
+      "field": "model_sha256",
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    {
+      "model": "SubmitModelRequest",
+      "field": "predictor_version",
+      "value": "custom"
+    },
+    {
+      "model": "SubmitModelRequest",
+      "field": "prediction_request_schema",
+      "value": "strange-physics.prediction-request.draft1"
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_model_bytes",
+      "value": 0
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_model_bytes",
+      "value": true
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_model_bytes",
+      "value": 262145
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_ledger_bytes",
+      "value": 0
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_ledger_bytes",
+      "value": true
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_ledger_bytes",
+      "value": 8388609
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_canonical_prefix_bytes",
+      "value": 0
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_canonical_prefix_bytes",
+      "value": true
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_canonical_prefix_bytes",
+      "value": 8388609
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_metadata_bytes",
+      "value": 0
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_metadata_bytes",
+      "value": true
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_metadata_bytes",
+      "value": 4194305
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_json_depth",
+      "value": 0
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_json_depth",
+      "value": true
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_json_depth",
+      "value": 33
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_json_nodes",
+      "value": 0
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_json_nodes",
+      "value": true
+    },
+    {
+      "model": "ModelRegistrationPolicy",
+      "field": "max_json_nodes",
+      "value": 1000001
+    }
+  ],
+  "runtime_negative": [
+    {
+      "model": "SubmitModelRequest",
+      "field": "model_artifact",
+      "value": {
+        "artifact_id": "artifact-1",
+        "generation": "9007199254740993",
+        "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+        "size_bytes": 377,
+        "media_type": "text/plain"
+      }
+    },
+    {
+      "model": "SubmitModelRequest",
+      "field": "model_artifact",
+      "value": {
+        "artifact_id": "artifact-1",
+        "generation": "9007199254740993",
+        "sha256": "a0d4da22b2f114a621d44fb5f7f51b6868d3518ffbcd9fbc22c546123e40a6c2",
+        "size_bytes": 262145,
+        "media_type": "application/json"
+      }
+    },
+    {
+      "model": "ModelSubmissionAdmission",
+      "field": "request_sha256",
+      "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "model": "ModelSubmissionAdmission",
+      "field": "accepted_at",
+      "value": 1199
+    },
+    {
+      "model": "ModelRegistrationRecord",
+      "field": "committed_at",
+      "value": 1201
+    },
+    {
+      "model": "ModelRegistrationRecord",
+      "field": "model",
+      "value": {
+        "schema_version": "strange-physics.linear-spring-model.v1",
+        "linear": 2.0,
+        "through_index": 1,
+        "fit_record_indices": [
+          0
+        ],
+        "observation_sha256": "1efd8c85a69f77a4b134a5aebbd7cde03b4f084769ea22a1c253292c86e238c7",
+        "fitter_version": "unrecognized-but-valid-fitter",
+        "fit_config_sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+      }
+    },
+    {
+      "model": "ModelRegistrationRecord",
+      "field": "engine",
+      "value": {
+        "workspace_id": "workspace-1",
+        "run_id": "run-1",
+        "admission_id": "admission-1",
+        "admission_sha256": "9f7dbd5e518a2ec35525799d54cf7967e7b5569211ecb11e5bea320051fd3b49",
+        "creation_request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+        "world_version_id": "other-world",
+        "ownership_sha256": "59283eaae819d20bdc24596fa98cd56e978ede039440658e9aa629303a33d4ee",
+        "space_sha256": "3fa943a87fba379f8f5b81cdb2ada8ab9c1b23333ba1b29d674890c30e9cc84c",
+        "engine_version": "synthetic-original-engine",
+        "engine_fingerprint": "1111111111111111111111111111111111111111111111111111111111111111",
+        "committed_at": 1000
+      }
+    },
+    {
+      "model": "ModelRegistrationLookup",
+      "field": "scope",
+      "value": {
+        "workspace_id": "workspace-1",
+        "principal_id": "principal-1",
+        "kind": "experiment",
+        "resource_id": "run-1",
+        "key": "synthetic-model-key"
+      }
+    }
+  ]
+}

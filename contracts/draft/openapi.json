@@ -174,37 +174,7 @@
         "$ref": "../control.schema.json#/$defs/RunView"
       },
       "SubmitModelRequest": {
-        "additionalProperties": false,
-        "properties": {
-          "model_artifact": {
-            "$ref": "research.schema.json#/$defs/ArtifactRef"
-          },
-          "predictor_protocol": {
-            "const": "strange-physics.prediction-request.draft1"
-          },
-          "runtime_image_sha256": {
-            "maxLength": 64,
-            "minLength": 64,
-            "pattern": "^[a-f0-9]{64}$",
-            "type": "string"
-          },
-          "through_index": {
-            "maximum": 9999,
-            "minimum": -1,
-            "type": "integer"
-          }
-        },
-        "required": [
-          "through_index",
-          "model_artifact",
-          "runtime_image_sha256",
-          "predictor_protocol"
-        ],
-        "type": "object",
-        "x-pending-contracts": [
-          "ART",
-          "EXEC"
-        ]
+        "$ref": "../model-registration.schema.json#/$defs/SubmitModelRequest"
       }
     },
     "securitySchemes": {

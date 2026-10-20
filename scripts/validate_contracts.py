@@ -48,6 +48,19 @@ def main() -> None:
             raise ValueError(f"Unexpected schema result for {reference}: {errors[:1]}")
         count += 1
 
+    registration = json.loads((ROOT / "model-registration.examples.json").read_text())
+    for name, fixture in registration["valid"].items():
+        check(f"model-registration.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in registration[group]:
+            value = copy.deepcopy(registration["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"model-registration.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     legacy = json.loads((ROOT / "examples.json").read_text())
     for group in ["valid", "invalid", "runtime_invalid"]:
         for fixture in legacy[group]:
