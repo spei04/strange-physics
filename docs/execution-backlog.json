@@ -2064,8 +2064,8 @@
         "QE"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/83",
-      "execution_owner": "Engineer Quality, exclusive primary writer; Research and lead review.",
-      "execution_plan": "Versioned ordered protocol and fixed normalization; independent analytic evaluator labels; complete-manifest validation; all failures counted, no survivor averaging; per-probe diagnostics plus frozen SCI report and actual retained-byte hash. Publish API before implementation."
+      "execution_owner": "Engineer Quality completed authoring; Research and lead accepted source; root owns integration.",
+      "execution_plan": "Accepted17be197 with independent runtime82fc914. Integrated source464c73a preserves accepted predictor and C1 modules; exact-head PR/main checks remain. SDK/CLI I1 follows."
     },
     {
       "id": "SP-06.b",
@@ -10546,7 +10546,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Engineer Quality (ID-C/C1 service/key lifecycle active in identity checkout)",
+      "BE1": "Engineer Platform (C2 run credentials in identity checkout)",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10562,7 +10562,7 @@
     "schedule_repair": "2026-10-19: technical lead accepted SP-01.b before SP-01.c freeze. One added edge (369 total); both reference schedules regenerated without changing effort, capacity, approval gates or current execution staffing.",
     "reviewed_scientific_head": "6e724152e5c947db1662bd65cea36412a8498b22",
     "integrated_scientific_subset": "cc24aef592f3157b67024e3cab41159489c77ffa",
-    "contract_scope_note": "Control part1, ID-A and all ID-B/B1/B2/B3 units are integrated. Quality authors ID-C/C1; C2 and final parent composition follow acceptance. Full SP-01.b and dependent consumers remain gated.",
+    "contract_scope_note": "Control part1, ID-A, ID-B and C1 service credentials are integrated. Platform authors C2; final identity composition and dependent consumers remain gated.",
     "integrated_control_subset": "d6204aaab82e1b100532f40bae00e224d9334c65",
     "identity_remaining_units": [
       {
@@ -10791,10 +10791,10 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-06.a_in_progress",
+      "status": "SP-06.a_reviewed_pending_integration",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "SP-06.a independent scoring; SP-04.e follows accepted scorer",
+      "next_authoring_task": "SP-04.e SDK/CLI after scorer protected-main acceptance and exclusive primary handoff",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -11029,6 +11029,29 @@
       "tree": "79ee5efd3b4448a4f23d12cbf8b87712c7b21a07",
       "pr_ci": 39363278629,
       "main_ci": 39363488562
+    },
+    "spring_evaluation_evidence": {
+      "source": "17be197a1499c7619718b4e5141aa34a6523e519",
+      "runtime_source": "82fc9145b576fcb01e58815989bc2c1ebd1087a0",
+      "integrated_source": "464c73aed7b2cbf539549174b87e0c1a5567ea7d",
+      "status": "reviewed_pending_hosted_integration",
+      "author": "Engineer Quality",
+      "reviewers": [
+        "Engineer Research",
+        "Project lead"
+      ],
+      "integration_reviewer": "Engineer Quality",
+      "author_full_tests": 1417,
+      "focused_tests": 97,
+      "independent_additional_cases": 7,
+      "independent_mutations_detected": 7,
+      "author_schema_checks": 522,
+      "direct_probes": 168,
+      "max_position_component_difference": 2.6645352591003757e-15,
+      "max_per_probe_mse": 4.249608827306303e-31,
+      "record": "docs/EVALUATION.md",
+      "boundary": "Independent bounded Decimal reference and complete-manifest scoring only. Direct-model synthetic evidence; SDK/CLI purchased-prefix I1, official study, full penalty freeze and deployment remain unverified.",
+      "private_index_sha256": "1c8d43550c8b618039a6b82236f879e1d13dafd388fcd84bea44969aca991c20"
     }
   }
 }
