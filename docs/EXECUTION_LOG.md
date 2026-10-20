@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | C1 repair review; C2 run-credential implementation next | Predictor independently accepted; C2 waits C1 integration and identity writer handoff |
-| Research | SP-04.e/I1 SDK/CLI preparation | Predictor authored and accepted; read-only preparation while dependent scorer remains unfinished |
-| Quality | C1 review repairs; independent SP-06.a scorer next | Owns identity until C1 source release; scorer starts after accepted predictor and primary handoff |
-| Project lead | Integrate predictor and coordinate C1 acceptance | Owns primary integration; Quality owns identity until release; exact-head checks before each merge |
+| Platform | C2 run-credential preparation | C1 source independently accepted; implementation waits C1 integration and identity handoff |
+| Research | SP-04.e/I1 SDK/CLI preparation and scorer review | Read-only preparation; SDK/CLI source waits accepted scorer |
+| Quality | SP-06.a/#83 independent development scorer | Exclusive primary writer after accepted predictor; publish protocol/API for review before implementation |
+| Project lead | C1 integration and scorer coordination | Owns identity integration; Quality owns primary; exact-head checks before each merge |
 
 ## Assignments
 
@@ -95,6 +95,11 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-20 03:06 | Research | SP-04.b/#81 analytic predictor and evidence | ec959b5 accepted by lead/Platform; 1,320 full tests, 314 independent focused cases and package verification; primary writer released |
 | 2026-10-20 03:06 | Project lead | SP-04.b integration; next assignments | Exact-head hosted checks next; Quality moves to SP-06.a after C1 release, Platform takes C2 after C1 acceptance, Research prepares SDK/CLI read-only |
 | 2026-10-20 03:06 | Quality + Platform + lead | C1 adversarial review | Four repairs tracked: role-independent key counts, common referenced-record retention, creation workspace CAS and principal snapshot evolution |
+| 2026-10-20 03:12 | Project lead | Predictor integrated; scorer writer handoff | PR #82 and protected main passed with matching reviewed tree; primary checkout reused |
+| 2026-10-20 03:12 | Quality | SP-06.a/#83 independent scorer | C1 source released at 5009fdf; current protocol/API review precedes implementation; Research prepares SDK/CLI consumer |
+| 2026-10-20 03:12 | Platform | C2 preparation | C1 source accepted; identity authoring begins after C1 integration and writer handoff |
+| 2026-10-20 03:13 | Quality | C1 service/key lifecycle source complete | 5009fdf accepted by Platform and lead; 1,032 branch tests, 114 focused cases, seven detected repair mutants; writer released |
+| 2026-10-20 03:13 | Project lead + Platform | C1 integration with accepted prediction | 251694f has exact reviewed source blobs and complete package allowlist; 1,434 tests, Ruff/format, mypy48 and 555 schemas pass; hosted checks remain |
 
 ## Review evidence and management checkpoint
 
@@ -118,6 +123,8 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 - Linking delta: ID-B/B3 source051d8f708a5f5cc1a9182448466eb6dbdeb10f55 passed Research, Quality and lead review. Platform passed 714 full branch tests, 222 focused session/link tests, Ruff/format (62 files), strict mypy (34), 478 external schema checks, configured Bandit severity gate and offline wheel/sdist allowlist validation. Research independently ran 100 linking cases; Quality ran all222 and confirmed repaired guard-mutation coverage. Fixes bind audit replay, expose public commit revision, reject invalid primary authority before freshness advice, prevent cross-provider login/link callback collisions and define safe429 responses. Shared trusted proof purpose/owner is an explicit internal producer amendment; public login HTTP is unchanged. Root integrated accepted scientific progress before exact-head checks. No real verifier, broker, HTTP, SQL or recovery enforcement is claimed; ID-C and final parent freeze remain open.
 - Calibration integration: [PR #78](https://github.com/spei04/strange-physics/pull/78) merged as db18278821d72d3ba02336e45827d441af0a00b6; tree08efb97564ff99f7056551a04b93b27b5460f3eb matches independently accepted7b27bad5a6d947580d231b337df8836558a62131. PR CI39358928012 and protected-main CI39359050024 passed all applicable jobs, including the main candidate build. SP-03.b is complete for its bounded calibration scope; SP-04.a is now assigned.
 - Calibration delta: SP-03.b source 43e05897587ba3b7e1a4266c2d40af7cbaa1b5b6 passed independent Quality and lead review. Preregistration 5e524a1 and proof clarification f55d38f preceded measurements. All 63 primary and seven mixed-mass noiseless prefixes meet the joint criteria; maximum per-probe RMSE 8.46960e-6. Weak excitation retains 34 unsupported / 48 cases. Noise retains all 64 prefixes: six negative estimates, 13 joint passes, 406 computed probes over the bound and 144 failed probes. Derived arithmetic/propagation failures remain JSON-safe and counted. 817 full tests and 204 focused cases, Ruff/format and strict mypy passed; exact-head hosted CI remains an integration gate. SPRING_DOMAIN.md documents reproduction, analytic bounds and finite-matrix limitations. This is test-only calibration, not a production fitter/predictor/scorer or I1 exit.
+- C1 service credential delta: 5009fdf7c0ddd36fd2704b37549217b397876c04 defines owner-authorized service creation and key issue/rotate/recover/revoke, immutable creation ceilings, monotonic authority/key generations and grant incarnations, bounded overlap, safe metadata-only retries and atomic commit/audit proposals. Review repairs keep live key counts independent of current role, extend all referenced records through receipt retention, and require committed workspace/principal/key revisions before replay. Platform independently passed 114 cases plus two additional checks and detected seven repair mutations; lead reviewed the fixes. Author passed 1,032 tests and all static/schema/security/offline package gates. Reconciled source 251694f passed 1,434 tests, Ruff/format (80 files), strict mypy (48) and 555 external schema checks. Private source evidence is sealed outside checkouts. Exact-head hosted acceptance remains; C2, final identity composition, real verification, SQL and HTTP remain unfinished.
+- Predictor integration: PR #82/main 9c341f8c282865387b2c562d15568a953d7bc7b5 matches reviewed d37118e35f8b7d970e9237a95bcf845322468110/tree 4d33a099fa47c18e6f4e78d1892f1005538adccc. PR CI39362603040 and protected-main CI39362758495 passed, including the installed candidate. SP-04.b is complete for its bounded runtime; independent scoring and SDK/CLI I1 evidence remain.
 - Predictor delta: ec959b5e89ac1489ff8ba35c4fd431a928e89787 preserves accepted runtime 205b3fc and preregistration 9f30fa2. All 1,320 tests, lint/format, strict mypy (43 files), 506 external schema checks, configured Bandit gate and offline package verification passed. Lead reran both focused files from immutable source; Platform ran all 314 plus 27 boundary/varied-input checks and detected five deliberate numerical defects. All 168 direct oracle and 18 near-zero requests satisfy the fixed 1e-12 component threshold. All 70 fitted models generated all 1,680 probes; worst per-probe RMSE 8.4695975e-6, zero failed outcomes. Prediction uses exact timestamps and returns no partial response. Hosted exact-head checks remain; no scorer, official benchmark or I1 claim.
 - Fitter integration: PR #80 merged e5a3c8d8b7d718be9be7d88e81fb4cad90e73f1a; tree cbe89e1d14646d3e9d77b96b97d8f267e6cfaafd matches reviewed 833d8c711ecdc97e3817ed744f9ff674331d0d1f. PR CI39360722931 and main CI39360858087 passed all applicable jobs, including the protected-main candidate build. SP-04.a is complete for its bounded fitting scope; SP-04.b is now assigned. No prediction/scoring/I1 result is claimed.
 - Fitter delta: source c43cd8011efdb6fe2dc27ce251803eba4fe36597 independently accepted by Quality and Platform. Each reran all 88 focused cases; Quality detected five and Platform ten deliberate source defects. The fixed config binds the actual digest, consumes every eligible paired-Simpson window using public masses, retains failed-record provenance and zero rows, and reports finite/negative/weak failures explicitly. Author checks passed 905 tests, external schema validation and offline package allowlist. Reconciliation with B3 passed 1,006 tests, Ruff/format (69 files), strict mypy (39 files) and external schema validation. No frozen SCI bytes or dependency manifest changed. Exact-head hosted checks remain before merge; fitting success makes no accuracy, prediction, score or I1 claim.
@@ -130,9 +137,9 @@ Research owns the local spring proof; Quality independently authors its developm
 scorer. SP-02.b is accepted and SP-03.a fixtures have passed independent review.
 SP-03.a and SP-03.b are integrated, including exact-head PR/main checks.
 SP-04.a/#77 is integrated with matching reviewed tree and PR/main CI.
-SP-04.b/#81 source is independently accepted; the lead owns primary integration.
-Research prepares SP-04.e read-only. Quality owns the identity checkout for C1
-repairs, then authors the independent scorer after accepted predictor integration.
+SP-04.b/#81 is integrated with passing PR/main CI. Quality owns the primary
+checkout for independent SP-06.a/#83 scoring. Research prepares SP-04.e read-only.
+C1 source 5009fdf is independently accepted; the lead owns identity integration.
 Platform takes C2 after C1 integration and identity writer handoff.
 
 The approved dependency path is SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b →
@@ -161,16 +168,16 @@ outputs require explicit failures. Any failed probe makes primary MSE fields nul
 and the report unscorable; never average only surviving probes. A correctly
 reported negative result is valid evidence, not permission to relax tolerances.
 
-The accepted simulation/journal/random-investigation CLI and 817 passing local tests
-do not yet supply a fitter, predictor, independent scorer, generalization result
-or recovery result. I1 is a local development proof, not the full held-out
+Simulation, purchased journals, calibration, fitting and bounded prediction are
+integrated. Independent scoring, the SDK/CLI I1 exit and recovery evaluation
+remain unfinished. I1 is a local development proof, not the full held-out
 benchmark, hosted execution or a product release.
 
-Unfinished SP-01.b/c/d/e, B3, ID-C, SP-08 identity implementation, staging and whole
+Unfinished SP-01.b/c/d/e, ID-C, SP-08 identity implementation, staging and whole
 R0 exit are not prerequisites in this local path. They remain prerequisites for
 their hosted/later consumers (for example SP-06.b requires SP-01.c). Use the leaf
 DAG; do not turn their schedule order into a new scientific dependency. Two cloud
-checkouts now permit Research and Platform to author independently; each checkout
+checkouts support independent scientific and identity work; each checkout
 has one writer and its own locked dependency installation. Reuse them sequentially
 at handoff and retain independent review. Scorer implementation waits for SP-04.b.
 The concrete capacity
@@ -179,7 +186,7 @@ action is approved and complete; it grants no additional staging or release auth
 ## Current blockers and rules
 
 - Capacity stop resolved: independent SP-02.b acceptance preserved source and dependencies; PR #74/main f197687 records recovery, and PR #76/main 8510243 records accepted SP-03.a. One additional ordinary cloud worktree was necessary for independent B3 authoring while Research owned the primary checkout. Its own locked copy-mode environment occupies about 179 MiB; 103,889,854,464 bytes remained free at creation. Managed creation cannot target this remote host from the local chat, so the remote worktree is unmanaged and indexed privately. Both checkouts remain active and must be reused, not archived or removed. No local project copy or shared mutable dependency links. Maintain >=20 GiB readiness separately from the 100 MiB emergency stop floor.
-- Final identity review must reconcile issuer + verified tenant/null + subject, global purpose-bound proof ownership, composed human/service/run authority and current authorization before every streamed delivery batch. The <=30-second check applies only to idle connections. B3/ID-C remain implementation assignments, not completed interfaces.
+- Final identity review must reconcile issuer + verified tenant/null + subject, global purpose-bound proof ownership, composed human/service/run authority and current authorization before every streamed delivery batch. The <=30-second check applies only to idle connections. B3 is integrated; ID-C and final composition remain unfinished.
 - Cloud filesystem had 215 MiB free at execution start; accepted SP-02.b recovery now permits scoped development. Continue preserving migration archives and other active projects.
 - Baseline integration passed both review scopes and required checks at 7117060. Specific contract freezes remain prerequisites; SP-01.c additionally waits for SP-01.b DB acceptance.
 - Root coordinates every checkout write; independent writers get separate cloud checkouts. No local project copies.

@@ -190,6 +190,17 @@ def main() -> None:
     check(rate_schema, linking["rate_limit"]["body"])
     check(rate_schema, linking["rate_limit"]["body"] | {"code": "proof_rejected"}, False)
 
+    services = json.loads((ROOT / "service.examples.json").read_text())
+    for name, fixture in services["valid"].items():
+        check(f"service.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in services[group]:
+            value = copy.deepcopy(services["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"service.schema.json#/$defs/{fixture['model']}", value, group == "runtime_negative"
+            )
+
     for fixture in sessions["workspace_session_failures"]:
         check("control.schema.json#/$defs/Error", fixture["output"])
 
