@@ -76,6 +76,21 @@ def main() -> None:
                 f"fitting.schema.json#/$defs/{fixture['model']}", value, group == "runtime_negative"
             )
 
+    prediction = json.loads((ROOT / "prediction.examples.json").read_text())
+    for name, fixture in prediction["valid"].items():
+        check(f"prediction.schema.json#/$defs/{name}", fixture)
+    check("research.schema.json#/$defs/LinearSpringModel", prediction["model"])
+    check("research.schema.json#/$defs/PredictionRequest", prediction["request"])
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in prediction[group]:
+            value = copy.deepcopy(prediction["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"prediction.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     sessions = json.loads((ROOT / "session.examples.json").read_text())
     for name, fixture in sessions["valid"].items():
         check(f"session.schema.json#/$defs/{name}", fixture)

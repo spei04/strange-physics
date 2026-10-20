@@ -1,0 +1,484 @@
+{
+  "$defs": {
+    "Frame": {
+      "additionalProperties": false,
+      "properties": {
+        "positions": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Positions",
+          "type": "array"
+        },
+        "time": {
+          "minimum": 0,
+          "title": "Time",
+          "type": "number"
+        },
+        "velocities": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Velocities",
+          "type": "array"
+        }
+      },
+      "required": [
+        "time",
+        "positions",
+        "velocities"
+      ],
+      "title": "Frame",
+      "type": "object"
+    },
+    "PredictionResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.prediction-response.v1",
+          "default": "strange-physics.prediction-response.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "trajectory": {
+          "$ref": "#/$defs/Trajectory"
+        }
+      },
+      "required": [
+        "model_sha256",
+        "trajectory"
+      ],
+      "title": "PredictionResponse",
+      "type": "object"
+    },
+    "SpringPredictionConfig": {
+      "additionalProperties": false,
+      "description": "A fixed analytic profile; different domains or policies need a version decision.",
+      "properties": {
+        "algorithm": {
+          "const": "closed-form-oscillator-sinc.v1",
+          "default": "closed-form-oscillator-sinc.v1",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "anchor_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Anchor Count",
+          "type": "integer"
+        },
+        "connection_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Connection Count",
+          "type": "integer"
+        },
+        "coordinates": {
+          "default": 2,
+          "maximum": 2,
+          "minimum": 2,
+          "title": "Coordinates",
+          "type": "integer"
+        },
+        "equation": {
+          "const": "stationary-shared-zero-rest-linear-spring.v1",
+          "default": "stationary-shared-zero-rest-linear-spring.v1",
+          "title": "Equation",
+          "type": "string"
+        },
+        "failure_policy": {
+          "const": "no-partial-response.v1",
+          "default": "no-partial-response.v1",
+          "title": "Failure Policy",
+          "type": "string"
+        },
+        "max_anchor_norm": {
+          "default": 0.5,
+          "maximum": 0.5,
+          "minimum": 0.5,
+          "title": "Max Anchor Norm",
+          "type": "number"
+        },
+        "max_coefficient": {
+          "default": 4.0,
+          "maximum": 4.0,
+          "minimum": 4.0,
+          "title": "Max Coefficient",
+          "type": "number"
+        },
+        "max_horizon": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Horizon",
+          "type": "number"
+        },
+        "max_impulse_norm": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 1.0,
+          "title": "Max Impulse Norm",
+          "type": "number"
+        },
+        "max_initial_position_norm": {
+          "default": 3.0,
+          "maximum": 3.0,
+          "minimum": 3.0,
+          "title": "Max Initial Position Norm",
+          "type": "number"
+        },
+        "max_initial_velocity_norm": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Initial Velocity Norm",
+          "type": "number"
+        },
+        "max_integration_dt": {
+          "default": 0.05,
+          "maximum": 0.05,
+          "minimum": 0.05,
+          "title": "Max Integration Dt",
+          "type": "number"
+        },
+        "max_mass": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Mass",
+          "type": "number"
+        },
+        "max_output_frames": {
+          "default": 2001,
+          "maximum": 2001,
+          "minimum": 2001,
+          "title": "Max Output Frames",
+          "type": "integer"
+        },
+        "max_output_position_norm": {
+          "default": 12.0,
+          "maximum": 12.0,
+          "minimum": 12.0,
+          "title": "Max Output Position Norm",
+          "type": "number"
+        },
+        "max_output_velocity_norm": {
+          "default": 14.0,
+          "maximum": 14.0,
+          "minimum": 14.0,
+          "title": "Max Output Velocity Norm",
+          "type": "number"
+        },
+        "max_reference_steps": {
+          "default": 20000,
+          "maximum": 20000,
+          "minimum": 20000,
+          "title": "Max Reference Steps",
+          "type": "integer"
+        },
+        "min_coefficient": {
+          "default": 0.0,
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "title": "Min Coefficient",
+          "type": "number"
+        },
+        "min_integration_dt": {
+          "default": 0.0001,
+          "maximum": 0.0001,
+          "minimum": 0.0001,
+          "title": "Min Integration Dt",
+          "type": "number"
+        },
+        "min_mass": {
+          "default": 0.5,
+          "maximum": 0.5,
+          "minimum": 0.5,
+          "title": "Min Mass",
+          "type": "number"
+        },
+        "particle_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Particle Count",
+          "type": "integer"
+        },
+        "predictor_version": {
+          "const": "strange-physics.linear-spring.analytic.v1",
+          "default": "strange-physics.linear-spring.analytic.v1",
+          "title": "Predictor Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.spring-prediction-config.v1",
+          "default": "strange-physics.spring-prediction-config.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "step_policy": {
+          "const": "alignment-replay-metadata-only.v1",
+          "default": "alignment-replay-metadata-only.v1",
+          "title": "Step Policy",
+          "type": "string"
+        },
+        "supported_fit_config_sha256": {
+          "const": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+          "default": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+          "title": "Supported Fit Config Sha256",
+          "type": "string"
+        },
+        "supported_fitter_version": {
+          "const": "strange-physics.linear-spring.paired-simpson.v1",
+          "default": "strange-physics.linear-spring.paired-simpson.v1",
+          "title": "Supported Fitter Version",
+          "type": "string"
+        },
+        "supported_model_version": {
+          "const": "strange-physics.linear-spring-model.v1",
+          "default": "strange-physics.linear-spring-model.v1",
+          "title": "Supported Model Version",
+          "type": "string"
+        },
+        "time_policy": {
+          "const": "exact-requested-times.v1",
+          "default": "exact-requested-times.v1",
+          "title": "Time Policy",
+          "type": "string"
+        }
+      },
+      "title": "SpringPredictionConfig",
+      "type": "object"
+    },
+    "SpringPredictionDiagnostics": {
+      "additionalProperties": false,
+      "description": "Input identities and complete/attempted/returned accounting, without raw errors.",
+      "properties": {
+        "accuracy_claim": {
+          "const": "none",
+          "default": "none",
+          "title": "Accuracy Claim",
+          "type": "string"
+        },
+        "actual_model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Actual Model Sha256",
+          "type": "string"
+        },
+        "computed_frame_count": {
+          "maximum": 2001,
+          "minimum": 0,
+          "title": "Computed Frame Count",
+          "type": "integer"
+        },
+        "execution_mode": {
+          "const": "analytic-no-integration.v1",
+          "default": "analytic-no-integration.v1",
+          "title": "Execution Mode",
+          "type": "string"
+        },
+        "failed_frame_index": {
+          "anyOf": [
+            {
+              "maximum": 2000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Failed Frame Index"
+        },
+        "prediction_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Prediction Config Sha256",
+          "type": "string"
+        },
+        "predictor_version": {
+          "const": "strange-physics.linear-spring.analytic.v1",
+          "title": "Predictor Version",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "requested_frame_count": {
+          "maximum": 2001,
+          "minimum": 2,
+          "title": "Requested Frame Count",
+          "type": "integer"
+        },
+        "requested_model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Requested Model Sha256",
+          "type": "string"
+        },
+        "returned_frame_count": {
+          "maximum": 2001,
+          "minimum": 0,
+          "title": "Returned Frame Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "strange-physics.spring-prediction-diagnostics.v1",
+          "default": "strange-physics.spring-prediction-diagnostics.v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "actual_model_sha256",
+        "requested_model_sha256",
+        "request_sha256",
+        "prediction_config_sha256",
+        "predictor_version",
+        "requested_frame_count",
+        "computed_frame_count",
+        "returned_frame_count",
+        "failed_frame_index"
+      ],
+      "title": "SpringPredictionDiagnostics",
+      "type": "object"
+    },
+    "SpringPredictionResult": {
+      "additionalProperties": false,
+      "description": "A complete SCI trajectory or a typed failure with no partial response.",
+      "properties": {
+        "diagnostics": {
+          "$ref": "#/$defs/SpringPredictionDiagnostics"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "model_digest_mismatch",
+                "unsupported_model_version",
+                "unsupported_fitter_version",
+                "unsupported_fit_configuration",
+                "unsupported_topology",
+                "coefficient_outside_domain",
+                "anchor_outside_domain",
+                "mass_outside_domain",
+                "position_outside_domain",
+                "velocity_outside_domain",
+                "impulse_outside_domain",
+                "horizon_outside_domain",
+                "resource_limit",
+                "arithmetic_failure",
+                "nonfinite_state",
+                "output_bound"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason"
+        },
+        "response": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PredictionResponse"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schema_version": {
+          "const": "strange-physics.spring-prediction-result.v1",
+          "default": "strange-physics.spring-prediction-result.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "predicted",
+            "model_mismatch",
+            "unsupported_runtime",
+            "unsupported_domain",
+            "numerical_failure"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "response",
+        "diagnostics"
+      ],
+      "title": "SpringPredictionResult",
+      "type": "object"
+    },
+    "Trajectory": {
+      "additionalProperties": false,
+      "properties": {
+        "frames": {
+          "items": {
+            "$ref": "#/$defs/Frame"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "title": "Frames",
+          "type": "array"
+        }
+      },
+      "required": [
+        "frames"
+      ],
+      "title": "Trajectory",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/prediction.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Fixed analytic predictor configuration and complete-or-failed local outcomes. Provenance validation is not numerical authenticity or forecast accuracy.",
+  "title": "Strange Physics local spring prediction v1"
+}
