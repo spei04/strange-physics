@@ -1591,7 +1591,7 @@
         "RS2"
       ],
       "objective": "Ensure numerical results and supported interventions are scientifically defensible. This PR delivers extend independent analytic physics fixtures.",
-      "status": "in_progress",
+      "status": "completed",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1599,8 +1599,8 @@
         "SDK"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/73",
-      "execution_owner": "Engineer Research; exclusive existing-cloud-checkout writer; Quality/Platform independently review.",
-      "evidence": "Assigned 2026-10-20 01:59 UTC after SP-02.b acceptance and clean checkout reconciliation to main89a44ed. Analytic validation authoring started; no completed fixture, fit/predict/score or research-result claim."
+      "execution_owner": "Engineer Research authored; Quality and Platform independently accepted; lead integrates.",
+      "evidence": "Source66016cf (testsea3ebf12) independently accepted:53 new cases,613 full local tests,64 physics tests,Ruff/format59,mypy32 pass. Quality reproduced immutable cases/error evidence and detected seven physics mutations. Worst analytic error6.5304e-8 against predeclared2e-7; no source/distribution/dependency or tolerance change. Exact-head CI required before integration. See NUMERICAL_VALIDATION.md for bounded applicability."
     },
     {
       "id": "SP-03.b",
@@ -1636,7 +1636,9 @@
         "Research",
         "SDK",
         "QE"
-      ]
+      ],
+      "issue": "https://github.com/spei04/strange-physics/issues/75",
+      "execution_owner": "Engineer Research; read-only preparation, authoring follows SP-03.a integration and exclusive writer handoff."
     },
     {
       "id": "SP-03.c",
@@ -10710,10 +10712,10 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-03.a_in_progress",
+      "status": "SP-03.b_preparation",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "SP-03.a",
+      "next_authoring_task": "SP-03.b",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10735,7 +10737,7 @@
       "forecast_boundary": "Reference human effort only; not a subagent delivery forecast. Dependencies, gates and schedules unchanged.",
       "identity_boundary": "SP-01.b/c/d/e, B3, ID-C, SP-08, staging and whole R0 exit are not prerequisites for the local slice; their hosted/later consumer gates remain.",
       "acceptance": "Purchased-prefix-only fit, unseen-condition predictions, independent analytic development score and SDK/CLI evidence; any failed probe unscorable, primary MSE null; derive RMSE from position_mse.",
-      "evidence_gap": "Existing simulation/journal/random CLI, schemas and 560 tests do not yet implement fit/predict/score or prove generalization/recovery.",
+      "evidence_gap": "613 passing local tests include independent analytic validation, but no domain-ratified fitter, predictor, scorer, generalization or recovery result.",
       "capacity_approval": "Concrete disk expansion and snapshot approved and independently accepted 2026-10-20; other paid/release gates unchanged."
     },
     "capacity_recovery": {
@@ -10766,7 +10768,37 @@
         "snapshot_upper_estimate": 10
       },
       "billing_boundary": "Before credits/tax; estimate, not measured invoice. No staging, provider, official sweep or release authorization.",
-      "reconciled_head": "89a44ed348537f312914b66c8cdd71076e7d2bdf"
+      "reconciled_head": "89a44ed348537f312914b66c8cdd71076e7d2bdf",
+      "pull_request": 74,
+      "merge": "f197687cbf7327d29ef6bad06cc228dcbaf4a10a",
+      "reviewed_head": "579907b1be757ee2fb1708b854dfe12196f6aefe",
+      "tree": "b1bd3b926aba4a6a1e4a6d060ee9b9461e370405",
+      "pr_ci": 39356603093,
+      "main_ci": 39356704081
+    },
+    "analytic_fixture_evidence": {
+      "reviewed_source": "66016cf6b5f3bcb74d98ace504e1e6b2db77d080",
+      "reviewed_tests": "ea3ebf12fa90ad415f970d5127dc1dc15a667ae8",
+      "author": "Engineer Research",
+      "independent_reviewers": [
+        "Engineer Quality",
+        "Engineer Platform"
+      ],
+      "new_cases": 53,
+      "local_full_tests": 613,
+      "focused_physics_tests": 64,
+      "quality_mutations_detected": 7,
+      "worst_analytic_norm_error": 6.5304e-08,
+      "declared_component_atol": 2e-07,
+      "unchanged": [
+        "production source",
+        "study distributions",
+        "dependencies",
+        "old assertions",
+        "declared tolerances"
+      ],
+      "record": "docs/NUMERICAL_VALIDATION.md",
+      "boundary": "Bounded synthetic fixtures; no SP-03.b ratification or fit/predict/score claim. Exact-head CI enforced before integration."
     }
   }
 }
