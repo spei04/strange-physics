@@ -12,8 +12,8 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | --- | --- | --- |
 | Research | SP-01.e/VAL1 scientific fixture review | Raw versus typed identity, numeric boundaries and incomplete science; read-only |
 | Platform | SP-01.e/VAL1 contract/tooling review | Approved roots, audiences, reference closure and drift; read-only |
-| Quality | SP-01.e/#98 VAL1 manifest and fixture checkpoint | Exclusive identity writer; generator follows checkpoint review |
-| Project lead | Completion records, primary integration and dependency gates | WEB1 integrated; native proposal and RA_EXEC decision pending |
+| Quality | SP-01.e/#98 VAL1 generator next; manifest/fixtures1014592 accepted | Exclusive identity writer; no generator started at this checkpoint |
+| Project lead | Reviewed proposal PR #100, VAL1 draft PR #101 and dependency gates | Active research graph and RA_EXEC unchanged; no experiments authorized |
 
 ## Assignments
 
@@ -459,3 +459,5 @@ Private integration index SHA256 5eac34c152c87a13a663a3ebad284a806eb8061932c226b
 2026-10-20 — Lead verified same-account SSH recovery, primary clean main1ac8875 and identity clean19500bc; actual free space 103,368,593,408 bytes. Quality resumes the six agreed VAL1 manifest/fixture corrections in the existing identity checkout. Research reviews scientific byte/layer semantics; Platform reviews public roots, audiences and references. Generator implementation waits for immutable replacement acceptance. Lead owns proposal documentation and integration in primary. No checkout, dependency copy or infrastructure was created; both checkouts remain active.
 
 2026-10-20 — The reviewed [native sequencing recommendation](research/NATIVE_COMPARISON_PROPOSAL.md) keeps finite-grid calibration before the first comparison and moves Laplace implementation plus its approximation-versus-grid audit to later RA-N02.b. Proposed first-result effort is 17–26 engineer-days (21.25–32.5 with reserve); later Laplace is 3–5 (3.75–6.25 with reserve), low confidence. Full programme scope, active dependencies, RA_EXEC, run caps and GA forecast remain unchanged. This is saved planning only. Research and Quality reviewed the sequencing recommendation; Research supplied the later audit-inclusive estimate. The saved delta requires independent graph/source review. No native implementation, measured experiment or new spending is authorized.
+
+2026-10-20 — VAL1 manifest/fixtures 10145929997fc959fe31ba0398cdf8dac62e4934 (tree a7daa18e4506d268d334b05f14949da0ec0f8838), published in draft PR #101, are independently accepted after the six review corrections. All 87 focused tests, 1,431 external schema cases and configured static/type/security checks pass; Research adds 150 independent checks, and Platform verifies 96-root closure and repair-sensitive boundaries. Quality retains identity for the next generator assignment. Generation/drift CI, CLIENT1 and MOCK1 remain pending; SP-01.e stays in progress. Planning PR #100 is separately reviewed at 0ecf4f4; active research dependencies and RA_EXEC are unchanged.
