@@ -11561,7 +11561,8 @@
           "started_at": "2026-10-20T08:15:54.588377+00:00",
           "api_source": "c066900b875c4393f74d6e34b7b9fec09e15a83f",
           "api_tree": "b5d47d4766ee3454d2037d5823a3e668a9e27380",
-          "runtime_assigned_at": "2026-10-20T08:49:09.121885+00:00"
+          "runtime_source_started_at": "2026-10-20T08:48:46Z",
+          "runtime_assignment_recorded_at": "2026-10-20T08:49:09.121885+00:00"
         }
       ],
       "starting_commit": "c74975b730cb020b23e338ff466a52d9282c7177",
@@ -11825,7 +11826,6 @@
         "review_date": "2026-11-19"
       },
       "web1_runtime_assignment": {
-        "assigned_at": "2026-10-20T08:49:09.121885+00:00",
         "owner": "Engineer Research",
         "checkout": "identity",
         "reviewers": [
@@ -11833,7 +11833,10 @@
           "Quality: current authority/recovery/raw-byte safety"
         ],
         "lead": "Primary integration/progress",
-        "scope": "Current viewer guard, cursor/snapshot/event boundaries, actual-byte bodies and incremental bounded complete history. No network/hosted producer or client UI."
+        "scope": "Current viewer guard, cursor/snapshot/event boundaries, actual-byte bodies and incremental bounded complete history. No network/hosted producer or client UI.",
+        "recorded_at": "2026-10-20T08:49:09.121885+00:00",
+        "source_started_at": "2026-10-20T08:48:46Z",
+        "authorization": "Explicit lead continuation after full c066900 API checks and independent acceptance."
       }
     },
     "contract_tooling_preparation": {

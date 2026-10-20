@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | WEB1 API/fixtures, then runtime after review | Assigned after exact WORLD1 acceptance and reviewed identity handoff |
-| Platform | Native-only research prerequisite proposal; then WEB1 stream/artifact review | Planning only; returns to immutable API review when ready |
-| Quality | Completion/handoff, then WEB1 authority/recovery/schema review | Independent reviewer; SP-01.e remains preparation-only |
-| Project lead | Record WORLD1 acceptance and hand off WEB1 | Exclusive primary owner; integration and progress |
+| Research | WEB1 bounded runtime from accepted APIc066900 | Current viewer/cursor/events first, then actual-byte bodies and complete bounded history |
+| Platform | WEB1 state, provenance and budget composition review | Immutable source checkpoints; native prerequisite proposal review is complete |
+| Quality | WEB1 current authority, recovery and raw-byte safety review | Independent reviewer; SP-01.e remains preparation-only |
+| Project lead | WEB1 primary integration and progress; native proposal scope decision | Exclusive primary owner; PR #96 integrated, RA_EXEC remains pending |
 
 ## Assignments
 
