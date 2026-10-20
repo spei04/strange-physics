@@ -10,9 +10,9 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | Final WORLD1 supplied-pair and allocation repairs | Reassigned exclusive identity writer; WEB1 waits accepted integration |
-| Platform | WORLD1 allocation and all-pair review; WEB1 preparation retained | Independent reviewer; replacement acceptance required |
-| Quality | WORLD1 six-pair composition review; WEB1 preparation retained | Independent reviewer; SP-01.e stays preparation only |
+| Research | Local comparison prerequisite audit; WEB1 API preparation | WORLD1 writer released; WEB1 source waits exact integration/handoff |
+| Platform | WEB1 stream/artifact producer and consumer handoff | Final WORLD1 runtime accepted; read-only preparation |
+| Quality | Final WORLD1 union review; WEB1 authority/recovery | Runtime accepted; SP-01.e stays preparation only |
 | Project lead | Integrate reviewed WORLD1 and update progress | Exclusive primary owner; exact PR/main acceptance before WEB1 handoff |
 
 ## Assignments
@@ -380,7 +380,7 @@ Platform independently reproduced an older version newer than the retained lates
 
 Shared boundary 83d304c passed Quality’s 240 focused, 29 additional authority, 60 differential C2 checks and six detected mutations; Platform passed 43 focused, 55 extra checks and seven mutations; lead passed 29 old/new parser/canonical cases. Lead additionally passed 30 runtime identity/policy/run-selection cases at abdf849. Counts overlap and are not additive. Private indices are recorded in execution-backlog.json, owner-readable outside checkouts, review 2026-11-19. Existing checkouts/environments remain in use; no new checkout, dependencies, deployment or paid gate.
 
-## WORLD1 runtime accepted; final integration assignment
+## Earlier WORLD1 runtime checkpoint; subsequently qualified
 
 WORLD1 runtime 9267733 is independently accepted by lead, Platform and Quality after 2,768 full tests, 345 WORLD1 cases, 542 broader focused cases, 1,201 schema checks, Ruff/format127 and strict mypy87. Retained predecessor/ancestor ID and chronology checks, grant renewal-distance consistency and safe head reads were repaired and regression-tested. Exact final PR #95 and protected-main CI remain before integration acceptance. WEB1 and the SP-01.d parent freeze remain open.
 
@@ -393,3 +393,11 @@ Assignments: lead owns primary integration; Research prepares WEB1 API read-only
 Evidence indices are recorded in execution-backlog.json, owner-readable outside checkouts with diagnostic review 2026-11-19. Same-VM storage is not an off-device backup. Task graph, estimates, research-amendment, paid/deployment and release gates remain unchanged.
 
 Final composition qualified the earlier 9267733 acceptance: the original receipt parent/version pair also needs validation. Research repaired that supplied pair at6abdb3 and retains the identity writer while Platform checks visible version-ID reuse at fresh append allocation; Quality verifies all six supplied-record pairs. Publication and full final acceptance remain held for the replacement. Existing full-test evidence stays attached to its original source.
+
+## Final WORLD1 composition accepted
+
+2026-10-20 08:04 UTC — Final WORLD1 runtime2b882fe is accepted by lead, Platform and Quality after 2,783 full tests, 360 WORLD1 cases, 557 broader focused cases, 1,201 schemas, Ruff/format127, strict mypy87, static security and offline package/installed-callable checks. Final composition repairs validate all six supplied historical/current version pairs and prevent fresh allocation from reusing a visible version ID; valid retries still ignore unused allocation inputs. Final authorf7b1cb1 changes documentation only. This supersedes the qualified9267733 acceptance. Exact final PR #95/main checks remain before integration acceptance; WEB1 and full SP-01.d remain open.
+
+Private evidence binds runtime2b882fe, final authorf7b1cb1 and both replacement reviews; review date2026-11-19, directories0700/files0600. Quality passed42 overlapping six-pair cases, six direct contradictions and eight guard mutations; Platform passed180 public composition cases and eleven guard mutations. Lead passed17 allocation/replay and five history/head cases. These suites overlap and are not additive unique totals. The four session/linking status annotations were independently verified to leave schema fields unchanged;222 related tests and1,201 external-schema cases pass.
+
+Assignments: Research released the clean identity writer and is auditing the36-episode comparison prerequisites read-only, then prepares WEB1 API. Platform prepares the WEB1 stream/artifact handoff; Quality reviews the final source/progress union and WEB1 authority/recovery; lead owns primary integration. No research-amendment gate, deployment, provider, official-study or release approval is inferred. Both existing checkouts remain needed for immediate reuse.
