@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | ID-B/B3 identity linking (#63), in progress | Exclusive identity cloud checkout; Quality/lead review before ID-C |
-| Research | SP-03.b calibration accepted locally; SP-04.a fitter (#77) preparation next | Primary cloud checkout released for integration; authoring follows accepted dependency and lead handoff |
-| Quality | SP-03.b independent acceptance; B3 review next | ID-C/#64 still depends on B3; independent SP-06.a scorer follows SP-04.b |
-| Project lead | Integrate reviewed SP-03.b; coordinate fitter and B3 | Exact-head checks before merge; two independently owned cloud checkouts, no shared mutable dependencies |
+| Platform | B3 source accepted; independent SP-04.a fitter review next | Identity checkout released to lead for integration; no infrastructure mutation |
+| Research | SP-04.a production spring fitter (#77), in progress | Exclusive primary cloud checkout; Quality/Platform/lead review |
+| Quality | ID-C/#64 read-only API preparation; independent SP-04.a review | Credential authoring follows accepted B3 integration; independent SP-06.a scorer follows SP-04.b |
+| Project lead | Integrate B3; coordinate fitter and credential handoffs | Identity checkout owned during integration; Research retains exclusive primary checkout |
 
 ## Assignments
 
@@ -80,6 +80,11 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-20 02:20 | Quality | SP-03.b — independent reproduction and numerical failure review | Reproduced fixed matrices; found derived-arithmetic and propagation overflow paths; Research repaired explicit JSON-safe failure accounting |
 | 2026-10-20 02:25 | Research | SP-03.b/#75 — noiseless domain calibration and noise sensitivity | 43e0589 accepted; 817 full tests, 204 focused; Ruff/format and strict mypy passed; primary writer released |
 | 2026-10-20 02:25 | Project lead | SP-03.b integration; SP-04.a/#77 preparation assigned | Quality accepted immutable source; exact-head CI still required; production fitter authoring follows integration |
+| 2026-10-20 02:29 | Project lead | SP-03.b integration and SP-04.a writer handoff | PR #78/main db182788 matches reviewed7b27bad/tree08efb975; PR CI39358928012 and main CI39359050024 passed; reused primary checkout |
+| 2026-10-20 02:29 | Research | SP-04.a/#77 — versioned public-prefix spring fitter | Bounded config/result API accepted; no prediction/scoring claim; Quality and Platform independently review |
+| 2026-10-20 02:31 | Platform | ID-B/B3/#63 — reviewed linking contract and repairs | Source051d8f7 accepted by Research/Quality/lead; 714 branch tests, 222 focused, static/schema/package checks passed; identity writer released |
+| 2026-10-20 02:31 | Project lead | Integrate B3 with accepted scientific main and reconcile stream contracts | Exact integrated-head checks before merge; three stream acceptance statements clarified without changing graph/effort/gates |
+| 2026-10-20 02:31 | Quality | ID-C/#64 — bounded credential API preparation | C1 service/key lifecycle then C2 run credentials/composition; read-only until B3 integration; Platform reviews fitter |
 
 ## Review evidence and management checkpoint
 
@@ -98,6 +103,8 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 - Shared storage: cloud free space measured 101,232,640 bytes (~96.5 MiB), then 103,305,216 bytes (~98.5 MiB), on 2026-10-20; checkout mutations stopped below the 100 MiB no-write floor. Mac read-back was 323 MiB after a transient no-space warning. Only ~18 MB is project-owned disposable cloud cache; other projects and migration archives are excluded. This historical stop was resolved by the approved SP-02.b recovery below; no unrelated cleanup occurred.
 - Capacity recovery: the product owner approved the concrete 200→300 GiB balanced boot-disk expansion and recovery snapshot on 2026-10-20. Platform completed the globally scoped STANDARD snapshot, stored in us-central1, before expanding the same attached disk and its root partition/ext4 filesystem online. Snapshot completion was 01:54:35 UTC; resize and filesystem growth completed by 01:56:22 UTC. No reboot, stop, detach, formatting, cleanup, dependency install or IAM change occurred. Platform measured 104,103,600,128 bytes free; Quality independently measured 104,113,758,208 bytes (~96.96 GiB), above the 20 GiB gate. The filesystem totals 310,911,414,272 bytes. Platform and Quality fully rehashed the protected archive, pinned uv and all 3,414 venv entries; source, manifest/runtime fingerprints, directory metadata, recorded long-lived consumers, boot identity and service state were preserved. Private evidence and its hash index remain outside the checkout with owner-only 0700/0600 permissions. Snapshot review is 2026-10-27, with no automatic deletion; the three-day recycle period begins only after a future deletion. This is a crash-consistent snapshot, not a restore rehearsal or application-health proof. Ordinary diagnostics are reviewed 2026-11-19; unique recovery records remain until superseded. Official [pricing](https://cloud.google.com/compute/disks-image-pricing) and [resize procedure](https://docs.cloud.google.com/compute/docs/disks/resize-persistent-disk).
 - CI/CD complete for this package: PR #56 merged 256b409 with a matching reviewed tree. Main run 39347053265 passed all checks and delivered artifact 12231636153; independent in-memory bundle/checksum/source review passed, and the PR produced zero artifacts. DELIVERY_RECORD.md preserves exact hashes and policy read-back. This is unpublished candidate delivery, not deployment or production readiness. One-account GitHub approval limitation remains explicit.
+- Linking delta: ID-B/B3 source051d8f708a5f5cc1a9182448466eb6dbdeb10f55 passed Research, Quality and lead review. Platform passed 714 full branch tests, 222 focused session/link tests, Ruff/format (62 files), strict mypy (34), 478 external schema checks, configured Bandit severity gate and offline wheel/sdist allowlist validation. Research independently ran 100 linking cases; Quality ran all222 and confirmed repaired guard-mutation coverage. Fixes bind audit replay, expose public commit revision, reject invalid primary authority before freshness advice, prevent cross-provider login/link callback collisions and define safe429 responses. Shared trusted proof purpose/owner is an explicit internal producer amendment; public login HTTP is unchanged. Root integrated accepted scientific progress before exact-head checks. No real verifier, broker, HTTP, SQL or recovery enforcement is claimed; ID-C and final parent freeze remain open.
+- Calibration integration: [PR #78](https://github.com/spei04/strange-physics/pull/78) merged as db18278821d72d3ba02336e45827d441af0a00b6; tree08efb97564ff99f7056551a04b93b27b5460f3eb matches independently accepted7b27bad5a6d947580d231b337df8836558a62131. PR CI39358928012 and protected-main CI39359050024 passed all applicable jobs, including the main candidate build. SP-03.b is complete for its bounded calibration scope; SP-04.a is now assigned.
 - Calibration delta: SP-03.b source 43e05897587ba3b7e1a4266c2d40af7cbaa1b5b6 passed independent Quality and lead review. Preregistration 5e524a1 and proof clarification f55d38f preceded measurements. All 63 primary and seven mixed-mass noiseless prefixes meet the joint criteria; maximum per-probe RMSE 8.46960e-6. Weak excitation retains 34 unsupported / 48 cases. Noise retains all 64 prefixes: six negative estimates, 13 joint passes, 406 computed probes over the bound and 144 failed probes. Derived arithmetic/propagation failures remain JSON-safe and counted. 817 full tests and 204 focused cases, Ruff/format and strict mypy passed; exact-head hosted CI remains an integration gate. SPRING_DOMAIN.md documents reproduction, analytic bounds and finite-matrix limitations. This is test-only calibration, not a production fitter/predictor/scorer or I1 exit.
 - Budget: the approved expansion adds an estimated ~$10/month and the snapshot up to roughly ~$10/month while retained, before credits/tax; actual billing is not yet measured. Only this capacity action was approved. Staging, provider trials, official sweeps and releases retain their concrete approval gates. Existing VM billing is outside this incremental estimate.
 - Tracking: SP-00.a [#44](https://github.com/spei04/strange-physics/issues/44), SP-00.b [#45](https://github.com/spei04/strange-physics/issues/45), SP-02.a [#46](https://github.com/spei04/strange-physics/issues/46), SP-02.b [#72](https://github.com/spei04/strange-physics/issues/72), SP-03.a [#73](https://github.com/spei04/strange-physics/issues/73).
@@ -106,9 +113,11 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 Research owns the local spring proof; Quality independently authors its development
 scorer. SP-02.b is accepted and SP-03.a fixtures have passed independent review.
-SP-03.a is integrated and SP-03.b calibration is independently accepted locally.
-Research prepares SP-04.a/#77 while the lead completes integration. Platform authors
-B3 linking in a separate cloud checkout; Quality retains ID-C after accepted ID-B.
+SP-03.a and SP-03.b are integrated, including exact-head PR/main checks.
+Research now authors SP-04.a/#77 in the reused primary checkout. B3 linking is
+under lead integration in the separate cloud checkout. Quality prepares ID-C as
+two dependent increments: C1 service/key lifecycle, then C2 run credentials and
+product-authority composition. Authoring waits for accepted ID-B.
 
 The approved dependency path is SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b →
 SP-06.a → SP-04.e/I1. SP-03.a also requires completed SP-00.b; SP-03.b requires

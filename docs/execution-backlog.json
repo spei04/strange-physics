@@ -1325,7 +1325,7 @@
       ],
       "execution_owner": "Project lead coordinates; Platform owns ID-B/B3, then Quality owns ID-C",
       "issue": "https://github.com/spei04/strange-physics/issues/52",
-      "evidence": "Control part 1 (PR #53), ID-A sessions (PR #65), ID-B/B1 membership (PR #67) and B2 invitations (PR #69) are integrated. B2 main89e6117 matches reviewed8267865; 560 hosted tests and PR/main CI passed. B3 linking, ID-C credentials and final composed review remain open; full-contract consumers remain blocked."
+      "evidence": "Control part 1 (PR #53), ID-A sessions (PR #65), ID-B/B1 membership (PR #67) and B2 invitations (PR #69) are integrated. B2 main89e6117 matches reviewed8267865; 560 hosted tests and PR/main CI passed. B3 linking, ID-C credentials and final composed review remain open; full-contract consumers remain blocked. B3 source051d8f7 independently accepted with714 branch tests; integrated-head checks and ID-C/final composition still pending."
     },
     {
       "id": "SP-01.c",
@@ -1629,7 +1629,7 @@
         "RS2"
       ],
       "objective": "Ensure numerical results and supported interventions are scientifically defensible. This PR delivers ratify first-spring domain and tolerances.",
-      "status": "in_progress",
+      "status": "completed",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1638,8 +1638,8 @@
         "QE"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/75",
-      "execution_owner": "Engineer Research; independently reviewed by Quality and lead; primary checkout handed to lead for integration.",
-      "evidence": "Source 43e05897587ba3b7e1a4266c2d40af7cbaa1b5b6; 817 full local tests and 204 focused cases/static checks pass. All 70 primary/mixed-mass noiseless prefixes pass; 13/64 noisy prefixes pass, failures retained. Exact-head CI and integration pending; docs/SPRING_DOMAIN.md."
+      "execution_owner": "Engineer Research; Quality/lead review and integration accepted.",
+      "evidence": "PR #78/main db18278821d72d3ba02336e45827d441af0a00b6/tree08efb975 matches reviewed7b27bad; PR CI39358928012 and main CI39359050024 passed with 817 tests. Bounded calibration in docs/SPRING_DOMAIN.md; all 70 noiseless prefixes pass and 13/64 noisy prefixes pass, failures retained."
     },
     {
       "id": "SP-03.c",
@@ -1741,7 +1741,7 @@
         "RS2"
       ],
       "objective": "Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers fit a spring using purchased observations.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1750,7 +1750,8 @@
         "SDK"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/77",
-      "execution_owner": "Engineer Research; read-only bounded API preparation; authoring after accepted SP-03.b integration."
+      "execution_owner": "Engineer Research; exclusive primary cloud checkout after accepted SP-03.b/02.b; Quality/Platform/lead review.",
+      "execution_plan": "Versioned explicit actual-config digest, all-completed paired-Simpson windows and public masses; frozen LinearSpringModel plus separate JSON-safe diagnostics. Fitted is numerical success, not ground-truth acceptance. Nonzero noise and coefficients outside calibrated range remain explicit; no clipping or private inputs."
     },
     {
       "id": "SP-04.b",
@@ -2813,8 +2814,8 @@
         "HTTP",
         "WEB"
       ],
-      "scope": "Check current membership/credential status on requests and define periodic SSE reauthorization hooks.",
-      "accept": "Revoked caller denied new work; event authorization refresh \u226430 seconds.",
+      "scope": "Check current membership/credential status on requests and before every SSE payload batch; reauthorize idle connections at most 30 seconds apart.",
+      "accept": "Revoked caller denied new work; current authoritative checks before every payload batch; idle reauthorization \u226430 seconds.",
       "tests": "Revocation races, stale token, sole-owner and safe audit/redaction tests.",
       "risk": "No stale membership cache bypass.",
       "out": "SCIM provisioning.",
@@ -4639,7 +4640,7 @@
         "ID"
       ],
       "scope": "Support Last-Event-ID, cursor expiry, authoritative snapshot and archived history pagination with reauthorization.",
-      "accept": "Reconnect has no silent committed-event gaps; revoked stream closes \u226430s.",
+      "accept": "Reconnect has no silent committed-event gaps; current authoritative checks before every payload batch; revoked idle stream closes \u226430s.",
       "tests": "Duplicate/gap/expired cursor, archive outage and membership revocation tests.",
       "risk": "Archive and snapshot use same tenant/privacy policy.",
       "out": "Excludes SP-23.a publish committed event and replay endpoints; SP-23.c render live investigation timeline; SP-23.d integrate reconnect and cancellation ux. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -6588,7 +6589,7 @@
         "WEB"
       ],
       "scope": "Revoke account/service/run access, close streams and stop unauthorized new work; reconcile active jobs.",
-      "accept": "Disabled principal denied new calls immediately; stream \u226430s and job launch \u22645s revocation targets.",
+      "accept": "Disabled principal denied new calls immediately; current authoritative checks before every stream payload batch; idle stream closure \u226430s and job launch \u22645s revocation targets.",
       "tests": "Active session/token/job/SSE disable races and sole-owner exceptions.",
       "risk": "No stale authorization caches or forgotten machine keys.",
       "out": "Excludes SP-35.a freeze scim mapping and lifecycle semantics; SP-35.b implement bounded provisioning and reconciliation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -10537,7 +10538,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Engineer Platform (B3 identity linking active in independent cloud checkout)",
+      "BE1": "Engineer Platform B3 source accepted; Engineer Quality prepares ID-C after integration",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10553,7 +10554,7 @@
     "schedule_repair": "2026-10-19: technical lead accepted SP-01.b before SP-01.c freeze. One added edge (369 total); both reference schedules regenerated without changing effort, capacity, approval gates or current execution staffing.",
     "reviewed_scientific_head": "6e724152e5c947db1662bd65cea36412a8498b22",
     "integrated_scientific_subset": "cc24aef592f3157b67024e3cab41159489c77ffa",
-    "contract_scope_note": "Control part 1, ID-A sessions, ID-B/B1 membership and B2 invitations are integrated. B3 linking is in progress in an independent cloud checkout; ID-C follows acceptance. Full SP-01.b and dependent consumers remain gated; human-resource reforecast remains required.",
+    "contract_scope_note": "Control part 1, ID-A sessions, ID-B/B1 membership and B2 invitations are integrated. B3 source051d8f7 is independently accepted; lead integration and exact-head CI remain. Quality prepares ID-C read-only. Full SP-01.b and dependent consumers remain gated.",
     "integrated_control_subset": "d6204aaab82e1b100532f40bae00e224d9334c65",
     "identity_remaining_units": [
       {
@@ -10596,12 +10597,13 @@
           {
             "id": "B3",
             "title": "Explicit identity linking",
-            "status": "in_progress",
+            "status": "reviewed_integration_pending",
             "depends_on": [
               "B1",
               "B2"
             ],
-            "execution": "Engineer Platform owns the independent identity cloud worktree; Quality/lead review before ID-C. Capacity prerequisite is accepted."
+            "execution": "Lead owns identity checkout during integration; Quality prepares ID-C read-only. Research retains the independent primary fitter checkout.",
+            "source": "051d8f708a5f5cc1a9182448466eb6dbdeb10f55"
           }
         ]
       },
@@ -10614,7 +10616,28 @@
         ],
         "owner": "Engineer Quality",
         "issue": "https://github.com/spei04/strange-physics/issues/64",
-        "blocker": "Accepted ID-B/B3"
+        "blocker": "Accepted ID-B/B3",
+        "pr_units": [
+          {
+            "id": "C1",
+            "title": "Service principal and API key lifecycle",
+            "status": "queued",
+            "depends_on": [
+              "SP-01.b/ID-B/B3 integration"
+            ],
+            "owner": "Engineer Quality"
+          },
+          {
+            "id": "C2",
+            "title": "Run credentials and product-authority composition",
+            "status": "blocked",
+            "depends_on": [
+              "C1"
+            ],
+            "owner": "Engineer Quality"
+          }
+        ],
+        "execution_plan": "Lead accepted two dependent reviewable increments. New trusted principal authority generation and durable grant incarnation prevent disable/re-enable and remove/regrant resurrection; existing public session/B1 shapes remain unchanged. Creator and leaf key are audit metadata, not enduring run authority. ID-C and SP-01.b stay open until both and final composition review."
       }
     ],
     "estimate_adjustments": [
@@ -10715,10 +10738,10 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-03.b_reviewed_integration_pending",
+      "status": "SP-04.a_in_progress",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "SP-04.a after SP-03.b integration",
+      "next_authoring_task": "SP-04.a",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10811,7 +10834,7 @@
     },
     "checkout_ownership": {
       "scientific": "Research authors in the primary cloud checkout; lead takes exclusive ownership for integration handoffs.",
-      "identity": "Platform authors B3 in one independent ordinary cloud worktree; reuse for ID-C after acceptance.",
+      "identity": "B3 source accepted; lead owns identity checkout for integrated-head verification. Reuse for Quality ID-C only after B3 acceptance.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -10839,8 +10862,34 @@
       "noise_computed_probe_failures": 406,
       "noise_missing_predictions": 144,
       "record": "docs/SPRING_DOMAIN.md",
+      "status": "accepted_and_integrated",
+      "boundary": "Synthetic test-only calibration. Fixed noiseless finite matrices and exact-sample quadrature bounds; no blanket noisy accuracy, continuous RK4 guarantee, production fitter/predictor/scorer, I1 or release claim. Derived arithmetic and propagation failures explicitly retained as JSON-safe diagnostics.",
+      "pull_request": 78,
+      "merge": "db18278821d72d3ba02336e45827d441af0a00b6",
+      "reviewed_integration_head": "7b27bad5a6d947580d231b337df8836558a62131",
+      "tree": "08efb97564ff99f7056551a04b93b27b5460f3eb",
+      "pr_ci": 39358928012,
+      "main_ci": 39359050024
+    },
+    "linking_evidence": {
+      "source": "051d8f708a5f5cc1a9182448466eb6dbdeb10f55",
       "status": "independently_reviewed_integration_pending",
-      "boundary": "Synthetic test-only calibration. Fixed noiseless finite matrices and exact-sample quadrature bounds; no blanket noisy accuracy, continuous RK4 guarantee, production fitter/predictor/scorer, I1 or release claim. Derived arithmetic and propagation failures explicitly retained as JSON-safe diagnostics."
-    }
+      "author": "Engineer Platform",
+      "reviewers": [
+        "Engineer Quality",
+        "Engineer Research",
+        "Project lead"
+      ],
+      "branch_full_tests": 714,
+      "focused_session_link_tests": 222,
+      "independent_link_tests": 100,
+      "external_schema_checks": 478,
+      "ruff_formatted_files": 62,
+      "mypy_files": 34,
+      "package_check": "Offline pinned wheel/sdist build and exact archive allowlist passed.",
+      "security_check": "Configured Bandit medium/high gate passed; two unchanged baseline low findings retained. Hosted dependency audit remains required.",
+      "scope": "Pure linking/session contract amendment; no real provider verification, broker configuration, HTTP/SQL/race/recovery implementation."
+    },
+    "stream_contract_clarification": "Current authoritative session/credential, grant and workspace checks before every payload batch; applicable run lease also checked. The <=30-second interval applies only to idle connections, not cached payload authorization. SP-11.c/23.b/35.c prose aligned; graph/effort/gates unchanged."
   }
 }

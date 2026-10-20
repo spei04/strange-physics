@@ -1,0 +1,302 @@
+{
+  "notice": "Synthetic conformance fixtures only; no provider, SQL or recovery evidence.",
+  "rate_limit": {
+    "body": {
+      "code": "rate_limited",
+      "request_id": "request-1"
+    },
+    "headers": {
+      "Retry-After": "30"
+    },
+    "status": 429
+  },
+  "runtime_negative": [
+    {
+      "field": "issuer",
+      "model": "IdentityNamespace",
+      "value": "https://EXAMPLE.com"
+    },
+    {
+      "field": "expires_at",
+      "model": "LinkChallenge",
+      "value": 1020
+    },
+    {
+      "field": "state",
+      "model": "LinkChallenge",
+      "value": "committed"
+    },
+    {
+      "field": "flow",
+      "model": "LinkStartResponse",
+      "value": "oidc_code"
+    },
+    {
+      "field": "receipt_retention_seconds",
+      "model": "LinkPolicy",
+      "value": 1
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "tenant_id",
+      "model": "IdentityNamespace",
+      "value": true
+    },
+    {
+      "field": "email",
+      "model": "IdentityNamespace",
+      "value": "user@example.com"
+    },
+    {
+      "field": "principal_id",
+      "model": "LinkStartRequest",
+      "value": "other"
+    },
+    {
+      "field": "purpose",
+      "model": "LinkChallenge",
+      "value": "login"
+    },
+    {
+      "field": "expected_revision",
+      "model": "LinkCommitRequest",
+      "value": -1
+    },
+    {
+      "field": "principal",
+      "model": "LinkActor",
+      "value": {
+        "active": true,
+        "kind": "service",
+        "principal_id": "principal-1"
+      }
+    },
+    {
+      "field": "identity",
+      "model": "LinkResult",
+      "value": {
+        "issuer": "https://securetoken.google.com/example-project",
+        "subject": "secondary-subject",
+        "tenant_id": null
+      }
+    },
+    {
+      "field": "details",
+      "model": "LinkError",
+      "value": {
+        "owner": "other"
+      }
+    }
+  ],
+  "valid": {
+    "IdentityAssociation": {
+      "active": true,
+      "identity": {
+        "issuer": "https://securetoken.google.com/example-project",
+        "subject": "primary-subject",
+        "tenant_id": null
+      },
+      "linked_at": 900,
+      "principal_id": "principal-1",
+      "revision": 0
+    },
+    "IdentityNamespace": {
+      "issuer": "https://securetoken.google.com/example-project",
+      "subject": "primary-subject",
+      "tenant_id": null
+    },
+    "LinkActor": {
+      "actor": {
+        "context": {
+          "browser_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "csrf_matches": true,
+          "csrf_scope": "session",
+          "has_bearer": false,
+          "has_session_cookie": true,
+          "origin": "https://app.example",
+          "target_origin": "https://app.example"
+        },
+        "credential": {
+          "generation": 0,
+          "session_id": "session-1"
+        },
+        "session": {
+          "absolute_expires_at": 4610,
+          "authenticated_at": 990,
+          "created_at": 1010,
+          "generation": 0,
+          "last_seen_at": 1010,
+          "policy_id": "synthetic-policy-1",
+          "principal_active": true,
+          "principal_id": "principal-1",
+          "revoked": false,
+          "session_id": "session-1"
+        }
+      },
+      "authenticated_identity": {
+        "authenticated_at": 990,
+        "generation": 0,
+        "identity": {
+          "issuer": "https://securetoken.google.com/example-project",
+          "subject": "primary-subject",
+          "tenant_id": null
+        },
+        "session_id": "session-1"
+      },
+      "primary": {
+        "active": true,
+        "identity": {
+          "issuer": "https://securetoken.google.com/example-project",
+          "subject": "primary-subject",
+          "tenant_id": null
+        },
+        "linked_at": 900,
+        "principal_id": "principal-1",
+        "revision": 0
+      },
+      "principal": {
+        "active": true,
+        "kind": "human",
+        "principal_id": "principal-1"
+      }
+    },
+    "LinkAudit": {
+      "challenge_id": "link-1",
+      "event": "identity_linked",
+      "identity": {
+        "issuer": "https://securetoken.google.com/example-project",
+        "subject": "secondary-subject",
+        "tenant_id": null
+      },
+      "occurred_at": 1025,
+      "principal_id": "principal-1",
+      "proof_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    "LinkChallenge": {
+      "authenticated_at": 990,
+      "browser_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "challenge_id": "link-1",
+      "consumed_at": null,
+      "created_at": 1020,
+      "expires_at": 1200,
+      "generation": 0,
+      "link_policy_id": "link-policy-1",
+      "primary_identity": {
+        "issuer": "https://securetoken.google.com/example-project",
+        "subject": "primary-subject",
+        "tenant_id": null
+      },
+      "primary_revision": 0,
+      "principal_id": "principal-1",
+      "proof": {
+        "audience": "example-project",
+        "auth_time": 1021,
+        "browser_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expires_at": 1200,
+        "flow": "managed_broker",
+        "issued_at": 1021,
+        "issuer": "https://securetoken.google.com/example-project",
+        "proof_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "provider_id": "managed",
+        "purpose": "link_identity",
+        "subject": "secondary-subject",
+        "tenant_id": null,
+        "transaction_id": "link-1",
+        "upstream_provider": "google.com",
+        "verified_at": 1022
+      },
+      "provider_id": "managed",
+      "purpose": "link_identity",
+      "revision": 2,
+      "session_id": "session-1",
+      "session_policy_id": "synthetic-policy-1",
+      "state": "verified"
+    },
+    "LinkClaimConsumption": {
+      "consumed_at": 1025,
+      "owner": {
+        "purpose": "link_identity",
+        "transaction_id": "link-1"
+      },
+      "proof_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "retain_until": 4620
+    },
+    "LinkCommitRequest": {
+      "expected_revision": 2
+    },
+    "LinkError": {
+      "code": "link_conflict",
+      "request_id": "request-1"
+    },
+    "LinkExchangeRequest": {
+      "id_token": "synthetic-link-token"
+    },
+    "LinkPolicy": {
+      "challenge_ttl_seconds": 180,
+      "policy_id": "link-policy-1",
+      "providers": [
+        {
+          "callback_uri": null,
+          "provider_id": "managed"
+        },
+        {
+          "callback_uri": "https://app.example/v1/identity-links/oidc/callback",
+          "provider_id": "oidc"
+        }
+      ],
+      "receipt_retention_seconds": 3600,
+      "schema_version": "strange-physics.linking-policy.v1",
+      "session_policy_id": "synthetic-policy-1"
+    },
+    "LinkProvider": {
+      "callback_uri": null,
+      "provider_id": "managed"
+    },
+    "LinkReceipt": {
+      "challenge_id": "link-1",
+      "challenge_revision": 2,
+      "committed_at": 1025,
+      "identity": {
+        "issuer": "https://securetoken.google.com/example-project",
+        "subject": "secondary-subject",
+        "tenant_id": null
+      },
+      "principal_id": "principal-1",
+      "proof_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "retain_until": 4620
+    },
+    "LinkResult": {
+      "challenge_id": "link-1",
+      "state": "linked"
+    },
+    "LinkStartRequest": {
+      "provider_id": "managed"
+    },
+    "LinkStartResponse": {
+      "authorization_url": null,
+      "challenge_id": "link-1",
+      "expires_at": 1200,
+      "flow": "managed_broker",
+      "provider_id": "managed"
+    },
+    "LinkStatus": {
+      "challenge_id": "link-1",
+      "expired": false,
+      "expires_at": 1200,
+      "next_action": "commit",
+      "revision": 2,
+      "state": "verified"
+    },
+    "SessionIdentity": {
+      "authenticated_at": 990,
+      "generation": 0,
+      "identity": {
+        "issuer": "https://securetoken.google.com/example-project",
+        "subject": "primary-subject",
+        "tenant_id": null
+      },
+      "session_id": "session-1"
+    }
+  }
+}
