@@ -1365,10 +1365,10 @@
         "security",
         "Backend"
       ],
-      "execution_owner": "Platform authors EXEC1 after reviewed handoff; Quality/Research/lead independently review. ART1 integrated; COMP1 remains.",
+      "execution_owner": "Platform authors EXEC1 predicates after accepted API57f2f303; Quality/Research/lead review. ART1 integrated; COMP1 remains.",
       "issue": "https://github.com/spei04/strange-physics/issues/89",
       "execution_plan": "ART1 artifact/checkpoint admission and recovery; EXEC1 package quarantine and worker/broker authority; COMP1 predictor/DB composition. Accepted SP-01.b integration precedes source. Three review units preserve the baseline task/effort/gates.",
-      "evidence": "ART1 complete via PR91/main95bdd85 matching reviewed8c282eb/treecb539fa2; PRCI39370833204 and all five mainCI39370975462 jobs passed. Combined1954 tests/669schemas/static/security/package checks. EXEC1 API is assigned; full SP-01.c freeze awaits EXEC1 and COMP1."
+      "evidence": "ART1 complete via PR91/main95bdd85 matching reviewed8c282eb/treecb539fa2; PRCI39370833204 and all five mainCI39370975462 jobs passed. Combined1954 tests/669schemas/static/security/package checks. EXEC1 API57f2f303 accepted with137 focused/722schema cases and independent review; runtime predicates assigned. Full SP-01.c freeze awaits EXEC1 runtime and COMP1."
     },
     {
       "id": "SP-01.d",
@@ -10554,7 +10554,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Platform authors EXEC1 contracts after reviewed handoff; project lead integrates, Quality and Research review.",
+      "BE1": "Platform authors EXEC1 runtime predicates after accepted API57f2f303; lead integrates, Quality and Research review.",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -11165,8 +11165,10 @@
           "depends_on": [
             "ART1"
           ],
-          "preparation": "Lead/Quality accepted bounded API design; API review precedes runtime predicates.",
-          "phase": "Approved API authoring assignment; explicit checkout handoff follows this reviewed record."
+          "preparation": "API57f2f303 accepted by lead, Quality and Research; independent runtime review remains before integration.",
+          "phase": "Runtime predicate authoring in reused identity checkout; no live extraction/build/controller/isolation or SQL adapters.",
+          "api_source": "57f2f303a5fec4b65b1df022b4239a64f537f6bc",
+          "api_tree": "ecd3facfcd1f3e5086ef3fca9c30a4c29f8a0b3a"
         },
         {
           "id": "COMP1",
@@ -11246,7 +11248,29 @@
         "Broker operations use closed existing-permission mapping and current C2 authority, runtime approval, launch lifecycle and isolation policy before every operation/commit/payload.",
         "Exact older-launch termination remains authorized after owner/lease/policy invalidation; fence unknown dispatch first and never report unknown processes stopped or affect a newer launch.",
         "Manifest/profile syntax checks are not import/conformance proof; no actual extraction/build/controller/sandbox or new predictor execution."
-      ]
+      ],
+      "exec1_api_evidence": {
+        "source": "57f2f303a5fec4b65b1df022b4239a64f537f6bc",
+        "tree": "ecd3facfcd1f3e5086ef3fca9c30a4c29f8a0b3a",
+        "status": "accepted_for_runtime_authoring",
+        "initial_source": "3777b197ee924319a7492614192b52f88ab99577",
+        "focused_tests": 137,
+        "external_schema_checks": 722,
+        "lead_additional_cases": 15,
+        "quality_additional_cases": 10,
+        "research_additional_cases": 19,
+        "quality_guard_mutations_detected": 5,
+        "research_completion_guard_mutation_detected": 1,
+        "lead_index_sha256": "29302b78c4e8ebe153f32822b543c17b93192a6b5e6413f4454adc38cec8582e",
+        "research_index_sha256": "b1d0ac57d1706e707462238f4c061168bf0d8b4933f9b9f563b28c77fc6555f4",
+        "repairs": [
+          "Historical approval/launch/fence/completion chronology.",
+          "Explicit normal-completion and budget-exhaustion reasons.",
+          "Required scoped launch lookup and named atomic uniqueness/conflict reread.",
+          "Aggregate configuration key/string bound before canonical serialization."
+        ],
+        "scope": "API shapes and intrinsic consistency only; runtime authority, actual producers, final integration and full SP-01.c remain pending."
+      }
     },
     "spring_workflow_evidence": {
       "source": "fff854b39fc72c46a785a7d581417425d67261c9",
