@@ -659,7 +659,7 @@ Parent: [#5](https://github.com/spei04/strange-physics/issues/5). This issue clo
 - **Security and reliability:** Failed tests require numerical justification, not arbitrary loosening.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
+- **Milestone / state:** R1; in progress under Research, issue #75; SP-03.a/SP-01.a accepted. Quality/Platform independently review before calibration acceptance.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-03-c"></a>
@@ -3366,4 +3366,4 @@ analytic scoring with explicit failures; existing simulation/schema/CI evidence
 does not satisfy it. The concrete disk/snapshot action is approved and complete;
 SP-03.a source 66016cf is independently accepted with 53 new analytic cases and
 613 local tests; exact-head CI is enforced before integration. Research prepares
-SP-03.b/#75, with authoring held until the dependency and writer handoff pass.
+SP-03.b/#75 after PR #76 integration and matching main CI; authoring is now in progress.

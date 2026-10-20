@@ -1629,7 +1629,7 @@
         "RS2"
       ],
       "objective": "Ensure numerical results and supported interventions are scientifically defensible. This PR delivers ratify first-spring domain and tolerances.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1638,7 +1638,7 @@
         "QE"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/75",
-      "execution_owner": "Engineer Research; read-only preparation, authoring follows SP-03.a integration and exclusive writer handoff."
+      "execution_owner": "Engineer Research; exclusive reused cloud checkout; Quality/Platform independently review."
     },
     {
       "id": "SP-03.c",
@@ -10712,7 +10712,7 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-03.b_preparation",
+      "status": "SP-03.b_in_progress",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
       "next_authoring_task": "SP-03.b",
@@ -10798,7 +10798,13 @@
         "declared tolerances"
       ],
       "record": "docs/NUMERICAL_VALIDATION.md",
-      "boundary": "Bounded synthetic fixtures; no SP-03.b ratification or fit/predict/score claim. Exact-head CI enforced before integration."
+      "boundary": "Bounded synthetic fixtures; no SP-03.b ratification or fit/predict/score claim. Exact-head CI enforced before integration.",
+      "pull_request": 76,
+      "merge": "8510243a029fc24a8ec4067c6737762fa2c7bc29",
+      "reviewed_integration_head": "2c73c3cfc12487dadc0ca9cb850e44c464cb271e",
+      "tree": "e81fa2f030fd4326ad5716504302a934df2158d3",
+      "pr_ci": 39357113227,
+      "main_ci": 39357223876
     }
   }
 }
