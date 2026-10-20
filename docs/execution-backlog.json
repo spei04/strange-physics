@@ -11520,9 +11520,6 @@
         ],
         "deps": [
           "RA-09",
-          "RA-10",
-          "RA-11",
-          "RA-12",
           "SP-07.d",
           "SP-18.d",
           "RA_PILOT",
@@ -11542,7 +11539,22 @@
         "confidence": "low",
         "owner": "Quality + Research",
         "status": "proposed_runtime_not_authorized",
-        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code.",
+        "conditional_deps": {
+          "manifest_field": "admitted_profile_ids",
+          "mapping": {
+            "mda_inspired": [
+              "RA-10"
+            ],
+            "aces_inspired": [
+              "RA-11"
+            ],
+            "autoscilab_inspired": [
+              "RA-12"
+            ]
+          },
+          "rule": "Before RA_PILOT approval and RA-13.a start, resolve every admitted profile to its completed prerequisites and freeze the resulting closure with matrix/counts. Excluded profiles require recorded reasons and produce no result. The proposed nine-profile matrix admits all three and therefore requires all three tasks."
+        }
       },
       {
         "id": "RA-13.b",
@@ -11613,14 +11625,26 @@
           "RA-02",
           "RA-07.b",
           "RA-09",
-          "RA-10",
-          "RA-11",
-          "RA-12",
           "SP-07.d",
           "SP-18.d"
         ],
         "status": "pending",
-        "objective": "Approve exact admitted feasibility matrix, provider/compute quote and stop limits; revise dependencies/counts explicitly if excluding profiles."
+        "objective": "Approve exact admitted feasibility matrix, provider/compute quote and stop limits; revise dependencies/counts explicitly if excluding profiles.",
+        "conditional_deps": {
+          "manifest_field": "admitted_profile_ids",
+          "mapping": {
+            "mda_inspired": [
+              "RA-10"
+            ],
+            "aces_inspired": [
+              "RA-11"
+            ],
+            "autoscilab_inspired": [
+              "RA-12"
+            ]
+          },
+          "rule": "Before RA_PILOT approval and RA-13.a start, resolve every admitted profile to its completed prerequisites and freeze the resulting closure with matrix/counts. Excluded profiles require recorded reasons and produce no result. The proposed nine-profile matrix admits all three and therefore requires all three tasks."
+        }
       },
       {
         "id": "RA_SIZING",
@@ -11676,8 +11700,9 @@
       "status": "independently_reviewed",
       "reviewer": "Engineer Research",
       "reviewed_commit": "45e4cdec262884d2e5e25bc1543a728d2c97b640",
-      "validation": "18 tasks,4 gates,66 extension edges; no missing dependencies/cycles;48\u201378d plus25%; early branch excludes hosted/provider/profile predecessors. Domain clarification requires exact-head readback.",
+      "validation": "18 tasks,4 gates,60 fixed extension edges and6 conditional profile edges; all possible edges checked for missing IDs/cycles. Early ancestry excludes provider/hosted/profile predecessors. Exact final readback pending.",
       "source_cutoff": "2026-10-19"
-    }
+    },
+    "dependency_policy": "Fixed deps always apply. conditional_deps are materialized from the frozen admitted_profile_ids before approval/start; validate IDs, acyclicity and completion on that exact resolved graph. No elapsed date or omitted profile task implies approval."
   }
 }

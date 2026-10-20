@@ -134,7 +134,7 @@ RA-13.b first adds independent development worlds within each retained stratum u
 The task records below are a separate proposed queue. Existing task IDs and dependencies are unchanged. Every task has a single reviewable deliverable; adapters are split by method. Effort is human engineering effort, not elapsed subagent time.
 
 - **RA_EXEC:** owner accepts the scoped extension and staffing after review of this artifact; implementation gate, currently pending. All 18 task records inherit it transitively.
-- **RA_PILOT:** after RA-02, RA-07.b, admitted profile/adaptation dependencies, SP-07.d and SP-18.d, owner approves the exact feasibility matrix, quote and stop limits. Profile exclusions require a revised dependency list and counts. Existing paid-provider gates remain.
+- **RA_PILOT:** after RA-02, RA-07.b, admitted profile/adaptation dependencies, SP-07.d and SP-18.d, owner approves the exact feasibility matrix, quote and stop limits. The three profile prerequisites are conditional on the frozen admitted_profile_ids: MDA-inspired requires RA-10, ACES-inspired RA-11, and AutoSciLab-inspired RA-12. Resolve their completed dependency closure and recompute counts before approval. Existing paid-provider gates remain.
 - **RA_SIZING:** after RA-13.a, owner approves an independent-world sample/stopping rule and quoted runtime/cost cap for RA-13.b. Feasibility alone cannot pass this gate.
 - **RA_OFFICIAL:** after RA-14, independent scientific/security review and existing OFFICIAL_SWEEP approval. It cannot waive pilot, deployment, release or calendar gates.
 
@@ -144,7 +144,7 @@ After prerequisites are available, RS1 can deliver representation/belief/proposa
 
 The early branch is RA_EXEC → RA-01 → RA-03 → RA-03.b → RA-05 → RA-06 → RA-07 → RA-07.b, joined by RA-02 and I1. Baseline scientific predecessors still apply; provider profiles and hosted deployment do not.
 
-The larger branch forks after representation: RA-04.a/b builds classical adapters, RA-05/06 builds beliefs, and RA-08 builds proposals after its provider-interface prerequisites. RA-09 joins beliefs, acquisition and proposals. RA-10/11/12 join those producers and accepted SP-20.d isolation. Then RA_PILOT → RA-13.a → RA_SIZING → RA-13.b → RA-14. Baseline scientific/provider/isolation predecessors can dominate availability. RA-08 may proceed alongside belief work; assignment alone never satisfies a prerequisite.
+The larger branch forks after representation: RA-04.a/b builds classical adapters, RA-05/06 builds beliefs, and RA-08 builds proposals after its provider-interface prerequisites. RA-09 joins beliefs, acquisition and proposals. Admitted RA-10/11/12 profiles join those producers and accepted SP-20.d isolation; excluded profiles are removed only through the frozen conditional dependency mapping. Then RA_PILOT → RA-13.a → RA_SIZING → RA-13.b → RA-14. Baseline scientific/provider/isolation predecessors can dominate availability. RA-08 may proceed alongside belief work; assignment alone never satisfies a prerequisite.
 
 ### Milestone exit gates
 
@@ -154,7 +154,7 @@ The larger branch forks after representation: RA-04.a/b builds classical adapter
 | E1: classical and uncertainty foundation | RA-04.a/b/05/06 pass tractable tests and predictive calibration or record rejected arms | After E0; parallelize only available work |
 | E1a: first offline result | RA-07.b manifest, analytic rankings, complete paired descriptive results and measured CPU | No provider profile or hosted deployment dependency |
 | E2: selectors, proposals and adaptation | RA-07/08/09 pass information-boundary and equivalence tests | Depends on actual predecessor acceptance, not calendar week |
-| E3: composed profiles | RA-10/11/12 independently reviewed with explicit paper departures | Full-system isolation SP-20.d must already pass |
+| E3: composed profiles | Each admitted RA-10/11/12 profile independently reviewed with explicit paper departures | Full-system isolation SP-20.d must already pass |
 | E4: development evidence | RA-13.a complete or stopped transparently; exact costs and failures retained | RA_PILOT and existing provider gates required |
 | E4b: replicated-world sizing | RA-13.b world-level uncertainty and prospective study-size evidence | Separate RA_SIZING quote/approval |
 | E5: study decision | RA-14 frozen manifest, reviewed estimate and capacity/release reforecast | Official sweep remains separately gated |
@@ -394,7 +394,8 @@ Later scheduling is milestone-level until measured throughput exists. The ten-da
 - **Owner:** Quality + Research; primary lane QE.
 - **Scope:** Run the explicit capped development matrix over admitted profiles; validate paired accounting, timing, interruption and spend. Record exclusions in a revised frozen matrix before running. This one-world-per-stratum pilot is feasibility evidence only.
 - **Out of scope:** Population sizing inference from one world per stratum, confirmatory test-set tuning, official sweep, deployment or any cap overrun.
-- **Prerequisites:** RA-09, RA-10, RA-11, RA-12, SP-07.d, SP-18.d, RA_PILOT, RA-07.b.
+- **Prerequisites:** RA-09, SP-07.d, SP-18.d, RA_PILOT, RA-07.b.
+- **Conditional prerequisites:** frozen admitted_profile_ids maps mda_inspired→RA-10, aces_inspired→RA-11 and autoscilab_inspired→RA-12. Every admitted profile and its full closure must be complete before RA_PILOT approval/start. Exclusions require reasons and revised counts; the proposed nine-profile matrix requires all three.
 - **Required contracts:** STUDY, COST, ADAPT (definitions above).
 - **Acceptance:** All planned and terminated cells are accounted for, budget totals reconcile, information boundaries pass and exact reproduction is possible. No within-stratum population variance, power or world-level precision claim is made.
 - **Automated tests:** Resume/retry/kill tests, deliberate missing predictions, cost reconciliation and independent report reproduction.
