@@ -10630,7 +10630,7 @@
           {
             "id": "C1",
             "title": "Service principal and API key lifecycle",
-            "status": "in_progress",
+            "status": "complete",
             "depends_on": [
               "SP-01.b/ID-B/B3 integration"
             ],
@@ -10640,28 +10640,46 @@
               5
             ],
             "confidence": "medium",
-            "execution": "Source 5009fdf independently accepted; lead integrates before exact-head hosted gates.",
-            "source": "5009fdf7c0ddd36fd2704b37549217b397876c04"
+            "execution": "PR #84/main 2cb3df7ace64708cb5ec53887ca8a0ad9aceb7d7 matches reviewed 0fcc989446769a2dcb6a85fe29bb71b734a5f90e/tree 79ee5efd3b4448a4f23d12cbf8b87712c7b21a07. PR CI39363278629 and main CI39363488562 passed every applicable job, including the protected-main candidate.",
+            "source": "5009fdf7c0ddd36fd2704b37549217b397876c04",
+            "integrated_source": "251694f9cbf0f6236d4988ffebb3860761d1ab97",
+            "author_full_tests": 1032,
+            "integrated_full_tests": 1434,
+            "focused_tests": 114,
+            "independent_extra_checks": 2,
+            "repair_mutations_detected": 7,
+            "external_schema_checks": 555,
+            "pull_request": 84,
+            "merge": "2cb3df7ace64708cb5ec53887ca8a0ad9aceb7d7",
+            "reviewed_head": "0fcc989446769a2dcb6a85fe29bb71b734a5f90e",
+            "tree": "79ee5efd3b4448a4f23d12cbf8b87712c7b21a07",
+            "pr_ci": 39363278629,
+            "main_ci": 39363488562
           },
           {
             "id": "C2",
             "title": "Run credentials and product-authority composition",
-            "status": "blocked",
+            "status": "in_progress",
             "depends_on": [
               "C1"
             ],
-            "owner": "Engineer Platform after accepted C1 and identity writer handoff",
+            "owner": "Engineer Platform, exclusive identity writer",
             "human_effort_days": [
               2,
               4
             ],
-            "confidence": "medium-low"
+            "confidence": "medium-low",
+            "execution_plan": "Immutable RunOwnership and complete run credential state; mandatory keyword-only ProductAuthority on existing authorize_product/check_product_idempotency. Current session/service/run authority before receipts; per-operation role checks; original owner and deadline independent of creator leaf key; private coordinator-only atomic lifecycle proposals and metadata-only retry. Early API and independent review before freeze."
           }
         ],
         "execution_plan": "Lead accepted two dependent reviewable increments. New trusted principal authority generation and durable grant incarnation prevent disable/re-enable and remove/regrant resurrection; existing public session/B1 shapes remain unchanged. Creator and leaf key are audit metadata, not enduring run authority. ID-C and SP-01.b stay open until both and final composition review. C1 uses the reused identity checkout after B3 mainCI acceptance. Recovery preserves the original scopes/expiry, changes only key identity/verifier/generation and immediately revokes the target; exact retries return metadata only after current authority checks.",
         "shared_final_review_days": [
           1,
           2
+        ],
+        "remaining_human_effort_days": [
+          3,
+          6
         ]
       }
     ],
@@ -10869,7 +10887,7 @@
     },
     "checkout_ownership": {
       "scientific": "Quality owns primary SP-06.a scoring. Research prepares SDK/CLI and reviews scoring read-only.",
-      "identity": "Lead owns C1 integration after Quality source release; Platform receives C2 after acceptance and handoff. Reuse existing identity checkout.",
+      "identity": "Platform owns ID-C/C2 in the reused identity checkout after C1 PR/main acceptance. Quality owns primary scoring; no extra checkout.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -10993,6 +11011,24 @@
       "tree": "4d33a099fa47c18e6f4e78d1892f1005538adccc",
       "pr_ci": 39362603040,
       "main_ci": 39362758495
+    },
+    "service_credential_evidence": {
+      "source": "5009fdf7c0ddd36fd2704b37549217b397876c04",
+      "integrated_source": "251694f9cbf0f6236d4988ffebb3860761d1ab97",
+      "status": "complete",
+      "author": "Engineer Quality",
+      "reviewers": [
+        "Engineer Platform",
+        "Project lead"
+      ],
+      "record": "docs/SERVICE_CREDENTIAL_CONTRACT.md",
+      "boundary": "Pure contracts, validation and atomic proposals; no actual verifier, database, HTTP handler, C2 or final identity freeze.",
+      "pull_request": 84,
+      "reviewed_head": "0fcc989446769a2dcb6a85fe29bb71b734a5f90e",
+      "merge": "2cb3df7ace64708cb5ec53887ca8a0ad9aceb7d7",
+      "tree": "79ee5efd3b4448a4f23d12cbf8b87712c7b21a07",
+      "pr_ci": 39363278629,
+      "main_ci": 39363488562
     }
   }
 }
