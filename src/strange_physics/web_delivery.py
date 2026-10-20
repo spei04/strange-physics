@@ -20,6 +20,7 @@ from strange_physics.research_contracts import message_sha256
 from strange_physics.web_access import ViewerContext, authorize_viewer, check_run_capture
 from strange_physics.web_contracts import (
     MAX_SAFE,
+    EventIdentity,
     ExperimentRecordBinding,
     ExperimentRecordRef,
     HistoryPageBinding,
@@ -231,8 +232,14 @@ def prepare_replay_body(
     assert artifact is not None
     for event in chunk.events:
         _event(event, current, context, now)
-        if event.occurred_at > captured.captured_at:
+        if event.occurred_at > captured.captured_at or (
+            captured.history.last_event is not None
+            and event.event_id == captured.history.last_event.event_id
+            and EventIdentity.from_event(event) != captured.history.last_event
+        ):
             raise ContractViolation("recovery_required", 409)
+        if isinstance(event.payload, RunView):
+            check_run_capture(event.payload, captured.run)
     return _body(
         context,
         namespace,

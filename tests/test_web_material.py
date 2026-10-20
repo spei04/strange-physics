@@ -709,3 +709,120 @@ def test_missing_private_material_has_explicit_failure(entry: str) -> None:
                 request_sha256=body.request_sha256,
                 now=1200,
             )
+
+
+def replay_groups(groups: tuple[tuple[w.RunEvent, ...], ...]) -> dict[str, Any]:
+    """Actual raw objects and a captured root, independent of the later current head."""
+    namespace = sample(w.StreamNamespace)
+    descriptors = []
+    bodies = []
+    artifacts = []
+    for index, events in enumerate(groups):
+        chunk = w.ReplayChunk(
+            namespace=namespace,
+            first_sequence=events[0].sequence,
+            last_sequence=events[-1].sequence,
+            events=events,
+        )
+        raw = raw_message(chunk)
+        ref = ArtifactRef(
+            artifact_id=f"captured-object-{index}",
+            generation="1",
+            sha256=hashlib.sha256(raw).hexdigest(),
+            size_bytes=len(raw),
+            media_type="application/json",
+        )
+        descriptors.append(
+            w.ReplayChunkRef(
+                namespace=namespace,
+                first_sequence=chunk.first_sequence,
+                last_sequence=chunk.last_sequence,
+                event_count=len(events),
+                first_event=w.EventIdentity.from_event(events[0]),
+                last_event=w.EventIdentity.from_event(events[-1]),
+                artifact=ref,
+                chunk_sha256=message_sha256(chunk),
+            )
+        )
+        bodies.append(raw)
+        artifacts.append(catalog(ref))
+    page = w.HistoryPage(
+        page_id="captured-page",
+        manifest_id="captured-manifest",
+        namespace=namespace,
+        through_sequence=groups[-1][-1].sequence,
+        page_index=0,
+        first_chunk_index=0,
+        chunks=tuple(descriptors),
+        next_page=None,
+    )
+    root = w.HistoryManifest(
+        manifest_id=page.manifest_id,
+        namespace=namespace,
+        run_revision=2,
+        through_sequence=page.through_sequence,
+        last_event=descriptors[-1].last_event,
+        page_count=1,
+        chunk_count=len(groups),
+        total_chunk_bytes=sum(map(len, bodies)),
+        first_page=w.HistoryPageRef(page_id=page.page_id, page_sha256=message_sha256(page)),
+    )
+    original = snapshot()
+    capture = changed(original.snapshot, history=root)
+    assert original.cursor is not None
+    record = changed(
+        original,
+        snapshot=capture,
+        cursor=changed(
+            original.cursor,
+            after_sequence=root.through_sequence,
+            event=root.last_event,
+            snapshot_sha256=message_sha256(capture),
+        ),
+    )
+    current = head(committed_through_sequence=root.through_sequence, last_event=root.last_event)
+    return begin_args(record, current) | dict(
+        requested_artifact=artifacts[0].record.ref,
+        page=w.HistoryPageBinding(manifest=root, page=page, previous=None),
+        descriptor_index=0,
+        artifact=artifacts[0],
+        raw=bodies[0],
+    )
+
+
+@pytest.mark.parametrize("revision", [1, 2, 3])
+def test_replay_body_run_event_binds_captured_run_before_later_current_run(revision: int) -> None:
+    event = w.RunEvent.model_validate_json(json.dumps(DATA["events"][1]))
+    event = changed(event, sequence=0, payload=changed(event.payload, revision=revision))
+    args = replay_groups(((event,),))
+    context = args["context"]
+    args["context"] = replace(context, run=changed(context.run, revision=3))
+    args["head"] = changed(args["head"], run_revision=3)
+    if revision == 3:
+        with violation("recovery_required", 409):
+            prepare_replay_body(**args)
+    else:
+        assert prepare_replay_body(**args).kind == "replay"
+
+
+@pytest.mark.parametrize("reuse", [False, True])
+def test_replay_body_interior_identity_binds_captured_final_event(reuse: bool) -> None:
+    template = w.RunEvent.model_validate_json(json.dumps(DATA["events"][2]))
+    events = [
+        changed(template, sequence=index, event_id=f"captured-event-{index}") for index in range(4)
+    ]
+    if reuse:
+        events[1] = changed(events[1], event_id=events[3].event_id)
+    args = replay_groups((tuple(events[:3]), (events[3],)))
+    args["head"] = changed(
+        args["head"],
+        committed_through_sequence=4,
+        last_event=changed(
+            args["head"].last_event, sequence=4, event_id="later-head", event_sha256="1" * 64
+        ),
+    )
+    if reuse:
+        with violation("recovery_required", 409):
+            prepare_replay_body(**args)
+    else:
+        assert prepare_replay_body(**args).kind == "replay"
