@@ -226,7 +226,8 @@ class Estimate:
         "estimated", "insufficient_excitation", "negative_estimate", "nonfinite_estimate"
     ]
     raw: float | None
-    design_rms: float
+    design_rms: float | None
+    failure_reason: str | None
     row_count: int
     completed_indices: tuple[int, ...]
     failed_count: int
@@ -251,11 +252,13 @@ def _columns(fit: SpringFitInput, method: Method) -> tuple[FloatArray, FloatArra
             r0 = np.asarray(first.positions[0]) - anchor
             r1 = np.asarray(middle.positions[0]) - anchor
             r2 = np.asarray(last.positions[0]) - anchor
-            integral = h * (
-                (r0 + 4 * r1 + r2) / 3 if method == "simpson" else (r0 + 2 * r1 + r2) / 2
-            )
-            design.append(-integral / mass)
-            response.append(np.asarray(last.velocities[0]) - first.velocities[0])
+            # Public finite observations can still overflow derived arithmetic.
+            with np.errstate(over="ignore", invalid="ignore"):
+                integral = h * (
+                    (r0 + 4 * r1 + r2) / 3 if method == "simpson" else (r0 + 2 * r1 + r2) / 2
+                )
+                design.append(-integral / mass)
+                response.append(np.asarray(last.velocities[0]) - first.velocities[0])
         completed.append(record.index)
     return (
         np.asarray(design, dtype=np.float64).reshape(-1, 2),
@@ -267,24 +270,34 @@ def _columns(fit: SpringFitInput, method: Method) -> tuple[FloatArray, FloatArra
 def _estimate(fit: SpringFitInput, method: Method = "simpson") -> Estimate:
     # No hidden coefficient, world definition or evaluation probe is an input.
     design, response, completed = _columns(fit, method)
-    design_rms = float(np.sqrt(np.mean(design**2)))
-    raw = None
+    design_rms, raw = None, None
     status: Literal[
         "estimated", "insufficient_excitation", "negative_estimate", "nonfinite_estimate"
-    ] = "insufficient_excitation"
-    if design_rms >= DESIGN_RMS_FLOOR:
-        raw = float(np.sum(design * response) / np.sum(design**2))
-        status = (
-            "nonfinite_estimate"
-            if not math.isfinite(raw)
-            else "negative_estimate"
-            if raw < 0
-            else "estimated"
-        )
+    ] = "nonfinite_estimate"
+    failure_reason: str | None = "nonfinite_columns"
+    if np.all(np.isfinite(design)) and np.all(np.isfinite(response)):
+        with np.errstate(over="ignore", invalid="ignore"):
+            energy = float(np.sum(design**2))
+            cross_product = float(np.sum(design * response))
+        if math.isfinite(energy):
+            design_rms = math.sqrt(energy / design.size)
+        if not math.isfinite(energy) or not math.isfinite(cross_product):
+            failure_reason = "nonfinite_reduction"
+        elif design_rms is not None and design_rms < DESIGN_RMS_FLOOR:
+            status, failure_reason = "insufficient_excitation", "design_rms_below_floor"
+        else:
+            raw = cross_product / energy
+            if not math.isfinite(raw):
+                raw, failure_reason = None, "nonfinite_coefficient"
+            elif raw < 0:
+                status, failure_reason = "negative_estimate", "negative_coefficient"
+            else:
+                status, failure_reason = "estimated", None
     return Estimate(
         status=status,
         raw=raw,
         design_rms=design_rms,
+        failure_reason=failure_reason,
         row_count=design.size,
         completed_indices=completed,
         failed_count=len(fit.observations.records) - len(completed),
@@ -486,6 +499,7 @@ def test_physical_excitation_sweep(amplitude: float, k: float, mass: float) -> N
     assert estimate.completed_indices == (0,)
     assert estimate.failed_count == 0
     assert math.isfinite(residual_effect)
+    assert estimate.design_rms is not None
     if estimate.design_rms < DESIGN_RMS_FLOOR:
         assert estimate.status == "insufficient_excitation"
         assert estimate.raw is None
@@ -703,6 +717,45 @@ def test_no_completed_records_is_explicitly_unsupported() -> None:
         _fit_input(prefix)
 
 
+@pytest.mark.parametrize(
+    ("kind", "reason"),
+    [
+        ("design_reduction", "nonfinite_reduction"),
+        ("design_columns", "nonfinite_columns"),
+        ("response_columns", "nonfinite_columns"),
+        ("coefficient", "nonfinite_coefficient"),
+    ],
+)
+def test_nonfinite_derived_values_fail_and_remain_json_safe(kind: str, reason: str) -> None:
+    prefix = _column_prefix(DESIGN_RMS_FLOOR)
+    data = prefix.model_dump(mode="json")
+    frames = data["records"][0]["trajectory"]["frames"]
+    if kind in ("design_reduction", "design_columns"):
+        value = 1e200 if kind == "design_reduction" else 1e308
+        for frame in frames:
+            frame["positions"] = [[value, value]]
+    elif kind == "response_columns":
+        frames[0]["velocities"] = [[-1e308, -1e308]]
+        frames[2]["velocities"] = [[1e308, 1e308]]
+    else:
+        data = _column_prefix(DESIGN_RMS_FLOOR, residual=5e306).model_dump(mode="json")
+    prefix = ObservationBundle.model_validate_json(json.dumps(data, allow_nan=False))
+    estimate = _estimate(_fit_input(prefix))
+    assert estimate.status == "nonfinite_estimate"
+    assert estimate.failure_reason == reason
+    assert estimate.raw is None
+    assert estimate.row_count == 40
+    assert estimate.completed_indices == (0,)
+    assert estimate.failed_count == 0
+    assert estimate.prefix_sha256 == message_sha256(prefix)
+    report = _report_case(0.0, prefix)
+    assert report["failed_probe_count"] == 24
+    assert report["joint_accuracy_pass"] is False
+    assert report["raw_coefficient"] is None
+    assert report["failure_reason"] == reason
+    assert json.loads(json.dumps(report, allow_nan=False))["failed_probe_count"] == 24
+
+
 def _report_case(
     k: float,
     prefix: ObservationBundle,
@@ -720,6 +773,7 @@ def _report_case(
         "status": estimate.status,
         "raw_coefficient": estimate.raw,
         "design_rms": estimate.design_rms,
+        "failure_reason": estimate.failure_reason,
         "scalar_row_count": estimate.row_count,
         "completed_indices": estimate.completed_indices,
         "failed_record_count": estimate.failed_count,
