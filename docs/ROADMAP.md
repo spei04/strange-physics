@@ -66,7 +66,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 
 The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. The primary checkout and one separate identity checkout are retained for independently active writers. Existing migration archives and other experiments are not disposable build caches.
 
-Current execution roster: Lead owns primary integration and progress. Research authors WEB1 runtime after accepted APIc066900; Platform reviews stream/artifact joins and Quality authority/recovery. SP-01.e remains preparation-only until full SP-01.d. The local comparison prerequisite proposal is recorded separately with RA_EXEC pending. Both existing cloud checkouts and independent environments are reused; human operations, deployment, paid and release gates remain separate.
+Current execution roster: Lead owns primary integration and progress. WEB1 runtime review is accepted; Research completes final source checks/evidence, Platform reviews integration consistency and Quality has prepared SP-01.e/#98. Its source work waits exact WEB1 integration and writer release. The local comparison prerequisite proposal is recorded separately with RA_EXEC pending. Both existing cloud checkouts and independent environments are reused; human operations, deployment, paid and release gates remain separate.
 
 ### 0.3 Update procedure for every implementation change
 
@@ -89,7 +89,7 @@ The staged workflow and execution backlog were approved on 2026-10-19. Begin the
 | --- | --- | --- |
 | 1 — Plan and challenge | Inspect actual code, compare options, expose assumptions, challenge risks; product owner reviews assumptions before implementation approval | Blueprint and challenge review accepted; unmeasured targets and external commitments remain provisional |
 | 2 — Turn the plan into engineering work | Assignable PR tasks, exact dependencies/contracts/tests, capacity model and exit gates | 168 leaf tasks/42 epics; 369 prerequisites checked in both schedule scenarios; first ten days planned; execution approval recorded; subset freezes remain pending |
-| 3 — Implement one vertical slice at a time | Start only an approved slice; require tests, review, telemetry and updated documentation; then assess its evidence before selecting the next | In progress: bounded spring I1, SP-01.a/b/c and WORLD1 are accepted; WEB1 is next |
+| 3 — Implement one vertical slice at a time | Start only an approved slice; require tests, review, telemetry and updated documentation; then assess its evidence before selecting the next | In progress: bounded spring I1, SP-01.a/b/c and WORLD1 are accepted; WEB1 final verification/integration is in progress |
 | 4 — Validate actual production readiness | Audit shipped implementation against REQ01–REQ16 using real test/load/security/deploy/restore evidence; block unsupported claims | Not started; R6–R8 own these gates |
 
 The roadmap owns product/architecture/overall progress; EXECUTION_BACKLOG.md owns assignable task details and schedules, backed by execution-backlog.json. GitHub issues hold epic rollups; The local SCI subset, full control/identity contract set and ART/EXEC/COMP1 contracts are accepted through SP-01.a/b/c. WORLD1 is integrated; WEB1 remains before the SP-01.d freeze. Creating an issue, schema or milestone never marks its implementation complete. Issue blockers describe completion/integration prerequisites; mock work may start after its explicitly approved interface boundary.
@@ -1100,7 +1100,7 @@ The requested artifact paths are represented by useful sections in this single f
 
 **Approval scope:** execution backlog D01–D06 and initial R0/spring scope approved on 2026-10-19. Current execution uses a lead and up to three engineer subagents; the nine-human-team schedule remains conditional. No arbitrary paid benchmark sweep, compliance claim or unlimited infrastructure spend is implied. Cloud provisioning remains tied to concrete priced configuration, verified account permissions and applicable release/approval controls.
 
-**Next executable outcome:** WEB1 stream/snapshot/replay API checkpoint and pure predicates, then full SP-01.d review; SP-01.e follows accepted freeze. WORLD1 is integrated through PR #95. The36-episode research path has a separate dependency decision and RA_EXEC gate; it does not depend on hosted delivery.
+**Next executable outcome:** WEB1 final verification and exact PR/main integration, then Quality begins SP-01.e/#98 with the VAL1 manifest/fixture checkpoint. WORLD1 is integrated through PR #95. The36-episode research path has a separate dependency decision and RA_EXEC gate; it does not depend on hosted delivery.
 
 Research methods planning amendment: PR #86/main e239eb2c704cd315aadd6064cdb521d1a6d9bbdc matches reviewedc48517b/tree558d68ed; PR CI39365953740 and all main CI39366138629 jobs passed. The18-task extension is a reviewed plan only; RA_EXEC and paid/sizing/official gates remain pending.
 
