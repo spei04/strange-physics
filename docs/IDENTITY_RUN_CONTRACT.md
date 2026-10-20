@@ -1,7 +1,8 @@
 # Identity, run and SQL contract v1 — first control subset
 
-SP-01.b / issue #52, part 1. The full task remains in progress until remaining
-C-ID contracts are reviewed; downstream full-contract consumers remain blocked.
+SP-01.b / issue #52, part 1. All C-ID conformance slices are defined and reviewed;
+C2 integration and final parent producer/consumer acceptance remain pending.
+Downstream full-contract consumers stay blocked until the lead records that gate.
 This bounded contract covers the eleven routes in the
 [partial OpenAPI draft](../contracts/draft/openapi.json).
 [Schema](../contracts/control.schema.json),
@@ -10,7 +11,7 @@ and [synthetic examples](../contracts/control.examples.json) define the subset.
 The [browser-session subset](BROWSER_SESSION_CONTRACT.md) adds ID-A interfaces.
 Membership/invitation/linking (ID-B) and service lifecycle (ID-C/C1) have separate
 accepted contracts. The [run/composition slice](RUN_CREDENTIAL_CONTRACT.md) is the
-remaining ID-C review checkpoint; full-contract consumers stay blocked pending
+reviewed ID-C runtime checkpoint awaiting integration; full-contract consumers stay blocked pending
 final producer/consumer acceptance.
 Producer/consumer acceptance is recorded separately after independent review.
 
@@ -24,7 +25,7 @@ operational evidence. CORE and the local SDK are unchanged.
 
 | Frozen here | Remaining dependency |
 | --- | --- |
-| Identity/current membership separation, role/scope predicates | OIDC/session verifier and cookie/CSRF HTTP implementation; service credential rotation |
+| Identity/current membership separation, role/scope predicates | OIDC/session verifier, cookie/CSRF HTTP implementation and actual service-key storage/verification |
 | Run/operation projections and transitions | HTTP handlers, dispatch and recovery |
 | Scoped idempotency and checkpoint history | Durable SQL transactions and concurrency tests |
 | SQL keys, relationships, transaction and tenant isolation obligations | Migrations, RLS policies, runtime DB roles |
@@ -39,9 +40,9 @@ events remain explicitly draft.
 
 ## Identity and current authority
 
-Identity is the verified (canonical issuer, verified tenant ID or explicit null, subject) pair. The external verifier checks
+Identity is the verified (canonical issuer, verified tenant ID or explicit null, subject) tuple. The external verifier checks
 issuer allowlist, audience, signature, expiry and revocation, then resolves that
-pair to a stable application principal. Email/domain neither links accounts nor
+tuple to a stable application principal. Email/domain neither links accounts nor
 grants workspace membership. Account linking needs explicit proof.
 
 A current membership/grant is loaded independently of credential claims. It
@@ -298,6 +299,10 @@ constraints require later migrations and concurrency evidence.
 | outbox | Tenant/run/operation FK; unique dispatch/delivery identity; durable before ack; replay-safe consumer |
 | artifact references | Tenant-scoped FKs; verified durable generation/hash/size; ART owns storage schema |
 
+Explicit null tenant is one namespace value for identity uniqueness, not a
+wildcard. The actual database constraint must reject duplicate issuer/null/subject
+identities as strictly as identities with a tenant value.
+
 Use CHECKs for numeric/state bounds, budget arithmetic and result/error
 nullability where possible; cross-row and JSON semantics need transaction
 predicates and validated typed payloads. Naked resource ID FKs cannot cross
@@ -318,50 +323,53 @@ connection reuse. RLS supplements explicit object authorization and composite
 FKs. Error, rollback and nested transaction paths must not retain tenant state.
 Workers/evaluators receive least privilege.
 
-## Remaining C-ID freeze checklist
+## Reviewed C-ID inventory and remaining acceptance
 
-A separate coherent SP-01.b follow-up must specify public browser session,
-invitation/membership, and service credential management contracts before the
-whole C-ID freeze or its dependent tasks can complete:
+The conformance slices below are defined and independently reviewed. Their
+integration identities make the inventory auditable; they do not establish
+production provider, HTTP, SQL, concurrency or recovery behavior.
 
-- Browser login/callback/session introspection/logout and expiry/renewal shapes;
-  secure cookie, origin/CSRF, callback state/nonce and explicit account linking.
-- Invitation creation/redemption/expiry/revocation and identity binding;
-  membership list/change/remove authorization, role changes and last-owner rules.
-- Service principal/credential create/list/rotate/revoke scopes, secret handling,
-  authority ancestry and revocation propagation.
-- Concrete routes, request/response/errors, concurrency/idempotency examples,
-  schema/runtime fixtures, security test obligations and producer/consumer review.
-
-This subset neither invents those unfinished route shapes nor counts them as
-accepted. No handlers are implied by their later contract freeze.
-
-
-### Remaining PR units and planning estimate
-
-| Unit | Owner / dependency | Reviewable result |
+| Slice | Contract artifacts | Reviewed integration or runtime |
 | --- | --- | --- |
-| SP-01.b/ID-A | Research; after control part 1 | Browser sessions/bootstrap, managed broker proof versus OIDC callback, origin/CSRF, renewal/logout and required versioned deployment policy |
-| SP-01.b/ID-B | Next backend author; after ID-A | Workspace membership, single-use invitations, last-owner safety and explicit two-identity linking |
-| SP-01.b/ID-C | Next backend author; after ID-B | Service/run credential issuance, rotation, revocation ancestry, safe metadata and one-time secret delivery semantics |
+| Control part 1 | This document, control.schema.json, control.examples.json and contracts/draft/openapi.json | [Control integration](https://github.com/spei04/strange-physics/commit/d6204aaab82e1b100532f40bae00e224d9334c65) |
+| ID-A browser sessions | [Browser/session contract](BROWSER_SESSION_CONTRACT.md), session schema/examples/OpenAPI | [ID-A integration](https://github.com/spei04/strange-physics/commit/cc576da9f7ce43f7bc497289a3e02efa9c74f9d0) |
+| ID-B/B1 workspace membership | [Workspace contract](WORKSPACE_MEMBERSHIP_CONTRACT.md), workspace schema/examples/OpenAPI | [B1 integration](https://github.com/spei04/strange-physics/commit/1ec45aabb02b3d4fff98de91fc09bffb0e9c7daf) |
+| ID-B/B2 invitations | [Invitation contract](INVITATION_CONTRACT.md), invitation schema/examples/OpenAPI | [B2 integration](https://github.com/spei04/strange-physics/commit/89e6117f1b5394acd70968b3505c4770fbc9315e) |
+| ID-B/B3 explicit linking | [Linking contract](IDENTITY_LINKING_CONTRACT.md), linking schema/examples/OpenAPI and the reviewed internal ID-A amendment | [B3 integration](https://github.com/spei04/strange-physics/commit/24c879612c92913d04b7b54456515a69b46ee67b) |
+| ID-C/C1 service keys | [Service credential contract](SERVICE_CREDENTIAL_CONTRACT.md), service schema/examples/OpenAPI and principal/grant ancestry wrappers | [C1 integration](https://github.com/spei04/strange-physics/commit/2cb3df7ace64708cb5ec53887ca8a0ad9aceb7d7) |
+| ID-C/C2 run credentials and complete authority | [Run credential contract](RUN_CREDENTIAL_CONTRACT.md), internal run-credentials schema/examples, mandatory product guards and coordinator proposals | [Reviewed C2 runtime](https://github.com/spei04/strange-physics/commit/67d1128d262d9fcf7cca4884eb472a73041d7606); integration pending |
 
-Research's remaining estimate is 6–8 engineer-days, medium confidence; this
-supersedes the original four-day task estimate for execution planning. Reforecast
-at the next planning checkpoint; do not convert agent elapsed time into human
-staffing or use the historical comparison schedule as a current promise.
-ID-A preparation is complete; authoring is queued behind CI-01. Concrete
-origins/callbacks and lifetime values remain explicit deployment-policy inputs.
-Missing policy fails closed; no implicit production defaults are approved.
+B3 requires explicit trusted proof purpose and typed claim ownership, while the
+global registry key remains the actual proof digest alone. C2 requires the
+ProductAuthority keyword at both existing complete admission/replay entry points;
+all repository callers are migrated. Neither change alters the existing public
+login, workspace or control request/response shapes. These are explicit internal
+producer amendments, not evidence that external producers have been upgraded.
 
-Retain Identity Platform Google/GitHub sign-in and the portable OIDC adapter.
-The app verifies the configured broker, not a raw GitHub OAuth token as its own
-OIDC identity. Avoid automatic email-based merging, including at the configured
-broker; manual linking requires explicit proof.
-[Identity Platform GitHub sign-in](https://docs.cloud.google.com/identity-platform/docs/web/github),
-[account-linking configuration](https://docs.cloud.google.com/identity-platform/docs/link-accounts),
-[token verification](https://firebase.google.com/docs/auth/admin/verify-id-tokens).
+Remaining parent acceptance consists of integrated-head verification, final
+producer/consumer composition review and a separately recorded SP-01.b/C-ID gate
+decision. This inventory does not declare that gate complete. The current
+schedule and task state live in [the execution backlog](EXECUTION_BACKLOG.md) and
+[the roadmap](ROADMAP.md); earlier preparation estimates are superseded and are
+not implementation commitments.
+
+Concrete origins/callbacks, issuer/audience settings and lifetimes still require
+explicit reviewed deployment policy. Missing policy fails closed. The portable
+OIDC adapter and managed broker obligations remain specified; actual provider
+configuration, token verification, HTTP handlers, SQL constraints/isolation,
+outbox delivery, secure randomness, signing, retention and recovery drills are
+future implementation work. In particular, the managed Identity Platform tenant
+profile remains blocked under the reviewed B3 broker-conformance rule; no client
+flag or optimistic configuration assertion enables it. See
+[broker divergence and recovery](IDENTITY_LINKING_CONTRACT.md#recovery-and-broker-divergence).
 
 ## Required later integration evidence
+
+B1/B2/B3 current browser producers must enforce the
+[original-family security continuity obligation](BROWSER_SESSION_CONTRACT.md#principal-disablement-and-browser-family-continuity)
+across principal disable/re-enable. The later HTTP/SQL evidence must cover
+management, invitation and linking mutation/status/replay with old families;
+C1/C2 generation wrappers alone do not establish those earlier adapters.
 
 Independent review accepts shapes/examples, not production readiness.
 Later HTTP/SQL/worker slices must demonstrate:

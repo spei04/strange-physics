@@ -1,9 +1,11 @@
 # Service principal and API-key contracts — ID-C/C1
 
-Status: lifecycle conformance review checkpoint. Pure admission/replay proposals
-and adversarial tests are implemented; these interfaces are not a hosted
-issuer, HTTP service, verifier or SQL implementation. ID-C/C2 run credentials
-and full C-ID producer/consumer acceptance remain separate gates.
+Status: reviewed and integrated C1 conformance slice. Pure admission/replay
+proposals and adversarial tests are implemented; these interfaces are not a hosted
+issuer, HTTP service, verifier or SQL implementation. The reviewed
+[C2 run/composition runtime](RUN_CREDENTIAL_CONTRACT.md) awaits integration; final
+C-ID producer/consumer acceptance remains a separate gate. See the
+[reviewed inventory](IDENTITY_RUN_CONTRACT.md#reviewed-c-id-inventory-and-remaining-acceptance).
 
 The additive [schema](../contracts/service.schema.json),
 [route contract](../contracts/service.openapi.json), and
@@ -198,9 +200,10 @@ uniqueness remain real producer obligations.
 Required runtime evidence includes concurrent issue/rotate/recover/revoke versus
 state/grant changes, idempotency races, crash injection at every transaction
 boundary, no plaintext logging/storage, tenant-isolation checks, actual verifier
-tests, retention cleanup with referenced receipts, and recovery drills. C2 run
-credentials, mandatory product-authority composition, HTTP handlers, SQL,
-provider integration and production-readiness gates remain open.
+tests, retention cleanup with referenced receipts, and recovery drills. C2 now
+defines the reviewed run-credential proposals and mandatory product-authority
+composition at both existing complete guards. Their actual current-state adapters,
+HTTP handlers, SQL/provider integration and production-readiness gates remain open.
 
 ## Focused verification
 
