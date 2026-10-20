@@ -68,7 +68,9 @@ ownership fences the challenge and its receipts. Start a fresh challenge after
 proper reauthentication; do not transfer one to a different session.
 
 Every operation, status read and receipt replay rechecks current authority and
-primary mapping before returning an outcome. Primary authentication must remain
+primary mapping before returning an outcome. Invalid/disabled/reassigned primary
+authority is rejected before freshness advice; a stale invalid mapping never
+receives a reauthentication hint. Origin/CSRF checks still apply first. Primary authentication must remain
 strictly younger than recent_auth_seconds. Exact Origin and session CSRF are
 required on POSTs; mixed cookie/bearer and bearer-only callers are rejected.
 Missing approved policies fail closed. These are server checks, not client form
@@ -98,7 +100,7 @@ checks the secondary proof and its fresh-auth challenge; primary session authori
 is not secondary identity proof.
 
 Managed broker exchange is a session-CSRF POST. OIDC uses a distinct approved
-link callback URI, never the login completion callback, and GET/query
+link callback URI, distinct from every configured provider's login completion callback, and GET/query
 code/state or error/state only. Current primary session/browser and purpose-bound
 state must be verified **before code exchange**. Exact callback, nonce and PKCE
 S256 checks remain mandatory. Callback evidence may stage verification only;
@@ -149,7 +151,11 @@ Primary disablement, identity mapping changes and proof claim changes share the
 commit serialization boundary. None of this is proven by pure predicate tests.
 
 LinkChallenge ID is the commit's natural idempotency key; expected_revision is
-the original verified revision. An exact committed retry rechecks current
+the original verified revision. The public LinkStatus returned by proof verification,
+OIDC callback and status lookup exposes its current revision. A client constructs
+LinkCommitRequest from that verified response and retains the original revision
+for retries; it never guesses internal transition counts. This revision is safe
+metadata and confers no authority. An exact committed retry rechecks current
 authority, original primary mapping, resulting active secondary association,
 global consumed claim and retained receipt. It never calls a verifier, reclaims
 proof, reapplies association or extends retention. An altered revision, changed
@@ -198,8 +204,22 @@ LinkError codes plus request correlation ID; adapters suppress raw validation an
 provider details. Ownership conflict is generic link_conflict/409. Stale actual
 primary authentication uses reauthentication_required/401 plus the established
 X-Authentication-Action: reauthenticate header. Invalid/revoked sessions do not
-receive that freshness header. Rate limits are server producer obligations,
+receive that freshness header. Rate limits use rate_limited/429 and a bounded
+Retry-After header, independent of identity existence. Rate limits are server producer obligations,
 including bounded attempts and challenge retention; no limiter is implemented.
+
+The fixed code/status mapping is:
+
+| Safe code | HTTP status |
+| --- | --- |
+| invalid_request, ambiguous_credentials | 400 |
+| unauthenticated, proof_rejected, link_expired, reauthentication_required | 401 |
+| forbidden | 403 |
+| not_found | 404 |
+| link_conflict, recovery_required | 409 |
+| unsupported_flow | 422 |
+| rate_limited | 429, with bounded Retry-After |
+| policy_unavailable, temporarily_unavailable | 503 |
 
 Required later evidence includes real cryptographic verifier negative cases,
 forced secondary authentication/precision behavior, broker alias/tenant isolation,

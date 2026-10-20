@@ -323,8 +323,9 @@ class ProofClaimOwner(Message):
 
 
 class TrustedIdentityProof(Message):
-    purpose: ProofPurpose
     """Minimal durable verifier result; never accepted from a public request."""
+
+    purpose: ProofPurpose
 
     transaction_id: Identifier
     provider_id: Identifier

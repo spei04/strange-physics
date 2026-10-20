@@ -1,5 +1,15 @@
 {
   "notice": "Synthetic conformance fixtures only; no provider, SQL or recovery evidence.",
+  "rate_limit": {
+    "body": {
+      "code": "rate_limited",
+      "request_id": "request-1"
+    },
+    "headers": {
+      "Retry-After": "30"
+    },
+    "status": 429
+  },
   "runtime_negative": [
     {
       "field": "issuer",
@@ -275,6 +285,7 @@
       "expired": false,
       "expires_at": 1200,
       "next_action": "commit",
+      "revision": 2,
       "state": "verified"
     },
     "SessionIdentity": {

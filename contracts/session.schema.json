@@ -1039,6 +1039,7 @@
     },
     "TrustedIdentityProof": {
       "additionalProperties": false,
+      "description": "Minimal durable verifier result; never accepted from a public request.",
       "properties": {
         "audience": {
           "maxLength": 512,

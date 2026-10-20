@@ -141,11 +141,22 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "linking.schema.json#/$defs/LinkError"
+                  "allOf": [
+                    {
+                      "$ref": "linking.schema.json#/$defs/LinkError"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "const": "rate_limited"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             },
-            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "description": "rate_limited with bounded Retry-After; independent of identity existence. No provider or account details.",
             "headers": {
               "Retry-After": {
                 "description": "Bounded policy rate limit independent of identity existence.",
@@ -306,11 +317,22 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "linking.schema.json#/$defs/LinkError"
+                  "allOf": [
+                    {
+                      "$ref": "linking.schema.json#/$defs/LinkError"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "const": "rate_limited"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             },
-            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "description": "rate_limited with bounded Retry-After; independent of identity existence. No provider or account details.",
             "headers": {
               "Retry-After": {
                 "description": "Bounded policy rate limit independent of identity existence.",
@@ -461,11 +483,22 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "linking.schema.json#/$defs/LinkError"
+                  "allOf": [
+                    {
+                      "$ref": "linking.schema.json#/$defs/LinkError"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "const": "rate_limited"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             },
-            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "description": "rate_limited with bounded Retry-After; independent of identity existence. No provider or account details.",
             "headers": {
               "Retry-After": {
                 "description": "Bounded policy rate limit independent of identity existence.",
@@ -635,11 +668,22 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "linking.schema.json#/$defs/LinkError"
+                  "allOf": [
+                    {
+                      "$ref": "linking.schema.json#/$defs/LinkError"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "const": "rate_limited"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             },
-            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "description": "rate_limited with bounded Retry-After; independent of identity existence. No provider or account details.",
             "headers": {
               "Retry-After": {
                 "description": "Bounded policy rate limit independent of identity existence.",
@@ -810,11 +854,22 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "linking.schema.json#/$defs/LinkError"
+                  "allOf": [
+                    {
+                      "$ref": "linking.schema.json#/$defs/LinkError"
+                    },
+                    {
+                      "properties": {
+                        "code": {
+                          "const": "rate_limited"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             },
-            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "description": "rate_limited with bounded Retry-After; independent of identity existence. No provider or account details.",
             "headers": {
               "Retry-After": {
                 "description": "Bounded policy rate limit independent of identity existence.",

@@ -499,7 +499,8 @@
             "proof_rejected",
             "link_conflict",
             "recovery_required",
-            "temporarily_unavailable"
+            "temporarily_unavailable",
+            "rate_limited"
           ],
           "title": "Code",
           "type": "string"
@@ -823,6 +824,12 @@
           "title": "Next Action",
           "type": "string"
         },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
         "state": {
           "enum": [
             "pending",
@@ -838,6 +845,7 @@
       },
       "required": [
         "challenge_id",
+        "revision",
         "state",
         "expires_at",
         "expired",
@@ -1051,6 +1059,7 @@
     },
     "TrustedIdentityProof": {
       "additionalProperties": false,
+      "description": "Minimal durable verifier result; never accepted from a public request.",
       "properties": {
         "audience": {
           "maxLength": 512,

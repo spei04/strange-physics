@@ -20,11 +20,13 @@ from strange_physics.linking_contracts import (
     LinkChallenge,
     LinkClaimConsumption,
     LinkCommitRequest,
+    LinkError,
     LinkExchangeRequest,
     LinkPolicy,
     LinkReceipt,
     LinkResult,
     LinkStartRequest,
+    LinkStatus,
     identity_namespace,
     link_claim_retain_until,
     link_status,
@@ -272,7 +274,13 @@ def test_current_primary_authority_precedes_receipt_replay(change: str) -> None:
         data["actor"]["context"]["has_session_cookie"] = False
     else:
         data["actor"]["context"]["browser_binding_sha256"] = None
-    with pytest.raises(ContractViolation):
+    expected = {
+        "session_generation": ("not_found", 404),
+        "csrf": ("forbidden", 403),
+        "origin": ("forbidden", 403),
+        "bearer": ("ambiguous_credentials", 400),
+    }.get(change, ("unauthenticated", 401))
+    with denied(*expected):
         replay_link_commit(
             **replay_args(
                 context=LinkActor.model_validate_json(json.dumps(data)),
@@ -616,3 +624,73 @@ def test_verifying_unknown_exchange_cannot_restart_or_reuse_the_challenge() -> N
     recovery = changed(before, state="recovery_required", revision=2)
     validate_link_transition(before, recovery, expected_revision=1)
     assert link_status(**bound(challenge=recovery)).next_action == "reconcile"
+
+
+def test_public_verified_status_supplies_the_commit_revision() -> None:
+    # A client uses only the declared public response, never internal transition counts.
+    observed = LinkStatus.model_validate_json(link_status(**bound()).model_dump_json())
+    assert observed.state == "verified" and observed.next_action == "commit"
+    request = LinkCommitRequest(expected_revision=observed.revision)
+    validate_link_commit(**commit_args(request=request))
+    assert replay_link_commit(**replay_args(request=request)) == value(LinkResult)
+    completed = link_status(**bound(challenge=commit_args()["after"]))
+    assert completed.revision == observed.revision + 1 and completed.next_action == "done"
+
+
+@pytest.mark.parametrize("change", ["disabled_principal", "disabled_primary", "reassigned_primary"])
+def test_stale_invalid_primary_never_receives_freshness_advice(change: str) -> None:
+    data = value(LinkActor).model_dump(mode="json")
+    if change == "disabled_principal":
+        data["principal"]["active"] = False
+    elif change == "disabled_primary":
+        data["primary"]["active"] = False
+    else:
+        data["primary"]["principal_id"] = "another-owner"
+    context = LinkActor.model_validate_json(json.dumps(data))
+    # Actual authentication reaches its age limit at 1110, but invalid authority wins.
+    with denied("unauthenticated", 401):
+        replay_link_commit(**replay_args(context=context, now=1110, receipt=None))
+    with denied("unauthenticated", 401):
+        link_status(**bound(context=context, now=1110))
+    data["actor"]["context"]["csrf_matches"] = False
+    with denied("forbidden", 403):
+        replay_link_commit(
+            **replay_args(
+                context=LinkActor.model_validate_json(json.dumps(data)), now=1110, receipt=None
+            )
+        )
+
+
+def test_trusted_proof_keeps_documentation_after_required_purpose_amendment() -> None:
+    assert TrustedIdentityProof.__doc__ is not None
+    assert TrustedIdentityProof.model_json_schema().get("description")
+
+
+def test_link_callback_cannot_collide_with_another_providers_login_callback() -> None:
+    args = oidc_args()
+    data = args["session_policy"].model_dump(mode="json")
+    oidc = next(provider for provider in data["providers"] if provider["provider_id"] == "oidc")
+    data["providers"].append(
+        oidc | {"provider_id": "other-oidc", "callback_uri": args["oidc_evidence"].callback_uri}
+    )
+    configured = DeploymentSessionPolicy.model_validate_json(json.dumps(data))
+    with denied("unsupported_flow", 422):
+        validate_link_proof(**(args | {"session_policy": configured}))
+
+
+def test_rate_limit_has_explicit_safe_code_schema_and_retry_after() -> None:
+    fixture = FIXTURES["rate_limit"]
+    error = LinkError.model_validate_json(json.dumps(fixture["body"]))
+    assert fixture["status"] == 429 and error.code == "rate_limited"
+    assert int(fixture["headers"]["Retry-After"]) > 0
+    assert (
+        "rate_limited" in linking_json_schema()["$defs"]["LinkError"]["properties"]["code"]["enum"]
+    )
+    api = json.loads((ROOT / "contracts/linking.openapi.json").read_text())
+    for routes in api["paths"].values():
+        for operation in routes.values():
+            response = operation["responses"]["429"]
+            assert "Retry-After" in response["headers"]
+            assert response["content"]["application/json"]["schema"]["allOf"][1] == {
+                "properties": {"code": {"const": "rate_limited"}}
+            }

@@ -26,6 +26,7 @@ from strange_physics.session_contracts import (
     Secret,
     Text,
     TrustedIdentityProof,
+    browser_request,
     provider_for,
     server_time,
     uri_origin,
@@ -135,6 +136,7 @@ class LinkResult(Message):
 
 class LinkStatus(Message):
     challenge_id: Identifier
+    revision: Count
     state: LinkState
     expires_at: Count
     expired: bool
@@ -158,6 +160,7 @@ class LinkError(Message):
         "link_conflict",
         "recovery_required",
         "temporarily_unavailable",
+        "rate_limited",
     ]
     request_id: Identifier
 
@@ -267,7 +270,10 @@ def _provider(
     elif (
         link_provider.callback_uri is None
         or uri_origin(link_provider.callback_uri) not in session_policy.app_origins
-        or link_provider.callback_uri == provider.callback_uri
+        or any(
+            link_provider.callback_uri == candidate.callback_uri
+            for candidate in session_policy.providers
+        )
     ):
         raise ContractViolation("unsupported_flow", 422)
     return provider, link_provider
@@ -276,20 +282,12 @@ def _provider(
 def _actor(
     session_policy: DeploymentSessionPolicy, context: LinkActor, *, now: int, mutation: bool
 ) -> None:
-    validate_human_actor(session_policy, context.actor, now=now, mutation=mutation)
+    # B1 mutation validation includes freshness. B3 must first reject a currently
+    # invalid primary mapping, so apply HTTP constraints and current session checks
+    # separately, retaining Origin/CSRF without offering reauthentication too early.
+    browser_request(session_policy, context.actor.context, mutation=mutation)
+    validate_human_actor(session_policy, context.actor, now=now, mutation=False)
     session = context.actor.session
-    primary_providers = [
-        provider
-        for provider in session_policy.providers
-        if provider.issuer == context.primary.identity.issuer
-        and provider.tenant_id == context.primary.identity.tenant_id
-    ]
-    if not primary_providers:
-        raise ContractViolation("unauthenticated", 401)
-    if any(p.flow == "managed_broker" and p.tenant_id is not None for p in primary_providers):
-        raise ContractViolation("unsupported_flow", 422)
-    if now - session.authenticated_at >= session_policy.recent_auth_seconds:
-        raise ContractViolation("reauthentication_required", 401)
     if (
         not context.principal.active
         or context.principal.principal_id != session.principal_id
@@ -302,6 +300,18 @@ def _actor(
         or context.actor.context.browser_binding_sha256 is None
     ):
         raise ContractViolation("unauthenticated", 401)
+    primary_providers = [
+        provider
+        for provider in session_policy.providers
+        if provider.issuer == context.primary.identity.issuer
+        and provider.tenant_id == context.primary.identity.tenant_id
+    ]
+    if not primary_providers:
+        raise ContractViolation("unauthenticated", 401)
+    if any(p.flow == "managed_broker" and p.tenant_id is not None for p in primary_providers):
+        raise ContractViolation("unsupported_flow", 422)
+    if now - session.authenticated_at >= session_policy.recent_auth_seconds:
+        raise ContractViolation("reauthentication_required", 401)
 
 
 def validate_link_start(
@@ -685,6 +695,7 @@ def link_status(
         action = "start_new_challenge"
     return LinkStatus(
         challenge_id=challenge.challenge_id,
+        revision=challenge.revision,
         state=challenge.state,
         expires_at=challenge.expires_at,
         expired=expired,
