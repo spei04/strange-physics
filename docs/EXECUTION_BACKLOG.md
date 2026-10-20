@@ -546,7 +546,7 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Security and reliability:** No trusted pickle; bounded inputs and scoped identities.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, security, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; in progress under Engineer Platform, issue #89, after accepted SP-00.b and SP-01.b. Three reviewed PR units: ART1 object/checkpoint admission, EXEC1 package/worker envelopes, COMP1 predictor/DB composition. Existing four delivery plus one reserve days and all gates are unchanged.
+- **Milestone / state:** R0; in progress, issue #89. ART1 runtime29a968b/author7a90e96 is independently accepted; combined5ad0ef3 passed1,954 tests and669 schemas plus static/security/package checks. Exact-head PR/main gates remain before ART1 integration. Platform prepares EXEC1 package/worker envelopes; Research prepares SCI-facing COMP1 predictor/DB composition. Existing four delivery plus one reserve days, dependencies and all gates are unchanged.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-01-d"></a>
@@ -3386,3 +3386,5 @@ and passing PR/main CI, including 817 tests. SP-04.a/#77 is integrated through P
 reviewed tree and passing PR/main CI, including 1,006 tests. SP-04.b/#81 is integrated through PR #82/main 9c341f8 with passing PR/main CI,
 1,320 tests and all 1,680 unseen predictions inside the fixed per-probe limit. Noise sensitivity failures remain explicit; no
 thresholds or manifests were relaxed.
+
+ART1 integration checkpoint: lead owns primary integration of accepted7a90e96 with accepted SDK/I1 progress8cf6fea at5ad0ef3. Both schema-validator additions and the exact36-entry package allowlist survived independent union review. Platform released identity clean for sequential reuse after main acceptance; no new checkout. EXEC1 and COMP1 remain separate dependent review units, and full SP-01.c freeze remains open.
