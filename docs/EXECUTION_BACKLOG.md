@@ -728,7 +728,7 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 - **Security and reliability:** Bound output; no pickle or true simulator parameters.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R1; in progress under Research, issue #81, after accepted SP-04.a integration. Analytic runtime and preregistered independent Decimal-oracle plan accepted; Quality/Platform/lead review and exact-head CI required. SP-06.a scoring and SP-04.e/I1 remain separate.
+- **Milestone / state:** R1; in progress, source ec959b5 independently accepted by lead/Platform, issue #81. 1,320 full tests and 314 independently rerun focused cases pass; all 1,680 fit-to-predict probes meet the preregistered per-probe bound. Lead owns exact-head PR/main acceptance. SP-06.a scoring and SP-04.e/I1 remain separate.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-04-c"></a>
@@ -3356,8 +3356,9 @@ Scientific execution checkpoint 2026-10-20: Research's read-only dependency revi
 confirms SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b → SP-06.a → SP-04.e/I1,
 with the additional approved joins and accepted predecessors recorded in
 [EXECUTION_LOG.md](EXECUTION_LOG.md#next-scientific-acceptance-checkpoint--i1).
-Research owns SP-04.b in the primary checkout after accepted fitter integration. Quality owns C1 in the identity checkout and independently authors
-SP-06.a only after SP-04.b. The six scientific tasks retain
+The lead owns predictor integration in the primary checkout. Quality owns C1
+repairs in the identity checkout, then independently authors SP-06.a after
+SP-04.b acceptance. Platform takes C2 after C1 integration and writer handoff. The six scientific tasks retain
 19 reference engineering days plus 4.75 reserve, not a subagent schedule promise.
 No unfinished identity contract or whole-R0 gate is a prerequisite for this local
 slice. Enterprise work and its actual consumer gates remain unchanged. I1 needs
@@ -3367,6 +3368,6 @@ does not satisfy it. The concrete disk/snapshot action is approved and complete;
 SP-03.a is integrated through PR #76/main 8510243 with matching tree and passing
 PR/main CI. SP-03.b/#75 is integrated through PR #78/main db182788 with matching reviewed tree
 and passing PR/main CI, including 817 tests. SP-04.a/#77 is integrated through PR #80/main e5a3c8d with a matching
-reviewed tree and passing PR/main CI, including 1,006 tests. Research now authors
-SP-04.b/#81 under the accepted runtime and preregistration. Noise sensitivity failures remain explicit; no
+reviewed tree and passing PR/main CI, including 1,006 tests. SP-04.b/#81 source ec959b5 is independently accepted with 1,320 tests and all 1,680
+unseen predictions inside the fixed per-probe limit; exact-head hosted checks remain. Noise sensitivity failures remain explicit; no
 thresholds or manifests were relaxed.
