@@ -116,6 +116,13 @@ accepted GKE Sandbox/Cloud Run separation, authentication and workspace access
 control are required before accepting untrusted hosted packages.
 
 The random investigator does not fit or discover a model. The reference worlds
-and common calibration generator are development fixtures. Shared fitting,
-uncertainty, active selection, held-out scoring, LLM calls, the browser UI and
-cloud deployment remain the next implementation milestones.
+and common calibration generator are development fixtures. The separate local
+spring fitting API estimates one shared linear coefficient under an explicit
+assumption, and the [local analytic predictor](PREDICTION.md) propagates supported
+unseen initial conditions. Uncertainty, active selection, independent scoring,
+SDK/CLI integration, LLM calls, the browser UI and cloud deployment remain
+implementation milestones.
+
+The local production fitting API and its fixed configuration, explicit failure
+results and evidence limits are documented in [FITTING.md](FITTING.md).
+Independent scoring and SDK/CLI integration remain separate gates.
