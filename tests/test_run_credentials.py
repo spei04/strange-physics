@@ -960,3 +960,20 @@ def test_service_run_owner_cannot_be_projected_as_administrative_owner() -> None
         ValidationError, match="Service run owner cannot hold an administrative owner grant"
     ):
         changed(original, owner=owner, credentials=state)
+
+
+@pytest.mark.parametrize("operation", ["replace", "revoke"])
+def test_replay_binds_exact_request_target_to_original_committed_outcome(operation: str) -> None:
+    original = args(operation)
+    committed = plan(**original)
+    retry = replay_args(original, committed)
+    request = changed(original["request"], credential_id="unrelated-target")
+    digest = message_sha256(request)
+    retry["request"] = request
+    retry["lookup"] = c.RunCredentialLookup(
+        state="committed",
+        receipt=changed(committed.receipt, request_sha256=digest),
+        audit=changed(committed.audit, request_sha256=digest),
+    )
+    with denied("recovery_required", 409):
+        change_run_credential(**retry)

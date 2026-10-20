@@ -146,7 +146,9 @@ revocation to commit and never marks it current. Atomic plans bind those snapsho
 to complete proposed state, exact audit digest and delivery intent.
 
 Idempotency lookup uses stable coordinator actor, workspace/run, operation and key,
-with the exact request digest. Authorization renewal may change authorization_id;
+with the exact request digest. Replace/revoke additionally join the request target
+to the original replaced/revoked identity; a consistent digest cannot excuse a
+contradictory retained target. Authorization renewal may change authorization_id;
 the original ID remains in immutable audit evidence. Another coordinator actor,
 foreign policy, receipt scope mismatch or missing evidence cannot replay it.
 The current attempt/epoch must equal the original outcome. At equal credential

@@ -149,6 +149,14 @@ def _replay(
         raise ContractViolation("recovery_required", 409)
     if receipt.request_sha256 != message_sha256(request):
         raise ContractViolation("idempotency_conflict", 409)
+    if (
+        isinstance(request, RunCredentialReplaceRequest)
+        and request.credential_id != outcome.replaced_credential_id
+    ) or (
+        isinstance(request, RunCredentialRevokeRequest)
+        and request.credential_id != outcome.credential_id
+    ):
+        raise ContractViolation("recovery_required", 409)
     if (outcome.attempt_id, outcome.lease_epoch) != (current.lease.attempt_id, current.lease.epoch):
         raise ContractViolation("forbidden", 403)
     if (
