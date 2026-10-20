@@ -874,7 +874,7 @@ Parent: [#8](https://github.com/spei04/strange-physics/issues/8). This issue clo
 - **Security and reliability:** Separate evaluator labels from fitter; report failures.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Quality engineer; base reference lane TL. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R1; source accepted at17be197 after independent Research/lead review; issue #83 awaits exact-head PR/main integration. 1,417 author tests,97 focused cases,7 independent extra cases and7 detected mutants; integrated source464c73a preserves C1 and predictor work. Research prepares SDK/CLI; I1 remains open.
+- **Milestone / state:** R1; complete through PR #85/main c20e3b5, matching reviewed3556088 and treecad9249f. Required PR CI39365261896 and all protected-main CI39365449219 jobs passed;1,531 integrated tests. Independent97 focused cases,7 boundary checks and7 mutants. SP-04.e SDK/CLI is next; I1 remains open.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-06-b"></a>

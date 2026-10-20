@@ -1,6 +1,6 @@
 # Research methods amendment — 2026-10-19
 
-**Status:** proposed research execution extension; planning work is authorized. Runtime tasks, paid pilots and official studies retain the gates below. No new method was implemented or reproduced by this review.
+**Status:** independently reviewed research execution proposal; planning work is authorized. Runtime tasks, paid pilots and official studies retain the gates below. No new method was implemented or reproduced by this review.
 **Owner:** project lead. **Review cutoff:** 2026-10-19 UTC. **Saved:** 2026-10-20 UTC.
 **Canonical links:** [roadmap](../ROADMAP.md), [benchmark](../BENCHMARK.md), [execution backlog](../EXECUTION_BACKLOG.md), [machine-readable ledger](../execution-backlog.json).
 **Baseline preserved:** 168 approved tasks, 369 dependencies and ten gates. This extension has 18 separate proposed PR tasks. It does not silently rebaseline that graph or its conditional nine-person GA forecast.
@@ -61,7 +61,7 @@ Keep random, classical bootstrap disagreement and the bounded LLM selector on th
 
 RA-07.b follows I1, the classical linear fitter, calibrated model beliefs and acquisition producers. Freeze six stationary spring worlds, two policy seeds and three fixed-pool selectors: **36 episodes**, **12 purchased slots** per episode including four common calibrations, **432 slots** maximum. Freeze world/noise identities, model pool, priors/likelihood, action menus and disjoint probes before measurements. Aggregate seeds within each world; report paired descriptive error, failures and CPU.
 
-Use only supported native LinearSpringModel candidates with real hashes; primary prediction is the declared MAP candidate. The current scorer cannot accept a richer DAG or mixture under a dummy linear identity. Richer profiles need a separately reviewed SP-19/20 model-to-prediction/evaluation binding. New symbolic adapters are not prerequisites for this result.
+All six source worlds must be stationary, one-particle, fixed-anchor, zero-cubic and zero-observation-noise, inside the current scorer bounds for mass, impulse, duration and stiffness. Freeze a separately justified positive numerical-discrepancy scale and its analytic sensitivity checks before online runs. These approximate model-belief weights must not be represented as calibrated observation-noise probabilities. Use only supported native LinearSpringModel candidates with real hashes; primary prediction is the declared MAP candidate. The current scorer cannot accept a richer DAG or mixture under a dummy linear identity. Richer profiles need a separately reviewed SP-19/20 model-to-prediction/evaluation binding. New symbolic adapters are not prerequisites for this result.
 
 Proposed limits are **8 CPU-core-hours** and **1 GiB new artifacts** on the existing machine. No provider calls, network use or provisioning. Stop and retain incomplete cells at either cap. This reduced-budget development result is not an official40-slot score, population claim or adaptation result. RA_EXEC still gates implementation; this branch has no SP-18/20 or RA-09–12 prerequisite.
 
@@ -308,7 +308,7 @@ Later scheduling is milestone-level until measured throughput exists. The ten-da
 
 - **Objective:** Produce a useful measured research result before provider profiles or hosted deployment.
 - **Owner:** Quality + Research; primary lane QE.
-- **Scope:** Run analytic common-prefix rankings and six frozen stationary spring development worlds, two policy seeds and three fixed-pool selectors:36 episodes,12 purchased slots including4 common calibrations,432 maximum slots. Use supported native LinearSpringModel candidates and the existing classical fitter/predictor/scorer; primary prediction is the declared MAP candidate, not an unrepresented mixture. Freeze pool, priors, likelihood, six world/noise identities, action menus and disjoint probes. Each arm uses only its own prefix.
+- **Scope:**Run analytic common-prefix rankings and six frozen stationary spring development worlds, two policy seeds and three fixed-pool selectors:36 episodes,12 purchased slots including4 common calibrations,432 maximum slots. Use supported native LinearSpringModel candidates and the existing classical fitter/predictor/scorer; primary prediction is the declared MAP candidate, not an unrepresented mixture. Freeze pool, priors, likelihood, six world/noise identities, action menus and disjoint probes. Each arm uses only its own prefix. All six source worlds are stationary, one-particle, fixed-anchor, zero-cubic and zero-observation-noise, within the scorer mass/impulse/time/stiffness bounds. Freeze a separately justified positive numerical-discrepancy scale and test sensitivity before online runs; approximate model-belief weights are not calibrated observation-noise probabilities.
 - **Out of scope:** Richer DAG scoring, new symbolic adapters, provider calls, hosted deployment, population superiority, adaptation claims, official scores or new machines.
 - **Prerequisites:** RA-06, RA-07, SP-04.e.
 - **Required contracts:** STUDY, BELIEF, ACQUISITION, COST (definitions above).
@@ -444,3 +444,5 @@ The owner must decide whether to activate this extension, which bounded pilot ma
 ## Review and maintenance
 
 Lead checks all dependency IDs and cycles against the canonical baseline, plus the extension gates; Quality or Research independently reviews the scientific design and arithmetic. Record exact reviewed commit and CI evidence in the assignment log. Amend this record and the canonical roadmap, benchmark and backlog together if scope, budgets or conclusions change. A written plan is not production readiness or research evidence.
+
+Independent scientific/dependency review accepted45e4cdec262884d2e5e25bc1543a728d2c97b640. The final domain clarification and canonical progress update receive exact-head review before PR #86 integration. Runtime activation remains pending.

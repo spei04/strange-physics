@@ -2056,7 +2056,7 @@
         "TL"
       ],
       "objective": "Produce unbiased, reproducible generalization and recovery measurements. This PR delivers compute independent development reports.",
-      "status": "in_progress",
+      "status": "complete",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2065,7 +2065,7 @@
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/83",
       "execution_owner": "Engineer Quality completed authoring; Research and lead accepted source; root owns integration.",
-      "execution_plan": "Accepted17be197 with independent runtime82fc914. Integrated source464c73a preserves accepted predictor and C1 modules; exact-head PR/main checks remain. SDK/CLI I1 follows."
+      "execution_plan": "PR #85/main c20e3b5 matches reviewed3556088/treecad9249f; all required PR checks and protected-main CI39365449219 passed.1531 integrated tests; SP-04.e SDK/CLI remains next."
     },
     {
       "id": "SP-06.b",
@@ -10791,10 +10791,10 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-06.a_reviewed_pending_integration",
+      "status": "SP-04.e_ready",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "SP-04.e SDK/CLI after scorer protected-main acceptance and exclusive primary handoff",
+      "next_authoring_task": "SP-04.e SDK/CLI after primary planning-review handoff; scorer is integrated and accepted.",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -11034,7 +11034,7 @@
       "source": "17be197a1499c7619718b4e5141aa34a6523e519",
       "runtime_source": "82fc9145b576fcb01e58815989bc2c1ebd1087a0",
       "integrated_source": "464c73aed7b2cbf539549174b87e0c1a5567ea7d",
-      "status": "reviewed_pending_hosted_integration",
+      "status": "complete",
       "author": "Engineer Quality",
       "reviewers": [
         "Engineer Research",
@@ -11051,12 +11051,22 @@
       "max_per_probe_mse": 4.249608827306303e-31,
       "record": "docs/EVALUATION.md",
       "boundary": "Independent bounded Decimal reference and complete-manifest scoring only. Direct-model synthetic evidence; SDK/CLI purchased-prefix I1, official study, full penalty freeze and deployment remain unverified.",
-      "private_index_sha256": "1c8d43550c8b618039a6b82236f879e1d13dafd388fcd84bea44969aca991c20"
+      "private_index_sha256": "1c8d43550c8b618039a6b82236f879e1d13dafd388fcd84bea44969aca991c20",
+      "pull_request": 85,
+      "reviewed_head": "3556088ebf39fdaa250e16bb4a04008f79d726e2",
+      "merge": "c20e3b5d1baa23f906c20b33af6da4d759920345",
+      "tree": "cad9249f89f083df26637de4dfeff0d13086b58d",
+      "pr_ci": 39365261896,
+      "main_ci": 39365449219,
+      "integrated_full_tests": 1531,
+      "integrated_mypy_files": 52,
+      "integrated_formatted_files": 86,
+      "integrated_schema_checks": 571
     }
   },
   "research_amendment": {
     "id": "RA-2026-10-19",
-    "status": "planning_review_runtime_not_authorized",
+    "status": "reviewed_planning_runtime_not_authorized",
     "literature_cutoff": "2026-10-19",
     "record": "research/2026-10-19-METHOD_DECISIONS.md",
     "baseline_unchanged": {
@@ -11339,7 +11349,7 @@
           "COST"
         ],
         "objective": "Produce a useful measured research result before provider profiles or hosted deployment.",
-        "scope": "Run analytic common-prefix rankings and six frozen stationary spring development worlds, two policy seeds and three fixed-pool selectors:36 episodes,12 purchased slots including4 common calibrations,432 maximum slots. Use supported native LinearSpringModel candidates and the existing classical fitter/predictor/scorer; primary prediction is the declared MAP candidate, not an unrepresented mixture. Freeze pool, priors, likelihood, six world/noise identities, action menus and disjoint probes. Each arm uses only its own prefix.",
+        "scope": "Run analytic common-prefix rankings and six frozen stationary spring development worlds, two policy seeds and three fixed-pool selectors:36 episodes,12 purchased slots including4 common calibrations,432 maximum slots. Use supported native LinearSpringModel candidates and the existing classical fitter/predictor/scorer; primary prediction is the declared MAP candidate, not an unrepresented mixture. Freeze pool, priors, likelihood, six world/noise identities, action menus and disjoint probes. Each arm uses only its own prefix. All six source worlds are stationary, one-particle, fixed-anchor, zero-cubic and zero-observation-noise, within the scorer mass/impulse/time/stiffness bounds. Freeze a separately justified positive numerical-discrepancy scale and test sensitivity before online runs; approximate model-belief weights are not calibrated observation-noise probabilities.",
         "out": "Richer DAG scoring, new symbolic adapters, provider calls, hosted deployment, population superiority, adaptation claims, official scores or new machines.",
         "accept": "Within8 CPU-core-hours and1GiB new artifacts on the existing machine, independent scoring and world-paired descriptive results reproduce or a cap-limited incomplete result is recorded. Aggregate policy seeds within each world. Use actual native model/request hashes; no dummy linear identity or cross-arm data. No provider/network invocation.",
         "tests": "Analytic ranking equivalence, independent scoring, arm-history separation, absent-provider/network spy, cap/interrupt/replay and failure accounting.",
@@ -11641,7 +11651,7 @@
       "cpu_core_hours": 8,
       "new_artifacts_gib": 1,
       "provider_calls": 0,
-      "scope": "Native linear fixed-pool development only; real model hashes and MAP candidate scoring, world-paired descriptive results."
+      "scope": "Run analytic common-prefix rankings and six frozen stationary spring development worlds, two policy seeds and three fixed-pool selectors:36 episodes,12 purchased slots including4 common calibrations,432 maximum slots. Use supported native LinearSpringModel candidates and the existing classical fitter/predictor/scorer; primary prediction is the declared MAP candidate, not an unrepresented mixture. Freeze pool, priors, likelihood, six world/noise identities, action menus and disjoint probes. Each arm uses only its own prefix. All six source worlds are stationary, one-particle, fixed-anchor, zero-cubic and zero-observation-noise, within the scorer mass/impulse/time/stiffness bounds. Freeze a separately justified positive numerical-discrepancy scale and test sensitivity before online runs; approximate model-belief weights are not calibrated observation-noise probabilities."
     },
     "feasibility_ceiling": {
       "task": "RA-13.a",
@@ -11663,14 +11673,11 @@
       "precision_claim": false
     },
     "review": {
-      "status": "awaiting_exact_commit_review",
-      "scientific_findings_repaired": [
-        "Split classical adapters and symbolic runtime",
-        "Separate common-prefix diagnostics from online arm histories",
-        "One inference approximation",
-        "Feasibility is not population sizing",
-        "Early offline checkpoint uses native linear scorer only"
-      ]
+      "status": "independently_reviewed",
+      "reviewer": "Engineer Research",
+      "reviewed_commit": "45e4cdec262884d2e5e25bc1543a728d2c97b640",
+      "validation": "18 tasks,4 gates,66 extension edges; no missing dependencies/cycles;48\u201378d plus25%; early branch excludes hosted/provider/profile predecessors. Domain clarification requires exact-head readback.",
+      "source_cutoff": "2026-10-19"
     }
   }
 }
