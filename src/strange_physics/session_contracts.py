@@ -933,7 +933,7 @@ def session_json_schema() -> JsonSchemaValue:
     _, schema = models_json_schema([(model, "validation") for model in SESSION_MODELS])
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
     schema["$id"] = "https://strange-physics.dev/contracts/session.schema.json"
-    schema["x-contract-status"] = "session-v1; SP-01.b remains partial"
+    schema["x-contract-status"] = "session-v1; bounded SP-01.b freeze accepted"
     schema["x-public-models"] = [model.__name__ for model in PUBLIC_MODELS]
     schema["description"] = (
         "Browser session shapes plus pure conformance checks. Internal trusted projections "

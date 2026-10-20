@@ -1410,9 +1410,9 @@
         "research"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/94",
-      "execution_owner": "Research repairs WORLD1 retained histories in identity; Platform and Quality independently review, lead owns primary integration.",
+      "execution_owner": "Lead integrates accepted WORLD1; Research prepares WEB1 read-only, Platform reviews stream/artifact provenance, Quality reviews composition and current authority/recovery.",
       "execution_plan": "WORLD1 immutable world/version, safe and granted views, browser capability and exact run selection; WEB1 bounded streams/snapshots/cursors/replay/artifact retrieval. API checkpoint before predicates in each independent PR.",
-      "evidence": "WORLD1 runtime 8555602 passed 2,732 full tests and 1,201 schema cases; test-only abdf849 repairs explicit shared-helper imports and passes full strict typing. Independent review found three retained-predecessor consistency gaps in version/grant retry histories. Research owns bounded repairs; Platform and Quality verify the replacement, and lead holds integration. Shared authorization/parser extraction is independently accepted. WEB1 and complete SP-01.d remain pending."
+      "evidence": "WORLD1 runtime 9267733 is independently accepted by lead, Platform and Quality after 2,768 full tests, 345 WORLD1 cases, 542 broader focused cases, 1,201 schema checks, Ruff/format127 and strict mypy87. Retained predecessor/ancestor ID and chronology checks, grant renewal-distance consistency and safe head reads were repaired and regression-tested. Exact final PR #95 and protected-main CI remain before integration acceptance. WEB1 and the SP-01.d parent freeze remain open."
     },
     {
       "id": "SP-01.e",
@@ -11524,7 +11524,7 @@
     },
     "web_contract_preparation": {
       "owner": "Engineer Research",
-      "status": "world1_runtime_review_repairs",
+      "status": "world1_reviewed_integration_pending",
       "task": "SP-01.d",
       "depends_on": [
         "SP-01.b",
@@ -11535,10 +11535,13 @@
       "pr_units": [
         {
           "id": "WORLD1",
-          "status": "runtime_review_repairs",
+          "status": "reviewed_integration_pending",
           "scope": "Immutable world/version, safe and granted views, browser-only capability and exact run selection.",
           "api_source": "fd6bac2d76b1cf83f5935bb214d0cb13802af13d",
-          "api_tree": "f27d83fe78debc42ee8bd41485b5b7339ce99003"
+          "api_tree": "f27d83fe78debc42ee8bd41485b5b7339ce99003",
+          "runtime_source": "926773379afa3e30d9bcf454a44e0041598a26b8",
+          "author_head": "f23f92ff5ed1533575ac8bf18b6969f60ebd66b5",
+          "pull_request": 95
         },
         {
           "id": "WEB1",
@@ -11625,16 +11628,58 @@
         "lead_index_sha256": "3a4c7be08c7fbfaa8c982ebe3c19a285cc2d93bcc7a9dbdadc4066f78c5b5ae5"
       },
       "world1_runtime_evidence": {
-        "source": "855560213559054441abf91ec030ebdb929b2f12",
-        "tree": "cb99968290f03288c27f61dfcac03c569448d28a",
-        "full_tests": 2732,
+        "source": "926773379afa3e30d9bcf454a44e0041598a26b8",
+        "tree": "e560aec4f8d5b236a9ba29a6bda29bc7a24bf5c1",
+        "status": "independently_accepted_integration_pending",
+        "author_head": "f23f92ff5ed1533575ac8bf18b6969f60ebd66b5",
+        "author_tree": "679799197e47667629296d53e60af4516072978a",
+        "full_tests": 2768,
+        "world1_focused": 345,
+        "broader_focused": 542,
         "schemas": 1201,
-        "test_typing_repair": "abdf84981c9f8545de9445a38f3e0eb8cd3eb94e",
+        "ruff_files": 127,
         "mypy_files": 87,
-        "lead_extra_cases": 30,
-        "lead_index_sha256": "3cfd70e63ce00d64d44322f5dc8c0561b35228c244bdc13949621350bd584b1a",
-        "status": "held_for_three_retained_predecessor_repairs",
-        "boundary": "Author full suite is exact8555602; abdf849 only changes old helper test imports/call targets. No runtime acceptance or live producer proof. Earlier evidence is not final replacement evidence."
+        "full_index_sha256": "b4c2bbd0ab8321fa6b38c621727fc082c0009a818bb7ad74bcfaf57ed3bd6420",
+        "package_index_sha256": "db236fd5614de6720a903452bc44c4405f4a1708d86a73145cb02658e6ea3fba",
+        "final_author_index_sha256": "333fbaefc7bcfcb91ec7113aff8b30c950f752a3537621528d0e162611bd8d69",
+        "quality": {
+          "source": "926773379afa3e30d9bcf454a44e0041598a26b8",
+          "focused": 542,
+          "extra": 111,
+          "history_matrix": 33,
+          "original_repros": 3,
+          "mutants": 7,
+          "index": "fda4e90f869db9d7f02d1e7b083c712b93ff3184820833247796bf5b40947e88",
+          "status": "accepted"
+        },
+        "platform": {
+          "source": "926773379afa3e30d9bcf454a44e0041598a26b8",
+          "focused": 345,
+          "witness": 33,
+          "repros": 5,
+          "id_pairs": 441,
+          "grant_pairs": 2025,
+          "mutants": 9,
+          "index": "32a4653a1b67ad2c8234ef408fffd15440aefd9d7dcb44db99a99a1a0e398138",
+          "status": "accepted"
+        },
+        "lead": {
+          "source": "926773379afa3e30d9bcf454a44e0041598a26b8",
+          "tree": "e560aec4f8d5b236a9ba29a6bda29bc7a24bf5c1",
+          "identity_cases": 30,
+          "history_cases": 5,
+          "identity_index": "d7d218bed1b87a65dc610d4fe2e9e77d0a66343cba28b0f625e25ff1382ff435",
+          "history_index": "f09ebff62b7046fa649d72d1f7b8081486b10fe937d0ccf36167ea071b8ef472",
+          "status": "accepted_by_lead"
+        },
+        "earlier_runtime": "855560213559054441abf91ec030ebdb929b2f12",
+        "repairs": [
+          "Compare every supplied relevant version-record pair, including historical receipt parent and current head parent; known own/parent IDs cannot denote different ordinals.",
+          "Exact equal-ordinal canonical identity, adjacent parent relation and nondecreasing creation time.",
+          "Compare grant receipt against current predecessor and outcome; irreversible revocation and strict integer expiry growth for each intervening renewal.",
+          "Apply the same bounded current-parent consistency check to safe head reads."
+        ],
+        "boundary": "Pure trusted-projection contracts/proposals, not live HTTP/SQL/storage/UI or full-history authenticity. Review suites overlap. Final exact PR/main acceptance remains required."
       }
     },
     "contract_tooling_preparation": {

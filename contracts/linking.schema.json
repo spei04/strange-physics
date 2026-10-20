@@ -1208,7 +1208,7 @@
   "$id": "https://strange-physics.dev/contracts/linking.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Public link shapes plus private trusted projections and pure conformance predicates. No crypto, broker, HTTP, persistence, race or recovery implementation.",
-  "x-contract-status": "linking-v1 review; SP-01.b remains partial",
+  "x-contract-status": "linking-v1; bounded SP-01.b freeze accepted",
   "x-public-models": [
     "LinkStartRequest",
     "LinkStartResponse",

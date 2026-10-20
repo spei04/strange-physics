@@ -737,7 +737,7 @@ def linking_json_schema() -> JsonSchemaValue:
     _, schema = models_json_schema([(model, "validation") for model in LINK_MODELS])
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
     schema["$id"] = "https://strange-physics.dev/contracts/linking.schema.json"
-    schema["x-contract-status"] = "linking-v1 review; SP-01.b remains partial"
+    schema["x-contract-status"] = "linking-v1; bounded SP-01.b freeze accepted"
     schema["x-public-models"] = [model.__name__ for model in PUBLIC_MODELS]
     schema["description"] = (
         "Public link shapes plus private trusted projections and pure conformance predicates. "
