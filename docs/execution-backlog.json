@@ -1410,9 +1410,9 @@
         "research"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/94",
-      "execution_owner": "Lead integrates reviewed WORLD1; Research audits local comparison prerequisites and prepares WEB1; Platform reviews stream/artifact joins; Quality reviews union and authority/recovery.",
+      "execution_owner": "Research owns WEB1 after explicit handoff; Platform and Quality review; lead integrates.",
       "execution_plan": "WORLD1 immutable world/version, safe and granted views, browser capability and exact run selection; WEB1 bounded streams/snapshots/cursors/replay/artifact retrieval. API checkpoint before predicates in each independent PR.",
-      "evidence": "2026-10-20 08:04 UTC \u2014 Final WORLD1 runtime2b882fe is accepted by lead, Platform and Quality after 2,783 full tests, 360 WORLD1 cases, 557 broader focused cases, 1,201 schemas, Ruff/format127, strict mypy87, static security and offline package/installed-callable checks. Final composition repairs validate all six supplied historical/current version pairs and prevent fresh allocation from reusing a visible version ID; valid retries still ignore unused allocation inputs. Final authorf7b1cb1 changes documentation only. This supersedes the qualified9267733 acceptance. Exact final PR #95/main checks remain before integration acceptance; WEB1 and full SP-01.d remain open."
+      "evidence": "WORLD1 is complete through PR #95/maincaeb58adae55e77187446ac65dc3c85cd98ce37c, matching reviewede42fb87c19a9ffe95edc26c91a9a806e17d1e260/tree648f7775f5ae1b4dc72d72f3833b659fbaf4a977. All four applicable PR CI39391162963 and all five protected-main CI39391431584 jobs passed. The reviewed runtime passed 2,783 tests, 1,201 schema fixtures and configured static/type/security/package checks; current authority, retained-history and allocation repairs were independently accepted. Candidate artifact12249238534 was checksum/provenance/source verified and retained privately. This accepts pure contracts/proposals; live HTTP/database/storage producers remain later work. Research receives WEB1 API/fixture authoring in the existing identity checkout after the lead verifies this handoff; Platform reviews stream/artifact joins, Quality reviews current authority/recovery and lead owns primary integration. The first checkpoint defines bounded events, cursors, immutable snapshot/archive recovery and exact scientific artifact retrieval before runtime predicates. Viewer reads use current browser/service runs:read, including terminal runs, without worker-lease requirements. SP-01.d stays in progress and SP-01.e stays preparation-only until WEB1 is accepted."
     },
     {
       "id": "SP-01.e",
@@ -10922,7 +10922,7 @@
     },
     "checkout_ownership": {
       "scientific": "Project lead owns primary progress/integration; reviewers use immutable source.",
-      "identity": "Research released clean WORLD1 authorf7b1cb1. Project lead owns integration and the retained identity checkout pending an explicit WEB1 author handoff; all engineer preparation is read-only. Existing independent environment and checkout will be reused.",
+      "identity": "Clean WORLD1 author released; Project lead retains identity for immediate Research WEB1 handoff after this completion record is reviewed. Existing independent environment and unchanged pins are reused.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11524,32 +11524,39 @@
     },
     "web_contract_preparation": {
       "owner": "Engineer Research",
-      "status": "world1_final_integration",
+      "status": "world1_complete_web1_ready_for_handoff",
       "task": "SP-01.d",
       "depends_on": [
         "SP-01.b",
         "SP-01.c"
       ],
-      "scope": "Accepted WORLD1 API precedes bounded runtime and independent review; WEB1 follows separately and SP-01.e waits complete SP-01.d.",
+      "scope": "WORLD1 integrated; WEB1 API/fixture authoring next, with review before runtime. SP-01.e waits full SP-01.d.",
       "issue": 94,
       "pr_units": [
         {
           "id": "WORLD1",
-          "status": "reviewed_pending_final_ci",
+          "status": "complete",
           "scope": "Immutable world/version, safe and granted views, browser-only capability and exact run selection.",
           "api_source": "fd6bac2d76b1cf83f5935bb214d0cb13802af13d",
           "api_tree": "f27d83fe78debc42ee8bd41485b5b7339ce99003",
           "runtime_source": "2b882fe3d26879cd7fc1abe7ca623833aef52372",
           "author_head": "f7b1cb1a94d589b4b70ad5625f60414b1d6a50c8",
-          "pull_request": 95
+          "pull_request": 95,
+          "merge_commit": "caeb58adae55e77187446ac65dc3c85cd98ce37c",
+          "reviewed_head": "e42fb87c19a9ffe95edc26c91a9a806e17d1e260"
         },
         {
           "id": "WEB1",
-          "status": "prepared",
+          "status": "ready_for_handoff",
           "depends_on": [
             "WORLD1"
           ],
-          "scope": "Bounded stream/snapshot/cursor/archive/artifact retrieval and recovery."
+          "scope": "Bounded stream/snapshot/cursor/archive/artifact retrieval and recovery.",
+          "owner": "Engineer Research",
+          "reviewers": [
+            "Platform",
+            "Quality"
+          ]
         }
       ],
       "starting_commit": "c74975b730cb020b23e338ff466a52d9282c7177",
@@ -11630,7 +11637,7 @@
       "world1_runtime_evidence": {
         "source": "2b882fe3d26879cd7fc1abe7ca623833aef52372",
         "tree": "bd387b6bbf4f86a8a8f70617d65a10ec8f607b5f",
-        "status": "accepted_pending_exact_final_ci",
+        "status": "complete",
         "author_head": "f7b1cb1a94d589b4b70ad5625f60414b1d6a50c8",
         "author_tree": "364c3d6e906334e58b7e920d6a1bb15666bda1b4",
         "full_tests": 2783,
@@ -11679,7 +11686,16 @@
           "Reject a new version ID already visible in the current head records, after exact replay and expected-head checks.",
           "Retain chronology, canonical identity, irreversible revocation and minimum renewal-expiry growth checks."
         ],
-        "boundary": "Pure trusted-projection contracts/proposals; no live HTTP/SQL/storage/UI or full-history authenticity proof. Known-ID checks do not replace global producer uniqueness. Overlapping review suites are not summed. Exact PR/main acceptance remains required."
+        "boundary": "Reviewed pure contracts/proposals with exact PR/main acceptance. No live HTTP/SQL/storage/UI or full-history authenticity proof; global uniqueness and current reads remain producer obligations. Overlapping suites are not summed.",
+        "reviewed_head": "e42fb87c19a9ffe95edc26c91a9a806e17d1e260",
+        "merge_commit": "caeb58adae55e77187446ac65dc3c85cd98ce37c",
+        "reviewed_tree": "648f7775f5ae1b4dc72d72f3833b659fbaf4a977",
+        "merge_tree": "648f7775f5ae1b4dc72d72f3833b659fbaf4a977",
+        "pr_ci": 39391162963,
+        "main_ci": 39391431584,
+        "integration_index_sha256": "4c1a7aa966163ffc29aabc28afbae8f8e31102eb339e0e227a35cd5d97c1b72b",
+        "candidate_artifact_id": 12249238534,
+        "candidate_sha256": "63d0c22f58ea89f7a538ea147e9b911236790e2f820894afdce37b34fae1b5ca"
       },
       "world1_runtime_history": [
         {
@@ -11745,6 +11761,40 @@
       "task": "SP-01.e",
       "scope": "VAL1 shared public contract fixtures, CLIENT1 separately locked TypeScript/Ajv contract harness, MOCK1 bounded HTTP/SSE fixtures; no install, generation or freeze before actual leaf prerequisites.",
       "compatibility_requirements": "Cross-language fixtures must cover Unicode/defaults, float formatting boundaries, signed zero, uint64 decimal strings and opaque JSON numeric identity. Raw artifact SHA verification uses original bytes; typed SCI recomputation must match the frozen profile rather than ordinary JavaScript serialization."
+    },
+    "local_comparison_prerequisite_review": {
+      "status": "planning_decision_pending_no_runtime_authorization",
+      "source": "dc212461b8b5cdf68e1b724130f244de5c01603f",
+      "reviewers": [
+        "Research",
+        "Quality"
+      ],
+      "closure_nodes": 29,
+      "accepted": 14,
+      "unfinished": 15,
+      "unfinished_baseline": [
+        "SP-03.c",
+        "SP-04.c",
+        "SP-04.d",
+        "SP-05.a",
+        "SP-05.b",
+        "SP-19.a"
+      ],
+      "unfinished_ra": [
+        "RA-01",
+        "RA-02",
+        "RA-03",
+        "RA-03.b",
+        "RA-05",
+        "RA-06",
+        "RA-07",
+        "RA-07.b"
+      ],
+      "pending_gate": "RA_EXEC",
+      "no_hosted_dependency": true,
+      "finding": "Research and Quality independently audited the planned36-episode local comparison. Its29-node prerequisite closure contains14 accepted nodes and15 unfinished nodes: eight RA tasks, six baseline tasks and pendingRA_EXEC. It has no WEB1, hosted deployment or provider prerequisite. However, native LinearSpringModel selection still depends transitively on symbolic execution and all-family calibration/sparse/bootstrap work. Preserve this graph now; the recommended planning decision is a separately reviewed native-only belief/calibration and fixed-menu/acquisition path using accepted spring fitting/prediction/scoring, with source/license provenance, manifest/cost, arm isolation and discrepancy-scale safeguards retained. This proposal does not approve RA_EXEC or complete the broader tasks.",
+      "next_task": "Next executable scientific preparation: Research owns the native-versus-rich prerequisite proposal and fixed manifest/oracle design; Quality reviews isolation/calibration/accounting and Platform reviews provenance. After explicit RA_EXEC acceptance, the first RA implementation is RA-01 (Research + Platform): dated source/license/recipe go/no-go evidence. SP-03.c and SP-19.a are dependency-ready baseline tasks but need separate assignment outside the completed bounded I1 slice. Any authorized comparison must first freeze pool/priors/likelihood, common calibration and candidate menu, six world identities, two seeds, budget/failure policy, discrepancy scale and sensitivity, disjoint scoring probes and complete output records. Retain36 episodes,12 slots including4 common calibrations,432 maximum slots,8 CPU-core-hours,1GiB new artifacts, existing machine and zero network/provider/provisioning; incomplete outcomes stay visible, with no population/adaptation/official-score claim.",
+      "graph_unchanged": true
     }
   },
   "research_amendment": {
