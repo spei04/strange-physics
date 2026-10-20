@@ -14,8 +14,10 @@ from strange_physics.world_contracts import (
     WORLD_MODELS,
     BrowserWorldDefinition,
     WorldActorAncestry,
+    WorldExpiredMutation,
     WorldMutationScope,
     WorldPolicy,
+    WorldVersionCommit,
     WorldVersionRecord,
     WorldVersionView,
 )
@@ -85,6 +87,7 @@ class PreviewGrantRecord(Message):
             )
             or not self.created_at <= self.updated_at
             or self.expires_at <= self.created_at
+            or (self.revoked_at is None and self.updated_at >= self.expires_at)
             or (self.revoked_at is not None and self.revoked_at != self.updated_at)
             or (
                 self.revision == 1
@@ -119,6 +122,7 @@ class PreviewGrantView(Message):
         if (
             self.created_at > self.updated_at
             or self.expires_at <= self.created_at
+            or (self.revoked_at is None and self.updated_at >= self.expires_at)
             or (self.revoked_at is not None and self.revoked_at != self.updated_at)
             or (
                 self.revision == 1
@@ -166,7 +170,7 @@ class GrantedWorldDefinition(Message):
 
     @model_validator(mode="after")
     def same_public_space(self) -> Self:
-        if self.version.space != self.definition.space:
+        if message_sha256(self.version.space) != message_sha256(self.definition.space):
             raise ValueError("Granted definition must match its safe public space")
         return self
 
@@ -186,6 +190,7 @@ class PreviewMutationCommit(Message):
     after: PreviewGrantRecord
     result: PreviewGrantView
     committed_at: Count
+    receipt_expires_at: Count
 
     @model_validator(mode="after")
     def closure(self) -> Self:
@@ -193,6 +198,7 @@ class PreviewMutationCommit(Message):
         view = self.version.view
         if (
             self.scope.operation != request.operation
+            or self.receipt_expires_at != self.committed_at + self.policy.receipt_retention_seconds
             or self.request_sha256 != message_sha256(request)
             or self.version.classification != "customer_authored"
             or (new.workspace_id, new.world_id, new.version_id)
@@ -202,7 +208,7 @@ class PreviewMutationCommit(Message):
             or self.actor.workspace_id != view.workspace_id
             or new.updated_by != self.actor
             or new.updated_at != self.committed_at
-            or view.created_at > self.committed_at
+            or view.created_at > new.created_at
             or new.decision_policy_sha256 != message_sha256(self.policy)
             or self.result != preview_metadata(new)
         ):
@@ -244,6 +250,7 @@ class PreviewMutationCommit(Message):
         if request.operation == "revoke_preview":
             if (
                 old is None
+                or self.recipient_at_commit is not None
                 or new.expires_at != old.expires_at
                 or new.revoked_at != self.committed_at
             ):
@@ -288,6 +295,7 @@ class PreviewGrantLookup(Message):
 
     scope: WorldMutationScope
     receipt: PreviewMutationCommit | None
+    expired: WorldExpiredMutation | None
     grant: PreviewGrantRecord | None
     latest_commit: PreviewMutationCommit | None
 
@@ -295,6 +303,32 @@ class PreviewGrantLookup(Message):
     def operation(self) -> Self:
         if self.scope.operation == "create_version":
             raise ValueError("Preview lookup requires a preview mutation")
+        return self
+
+
+class WorldReceiptExpiration(Message):
+    """Original full receipt to exact tombstone proposal; no cleanup or deletion authorization."""
+
+    receipt: WorldVersionCommit | PreviewMutationCommit
+    expired: WorldExpiredMutation
+    observed_at: Count
+
+    @model_validator(mode="after")
+    def original_receipt(self) -> Self:
+        old, new = self.receipt, self.expired
+        version = old.version
+        if (
+            new.scope != old.scope
+            or new.request_sha256 != old.request_sha256
+            or new.receipt_id != old.receipt_id
+            or new.allocated_world_id != version.view.world_id
+            or new.policy_sha256 != message_sha256(old.policy)
+            or new.retention_seconds != old.policy.receipt_retention_seconds
+            or new.committed_at != old.committed_at
+            or new.expires_at != old.receipt_expires_at
+            or self.observed_at < new.expires_at
+        ):
+            raise ValueError("Expiration must preserve the exact original committed receipt")
         return self
 
 
@@ -309,6 +343,7 @@ PREVIEW_MODELS: tuple[type[Message], ...] = (
     GrantedWorldDefinition,
     PreviewMutationCommit,
     PreviewGrantLookup,
+    WorldReceiptExpiration,
 )
 AUTHOR_INPUT_MODELS = ("CreateWorldVersionRequest",)
 GRANTED_OUTPUT_MODELS = ("GrantedWorldDefinition",)
@@ -328,13 +363,13 @@ def world_json_schema() -> JsonSchemaValue:
         "WorldHead",
         "WorldPage",
         "WorldVersionResult",
-        "PreviewGrantView",
-        "PreviewGrantPage",
     ]
+    schema["x-management-output-models"] = ["PreviewGrantView", "PreviewGrantPage"]
     schema["x-author-input-models"] = list(AUTHOR_INPUT_MODELS)
     schema["x-granted-definition-models"] = list(GRANTED_OUTPUT_MODELS)
     schema["x-public-models"] = [
         *schema["x-agent-safe-models"],
+        *schema["x-management-output-models"],
         *AUTHOR_INPUT_MODELS,
         *GRANTED_OUTPUT_MODELS,
         "IssuePreviewRequest",

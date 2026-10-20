@@ -1583,6 +1583,16 @@
       "additionalProperties": false,
       "description": "Scoped partial persistence evidence; runtime must reject missing/inconsistent closure.",
       "properties": {
+        "expired": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldExpiredMutation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "grant": {
           "anyOf": [
             {
@@ -1620,6 +1630,7 @@
       "required": [
         "scope",
         "receipt",
+        "expired",
         "grant",
         "latest_commit"
       ],
@@ -1902,6 +1913,12 @@
         "policy": {
           "$ref": "#/$defs/WorldPolicy"
         },
+        "receipt_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Receipt Expires At",
+          "type": "integer"
+        },
         "receipt_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -1971,7 +1988,8 @@
         "before",
         "after",
         "result",
-        "committed_at"
+        "committed_at",
+        "receipt_expires_at"
       ],
       "title": "PreviewMutationCommit",
       "type": "object"
@@ -3000,6 +3018,75 @@
       "title": "WorldDefinition",
       "type": "object"
     },
+    "WorldExpiredMutation": {
+      "additionalProperties": false,
+      "description": "Private uniqueness tombstone for the retained namespace lifetime, not deletion authority.",
+      "properties": {
+        "allocated_world_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Allocated World Id",
+          "type": "string"
+        },
+        "committed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Committed At",
+          "type": "integer"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "receipt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Receipt Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "retention_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Retention Seconds",
+          "type": "integer"
+        },
+        "scope": {
+          "$ref": "#/$defs/WorldMutationScope"
+        }
+      },
+      "required": [
+        "scope",
+        "request_sha256",
+        "receipt_id",
+        "allocated_world_id",
+        "policy_sha256",
+        "retention_seconds",
+        "committed_at",
+        "expires_at"
+      ],
+      "title": "WorldExpiredMutation",
+      "type": "object"
+    },
     "WorldHead": {
       "additionalProperties": false,
       "properties": {
@@ -3225,6 +3312,39 @@
       "title": "WorldPolicy",
       "type": "object"
     },
+    "WorldReceiptExpiration": {
+      "additionalProperties": false,
+      "description": "Original full receipt to exact tombstone proposal; no cleanup or deletion authorization.",
+      "properties": {
+        "expired": {
+          "$ref": "#/$defs/WorldExpiredMutation"
+        },
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
+        },
+        "receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldVersionCommit"
+            },
+            {
+              "$ref": "#/$defs/PreviewMutationCommit"
+            }
+          ],
+          "title": "Receipt"
+        }
+      },
+      "required": [
+        "receipt",
+        "expired",
+        "observed_at"
+      ],
+      "title": "WorldReceiptExpiration",
+      "type": "object"
+    },
     "WorldRunSelection": {
       "additionalProperties": false,
       "description": "Retained exact selection; later catalog withdrawal does not rewrite an admitted run.",
@@ -3301,12 +3421,21 @@
             }
           ]
         },
+        "policy": {
+          "$ref": "#/$defs/WorldPolicy"
+        },
         "policy_sha256": {
           "maxLength": 64,
           "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Policy Sha256",
           "type": "string"
+        },
+        "receipt_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Receipt Expires At",
+          "type": "integer"
         },
         "receipt_id": {
           "not": {
@@ -3345,8 +3474,10 @@
         "before",
         "version",
         "result",
+        "policy",
         "policy_sha256",
-        "committed_at"
+        "committed_at",
+        "receipt_expires_at"
       ],
       "title": "WorldVersionCommit",
       "type": "object"
@@ -3369,6 +3500,16 @@
           "anyOf": [
             {
               "$ref": "#/$defs/WorldHead"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expired": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorldExpiredMutation"
             },
             {
               "type": "null"
@@ -3402,6 +3543,7 @@
       "required": [
         "scope",
         "receipt",
+        "expired",
         "target",
         "current_head",
         "current_commit"
@@ -3551,9 +3693,7 @@
     "WorldVersionView",
     "WorldHead",
     "WorldPage",
-    "WorldVersionResult",
-    "PreviewGrantView",
-    "PreviewGrantPage"
+    "WorldVersionResult"
   ],
   "x-author-input-models": [
     "CreateWorldVersionRequest"
@@ -3561,6 +3701,10 @@
   "x-contract-status": "WORLD1 typed API review; authorization/persistence predicates pending",
   "x-granted-definition-models": [
     "GrantedWorldDefinition"
+  ],
+  "x-management-output-models": [
+    "PreviewGrantView",
+    "PreviewGrantPage"
   ],
   "x-public-models": [
     "WorldVersionView",

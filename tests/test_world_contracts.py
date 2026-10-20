@@ -128,6 +128,7 @@ def second_version() -> dict[str, Any]:
         },
     }
     new["committed_at"] = 901
+    new["receipt_expires_at"] = 4501
     return new
 
 
@@ -213,6 +214,9 @@ def synchronize_preview(value: dict[str, Any]) -> None:
         request_models[value["request"]["operation"]].model_validate_json(
             json.dumps(value["request"])
         )
+    )
+    value["receipt_expires_at"] = (
+        value["committed_at"] + value["policy"]["receipt_retention_seconds"]
     )
     new = p.PreviewGrantRecord.model_validate(value["after"])
     value["result"] = p.preview_metadata(new).model_dump(mode="json")
@@ -449,3 +453,282 @@ def test_page_limits_and_duplicates() -> None:
         value["items"] *= 65
         with pytest.raises(ValidationError):
             parse(name, value)
+
+
+def canonical_fixture(name: str, sign: float) -> dict[str, Any]:
+    value = fixture(name)
+
+    def change_positions(obj: Any) -> None:
+        if isinstance(obj, dict):
+            for key, child in obj.items():
+                if key == "position" and isinstance(child, list) and child[0] == 0.0:
+                    child[0] = sign
+                else:
+                    change_positions(child)
+        elif isinstance(obj, list):
+            for child in obj:
+                change_positions(child)
+
+    change_positions(value)
+    record = (
+        value
+        if name == "WorldVersionRecord"
+        else value.get("version")
+        if name != "GrantedWorldDefinition"
+        else None
+    )
+    if record is not None:
+        core = WorldDefinition.model_validate_json(json.dumps(record["definition"]))
+        record["definition_sha256"] = message_sha256(core)
+    if name == "WorldVersionCommit":
+        value["request_sha256"] = message_sha256(
+            w.CreateWorldVersionRequest.model_validate_json(json.dumps(value["request"]))
+        )
+    elif name == "WorldRunSelection":
+        version = w.WorldVersionRecord.model_validate_json(json.dumps(value["version"]))
+        value["catalog"]["definition_sha256"] = version.definition_sha256
+        value["catalog"]["space_sha256"] = message_sha256(version.view.space)
+    return value
+
+
+@pytest.mark.parametrize("sign", [0.0, -0.0])
+@pytest.mark.parametrize(
+    ("name", "point"),
+    [
+        ("WorldVersionRecord", "view"),
+        ("WorldVersionCommit", "request"),
+        ("WorldVersionCommit", "result"),
+        ("GrantedWorldDefinition", "version"),
+        ("WorldRunSelection", "admission"),
+        ("WorldRunSelection", "stored_result"),
+    ],
+)
+def test_canonical_identity_preserves_signed_zero(name: str, point: str, sign: float) -> None:
+    value = canonical_fixture(name, sign)
+    parse(name, value)  # Equal canonical identities are valid with either sign.
+    if point == "request":
+        space = value["request"]["definition"]["space"]
+    elif point == "result":
+        space = value["result"]["version"]["space"]
+    elif point == "admission":
+        space = value["admission"]["admitted_run"]["space"]
+        retained_space = value["admission"]["stored_request"]["operation"]["result"]["value"][
+            "space"
+        ]
+        retained_space["structure"]["anchors"][0]["position"][0] = -sign
+    elif point == "stored_result":
+        space = value["admission"]["stored_request"]["operation"]["result"]["value"]["space"]
+    else:
+        space = value[point]["space"]
+    space["structure"]["anchors"][0]["position"][0] = -sign
+    if point == "request":
+        value["request_sha256"] = message_sha256(
+            w.CreateWorldVersionRequest.model_validate_json(json.dumps(value["request"]))
+        )
+    with pytest.raises(ValidationError):
+        parse(name, value)
+
+
+@pytest.mark.parametrize("observed_at", [899, 900, 901])
+def test_catalog_observation_cannot_precede_its_version(observed_at: int) -> None:
+    value = fixture("WorldRunSelection")
+    value["catalog"]["observed_at"] = observed_at
+    if observed_at < value["version"]["view"]["created_at"]:
+        with pytest.raises(ValidationError):
+            parse("WorldRunSelection", value)
+    else:
+        parse("WorldRunSelection", value)
+
+
+@pytest.mark.parametrize("created_at", [899, 900, 901])
+def test_retained_grant_issuance_cannot_precede_version(created_at: int) -> None:
+    value = preview_commit()
+    value["before"].update(created_at=created_at, updated_at=created_at)
+    value["after"]["created_at"] = created_at
+    synchronize_preview(value)
+    if created_at < value["version"]["view"]["created_at"]:
+        with pytest.raises(ValidationError):
+            parse("PreviewMutationCommit", value)
+    else:
+        parse("PreviewMutationCommit", value)
+
+
+@pytest.mark.parametrize("model", ["PreviewGrantRecord", "PreviewGrantView"])
+@pytest.mark.parametrize("updated_at", [1099, 1100, 1101])
+def test_unrevoked_lifecycle_update_precedes_expiry(model: str, updated_at: int) -> None:
+    value = fixture(model)
+    value.update(revision=2, updated_at=updated_at)
+    if updated_at < value["expires_at"]:
+        parse(model, value)
+    else:
+        with pytest.raises(ValidationError):
+            parse(model, value)
+
+
+def test_revocation_after_expiry_remains_valid() -> None:
+    value = preview_commit("revocation_commit")
+    value["committed_at"] = 2000
+    value["after"].update(updated_at=2000, revoked_at=2000)
+    synchronize_preview(value)
+    parsed = p.PreviewMutationCommit.model_validate_json(json.dumps(value))
+    assert parsed.after.revoked_at is not None
+    assert parsed.after.revoked_at > parsed.after.expires_at
+
+
+@pytest.mark.parametrize(
+    "field", ["receipt_id", "request_sha256", "allocated_world_id", "policy_sha256"]
+)
+def test_expiration_is_bound_to_original_receipt(field: str) -> None:
+    value = fixture("WorldReceiptExpiration")
+    value["expired"][field] = "f" * 64 if field.endswith("sha256") else "different"
+    with pytest.raises(ValidationError):
+        parse("WorldReceiptExpiration", value)
+
+
+@pytest.mark.parametrize("change", ["policy", "interval", "too_early", "key"])
+def test_expiration_cannot_rewrite_original_retention(change: str) -> None:
+    value = fixture("WorldReceiptExpiration")
+    if change == "policy":
+        value["expired"]["policy_sha256"] = "f" * 64
+    elif change == "interval":
+        value["expired"]["retention_seconds"] -= 1
+        value["expired"]["expires_at"] -= 1
+    elif change == "too_early":
+        value["observed_at"] -= 1
+    else:
+        value["expired"]["scope"]["key"] = "another-key"
+    with pytest.raises(ValidationError):
+        parse("WorldReceiptExpiration", value)
+
+
+def test_preview_receipt_expiration_preserves_original_policy_and_world() -> None:
+    old = p.PreviewMutationCommit.model_validate_json(
+        json.dumps(FIXTURES["valid"]["PreviewMutationCommit"])
+    )
+    expired = w.WorldExpiredMutation(
+        scope=old.scope,
+        request_sha256=old.request_sha256,
+        receipt_id=old.receipt_id,
+        allocated_world_id=old.version.view.world_id,
+        policy_sha256=message_sha256(old.policy),
+        retention_seconds=old.policy.receipt_retention_seconds,
+        committed_at=old.committed_at,
+        expires_at=old.receipt_expires_at,
+    )
+    transition = p.WorldReceiptExpiration(
+        receipt=old, expired=expired, observed_at=expired.expires_at
+    )
+    assert transition.expired.scope.world_id == old.version.view.world_id
+    # This shape proposal does not execute purge or authorize metadata retrieval.
+    assert transition.receipt.receipt_id == old.receipt_id
+
+
+@pytest.mark.parametrize("model", ["WorldVersionCommit", "PreviewMutationCommit"])
+def test_original_receipt_captures_exact_expiry(model: str) -> None:
+    value = fixture(model)
+    value["receipt_expires_at"] -= 1
+    with pytest.raises(ValidationError):
+        parse(model, value)
+
+
+def test_receipt_and_tombstone_partial_combinations_remain_visible() -> None:
+    value = fixture("WorldVersionLookup")
+    value["expired"] = fixture("WorldExpiredMutation")
+    both = parse("WorldVersionLookup", value)
+    assert isinstance(both, w.WorldVersionLookup)
+    assert both.receipt is not None and both.expired is not None
+    # The later runtime must report recovery-required for both, never normalize it.
+    value.update(receipt=None, target=None, current_head=None, current_commit=None)
+    expired = parse("WorldVersionLookup", value)
+    assert isinstance(expired, w.WorldVersionLookup)
+    assert expired.expired is not None and expired.scope.world_id is None
+
+
+def test_world_http_routes_have_explicit_browser_only_boundaries() -> None:
+    api = json.loads((ROOT / "contracts/world.openapi.json").read_text())
+    capabilities = {"worlds:read", "worlds:write", "worlds:preview", "worlds:preview-grants:manage"}
+    operations = [op for path in api["paths"].values() for op in path.values()]
+    assert len(operations) == 12
+    assert len({op["operationId"] for op in operations}) == len(operations)
+    for routes in api["paths"].values():
+        for method, op in routes.items():
+            assert op["x-world-capability"] in capabilities
+            assert op["x-current-authorization-before-lookup"] is True
+            assert op["x-implemented"] is False
+            mutation = method == "post"
+            assert op["security"] == [
+                {"sessionCookie": [], "csrfHeader": []} if mutation else {"sessionCookie": []}
+            ]
+            expected_freshness = mutation and op["x-world-capability"].endswith(":manage")
+            assert op["x-recent-authentication"] == expected_freshness
+            assert ("X-Authentication-Action" in op["responses"]["401"].get("headers", {})) == (
+                expected_freshness
+            )
+            assert all(param["required"] for param in op["parameters"] if param["in"] == "path")
+            result_ref = op["responses"]["200"]["content"]["application/json"]["schema"]["$ref"]
+            if op["operationId"] == "readGrantedWorldDefinition":
+                assert result_ref.endswith("/GrantedWorldDefinition")
+                assert any(
+                    param["name"] == "grant_id" and param["required"] for param in op["parameters"]
+                )
+            else:
+                assert result_ref.rsplit("/", 1)[-1] in (
+                    p.world_json_schema()["x-agent-safe-models"]
+                    + p.world_json_schema()["x-management-output-models"]
+                )
+            if mutation:
+                assert any(
+                    param["name"] == "Idempotency-Key" and param["required"]
+                    for param in op["parameters"]
+                )
+
+
+def test_route_schemas_distinguish_initial_create_from_append() -> None:
+    api = json.loads((ROOT / "contracts/world.openapi.json").read_text())
+    initial = api["components"]["schemas"]["InitialWorldRequest"]["allOf"][1]["properties"]
+    append = api["components"]["schemas"]["AppendWorldRequest"]["allOf"][1]["properties"]
+    assert initial["expected_head_revision"] == {"type": "integer", "const": 0}
+    assert initial["expected_version_id"] == {"type": "null"}
+    assert append["expected_head_revision"]["minimum"] == 1
+    assert append["expected_version_id"]["type"] == "string"
+
+
+def test_revoke_does_not_retain_an_unbound_recipient_snapshot() -> None:
+    value = preview_commit("revocation_commit")
+    value["recipient_at_commit"] = fixture("PreviewMutationCommit")["recipient_at_commit"]
+    with pytest.raises(ValidationError):
+        parse("PreviewMutationCommit", value)
+
+
+def test_owner_management_output_is_not_an_agent_stream_root() -> None:
+    schema = p.world_json_schema()
+    assert schema["x-management-output-models"] == ["PreviewGrantView", "PreviewGrantPage"]
+    assert not set(schema["x-management-output-models"]) & set(schema["x-agent-safe-models"])
+    assert set(schema["x-management-output-models"]) <= set(schema["x-public-models"])
+
+
+def test_service_run_selection_does_not_require_browser_world_authority() -> None:
+    value = fixture("WorldRunSelection")
+    ownership = value["admission"]["ownership"]
+    ownership.update(
+        principal_kind="service",
+        principal_id="service-principal",
+        created_by_credential_id="service-key",
+    )
+    value["admission"]["stored_request"]["scope"]["principal_id"] = "service-principal"
+    selection = w.WorldRunSelection.model_validate_json(json.dumps(value))
+    assert selection.admission.ownership.principal_kind == "service"
+    assert selection.version.author.principal_id != selection.admission.ownership.principal_id
+
+
+def test_opaque_version_id_is_unique_even_across_worlds_in_a_page() -> None:
+    value = fixture("WorldPage")
+    second = copy.deepcopy(value["items"][0])
+    second["world_id"] = "another-world"
+    value["items"].append(second)
+    with pytest.raises(ValidationError):
+        parse("WorldPage", value)
+    second["version_id"] = "distinct-version"
+    page = w.WorldPage.model_validate_json(json.dumps(value))
+    assert len(page.items) == 2
+    assert len({item.world_id for item in page.items}) == 2

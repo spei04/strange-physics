@@ -139,6 +139,7 @@
       "preview_ttl_seconds": 900,
       "receipt_retention_seconds": 3600
     },
+    "receipt_expires_at": 4610,
     "receipt_id": "grant-receipt-2",
     "recipient_at_commit": {
       "grant": {
@@ -384,6 +385,7 @@
       "preview_ttl_seconds": 900,
       "receipt_retention_seconds": 3600
     },
+    "receipt_expires_at": 4620,
     "receipt_id": "grant-receipt-3",
     "recipient_at_commit": null,
     "request": {
@@ -899,6 +901,7 @@
       "version_id": "world-version-1"
     },
     "PreviewGrantLookup": {
+      "expired": null,
       "grant": {
         "created_at": 1000,
         "decision_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
@@ -1021,6 +1024,7 @@
           "preview_ttl_seconds": 900,
           "receipt_retention_seconds": 3600
         },
+        "receipt_expires_at": 4620,
         "receipt_id": "grant-receipt-3",
         "recipient_at_commit": null,
         "request": {
@@ -1216,6 +1220,7 @@
           "preview_ttl_seconds": 900,
           "receipt_retention_seconds": 3600
         },
+        "receipt_expires_at": 4600,
         "receipt_id": "grant-receipt-1",
         "recipient_at_commit": {
           "grant": {
@@ -1499,6 +1504,7 @@
         "preview_ttl_seconds": 900,
         "receipt_retention_seconds": 3600
       },
+      "receipt_expires_at": 4600,
       "receipt_id": "grant-receipt-1",
       "recipient_at_commit": {
         "grant": {
@@ -1796,6 +1802,22 @@
       "workspace_id": "workspace-1",
       "world_id": "world-1"
     },
+    "WorldExpiredMutation": {
+      "allocated_world_id": "world-1",
+      "committed_at": 900,
+      "expires_at": 4500,
+      "policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "receipt_id": "world-receipt-1",
+      "request_sha256": "26b20d3f0a2334b88ecdf3e328126ef750688041e34edde2bcce4a605284cf24",
+      "retention_seconds": 3600,
+      "scope": {
+        "key": "synthetic-world",
+        "operation": "create_version",
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1",
+        "world_id": null
+      }
+    },
     "WorldHead": {
       "changed_at": 900,
       "revision": 1,
@@ -1876,6 +1898,278 @@
       ],
       "preview_ttl_seconds": 900,
       "receipt_retention_seconds": 3600
+    },
+    "WorldReceiptExpiration": {
+      "expired": {
+        "allocated_world_id": "world-1",
+        "committed_at": 900,
+        "expires_at": 4500,
+        "policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+        "receipt_id": "world-receipt-1",
+        "request_sha256": "26b20d3f0a2334b88ecdf3e328126ef750688041e34edde2bcce4a605284cf24",
+        "retention_seconds": 3600,
+        "scope": {
+          "key": "synthetic-world",
+          "operation": "create_version",
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1",
+          "world_id": null
+        }
+      },
+      "observed_at": 4500,
+      "receipt": {
+        "before": null,
+        "committed_at": 900,
+        "parent": null,
+        "policy": {
+          "max_definition_bytes": 65536,
+          "max_metadata_bytes": 4194304,
+          "max_page_bytes": 1048576,
+          "max_page_items": 128,
+          "policy_id": "synthetic-world-policy",
+          "preview_reader_roles": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "preview_ttl_seconds": 900,
+          "receipt_retention_seconds": 3600
+        },
+        "policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+        "receipt_expires_at": 4500,
+        "receipt_id": "world-receipt-1",
+        "request": {
+          "definition": {
+            "change_after": null,
+            "changed_law": null,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.5
+              }
+            },
+            "noise_seed": "18446744073709551615",
+            "schema_version": "strange-physics.browser-world.v1",
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            }
+          },
+          "expected_head_revision": 0,
+          "expected_version_id": null,
+          "title": "Synthetic world"
+        },
+        "request_sha256": "26b20d3f0a2334b88ecdf3e328126ef750688041e34edde2bcce4a605284cf24",
+        "result": {
+          "head": {
+            "changed_at": 900,
+            "revision": 1,
+            "version_id": "world-version-1",
+            "workspace_id": "workspace-1",
+            "world_id": "world-1"
+          },
+          "version": {
+            "created_at": 900,
+            "parent_version_id": null,
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            },
+            "title": "Synthetic world",
+            "version_id": "world-version-1",
+            "version_number": 1,
+            "workspace_id": "workspace-1",
+            "world_id": "world-1"
+          }
+        },
+        "scope": {
+          "key": "synthetic-world",
+          "operation": "create_version",
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1",
+          "world_id": null
+        },
+        "version": {
+          "author": {
+            "grant_incarnation": 0,
+            "membership_revision": 0,
+            "principal_generation": 0,
+            "principal_id": "principal-1",
+            "workspace_id": "workspace-1"
+          },
+          "classification": "customer_authored",
+          "definition": {
+            "change_after": null,
+            "changed_law": null,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.5
+              }
+            },
+            "noise_seed": 18446744073709551615,
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            }
+          },
+          "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+          "view": {
+            "created_at": 900,
+            "parent_version_id": null,
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            },
+            "title": "Synthetic world",
+            "version_id": "world-version-1",
+            "version_number": 1,
+            "workspace_id": "workspace-1",
+            "world_id": "world-1"
+          }
+        }
+      }
     },
     "WorldRunSelection": {
       "admission": {
@@ -2168,7 +2462,22 @@
       "before": null,
       "committed_at": 900,
       "parent": null,
+      "policy": {
+        "max_definition_bytes": 65536,
+        "max_metadata_bytes": 4194304,
+        "max_page_bytes": 1048576,
+        "max_page_items": 128,
+        "policy_id": "synthetic-world-policy",
+        "preview_reader_roles": [
+          "owner",
+          "researcher",
+          "viewer"
+        ],
+        "preview_ttl_seconds": 900,
+        "receipt_retention_seconds": 3600
+      },
       "policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "receipt_expires_at": 4500,
       "receipt_id": "world-receipt-1",
       "request": {
         "definition": {
@@ -2407,7 +2716,22 @@
         "before": null,
         "committed_at": 900,
         "parent": null,
+        "policy": {
+          "max_definition_bytes": 65536,
+          "max_metadata_bytes": 4194304,
+          "max_page_bytes": 1048576,
+          "max_page_items": 128,
+          "policy_id": "synthetic-world-policy",
+          "preview_reader_roles": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "preview_ttl_seconds": 900,
+          "receipt_retention_seconds": 3600
+        },
         "policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+        "receipt_expires_at": 4500,
         "receipt_id": "world-receipt-1",
         "request": {
           "definition": {
@@ -2648,11 +2972,27 @@
         "workspace_id": "workspace-1",
         "world_id": "world-1"
       },
+      "expired": null,
       "receipt": {
         "before": null,
         "committed_at": 900,
         "parent": null,
+        "policy": {
+          "max_definition_bytes": 65536,
+          "max_metadata_bytes": 4194304,
+          "max_page_bytes": 1048576,
+          "max_page_items": 128,
+          "policy_id": "synthetic-world-policy",
+          "preview_reader_roles": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "preview_ttl_seconds": 900,
+          "receipt_retention_seconds": 3600
+        },
         "policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+        "receipt_expires_at": 4500,
         "receipt_id": "world-receipt-1",
         "request": {
           "definition": {

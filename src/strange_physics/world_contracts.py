@@ -8,7 +8,7 @@ from typing import Annotated, Literal, Self
 from pydantic import AfterValidator, Field, TypeAdapter, model_validator
 
 from strange_physics.contracts import ExperimentSpace, Identifier, Message
-from strange_physics.control_contracts import CreateRunRequest, Role
+from strange_physics.control_contracts import CreateRunRequest, Role, RunView
 from strange_physics.laws import LawSpec, RadialParameters, SpringParameters, VelocityParameters
 from strange_physics.research_contracts import Count, Digest, message_sha256
 from strange_physics.run_credential_contracts import HumanProductAuthority
@@ -246,9 +246,9 @@ class WorldVersionRecord(Message):
         # Validate the supported profile without adding absent parameter defaults.
         adapted = BrowserWorldDefinition.from_core(self.definition)
         if (
-            adapted.to_core() != self.definition
+            message_sha256(adapted.to_core()) != message_sha256(self.definition)
             or self.definition_sha256 != message_sha256(self.definition)
-            or self.view.space != self.definition.space
+            or message_sha256(self.view.space) != message_sha256(self.definition.space)
             or self.author.workspace_id != self.view.workspace_id
         ):
             raise ValueError(
@@ -271,7 +271,7 @@ class WorldPage(Message):
 
     @model_validator(mode="after")
     def unique_items(self) -> Self:
-        ids = tuple((item.workspace_id, item.world_id, item.version_id) for item in self.items)
+        ids = tuple(item.version_id for item in self.items)
         if len(set(ids)) != len(ids) or len({x.workspace_id for x in self.items}) > 1:
             raise ValueError("World page must contain unique versions in one workspace")
         return self
@@ -338,23 +338,28 @@ class WorldVersionCommit(Message):
     before: WorldHead | None
     version: WorldVersionRecord
     result: WorldVersionResult
+    policy: WorldPolicy
     policy_sha256: Digest
     committed_at: Count
+    receipt_expires_at: Count
 
     @model_validator(mode="after")
     def closure(self) -> Self:
         view = self.version.view
         if (
             self.scope.operation != "create_version"
+            or self.policy_sha256 != message_sha256(self.policy)
+            or self.receipt_expires_at != self.committed_at + self.policy.receipt_retention_seconds
             or (self.scope.workspace_id, self.scope.principal_id)
             != (view.workspace_id, self.version.author.principal_id)
             or self.scope.world_id != (None if view.version_number == 1 else view.world_id)
             or self.request_sha256 != message_sha256(self.request)
             or self.version.classification != "customer_authored"
-            or self.version.definition != self.request.definition.to_core()
+            or message_sha256(self.version.definition)
+            != message_sha256(self.request.definition.to_core())
             or view.title != self.request.title
             or view.created_at != self.committed_at
-            or self.result.version != view
+            or message_sha256(self.result.version) != message_sha256(view)
             or view.version_number != self.request.expected_head_revision + 1
             or view.parent_version_id != self.request.expected_version_id
         ):
@@ -385,11 +390,34 @@ class WorldVersionCommit(Message):
         return self
 
 
+class WorldExpiredMutation(Message):
+    """Private uniqueness tombstone for the retained namespace lifetime, not deletion authority."""
+
+    scope: WorldMutationScope
+    request_sha256: Digest
+    receipt_id: Identifier
+    allocated_world_id: Identifier
+    policy_sha256: Digest
+    retention_seconds: Annotated[int, Field(strict=True, ge=1, le=2**31 - 1)]
+    committed_at: Count
+    expires_at: Count
+
+    @model_validator(mode="after")
+    def original_scope_and_time(self) -> Self:
+        if (
+            self.scope.world_id not in (None, self.allocated_world_id)
+            or self.expires_at != self.committed_at + self.retention_seconds
+        ):
+            raise ValueError("Expired key must preserve allocated world and original retention")
+        return self
+
+
 class WorldVersionLookup(Message):
     """Partial states stay representable for later recovery checks, never normalized to absence."""
 
     scope: WorldMutationScope
     receipt: WorldVersionCommit | None
+    expired: WorldExpiredMutation | None
     target: WorldVersionRecord | None
     current_head: WorldHead | None
     current_commit: WorldVersionCommit | None
@@ -428,19 +456,23 @@ class WorldRunSelection(Message):
     def exact_run(self) -> Self:
         view = self.version.view
         request: CreateRunRequest = self.admission.request
+        result = self.admission.stored_request.operation.result
         if (
-            (self.catalog.workspace_id, self.catalog.world_id, self.catalog.version_id)
+            result is None
+            or not isinstance(result.value, RunView)
+            or message_sha256(result.value) != message_sha256(self.admission.admitted_run)
+            or (self.catalog.workspace_id, self.catalog.world_id, self.catalog.version_id)
             != (view.workspace_id, view.world_id, view.version_id)
             or self.catalog.definition_sha256 != self.version.definition_sha256
             or self.catalog.space_sha256 != message_sha256(view.space)
             or not self.catalog.eligible_for_new_runs
-            or self.catalog.observed_at > self.selected_at
+            or not view.created_at <= self.catalog.observed_at <= self.selected_at
             or view.created_at > self.selected_at
             or self.admission.ownership.workspace_id != view.workspace_id
             or self.selected_at != self.admission.ownership.created_at
             or request.world_version_id != view.version_id
             or request.experiment_budget != view.space.budget
-            or self.admission.admitted_run.space != view.space
+            or message_sha256(self.admission.admitted_run.space) != message_sha256(view.space)
             or self.creation_request_sha256 != message_sha256(request)
         ):
             raise ValueError(
@@ -465,6 +497,7 @@ WORLD_MODELS: tuple[type[Message], ...] = (
     WorldMutationScope,
     WorldVersionResult,
     WorldVersionCommit,
+    WorldExpiredMutation,
     WorldVersionLookup,
     WorldCatalogEligibility,
     WorldRunSelection,
