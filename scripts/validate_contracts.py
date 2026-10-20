@@ -266,6 +266,9 @@ def main() -> None:
                 group == "runtime_negative",
             )
 
+    for value in execution["normal_completion"]:
+        check("execution.schema.json#/$defs/WorkerTerminationRequest", value)
+
     for fixture in sessions["workspace_session_failures"]:
         check("control.schema.json#/$defs/Error", fixture["output"])
 

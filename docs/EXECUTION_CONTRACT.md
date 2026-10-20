@@ -185,6 +185,13 @@ authority. It does not require the old worker credential, owner or policy to
 be work-authorized. This distinction must not enable a stale acknowledgement
 to stop a newer launch or mutate the current lease/global run status.
 
+Normal Agent completion and experiment-budget exhaustion use the explicit
+`completed` and `budget_exhausted` reasons, with the same irreversible fence
+and exact-instance reconciliation. The later SP-16 completion/settlement
+producer supplies the reason from its current run evidence; a reason string
+alone establishes neither successful science nor a completed global run.
+Normal exit must not masquerade as operator cancellation.
+
 A termination proposal binds the exact launch and body hash, expected
 per-launch lifecycle revision, irreversible fence, retained termination record
 and exact command outbox. The completion model binds the original request,

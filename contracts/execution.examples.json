@@ -1,5 +1,23 @@
 {
   "description": "Synthetic EXEC1 contract fixtures, not real storage/build/signature/isolation/process evidence.",
+  "normal_completion": [
+    {
+      "expected_lifecycle_revision": 0,
+      "launch_id": "launch-1",
+      "launch_record_sha256": "1818e7dad0f44d30cc8b9a86c2401c46870df0e0746efebc9fe4e54e8174a742",
+      "reason": "completed",
+      "run_id": "run-1",
+      "workspace_id": "workspace-1"
+    },
+    {
+      "expected_lifecycle_revision": 0,
+      "launch_id": "launch-1",
+      "launch_record_sha256": "1818e7dad0f44d30cc8b9a86c2401c46870df0e0746efebc9fe4e54e8174a742",
+      "reason": "budget_exhausted",
+      "run_id": "run-1",
+      "workspace_id": "workspace-1"
+    }
+  ],
   "runtime_negative": [
     {
       "field": "path",

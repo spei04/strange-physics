@@ -374,3 +374,16 @@ def test_package_identity_is_canonical_manifest_not_archive() -> None:
     assert launch.admission.checkpoint_binding.agent_package_sha256 == digest
     assert digest != source.archive.record.ref.sha256
     assert digest != source.manifest_object.record.ref.sha256
+
+
+@pytest.mark.parametrize("body", EXAMPLES["normal_completion"])
+def test_normal_completion_uses_exact_launch_fence(body: dict[str, Any]) -> None:
+    value = fixture("WorkerTerminationPlan")
+    value["termination"]["request"] = body
+    digest = message_sha256(parse(w.WorkerTerminationRequest, body))
+    value["termination"]["request_sha256"] = digest
+    value["outbox"]["request_sha256"] = digest
+    plan = parse(w.WorkerTerminationPlan, value)
+    assert plan.transition.after.state == "fenced"
+    assert plan.transition.after.stop_outcome is None
+    assert plan.termination.request.reason in {"completed", "budget_exhausted"}

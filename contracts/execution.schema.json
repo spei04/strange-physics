@@ -3595,7 +3595,9 @@
             "authority_revoked",
             "policy_lost",
             "deadline",
-            "operator"
+            "operator",
+            "completed",
+            "budget_exhausted"
           ],
           "title": "Reason",
           "type": "string"

@@ -411,7 +411,14 @@ class WorkerTerminationRequest(Message):
     launch_record_sha256: Digest
     expected_lifecycle_revision: Number
     reason: Literal[
-        "cancelled", "lease_lost", "authority_revoked", "policy_lost", "deadline", "operator"
+        "cancelled",
+        "lease_lost",
+        "authority_revoked",
+        "policy_lost",
+        "deadline",
+        "operator",
+        "completed",
+        "budget_exhausted",
     ]
 
 
