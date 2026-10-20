@@ -425,3 +425,45 @@ The WEB schema status now describes reviewed pure contracts/predicates with
 hosted producers pending. This annotation changes no field, wire dialect,
 CORE/SCI/ART/C2 interface, deployment state or authorization policy. Final exact
 source checks and their evidence identity follow separately.
+
+
+### Final author validation evidence
+
+Exact source `f2d1068aaa8ddfc3f65d867121ff9362314670b0` (tree
+`85a23b26cd43a0adb3e2904c87d3713ff1a5d9e3`) passed 3,104 repository tests,
+including 321 WEB cases (179 API, 83 stream/replay, 59 material). Ruff and format
+checks passed over 136 files, full `mypy src tests examples` over 95 files, and
+1,431 external schema fixtures/references. Static security used the exact
+configured command `bandit -r src scripts -ll`. The prior annotation checkpoint
+`00800555` passed the same 3,104 tests but failed a 105-character status line;
+its retained failure was repaired by formatting only, then all final checks
+were rerun on the source identified here.
+
+The offline wheel and source archive match the explicit source allowlist.
+The project wheel was installed without dependencies into a temporary private
+target and exercised using the existing pinned interpreter/dependencies and
+synthetic test fixtures. All 21 imported project modules resolved inside that
+installed target. Actual cursor/event, scientific-body, full-history,
+replay-body and exact-request substitution checks passed. The target was
+removed after verification. This is an installed-project packaging smoke,
+not a newly provisioned isolated runtime or a hosted producer test.
+
+The sealed owner-only author index is
+`/home/serenapei/.local/state/strange-physics-reviews/web1-author/f2d1068-final/index.json`,
+SHA-256 `a5506d5d53a8f27565ad214af15075167fecf6aefb2ae1ff2a5b7ae596a734a2`.
+It binds source/tree, exact commands/statuses, logs, package hashes, pinned
+manifests/runtime versions and temporary-install removal. Reproducible
+private diagnostics have a 2026-11-19 review date; required release evidence
+remains subject to its retention policy. Earlier API/partial/material evidence
+and qualified findings remain separate rather than being relabeled as final.
+
+Independent acceptance scopes overlap and are not an aggregate test count.
+The lead's large scientific-body checks covered a distinct 1,779,612-byte record
+with matching eight-particle run space, exact browser/service slicing and
+midstream revocation. Platform and Quality separately reviewed supplied
+history/capture/request identity, aggregate budgets, authority ordering, strict
+parsing and per-batch checks, including targeted guard mutations. All accepted
+the repaired pure-runtime composition before this final author pass. Exact
+integrated PR/main CI, network dependency auditing and hosted producer/runtime
+readiness remain separate lead-owned gates; this document does not assert they
+have completed for this authored checkpoint.
