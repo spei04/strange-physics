@@ -1365,10 +1365,10 @@
         "security",
         "Backend"
       ],
-      "execution_owner": "Research authors COMP1 API in identity; Platform and Quality independently review immutable checkpoints. Lead owns primary progress/integration. ART1 and EXEC1 are integrated.",
+      "execution_owner": "Research authors COMP1 runtime in identity after accepted API21cb201; Platform and Quality independently review immutable checkpoints. Lead owns primary progress/integration. ART1 and EXEC1 are integrated.",
       "issue": "https://github.com/spei04/strange-physics/issues/89",
       "execution_plan": "ART1 artifact/checkpoint admission and recovery; EXEC1 package quarantine and worker/broker authority; COMP1 predictor/DB composition. Accepted SP-01.b integration precedes source. Three review units preserve the baseline task/effort/gates.",
-      "evidence": "ART1 complete via PR91/main95bdd85. EXEC1 complete via PR92/main750db15810f4a58a4a8d34776cb3708dc310ef5a matching reviewed671f109/tree13894d9c. PRCI39375391014 and all five mainCI39375611645 jobs passed;2281 tests/722 schemas/static/security/package checks. Full SP-01.c freeze still requires COMP1."
+      "evidence": "ART1 complete via PR91/main95bdd85. EXEC1 complete via PR92/main750db15810f4a58a4a8d34776cb3708dc310ef5a matching reviewed671f109/tree13894d9c. PRCI39375391014 and all five mainCI39375611645 jobs passed;2281 tests/722 schemas/static/security/package checks. Full SP-01.c freeze still requires COMP1. COMP1 API21cb201/tree d3e0b341 independently accepted;422 focused/764 schemas/static/type checks. Runtime and full freeze remain pending."
     },
     {
       "id": "SP-01.d",
@@ -11151,7 +11151,7 @@
     },
     "artifact_worker_contracts": {
       "issue": 89,
-      "owner": "Research authors COMP1; Platform/Quality review, project lead coordinates integration.",
+      "owner": "Research authors COMP1 runtime in identity after accepted API21cb201; Platform and Quality independently review immutable checkpoints. Lead owns primary progress/integration. ART1 and EXEC1 are integrated.",
       "reviewers": [
         "Engineer Quality",
         "Engineer Research",
@@ -11190,15 +11190,17 @@
             "ART1",
             "EXEC1"
           ],
-          "preparation": "Early API plan accepted after Research/Platform/Quality review; source starts after this progress handoff is reviewed.",
+          "preparation": "API shapes independently accepted by lead, Platform and Quality after bounded review repairs.",
           "owner": "Engineer Research",
           "reviewers": [
             "Engineer Platform",
             "Engineer Quality",
             "Project lead"
           ],
-          "phase": "Early API authoring in reused identity checkout; independent API review precedes runtime.",
-          "starting_commit": "6933f2faa5a7fa769f2b4812047cfa0eee674276"
+          "phase": "Runtime authoring in reused identity checkout; independent runtime review and exact integration checks required.",
+          "starting_commit": "6933f2faa5a7fa769f2b4812047cfa0eee674276",
+          "api_source": "21cb20146bea3ff42aa15dafe43136ff24ff6081",
+          "api_tree": "d3e0b3417dfc518215e19123a7fb5c185268e420"
         }
       ],
       "decisions": [
@@ -11366,6 +11368,34 @@
         "recovery": "Separate pending/running/failed/cancelled from completed exact StoredRequest/Operation/ModelReceipt/model-record/outbox closure. No latest model pointer.",
         "preserved": "Frozen ModelReceipt/SCI/CORE; valid poor-fit or unsupported-domain learned artifacts; fit_config digest remains provenance, not fitter authenticity.",
         "excluded": "No custom predictor execution, evaluator/provider authority, live adapters, deployment or paid calls."
+      },
+      "comp1_api_evidence": {
+        "source": "21cb20146bea3ff42aa15dafe43136ff24ff6081",
+        "tree": "d3e0b3417dfc518215e19123a7fb5c185268e420",
+        "status": "accepted_for_runtime_authoring",
+        "focused_tests": 422,
+        "external_schema_checks": 764,
+        "formatted_files": 115,
+        "mypy_files": 76,
+        "quality_focused_tests": 710,
+        "quality_extra_cases": 18,
+        "quality_mutations": 6,
+        "platform_extra_cases": 13,
+        "platform_mutations": 4,
+        "lead_extra_cases": 19,
+        "quality_index_sha256": "f2f6459b202a69b6334fa0b01f27240f102f70eaa73e877273d974711c2dcc84",
+        "platform_index_sha256": "04867b5e6bdf716fc6f5072cba54ef82b48c3dd34849d9b56b9a397ff659fb35",
+        "lead_index_sha256": "ff9643f95fbcb12a1cf3251a641b2bfabb424af9564a2ccc67975f6fdba84660",
+        "earlier_full_suite": {
+          "source": "b18b0ec6a6fa1457bb91dce5c4715edbfe45e0bd",
+          "tests": 2373,
+          "boundary": "Predates repaired API; not final full-suite evidence."
+        },
+        "repairs": [
+          "Later-epoch committing worker revision cannot predate accepted submission.",
+          "Private BuiltinPredictionProfile uses actual frozen PredictorVersion; no alias or public worker change."
+        ],
+        "scope": "API and intrinsic consistency only. Current runtime authorization, bytes/prefix checks, approval renewal and real producers remain unverified."
       }
     },
     "spring_workflow_evidence": {

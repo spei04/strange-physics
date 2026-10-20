@@ -10,9 +10,9 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | COMP1 native-model registration API, then predicates | Exclusive identity writer; immutable API review before runtime |
-| Platform | COMP1 build/runtime/persistence review | Read-only independent reviewer; EXEC1 writer released |
-| Quality | COMP1 authority/recovery review | Read-only independent reviewer; retains SP-01.e preparation |
+| Research | COMP1 bounded model-registration runtime | Exclusive identity writer; API21cb201 accepted; runtime review pending |
+| Platform | COMP1 byte bounds, scientific prefix and native approval review | Read-only; reviews immutable runtime checkpoints |
+| Quality | COMP1 current broker authority and asynchronous recovery review | Read-only; API accepted; retains SP-01.e preparation |
 | Project lead | Coordinate COMP1 and maintain progress | Exclusive primary owner; integrate only reviewed exact source and CI |
 
 ## Assignments
@@ -319,3 +319,13 @@ Research is assigned COMP1 API contracts in the reused identity checkout after t
 Private integration index SHA256bf98163b959a260f23f2c5412818855d26dacd326b8ff267206abafc91ddd5c0 and candidate SHA2562d6b7d08d4be5d49049bed08b5e6544cbf77940ee5a9a73c0d2bdd6b302b3f3a are retained outside checkouts, owner-only, review2026-11-19. Snapshot/unique release evidence retention remains separate from reproducible diagnostics; same-VM storage is not an off-device backup. Both existing cloud checkouts are reused with independent environments. Available space after integration was103,563,276,288 bytes; no additional checkout/dependency copy or cleanup was needed. Full SP-01.c, hosted production, paid and release gates remain open.
 
 2026-10-20 05:41 UTC — Quality accepted final handoff6933f2faa5a7fa769f2b4812047cfa0eee674276 after verifying separate runtime/reviewed/merge tree identities, exact CI and candidate inner checksums/provenance. Lead verified identity had no active checkout consumers, a clean tree and unchanged independently owned dependency pins, then switched it to feat/model-registration-contracts at that accepted head. Research received the explicit writer handoff and began COMP1 API authoring. Platform and Quality retain independent read-only reviewer assignments; lead owns primary progress. The private owner index was updated. No additional checkout or dependency installation was created.
+
+## COMP1 API accepted; runtime assignment
+
+2026-10-20 05:53 UTC — Lead, Platform and Quality accepted API21cb20146bea3ff42aa15dafe43136ff24ff6081/treed3e0b3417dfc518215e19123a7fb5c185268e420. All422 focused cases,764 external schema checks,Ruff/format115 and configured mypy76 pass. Quality independently passed710 focused and18 additional cases with six detected guard mutations; Platform passed422 focused and13 additional cases with four detected mutations; lead passed19 independent boundaries. These overlapping suites are not additive unique-test totals. The earlier b18b0ec full2,373-test result predates the repaired API and is retained only as earlier evidence.
+
+Both reviewers reproduced the same replacement-worker history defect: a later lease epoch could have an older run revision than the accepted submission while the final commit revision dominated both. The repair adds the missing pairwise ordering, with equal/later positive cases. Actual-config integration also repaired the private EXEC1 BuiltinPredictionProfile type to accept the existing frozen PredictorVersion literal; the old generic Identifier rejected its dots. No alias or new predictor version was introduced. Public PackageManifest closure, submitted-worker behavior, CORE/SCI and ModelReceipt remain unchanged.
+
+Research now implements the bounded runtime in the same identity checkout. Platform reviews raw/canonical bytes, original-engine scientific-prefix provenance and native approval renewal. Quality reviews mandatory current worker-broker authorization, replay/recovery and current-state transaction fences. Lead maintains primary progress and integration. Runtime must compose current authorization before private parsing/lookup/replay and preserve complete asynchronous admission/operation/record/outbox closure. Accepted shapes do not establish those predicates, scalable storage, real SQL producers, hostile-code isolation or hosted readiness. Full SP-01.c remains open; SP-01.d/e source still waits its prerequisites.
+
+Private evidence indices remain owner-readable outside checkouts, review2026-11-19: Platform SHA25604867b5e6bdf716fc6f5072cba54ef82b48c3dd34849d9b56b9a397ff659fb35; Quality f2f6459b202a69b6334fa0b01f27240f102f70eaa73e877273d974711c2dcc84; lead ff9643f95fbcb12a1cf3251a641b2bfabb424af9564a2ccc67975f6fdba84660. Lead retained an initial expiry fixture that also changed worker deadlines, then replaced it with an isolated coherently rehashed scan-expiry pair; author retained an initial duplicate-module mypy invocation diagnostic before running the configured command. No source assertion or gate was weakened. Both existing cloud checkouts and independent environments remain active; no additional checkout, environment or local project copy was created. Same-VM evidence is not an off-device backup.
