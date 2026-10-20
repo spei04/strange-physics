@@ -19,6 +19,7 @@ from strange_physics.session_contracts import (
     LoginStartRequest,
     LoginTransaction,
     OIDCCallbackEvidence,
+    ProofClaimOwner,
     RenewalRequest,
     SessionCredential,
     SessionRecord,
@@ -182,21 +183,31 @@ def test_identity_binding_expiry_and_auth_time_reject_unsafe_proofs(
             transaction,
             value(TrustedIdentityProof, **changes),
             now=1010,
-            claimed_by_transaction=None,
+            claimed_by=None,
         )
 
 
 def test_replayed_proof_other_transaction_and_replacement_evidence_are_rejected() -> None:
     transaction = value(LoginTransaction)
     proof = value(TrustedIdentityProof)
-    validate_proof(policy(), transaction, proof, now=1010, claimed_by_transaction="login-1")
+    validate_proof(
+        policy(),
+        transaction,
+        proof,
+        now=1010,
+        claimed_by=ProofClaimOwner(purpose="login", transaction_id="login-1"),
+    )
     for claimed, supplied in [
         ("other", proof),
         ("login-1", value(TrustedIdentityProof, proof_sha256="9" * 64)),
     ]:
         with pytest.raises(ContractViolation, match="proof_rejected"):
             validate_proof(
-                policy(), transaction, supplied, now=1010, claimed_by_transaction=claimed
+                policy(),
+                transaction,
+                supplied,
+                now=1010,
+                claimed_by=ProofClaimOwner(purpose="login", transaction_id=claimed),
             )
 
 
@@ -258,7 +269,7 @@ def test_login_completion_binds_one_session_and_committed_proof_cannot_create_an
         principal_id="principal-1",
         now=1010,
         expected_revision=2,
-        claimed_by_transaction="login-1",
+        claimed_by=ProofClaimOwner(purpose="login", transaction_id="login-1"),
     )
     with pytest.raises(ContractViolation):
         validate_login_completion(
@@ -270,7 +281,7 @@ def test_login_completion_binds_one_session_and_committed_proof_cannot_create_an
             principal_id="principal-1",
             now=1010,
             expected_revision=3,
-            claimed_by_transaction="login-1",
+            claimed_by=ProofClaimOwner(purpose="login", transaction_id="login-1"),
         )
     for changed in [
         value(LoginTransaction, state="committed", session_id="other", revision=3),
@@ -286,7 +297,7 @@ def test_login_completion_binds_one_session_and_committed_proof_cannot_create_an
                 principal_id="principal-1",
                 now=1010,
                 expected_revision=2,
-                claimed_by_transaction="login-1",
+                claimed_by=ProofClaimOwner(purpose="login", transaction_id="login-1"),
             )
 
 
@@ -532,7 +543,7 @@ def test_verified_state_requires_durable_exclusive_proof_claim() -> None:
             value(LoginTransaction),
             value(TrustedIdentityProof),
             now=1010,
-            claimed_by_transaction=None,
+            claimed_by=None,
         )
 
 
@@ -543,7 +554,7 @@ def test_future_auth_time_cannot_create_an_immediately_invalid_session_view() ->
             value(LoginTransaction, state="verifying", proof=None),
             value(TrustedIdentityProof, auth_time=1011, issued_at=1011, verified_at=1011),
             now=1010,
-            claimed_by_transaction=None,
+            claimed_by=None,
         )
 
 
@@ -632,9 +643,7 @@ def test_provider_alias_cannot_partition_application_wide_proof_ownership() -> N
     configured = DeploymentSessionPolicy.model_validate_json(json.dumps(data))
     first_transaction = value(LoginTransaction, state="verifying", proof=None)
     first_proof = value(TrustedIdentityProof)
-    validate_proof(
-        configured, first_transaction, first_proof, now=1010, claimed_by_transaction=None
-    )
+    validate_proof(configured, first_transaction, first_proof, now=1010, claimed_by=None)
     alias_transaction = value(
         LoginTransaction,
         transaction_id="login-2",
@@ -644,14 +653,18 @@ def test_provider_alias_cannot_partition_application_wide_proof_ownership() -> N
     )
     alias_proof = value(TrustedIdentityProof, transaction_id="login-2", provider_id="managed-alias")
     assert proof_claim_key(first_proof) == proof_claim_key(alias_proof)
-    claims = {proof_claim_key(first_proof): first_transaction.transaction_id}
+    claims = {
+        proof_claim_key(first_proof): ProofClaimOwner(
+            purpose="login", transaction_id=first_transaction.transaction_id
+        )
+    }
     with pytest.raises(ContractViolation, match="proof_rejected"):
         validate_proof(
             configured,
             alias_transaction,
             alias_proof,
             now=1010,
-            claimed_by_transaction=claims[proof_claim_key(alias_proof)],
+            claimed_by=claims[proof_claim_key(alias_proof)],
         )
 
 

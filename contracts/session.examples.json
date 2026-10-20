@@ -226,6 +226,7 @@
         "issuer": "https://securetoken.google.com/example-project",
         "proof_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
         "provider_id": "managed",
+        "purpose": "login",
         "subject": "synthetic-subject",
         "tenant_id": null,
         "transaction_id": "login-1",
@@ -254,6 +255,10 @@
     "OIDCDeniedCallbackRequest": {
       "error": "synthetic-denial",
       "state": "synthetic-state"
+    },
+    "ProofClaimOwner": {
+      "purpose": "login",
+      "transaction_id": "login-1"
     },
     "ProviderPolicy": {
       "audience": "example-project",
@@ -320,6 +325,7 @@
       "issuer": "https://securetoken.google.com/example-project",
       "proof_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
       "provider_id": "managed",
+      "purpose": "login",
       "subject": "synthetic-subject",
       "tenant_id": null,
       "transaction_id": "login-1",

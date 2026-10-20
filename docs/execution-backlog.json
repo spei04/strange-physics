@@ -1323,9 +1323,9 @@
         "frontend",
         "security"
       ],
-      "execution_owner": "Project lead coordinates; Platform owns ID-B/B3, then Quality owns ID-C",
+      "execution_owner": "Project lead coordinates; Quality owns ID-C/C1 then C2, Platform/Research review.",
       "issue": "https://github.com/spei04/strange-physics/issues/52",
-      "evidence": "Control part 1 (PR #53), ID-A sessions (PR #65), ID-B/B1 membership (PR #67) and B2 invitations (PR #69) are integrated. B2 main89e6117 matches reviewed8267865; 560 hosted tests and PR/main CI passed. B3 linking, ID-C credentials and final composed review remain open; full-contract consumers remain blocked."
+      "evidence": "Control part1, ID-A and ID-B/B1/B2/B3 integrated; B3 PR79/main24c8796/treeaedc6064 matches reviewedc716ede; PR/main CI pass,918 integrated tests. ID-C/C1 in progress, C2 then final composition review remain; full-contract consumers stay blocked."
     },
     {
       "id": "SP-01.c",
@@ -2814,8 +2814,8 @@
         "HTTP",
         "WEB"
       ],
-      "scope": "Check current membership/credential status on requests and define periodic SSE reauthorization hooks.",
-      "accept": "Revoked caller denied new work; event authorization refresh \u226430 seconds.",
+      "scope": "Check current membership/credential status on requests and before every SSE payload batch; reauthorize idle connections at most 30 seconds apart.",
+      "accept": "Revoked caller denied new work; current authoritative checks before every payload batch; idle reauthorization \u226430 seconds.",
       "tests": "Revocation races, stale token, sole-owner and safe audit/redaction tests.",
       "risk": "No stale membership cache bypass.",
       "out": "SCIM provisioning.",
@@ -4640,7 +4640,7 @@
         "ID"
       ],
       "scope": "Support Last-Event-ID, cursor expiry, authoritative snapshot and archived history pagination with reauthorization.",
-      "accept": "Reconnect has no silent committed-event gaps; revoked stream closes \u226430s.",
+      "accept": "Reconnect has no silent committed-event gaps; current authoritative checks before every payload batch; revoked idle stream closes \u226430s.",
       "tests": "Duplicate/gap/expired cursor, archive outage and membership revocation tests.",
       "risk": "Archive and snapshot use same tenant/privacy policy.",
       "out": "Excludes SP-23.a publish committed event and replay endpoints; SP-23.c render live investigation timeline; SP-23.d integrate reconnect and cancellation ux. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -6589,7 +6589,7 @@
         "WEB"
       ],
       "scope": "Revoke account/service/run access, close streams and stop unauthorized new work; reconcile active jobs.",
-      "accept": "Disabled principal denied new calls immediately; stream \u226430s and job launch \u22645s revocation targets.",
+      "accept": "Disabled principal denied new calls immediately; current authoritative checks before every stream payload batch; idle stream closure \u226430s and job launch \u22645s revocation targets.",
       "tests": "Active session/token/job/SSE disable races and sole-owner exceptions.",
       "risk": "No stale authorization caches or forgotten machine keys.",
       "out": "Excludes SP-35.a freeze scim mapping and lifecycle semantics; SP-35.b implement bounded provisioning and reconciliation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -10538,7 +10538,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Engineer Platform (B3 identity linking active in independent cloud checkout)",
+      "BE1": "Engineer Quality (ID-C/C1 service/key lifecycle active in identity checkout)",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10554,7 +10554,7 @@
     "schedule_repair": "2026-10-19: technical lead accepted SP-01.b before SP-01.c freeze. One added edge (369 total); both reference schedules regenerated without changing effort, capacity, approval gates or current execution staffing.",
     "reviewed_scientific_head": "6e724152e5c947db1662bd65cea36412a8498b22",
     "integrated_scientific_subset": "cc24aef592f3157b67024e3cab41159489c77ffa",
-    "contract_scope_note": "Control part 1, ID-A sessions, ID-B/B1 membership and B2 invitations are integrated. B3 linking is in progress in an independent cloud checkout; ID-C follows acceptance. Full SP-01.b and dependent consumers remain gated; human-resource reforecast remains required.",
+    "contract_scope_note": "Control part1, ID-A and all ID-B/B1/B2/B3 units are integrated. Quality authors ID-C/C1; C2 and final parent composition follow acceptance. Full SP-01.b and dependent consumers remain gated.",
     "integrated_control_subset": "d6204aaab82e1b100532f40bae00e224d9334c65",
     "identity_remaining_units": [
       {
@@ -10570,7 +10570,7 @@
       {
         "id": "SP-01.b/ID-B",
         "title": "Membership, invitations and explicit account linking",
-        "status": "in_progress",
+        "status": "complete",
         "depends_on": [
           "SP-01.b/ID-A"
         ],
@@ -10597,25 +10597,62 @@
           {
             "id": "B3",
             "title": "Explicit identity linking",
-            "status": "in_progress",
+            "status": "complete",
             "depends_on": [
               "B1",
               "B2"
             ],
-            "execution": "Engineer Platform owns the independent identity cloud worktree; Quality/lead review before ID-C. Capacity prerequisite is accepted."
+            "execution": "Integrated after Research/Quality/lead review and exact-head PR/main checks.",
+            "source": "051d8f708a5f5cc1a9182448466eb6dbdeb10f55",
+            "pull_request": 79,
+            "merge": "24c879612c92913d04b7b54456515a69b46ee67b"
           }
         ]
       },
       {
         "id": "SP-01.b/ID-C",
         "title": "Service and run credential lifecycle",
-        "status": "blocked",
+        "status": "in_progress",
         "depends_on": [
           "SP-01.b/ID-B"
         ],
         "owner": "Engineer Quality",
         "issue": "https://github.com/spei04/strange-physics/issues/64",
-        "blocker": "Accepted ID-B/B3"
+        "pr_units": [
+          {
+            "id": "C1",
+            "title": "Service principal and API key lifecycle",
+            "status": "in_progress",
+            "depends_on": [
+              "SP-01.b/ID-B/B3 integration"
+            ],
+            "owner": "Engineer Quality",
+            "human_effort_days": [
+              3,
+              5
+            ],
+            "confidence": "medium"
+          },
+          {
+            "id": "C2",
+            "title": "Run credentials and product-authority composition",
+            "status": "blocked",
+            "depends_on": [
+              "C1"
+            ],
+            "owner": "Engineer Quality",
+            "human_effort_days": [
+              2,
+              4
+            ],
+            "confidence": "medium-low"
+          }
+        ],
+        "execution_plan": "Lead accepted two dependent reviewable increments. New trusted principal authority generation and durable grant incarnation prevent disable/re-enable and remove/regrant resurrection; existing public session/B1 shapes remain unchanged. Creator and leaf key are audit metadata, not enduring run authority. ID-C and SP-01.b stay open until both and final composition review. C1 uses the reused identity checkout after B3 mainCI acceptance. Recovery preserves the original scopes/expiry, changes only key identity/verifier/generation and immediately revokes the target; exact retries return metadata only after current authority checks.",
+        "shared_final_review_days": [
+          1,
+          2
+        ]
       }
     ],
     "estimate_adjustments": [
@@ -10628,6 +10665,16 @@
         "confidence": "medium",
         "status": "reforecast_required",
         "note": "Reference four-day estimate is superseded for execution planning; retained forecast is a historical nine-human-team comparison, not a current delivery promise. Agent elapsed time is not engineer-day evidence."
+      },
+      {
+        "task": "SP-01.b/ID-C",
+        "remaining_engineer_days": [
+          6,
+          11
+        ],
+        "confidence": "medium to medium-low",
+        "status": "provisional_after_ID-B_acceptance",
+        "note": "Provisional remaining ID-C human effort: C1 service/key lifecycle 3\u20135 engineer-days (medium); C2 run credentials/composition 2\u20134 (medium-low); shared final composition review/integration 1\u20132, counted once. Total6\u201311 engineer-days includes uncertainty; no additional reserve is added. This supersedes the original two-day ID-C expectation for current execution only; the nine-human reference forecast remains historical and agent elapsed time is not human effort evidence."
       }
     ],
     "additional_work": [
@@ -10812,7 +10859,7 @@
     },
     "checkout_ownership": {
       "scientific": "Research authors in the primary cloud checkout; lead takes exclusive ownership for integration handoffs.",
-      "identity": "Platform authors B3 in one independent ordinary cloud worktree; reuse for ID-C after acceptance.",
+      "identity": "Engineer Quality owns the reused identity checkout for C1 after accepted B3 integration. C2 requires accepted C1; no extra checkout.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -10848,6 +10895,35 @@
       "tree": "08efb97564ff99f7056551a04b93b27b5460f3eb",
       "pr_ci": 39358928012,
       "main_ci": 39359050024
-    }
+    },
+    "linking_evidence": {
+      "source": "051d8f708a5f5cc1a9182448466eb6dbdeb10f55",
+      "status": "accepted_and_integrated",
+      "author": "Engineer Platform",
+      "reviewers": [
+        "Engineer Quality",
+        "Engineer Research",
+        "Project lead"
+      ],
+      "branch_full_tests": 714,
+      "focused_session_link_tests": 222,
+      "independent_link_tests": 100,
+      "external_schema_checks": 478,
+      "ruff_formatted_files": 62,
+      "mypy_files": 34,
+      "package_check": "Offline pinned wheel/sdist build and exact archive allowlist passed.",
+      "security_check": "Configured Bandit medium/high gate passed; two unchanged baseline low findings retained. Hosted dependency audit remains required.",
+      "scope": "Pure linking/session contract amendment; no real provider verification, broker configuration, HTTP/SQL/race/recovery implementation.",
+      "pull_request": 79,
+      "merge": "24c879612c92913d04b7b54456515a69b46ee67b",
+      "reviewed_integration_head": "c716ede7cad5b745ceb5d473d7f301c448107a0a",
+      "tree": "aedc60646121d591eb593e0261e6a9c4a4abb808",
+      "pr_ci": 39359729686,
+      "main_ci": 39359864028,
+      "integrated_full_tests": 918,
+      "integrated_mypy_files": 35,
+      "integrated_formatted_files": 64
+    },
+    "stream_contract_clarification": "Current authoritative session/credential, grant and workspace checks before every payload batch; applicable run lease also checked. The <=30-second interval applies only to idle connections, not cached payload authorization. SP-11.c/23.b/35.c prose aligned; graph/effort/gates unchanged."
   }
 }
