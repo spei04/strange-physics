@@ -3,7 +3,15 @@
 from __future__ import annotations
 
 import math
-from decimal import ROUND_HALF_EVEN, Decimal, localcontext
+from decimal import (
+    ROUND_HALF_EVEN,
+    Context,
+    Decimal,
+    DivisionByZero,
+    InvalidOperation,
+    Overflow,
+    localcontext,
+)
 from time import perf_counter_ns
 
 from pydantic import ValidationError
@@ -131,9 +139,18 @@ def _reference_position(coefficient: float, request: PredictionRequest, time: fl
     particle = request.experiment.particles[0]
     if time == 0:
         return particle.position
-    with localcontext() as context:
-        context.prec = 80
-        context.rounding = ROUND_HALF_EVEN
+    # Pin the whole arithmetic context; callers may change their thread-local defaults.
+    context = Context(
+        prec=80,
+        rounding=ROUND_HALF_EVEN,
+        Emin=-999999,
+        Emax=999999,
+        capitals=1,
+        clamp=0,
+        flags=[],
+        traps=[InvalidOperation, DivisionByZero, Overflow],
+    )
+    with localcontext(context):
         d = Decimal.from_float
         mass, t = d(particle.mass), d(time)
         anchor = tuple(d(value) for value in request.structure.anchors[0].position)

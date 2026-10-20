@@ -39,7 +39,7 @@ a failure, not permission to redraw or select probes based on predictions.
 These choices are fixed before measurements:
 
 - Convert every actual binary64 input with Decimal.from_float. Use Decimal
-  precision 80 and round-half-even. Perform the coefficient/mass division and
+  precision 80 and round-half-even, explicit exponent bounds[-999999,999999],\n  no clamp, cleared flags and InvalidOperation/DivisionByZero/Overflow traps.\n  The context is independent of caller Decimal settings. Perform the coefficient/mass division and
   the optional J/m velocity update in Decimal. Apply the impulse once before
   time zero; preserve the requested initial position at zero.
 - Let u=(k/m)*t^2. Approved inputs give 0<=u<=32. Compute C=sum((-u)^n/(2n)!)

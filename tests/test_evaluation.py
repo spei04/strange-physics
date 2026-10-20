@@ -546,3 +546,26 @@ def test_reference_agrees_with_higher_precision_ode_series_at_maximum_phase() ->
     actual = evaluation._reference_position(4.0, req, 2.0)
     assert abs(actual[0] - float(position)) <= 1e-12
     assert actual[1] == 0.0
+
+
+def test_reference_context_is_independent_of_callers_decimal_settings() -> None:
+    from decimal import ROUND_FLOOR, Inexact, localcontext
+
+    req = request(
+        model(4.0),
+        times=(0.0, 2.0),
+        mass=0.5,
+        anchor=(-0.5, 0.0),
+        position=(3.0, 0.0),
+        velocity=(2.0, 0.0),
+        impulse=(1.0, 0.0),
+    )
+    expected = evaluation._reference_position(4.0, req, 2.0)
+    with localcontext() as context:
+        context.prec = 2
+        context.rounding = ROUND_FLOOR
+        context.Emin, context.Emax, context.clamp = -1, 1, 1
+        context.traps[Inexact] = True
+        actual = evaluation._reference_position(4.0, req, 2.0)
+        assert context.prec == 2 and context.traps[Inexact]
+    assert actual == expected
