@@ -82,8 +82,12 @@ def _state_at_time(
     anchor = request.structure.anchors[0].position
     impulse = request.experiment.impulse
     velocity = (
-        particle.velocity[0] + (impulse.vector[0] / particle.mass if impulse else 0.0),
-        particle.velocity[1] + (impulse.vector[1] / particle.mass if impulse else 0.0),
+        particle.velocity
+        if impulse is None
+        else (
+            particle.velocity[0] + impulse.vector[0] / particle.mass,
+            particle.velocity[1] + impulse.vector[1] / particle.mass,
+        )
     )
     if time == 0:
         # Preserve exact requested initial values, including tiny signed components.

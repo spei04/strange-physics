@@ -569,3 +569,15 @@ def test_production_fit_to_unseen_prediction_meets_each_probe_bound(
             assert math.sqrt(math.fsum(squared_errors) / 82) <= FIT_PREDICT_RMSE
             probe_count += 1
     assert probe_count == 24
+
+
+def test_no_impulse_preserves_signed_initial_velocity_at_frame_zero() -> None:
+    model = _model(0.9)
+    data = _request(model, probe=7).model_dump(mode="json")
+    data["experiment"]["particles"][0]["velocity"] = [-0.0, -1e-320]
+    request = PredictionRequest.model_validate_json(json.dumps(data))
+    result = predict_linear_spring(model, request, CONFIG)
+    assert result.response is not None
+    velocity = result.response.trajectory.frames[0].velocities[0]
+    assert velocity == (-0.0, -1e-320)
+    assert math.copysign(1.0, velocity[0]) == -1.0
