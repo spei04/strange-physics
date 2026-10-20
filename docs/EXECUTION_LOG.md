@@ -102,11 +102,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-20 03:13 | Project lead + Platform | C1 integration with accepted prediction | 251694f has exact reviewed source blobs and complete package allowlist; 1,434 tests, Ruff/format, mypy48 and 555 schemas pass; hosted checks remain |
 | 2026-10-20 03:19 | Project lead | C1 integrated; identity writer handoff | PR #84 and protected main passed with matching reviewed tree; same checkout reused for C2 |
 | 2026-10-20 03:19 | Platform | ID-C/C2 run credentials and product-authority composition | Accepted bounded plan; immutable run ownership, required composed admission, lease/generation fencing and safe coordinator replay; no public mint route |
-
 | 2026-10-20 03:35 | Quality | SP-06.a independent scoring | Released clean17be197; runtime82fc914 passed1,417 tests,97 focused cases, schemas/static/security/package checks; Research accepted97 cases+7 boundary checks+7 mutants |
-| 2026-10-20 03:36 | Project lead + Quality | Scorer integration | Merged C1/handoff09e39e88 into scorer at464c73a; exact80 source/test/contract blobs and26-module archive union independently verified; PR/main checks next |
-| 2026-10-20 03:36 | Research | C2 early contract review |72 cases passed; operation/credential-state binding finding assigned to Platform for repair before runtime acceptance |
-| 2026-10-20 03:37 | Project lead + Research | Research methods planning amendment | Lead drafts paper/task comparison and canonical plan update; Research independently reviews. Current I1 and C2 continue; new runtime and paid work remain gated |
+| 2026-10-20 03:35 | Project lead + Quality | Scorer integration | Merged C1/handoff09e39e88 into scorer at464c73a; exact80 source/test/contract blobs and26-module archive union independently verified; PR/main checks next |
+| 2026-10-20 03:35 | Research | C2 early contract review |72 cases passed; operation/credential-state binding finding assigned to Platform for repair before runtime acceptance |
+| 2026-10-20 03:35 | Project lead + Research | Research methods planning amendment | Lead drafts paper/task comparison and canonical plan update; Research independently reviews. Current I1 and C2 continue; new runtime and paid work remain gated |
 
 ## Review evidence and management checkpoint
 
@@ -206,4 +205,4 @@ action is approved and complete; it grants no additional staging or release auth
 
 Source17be197a1499c7619718b4e5141aa34a6523e519 retains runtime82fc9145b576fcb01e58815989bc2c1ebd1087a0. The independent Decimal reference uses fixed precision/context, a proven bounded series and exact request identities; it shares no predictor or simulator math. Complete-manifest validation preserves missing, invalid and failed outputs without survivor averaging. All168 direct-model probes passed; maximum component difference2.6645352591003757e-15 and per-probe MSE4.249608827306303e-31 are finite synthetic evidence, not fitted SDK/CLI I1. Final public/private boundary and timing-bearing report bytes are documented in EVALUATION.md.
 
-Private evidence stays outside disposable checkouts at /home/serenapei/.local/state/strange-physics-evidence/evaluation/2026-10-20. Sealed index82fc9145b576-index.json SHA2561c8d43550c8b618039a6b82236f879e1d13dafd388fcd84bea44969aca991c20 identifies source, task, checks and matrix. Owner-readable only; review2026-11-19, same-VM storage is not an off-device backup. Do not mutate this record; add integration evidence separately.
+Private evidence stays outside disposable checkouts at /home/serenapei/.local/state/strange-physics-evidence/evaluation/2026-10-20. Sealed index82fc9145b576-index.json SHA2561c8d43550c8b618039a6b82236f879e1d13dafd388fcd84bea44969aca991c20 identifies source, task and checks. Owner-readable only; review2026-11-19, same-VM storage is not an off-device backup. Do not mutate this record; add integration evidence separately.
