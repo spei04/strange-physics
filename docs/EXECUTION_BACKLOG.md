@@ -788,7 +788,7 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 - **Security and reliability:** Trusted local and development-only labels; no provider dependency.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R1; in progress pending hosted integration. Research released accepted fff854b/runtime ed3ce1d; Quality and lead accepted the source and installed-wheel evidence. CLI4 purchases and the known-k SDK fixture each retain24/24 independent scores, every probe within0.001 RMSE. Lead integrates3506b0c; exact-head PR/main acceptance remains before I1 closure.
+- **Milestone / state:** R1; complete for bounded local I1. PR #90/main d931158 matches accepted8336ca5/treee3198a56; required PR CI39368869540 and all five main CI39369037416 jobs passed. Integrated1,771 tests; installed-wheel CLI4 purchases and known-k SDK fixture each retain24/24 independent scores with every probe within0.001 RMSE. Broader research and hosted gates remain.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-05"></a>
@@ -880,7 +880,7 @@ Parent: [#8](https://github.com/spei04/strange-physics/issues/8). This issue clo
 - **Security and reliability:** Separate evaluator labels from fitter; report failures.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Quality engineer; base reference lane TL. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R1; complete through PR #85/main c20e3b5, matching reviewed3556088 and treecad9249f. Required PR CI39365261896 and all protected-main CI39365449219 jobs passed;1,531 integrated tests. Independent97 focused cases,7 boundary checks and7 mutants. SP-04.e SDK/CLI is next; I1 remains open.
+- **Milestone / state:** R1; complete through PR #85/main c20e3b5, matching reviewed3556088 and treecad9249f. Required PR CI39365261896 and all protected-main CI39365449219 jobs passed;1,531 integrated tests. Independent97 focused cases,7 boundary checks and7 mutants. SP-04.e SDK/CLI subsequently completed through PR #90; bounded I1 is accepted.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-06-b"></a>
@@ -3361,25 +3361,25 @@ No implementation was started by this planning review. No new checkout, dependen
 
 SP-01.b is complete through the independently reviewed control, ID-A, ID-B/B1–B3 and ID-C/C1–C2 units plus final composition. PR #88/main 92320173ff0d3278c65cfc251983d57fab9960b1 matches accepted b8d3e5ee96b3b07da53eccbabddebc5a73223ba3 and tree 515e27ebbb594a15ce439b24a14463ed7a4cf9a7; PR CI39367180231 and all protected-main CI39367439199 jobs passed. Integrated 1,692 tests, Ruff/format92, strict mypy57,613 schema checks, configured security checks and offline package validation passed. The earlier 3–6-day remaining identity estimate is historical and no longer an outstanding assignment. Agent elapsed time is not human effort evidence. Full-contract consumers may use this bounded freeze once their other actual prerequisites pass; no live enforcement or release claim follows.
 
-SP-01.c/#89 is assigned to Platform in three sequential review units: ART1 immutable object identity and mandatory bound checkpoint evidence; EXEC1 quarantined package/build and current launch/broker authority; COMP1 predictor identities and explicit object/DB recovery fixtures. Public generation and internal locator remain separate. Broker authority reuses the C2 current credential tuple. Resource limits are explicit versioned policy inputs. CORE/SCI bytes stay unchanged; Lead integrates the released local workflow/CLI source. No provisioning, build execution or sandbox proof. This decomposition changes no baseline estimate, dependency or approval gate.
+SP-01.c/#89 is assigned to Platform in three sequential review units: ART1 immutable object identity and mandatory bound checkpoint evidence; EXEC1 quarantined package/build and current launch/broker authority; COMP1 predictor identities and explicit object/DB recovery fixtures. Public generation and internal locator remain separate. Broker authority reuses the C2 current credential tuple. Resource limits are explicit versioned policy inputs. CORE/SCI bytes stay unchanged; the local workflow/CLI is integrated through PR #90. No provisioning, build execution or sandbox proof. This decomposition changes no baseline estimate, dependency or approval gate.
 
 The coordinated [CI-01 request](https://github.com/spei04/strange-physics/issues/54) adds bounded repository CI/CD maintenance. It does not waive the cloud storage/provisioning gates or complete SP-27.a. Repository-settings coordination owns branch protection; candidate delivery requires protected main and successful required checks. Publication/deployment remain separately gated.
 
-Execution checkpoint 2026-10-20: SP-01.b and ID-C are complete; Platform now owns SP-01.c/#89, Research prepares SP-01.d read-only after releasing SP-04.e/#87 to lead integration, and Quality reviews both. Earlier source/PR/check identities remain in EXECUTION_LOG.md and the machine ledger. SP-02.b capacity is complete after the approved recovery snapshot and 200→300 GiB expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
+Execution checkpoint 2026-10-20: SP-01.b and ID-C are complete; Platform now owns SP-01.c/#89, SP-04.e/#87 and bounded I1 are complete through PR #90; Research prepares SP-01.d read-only, and Quality reviews ART1 and prepares SP-01.e tooling read-only. Earlier source/PR/check identities remain in EXECUTION_LOG.md and the machine ledger. SP-02.b capacity is complete after the approved recovery snapshot and 200→300 GiB expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
 
 
 Scientific execution checkpoint 2026-10-20: Research's read-only dependency review
 confirms SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b → SP-06.a → SP-04.e/I1,
 with the additional approved joins and accepted predecessors recorded in
-[EXECUTION_LOG.md](EXECUTION_LOG.md#next-scientific-acceptance-checkpoint--i1).
-SP-06.a/#83 is integrated; lead integrates accepted SP-04.e/#87 in the primary checkout.
+[EXECUTION_LOG.md](EXECUTION_LOG.md#scientific-acceptance-checkpoint--i1-complete).
+SP-06.a/#83 and SP-04.e/#87 are integrated; bounded I1 is complete through PR #90.
 SP-01.b is integrated; Platform owns SP-01.c/#89 in the identity checkout. The six scientific tasks retain
 19 reference engineering days plus 4.75 reserve, not a subagent schedule promise.
 No unfinished identity contract or whole-R0 gate is a prerequisite for this local
-slice. Enterprise work and its actual consumer gates remain unchanged. I1 needs
+slice. Enterprise work and its actual consumer gates remain unchanged. I1 has
 purchased-prefix-only fitting, unseen-condition predictions and independent
-analytic scoring with explicit failures; existing simulation/schema/CI evidence
-does not satisfy it. The concrete disk/snapshot action is approved and complete;
+analytic scoring with explicit failures through the installed SDK/CLI;
+all24 preregistered probes satisfy the fixed per-probe error gate. The concrete disk/snapshot action is approved and complete;
 SP-03.a is integrated through PR #76/main 8510243 with matching tree and passing
 PR/main CI. SP-03.b/#75 is integrated through PR #78/main db182788 with matching reviewed tree
 and passing PR/main CI, including 817 tests. SP-04.a/#77 is integrated through PR #80/main e5a3c8d with a matching
