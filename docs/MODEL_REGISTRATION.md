@@ -1,8 +1,9 @@
 # Native model registration — COMP1
 
 Status: native contracts and pure admission/completion/replay proposals independently
-reviewed. Hosted integration and the complete SP-01.c freeze remain pending.
-Actual storage/SQL producers are not implemented by this slice. Synthetic fixtures do
+reviewed; hosted producers remain pending. The current integration and parent
+freeze gates are recorded in the execution backlog. Actual storage/SQL producers
+are not implemented by this slice. Synthetic fixtures do
 not establish deployed approval, process isolation, fitting accuracy or production
 readiness.
 
