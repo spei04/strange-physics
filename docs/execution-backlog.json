@@ -11530,7 +11530,7 @@
         "SP-01.b",
         "SP-01.c"
       ],
-      "scope": "WORLD1 integrated; WEB1 API/fixture authoring next, with review before runtime. SP-01.e waits full SP-01.d.",
+      "scope": "WORLD1 integrated; WEB1 API and partial guard/cursor/snapshot/event runtime independently accepted. Actual-byte body/history runtime and full integration checks remain before SP-01.d; SP-01.e waits full SP-01.d.",
       "issue": 94,
       "pr_units": [
         {
@@ -11892,7 +11892,15 @@
           "Current head must agree with every retained recent event identity and not predate the known last event.",
           "Malformed snapshot ID is rejected after authority but before private head lookup; known beyond-head remains incompatible_state409."
         ],
-        "boundary": "Partial pure runtime only. Quality/lead earlier scoped source is unchanged by the two reviewed added head guards. Actual-byte bodies and complete history are still being authored; no complete WEB1 or SP-01.d claim. Suites overlap."
+        "boundary": "Partial pure runtime only. Quality/lead earlier scoped source is unchanged by the two reviewed added head guards. Actual-byte bodies and complete history are still being authored; no complete WEB1 or SP-01.d claim. Suites overlap.",
+        "draft_integration": {
+          "source": "e5a6162eafb09d890aafb7f03bfe9c860350b9d1",
+          "ci": 39398415065,
+          "status": "failed_full_mypy_duplicate_test_module",
+          "security": "passed",
+          "repair_owner": "Research",
+          "next_gate": "Full-repository strict typing and complete body/history review before integration acceptance."
+        }
       }
     },
     "contract_tooling_preparation": {
