@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | ID-C/C2 run credentials and product authority | Exclusive identity writer after C1 PR/main acceptance; early interface and independent review required |
+| Platform | SP-01.c artifact/worker contract preparation | C2 released at33caa917; read-only preparation, freeze/source handoff waits parent integration |
 | Research | SP-04.e/#87 local scientific SDK/CLI | Exclusive primary writer after accepted scorer and planning integration; preregistration and API review precede runtime |
-| Quality | C2 independent runtime review | Read-only review of Platform952f95c; scorer source/integration accepted |
-| Project lead | Coordinate SDK and C2 integration | Research owns primary; Platform owns identity until final release; exact-head review/CI before each integration |
+| Quality | Early SDK API and C2 integration review | C2 runtime67d1128/docs33caa917 and parent composition accepted; exact integration checks remain |
+| Project lead | Coordinate SDK and C2 integration | Research owns primary; lead owns released identity for C2 integration; exact-head review/CI before each integration |
 
 ## Assignments
 
@@ -222,3 +222,5 @@ Final planning review found and repaired a missing classical PySR prerequisite w
 2026-10-20 — Research amendment PR #86 integrated as e239eb2c704cd315aadd6064cdb521d1a6d9bbdc, tree558d68eda38aa513aa5ae59255190fef7a9f890d equals acceptedc48517b6fc57468375989670ce341f9d0a96489a. PR CI39365953740 and all protected-main CI39366138629 jobs passed. Scientific/dependency review accepted all18 records,62 fixed+6 conditional edges and conditional-profile readiness. The original168-task/369-edge/ten-gate graph remains unchanged; scorer completion is a progress update. New research runtime and paid work remain gated.
 
 Research is assigned SP-04.e/#87 in the reused primary checkout: preregister24 fixed probes, publish the artifact API, then wire the SDK/CLI workflow. Quality reviews after final C2 composition; lead coordinates. Root owns no source writer after handoff. Both existing cloud checkouts stay in use with independent dependencies; no new checkout was created.
+
+Platform released C2 at33caa917 after accepted runtime67d1128 and final parent composition review. Lead takes identity integration; Platform prepares SP-01.c read-only. Final artifact/worker freeze and source handoff wait accepted SP-01.b integration. Quality reviews the SDK API and integrated C2 source.
