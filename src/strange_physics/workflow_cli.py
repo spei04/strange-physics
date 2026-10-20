@@ -106,6 +106,9 @@ def _load[T: Message](path: Path, stage: Stage, name: str, model: type[T]) -> T:
         or (completion.input_message_sha256 != input_hashes)
     ):
         raise WorkflowError("artifact_mismatch")
+    if isinstance(value, (SpringFitArtifact, SpringPreparationArtifact, SpringPredictionArtifact)):
+        if completion.elapsed_ms != value.elapsed_ms:
+            raise WorkflowError("artifact_mismatch")
     for filename, expected in projections.items():
         parsed = stage_message(files, filename, type(expected))
         if parsed != expected:

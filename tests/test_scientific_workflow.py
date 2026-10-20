@@ -602,3 +602,156 @@ def test_preflight_json_limit_before_reading(tmp_path: Path) -> None:
     source.chmod(0o600)
     with pytest.raises(WorkflowError, match="input_limit"):
         read_message(source, ObservationBundle)
+
+
+def test_fully_scored_scientific_miss_is_retained(tmp_path: Path) -> None:
+    journal, observations = run(tmp_path)
+    fit = fit_spring(observations)
+    # A deliberately wrong but provenance-bound learned model is a valid test of
+    # independent scoring. This does not claim the fitter produced this estimate.
+    data = fit.model_dump(mode="json")
+    data["result"]["model"]["linear"] = 2.0
+    data["result"]["diagnostics"]["raw_coefficient"] = 2.0
+    fit = SpringFitArtifact.model_validate_json(json.dumps(data))
+    prepared = prepare_spring_evaluation(journal, fit)
+    assert fit.model is not None and prepared.protocol is not None
+    predictions = predict_spring(fit.model, prepared.protocol)
+    score = score_spring(journal, fit, prepared, predictions)
+    assert score.result.status == "scored" and score.result.report is not None
+    assert len(score.probes) == 24
+    assert score.maximum_position_rmse is not None and score.maximum_position_rmse > 0.001
+    assert not score.target_passed
+    assert all(p.position_rmse is not None for p in score.probes)
+
+
+@pytest.mark.parametrize("kind", ["empty", "all_failed"])
+def test_cli_failed_fit_preserves_input_without_model(tmp_path: Path, kind: str) -> None:
+    journal = tmp_path / "session.sqlite"
+    with LocalSession.create(journal, "failed-cli", world()) as session:
+        if kind == "all_failed":
+            session._journal.reserve("failed", purchase(), 4)
+            session._journal.commit(
+                ExperimentRecord(
+                    operation_id="failed",
+                    index=0,
+                    experiment=purchase(),
+                    status="failed",
+                    error="simulation_failed",
+                )
+            )
+        observations = session.export()
+    source = tmp_path / "observations.json"
+    source.write_text(observations.model_dump_json())
+    source.chmod(0o600)
+    destination = tmp_path / "fit"
+    assert main(["fit-spring", "--observations", str(source), "--output", str(destination)]) == 1
+    retained = read_message(destination / "fit.json", SpringFitArtifact)
+    assert retained.observations == observations and retained.model is None
+    assert set(read_stage(destination, "fit")) == {"fit.json", "config.json"}
+    assert (
+        main(
+            [
+                "prepare-spring-evaluation",
+                "--journal",
+                str(journal),
+                "--fit",
+                str(destination),
+                "--output",
+                str(tmp_path / "prepared"),
+            ]
+        )
+        == 1
+    )
+    assert not (tmp_path / "prepared/protocol.json").exists()
+
+
+@pytest.mark.parametrize("fail_call", [1, 2, 3, 4])
+def test_no_completion_after_any_flush_failure(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, fail_call: int
+) -> None:
+    _, observations = run(tmp_path)
+    destination = tmp_path / "incomplete"
+    real = os.fsync
+    calls = 0
+
+    def fail(fd: int) -> None:
+        nonlocal calls
+        calls += 1
+        if calls == fail_call:
+            raise OSError("injected fsync failure")
+        real(fd)
+
+    monkeypatch.setattr(os, "fsync", fail)
+    with pytest.raises(OSError):
+        write_stage(
+            destination, "fit", {"first.json": observations, "second.json": observations}, (), 1
+        )
+    assert not (destination / "completion.json").exists()
+
+
+@pytest.mark.parametrize("kind", ["file", "directory", "symlink", "parent_symlink"])
+def test_existing_and_symlink_outputs_are_not_overwritten(tmp_path: Path, kind: str) -> None:
+    _, observations = run(tmp_path)
+    destination = tmp_path / "output"
+    if kind == "file":
+        destination.write_bytes(b"retained")
+    elif kind == "directory":
+        destination.mkdir(mode=0o700)
+        (destination / "retained").write_bytes(b"retained")
+    elif kind == "symlink":
+        destination.symlink_to(tmp_path / "missing")
+    else:
+        alias = tmp_path / "alias"
+        alias.symlink_to(tmp_path, target_is_directory=True)
+        destination = alias / "output"
+    with pytest.raises((OSError, WorkflowError)):
+        write_stage(destination, "fit", {"fit.json": observations}, (), 1)
+    if kind == "file":
+        assert destination.read_bytes() == b"retained"
+    elif kind == "directory":
+        assert (destination / "retained").read_bytes() == b"retained"
+    else:
+        assert not (tmp_path / "missing").exists()
+
+
+def test_predictor_public_model_mismatch_retains_every_probe(tmp_path: Path) -> None:
+    _, observations = run(tmp_path)
+    fit = fit_spring(observations)
+    assert fit.model is not None
+    protocol = i1_protocol(fit.model, observations.space.structure)
+    other = fit.model.model_copy(update={"linear": 2.0})
+    result = predict_spring(other, protocol)
+    assert len(result.results) == 24
+    assert all(r.status == "model_mismatch" for r in result.results)
+    assert all(s.status == "failed" and s.response is None for s in result.submissions.entries)
+
+
+def test_fixed_probe_manifest_matches_every_preregistered_condition(tmp_path: Path) -> None:
+    import math
+
+    _, observations = run(tmp_path)
+    fit = fit_spring(observations)
+    assert fit.model is not None
+    protocol = i1_protocol(fit.model, observations.space.structure)
+    u = 1 / math.sqrt(2)
+    expected = (
+        ((-0.5, 0.0), (3.0, 0.0), (2.0, 0.0), (1.0, 0.0)),
+        ((-0.5, 0.0), (3.0, 0.0), (-2.0, 0.0), (-1.0, 0.0)),
+        ((0.0, -0.5), (0.0, 3.0), (0.0, 2.0), (0.0, 1.0)),
+        ((0.0, -0.5), (0.0, 3.0), (0.0, -2.0), (0.0, -1.0)),
+        ((-0.5 * u, -0.5 * u), (3 * u, 3 * u), (2 * u, -2 * u), (u, -u)),
+        ((0.0, 0.0), (0.0, 0.0), (2.0, 0.0), (1.0, 0.0)),
+        ((0.0, 0.0), (1.5, 0.2), (0.3, -0.6), (0.2, 0.1)),
+        ((0.0, 0.0), (0.0, 0.0), (0.0, 0.0), None),
+    )
+    for index, probe in enumerate(protocol.probes):
+        particle = probe.request.experiment.particles[0]
+        impulse = probe.request.experiment.impulse
+        assert (
+            probe.request.structure.anchors[0].position,
+            particle.position,
+            particle.velocity,
+            None if impulse is None else impulse.vector,
+        ) == expected[index % 8]
+        assert particle.mass == (0.5, 1.0, 2.0)[index // 8]
+        assert probe.request.structure.connections == observations.space.structure.connections
