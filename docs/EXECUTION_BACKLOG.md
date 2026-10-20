@@ -712,7 +712,7 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 - **Security and reliability:** No evaluator access; bounded compute and safe diagnostics.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R1; in progress, reviewed source c43cd801 accepted by Quality and Platform, issue #77. Author checks passed 905 tests; integration with accepted identity main passed 1,006 tests, Ruff/format (69 files), strict mypy (39 files) and external schema checks. Lead owns exact-head PR/main integration. Fitting only; prediction/scoring/I1 remain later tasks.
+- **Milestone / state:** R1; completed through PR #80/main e5a3c8d, reviewed head833d8c7 and matching treecbe89e1d. PR CI39360722931 and main CI39360858087 passed. 1,006 integrated tests, lint/format, strict typing and492 schema checks pass. Fitting only; prediction/scoring/I1 remain later tasks.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-04-b"></a>
@@ -728,7 +728,7 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 - **Security and reliability:** Bound output; no pickle or true simulator parameters.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
+- **Milestone / state:** R1; in progress under Research, issue #81, after accepted SP-04.a integration. Analytic runtime and preregistered independent Decimal-oracle plan accepted; Quality/Platform/lead review and exact-head CI required. SP-06.a scoring and SP-04.e/I1 remain separate.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-04-c"></a>
@@ -3356,8 +3356,7 @@ Scientific execution checkpoint 2026-10-20: Research's read-only dependency revi
 confirms SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b → SP-06.a → SP-04.e/I1,
 with the additional approved joins and accepted predecessors recorded in
 [EXECUTION_LOG.md](EXECUTION_LOG.md#next-scientific-acceptance-checkpoint--i1).
-The lead owns fitter integration in the primary checkout; Research prepares SP-04.b
-read-only. Quality owns C1 in the identity checkout and independently authors
+Research owns SP-04.b in the primary checkout after accepted fitter integration. Quality owns C1 in the identity checkout and independently authors
 SP-06.a only after SP-04.b. The six scientific tasks retain
 19 reference engineering days plus 4.75 reserve, not a subagent schedule promise.
 No unfinished identity contract or whole-R0 gate is a prerequisite for this local
@@ -3367,8 +3366,7 @@ analytic scoring with explicit failures; existing simulation/schema/CI evidence
 does not satisfy it. The concrete disk/snapshot action is approved and complete;
 SP-03.a is integrated through PR #76/main 8510243 with matching tree and passing
 PR/main CI. SP-03.b/#75 is integrated through PR #78/main db182788 with matching reviewed tree
-and passing PR/main CI, including 817 tests. SP-04.a/#77 source c43cd801 is
-independently accepted; the integrated source passes 1,006 tests. Exact-head hosted
-checks remain before merge. Research prepares the dependent predictor without
-starting source implementation. Noise sensitivity failures remain explicit; no
+and passing PR/main CI, including 817 tests. SP-04.a/#77 is integrated through PR #80/main e5a3c8d with a matching
+reviewed tree and passing PR/main CI, including 1,006 tests. Research now authors
+SP-04.b/#81 under the accepted runtime and preregistration. Noise sensitivity failures remain explicit; no
 thresholds or manifests were relaxed.

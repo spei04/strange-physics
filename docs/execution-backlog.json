@@ -1741,7 +1741,7 @@
         "RS2"
       ],
       "objective": "Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers fit a spring using purchased observations.",
-      "status": "in_progress",
+      "status": "completed",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1750,9 +1750,9 @@
         "SDK"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/77",
-      "execution_owner": "Engineer Research authored; Quality and Platform independently accepted; project lead owns primary integration.",
+      "execution_owner": "Engineer Research authored; Quality and Platform reviewed; project lead integrated.",
       "execution_plan": "Versioned explicit actual-config digest, all-completed paired-Simpson windows and public masses; frozen LinearSpringModel plus separate JSON-safe diagnostics. Fitted is numerical success, not ground-truth acceptance. Nonzero noise and coefficients outside calibrated range remain explicit; no clipping or private inputs.",
-      "execution_evidence": "Source c43cd801 independently accepted; 905 author tests and 1006 integrated tests, static/schema checks pass. Required exact-head hosted checks pending; not yet completed."
+      "execution_evidence": "PR #80 merged e5a3c8d8b7d718be9be7d88e81fb4cad90e73f1a; tree cbe89e1d14646d3e9d77b96b97d8f267e6cfaafd matches reviewed 833d8c711ecdc97e3817ed744f9ff674331d0d1f. PR CI39360722931 and main CI39360858087 passed all applicable jobs, including the protected-main candidate build. 1006 tests; fitting only."
     },
     {
       "id": "SP-04.b",
@@ -1779,13 +1779,16 @@
         "RS2"
       ],
       "objective": "Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers predict with the versioned spring model.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
         "Research",
         "QE"
-      ]
+      ],
+      "issue": "https://github.com/spei04/strange-physics/issues/81",
+      "execution_owner": "Engineer Research; exclusive primary writer after accepted SP-04.a; Platform/Quality/lead review.",
+      "execution_plan": "Fixed analytic runtime and canonical actual model/request/config binding; frozen SCI unchanged. Bounded unseen initial conditions, exact requested times, zero/tiny-frequency-safe propagation, full failure without partial response. Preregister independent Decimal oracle and numerical matrices before measurements; no scoring/I1 claim."
     },
     {
       "id": "SP-04.c",
@@ -10764,10 +10767,10 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-04.a_reviewed_integration_pending",
+      "status": "SP-04.b_in_progress",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "SP-04.b after accepted SP-04.a integration",
+      "next_authoring_task": "SP-04.b",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10789,7 +10792,7 @@
       "forecast_boundary": "Reference human effort only; not a subagent delivery forecast. Dependencies, gates and schedules unchanged.",
       "identity_boundary": "SP-01.b/c/d/e, B3, ID-C, SP-08, staging and whole R0 exit are not prerequisites for the local slice; their hosted/later consumer gates remain.",
       "acceptance": "Purchased-prefix-only fit, unseen-condition predictions, independent analytic development score and SDK/CLI evidence; any failed probe unscorable, primary MSE null; derive RMSE from position_mse.",
-      "evidence_gap": "Production fitter source is independently accepted and passes 1006 integrated tests; exact-head PR/main acceptance remains. Predictor, independent scorer and I1 evidence remain separate.",
+      "evidence_gap": "Production fitter is integrated with exact-head PR/main CI; predictor, independent scorer and I1 evidence remain separate.",
       "capacity_approval": "Concrete disk expansion and snapshot approved and independently accepted 2026-10-20; other paid/release gates unchanged."
     },
     "capacity_recovery": {
@@ -10859,7 +10862,7 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Project lead owns primary for fitter integration; Research prepares predictor read-only and receives writer ownership after accepted dependency integration.",
+      "scientific": "Research owns primary for SP-04.b after accepted fitter integration; lead takes exclusive writer ownership at integration handoffs.",
       "identity": "Engineer Quality owns the reused identity checkout for C1 after accepted B3 integration. C2 requires accepted C1; no extra checkout.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
@@ -10928,7 +10931,7 @@
     "stream_contract_clarification": "Current authoritative session/credential, grant and workspace checks before every payload batch; applicable run lease also checked. The <=30-second interval applies only to idle connections, not cached payload authorization. SP-11.c/23.b/35.c prose aligned; graph/effort/gates unchanged.",
     "spring_fitter_evidence": {
       "source": "c43cd8011efdb6fe2dc27ce251803eba4fe36597",
-      "status": "reviewed_integration_pending",
+      "status": "accepted_and_integrated",
       "author": "Engineer Research",
       "independent_reviewers": [
         "Engineer Quality",
@@ -10944,7 +10947,13 @@
       "external_schema_checks": 492,
       "config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
       "record": "docs/FITTING.md",
-      "boundary": "Public-prefix numerical fitter only; no prediction, ground-truth accuracy, scorer, I1 or release claim. Frozen SCI bytes and dependency manifests unchanged."
+      "boundary": "Public-prefix numerical fitter only; no prediction, ground-truth accuracy, scorer, I1 or release claim. Frozen SCI bytes and dependency manifests unchanged.",
+      "pull_request": 80,
+      "merge": "e5a3c8d8b7d718be9be7d88e81fb4cad90e73f1a",
+      "reviewed_integration_head": "833d8c711ecdc97e3817ed744f9ff674331d0d1f",
+      "tree": "cbe89e1d14646d3e9d77b96b97d8f267e6cfaafd",
+      "pr_ci": 39360722931,
+      "main_ci": 39360858087
     }
   }
 }
