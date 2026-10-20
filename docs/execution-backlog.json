@@ -1397,7 +1397,7 @@
         "FE"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze world, sse and replay contracts.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1410,9 +1410,9 @@
         "research"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/94",
-      "execution_owner": "Engineer Research after explicit identity writer handoff; Platform and Quality review; lead integrates.",
+      "execution_owner": "Engineer Research exclusively authors WORLD1 in identity; Platform and Quality independently review, lead integrates.",
       "execution_plan": "WORLD1 immutable world/version, safe and granted views, browser capability and exact run selection; WEB1 bounded streams/snapshots/cursors/replay/artifact retrieval. API checkpoint before predicates in each independent PR.",
-      "evidence": "Design preparation accepted; actual SP-01.b/c prerequisites complete. Source remains unstarted until reviewed handoff."
+      "evidence": "WORLD1 API authoring started after accepted SP-01.b/c and Quality-reviewed handoffc74975b on 2026-10-20 06:23 UTC. API checkpoint precedes runtime; WEB1 and parent completion remain open."
     },
     {
       "id": "SP-01.e",
@@ -10922,7 +10922,7 @@
     },
     "checkout_ownership": {
       "scientific": "Project lead owns primary progress/integration; reviewers use immutable source.",
-      "identity": "Clean and released after COMP1; reserved for Research WORLD1 after reviewed explicit handoff. Existing independently owned environment and pins retained.",
+      "identity": "Research exclusively authors WORLD1 on feat/world-preview-models from acceptedc74975b; existing independent environment/pins verified, no active previous consumers. Platform/Quality review immutable source.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11524,18 +11524,18 @@
     },
     "web_contract_preparation": {
       "owner": "Engineer Research",
-      "status": "ready_for_reviewed_writer_handoff",
+      "status": "world1_api_authoring",
       "task": "SP-01.d",
       "depends_on": [
         "SP-01.b",
         "SP-01.c"
       ],
-      "scope": "Two independent PRs within SP-01.d; immutable API checkpoint before predicates in each. Both actual prerequisites are accepted; source waits explicit handoff.",
+      "scope": "WORLD1 API authoring after explicit handoff; reviewed API precedes predicates. WEB1 follows independently and SP-01.e waits the complete SP-01.d.",
       "issue": 94,
       "pr_units": [
         {
           "id": "WORLD1",
-          "status": "ready_for_handoff",
+          "status": "api_authoring",
           "scope": "Immutable world/version, safe and granted views, browser-only capability and exact run selection."
         },
         {
@@ -11546,7 +11546,10 @@
           ],
           "scope": "Bounded stream/snapshot/cursor/archive/artifact retrieval and recovery."
         }
-      ]
+      ],
+      "starting_commit": "c74975b730cb020b23e338ff466a52d9282c7177",
+      "branch": "feat/world-preview-models",
+      "started_at": "2026-10-20T06:23:04Z"
     },
     "contract_tooling_preparation": {
       "owner": "Engineer Quality",

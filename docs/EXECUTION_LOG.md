@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | SP-01.d/#94 WORLD1, then WEB1 | Assigned; source waits reviewed explicit identity handoff; API checkpoint first |
+| Research | SP-01.d/#94 WORLD1 API authoring, then WEB1 | Exclusive identity writer; immutable API checkpoint before predicates |
 | Platform | WORLD1 preview/provenance and producer-boundary review | Independent immutable-source reviewer |
 | Quality | Completion/handoff, then WORLD1 authority/recovery/schema review | Independent reviewer; SP-01.e stays read-only preparation |
-| Project lead | Record SP-01.c acceptance and hand off WORLD1 | Exclusive primary owner; integration and progress |
+| Project lead | WORLD1 review, integration and progress | Exclusive primary owner; exact PR/main acceptance per unit |
 
 ## Assignments
 
@@ -353,3 +353,5 @@ Final integrated60a8ac581fcfed2df9f9381ce116b6d905064242 checks passed2,423 test
 Research is assigned SP-01.d/#94 in the existing identity checkout after this record is reviewed and the lead explicitly hands off the writer. WORLD1 covers immutable world/version views, browser-only current authorization, explicit preview grants and exact selected-world/run binding. WEB1 follows in a separate PR for streams, snapshots, cursors, replay and large-artifact retrieval. Each unit requires an API/fixture checkpoint before pure runtime predicates. Platform reviews preview/provenance and producer boundaries; Quality reviews authority/recovery/schema consistency and retains read-only SP-01.e preparation. Lead owns primary integration and progress. No dependency, estimate, paid, research-amendment or release gate changes.
 
 Private integration index SHA256 36b7a4ea56e08504d8c6638bd991f5f86bcaab1779fccd24439a869fdc82a02b; final composition index 227880dfbe5e0fe7278d782471985528e8cfb27b20b62ded8853ce8bb4e89627. The candidate and evidence are owner-readable outside checkouts, review 2026-11-19; same-VM storage is not an off-device backup. Baseline remains 168 tasks, 369 edges and ten gates. Identity is released and reserved for reuse; no additional checkout or dependency installation was created.
+
+2026-10-20 06:23 UTC — Quality accepted completion/handoff c74975b730cb020b23e338ff466a52d9282c7177/tree393ebb3ccc0ce92a40e5df9cda5ebe111efc921d, independently verifying source/CI/candidate evidence and unchanged baseline. Lead verified identity clean/released, no active checkout consumers, unchanged pins and no cross-checkout dependency symlinks, then switched it to feat/world-preview-models at that accepted head. Research received exclusive WORLD1 API authoring; Platform and Quality independently review. The private owner index is current. Free space103,510,413,312 bytes; no additional checkout or dependencies. The API checkpoint remains required before predicates; WEB1 and SP-01.e remain pending.
