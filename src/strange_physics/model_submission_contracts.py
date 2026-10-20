@@ -347,7 +347,9 @@ def model_registration_json_schema() -> JsonSchemaValue:
     _, schema = models_json_schema([(model, "validation") for model in MODEL_REGISTRATION_MODELS])
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
     schema["$id"] = "https://strange-physics.dev/contracts/model-registration.schema.json"
-    schema["x-contract-status"] = "COMP1 API review; runtime and full SP-01.c freeze pending"
+    schema["x-contract-status"] = (
+        "COMP1 pure contracts and proposals reviewed; integration and full SP-01.c freeze pending"
+    )
     schema["x-public-models"] = ["SubmitModelRequest"]
     schema["description"] = (
         "Only SubmitModelRequest is public. Other projections require trusted current producers; "

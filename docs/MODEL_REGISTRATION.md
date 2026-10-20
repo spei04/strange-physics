@@ -1,7 +1,8 @@
 # Native model registration — COMP1
 
-Status: API and composition-contract review. Runtime entrypoints, actual storage/SQL
-producers and the complete SP-01.c freeze remain pending. Synthetic fixtures do
+Status: native contracts and pure admission/completion/replay proposals independently
+reviewed. Hosted integration and the complete SP-01.c freeze remain pending.
+Actual storage/SQL producers are not implemented by this slice. Synthetic fixtures do
 not establish deployed approval, process isolation, fitting accuracy or production
 readiness.
 
@@ -46,10 +47,10 @@ claim.
 | Canonical selected SCI observation bundle | 8 MiB |
 | Private proposal/record metadata | 4 MiB |
 | Parsed JSON depth | 32 |
-| Parsed JSON nodes | 1,000,000 |
+| Lexical JSON node starts (including keys) | 1,000,000 |
 | Complete accepted-operation ledger | 10,000 operations |
 
-The proposed runtime must check raw byte limits before decoding and reject
+The runtime checks raw byte limits before decoding and rejects
 duplicate JSON keys, nonfinite constants and excessive nesting. The canonical
 prefix limit is a separate bound, enforced during incremental encoding before
 accumulating an oversized serialization. Its hash must be byte-identical to
@@ -84,7 +85,7 @@ permitted in this boundary.
 
 `ModelLedgerSnapshot` contains this binding, the run revision and the complete
 accepted scientific `Operation` ledger from one consistent transaction. At
-runtime its count/scope/ordinals/operation identities must join the actual current
+runtime its count/scope/ordinals/operation identities join the actual current
 run, using the existing committed-prefix helper. A pending, running, failed or
 cancelled operation stops the committed scientific prefix. A completed operation
 whose `ExperimentRecord.status` is failed remains a purchased observation and is
@@ -101,7 +102,7 @@ No new observation schema or weaker hash is introduced.
 
 ## Mandatory authorization and distinct native runtime approval
 
-Both future complete admission/replay and completion entrypoints must invoke
+Both complete admission/replay and completion entrypoints invoke
 `authorize_worker_broker("submit_model", ...)` with the actual current credential,
 run authority, `WorkerEnvironment` and `WorkerLaunchLookup` before inspecting
 private model bytes, ledger, idempotency lookup or completed replay. This composes
@@ -110,7 +111,7 @@ launch, current package approval and required isolation policy. A C2-only helper
 or a caller boolean is not the complete registration boundary. No human/service
 model-submission route is added.
 
-The built-in analytic predictor approval is a separate check. It must bind the
+The built-in analytic predictor approval is a separate check. It binds the
 actual fixed `SpringPredictionConfig`, native purpose/profile/version, exact
 trusted source/build/lock/recipe/image evidence, and current configured build,
 scan and approval policy. Agent-package approval or image equality alone is
@@ -143,8 +144,9 @@ provenance identities. Historical acceptance and committing-worker identities
 remain separate so a later eligible attempt can finish the same operation.
 Same-epoch aliases are rejected; run revisions and commit chronology cannot
 move backwards. A later-epoch worker must have a run revision at least as new as
-the accepted submission, not only an eventual commit revision that dominates both. A renewed credential in the same immutable worker launch does
-not change that launch's identity.
+the accepted submission, not only an eventual commit revision that dominates both.
+A renewed credential in the same immutable worker launch does not change that
+launch's identity.
 
 A completed operation must join the exact model receipt, normalized request,
 immutable model record and outbox. Pending/running/failed/cancelled operations
@@ -178,7 +180,7 @@ cycle. Public `PackageManifest` closure and submitted-worker behavior are
 unchanged. This is a compatibility repair, not a new predictor version or an
 alias for the frozen value.
 
-## API verification
+## Historical API checkpoint
 
 The fixture intentionally uses a SCI-valid coefficient of five with an unknown
 fitter and different fit-configuration claim. It includes a purchased failed
@@ -189,11 +191,12 @@ Contract tests cover strict bounds, public/private closure, raw versus canonical
 identity, actual engine/admission joins, scope and chronology, completed receipt
 and outbox substitution, later-attempt commits, partial recovery states and all
 retained operation statuses. They also compare frozen model/receipt definitions.
-The API checkpoint does not yet verify runtime parsing, authorization ordering,
-actual canonical prefix hashing, current approval renewal or storage behavior;
-those require the separately reviewed runtime implementation.
+The API checkpoint alone did not verify runtime parsing, authorization ordering,
+actual canonical prefix hashing or current approval renewal. Those checks are
+now covered by the separately reviewed runtime below. Storage behavior remains
+a future producer obligation.
 
-## Runtime review checkpoint
+## Runtime behavior and evidence
 
 `model_submissions.admit_model_submission` and `commit_model_submission` are
 pure complete-boundary proposal functions. Both first invoke the existing
@@ -217,9 +220,9 @@ incrementally checked byte limit. This avoids accumulating an unbounded encoded
 prefix string; the already bounded typed input still occupies memory. These
 reference bounds do not establish scalable database reads or hosted throughput.
 
-The first runtime checkpoint has 25 focused runtime cases plus the 94 accepted
-contract cases passing, with targeted Ruff and strict mypy checks. Independent
-runtime review and broader boundary/whole-repository verification remain open.
+The historical first runtime checkpoint, `59ea2ca`, passed 25 focused runtime
+cases plus the 94 accepted contract cases. Further tests and independent review
+produced the final source checkpoint below.
 No database/object adapter, predictor execution or deployed approval is supplied.
 
 Admission replay depends on authoritative immutable completed projections
@@ -229,3 +232,52 @@ of every trusted retained projection is outside this metadata-only replay proof.
 Completion/retry checks actual material and rejects mismatched raw-model identity
 or scientific provenance; no status-only replay is described as that stronger
 verification.
+
+### Final authored source verification
+
+Runtime source `b7c944c0c4065a96a62e777e3d6d2975ba3787d5` passed:
+
+- 2,423 whole-repository tests, including 47 runtime registration cases and
+  94 registration contract cases.
+- Ruff and formatting checks across 117 files; configured strict mypy across
+  78 source files; 764 external JSON Schema fixture checks and reference resolution.
+- The configured Bandit medium/high threshold. Existing low-severity findings
+  are not described as a zero-finding security audit.
+- Offline wheel/sdist building and exact reviewed archive allowlist checks.
+  A temporary wheel-only target installation, outside the checkout, verified
+  the shipped module identity, callable imports, actual bounded model/ledger
+  parsing and canonical model identity using the existing pinned dependency
+  environment. The temporary installation and package archives were removed.
+
+All three independent reviewers accepted that runtime. Review included current
+authority before poisoned private inputs, partial/status-specific commit witnesses,
+renewed credentials and later workers, exact historical prefixes, raw/canonical
+identity, approval renewal and mutation-sensitive guard checks. The retained
+private author evidence index has SHA-256
+`b21ade1a706be6034bbe297f66a1d157c7a15ad3e8ac86123da5e5bddc10654e`.
+Prior API and runtime diagnostics remain retained separately; final status prose
+does not relabel those earlier checkpoints as proof of the final source.
+
+The final documentation/schema-status change preserves all contract definitions
+and runtime behavior. Hosted exact-head CI, protected-main acceptance and the
+parent contract freeze are separate integration gates. The local wheel smoke is
+not a fresh dependency-install proof, live persistence test, worker isolation
+proof, predictor invocation or deployment.
+
+### Producer composition
+
+Use the actual current worker authority, original engine binding, current native
+approval and exact verified object readback for admission. Persist the returned
+`ModelAdmissionPlan` atomically under the full idempotency key. For completion,
+read a consistent complete byte-capped ledger and exact immutable model bytes,
+call `commit_model_submission`, and atomically apply the returned `ModelCommitPlan`
+with its operation, model record and outbox. Recheck current C2 keyset, run/lease,
+launch lifecycle, approval and catalog/CAS conditions in that transaction;
+historical launch credential fields are not current authorization fences.
+
+SP-09.d owns durable scientific result producers; SP-13.c owns checkpoint/model
+reference commits; SP-16.b owns restore composition; SP-12.a owns cumulative
+resource accounting. Those producers must provide consistent indexed, byte-capped
+internal reads and retain failure outcomes. An 8 MiB accepted reference envelope
+rejects larger histories without truncation; it does not demonstrate that every
+otherwise legal 10,000-operation run can be loaded or served at enterprise scale.

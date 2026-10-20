@@ -3492,7 +3492,7 @@
   "$id": "https://strange-physics.dev/contracts/model-registration.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Only SubmitModelRequest is public. Other projections require trusted current producers; schemas do not authenticate engine selection, byte identity, fitting or execution.",
-  "x-contract-status": "COMP1 API review; runtime and full SP-01.c freeze pending",
+  "x-contract-status": "COMP1 pure contracts and proposals reviewed; integration and full SP-01.c freeze pending",
   "x-public-models": [
     "SubmitModelRequest"
   ]
