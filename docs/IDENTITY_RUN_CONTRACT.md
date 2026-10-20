@@ -1,19 +1,19 @@
 # Identity, run and SQL contract v1 — first control subset
 
-SP-01.b / issue #52, part 1. All C-ID conformance slices are defined and reviewed;
-C2 integration and final parent producer/consumer acceptance remain pending.
-Downstream full-contract consumers stay blocked until the lead records that gate.
-This bounded contract covers the eleven routes in the
+SP-01.b / issue #52 is complete for its bounded interface and SQL-obligation
+scope through [PR #88](https://github.com/spei04/strange-physics/pull/88),
+including C2 and final producer/consumer composition review. Downstream consumers
+may use this freeze once their other actual prerequisites pass.
+This control subset covers the eleven original routes in the
 [partial OpenAPI draft](../contracts/draft/openapi.json).
 [Schema](../contracts/control.schema.json),
 [pure conformance checks](../src/strange_physics/control_contracts.py),
 and [synthetic examples](../contracts/control.examples.json) define the subset.
 The [browser-session subset](BROWSER_SESSION_CONTRACT.md) adds ID-A interfaces.
 Membership/invitation/linking (ID-B) and service lifecycle (ID-C/C1) have separate
-accepted contracts. The [run/composition slice](RUN_CREDENTIAL_CONTRACT.md) is the
-reviewed ID-C runtime checkpoint awaiting integration; full-contract consumers stay blocked pending
-final producer/consumer acceptance.
-Producer/consumer acceptance is recorded separately after independent review.
+accepted contracts. The [run/composition slice](RUN_CREDENTIAL_CONTRACT.md) is
+integrated with exact reviewed-tree and PR/protected-main acceptance recorded in
+[the execution log](EXECUTION_LOG.md).
 
 There is no hosted API, token issuer, SQL migration, RLS policy or deployment
 here. These predicates do not verify credentials, read current membership,
@@ -30,13 +30,14 @@ operational evidence. CORE and the local SDK are unchanged.
 | Scoped idempotency and checkpoint history | Durable SQL transactions and concurrency tests |
 | SQL keys, relationships, transaction and tenant isolation obligations | Migrations, RLS policies, runtime DB roles |
 | Eleven existing route identities and scopes | Remaining product routes |
-| Checkpoint index/identity/size/full-payload replay | ART envelope, object generation/hash verification and retention (SP-01.c) |
-| Model submission operation/receipt identity | ART envelope and hosted EXEC protocol |
+| Checkpoint index/identity/size/full-payload replay; accepted [ART1 envelope](ARTIFACT_CONTRACT.md) | Live object readback, transactional references and retention producers |
+| Model submission operation/receipt identity; reviewed [native API](MODEL_REGISTRATION.md) | COMP1 runtime/composition acceptance, then live storage and worker producers |
 | Event stream authorization scope | WEB schema, cursor retention/resync and SSE renewal (SP-01.d) |
 
 OpenAPI remains partial and unimplemented. Local SCI schema acceptance does not
-freeze a hosted prediction protocol. Checkpoint and model ART bodies, and WEB
-events remain explicitly draft.
+freeze a hosted prediction protocol. ART1 and EXEC1 interfaces are accepted;
+COMP1 runtime/composition and WEB event contracts remain pending. The native
+model API does not add custom predictor execution.
 
 ## Identity and current authority
 
@@ -210,8 +211,10 @@ strange-physics.python-json.v1: all JSON-mode fields including defaults/nulls,
 Python JSON sorted keys, compact separators, ASCII escaping, finite numbers,
 UTF-8 and no newline. This is not RFC 8785. Other languages reproduce golden
 bytes or use a conforming adapter. Raw client bytes/claimed hashes are not
-authority. Cancellation's absent body normalizes to {}. Model hashing remains
-conditional on its eventual ART/EXEC validator.
+authority. Cancellation's absent body normalizes to {}. The reviewed
+[native model API](MODEL_REGISTRATION.md) distinguishes the raw artifact digest
+from canonical model/request hashes; complete COMP1 runtime validation remains
+pending.
 
 Admission order:
 
@@ -325,7 +328,7 @@ connection reuse. RLS supplements explicit object authorization and composite
 FKs. Error, rollback and nested transaction paths must not retain tenant state.
 Workers/evaluators receive least privilege.
 
-## Reviewed C-ID inventory and remaining acceptance
+## Accepted C-ID inventory and production boundary
 
 The conformance slices below are defined and independently reviewed. Their
 integration identities make the inventory auditable; they do not establish
@@ -339,7 +342,7 @@ production provider, HTTP, SQL, concurrency or recovery behavior.
 | ID-B/B2 invitations | [Invitation contract](INVITATION_CONTRACT.md), invitation schema/examples/OpenAPI | [B2 integration](https://github.com/spei04/strange-physics/commit/89e6117f1b5394acd70968b3505c4770fbc9315e) |
 | ID-B/B3 explicit linking | [Linking contract](IDENTITY_LINKING_CONTRACT.md), linking schema/examples/OpenAPI and the reviewed internal ID-A amendment | [B3 integration](https://github.com/spei04/strange-physics/commit/24c879612c92913d04b7b54456515a69b46ee67b) |
 | ID-C/C1 service keys | [Service credential contract](SERVICE_CREDENTIAL_CONTRACT.md), service schema/examples/OpenAPI and principal/grant ancestry wrappers | [C1 integration](https://github.com/spei04/strange-physics/commit/2cb3df7ace64708cb5ec53887ca8a0ad9aceb7d7) |
-| ID-C/C2 run credentials and complete authority | [Run credential contract](RUN_CREDENTIAL_CONTRACT.md), internal run-credentials schema/examples, mandatory product guards and coordinator proposals | [Reviewed C2 runtime](https://github.com/spei04/strange-physics/commit/67d1128d262d9fcf7cca4884eb472a73041d7606); integration pending |
+| ID-C/C2 run credentials and complete authority | [Run credential contract](RUN_CREDENTIAL_CONTRACT.md), internal run-credentials schema/examples, mandatory product guards and coordinator proposals | [C2 and parent integration](https://github.com/spei04/strange-physics/commit/92320173ff0d3278c65cfc251983d57fab9960b1) |
 
 B3 requires explicit trusted proof purpose and typed claim ownership, while the
 global registry key remains the actual proof digest alone. C2 requires the
@@ -348,9 +351,9 @@ all repository callers are migrated. Neither change alters the existing public
 login, workspace or control request/response shapes. These are explicit internal
 producer amendments, not evidence that external producers have been upgraded.
 
-Remaining parent acceptance consists of integrated-head verification, final
-producer/consumer composition review and a separately recorded SP-01.b/C-ID gate
-decision. This inventory does not declare that gate complete. The current
+SP-01.b/C-ID parent acceptance includes integrated-head verification, final
+producer/consumer composition review and passing exact PR/main checks through
+PR #88. Live enforcement remains assigned to later producers. The current
 schedule and task state live in [the execution backlog](EXECUTION_BACKLOG.md) and
 [the roadmap](ROADMAP.md); earlier preparation estimates are superseded and are
 not implementation commitments.

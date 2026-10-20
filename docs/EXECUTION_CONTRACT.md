@@ -245,7 +245,8 @@ a lock resolver, build/scan/promotion service, token verification, resource or
 network isolation, a scheduler, object/SQL atomicity, or live recovery drills.
 Bounded pure admission/replay/broker/termination predicates test unavailable,
 partial and stale evidence; later hosted producers must establish its origin
-and currency. SP-01.c remains open through EXEC1 acceptance and COMP1.
+and currency. EXEC1 is integrated through PR #92; SP-01.c remains open through
+[native model registration and final composition](MODEL_REGISTRATION.md).
 
 Later production ownership remains SP-14.a extraction/pinned-lock validation,
 SP-14.b isolated builds, SP-14.c scans/promotion, SP-15.b resource admission,

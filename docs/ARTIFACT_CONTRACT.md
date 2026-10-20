@@ -1,8 +1,10 @@
 # Artifact and checkpoint contract — ART1
 
 SP-01.c / issue #89, first review unit. Typed messages and pure admission/recovery
-predicates are implemented for review. Full ART/EXEC acceptance still requires
-the package/worker unit and final composition; this is not hosted enforcement.
+predicates are accepted through [PR #91](https://github.com/spei04/strange-physics/pull/91).
+The [package/worker unit](EXECUTION_CONTRACT.md) is also integrated; full SP-01.c
+acceptance still requires [native model runtime/composition](MODEL_REGISTRATION.md).
+These interfaces do not establish hosted enforcement.
 
 [Schema](../contracts/artifacts.schema.json),
 [synthetic examples](../contracts/artifacts.examples.json) and
@@ -110,8 +112,9 @@ already committed observations remain independent of the checkpoint.
 
 No pickle or agent-specific executable deserialization runs in a trusted
 process. This slice implements no storage adapter, SQL/HTTP handler, sandbox,
-retention worker, token verifier or live concurrency guarantee. Package/worker
-envelopes are the next SP-01.c unit; full executable predictors remain SP-19.a.
+retention worker, token verifier or live concurrency guarantee. Accepted
+[package/worker envelopes](EXECUTION_CONTRACT.md) compose this artifact boundary;
+full executable predictors remain SP-19.a.
 
 ## Producer ordering and safe failures
 
@@ -201,6 +204,6 @@ checkpoint proposal, exact lost-acknowledgement replay, restore-candidate
 validation and raw-byte hash verification. These are local executable contract
 checks. They do not establish real object availability, transactional SQL,
 current-state adapter enforcement, crash recovery, storage/IAM isolation, or
-hosted production readiness. Exact integrated-head and hosted CI checks remain
-the integration owner's responsibility; SP-01.c remains open through the
-package/worker and final composition units.
+hosted production readiness. Exact integrated-head and hosted CI checks passed
+for ART1 through PR #91 and EXEC1 through PR #92. SP-01.c remains open through
+the native model runtime and final composition unit.
