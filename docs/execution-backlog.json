@@ -10528,7 +10528,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Engineer Research (next ID-A session-contract assignment)",
+      "BE1": "Engineer Platform (ID-B/B1 workspace/membership; later B2/B3 separately)",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10544,13 +10544,13 @@
     "schedule_repair": "2026-10-19: technical lead accepted SP-01.b before SP-01.c freeze. One added edge (369 total); both reference schedules regenerated without changing effort, capacity, approval gates or current execution staffing.",
     "reviewed_scientific_head": "6e724152e5c947db1662bd65cea36412a8498b22",
     "integrated_scientific_subset": "cc24aef592f3157b67024e3cab41159489c77ffa",
-    "contract_scope_note": "Control part 1 is integrated. ID-A/#57 sessions/bootstrap is assigned next; ID-B and ID-C remain queued. Full SP-01.b and its dependent consumers remain gated; remaining 6\u20138 engineer-day estimate still requires a human-resource reforecast.",
+    "contract_scope_note": "Control part 1 and ID-A sessions are integrated. ID-B/B1 is assigned next, B2/B3 separately queued, then ID-C. Full SP-01.b and dependent consumers remain gated. Historical remaining 6\u20138 engineer-day estimate still requires a human-resource reforecast; agent elapsed time is not staffing evidence.",
     "integrated_control_subset": "d6204aaab82e1b100532f40bae00e224d9334c65",
     "identity_remaining_units": [
       {
         "id": "SP-01.b/ID-A",
         "title": "Browser sessions and bootstrap",
-        "status": "assigned_pending_writer_handoff",
+        "status": "complete",
         "owner": "Engineer Research",
         "depends_on": [
           "SP-01.b control part 1"
@@ -10560,9 +10560,35 @@
       {
         "id": "SP-01.b/ID-B",
         "title": "Membership, invitations and explicit account linking",
-        "status": "queued",
+        "status": "assigned_pending_writer_handoff",
         "depends_on": [
           "SP-01.b/ID-A"
+        ],
+        "owner": "Engineer Platform",
+        "issue": "https://github.com/spei04/strange-physics/issues/63",
+        "pr_units": [
+          {
+            "id": "B1",
+            "title": "Workspace creation and membership",
+            "status": "assigned_pending_writer_handoff"
+          },
+          {
+            "id": "B2",
+            "title": "Invitations",
+            "status": "queued",
+            "depends_on": [
+              "B1"
+            ]
+          },
+          {
+            "id": "B3",
+            "title": "Explicit identity linking",
+            "status": "queued",
+            "depends_on": [
+              "B1",
+              "B2"
+            ]
+          }
         ]
       },
       {
@@ -10571,7 +10597,9 @@
         "status": "queued",
         "depends_on": [
           "SP-01.b/ID-B"
-        ]
+        ],
+        "owner": "Engineer Quality",
+        "issue": "https://github.com/spei04/strange-physics/issues/64"
       }
     ],
     "estimate_adjustments": [
@@ -10603,6 +10631,22 @@
     ],
     "integrated_journey_staging_docs": "1081135fb3fb8ad1d2dd6d70b4358aa85da2b370",
     "integrated_ci_increment": "256b409240a2fe50720f2181cc4f8602e15bdaf2",
-    "delivery_record": "DELIVERY_RECORD.md"
+    "delivery_record": "DELIVERY_RECORD.md",
+    "integrated_session_subset": "cc576da9f7ce43f7bc497289a3e02efa9c74f9d0",
+    "reviewed_session_head": "34d26d9343c63747e520351d0a99f154596248f0",
+    "session_evidence": {
+      "pull_request": 65,
+      "head_ci": 39348959056,
+      "main_ci": 39349126536,
+      "tests": 413,
+      "external_schema_cases": 207,
+      "matching_tree": "cd1f0ff73adb1ca41cbf87a5d4d39802d16d3357",
+      "reviewers": [
+        "Engineer Quality",
+        "Engineer Platform",
+        "Project lead"
+      ],
+      "scope": "Pure contracts and conformance predicates; no authentication handler, provider verification, cookie delivery or SQL implementation."
+    }
   }
 }
