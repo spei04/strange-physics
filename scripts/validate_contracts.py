@@ -75,6 +75,18 @@ def main() -> None:
                 f"session.schema.json#/$defs/{fixture['model']}", value, group == "runtime_negative"
             )
 
+    for fixture in sessions["workspace_session_failures"]:
+        check("control.schema.json#/$defs/Error", fixture["output"])
+
+    for group, values in sessions["path_identifiers"].items():
+        for value in values:
+            check(
+                "session.openapi.json#/paths/~1v1~1auth~1logins~1{transaction_id}"
+                "/get/parameters/0/schema",
+                value,
+                group == "valid",
+            )
+
     boundary_paths = {
         "identifiers": [
             "core.schema.json#/$defs/ParticleInitial/properties/id",

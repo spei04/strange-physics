@@ -1187,6 +1187,16 @@
             },
             "description": "Operation accepted; poll for committed outcome. Acceptance is not execution completion."
           },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Mixed cookie and bearer credentials or malformed authentication request. Uses the existing Error envelope with code invalid_request."
+          },
           "401": {
             "content": {
               "application/json": {
@@ -1263,7 +1273,7 @@
                 }
               }
             },
-            "description": "Temporary platform unavailability"
+            "description": "Authentication policy or service unavailable; existing Error envelope with code temporarily_unavailable. Reconcile any prior uncertain mutation before retry."
           }
         },
         "security": [
@@ -1283,7 +1293,25 @@
         "x-reject-mixed-credentials": true,
         "x-required-permission": "researcher: create run",
         "x-required-scope": "runs:create",
-        "x-session-contract": "../session.openapi.json"
+        "x-session-contract": "../session.openapi.json",
+        "x-session-error-mapping": {
+          "ambiguous_credentials": {
+            "code": "invalid_request",
+            "status": 400
+          },
+          "forbidden": {
+            "code": "forbidden",
+            "status": 403
+          },
+          "policy_unavailable": {
+            "code": "temporarily_unavailable",
+            "status": 503
+          },
+          "unauthenticated": {
+            "code": "unauthenticated",
+            "status": 401
+          }
+        }
       }
     },
     "/v1/workspaces/{workspace_id}/runs/{run_id}": {
@@ -1328,6 +1356,16 @@
             },
             "description": "Authorized result"
           },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Mixed cookie and bearer credentials or malformed authentication request. Uses the existing Error envelope with code invalid_request."
+          },
           "401": {
             "content": {
               "application/json": {
@@ -1404,7 +1442,7 @@
                 }
               }
             },
-            "description": "Temporary platform unavailability"
+            "description": "Authentication policy or service unavailable; existing Error envelope with code temporarily_unavailable. Reconcile any prior uncertain mutation before retry."
           }
         },
         "security": [
@@ -1423,7 +1461,25 @@
         "x-reject-mixed-credentials": true,
         "x-required-permission": "viewer: read run",
         "x-required-scope": "runs:read",
-        "x-session-contract": "../session.openapi.json"
+        "x-session-contract": "../session.openapi.json",
+        "x-session-error-mapping": {
+          "ambiguous_credentials": {
+            "code": "invalid_request",
+            "status": 400
+          },
+          "forbidden": {
+            "code": "forbidden",
+            "status": 403
+          },
+          "policy_unavailable": {
+            "code": "temporarily_unavailable",
+            "status": 503
+          },
+          "unauthenticated": {
+            "code": "unauthenticated",
+            "status": 401
+          }
+        }
       }
     },
     "/v1/workspaces/{workspace_id}/runs/{run_id}/cancel": {
@@ -1495,6 +1551,16 @@
             },
             "description": "Operation accepted; poll for committed outcome. Acceptance is not execution completion."
           },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Mixed cookie and bearer credentials or malformed authentication request. Uses the existing Error envelope with code invalid_request."
+          },
           "401": {
             "content": {
               "application/json": {
@@ -1571,7 +1637,7 @@
                 }
               }
             },
-            "description": "Temporary platform unavailability"
+            "description": "Authentication policy or service unavailable; existing Error envelope with code temporarily_unavailable. Reconcile any prior uncertain mutation before retry."
           }
         },
         "security": [
@@ -1591,7 +1657,25 @@
         "x-reject-mixed-credentials": true,
         "x-required-permission": "researcher: cancel authorized run",
         "x-required-scope": "runs:cancel",
-        "x-session-contract": "../session.openapi.json"
+        "x-session-contract": "../session.openapi.json",
+        "x-session-error-mapping": {
+          "ambiguous_credentials": {
+            "code": "invalid_request",
+            "status": 400
+          },
+          "forbidden": {
+            "code": "forbidden",
+            "status": 403
+          },
+          "policy_unavailable": {
+            "code": "temporarily_unavailable",
+            "status": 503
+          },
+          "unauthenticated": {
+            "code": "unauthenticated",
+            "status": 401
+          }
+        }
       }
     },
     "/v1/workspaces/{workspace_id}/runs/{run_id}/events": {
@@ -1652,6 +1736,16 @@
             "x-event-schema": {
               "$ref": "#/components/schemas/RunEvent"
             }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Mixed cookie and bearer credentials or malformed authentication request. Uses the existing Error envelope with code invalid_request."
           },
           "401": {
             "content": {
@@ -1739,7 +1833,7 @@
                 }
               }
             },
-            "description": "Temporary platform unavailability"
+            "description": "Authentication policy or service unavailable; existing Error envelope with code temporarily_unavailable. Reconcile any prior uncertain mutation before retry."
           }
         },
         "security": [
@@ -1760,7 +1854,25 @@
         "x-reject-mixed-credentials": true,
         "x-required-permission": "viewer: stream public committed run events",
         "x-required-scope": "runs:read",
-        "x-session-contract": "../session.openapi.json"
+        "x-session-contract": "../session.openapi.json",
+        "x-session-error-mapping": {
+          "ambiguous_credentials": {
+            "code": "invalid_request",
+            "status": 400
+          },
+          "forbidden": {
+            "code": "forbidden",
+            "status": 403
+          },
+          "policy_unavailable": {
+            "code": "temporarily_unavailable",
+            "status": 503
+          },
+          "unauthenticated": {
+            "code": "unauthenticated",
+            "status": 401
+          }
+        }
       }
     },
     "/v1/workspaces/{workspace_id}/runs/{run_id}/operations/{operation_id}": {
@@ -1817,6 +1929,16 @@
               }
             },
             "description": "Authorized result"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Mixed cookie and bearer credentials or malformed authentication request. Uses the existing Error envelope with code invalid_request."
           },
           "401": {
             "content": {
@@ -1894,7 +2016,7 @@
                 }
               }
             },
-            "description": "Temporary platform unavailability"
+            "description": "Authentication policy or service unavailable; existing Error envelope with code temporarily_unavailable. Reconcile any prior uncertain mutation before retry."
           }
         },
         "security": [
@@ -1913,7 +2035,25 @@
         "x-reject-mixed-credentials": true,
         "x-required-permission": "viewer: read authorized operation",
         "x-required-scope": "runs:read",
-        "x-session-contract": "../session.openapi.json"
+        "x-session-contract": "../session.openapi.json",
+        "x-session-error-mapping": {
+          "ambiguous_credentials": {
+            "code": "invalid_request",
+            "status": 400
+          },
+          "forbidden": {
+            "code": "forbidden",
+            "status": 403
+          },
+          "policy_unavailable": {
+            "code": "temporarily_unavailable",
+            "status": 503
+          },
+          "unauthenticated": {
+            "code": "unauthenticated",
+            "status": 401
+          }
+        }
       }
     }
   },

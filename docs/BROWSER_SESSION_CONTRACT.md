@@ -114,6 +114,15 @@ An app session does not grant workspace scope: derive the user principal, then
 apply the existing current membership/scope predicate inside each write/retry.
 No truth visibility, role, membership or export grant is added by bootstrap.
 
+Workspace routes preserve the existing control Error envelope; they do not
+return SessionError. workspace_session_error maps mixed credentials to
+400 invalid_request, missing policy to 503 temporarily_unavailable, and
+authentication/CSRF denials to existing 401 unauthenticated / 403 forbidden.
+Messages are fixed and safe; operation_id is null because authentication failed
+before admission. Only unavailable policy is marked retryable, and clients must
+still reconcile any earlier ambiguous operation before retrying. The auth-route
+SessionError vocabulary is not silently inserted into the control schema.
+
 Cookies are opaque CSPRNG-generated secrets (at least 256 bits), stored as
 one-way keyed hashes in the eventual session store, not plaintext. The cookie is
 __Host-sp_session with Secure, HttpOnly, Path=/, SameSite=Lax and no Domain.
@@ -121,7 +130,9 @@ The separate __Host-sp_login binding uses the same attributes. Its lifetime is
 bounded by the transaction's eligibility/reconciliation policy; it grants no
 application session. Max-Age never exceeds remaining server authority.
 Session identifiers/generations in JSON are public references, not cookie
-secrets. Public SessionBootstrap exposes only authenticated, stable principal ID
+secrets. Public response secrets retain runtime redaction but are read-only response data
+without write-only schema annotations. Public SessionBootstrap exposes only
+authenticated, stable principal ID
 and SessionView. Workspace/member information belongs to ID-B.
 
 CSRF/proof/callback fields use SecretStr for safe default representations and
@@ -146,7 +157,9 @@ Minimal TrustedIdentityProof retains issuer, subject, audience, tenant, approved
 upstream provider, actual auth_time, iat, exp, verification time, proof digest and
 transaction/browser binding. Verifiers check signature, algorithm, issuer keys,
 revocation and all protocol claims outside these predicates. auth_time measures
-authentication; a recently refreshed iat cannot make old authentication fresh.\nActual auth_time cannot be later than server commit time; the configured skew\napplies to verifier timing and never creates future authentication authority.
+authentication; a recently refreshed iat cannot make old authentication fresh.
+Actual auth_time cannot be later than server commit time; the configured skew
+applies to verifier timing and never creates future authentication authority.
 The proof alone does not create a principal. Resolve stable identity ownership
 separately under the later identity mapping contract; email never merges it.
 
@@ -165,7 +178,12 @@ ownership. An adapter accepting OIDC also requires validate_oidc_callback.
 validate_login_completion combines the completion checks, binds the resulting
 session ID and preserves the proof. None of these functions performs I/O.
 
-Proof ownership must be unique across transactions under the same provider.
+Proof ownership is application-wide, keyed only by proof_claim_key (the actual
+verified token SHA-256), independent of provider_id, policy_id, issuer aliases,
+tenant aliases or initiating transaction. A claim store keyed by provider ID
+would allow the same token through two identically configured aliases and is
+forbidden. validate_proof receives the owner from this global unique lookup;
+provider binding remains a separate check.
 Persist the minimal verified projection and ownership before attempting session
 commit. Commit the transaction's consumed state, unique session and audit event
 atomically. Reserve/check current principal authority and stable identity mapping
@@ -185,9 +203,14 @@ GET session first reconciles a delivered cookie; the outcome route returns only
 the safe transaction status. If no new cookie arrived, fresh login is required.
 There is no replay endpoint that reissues a committed secret or creates a second
 session from consumed proof. A committed record never transitions back.
-After the configured reconciliation retention, delete minimal proof claims;
-keep only required nonsecret audit/dedup tombstones under the later retention
-policy. A purged transaction is never eligible again.
+After configured reconciliation retention, delete minimal proof claims.
+The global consumed-proof tombstone is a separate record: retain it until at
+least proof_claim_retain_until, the later of verified token expires_at and the
+transaction reconciliation deadline, even when the transaction/projection was
+purged earlier. Cleanup cannot turn a still-valid consumed token into an
+unclaimed proof for another alias. Longer audit retention remains a deployment
+policy; these minimum dedup tombstones confer no session authority. A purged
+transaction is never eligible again.
 
 ## Renewal, logout and safe failures
 

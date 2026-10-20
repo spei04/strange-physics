@@ -124,12 +124,11 @@
           "type": "string"
         },
         "token": {
-          "format": "password",
           "maxLength": 16384,
           "minLength": 1,
+          "readOnly": true,
           "title": "Token",
-          "type": "string",
-          "writeOnly": true
+          "type": "string"
         }
       },
       "required": [
@@ -328,11 +327,10 @@
         "authorization_url": {
           "anyOf": [
             {
-              "format": "password",
               "maxLength": 16384,
               "minLength": 1,
-              "type": "string",
-              "writeOnly": true
+              "readOnly": true,
+              "type": "string"
             },
             {
               "type": "null"

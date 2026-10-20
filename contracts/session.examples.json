@@ -1,5 +1,21 @@
 {
   "notice": "Synthetic contract fixtures. Origins, time limits, digests and secrets are invented; not deployment approval or credentials.",
+  "path_identifiers": {
+    "invalid": [
+      "p\n",
+      "-p",
+      "p space",
+      "p\r\n",
+      "\u03c0",
+      "p\u2028",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    ],
+    "valid": [
+      "p",
+      "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+      "p_-1"
+    ]
+  },
   "runtime_negative": [
     {
       "field": "authenticated",
@@ -98,6 +114,11 @@
     {
       "field": "id_token",
       "model": "BrokerExchangeRequest",
+      "value": ""
+    },
+    {
+      "field": "token",
+      "model": "CSRFResponse",
       "value": ""
     }
   ],
@@ -305,5 +326,51 @@
       "upstream_provider": "google.com",
       "verified_at": 1005
     }
-  }
+  },
+  "workspace_session_failures": [
+    {
+      "input_code": "ambiguous_credentials",
+      "output": {
+        "code": "invalid_request",
+        "message": "Use one authentication method.",
+        "operation_id": null,
+        "request_id": "request-1",
+        "retryable": false
+      },
+      "status": 400
+    },
+    {
+      "input_code": "policy_unavailable",
+      "output": {
+        "code": "temporarily_unavailable",
+        "message": "Authentication policy is unavailable.",
+        "operation_id": null,
+        "request_id": "request-1",
+        "retryable": true
+      },
+      "status": 503
+    },
+    {
+      "input_code": "unauthenticated",
+      "output": {
+        "code": "unauthenticated",
+        "message": "Authentication required.",
+        "operation_id": null,
+        "request_id": "request-1",
+        "retryable": false
+      },
+      "status": 401
+    },
+    {
+      "input_code": "forbidden",
+      "output": {
+        "code": "forbidden",
+        "message": "Request is not permitted.",
+        "operation_id": null,
+        "request_id": "request-1",
+        "retryable": false
+      },
+      "status": 403
+    }
+  ]
 }

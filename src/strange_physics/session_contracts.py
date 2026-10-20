@@ -9,11 +9,12 @@ from __future__ import annotations
 from typing import Annotated, Literal, Self
 from urllib.parse import urlsplit
 
-from pydantic import Field, SecretStr, TypeAdapter, model_validator
+from pydantic import Field, SecretStr, TypeAdapter, WithJsonSchema, model_validator
 from pydantic.json_schema import JsonSchemaValue, models_json_schema
 
 from strange_physics.contracts import Identifier, Message
 from strange_physics.control_contracts import ContractViolation
+from strange_physics.control_contracts import Error as ControlError
 from strange_physics.research_contracts import Count, Digest
 
 Seconds = Annotated[int, Field(ge=1, le=2**31 - 1)]
@@ -28,6 +29,12 @@ HttpsURI = Annotated[
     ),
 ]
 Secret = Annotated[SecretStr, Field(min_length=1, max_length=16384)]
+ResponseSecret = Annotated[
+    SecretStr,
+    Field(min_length=1, max_length=16384),
+    # Preserve runtime redaction without marking intentionally returned values write-only.
+    WithJsonSchema({"type": "string", "minLength": 1, "maxLength": 16384, "readOnly": True}),
+]
 Flow = Literal["managed_broker", "oidc_code"]
 LoginState = Literal["pending", "verifying", "verified", "committed", "restart_required"]
 ErrorCode = Literal[
@@ -207,7 +214,7 @@ class LoginStartResponse(Message):
     provider_id: Identifier
     flow: Flow
     expires_at: Count
-    authorization_url: Secret | None
+    authorization_url: ResponseSecret | None
 
     @model_validator(mode="after")
     def validate_flow(self) -> Self:
@@ -218,7 +225,7 @@ class LoginStartResponse(Message):
 
 class CSRFResponse(Message):
     scope: Literal["preauth", "session"]
-    token: Secret
+    token: ResponseSecret
 
 
 class SessionView(Message):
@@ -256,6 +263,41 @@ class RenewalRequest(Message):
 class SessionError(Message):
     code: ErrorCode
     request_id: Identifier
+
+
+def workspace_session_error(
+    violation: ContractViolation,
+    *,
+    request_id: str,
+) -> tuple[int, ControlError]:
+    """Map authentication failures into the existing workspace Error envelope."""
+    mapping = {
+        "ambiguous_credentials": (400, "invalid_request", "Use one authentication method.", False),
+        "policy_unavailable": (
+            503,
+            "temporarily_unavailable",
+            "Authentication policy is unavailable.",
+            True,
+        ),
+        "unauthenticated": (401, "unauthenticated", "Authentication required.", False),
+        "forbidden": (403, "forbidden", "Request is not permitted.", False),
+    }
+    if violation.code not in mapping:
+        raise ValueError("Unsupported workspace session failure")
+    status, code, message, retryable = mapping[violation.code]
+    if violation.status != status:
+        raise ValueError("Workspace session failure has an inconsistent status")
+    # Validate against the unchanged control schema instead of widening its vocabulary.
+    error = ControlError.model_validate(
+        {
+            "code": code,
+            "message": message,
+            "request_id": request_id,
+            "retryable": retryable,
+            "operation_id": None,
+        }
+    )
+    return status, error
 
 
 class BrowserContext(Message):
@@ -477,6 +519,30 @@ def validate_oidc_callback(
         raise ContractViolation("proof_rejected", 401)
 
 
+def proof_claim_key(proof: TrustedIdentityProof) -> str:
+    """Application-wide unique key; provider/policy aliases must not partition ownership."""
+    return proof.proof_sha256
+
+
+def proof_claim_retain_until(
+    policy: DeploymentSessionPolicy,
+    transaction: LoginTransaction,
+    proof: TrustedIdentityProof,
+) -> int:
+    """Minimum tombstone deadline, not permission to consume or verify the proof."""
+    if (
+        transaction.policy_id != policy.policy_id
+        or proof.transaction_id != transaction.transaction_id
+        or proof.provider_id != transaction.provider_id
+    ):
+        raise ValueError("Proof retention requires the bound transaction and policy")
+    deadline = max(
+        proof.expires_at,
+        transaction.created_at + policy.transaction_retention_seconds,
+    )
+    return TypeAdapter(Count).validate_python(deadline, strict=True)
+
+
 def validate_proof(
     policy: DeploymentSessionPolicy,
     transaction: LoginTransaction,
@@ -485,7 +551,11 @@ def validate_proof(
     now: int,
     claimed_by_transaction: str | None,
 ) -> None:
-    """Only for verified evidence; external verifier checks signature/revocation/code exchange."""
+    """Check verified evidence against the owner loaded by application-wide proof_claim_key.
+
+    The external verifier checks signature/revocation/code exchange. A claim lookup
+    partitioned by provider or policy is not a conforming trusted input.
+    """
     server_time(now)
     provider = provider_for(policy, transaction.provider_id)
     if (

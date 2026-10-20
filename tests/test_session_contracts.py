@@ -6,9 +6,9 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from pydantic import ValidationError
+from pydantic import TypeAdapter, ValidationError
 
-from strange_physics.contracts import Message
+from strange_physics.contracts import Identifier, Message
 from strange_physics.control_contracts import ContractViolation
 from strange_physics.session_contracts import (
     PUBLIC_MODELS,
@@ -27,6 +27,8 @@ from strange_physics.session_contracts import (
     login_options,
     login_recovery,
     login_status,
+    proof_claim_key,
+    proof_claim_retain_until,
     session_json_schema,
     validate_login_binding,
     validate_login_completion,
@@ -38,6 +40,7 @@ from strange_physics.session_contracts import (
     validate_renewal,
     validate_session,
     validate_session_update,
+    workspace_session_error,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -542,3 +545,127 @@ def test_future_auth_time_cannot_create_an_immediately_invalid_session_view() ->
             now=1010,
             claimed_by_transaction=None,
         )
+
+
+def test_response_secrets_are_readable_but_still_redacted_and_requests_are_write_only() -> None:
+    definitions = session_json_schema()["$defs"]
+
+    def no_write_only(node: Any) -> None:
+        if isinstance(node, dict):
+            assert node.get("writeOnly") is not True
+            for item in node.values():
+                no_write_only(item)
+        elif isinstance(node, list):
+            for item in node:
+                no_write_only(item)
+
+    for model, field in [("CSRFResponse", "token"), ("LoginStartResponse", "authorization_url")]:
+        no_write_only(definitions[model]["properties"][field])
+    for model, field in [
+        ("BrokerExchangeRequest", "id_token"),
+        ("OIDCCallbackRequest", "code"),
+        ("OIDCCallbackRequest", "state"),
+        ("OIDCDeniedCallbackRequest", "error"),
+    ]:
+        assert definitions[model]["properties"][field]["writeOnly"] is True
+    response = value(
+        MODELS["LoginStartResponse"],
+        flow="oidc_code",
+        authorization_url="https://idp.example/authorize?state=synthetic",
+    )
+    assert "https://idp.example" not in repr(response)
+    assert "https://idp.example" not in response.model_dump_json()
+
+
+def test_login_outcome_path_reuses_identifier_schema_and_runtime_edges() -> None:
+    api = json.loads((ROOT / "contracts/session.openapi.json").read_text())
+    parameter = api["paths"]["/v1/auth/logins/{transaction_id}"]["get"]["parameters"][0]
+    adapter = TypeAdapter(Identifier)
+    assert parameter["schema"] == adapter.json_schema()
+    for item in FIXTURES["path_identifiers"]["valid"]:
+        assert adapter.validate_python(item, strict=True) == item
+    for item in FIXTURES["path_identifiers"]["invalid"]:
+        with pytest.raises(ValidationError):
+            adapter.validate_python(item, strict=True)
+
+
+@pytest.mark.parametrize("case", FIXTURES["workspace_session_failures"])
+def test_workspace_auth_errors_preserve_existing_safe_control_envelope(
+    case: dict[str, Any],
+) -> None:
+    status, error = workspace_session_error(
+        ContractViolation(case["input_code"], case["status"]),
+        request_id="request-1",
+    )
+    assert status == case["status"]
+    assert error.model_dump(mode="json") == case["output"]
+    api = json.loads((ROOT / "contracts/draft/openapi.json").read_text())
+    for routes in api["paths"].values():
+        for method, route in routes.items():
+            if method not in {"get", "post", "put"}:
+                continue
+            if {"workspaceBearer": []} in route.get("security", []):
+                assert str(status) in route["responses"]
+                assert route["x-session-error-mapping"][case["input_code"]] == {
+                    "status": status,
+                    "code": error.code,
+                }
+                assert "404" in route["responses"]
+            else:
+                assert "x-session-error-mapping" not in route
+
+
+def test_workspace_mapping_does_not_remap_object_authority_or_run_conflicts() -> None:
+    for code, status in [
+        ("not_found", 404),
+        ("incompatible_state", 409),
+        ("ambiguous_credentials", 401),
+    ]:
+        with pytest.raises(ValueError):
+            workspace_session_error(ContractViolation(code, status), request_id="request-1")
+
+
+def test_provider_alias_cannot_partition_application_wide_proof_ownership() -> None:
+    data = policy().model_dump(mode="json")
+    alias = data["providers"][0] | {"provider_id": "managed-alias"}
+    data["providers"].append(alias)
+    configured = DeploymentSessionPolicy.model_validate_json(json.dumps(data))
+    first_transaction = value(LoginTransaction, state="verifying", proof=None)
+    first_proof = value(TrustedIdentityProof)
+    validate_proof(
+        configured, first_transaction, first_proof, now=1010, claimed_by_transaction=None
+    )
+    alias_transaction = value(
+        LoginTransaction,
+        transaction_id="login-2",
+        provider_id="managed-alias",
+        state="verifying",
+        proof=None,
+    )
+    alias_proof = value(TrustedIdentityProof, transaction_id="login-2", provider_id="managed-alias")
+    assert proof_claim_key(first_proof) == proof_claim_key(alias_proof)
+    claims = {proof_claim_key(first_proof): first_transaction.transaction_id}
+    with pytest.raises(ContractViolation, match="proof_rejected"):
+        validate_proof(
+            configured,
+            alias_transaction,
+            alias_proof,
+            now=1010,
+            claimed_by_transaction=claims[proof_claim_key(alias_proof)],
+        )
+
+
+def test_proof_tombstone_outlives_transaction_retention_and_policy_aliases() -> None:
+    configured = value(DeploymentSessionPolicy, transaction_retention_seconds=180)
+    transaction = value(LoginTransaction, state="verifying", proof=None)
+    proof = value(TrustedIdentityProof, expires_at=6000)
+    assert proof_claim_retain_until(configured, transaction, proof) == 6000
+    assert proof_claim_retain_until(policy(), transaction, value(TrustedIdentityProof)) == 4600
+    alternate = value(DeploymentSessionPolicy, policy_id="different-policy")
+    alternate_transaction = value(
+        LoginTransaction, policy_id="different-policy", state="verifying", proof=None
+    )
+    assert proof_claim_key(proof) == FIXTURES["valid"]["TrustedIdentityProof"]["proof_sha256"]
+    assert proof_claim_retain_until(alternate, alternate_transaction, proof) == 6000
+    with pytest.raises(ValueError):
+        proof_claim_retain_until(alternate, transaction, proof)

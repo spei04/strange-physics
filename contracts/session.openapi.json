@@ -512,8 +512,10 @@
             "name": "transaction_id",
             "required": true,
             "schema": {
-              "maxLength": 64,
-              "minLength": 1,
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
               "type": "string"
             }
           }
