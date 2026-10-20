@@ -1365,7 +1365,7 @@
         "security",
         "Backend"
       ],
-      "execution_owner": "Research authors COMP1 after this reviewed handoff; Platform and Quality independently review. Lead owns progress/integration. ART1 and EXEC1 are integrated.",
+      "execution_owner": "Research authors COMP1 API in identity; Platform and Quality independently review immutable checkpoints. Lead owns primary progress/integration. ART1 and EXEC1 are integrated.",
       "issue": "https://github.com/spei04/strange-physics/issues/89",
       "execution_plan": "ART1 artifact/checkpoint admission and recovery; EXEC1 package quarantine and worker/broker authority; COMP1 predictor/DB composition. Accepted SP-01.b integration precedes source. Three review units preserve the baseline task/effort/gates.",
       "evidence": "ART1 complete via PR91/main95bdd85. EXEC1 complete via PR92/main750db15810f4a58a4a8d34776cb3708dc310ef5a matching reviewed671f109/tree13894d9c. PRCI39375391014 and all five mainCI39375611645 jobs passed;2281 tests/722 schemas/static/security/package checks. Full SP-01.c freeze still requires COMP1."
@@ -10918,7 +10918,7 @@
     },
     "checkout_ownership": {
       "scientific": "Project lead owns primary progress/integration; Quality and Research independently review immutable source.",
-      "identity": "Released by Platform and reserved for Research COMP1 after this reviewed handoff; reuse clean checkout and its independently owned pinned environment.",
+      "identity": "Research is exclusive COMP1 writer on feat/model-registration-contracts from accepted6933f2f; existing environment/pins revalidated. Platform/Quality review immutable checkpoints read-only.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11185,7 +11185,7 @@
         {
           "id": "COMP1",
           "title": "Predictor identity and DB/recovery composition",
-          "status": "approved_unstarted",
+          "status": "in_progress",
           "depends_on": [
             "ART1",
             "EXEC1"
@@ -11197,7 +11197,8 @@
             "Engineer Quality",
             "Project lead"
           ],
-          "phase": "Assigned; exclusive identity checkout writer handoff pending."
+          "phase": "Early API authoring in reused identity checkout; independent API review precedes runtime.",
+          "starting_commit": "6933f2faa5a7fa769f2b4812047cfa0eee674276"
         }
       ],
       "decisions": [
@@ -11352,7 +11353,7 @@
           "Engineer Quality",
           "Project lead"
         ],
-        "status": "approved_unstarted",
+        "status": "api_authoring",
         "api_checkpoint_before_runtime": true,
         "required_worker_boundary": "Mandatory authorize_worker_broker submit_model before private parse/lookup/replay, with actual current environment and launch closure; separate native analytic approval.",
         "immutable_binding": "Actual original admission/request/world-version and scope/space joined to a trusted retained engine binding; actual SCI ObservationBundle identity, not an asserted prefix digest.",
