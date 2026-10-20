@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | SP-01.d world/preview/SSE/replay API preparation | Read-only; COMP1 writer released; source waits accepted SP-01.c and handoff |
-| Platform | SP-01.d preview authority and stream/replay design review | Read-only; COMP1 runtime accepted |
-| Quality | COMP1 final composition and integration review | Read-only; retains SP-01.e preparation |
-| Project lead | Integrate accepted COMP1 and close SP-01.c after exact CI | Exclusive primary owner; next source handoff follows acceptance |
+| Research | SP-01.d/#94 WORLD1, then WEB1 | Assigned; source waits reviewed explicit identity handoff; API checkpoint first |
+| Platform | WORLD1 preview/provenance and producer-boundary review | Independent immutable-source reviewer |
+| Quality | Completion/handoff, then WORLD1 authority/recovery/schema review | Independent reviewer; SP-01.e stays read-only preparation |
+| Project lead | Record SP-01.c acceptance and hand off WORLD1 | Exclusive primary owner; integration and progress |
 
 ## Assignments
 
@@ -109,7 +109,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 ## Review evidence and management checkpoint
 
-- Outcome: an enterprise research product that measures discovery and adaptation. Bounded local I1 is accepted: purchased observations → fit → unseen-condition predictions → independently scored report. The next contract units are ART1, EXEC1 and COMP1 under SP-01.c.
+- Outcome: an enterprise research product that measures discovery and adaptation. Bounded local I1 and SP-01.b/c are accepted. The next contract task is SP-01.d/#94, split into WORLD1 and WEB1.
 - Historical evidence: the following delta bullets record their own source/checkpoint state. Earlier remaining-work statements are historical; the current assignment board and latest acceptance sections govern current work.
 - Baseline delta: research and recovery reviews at 2d78e35; 55 tests, lint/format and strict mypy pass; same-head CI covers Python 3.12/3.14, packaging and eight-particle CLI smoke. Two factual documentation corrections committed as 9833e6f and peer reviewed. PR #1 merged as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f; git diff verified its tree matches reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70. All four GitHub CI checks at that head passed on Python 3.12/3.14. [Merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060. SP-00.b is complete; this is not a product release.
 - Forecast repair: adding the DB-to-artifact freeze edge changes R0 to W6–7 and first spring integration to W11–13; R1 reserve becomes W26. GA remains W52–67. These remain nine-human-team reference estimates; actual engineer assignments are separate.
@@ -146,8 +146,8 @@ scorer. SP-02.b is accepted and SP-03.a fixtures have passed independent review.
 SP-03.a and SP-03.b are integrated, including exact-head PR/main checks.
 SP-04.a/#77 is integrated with matching reviewed tree and PR/main CI.
 SP-04.b/#81, SP-06.a/#83 and SP-04.e/#87 are integrated with passing PR/main CI.
-I1 is accepted through PR #90; Research prepares SP-01.d read-only. SP-01.b/C2 and final composition are integrated;
-Platform owns SP-01.c/#89 in identity after the recorded handoff.
+I1 is accepted through PR #90; SP-01.b/c are integrated. Research receives
+SP-01.d/#94 WORLD1 in identity after the reviewed explicit handoff.
 
 The approved dependency path is SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b →
 SP-06.a → SP-04.e/I1. SP-03.a also requires completed SP-00.b; SP-03.b requires
@@ -345,3 +345,11 @@ Research is reassigned to read-only SP-01.d API preparation; Platform independen
 Private indices remain owner-readable outside checkouts, review2026-11-19: author b21ade1a706be6034bbe297f66a1d157c7a15ad3e8ac86123da5e5bddc10654e; Quality40f8eee51e439daeec188f344078bace101ab66b15c26c7a6786ab92a074928c; Platform8e938872977f2896f9493d8d1979cf78465a1a7780a53d1b27e27c2be353ba03; lead6fcb44124d332fef0d782d67676a8f5ff3492749776e8c44d9a073fd25a31787; source union2325cca286090feb3dd4f8e0035f1ad93cf610f4e398e20adfb46ca8b1e5e2f6. Initial reviewer harness diagnostics are retained. Lead's redundant digest-guard mutant changed error classification while the frozen SCI helper still rejected; it is not counted as an authorization bypass. Same-VM evidence is not an off-device backup.
 
 Final integrated60a8ac581fcfed2df9f9381ce116b6d905064242 checks passed2,423 tests,Ruff/format117,mypy78 and764 external schema cases. The private integrated-check index SHA256989c28e24c32236165b6351f1c031a5d7385d188921d55816e2a69c1318e0100 binds the immutable source and captured results; subsequent changes are progress-only. Exact final PR #93 and protected-main CI remain before merge/parent acceptance.
+
+## COMP1 integrated; SP-01.c complete
+
+2026-10-20 06:20 UTC — COMP1 and SP-01.c are complete through PR #93/main11e200253347dc05973e5d7969a3abd145f285e2, matching revieweda75ac1b7099aa8d38d62577d14315dfeb5009f49/treeec01b963f20e95f682ef06a04bcebcd4350db862. All four PR CI39379345399 and all five protected-main CI39379544409 jobs passed. The exact integrated source passed 2,423 tests, 764 schema cases, Ruff/format and strict typing; independent boundary, recovery and composition reviews are accepted. Candidate artifact12245465046 was checksum/provenance verified and retained privately outside checkouts. These are pure contracts and predicates; live SQL/storage/HTTP/build/controller/isolation producers remain later tasks.
+
+Research is assigned SP-01.d/#94 in the existing identity checkout after this record is reviewed and the lead explicitly hands off the writer. WORLD1 covers immutable world/version views, browser-only current authorization, explicit preview grants and exact selected-world/run binding. WEB1 follows in a separate PR for streams, snapshots, cursors, replay and large-artifact retrieval. Each unit requires an API/fixture checkpoint before pure runtime predicates. Platform reviews preview/provenance and producer boundaries; Quality reviews authority/recovery/schema consistency and retains read-only SP-01.e preparation. Lead owns primary integration and progress. No dependency, estimate, paid, research-amendment or release gate changes.
+
+Private integration index SHA256 36b7a4ea56e08504d8c6638bd991f5f86bcaab1779fccd24439a869fdc82a02b; final composition index 227880dfbe5e0fe7278d782471985528e8cfb27b20b62ded8853ce8bb4e89627. The candidate and evidence are owner-readable outside checkouts, review 2026-11-19; same-VM storage is not an off-device backup. Baseline remains 168 tasks, 369 edges and ten gates. Identity is released and reserved for reuse; no additional checkout or dependency installation was created.

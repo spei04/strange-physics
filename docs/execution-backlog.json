@@ -1355,7 +1355,7 @@
         "PL2"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze artifacts, packages and worker interfaces.",
-      "status": "in_progress",
+      "status": "completed",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1365,10 +1365,10 @@
         "security",
         "Backend"
       ],
-      "execution_owner": "Project lead integrates accepted COMP1; Quality reviews final composition. Research/Platform prepare dependent SP-01.d read-only.",
+      "execution_owner": "Completed; lead accepted integration after independent review and exact PR/main CI.",
       "issue": "https://github.com/spei04/strange-physics/issues/89",
       "execution_plan": "ART1 artifact/checkpoint admission and recovery; EXEC1 package quarantine and worker/broker authority; COMP1 predictor/DB composition. Accepted SP-01.b integration precedes source. Three review units preserve the baseline task/effort/gates.",
-      "evidence": "ART1 complete via PR91/main95bdd85. EXEC1 complete via PR92/main750db158 matching reviewed671f109/tree13894d9c, with PRCI39375391014 and all five mainCI39375611645 jobs passed. COMP1 API21cb201 and runtimeb7c944c/finalauthor3ceb846 are independently accepted;2423 full tests/141 COMP1 cases/764 schemas/static/security/offline package checks passed. Combined60a8ac5 passed2423 full tests,lint/format,mypy78 and764 schemas; exact final PR93/main acceptance and parent freeze remain pending."
+      "evidence": "COMP1 and SP-01.c are complete through PR #93/main11e200253347dc05973e5d7969a3abd145f285e2, matching revieweda75ac1b7099aa8d38d62577d14315dfeb5009f49/treeec01b963f20e95f682ef06a04bcebcd4350db862. All four PR CI39379345399 and all five protected-main CI39379544409 jobs passed. The exact integrated source passed 2,423 tests, 764 schema cases, Ruff/format and strict typing; independent boundary, recovery and composition reviews are accepted. Candidate artifact12245465046 was checksum/provenance verified and retained privately outside checkouts. These are pure contracts and predicates; live SQL/storage/HTTP/build/controller/isolation producers remain later tasks."
     },
     {
       "id": "SP-01.d",
@@ -1408,7 +1408,11 @@
         "frontend",
         "Platform",
         "research"
-      ]
+      ],
+      "issue": "https://github.com/spei04/strange-physics/issues/94",
+      "execution_owner": "Engineer Research after explicit identity writer handoff; Platform and Quality review; lead integrates.",
+      "execution_plan": "WORLD1 immutable world/version, safe and granted views, browser capability and exact run selection; WEB1 bounded streams/snapshots/cursors/replay/artifact retrieval. API checkpoint before predicates in each independent PR.",
+      "evidence": "Design preparation accepted; actual SP-01.b/c prerequisites complete. Source remains unstarted until reviewed handoff."
     },
     {
       "id": "SP-01.e",
@@ -10562,13 +10566,13 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Research authors COMP1 after reviewed handoff; Platform/Quality review, lead integrates.",
+      "BE1": "Project lead integrates contracts; Research implements assigned WORLD1/WEB1 after handoff, with Platform/Quality review.",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
       "RS1": "Engineer Research",
       "RS2": "Engineer Research (sequential assignments)",
-      "FE": "Project lead; journey specification delivered by Platform, product acceptance pending",
+      "FE": "Engineer Research covers SP-01.d contracts sequentially; no UI implementation.",
       "QE": "Engineer Quality"
     },
     "review_policy": "Author does not approve own change. Lead coordinates peer review and takes integration responsibility; subagent review is not independent third-party assessment.",
@@ -10917,8 +10921,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Project lead owns primary progress/integration; Quality and Research independently review immutable source.",
-      "identity": "Research is exclusive COMP1 writer on feat/model-registration-contracts from accepted6933f2f; existing environment/pins revalidated. Platform/Quality review immutable checkpoints read-only.",
+      "scientific": "Project lead owns primary progress/integration; reviewers use immutable source.",
+      "identity": "Clean and released after COMP1; reserved for Research WORLD1 after reviewed explicit handoff. Existing independently owned environment and pins retained.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11151,13 +11155,13 @@
     },
     "artifact_worker_contracts": {
       "issue": 89,
-      "owner": "Project lead integrates accepted COMP1; Quality reviews final composition. Research/Platform prepare dependent SP-01.d read-only.",
+      "owner": "Completed; project lead accepted ART1/EXEC1/COMP1 integration with independent reviews.",
       "reviewers": [
         "Engineer Quality",
         "Engineer Research",
         "Project lead"
       ],
-      "status": "in_progress",
+      "status": "complete",
       "pr_units": [
         {
           "id": "ART1",
@@ -11185,25 +11189,26 @@
         {
           "id": "COMP1",
           "title": "Predictor identity and DB/recovery composition",
-          "status": "in_progress",
+          "status": "complete",
           "depends_on": [
             "ART1",
             "EXEC1"
           ],
-          "preparation": "API and runtime independently accepted; final integration in progress.",
+          "preparation": "API/runtime/composition accepted; exact PR/main checks passed.",
           "owner": "Engineer Research",
           "reviewers": [
             "Engineer Platform",
             "Engineer Quality",
             "Project lead"
           ],
-          "phase": "Final integration and exact PR/main checks before parent completion.",
+          "phase": "Integrated pure contracts/predicates; live producers remain later tasks.",
           "starting_commit": "6933f2faa5a7fa769f2b4812047cfa0eee674276",
           "api_source": "21cb20146bea3ff42aa15dafe43136ff24ff6081",
           "api_tree": "d3e0b3417dfc518215e19123a7fb5c185268e420",
           "pull_request": "https://github.com/spei04/strange-physics/pull/93",
           "runtime_source": "b7c944c0c4065a96a62e777e3d6d2975ba3787d5",
-          "author_source": "3ceb846b72b08d0dccc913192563981e92ae68d0"
+          "author_source": "3ceb846b72b08d0dccc913192563981e92ae68d0",
+          "merge_commit": "11e200253347dc05973e5d7969a3abd145f285e2"
         }
       ],
       "decisions": [
@@ -11358,7 +11363,7 @@
           "Engineer Quality",
           "Project lead"
         ],
-        "status": "integration_pending",
+        "status": "complete",
         "api_checkpoint_before_runtime": true,
         "required_worker_boundary": "Mandatory authorize_worker_broker submit_model before private parse/lookup/replay, with actual current environment and launch closure; separate native analytic approval.",
         "immutable_binding": "Actual original admission/request/world-version and scope/space joined to a trusted retained engine binding; actual SCI ObservationBundle identity, not an asserted prefix digest.",
@@ -11435,19 +11440,29 @@
         "quality_index": "40f8eee51e439daeec188f344078bace101ab66b15c26c7a6786ab92a074928c",
         "platform_index": "8e938872977f2896f9493d8d1979cf78465a1a7780a53d1b27e27c2be353ba03",
         "lead_index": "6fcb44124d332fef0d782d67676a8f5ff3492749776e8c44d9a073fd25a31787",
-        "status": "source_accepted_integration_pending",
+        "status": "complete",
         "author_source": "3ceb846b72b08d0dccc913192563981e92ae68d0",
         "author_index": "b21ade1a706be6034bbe297f66a1d157c7a15ad3e8ac86123da5e5bddc10654e",
         "integrated_source": "60a8ac581fcfed2df9f9381ce116b6d905064242",
         "integrated_tree": "6d6d453774cdfe0fc67158a16eeef320b7acd449",
         "union_index": "2325cca286090feb3dd4f8e0035f1ad93cf610f4e398e20adfb46ca8b1e5e2f6",
-        "boundary": "Reviewed pure contracts/proposals only. Metadata replay trusts immutable prior committed projections; completion validates material. Live producers, final PR/main and parent freeze remain pending.",
+        "boundary": "Reviewed pure contracts/proposals with exact PR/main acceptance. Metadata replay trusts immutable prior committed projections; completion validates material. Live producers remain later tasks.",
         "lead_total_tests": 58,
         "integrated_full_tests": 2423,
         "integrated_ruff_files": 117,
         "integrated_mypy_files": 78,
         "integrated_schema_checks": 764,
-        "integration_check_index": "989c28e24c32236165b6351f1c031a5d7385d188921d55816e2a69c1318e0100"
+        "integration_check_index": "989c28e24c32236165b6351f1c031a5d7385d188921d55816e2a69c1318e0100",
+        "reviewed_head": "a75ac1b7099aa8d38d62577d14315dfeb5009f49",
+        "merge_commit": "11e200253347dc05973e5d7969a3abd145f285e2",
+        "reviewed_tree": "ec01b963f20e95f682ef06a04bcebcd4350db862",
+        "merge_tree": "ec01b963f20e95f682ef06a04bcebcd4350db862",
+        "pr_ci": 39379345399,
+        "main_ci": 39379544409,
+        "integration_index_sha256": "36b7a4ea56e08504d8c6638bd991f5f86bcaab1779fccd24439a869fdc82a02b",
+        "candidate_artifact_id": 12245465046,
+        "candidate_sha256": "1f5b9a3f1bc7819e5bce826f7aa1e7accf99a9f2e555569780492bd8e6099e37",
+        "final_composition_review_index_sha256": "227880dfbe5e0fe7278d782471985528e8cfb27b20b62ded8853ce8bb4e89627"
       }
     },
     "spring_workflow_evidence": {
@@ -11509,13 +11524,29 @@
     },
     "web_contract_preparation": {
       "owner": "Engineer Research",
-      "status": "read_only_preparation",
+      "status": "ready_for_reviewed_writer_handoff",
       "task": "SP-01.d",
       "depends_on": [
         "SP-01.b",
         "SP-01.c"
       ],
-      "scope": "Separate agent-safe world view and explicit current customer-author preview grants; fetch-stream SSE status/cursor/resync and bounded partial replay fixtures. API checkpoint remains required before source/freeze."
+      "scope": "Two independent PRs within SP-01.d; immutable API checkpoint before predicates in each. Both actual prerequisites are accepted; source waits explicit handoff.",
+      "issue": 94,
+      "pr_units": [
+        {
+          "id": "WORLD1",
+          "status": "ready_for_handoff",
+          "scope": "Immutable world/version, safe and granted views, browser-only capability and exact run selection."
+        },
+        {
+          "id": "WEB1",
+          "status": "prepared",
+          "depends_on": [
+            "WORLD1"
+          ],
+          "scope": "Bounded stream/snapshot/cursor/archive/artifact retrieval and recovery."
+        }
+      ]
     },
     "contract_tooling_preparation": {
       "owner": "Engineer Quality",

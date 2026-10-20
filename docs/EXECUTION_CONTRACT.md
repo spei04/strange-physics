@@ -1,8 +1,8 @@
 # Package and worker execution contract
 
 Status: EXEC1 API and pure runtime are integrated through PR #92 with matching
-PR and protected-main checks. Real package processing, hosted producers and
-the full SP-01.c freeze remain pending.
+PR and protected-main checks. SP-01.c is complete after COMP1 integration in
+PR #93. Real package processing and hosted producers remain later work.
 [ART1](ARTIFACT_CONTRACT.md), [C2](RUN_CREDENTIAL_CONTRACT.md), CORE and SCI
 retain their accepted boundaries. This document defines typed inputs and pure
 proposal shapes; constructing a trusted record does not verify its provenance.
@@ -86,7 +86,7 @@ Submitted-agent approval and built-in analytic approval are different kinds.
 The built-in source names its configured repository, source commit/tree and
 real lock/recipe/build evidence, with no fictitious uploaded package. Its
 approved subject includes native-prediction purpose, predictor profile/version
-and canonical prediction-configuration digest. COMP1 will bind actual typed
+and canonical prediction-configuration digest. COMP1 binds actual typed
 configuration and actual model bytes to that approval. Fitter configuration
 digests remain captured provenance unless separately supplied and verified.
 Launch consumes the approved immutable image and retained package provenance;
@@ -245,8 +245,8 @@ a lock resolver, build/scan/promotion service, token verification, resource or
 network isolation, a scheduler, object/SQL atomicity, or live recovery drills.
 Bounded pure admission/replay/broker/termination predicates test unavailable,
 partial and stale evidence; later hosted producers must establish its origin
-and currency. EXEC1 is integrated through PR #92; SP-01.c remains open through
-[native model registration and final composition](MODEL_REGISTRATION.md).
+and currency. EXEC1 is integrated through PR #92; SP-01.c is complete after
+[native model registration and final composition](MODEL_REGISTRATION.md) in PR #93.
 
 Later production ownership remains SP-14.a extraction/pinned-lock validation,
 SP-14.b isolated builds, SP-14.c scans/promotion, SP-15.b resource admission,
@@ -352,4 +352,4 @@ CI39375611645 passed, including installed-wheel, dependency audit and candidate
 packaging. Merge750db158 matches reviewed671f109/tree13894d9c exactly.
 They do not establish live token verification, SQL atomicity, safe extraction,
 sandbox isolation, resource accounting, provider-process control or recovery
-drill evidence. The full SP-01.c freeze still requires COMP1.
+drill evidence. The pure SP-01.c freeze is complete through COMP1/PR #93.
