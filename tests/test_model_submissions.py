@@ -557,3 +557,21 @@ def test_json_node_guard_runs_before_decoding(monkeypatch: pytest.MonkeyPatch) -
     monkeypatch.setattr(json, "loads", unexpected)
     with denied("invalid_request", 422):
         s._parse(b'{"a": 1, "b": 2}', m.ModelLedgerSnapshot, policy)
+
+
+@pytest.mark.parametrize("decided_at", [1012, 1013, 1014])
+def test_same_approval_row_revision_cannot_move_decision_time_backwards(decided_at: int) -> None:
+    data = committed()
+    native = data["native"]
+    old = native.approval
+    revised = changed(
+        old,
+        approval=changed(old.approval, revision=old.approval.revision + 1, decided_at=decided_at),
+    )
+    assert revised.scan == old.scan
+    data["native"] = replace(native, approval=revised)
+    if decided_at < old.approval.decided_at:
+        with denied("recovery_required", 409):
+            s.admit_model_submission(**data)
+    else:
+        assert isinstance(s.admit_model_submission(**data), m.ModelSubmissionReplay)

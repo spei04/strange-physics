@@ -120,10 +120,13 @@ evaluator access.
 An immutable model record retains the approval that was valid at commit.
 A later current scan/approval may renew for the same complete immutable
 `BuiltinBuild` and profile. Current state/time/policy checks remain mandatory;
-same-row revisions must be monotonic, equal revisions exact, and a different
+same-row revisions and decision times must be nondecreasing, equal revisions exact, and a different
 approval ID requires the producer's authoritative current lookup. Renewal does
 not rewrite the retained record/outbox or cause an idempotency conflict.
 Different source/build/purpose is not equivalent merely because the image matches.
+A higher revision can reuse the same still-valid scan; no scan-observation-time
+monotonicity is inferred. The decision-time check is intrinsic retained/current
+row chronology, not a new authorization claim.
 
 ## Asynchronous admission and recovery
 
@@ -218,3 +221,11 @@ The first runtime checkpoint has 25 focused runtime cases plus the 94 accepted
 contract cases passing, with targeted Ruff and strict mypy checks. Independent
 runtime review and broader boundary/whole-repository verification remain open.
 No database/object adapter, predictor execution or deployed approval is supplied.
+
+Admission replay depends on authoritative immutable completed projections
+produced by a previously validated atomic commit. It does not freshly prove raw
+model/canonical-prefix correspondence without those bytes. Coherent corruption
+of every trusted retained projection is outside this metadata-only replay proof.
+Completion/retry checks actual material and rejects mismatched raw-model identity
+or scientific provenance; no status-only replay is described as that stronger
+verification.

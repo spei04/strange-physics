@@ -247,6 +247,7 @@ def _renewal(record: ModelRegistrationRecord, native: NativeModelEnvironment) ->
         raise ContractViolation("incompatible_state", 409)
     if previous.approval.approval_id == current.approval.approval_id and (
         current.approval.revision < previous.approval.revision
+        or current.approval.decided_at < previous.approval.decided_at
         or (current.approval.revision == previous.approval.revision and current != previous)
     ):
         raise ContractViolation("recovery_required", 409)
