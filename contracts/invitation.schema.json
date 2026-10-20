@@ -1,0 +1,1160 @@
+{
+  "$defs": {
+    "BrowserActor": {
+      "additionalProperties": false,
+      "description": "Verified human session lookup and HTTP context; never a public body.",
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/BrowserContext"
+        },
+        "credential": {
+          "$ref": "#/$defs/SessionCredential"
+        },
+        "session": {
+          "$ref": "#/$defs/SessionRecord"
+        }
+      },
+      "required": [
+        "session",
+        "credential",
+        "context"
+      ],
+      "title": "BrowserActor",
+      "type": "object"
+    },
+    "BrowserContext": {
+      "additionalProperties": false,
+      "description": "Trusted HTTP adapter projection; CSRF comparisons must be constant-time.",
+      "properties": {
+        "browser_binding_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Browser Binding Sha256"
+        },
+        "csrf_matches": {
+          "title": "Csrf Matches",
+          "type": "boolean"
+        },
+        "csrf_scope": {
+          "anyOf": [
+            {
+              "enum": [
+                "preauth",
+                "session"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Csrf Scope"
+        },
+        "has_bearer": {
+          "title": "Has Bearer",
+          "type": "boolean"
+        },
+        "has_session_cookie": {
+          "title": "Has Session Cookie",
+          "type": "boolean"
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 9,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^https://[!-~]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Origin"
+        },
+        "target_origin": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Target Origin",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_origin",
+        "origin",
+        "has_session_cookie",
+        "has_bearer",
+        "csrf_scope",
+        "csrf_matches",
+        "browser_binding_sha256"
+      ],
+      "title": "BrowserContext",
+      "type": "object"
+    },
+    "CreateInvitationRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_workspace_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Workspace Revision",
+          "type": "integer"
+        },
+        "recipient_email": {
+          "maxLength": 254,
+          "minLength": 3,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^[A-Za-z0-9!#$%&'*+/=?^_{`|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_{`|}~-]+)*@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$",
+          "title": "Recipient Email",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "recipient_email",
+        "role",
+        "expected_workspace_revision"
+      ],
+      "title": "CreateInvitationRequest",
+      "type": "object"
+    },
+    "CurrentRecipientIdentity": {
+      "additionalProperties": false,
+      "description": "Current human identity mapping, checked against the session principal.",
+      "properties": {
+        "identity_active": {
+          "title": "Identity Active",
+          "type": "boolean"
+        },
+        "issuer": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Issuer",
+          "type": "string"
+        },
+        "principal": {
+          "$ref": "#/$defs/PrincipalStatus"
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        },
+        "subject": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        }
+      },
+      "required": [
+        "principal",
+        "provider_id",
+        "issuer",
+        "subject",
+        "identity_active"
+      ],
+      "title": "CurrentRecipientIdentity",
+      "type": "object"
+    },
+    "InvitationIssued": {
+      "additionalProperties": false,
+      "properties": {
+        "invitation": {
+          "$ref": "#/$defs/InvitationView"
+        },
+        "token": {
+          "maxLength": 43,
+          "minLength": 43,
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+          "readOnly": true,
+          "title": "Token",
+          "type": "string"
+        }
+      },
+      "required": [
+        "invitation",
+        "token"
+      ],
+      "title": "InvitationIssued",
+      "type": "object"
+    },
+    "InvitationPage": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/InvitationView"
+          },
+          "maxItems": 100,
+          "title": "Items",
+          "type": "array"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "maxLength": 512,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "items",
+        "next_cursor"
+      ],
+      "title": "InvitationPage",
+      "type": "object"
+    },
+    "InvitationPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt_window_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Attempt Window Seconds",
+          "type": "integer"
+        },
+        "create_attempt_limit": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Create Attempt Limit",
+          "type": "integer"
+        },
+        "email_assertion_max_age_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Email Assertion Max Age Seconds",
+          "type": "integer"
+        },
+        "max_pending_per_workspace": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Max Pending Per Workspace",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "receipt_retention_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Receipt Retention Seconds",
+          "type": "integer"
+        },
+        "redeem_attempt_limit": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Redeem Attempt Limit",
+          "type": "integer"
+        },
+        "retry_window_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Retry Window Seconds",
+          "type": "integer"
+        },
+        "token_lifetime_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Token Lifetime Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "policy_id",
+        "token_lifetime_seconds",
+        "email_assertion_max_age_seconds",
+        "retry_window_seconds",
+        "receipt_retention_seconds",
+        "max_pending_per_workspace",
+        "create_attempt_limit",
+        "redeem_attempt_limit",
+        "attempt_window_seconds"
+      ],
+      "title": "InvitationPolicy",
+      "type": "object"
+    },
+    "InvitationReceipt": {
+      "additionalProperties": false,
+      "description": "Safe lookup/result identity; never plaintext response bytes.",
+      "properties": {
+        "key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^[!-~]+$",
+          "title": "Key",
+          "type": "string"
+        },
+        "operation": {
+          "enum": [
+            "issue",
+            "revoke",
+            "redeem"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "outcome_invitation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Outcome Invitation Id",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "target_invitation_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Invitation Id"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "principal_id",
+        "operation",
+        "workspace_id",
+        "target_invitation_id",
+        "key",
+        "request_sha256",
+        "outcome_invitation_id"
+      ],
+      "title": "InvitationReceipt",
+      "type": "object"
+    },
+    "InvitationRecord": {
+      "additionalProperties": false,
+      "description": "Trusted immutable grant plus serialized resolution; never plaintext token.",
+      "properties": {
+        "accepted_principal_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Accepted Principal Id"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "invitation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Invitation Id",
+          "type": "string"
+        },
+        "inviter_principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Inviter Principal Id",
+          "type": "string"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "recipient_email": {
+          "maxLength": 254,
+          "minLength": 3,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^[A-Za-z0-9!#$%&'*+/=?^_{`|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_{`|}~-]+)*@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$",
+          "title": "Recipient Email",
+          "type": "string"
+        },
+        "resolved_at": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Resolved At"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "role": {
+          "enum": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "pending",
+            "accepted",
+            "revoked"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "token_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Token Sha256",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "invitation_id",
+        "policy_id",
+        "workspace_id",
+        "inviter_principal_id",
+        "recipient_email",
+        "role",
+        "created_at",
+        "expires_at",
+        "token_sha256",
+        "revision",
+        "state",
+        "accepted_principal_id",
+        "resolved_at"
+      ],
+      "title": "InvitationRecord",
+      "type": "object"
+    },
+    "InvitationView": {
+      "additionalProperties": false,
+      "description": "Owner-visible metadata; no token/digest/upstream identity.",
+      "properties": {
+        "accepted_principal_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Accepted Principal Id"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "invitation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Invitation Id",
+          "type": "string"
+        },
+        "inviter_principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Inviter Principal Id",
+          "type": "string"
+        },
+        "recipient_email": {
+          "maxLength": 254,
+          "minLength": 3,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^[A-Za-z0-9!#$%&'*+/=?^_{`|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_{`|}~-]+)*@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$",
+          "title": "Recipient Email",
+          "type": "string"
+        },
+        "resolved_at": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Resolved At"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "role": {
+          "enum": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "pending",
+            "accepted",
+            "revoked",
+            "expired"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "invitation_id",
+        "workspace_id",
+        "inviter_principal_id",
+        "recipient_email",
+        "role",
+        "created_at",
+        "expires_at",
+        "revision",
+        "state",
+        "accepted_principal_id",
+        "resolved_at"
+      ],
+      "title": "InvitationView",
+      "type": "object"
+    },
+    "Membership": {
+      "additionalProperties": false,
+      "description": "Current application grant, loaded independently of credential claims.",
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "role": {
+          "enum": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "role",
+        "active",
+        "revision"
+      ],
+      "title": "Membership",
+      "type": "object"
+    },
+    "PrincipalStatus": {
+      "additionalProperties": false,
+      "description": "Current verified human app-principal state, bound to its stable identity.",
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "kind": {
+          "const": "human",
+          "title": "Kind",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "principal_id",
+        "active"
+      ],
+      "title": "PrincipalStatus",
+      "type": "object"
+    },
+    "RedeemInvitationRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "token": {
+          "maxLength": 43,
+          "minLength": 43,
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+          "title": "Token",
+          "type": "string",
+          "writeOnly": true
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "title": "RedeemInvitationRequest",
+      "type": "object"
+    },
+    "RedemptionContext": {
+      "additionalProperties": false,
+      "properties": {
+        "actor": {
+          "$ref": "#/$defs/BrowserActor"
+        },
+        "email_assertion": {
+          "$ref": "#/$defs/VerifiedEmailAssertion"
+        },
+        "inviter_membership": {
+          "$ref": "#/$defs/Membership"
+        },
+        "inviter_principal": {
+          "$ref": "#/$defs/PrincipalStatus"
+        },
+        "recipient_identity": {
+          "$ref": "#/$defs/CurrentRecipientIdentity"
+        },
+        "recipient_membership": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Membership"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "workspace": {
+          "$ref": "#/$defs/WorkspaceAuthority"
+        }
+      },
+      "required": [
+        "actor",
+        "workspace",
+        "inviter_membership",
+        "inviter_principal",
+        "recipient_identity",
+        "email_assertion",
+        "recipient_membership"
+      ],
+      "title": "RedemptionContext",
+      "type": "object"
+    },
+    "RedemptionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "invitation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Invitation Id",
+          "type": "string"
+        },
+        "membership": {
+          "$ref": "#/$defs/Membership"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "invitation_id",
+        "workspace_id",
+        "membership"
+      ],
+      "title": "RedemptionResult",
+      "type": "object"
+    },
+    "RevokeInvitationRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_invitation_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Invitation Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expected_invitation_revision"
+      ],
+      "title": "RevokeInvitationRequest",
+      "type": "object"
+    },
+    "SessionCredential": {
+      "additionalProperties": false,
+      "description": "Trusted hash lookup result, including narrowly retained logout-only history.",
+      "properties": {
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "generation"
+      ],
+      "title": "SessionCredential",
+      "type": "object"
+    },
+    "SessionRecord": {
+      "additionalProperties": false,
+      "description": "Current server session family; no opaque cookie secret is stored here.",
+      "properties": {
+        "absolute_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Absolute Expires At",
+          "type": "integer"
+        },
+        "authenticated_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authenticated At",
+          "type": "integer"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "last_seen_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Last Seen At",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "principal_active": {
+          "title": "Principal Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revoked": {
+          "title": "Revoked",
+          "type": "boolean"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "policy_id",
+        "principal_id",
+        "generation",
+        "created_at",
+        "authenticated_at",
+        "last_seen_at",
+        "absolute_expires_at",
+        "revoked",
+        "principal_active"
+      ],
+      "title": "SessionRecord",
+      "type": "object"
+    },
+    "VerifiedEmailAssertion": {
+      "additionalProperties": false,
+      "description": "Verified upstream evidence; issued_at is upstream time, not local parsing.",
+      "properties": {
+        "assertion_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Assertion Sha256",
+          "type": "string"
+        },
+        "email": {
+          "maxLength": 254,
+          "minLength": 3,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^[A-Za-z0-9!#$%&'*+/=?^_{`|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_{`|}~-]+)*@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$",
+          "title": "Email",
+          "type": "string"
+        },
+        "email_verified": {
+          "title": "Email Verified",
+          "type": "boolean"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "issued_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Issued At",
+          "type": "integer"
+        },
+        "issuer": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Issuer",
+          "type": "string"
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        },
+        "session_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Session Generation",
+          "type": "integer"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "subject": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        },
+        "verified_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Verified At",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "provider_id",
+        "issuer",
+        "subject",
+        "session_id",
+        "session_generation",
+        "email",
+        "email_verified",
+        "issued_at",
+        "expires_at",
+        "verified_at",
+        "assertion_sha256"
+      ],
+      "title": "VerifiedEmailAssertion",
+      "type": "object"
+    },
+    "WorkspaceAuthority": {
+      "additionalProperties": false,
+      "description": "Complete current owner set from the same locked workspace revision.\n\nSQL producers establish completeness and currency under the shared lock.\nactive_owner_ids counts active human owner membership rows; disabled_owner_ids\nidentifies rows whose principals are currently disabled. During security fan-out,\nstored workspace state can lag; composed authorization checks both facts.",
+      "properties": {
+        "active_owner_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Active Owner Ids",
+          "type": "array"
+        },
+        "disabled_owner_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Disabled Owner Ids",
+          "type": "array"
+        },
+        "workspace": {
+          "$ref": "#/$defs/WorkspaceView"
+        }
+      },
+      "required": [
+        "workspace",
+        "active_owner_ids",
+        "disabled_owner_ids"
+      ],
+      "title": "WorkspaceAuthority",
+      "type": "object"
+    },
+    "WorkspaceView": {
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "quarantined"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "visibility": {
+          "const": "private",
+          "title": "Visibility",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "display_name",
+        "visibility",
+        "state",
+        "revision"
+      ],
+      "title": "WorkspaceView",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/invitation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Synthetic conformance shapes, not verified identity, HTTP handlers or SQL.",
+  "x-contract-status": "ID-B/B2; linking/credential lifecycle and full C-ID remain unfinished",
+  "x-public-models": [
+    "CreateInvitationRequest",
+    "RevokeInvitationRequest",
+    "RedeemInvitationRequest",
+    "InvitationView",
+    "InvitationPage",
+    "InvitationIssued",
+    "RedemptionResult"
+  ]
+}
