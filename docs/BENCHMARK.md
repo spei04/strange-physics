@@ -226,3 +226,5 @@ No fabricated results, unmarked demonstrations or LLM-judged explanation scores
 as the primary scientific endpoint. Record exclusions with reasons, retain failed
 runs, and disclose implementation changes made after protocol freeze. Re-run the
 paired suite after changes that affect the comparison.
+
+2026-10-20 — The reviewed [native sequencing recommendation](research/NATIVE_COMPARISON_PROPOSAL.md) keeps finite-grid calibration before the first comparison and moves Laplace implementation plus its approximation-versus-grid audit to later RA-N02.b. Proposed first-result effort is 17–26 engineer-days (21.25–32.5 with reserve); later Laplace is 3–5 (3.75–6.25 with reserve), low confidence. Full programme scope, active dependencies, RA_EXEC, run caps and GA forecast remain unchanged. This is saved planning only.

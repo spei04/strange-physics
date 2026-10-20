@@ -12013,16 +12013,16 @@
     },
     "contract_tooling_preparation": {
       "owner": "Engineer Quality",
-      "status": "val1_manifest_fixtures_in_progress",
+      "status": "val1_manifest_fixtures_accepted_generator_pending",
       "task": "SP-01.e",
-      "scope": "Quality owns SP-01.e/#98 VAL1 in the reused identity checkout at accepted WEB1 main15714e6. The first immutable checkpoint contains the public-root/audience manifest, synthetic fixtures and raw/canonical byte goldens. Research reviews scientific identity and fixture semantics; Platform reviews public/private boundaries, references and drift. Generator and CI integration follow checkpoint acceptance; CLIENT1 and MOCK1 remain separate. Lead owns primary integration and progress. No additional checkout or dependency installation; the native proposal and RA_EXEC remain pending.",
+      "scope": "Quality retains identity for SP-01.e/VAL1 generator work following accepted manifest/fixtures1014592. Research reviews scientific byte/layer semantics and Platform public-root/reference/drift enforcement; lead owns integration and progress. Generator has not started at this checkpoint. CLIENT1/MOCK1 remain separate. No new checkout or dependency installation; native scope/RA_EXEC/run decisions remain pending.",
       "compatibility_requirements": "Cross-language fixtures must cover Unicode/defaults, float formatting boundaries, signed zero, uint64 decimal strings and opaque JSON numeric identity. Raw artifact SHA verification uses original bytes; typed SCI recomputation must match the frozen profile rather than ordinary JavaScript serialization.",
       "issue": 98,
       "units": [
         {
           "id": "VAL1",
           "scope": "Versioned approved-root/audience manifest, complete public closures, byte/hash fixtures, deterministic offline regeneration/check and narrow historical status annotation repair. No new dependency.",
-          "status": "manifest_fixtures_in_progress"
+          "status": "manifest_fixtures_accepted_generator_pending"
         },
         {
           "id": "CLIENT1",
@@ -12035,11 +12035,49 @@
           "status": "pending"
         }
       ],
-      "first_checkpoint": "Immutable VAL1 manifest/fixtures for independent review before generator implementation.",
+      "first_checkpoint": "Manifest/fixtures1014592 independently accepted; generator implementation may follow as the next scoped assignment.",
       "writer_handoff": "Quality owns identity after exact WEB1 PR/main/candidate acceptance and clean Research release.",
       "starting_commit": "15714e6ac4b6b300f0170e5aa22722987decd786",
       "branch": "feat/contract-tooling-validation",
-      "started_at": "2026-10-20T09:48:03.950454+00:00"
+      "started_at": "2026-10-20T09:48:03.950454+00:00",
+      "access_recovery": {
+        "verified_at": "2026-10-20T16:08:47.073081+00:00",
+        "primary_source": "1ac8875d5641b834a3361621b1ce03ad07c3f2e6",
+        "identity_source": "19500bcea1109ec9bc003a71853883a3f70563f5",
+        "clean_checkouts": true,
+        "same_account": true,
+        "free_bytes": 103368593408,
+        "assignment": "Existing Quality writer resumes checkpoint corrections; Research and Platform independent review. Generator waits for replacement acceptance.",
+        "initial_platform_index_sha256": "dec0d363863b691908258e2deacb0992e797c36680e22076423fd363972ae309"
+      },
+      "checkpoint": {
+        "source": "10145929997fc959fe31ba0398cdf8dac62e4934",
+        "tree": "a7daa18e4506d268d334b05f14949da0ec0f8838",
+        "pull_request": 101,
+        "status": "independently_accepted_manifest_fixtures_only",
+        "author": "Engineer Quality",
+        "reviewers": [
+          "Engineer Research",
+          "Engineer Platform",
+          "Project lead"
+        ],
+        "roots": 96,
+        "operations": 51,
+        "source_documents": 20,
+        "byte_vectors": 64,
+        "wire_vectors": 16,
+        "focused_tests": 87,
+        "external_schema_cases": 1431,
+        "research_independent_checks": 150,
+        "static_checks": "Full Ruff/format139, strict mypy96, configured Bandit -r src scripts -ll passed.",
+        "review_indices_sha256": {
+          "author": "477708b044e9c72fe8bedd5889103e51a45fbf73043db848680690ca74b1726a",
+          "research": "498225b97b7b116696b65a09dd9ce9894297ff54542209cc97de104ae4cd47ad",
+          "platform": "7a7f505ea17caeef0ef368aa220ceff0571cca13d248144edfa8f22edd22af3f"
+        },
+        "limits": "Checkpoint only. No generator, bundle rewriting/drift CLI/CI implementation, CLIENT1, MOCK1, full SP-01.e completion or hosted readiness. Full repository pytest/package acceptance remains a final VAL1 and hosted-CI obligation.",
+        "review_date": "2026-11-19"
+      }
     },
     "local_comparison_prerequisite_review": {
       "status": "planning_decision_pending_no_runtime_authorization",
@@ -12074,7 +12112,7 @@
       "finding": "Research and Quality independently audited the planned36-episode local comparison. Its29-node prerequisite closure contains14 accepted nodes and15 unfinished nodes: eight RA tasks, six baseline tasks and pendingRA_EXEC. It has no WEB1, hosted deployment or provider prerequisite. However, native LinearSpringModel selection still depends transitively on symbolic execution and all-family calibration/sparse/bootstrap work. Preserve this graph now; the recommended planning decision is a separately reviewed native-only belief/calibration and fixed-menu/acquisition path using accepted spring fitting/prediction/scoring, with source/license provenance, manifest/cost, arm isolation and discrepancy-scale safeguards retained. This proposal does not approve RA_EXEC or complete the broader tasks.",
       "next_task": "Next executable scientific preparation: Research owns the native-versus-rich prerequisite proposal and fixed manifest/oracle design; Quality reviews isolation/calibration/accounting and Platform reviews provenance. After explicit RA_EXEC acceptance, the first RA implementation is RA-01 (Research + Platform): dated source/license/recipe go/no-go evidence. SP-03.c and SP-19.a are dependency-ready baseline tasks but need separate assignment outside the completed bounded I1 slice. Any authorized comparison must first freeze pool/priors/likelihood, common calibration and candidate menu, six world identities, two seeds, budget/failure policy, discrepancy scale and sensitivity, disjoint scoring probes and complete output records. Retain36 episodes,12 slots including4 common calibrations,432 maximum slots,8 CPU-core-hours,1GiB new artifacts, existing machine and zero network/provider/provisioning; incomplete outcomes stay visible, with no population/adaptation/official-score claim.",
       "graph_unchanged": true,
-      "current_assignment": "Native proposal PR #96 scope/RA_EXEC/run decision pending. WEB1 integrated via PR #97. Quality owns SP-01.e/VAL1; Research and Platform review.",
+      "current_assignment": "Grid-first sequencing saved and independently reviewed in planning PR #100; scope/RA_EXEC/run decisions pending. VAL1 manifest/fixtures1014592 accepted in draft PR #101; Quality retains identity for the next generator assignment, Research/Platform review, lead integrates.",
       "proposal": {
         "id": "NATIVE_PATH_PROPOSAL_2026_10_20",
         "status": "proposed_not_approved_or_activated",
@@ -12139,8 +12177,61 @@
             "id": "RA-N02.b",
             "title": "Add and measure the declared native Laplace approximation",
             "objective": "Quantify one approximation against the accepted finite-grid reference.",
-            "scope": "Implement a bounded Laplace approximation to the declared scalar log posterior, with explicit support/boundary treatment and conditioning diagnostics. Evaluate or project it onto the same declared cells/nodes and prior/reference measure. Compute approximation posterior weights independently; they are not forced to equal grid weights. Persist actual inputs, method/config identity, approximation/reference error, failures and costs. Laplace is a separately validated diagnostic, not a fourth selector.",
+            "scope": "Implement a bounded Laplace approximation to the declared scalar log posterior, with explicit support/boundary treatment and conditioning diagnostics. Evaluate or project it onto the same declared cells/nodes and prior/reference measure. Compute approximation posterior weights independently; they are not forced to equal grid weights. Persist actual inputs, method/config identity, approximation/reference error, failures and costs. Laplace is a separately validated diagnostic, not a fourth selector. After the first grid-only result, consume the accepted, frozen RA-N03 development fixtures and perform the transferred Laplace-versus-grid calibration, predictive, ranking, boundary and misspecification audit. Preserve fixture identities and audit-only labels; later findings cannot retroactively tune the first comparison.",
             "out": "No additional inference backend, approximation-selected grid/prior, unrecorded fallback, online-engine substitution or exact-continuous-inference claim.",
+            "deps": [
+              "RA-N03"
+            ],
+            "contracts": [
+              "BELIEF",
+              "STUDY",
+              "COST"
+            ],
+            "accept": "Independent tractable cases meet preregistered tolerances. Boundary modes, singular/nonpositive curvature, numerical collapse and unsupported cases fail explicitly. Discretization error and approximation error remain distinct. Grid remains the common online engine unless separately amended. Approximation-versus-grid tolerances, predictions and acquisition rankings are independently assessed on those fixtures with all failures and costs. No Laplace validity or speedup claim precedes this acceptance.",
+            "tests": "Independent quadratic posterior and bounded/truncated cases; boundary, multimodal and misspecified cases; Hessian degeneracy; same-cell comparisons; exact-input mismatch; reproducibility and call-budget exhaustion. Frozen fixture identity and label isolation; posterior/predictive/ranking comparisons; transferred audit failures; rejection of retroactive comparison tuning.",
+            "risk": "Cap optimization/derivative evaluations and outputs. Do not clip failures into valid estimates, access hidden data or switch approximation silently.",
+            "effort_days": [
+              3,
+              5
+            ],
+            "confidence": "low",
+            "owner": "Research; independent Quality and Platform review",
+            "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates.",
+            "estimate_basis": {
+              "implementation_days": [
+                1,
+                1.5
+              ],
+              "independent_reference_tests_days": [
+                1,
+                1.5
+              ],
+              "transferred_grid_audit_days": [
+                0.5,
+                1
+              ],
+              "review_integration_docs_days": [
+                0.5,
+                1
+              ],
+              "with_25_percent_reserve_days": [
+                3.75,
+                6.25
+              ],
+              "confidence": "low",
+              "contingency": "Re-estimate before assignment. Preserve unsupported cases as explicit failures; no added inference backend. Re-scope into independently reviewable units if delivery would exceed five days.",
+              "historical_estimate_days": [
+                2,
+                3
+              ]
+            }
+          },
+          {
+            "id": "RA-N03",
+            "title": "Calibrate native beliefs and numerical-discrepancy sensitivity",
+            "objective": "Retain the scientific safeguards otherwise supplied by the broader calibration task.",
+            "scope": "Perform independent development calibration and prequential residual/predictive checks with tolerances fixed before outcomes. Justify positive numerical-discrepancy scale using accepted solver/analytic error evidence plus declared residual/correlation assumptions. Freeze a bounded sensitivity set; proposed half/base/double scales must all remain positive. Validate grid finite-sum/analytic references, refinement, predictive behavior, boundary/misspecification behavior and rankings on disjoint development fixtures. Freeze accepted fixture identities for the later RA-N02.b approximation audit; Laplace-specific comparison moves there. Labels flow only into audit output. Sensitivity over fixed purchased histories is diagnostic, not an uncounted adaptive sweep.",
+            "out": "No tuning on the six measured worlds or held-out probes, universal coverage, reinterpretation of zero observation noise as discrepancy, silent domain widening or outcome-driven filtering.",
             "deps": [
               "RA-N02.a"
             ],
@@ -12149,32 +12240,7 @@
               "STUDY",
               "COST"
             ],
-            "accept": "Independent tractable cases meet preregistered tolerances. Boundary modes, singular/nonpositive curvature, numerical collapse and unsupported cases fail explicitly. Discretization error and approximation error remain distinct. Grid remains the common online engine unless separately amended.",
-            "tests": "Independent quadratic posterior and bounded/truncated cases; boundary, multimodal and misspecified cases; Hessian degeneracy; same-cell comparisons; exact-input mismatch; reproducibility and call-budget exhaustion.",
-            "risk": "Cap optimization/derivative evaluations and outputs. Do not clip failures into valid estimates, access hidden data or switch approximation silently.",
-            "effort_days": [
-              2,
-              3
-            ],
-            "confidence": "low",
-            "owner": "Research; independent Quality and Platform review",
-            "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates."
-          },
-          {
-            "id": "RA-N03",
-            "title": "Calibrate native beliefs and numerical-discrepancy sensitivity",
-            "objective": "Retain the scientific safeguards otherwise supplied by the broader calibration task.",
-            "scope": "Perform independent development calibration and prequential residual/predictive checks with tolerances fixed before outcomes. Justify positive numerical-discrepancy scale using accepted solver/analytic error evidence plus declared residual/correlation assumptions. Freeze a bounded sensitivity set; proposed half/base/double scales must all remain positive. Compare grid and Laplace errors, boundary/misspecification behavior and rankings on disjoint development fixtures. Labels flow only into audit output. Sensitivity over fixed purchased histories is diagnostic, not an uncounted adaptive sweep.",
-            "out": "No tuning on the six measured worlds or held-out probes, universal coverage, reinterpretation of zero observation noise as discrepancy, silent domain widening or outcome-driven filtering.",
-            "deps": [
-              "RA-N02.b"
-            ],
-            "contracts": [
-              "BELIEF",
-              "STUDY",
-              "COST"
-            ],
-            "accept": "Predeclared native-domain reference/approximation tolerances and applicable development checks pass, or the profile is rejected and comparison remains blocked. Preserve poor calibration, failures, prior/scale sensitivity and pass/fail/incomplete eligibility. Weights are approximate model-belief weights, not calibrated observation-noise probabilities. Domain/approximation changes require a recorded amendment.",
+            "accept": "Predeclared native-domain grid-reference tolerances and applicable development checks pass, or the profile is rejected and comparison remains blocked. Preserve poor calibration, failures, prior/scale sensitivity and pass/fail/incomplete eligibility. Weights are approximate model-belief weights, not calibrated observation-noise probabilities. Domain/inference changes require a recorded amendment.",
             "tests": "Separately labeled synthetic-noise sanity cases; correlated discrepancy, weak excitation, boundary coefficients, misspecification, zero-noise limits with positive discrepancy; prequential ordering; replay/reset; evaluator-feedback rejection.",
             "risk": "Calibration audit cannot write selector state. Bound reference/sensitivity work and outputs, record costs and all outcomes, prohibit silent redraws or successful-only summaries.",
             "effort_days": [
@@ -12230,19 +12296,35 @@
         "implementation_gate": "RA_EXEC",
         "unchanged": "All existing baseline tasks, broad research tasks and gates stay unchanged. No task is marked complete by this proposal; RA-01 and RA-02 remain prerequisites in full.",
         "effort": {
-          "new_native_days": [
-            12,
-            19
+          "first_result_native_days": [
+            10,
+            16
           ],
           "unfinished_path_days": [
-            19,
-            29
+            17,
+            26
           ],
           "unfinished_path_with_25_percent_reserve": [
-            23.75,
-            36.25
+            21.25,
+            32.5
           ],
-          "scope": "Engineering effort, not elapsed schedule. No speculative reuse deduction or GA forecast change."
+          "later_laplace_days": [
+            3,
+            5
+          ],
+          "later_laplace_with_25_percent_reserve": [
+            3.75,
+            6.25
+          ],
+          "all_five_native_tasks_days": [
+            13,
+            21
+          ],
+          "native_proposal_with_RA01_RA02_RA07b_days": [
+            20,
+            31
+          ],
+          "scope": "Provisional engineering effort, not calendar duration or the full research programme. N03 retains its full 3\u20135 days. The later Laplace implementation includes its transferred audit. Broader programme scope is unchanged; no total-programme or calendar saving is established. Re-estimate at each gate and before later assignment; GA forecast unchanged."
         },
         "counts": {
           "original_tasks": 18,
@@ -12253,34 +12335,109 @@
           "original_fixed_edges": 62,
           "proposed_fixed_edges": 69,
           "conditional_edges": 6,
-          "native_closure": 21,
+          "native_closure": 20,
           "accepted_ancestors": 12,
-          "proposed_native_path_tasks": 8,
+          "proposed_native_path_tasks": 7,
           "pending_gates": 1
         },
-        "review": {
-          "source": "ad89f8d26264fff5ca96ea8c200decb1ff0582e2",
-          "reviewer": "Engineer Quality",
-          "status": "accepted_as_planning_proposal_only",
-          "checks": [
-            "Actual predictor and workflow producer/provenance seam verified.",
-            "All proposed dependencies resolve; graph acyclic; 23 tasks and69 fixed plus6 conditional edges.",
-            "RA-07.b closure21:12 accepted,8 proposed research tasks, pendingRA_EXEC.",
-            "Effort12\u201319 new,19\u201329 unfinished,23.75\u201336.25 with25% reserve.",
-            "Baseline tasks/gates/forecast and active research amendment unchanged."
-          ],
-          "activation": "Dependency amendment, RA_EXEC and bounded comparison run scope still require explicit decision.",
-          "index_sha256": "deb8971a674940fe4a8879c8e78b2c52ed38781084334f12e1561f9430f2ebac"
+        "previous_revision": {
+          "source": "1ac8875d5641b834a3361621b1ce03ad07c3f2e6",
+          "effort": {
+            "new_native_days": [
+              12,
+              19
+            ],
+            "unfinished_path_days": [
+              19,
+              29
+            ],
+            "unfinished_path_with_25_percent_reserve": [
+              23.75,
+              36.25
+            ],
+            "scope": "Engineering effort, not elapsed schedule. No speculative reuse deduction or GA forecast change."
+          },
+          "counts": {
+            "original_tasks": 18,
+            "proposed_tasks": 23,
+            "original_task_edges": 53,
+            "proposed_task_edges": 60,
+            "fixed_gate_edges": 9,
+            "original_fixed_edges": 62,
+            "proposed_fixed_edges": 69,
+            "conditional_edges": 6,
+            "native_closure": 21,
+            "accepted_ancestors": 12,
+            "proposed_native_path_tasks": 8,
+            "pending_gates": 1
+          },
+          "review": {
+            "source": "ad89f8d26264fff5ca96ea8c200decb1ff0582e2",
+            "reviewer": "Engineer Quality",
+            "status": "accepted_as_planning_proposal_only",
+            "checks": [
+              "Actual predictor and workflow producer/provenance seam verified.",
+              "All proposed dependencies resolve; graph acyclic; 23 tasks and69 fixed plus6 conditional edges.",
+              "RA-07.b closure21:12 accepted,8 proposed research tasks, pendingRA_EXEC.",
+              "Effort12\u201319 new,19\u201329 unfinished,23.75\u201336.25 with25% reserve.",
+              "Baseline tasks/gates/forecast and active research amendment unchanged."
+            ],
+            "activation": "Dependency amendment, RA_EXEC and bounded comparison run scope still require explicit decision.",
+            "index_sha256": "deb8971a674940fe4a8879c8e78b2c52ed38781084334f12e1561f9430f2ebac"
+          },
+          "publication": {
+            "pull_request": 96,
+            "merge_commit": "ee4831a23ded97de514075a88923c69b04316170",
+            "reviewed_head": "8ff2e8165b60746baaac2bdf1480c4e49fc6641d",
+            "tree": "31925740d9bfa8cc642a4d41fa8ae2861a26ebd0",
+            "pr_ci": 39395368138,
+            "main_ci": 39395654760,
+            "status": "published_proposal_only",
+            "index_sha256": "5233e10240b72bf5a5ea352d2ae7ab9fb965633af5c18243f4e04578c4ed5fde"
+          }
         },
-        "publication": {
-          "pull_request": 96,
-          "merge_commit": "ee4831a23ded97de514075a88923c69b04316170",
-          "reviewed_head": "8ff2e8165b60746baaac2bdf1480c4e49fc6641d",
-          "tree": "31925740d9bfa8cc642a4d41fa8ae2861a26ebd0",
-          "pr_ci": 39395368138,
-          "main_ci": 39395654760,
-          "status": "published_proposal_only",
-          "index_sha256": "5233e10240b72bf5a5ea352d2ae7ab9fb965633af5c18243f4e04578c4ed5fde"
+        "proposed_internal_dependency_changes": [
+          {
+            "task": "RA-N03",
+            "before": [
+              "RA-N02.b"
+            ],
+            "after": [
+              "RA-N02.a"
+            ]
+          },
+          {
+            "task": "RA-N02.b",
+            "before": [
+              "RA-N02.a"
+            ],
+            "after": [
+              "RA-N03"
+            ]
+          }
+        ],
+        "sequencing_review": {
+          "source_base": "1ac8875d5641b834a3361621b1ce03ad07c3f2e6",
+          "reviewers": [
+            "Engineer Research",
+            "Engineer Quality"
+          ],
+          "status": "accepted_as_planning_proposal_only",
+          "decision": "Grid-only first comparison; RA-N03 depends on RA-N02.a and later RA-N02.b depends on accepted RA-N03. All five native tasks and broader work retained.",
+          "schedule": "Allocate RA-N02.b after the first result; RA-N03 and RA-N04 may proceed after RA-N02.a. This scheduling recommendation grants no implementation or experiment permission.",
+          "activation": "Active dependency graph and RA_EXEC unchanged; explicit scope, implementation gate and bounded-run decisions still required.",
+          "reviewed_source": "0ecf4f4c3843aaed499bb1991cae1d39834aa613",
+          "reviewed_tree": "db6a51208253c77519a7faade35c653793dffaf2",
+          "saved_delta_reviewers": [
+            "Engineer Research",
+            "Engineer Platform"
+          ],
+          "review_index_sha256": {
+            "research": "8f371933ac6500efd8cc0ef2c04430a8cf468ba2e142f880d34bb35093421e21",
+            "platform": "398d4ad81a132d6654605f5906054303fb8dea42afd590c14d324f657d91a6b8",
+            "lead": "7a7d6cdf8da7bf7730636f683cd356f68b39688ffdaaf1c257ac080f377fb088"
+          },
+          "pull_request": 100
         }
       },
       "proposal_document": "docs/research/NATIVE_COMPARISON_PROPOSAL.md"
