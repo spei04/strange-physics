@@ -110,7 +110,7 @@ def authorize_service_management(
 
 
 def service_key_valid(principal: ServicePrincipalView, key: ServiceKeyState, *, now: int) -> bool:
-    """Current ancestry/lifetime predicate; this does not verify the presented secret."""
+    """Lifetime/ancestry only: neither secret verification nor per-operation permission."""
     server_time(now)
     return (
         principal.active
@@ -123,8 +123,6 @@ def service_key_valid(principal: ServicePrincipalView, key: ServiceKeyState, *, 
         and key.created_at
         <= now
         < min(key.expires_at, key.expires_at if key.retire_at is None else key.retire_at)
-        and set(key.scopes) <= set(principal.scope_ceiling)
-        and (principal.grant.membership.role != "viewer" or key.scopes == ("runs:read",))
     )
 
 
@@ -254,6 +252,25 @@ def _current_key_follows_snapshot(current: ServiceKeyState, committed: ServiceKe
     )
 
 
+def _principal_follows_snapshot(
+    current: ServicePrincipalView, committed: ServicePrincipalView
+) -> bool:
+    if current.revision == committed.revision:
+        return current == committed
+    old, new = committed.grant.membership, current.grant.membership
+    return (
+        current.revision > committed.revision
+        and current.model_dump(exclude={"revision", "last_key_generation", "grant"})
+        == committed.model_dump(exclude={"revision", "last_key_generation", "grant"})
+        and current.last_key_generation >= committed.last_key_generation
+        and current.grant.incarnation == committed.grant.incarnation
+        and (new.workspace_id, new.principal_id, new.active)
+        == (old.workspace_id, old.principal_id, old.active)
+        and new.revision >= old.revision
+        and (new.role == old.role or new.revision > old.revision)
+    )
+
+
 def _replay(
     policy: ServiceCredentialPolicy,
     manager: ServiceManager,
@@ -263,6 +280,7 @@ def _replay(
     lookup: ServiceReceiptLookup,
     *,
     workspace_id: str,
+    workspace_revision: int,
     principal_id: str | None,
     credential_id: str | None,
     key: str,
@@ -314,6 +332,10 @@ def _replay(
     )
     if receipt.retain_until != expected_retention:
         raise ContractViolation("recovery_required", 409)
+    if isinstance(request, ServiceCreateRequest) and workspace_revision < _add(
+        request.expected_workspace_revision, 1
+    ):
+        raise ContractViolation("recovery_required", 409)
     snapshot = receipt.snapshot
     expected_audit = ServiceAudit(
         event_id=receipt.audit_event_id,
@@ -334,8 +356,7 @@ def _replay(
     }
     if (
         audit != expected_audit
-        or principal.revision < snapshot.principal.revision
-        or principal.last_key_generation < snapshot.principal.last_key_generation
+        or not _principal_follows_snapshot(principal, snapshot.principal)
         or {item.credential_id for item in snapshot.keys} != expected_ids
     ):
         raise ContractViolation("recovery_required", 409)
@@ -383,6 +404,12 @@ def _changed_key(record: ServiceKeyRecord, **changes: int | None) -> ServiceKeyR
     return ServiceKeyRecord(
         key=ServiceKeyState.model_validate(value),
         verifier_sha256=record.verifier_sha256,
+    )
+
+
+def _scopes_allowed(principal: ServicePrincipalView, scopes: tuple[ServicePermission, ...]) -> bool:
+    return set(scopes) <= set(principal.scope_ceiling) and (
+        principal.grant.membership.role != "viewer" or scopes == ("runs:read",)
     )
 
 
@@ -523,6 +550,8 @@ def _mutate(
     retirement = None
     if isinstance(request, ServiceKeyRecoverRequest):
         assert target is not None
+        if not _scopes_allowed(principal, target.key.scopes):
+            raise ContractViolation("incompatible_state", 409)
         scopes, expiry, retirement = target.key.scopes, target.key.expires_at, target.key.retire_at
         changed = _replace(
             changed,
@@ -538,8 +567,8 @@ def _mutate(
     else:
         assert isinstance(request, ServiceKeyIssueRequest)
         scopes, expiry = request.scopes, request.expires_at
-        if not now < expiry <= _add(now, policy.max_key_ttl_seconds) or not set(scopes) <= set(
-            principal.scope_ceiling
+        if not now < expiry <= _add(now, policy.max_key_ttl_seconds) or not _scopes_allowed(
+            principal, scopes
         ):
             raise ContractViolation("invalid_request", 422)
         if isinstance(request, ServiceKeyRotateRequest):
@@ -633,6 +662,7 @@ def plan_service_operation(
         current,
         lookup,
         workspace_id=workspace_id,
+        workspace_revision=workspace.workspace.revision,
         principal_id=principal_id,
         credential_id=credential_id,
         key=key,
@@ -682,6 +712,25 @@ def plan_service_operation(
         committed_at=now,
     )
     affected = {output_key, replaced_key} - {None}
+    receipt_deadline = max(
+        (
+            _add(now, configured.receipt_retention_seconds),
+            *(
+                record.key.expires_at
+                for record in updated.records
+                if record.key.credential_id in affected
+            ),
+        )
+    )
+    updated = _updated_set(
+        updated,
+        records=tuple(
+            _changed_key(record, retain_until=max(record.key.retain_until, receipt_deadline))
+            if record.key.credential_id in affected
+            else record
+            for record in updated.records
+        ),
+    )
     snapshot = ServiceCommitSnapshot(
         principal=principal,
         keys=tuple(
@@ -703,12 +752,7 @@ def plan_service_operation(
         outcome=outcome,
         snapshot=snapshot,
         audit_event_id=audit_event_id,
-        retain_until=max(
-            (
-                _add(now, configured.receipt_retention_seconds),
-                *(item.expires_at for item in snapshot.keys),
-            )
-        ),
+        retain_until=receipt_deadline,
     )
     audit = ServiceAudit(
         event_id=audit_event_id,

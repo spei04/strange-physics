@@ -129,8 +129,8 @@ revocation likewise denies before receipt details or freshness guidance.
 get_service_principal and get_service_key apply owner authorization before
 lookup/projection. List producers use the same authorize_service_management
 boundary plus the bounded same-workspace/principal page validators and their
-snapshot-bound cursor implementation. service_key_valid is only an ancestry,
-scope and lifetime predicate; it does not verify a presented bearer. C2 must
+snapshot-bound cursor implementation. service_key_valid is only an ancestry
+and lifetime predicate; it does not verify a presented bearer. C2 must
 compose actual verified credentials with these current facts before product
 authorization. The separate initial-response validator only binds a transient
 secret to a proposed verifier digest; it proves neither current authority nor a
@@ -217,3 +217,36 @@ response binding, explicit metadata-only retries, key count/lifetime limits,
 retirement of both sides of overlap, near-expiry recovery, partial atomic
 evidence, immutable snapshots and fixed safe errors. They do not exercise a
 database, real key verifier, distributed race or hosted service.
+
+## Review refinements
+
+Key valid_now and admission counts describe only live, unrevoked authority under
+the current principal generation and grant incarnation. They are not permission
+decisions. Role downgrades cannot make live keys disappear from the two-key
+count and permit extra issuance that becomes valid upon role restoration.
+The creation scope ceiling is immutable and remains representable after a later
+viewer downgrade. C2 must intersect each requested permission with that ceiling,
+the key scopes and the current role. Current viewer grants permit read, not
+create/cancel, regardless of the creation ceiling.
+
+Fresh issue/rotate scopes must fit the current role and creation ceiling.
+Exact recovery also rejects when its original scopes no longer fit, because it
+cannot silently narrow or extend the recovered authority. The owner can use the
+explicit revoke/rotation lifecycle to obtain a narrower key; recovery continues
+to preserve the original expiry and retirement.
+
+Before constructing snapshots/audit, every affected key record is retained at
+least until the common receipt deadline, including an older rotation target
+when the replacement expires much later. An untouched recovery partner remains
+byte-identical. Creation replay additionally requires a current workspace
+revision at least the committed creation revision derived from its exact
+request, so a missing workspace-side commit cannot appear successful.
+
+At the same shared revision, the current principal must equal its committed
+snapshot. Later key mutations may advance the shared revision and issuance
+counter. Later role changes must advance both membership revision and the
+shared principal/keyset revision. Creation identity/name/ceiling are immutable
+in C1. Active state cannot change under the same principal generation; grant
+active state cannot change under the same incarnation. These checks reject
+partial state and known rollback; real producers still establish currency
+under the shared transaction lock.

@@ -95,7 +95,7 @@ class ServicePrincipalView(Message):
             or membership.role == "owner"
         ):
             raise ValueError("Service principal requires its independent non-owner grant")
-        validate_scopes(self.scope_ceiling, viewer=membership.role == "viewer")
+        validate_scopes(self.scope_ceiling)
         return self
 
 
@@ -153,6 +153,8 @@ class ServiceKeyRecord(Message):
 
 
 class ServiceKeyView(Message):
+    """Lifetime/ancestry validity; current per-operation permission is separate."""
+
     key: ServiceKeyState
     principal_revision: Count
     valid_now: bool

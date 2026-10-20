@@ -192,7 +192,7 @@ def test_create_allocates_independent_non_owner_grant_without_key() -> None:
     assert result.key_set.principal.last_key_generation == 0
     assert result.workspace.workspace.revision == ctx[3].workspace.revision + 1
     assert result.workspace.active_owner_ids == ctx[3].active_owner_ids
-    replay = call(result.key_set, request, ctx=ctx, stored=lookup(result))
+    replay = call(result.key_set, request, ctx=(*ctx[:3], result.workspace), stored=lookup(result))
     assert isinstance(replay, ServiceMutationResponse)
     assert replay.disposition == "replayed"
     assert replay.principal == result.key_set.principal
@@ -816,3 +816,291 @@ def test_short_original_expiry_caps_rotation_retirement() -> None:
         now=1110,
     )
     assert result.key_set.records[0].key.retire_at == 1130
+
+
+def role_change(current: ServiceKeySet, role: str) -> ServiceKeySet:
+    principal = current.principal
+    member = changed(
+        principal.grant.membership, role=role, revision=principal.grant.membership.revision + 1
+    )
+    return changed(
+        current,
+        principal=changed(
+            principal,
+            revision=principal.revision + 1,
+            grant=changed(principal.grant, membership=member),
+        ),
+    )
+
+
+def wide_issue() -> tuple[ServiceKeyIssueRequest, ServicePlan]:
+    request = ServiceKeyIssueRequest(
+        expected_revision=0,
+        scopes=("runs:create", "runs:read"),
+        expires_at=2000,
+    )
+    return request, plan(empty(), request, supplied_material=material(1))
+
+
+def test_downgrade_does_not_hide_live_keys_from_admission_before_role_restoration() -> None:
+    _, first = wide_issue()
+    pair = plan(
+        first.key_set,
+        ServiceKeyRotateRequest(
+            expected_revision=1,
+            scopes=("runs:create", "runs:read"),
+            expires_at=2200,
+            overlap_seconds=60,
+        ),
+        target="key-1",
+        supplied_material=material(2),
+        now=1110,
+    )
+    downgraded = role_change(pair.key_set, "viewer")
+    assert downgraded.principal.scope_ceiling == pair.key_set.principal.scope_ceiling
+    assert (
+        sum(service_key_valid(downgraded.principal, r.key, now=1120) for r in downgraded.records)
+        == 2
+    )
+    assert_denied(
+        "incompatible_state",
+        409,
+        call,
+        downgraded,
+        ServiceKeyIssueRequest(
+            expected_revision=3,
+            scopes=("runs:read",),
+            expires_at=2300,
+        ),
+        supplied_material=material(3),
+        now=1120,
+    )
+    restored = role_change(downgraded, "researcher")
+    assert (
+        sum(service_key_valid(restored.principal, r.key, now=1120) for r in restored.records) == 2
+    )
+    assert restored.principal.last_key_generation == 2
+    assert (
+        restored.principal.authority_generation == 0 and restored.principal.grant.incarnation == 0
+    )
+
+
+@pytest.mark.parametrize("permission", ("runs:read", "runs:create"))
+def test_viewer_fresh_issuance_obeys_current_role_even_with_original_researcher_ceiling(
+    permission: str,
+) -> None:
+    current = role_change(empty(), "viewer")
+    request = ServiceKeyIssueRequest.model_validate(
+        {
+            "expected_revision": 1,
+            "scopes": (permission,),
+            "expires_at": 2000,
+        }
+    )
+    if permission == "runs:read":
+        result = plan(current, request, supplied_material=material(1))
+        assert result.key_set.records[0].key.scopes == ("runs:read",)
+    else:
+        assert_denied("invalid_request", 422, call, current, request, supplied_material=material(1))
+
+
+def test_downgrade_preserves_lifetime_but_existing_role_guard_denies_writes() -> None:
+    from strange_physics.control_contracts import VerifiedCredential, authorize
+
+    _, initial = wide_issue()
+    current = role_change(initial.key_set, "viewer")
+    key_state = current.records[0].key
+    assert service_key_valid(current.principal, key_state, now=1110)
+    credential = VerifiedCredential(
+        issuer="https://synthetic.example",
+        subject="service-1",
+        principal_id="service-1",
+        credential_id=key_state.credential_id,
+        kind="service",
+        workspace_id="workspace-1",
+        scopes=key_state.scopes,
+        expires_at=key_state.expires_at,
+        revoked=False,
+    )
+    # This isolates the existing per-operation role rule, not the pending C2 composed boundary.
+    authorize(
+        credential,
+        current.principal.grant.membership,
+        permission="runs:read",
+        workspace_id="workspace-1",
+        now=1110,
+    )
+    assert_denied(
+        "forbidden",
+        403,
+        authorize,
+        credential,
+        current.principal.grant.membership,
+        permission="runs:create",
+        workspace_id="workspace-1",
+        now=1110,
+    )
+
+
+def test_recovery_cannot_preserve_now_forbidden_scopes_but_narrow_rotation_is_explicit() -> None:
+    _, initial = wide_issue()
+    current = role_change(initial.key_set, "viewer")
+    assert_denied(
+        "incompatible_state",
+        409,
+        call,
+        current,
+        ServiceKeyRecoverRequest(expected_revision=2),
+        target="key-1",
+        supplied_material=material(2),
+        now=1110,
+    )
+    narrowed = plan(
+        current,
+        ServiceKeyRotateRequest(
+            expected_revision=2,
+            scopes=("runs:read",),
+            expires_at=2200,
+            overlap_seconds=60,
+        ),
+        target="key-1",
+        supplied_material=material(2),
+        now=1110,
+    )
+    assert narrowed.key_set.records[1].key.scopes == ("runs:read",)
+    assert narrowed.key_set.principal.scope_ceiling == current.principal.scope_ceiling
+
+
+def test_every_affected_record_outlives_long_replacement_receipt() -> None:
+    ctx = context()
+    short_policy = changed(ctx[1], receipt_retention_seconds=10)
+    ctx = (ctx[0], short_policy, ctx[2], ctx[3])
+    first = plan(
+        empty(),
+        ServiceKeyIssueRequest(
+            expected_revision=0,
+            scopes=("runs:read",),
+            expires_at=1200,
+        ),
+        supplied_material=material(1),
+        ctx=ctx,
+    )
+    assert first.key_set.records[0].key.retain_until == 1200
+    request = ServiceKeyRotateRequest(
+        expected_revision=1,
+        scopes=("runs:read",),
+        expires_at=2200,
+        overlap_seconds=60,
+    )
+    ctx2 = context(1110)
+    rotated = plan(
+        first.key_set,
+        request,
+        target="key-1",
+        supplied_material=material(2),
+        now=1110,
+        ctx=(ctx2[0], short_policy, ctx2[2], ctx2[3]),
+    )
+    assert rotated.receipt.retain_until == 2200
+    for key_state in rotated.receipt.snapshot.keys:
+        assert key_state.retain_until >= rotated.receipt.retain_until
+        assert (
+            next(
+                r.key
+                for r in rotated.key_set.records
+                if r.key.credential_id == key_state.credential_id
+            )
+            == key_state
+        )
+    later = context(1500)
+    replay = call(
+        rotated.key_set,
+        request,
+        target="key-1",
+        stored=lookup(rotated),
+        now=1500,
+        ctx=(later[0], short_policy, later[2], later[3]),
+    )
+    assert isinstance(replay, ServiceMutationResponse)
+
+
+def test_creation_replay_requires_the_committed_workspace_revision_or_later() -> None:
+    ctx = context()
+    request = ServiceCreateRequest(
+        expected_workspace_revision=ctx[3].workspace.revision,
+        display_name="Investigator",
+        role="viewer",
+        scope_ceiling=("runs:read",),
+    )
+    created = plan(None, request, ctx=ctx)
+    assert_denied(
+        "recovery_required", 409, call, created.key_set, request, ctx=ctx, stored=lookup(created)
+    )
+    later_workspace = changed(
+        created.workspace,
+        workspace=changed(
+            created.workspace.workspace,
+            revision=created.workspace.workspace.revision + 1,
+        ),
+    )
+    replay = call(created.key_set, request, ctx=(*ctx[:3], later_workspace), stored=lookup(created))
+    assert isinstance(replay, ServiceMutationResponse)
+
+
+@pytest.mark.parametrize(
+    "case",
+    (
+        "same_revision_name",
+        "later_creation_ceiling",
+        "same_generation_reenabled",
+        "role_without_grant_cas",
+        "role_without_shared_cas",
+    ),
+)
+def test_inconsistent_current_principal_cannot_replay_committed_snapshot(case: str) -> None:
+    request: ServiceRequest
+    if case == "same_generation_reenabled":
+        _, initial = issue()
+        request = ServiceStateRequest(expected_revision=1, active=False)
+        committed = plan(initial.key_set, request)
+        current = changed(
+            committed.key_set, principal=changed(committed.key_set.principal, active=True)
+        )
+    else:
+        request, committed = wide_issue()
+        principal = committed.key_set.principal
+        if case == "same_revision_name":
+            principal = changed(principal, display_name="Changed without commit")
+        elif case == "later_creation_ceiling":
+            principal = changed(principal, revision=2, scope_ceiling=("runs:read",))
+        elif case == "role_without_grant_cas":
+            principal = changed(
+                principal,
+                revision=2,
+                grant=changed(
+                    principal.grant,
+                    membership=changed(principal.grant.membership, role="viewer"),
+                ),
+            )
+        else:
+            principal = changed(
+                principal,
+                grant=changed(
+                    principal.grant,
+                    membership=changed(principal.grant.membership, role="viewer", revision=1),
+                ),
+            )
+        current = changed(committed.key_set, principal=principal)
+    assert_denied("recovery_required", 409, call, current, request, stored=lookup(committed))
+
+
+def test_later_role_and_shared_cas_evolution_allows_metadata_replay_without_permission_claim() -> (
+    None
+):
+    request, initial = wide_issue()
+    current = role_change(initial.key_set, "viewer")
+    replay = call(current, request, stored=lookup(initial))
+    assert isinstance(replay, ServiceMutationResponse)
+    assert replay.principal.grant.membership.role == "viewer"
+    assert replay.credential is not None and replay.credential.valid_now
+    assert replay.outcome.committed_revision == 1 and replay.principal.revision == 2
