@@ -1323,9 +1323,9 @@
         "frontend",
         "security"
       ],
-      "execution_owner": "Engineer Quality (backend contract rotation)",
+      "execution_owner": "Project lead coordinates; Platform owns ID-B/B3, then Quality owns ID-C",
       "issue": "https://github.com/spei04/strange-physics/issues/52",
-      "evidence": "Part 1 integrated by PR #53 at d6204aaab82e1b100532f40bae00e224d9334c65, matching reviewed f6cead9 tree. Four head CI checks and merge-main CI passed; 252 tests, 67 external schema/header cases and independent Research/Platform reviews passed. ID-A sessions/bootstrap, ID-B membership/invitation/linking and ID-C credential lifecycle remain open; consumers remain blocked."
+      "evidence": "Control part 1 (PR #53), ID-A sessions (PR #65), ID-B/B1 membership (PR #67) and B2 invitations (PR #69) are integrated. B2 main89e6117 matches reviewed8267865; 560 hosted tests and PR/main CI passed. B3 linking, ID-C credentials and final composed review remain open; full-contract consumers remain blocked."
     },
     {
       "id": "SP-01.c",
@@ -2030,7 +2030,7 @@
         "SCI"
       ],
       "scope": "Score analytic spring predictions with fixed normalization, counts and report hashes.",
-      "accept": "Hand-calculated RMSE/counts match; missing output remains failure.",
+      "accept": "Hand-calculated MSE/normalized MSE/counts match the SCI report; sqrt(position_mse) supplies the ratified RMSE acceptance check; missing output remains failure and unscorable.",
       "tests": "Known errors, all invalid/missing output, normalization and tamper cases.",
       "risk": "Separate evaluator labels from fitter; report failures.",
       "out": "Full benchmark penalty freeze.",
@@ -10699,8 +10699,39 @@
       "checkout_clean": true,
       "active_author_processes": false,
       "remediation": "200-to-300 GiB disk plus recovery snapshot; explicit paid-action approval pending",
-      "resume": "Verify approved remediation and consumers; fetch/reconcile the preserved clean cloud checkout with current main before Platform B3. No new checkout or local project copy."
+      "resume": "After approved capacity recovery, verify consumers and headroom, then fetch/reconcile the preserved clean cloud checkout with current main. Research receives the first writer slot for SP-03.a; Platform retains B3. No simultaneous writers in one checkout or local project copy."
     },
-    "next_identity_review": "Purpose-bound global proof ownership, tenant-aware stable namespace, composed human/service/run authority and secret-safe retries; authoritative checks before every streamed delivery batch, <=30 seconds only for idle connections."
+    "next_identity_review": "Purpose-bound global proof ownership, tenant-aware stable namespace, composed human/service/run authority and secret-safe retries; authoritative checks before every streamed delivery batch, <=30 seconds only for idle connections.",
+    "scientific_checkpoint": {
+      "id": "I1",
+      "exit_task": "SP-04.e",
+      "status": "blocked_on_SP-02.b",
+      "lead": "Engineer Research",
+      "scorer": "Engineer Quality after accepted SP-04.b",
+      "next_authoring_task": "SP-03.a",
+      "path": [
+        "SP-02.b",
+        "SP-03.a",
+        "SP-03.b",
+        "SP-04.a",
+        "SP-04.b",
+        "SP-06.a",
+        "SP-04.e"
+      ],
+      "accepted_external_predecessors": [
+        "APPROVAL",
+        "SP-00.a",
+        "SP-00.b",
+        "SP-02.a",
+        "SP-01.a"
+      ],
+      "reference_scientific_days": 19,
+      "reference_scientific_reserve_days": 4.75,
+      "forecast_boundary": "Reference human effort only; not a subagent delivery forecast. Dependencies, gates and schedules unchanged.",
+      "identity_boundary": "SP-01.b/c/d/e, B3, ID-C, SP-08, staging and whole R0 exit are not prerequisites for the local slice; their hosted/later consumer gates remain.",
+      "acceptance": "Purchased-prefix-only fit, unseen-condition predictions, independent analytic development score and SDK/CLI evidence; any failed probe unscorable, primary MSE null; derive RMSE from position_mse.",
+      "evidence_gap": "Existing simulation/journal/random CLI, schemas and 560 tests do not yet implement fit/predict/score or prove generalization/recovery.",
+      "capacity_approval": "Unchanged; pending"
+    }
   }
 }
