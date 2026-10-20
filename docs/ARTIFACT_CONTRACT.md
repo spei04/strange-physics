@@ -171,3 +171,5 @@ future commit time. The same lease epoch implies the same attempt identity.
 A currently authorized replacement attempt may replay a compatible older
 checkpoint. When target and latest denote the same checkpoint, both retained
 record and outbox projections must be identical.
+The older target also cannot have a later run revision, commit time or lease
+epoch than the latest record; equal epochs identify the same attempt in both.

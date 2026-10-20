@@ -222,6 +222,8 @@ def _lookup(
         record.index > head.index
         or record.checkpoint_revision >= latest.checkpoint_revision
         or record.run_revision > latest.run_revision
+        or record.lease_epoch > latest.lease_epoch
+        or (record.lease_epoch == latest.lease_epoch and record.attempt_id != latest.attempt_id)
         or record.committed_at > latest.committed_at
     ):
         raise ContractViolation("recovery_required", 409)

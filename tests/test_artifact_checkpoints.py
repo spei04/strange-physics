@@ -927,3 +927,28 @@ def test_restore_rejects_advanced_available_row_but_accepts_renewed_proof() -> N
         artifacts=changed(data["artifacts"], objects=(renewed,), checked_at=data["now"] + 1),
         now=data["now"] + 1,
     )
+
+
+@pytest.mark.parametrize("fault", ["reversed_epoch", "same_epoch_foreign_attempt"])
+def test_historical_target_and_latest_have_consistent_attempt_history(fault: str) -> None:
+    data = at_index(ledger_data(), 0)
+    first = plan(data)
+    second = plan(next_checkpoint_args())
+    retry = replay_args(data, first)
+    target = changed(first.record, lease_epoch=2, attempt_id="historical-target")
+    latest = changed(
+        second.record,
+        lease_epoch=1 if fault == "reversed_epoch" else 2,
+        attempt_id="historical-latest",
+    )
+    lookup = changed(
+        retry["lookup"],
+        revision=second.head.checkpoint_revision,
+        head=second.head,
+        record=target,
+        outbox=changed(first.outbox, record_sha256=message_sha256(target)),
+        latest_record=latest,
+        latest_outbox=changed(second.outbox, record_sha256=message_sha256(latest)),
+    )
+    with denied("recovery_required", 409):
+        validate_checkpoint_write(**(retry | {"lookup": lookup}))
