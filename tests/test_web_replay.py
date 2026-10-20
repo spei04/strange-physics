@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+from test_run_credentials import changed, product, value
 
 from strange_physics import run_credential_contracts as rc
 from strange_physics import web_contracts as w
@@ -22,7 +23,6 @@ from strange_physics.web_replay import (
     read_snapshot,
     resolve_cursor,
 )
-from tests.test_run_credentials import changed, product, value
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = json.loads((ROOT / "contracts/web.examples.json").read_text())

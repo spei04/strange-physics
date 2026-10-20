@@ -277,7 +277,7 @@ Retry-After schemas reject non-ASCII-digit framing characters explicitly.
 Replacement checks and independent review are recorded separately; neither API
 checkpoint establishes runtime authorization or hosted readiness.
 
-### API review completion and first partial runtime unit
+### API review completion and historical first partial runtime unit
 
 The repaired API source `c066900b875c4393f74d6e34b7b9fec09e15a83f`
 passed 2,962 full tests, 405 focused WEB/control/session cases (179 WEB),
@@ -317,9 +317,9 @@ invalidate that state rather than resetting its budget or deadline. The empty
 watermark −1 and terminal MAX_SAFE watermark can both produce a lawful empty
 poll without emitting an out-of-range next sequence.
 
-This unit does **not yet implement** complete actual-byte artifact validation,
+At the historical partial checkpoints through `ac70f69`, this unit did not implement complete actual-byte artifact validation,
 incremental full history verification or reauthorization between raw body
-batches. Those are the next bounded runtime unit. The later history walk must
+batches. The following material unit supplies those predicates. The history walk must
 retain every consumed page/object/event identity, with an internal 8 MiB
 canonical-metadata ceiling additionally capped by policy.max_history_bytes.
 That separate metadata bound limits locally verifiable history; it is not a
@@ -336,3 +336,62 @@ The hosted producer must also preserve the at-most-30-second idle authority
 recheck obligation in IDENTITY_RUN_CONTRACT and RUN_CREDENTIAL_CONTRACT, as
 well as mandatory checks before every payload. This unit implements no idle
 loop, timer, connection manager or network producer.
+
+
+### Material runtime review checkpoint
+
+`web_delivery` adds `prepare_experiment_body`, `prepare_replay_body`, and
+`deliver_body_batch`. Preparation verifies the complete bounded raw object before
+returning private `VerifiedBody` state: current run-owned agent-visible available
+ART catalog/readback, exact immutable reference and raw SHA/size, strict UTF-8 JSON
+with depth 32/node 1,000,000 limits, and actual typed semantic identity. Scientific
+records additionally bind the committed event's operation, index and status.
+A completely verified failed experiment remains a failed scientific record;
+interrupted or invalid transport never becomes a completed record.
+
+Each body batch rechecks current viewer authority, actual current catalog identity,
+request/configuration identity and the original deadline before exposing at most
+64 KiB of raw bytes. Renewed readback of the same catalog is allowed. Policy
+changes invalidate state; they do not restart its deadline or budget. Private
+state is an authoritative producer input, not a client offset, range protocol,
+read grant or bearer capability. Atomic state/CAS and current authorization at
+real delivery remain hosted producer obligations.
+
+`web_history` adds `begin_history`, `read_history_page`, `accept_history_page`
+and `accept_history_chunk`. A walk starts from the actual immutable captured
+snapshot/root. Each page follows the exact preceding page hash, ordinal and
+chunk offset; each chunk follows the exact descriptor, raw ART identity and
+consecutive event interval. All consumed page IDs, object identities
+`(artifact_id, generation)`, and event IDs remain in a bounded private index.
+Nonadjacent reuse fails rather than disappearing from a sliding window. Event
+times and embedded historical RunViews must agree with the captured snapshot;
+later current run revisions/status/progress remain allowed under the canonical
+immutable-space join.
+
+Completion requires the full ordered page/chunk/event counts, final watermark
+and event identity, terminal page, and exact manifest raw chunk-byte total.
+Missing, reordered, corrupt or over-budget material raises an explicit failure
+without advancing the immutable prior state. A single-page/body lookup validates
+its supplied authoritative membership projection; only the complete walk proves
+all consumed chain relations. Neither interface authenticates arbitrary caller-
+constructed trusted projections or performs a database lookup.
+
+The delivery budget charges actual raw page UTF-8 bytes plus actual raw chunk
+bytes; the manifest's chunk-byte total counts only the latter. Separately, each
+retained identity is charged by its documented canonical accounting line, with
+an 8 MiB internal ceiling additionally capped by `policy.max_history_bytes`.
+Growth is checked before extending the retained index, with no eviction or
+budget/deadline reset. These limits bound this local verifier's supported
+history envelope; they are not a hosted memory/load claim.
+
+The initial material selection passes 312 WEB tests (179 API, 83 stream/replay,
+50 material), full `mypy src tests examples` over 95 files, and Ruff. The full
+mypy invocation exposed the partial checkpoint's test-module import convention:
+imports now use the same bare test-module names as repository-wide discovery,
+without suppression or configuration weakening. A legal CORE maximum-count
+fixture with eight particles, 2,001 frames and long finite numeric values is
+1,757,646 canonical bytes and reconstructs in 27 bounded body batches. It is a
+synthetic shape check, not an exhaustive serialization maximum, simulated
+trajectory, ObservationBundle admission, or RSS/load result. Full repository,
+package and independent material review results are recorded separately after
+this checkpoint; no hosted HTTP/object-store producer is implemented here.
