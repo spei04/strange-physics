@@ -324,6 +324,14 @@ def prepare_event_batch(
     current = _head(context, namespace, head, now)
     if (
         state.after_sequence > current.committed_through_sequence
+        or (state.last_occurred_at is not None and state.last_occurred_at > current.observed_at)
+        or (
+            current.last_event is not None
+            and any(
+                old.event_id == current.last_event.event_id and old != current.last_event
+                for old in state.recent_events
+            )
+        )
         or (
             state.after_sequence == current.committed_through_sequence
             and state.last_event != current.last_event

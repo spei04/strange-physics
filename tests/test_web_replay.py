@@ -624,3 +624,41 @@ def test_snapshot_header_validation_precedes_private_head(token: str) -> None:
             head=poison,
             now=1200,
         )
+
+
+@pytest.mark.parametrize("observed_at,accepted", [(99, False), (100, True), (1200, True)])
+def test_empty_poll_head_cannot_predate_last_delivered_event(
+    observed_at: int, accepted: bool
+) -> None:
+    args = event_args()
+    _, state = prepare_event_batch(**args)
+    args.update(state=state, events=(), cursors=(), head=changed(head(), observed_at=observed_at))
+    if accepted:
+        batch, same = prepare_event_batch(**args)
+        assert batch is None and same == state
+    else:
+        with violation("recovery_required", 409):
+            prepare_event_batch(**args)
+
+
+@pytest.mark.parametrize("reused", [False, True])
+def test_advanced_head_compares_every_supplied_recent_identity(reused: bool) -> None:
+    args = event_args()
+    _, state = prepare_event_batch(**args)
+    final = head().last_event
+    assert final is not None
+    advanced = changed(
+        final, sequence=4, event_id=state.recent_events[0].event_id if reused else "fresh-event-4"
+    )
+    args.update(
+        state=state,
+        events=(),
+        cursors=(),
+        head=head(committed_through_sequence=4, last_event=advanced),
+    )
+    if reused:
+        with violation("recovery_required", 409):
+            prepare_event_batch(**args)
+    else:
+        batch, same = prepare_event_batch(**args)
+        assert batch is None and same == state
