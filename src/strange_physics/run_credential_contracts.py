@@ -341,6 +341,35 @@ class RunCredentialReceipt(Message):
             or any(record.retain_until < self.retain_until for record in snapshot.records)
         ):
             raise ValueError("Receipt must bind the complete retained outcome and affected state")
+        records = {r.claims.credential_id: r for r in snapshot.records}
+        target = records[outcome.credential_id]
+        if outcome.operation in {"issue", "replace"}:
+            claims = target.claims
+            if (
+                target.revoked_at is not None
+                or snapshot.current_credential_id != claims.credential_id
+                or snapshot.last_generation != claims.generation
+                or claims.policy_id != self.policy_id
+                or (claims.attempt_id, claims.lease_epoch)
+                != (outcome.attempt_id, outcome.lease_epoch)
+                or claims.issued_at != outcome.committed_at
+            ):
+                raise ValueError("Issuance receipt must bind the new live current generation")
+        else:
+            # A historical key may belong to a previous policy/attempt. Revocation
+            # records the current coordinator lease without rewriting those claims.
+            if (
+                target.revoked_at != outcome.committed_at
+                or snapshot.current_credential_id == outcome.credential_id
+            ):
+                raise ValueError("Revocation receipt must fence the original target at commit")
+        if outcome.replaced_credential_id is not None:
+            replaced = records[outcome.replaced_credential_id]
+            if (
+                replaced.revoked_at != outcome.committed_at
+                or replaced.claims.generation >= target.claims.generation
+            ):
+                raise ValueError("Replacement must revoke the earlier generation at commit")
         return self
 
 
@@ -412,6 +441,7 @@ class RunCredentialPlan(Message):
             or self.credentials.current_credential_id != snapshot.current_credential_id
             or self.response.disposition != "committed"
             or self.response.outcome != outcome
+            or self.response.credential.valid_now != (outcome.operation in {"issue", "replace"})
             or self.response.credential.record not in self.credentials.records
             or self.response.credential.credential_revision != self.credentials.revision
             or self.response.credential.current_generation != self.credentials.last_generation

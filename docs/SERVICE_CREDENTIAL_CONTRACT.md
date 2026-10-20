@@ -225,7 +225,7 @@ the current principal generation and grant incarnation. They are not permission
 decisions. Role downgrades cannot make live keys disappear from the two-key
 count and permit extra issuance that becomes valid upon role restoration.
 The creation scope ceiling is immutable and remains representable after a later
-viewer downgrade. C2 must intersect each requested permission with that ceiling,
+viewer downgrade. The [C2 composition](RUN_CREDENTIAL_CONTRACT.md) intersects each permission with that ceiling,
 the key scopes and the current role. Current viewer grants permit read, not
 create/cancel, regardless of the creation ceiling.
 

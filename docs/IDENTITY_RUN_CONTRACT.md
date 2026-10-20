@@ -8,8 +8,10 @@ This bounded contract covers the eleven routes in the
 [pure conformance checks](../src/strange_physics/control_contracts.py),
 and [synthetic examples](../contracts/control.examples.json) define the subset.
 The [browser-session subset](BROWSER_SESSION_CONTRACT.md) adds ID-A interfaces.
-Membership/invitation/linking (ID-B) and credential lifecycle (ID-C) remain open;
-full-contract consumers stay blocked.
+Membership/invitation/linking (ID-B) and service lifecycle (ID-C/C1) have separate
+accepted contracts. The [run/composition slice](RUN_CREDENTIAL_CONTRACT.md) is the
+remaining ID-C review checkpoint; full-contract consumers stay blocked pending
+final producer/consumer acceptance.
 Producer/consumer acceptance is recorded separately after independent review.
 
 There is no hosted API, token issuer, SQL migration, RLS policy or deployment
@@ -47,20 +49,24 @@ binds workspace, principal, active state, role and revision. Authorization is
 checked on every request, before returning idempotent responses, and again in
 the mutation transaction. Revocation denies that caller and inherited
 credentials according to their issuer authority. It does not implicitly cancel
-every historical run. An independent service/run principal has its own current
-grant and lifecycle. Resolving credential ancestry/revocation is the issuer's
-responsibility before constructing the trusted projection.
+every historical run. An independent service principal has its own current grant and lifecycle. A run
+retains its original stable human/service owner and original authority ancestry;
+worker attempts do not allocate principals or grants. Current complete composition
+checks that ancestry before using a trusted credential projection.
 
 VerifiedCredential, Membership and RunLease are internal trusted projections,
-never request bodies or evidence that verification happened. The authorize
-predicate checks only relationships and current values supplied by the eventual
-verifier/transaction. Success does not prove those inputs were securely obtained.
+never request bodies or evidence that verification happened. The lower-level
+authorize/check_idempotency predicates are incomplete for hosted admission.
+Adapters must call authorize_product/check_product_idempotency with the required
+current ProductAuthority and WorkspaceAuthority. Success still does not prove
+those inputs were securely obtained.
 
 Owner/researcher can create/cancel runs within explicit scopes; viewer can read.
 Owner powers on future administration routes do not grant hidden-law, provider
 secret or evaluator-result access. Service credentials require explicit current
 grants and narrow scopes. Workspace credentials cannot impersonate the worker.
-Run credentials are bound to workspace/run/attempt/epoch and worker-only scopes.
+Run credentials bind immutable ownership, workspace/run/attempt/epoch, current
+run-wide credential generation and worker-only scopes.
 Refresh does not change the stable principal/idempotency identity.
 
 | Operation ID | Method | Credential | Required scope |

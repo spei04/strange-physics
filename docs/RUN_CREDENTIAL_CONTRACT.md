@@ -11,9 +11,8 @@ The completed C2 implementation amends both existing complete admission function
 authorize_product and check_product_idempotency gain a required keyword-only
 authority: ProductAuthority, without a default. Every current caller must change;
 the only existing callers are the workspace contract tests. Public session,
-membership, service and control wire shapes remain stable. This early interface
-checkpoint defines the union; executable composition and caller migration follow
-before C2 acceptance. An unused optional helper is not a completed security boundary.
+membership, service and control wire shapes remain stable. The executable composition and every current caller now use this required union.
+There is no optional path at either named entry point.
 
 HumanProductAuthority binds current ID-A policy/session/credential/browser context,
 current principal/grant and the original session principal generation. Product
@@ -99,11 +98,76 @@ Producer currency, uniqueness, token verification, signature keys, secure delive
 database locking, concurrency, crash reconciliation, cleanup and worker stopping
 remain implementation obligations.
 
-## Early interface evidence
+## Implemented conformance and review evidence
 
 The internal schema and synthetic examples are generated from
 run_credential_contracts.py. No raw bearer, signing key, hidden world or evaluator
 label belongs in these records. Schema/runtime tests check shape and cross-message
 relationships; they do not demonstrate cryptography, a live database or hosted
-authorization. Executable composition/lifecycle and the complete final test matrix
-must be reviewed before this contract is accepted.
+authorization. The pure product_authority.py and run_credentials.py implementations and their
+adversarial tests require independent review before C2 acceptance. No production
+readiness or full C-ID freeze is implied.
+
+## Producer and replay details
+
+admit_run_ownership is called during original run admission under the same
+transaction as a queued, revision-zero RunView. It calls the complete runs:create
+guard and derives the stable principal, original principal generation and grant
+incarnation from actual current authority. The original deadline and fixed
+WorkerScopes subset are trusted server policy inputs; the public CreateRunRequest
+does not carry ownership/ancestry or a worker-scope override. The producer must
+bind the admitted run to that request and persist ownership with the original
+run/receipt. A retry reuses that ownership, never the retry's leaf credential.
+
+For a run token's existing VerifiedCredential projection, issuer equals the
+verified claims issuer and subject is the stable owning principal ID. Every
+overlapping identifier, scope, deadline, attempt and epoch must match actual
+verified claims. Human credentials resolve to the actual session ID and original
+absolute expiry; the current session enforces idle expiry independently. Service
+credentials resolve to the actual retained C1 key. Parsing these projections
+cannot substitute for real cookie/bearer verification.
+
+change_run_credential requires the current coordinator and durable owner,
+workspace, running lease and fixed policy before inspecting a receipt. Fresh
+requests compare both current run revision and credential-state revision.
+Issue requires no current pointer. Replace names the current pointer, which may
+be expired or belong to an older attempt; the new token belongs to the current
+attempt/epoch and preserves original ownership/deadline. Revoke can target a
+retained unrevoked historical key and leaves any different current key unchanged.
+All issuance generations remain monotonic across attempts; retained identity
+collisions fail. Complete-record limits fail explicitly and never trigger cleanup.
+
+For issue/replace, the retained receipt binds policy, attempt/epoch, issuance time,
+new live current pointer and latest generation to the issued claims. Replacement
+also binds its predecessor's revocation to the same commit time. A historical
+revoke preserves the target's original policy/attempt claims while the outcome
+records the currently authorized coordinator policy/attempt; it binds target
+revocation to commit and never marks it current. Atomic plans bind those snapshots
+to complete proposed state, exact audit digest and delivery intent.
+
+Idempotency lookup uses stable coordinator actor, workspace/run, operation and key,
+with the exact request digest. Authorization renewal may change authorization_id;
+the original ID remains in immutable audit evidence. Another coordinator actor,
+foreign policy, receipt scope mismatch or missing evidence cannot replay it.
+The current attempt/epoch must equal the original outcome. At equal credential
+revision, affected snapshots, current pointer and generation are exact; later
+revisions permit only immutable claims, one-way revocation and increased retention.
+Current run revision cannot precede the committed request revision. Expired receipts
+require reconciliation and are never treated as absent.
+
+Product authentication errors retain the existing workspace_session_error mapping:
+policy_unavailable becomes 503 temporarily_unavailable, ambiguous cookie/bearer
+input becomes 400 invalid_request, and unauthenticated/forbidden remain 401/403.
+There is no recent-authentication header for ordinary product calls. Other control
+failures use existing safe status/code mappings. Coordinator recovery_required is
+an internal 409 decision to halt and reconcile; no new public error or mint route
+is defined. Generated identifiers and count exhaustion fail before any mutation;
+a returned plan still needs actual atomic commit, fencing and safe delivery.
+
+The runtime must revalidate the complete authority inside every write transaction,
+before every payload batch and before original token delivery. A crash between
+commit and delivery permits metadata reconciliation, not another issue directive.
+If delivery is lost, a separately authorized replacement uses the current CAS and
+fences the previous generation. Durable uniqueness, outbox processing, current
+reads, signing, transport, stop/settlement behavior and race/recovery drills remain
+obligations for later hosted implementations.

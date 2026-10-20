@@ -37,6 +37,8 @@ MODULES = frozenset(
         "py.typed",
         "research_contracts.py",
         "run_credential_contracts.py",
+        "run_credentials.py",
+        "product_authority.py",
         "sdk.py",
         "serialization.py",
         "session.py",
