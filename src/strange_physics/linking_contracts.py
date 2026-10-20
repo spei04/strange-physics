@@ -595,6 +595,7 @@ def replay_link_commit(
     associated: IdentityAssociation | None,
     consumption: LinkClaimConsumption | None,
     receipt: LinkReceipt | None,
+    audit: LinkAudit | None,
     now: int,
 ) -> LinkResult:
     configured, linking = validate_link_binding(
@@ -606,6 +607,7 @@ def replay_link_commit(
         or proof is None
         or receipt is None
         or consumption is None
+        or audit is None
         or associated is None
         or challenge.consumed_at is None
     ):
@@ -630,6 +632,15 @@ def replay_link_commit(
             owner=ProofClaimOwner(purpose="link_identity", transaction_id=challenge.challenge_id),
             consumed_at=challenge.consumed_at,
             retain_until=deadline,
+        )
+        or audit
+        != LinkAudit(
+            event="identity_linked",
+            challenge_id=challenge.challenge_id,
+            principal_id=challenge.principal_id,
+            identity=identity,
+            proof_sha256=proof.proof_sha256,
+            occurred_at=challenge.consumed_at,
         )
         or receipt
         != LinkReceipt(

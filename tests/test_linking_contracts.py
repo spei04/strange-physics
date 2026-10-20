@@ -129,6 +129,7 @@ def replay_args(**changes: Any) -> dict[str, Any]:
             associated=commit["associated"],
             consumption=commit["consumption"],
             receipt=commit["receipt"],
+            audit=commit["audit"],
             now=1026,
         )
         | changes
@@ -454,7 +455,7 @@ def test_challenge_cas_allows_only_one_commit_and_never_reopens_recovery() -> No
     assert link_status(**bound(challenge=recovery)).next_action == "reconcile"
 
 
-@pytest.mark.parametrize("field", ["associated", "consumption", "receipt"])
+@pytest.mark.parametrize("field", ["associated", "consumption", "receipt", "audit"])
 def test_unknown_or_partial_commit_never_replays_success(field: str) -> None:
     with denied("recovery_required"):
         replay_link_commit(**replay_args(**{field: None}))
@@ -466,6 +467,7 @@ def test_replay_needs_exact_receipt_current_mapping_and_original_expected_revisi
         replay_args(associated=changed(commit_args()["associated"], active=False)),
         replay_args(consumption=changed(value(LinkClaimConsumption), retain_until=4621)),
         replay_args(receipt=changed(value(LinkReceipt), proof_sha256="8" * 64)),
+        replay_args(audit=changed(value(LinkAudit), occurred_at=1024)),
     ):
         with denied("link_conflict"):
             replay_link_commit(**args)
@@ -598,7 +600,10 @@ def test_oidc_commit_and_retry_preserve_the_existing_primary_session() -> None:
     validate_link_commit(**args)
     assert replay_link_commit(
         **replay_args(
-            challenge=args["after"], associated=args["associated"], receipt=args["receipt"]
+            challenge=args["after"],
+            associated=args["associated"],
+            receipt=args["receipt"],
+            audit=args["audit"],
         )
     ) == value(LinkResult)
 
