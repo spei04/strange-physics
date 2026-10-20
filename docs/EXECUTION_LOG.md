@@ -11,9 +11,9 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
 | Platform | ID-C/C2 run credentials and product authority | Exclusive identity writer after C1 PR/main acceptance; early interface and independent review required |
-| Research | Research amendment review; SP-04.e SDK/CLI next | Read-only scientific/dependency review; SDK source follows scorer main acceptance and primary handoff |
+| Research | SP-04.e/#87 local scientific SDK/CLI | Exclusive primary writer after accepted scorer and planning integration; preregistration and API review precede runtime |
 | Quality | C2 independent runtime review | Read-only review of Platform952f95c; scorer source/integration accepted |
-| Project lead | Integrate scorer; save research amendment | Exclusive primary writer; Platform owns identity; exact-head review/CI and main acceptance before handoff |
+| Project lead | Coordinate SDK and C2 integration | Research owns primary; Platform owns identity until final release; exact-head review/CI before each integration |
 
 ## Assignments
 
@@ -218,3 +218,7 @@ Research independently accepted amendment45e4cde:18 tasks,4 extension gates and6
 The optional pilot resolves RA-10/11/12 prerequisites from frozen admitted_profile_ids in both prose and JSON. Excluded profiles require reasons and recounted matrices; all potentially admitted dependencies are cycle-checked, and actual readiness requires the frozen completed closure.
 
 Final planning review found and repaired a missing classical PySR prerequisite when the ACES profile is excluded. RA-04.a is now mandatory for RA_PILOT and RA-13.a. The final graph has62 fixed and6 conditional extension edges; this change follows the earlier45e4cde review and requires final readback.
+
+2026-10-20 — Research amendment PR #86 integrated as e239eb2c704cd315aadd6064cdb521d1a6d9bbdc, tree558d68eda38aa513aa5ae59255190fef7a9f890d equals acceptedc48517b6fc57468375989670ce341f9d0a96489a. PR CI39365953740 and all protected-main CI39366138629 jobs passed. Scientific/dependency review accepted all18 records,62 fixed+6 conditional edges and conditional-profile readiness. The original168-task/369-edge/ten-gate graph remains unchanged; scorer completion is a progress update. New research runtime and paid work remain gated.
+
+Research is assigned SP-04.e/#87 in the reused primary checkout: preregister24 fixed probes, publish the artifact API, then wire the SDK/CLI workflow. Quality reviews after final C2 composition; lead coordinates. Root owns no source writer after handoff. Both existing cloud checkouts stay in use with independent dependencies; no new checkout was created.

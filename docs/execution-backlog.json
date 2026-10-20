@@ -1887,14 +1887,17 @@
         "RS2"
       ],
       "objective": "Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers deliver local fit-predict-score sdk and cli.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
         "Research",
         "QE",
         "SDK"
-      ]
+      ],
+      "issue": "https://github.com/spei04/strange-physics/issues/87",
+      "execution_owner": "Engineer Research, exclusive primary writer; Quality and lead review.",
+      "execution_plan": "Preregister accepted24 fixed probes before measurement; publish additive artifact API, then shared SDK/CLI adapters over accepted fitter/predictor/scorer. Exact public-prefix/private-journal binding, bounded owner-only artifacts, all failures retained, per-probe acceptance. No RA runtime or paid work."
     },
     {
       "id": "SP-05.a",
@@ -10791,10 +10794,10 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-04.e_ready",
+      "status": "SP-04.e_in_progress",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "SP-04.e SDK/CLI after primary planning-review handoff; scorer is integrated and accepted.",
+      "next_authoring_task": "Research authors SP-04.e in primary after all scorer and planning PR/main checks; Platform C2 remains independently active in identity.",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -11066,7 +11069,7 @@
   },
   "research_amendment": {
     "id": "RA-2026-10-19",
-    "status": "reviewed_planning_runtime_not_authorized",
+    "status": "reviewed_planning_integrated_runtime_not_authorized",
     "literature_cutoff": "2026-10-19",
     "record": "research/2026-10-19-METHOD_DECISIONS.md",
     "baseline_unchanged": {
@@ -11699,11 +11702,16 @@
       "precision_claim": false
     },
     "review": {
-      "status": "independently_reviewed",
+      "status": "accepted_and_integrated",
       "reviewer": "Engineer Research",
-      "reviewed_commit": "45e4cdec262884d2e5e25bc1543a728d2c97b640",
-      "validation": "18 tasks,4 gates,62 fixed extension edges and6 conditional profile edges; no missing IDs/cycles. Classical PySR control is a required fixed producer; paper-inspired profiles are conditional. Exact final readback pending.",
-      "source_cutoff": "2026-10-19"
+      "reviewed_commit": "c48517b6fc57468375989670ce341f9d0a96489a",
+      "validation": "18 matched task records;62 fixed+6 conditional extension edges; no missing IDs/cycles under resolved no/single/all optional profiles. Mandatory classical control survives profile exclusion. Early branch has no provider/hosted/profile prerequisite.",
+      "source_cutoff": "2026-10-19",
+      "pull_request": 86,
+      "merge": "e239eb2c704cd315aadd6064cdb521d1a6d9bbdc",
+      "tree": "558d68eda38aa513aa5ae59255190fef7a9f890d",
+      "pr_ci": 39365953740,
+      "main_ci": 39366138629
     },
     "dependency_policy": "Fixed deps always apply. conditional_deps are materialized from the frozen admitted_profile_ids before approval/start; validate IDs, acyclicity and completion on that exact resolved graph. No elapsed date or omitted profile task implies approval."
   }
