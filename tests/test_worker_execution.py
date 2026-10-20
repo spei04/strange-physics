@@ -1230,3 +1230,197 @@ def test_restore_private_evidence_not_examined_before_current_authority() -> Non
     data["restore"] = object()
     with denied("forbidden", 403):
         planned(data)
+
+
+@pytest.mark.parametrize(
+    "state,revision,known",
+    [
+        ("fenced", 1, True),
+        ("fenced", 3, False),
+        ("stopping", 2, True),
+        ("stopping", 4, False),
+        ("stopped", 5, False),
+    ],
+)
+def test_retained_lifecycle_rejects_impossible_revision_instance_combinations(
+    state: str, revision: int, known: bool
+) -> None:
+    data = active()
+    before = data["lookup"].lifecycle
+    malformed = changed(
+        before,
+        state=state,
+        revision=revision,
+        instance=before.instance if known else None,
+        first_fenced_at=1202,
+        stopped_at=1203 if state == "stopped" else None,
+        stop_outcome=("terminated" if known else "never_started") if state == "stopped" else None,
+    )
+    data["lookup"] = changed(data["lookup"], lifecycle=malformed)
+    data["now"] = 1203
+    with denied("recovery_required", 409):
+        e._closure(data["lookup"], now=data["now"])
+    if state == "fenced":
+        with denied("recovery_required", 409):
+            e.terminate_worker_launch(**stop_args(data))
+
+
+@pytest.mark.parametrize("state,revision", [("fenced", 3), ("stopping", 4), ("stopped", 5)])
+def test_retained_known_instance_on_active_path_must_be_confirmed_before_fence(
+    state: str, revision: int
+) -> None:
+    data = active()
+    before = data["lookup"].lifecycle
+    instance = changed(before.instance, confirmed_at=1203)
+    data["lookup"] = changed(
+        data["lookup"],
+        lifecycle=changed(
+            before,
+            state=state,
+            revision=revision,
+            instance=instance,
+            first_fenced_at=1202,
+            stopped_at=1203 if state == "stopped" else None,
+            stop_outcome="terminated" if state == "stopped" else None,
+        ),
+    )
+    with denied("recovery_required", 409):
+        e._closure(data["lookup"], now=1203)
+
+
+@pytest.mark.parametrize(
+    "state,revision,known",
+    [
+        ("fenced", 1, False),
+        ("fenced", 2, False),
+        ("fenced", 3, True),
+        ("stopping", 2, False),
+        ("stopping", 3, False),
+        ("stopping", 4, True),
+        ("stopped", 2, False),
+        ("stopped", 3, False),
+        ("stopped", 4, False),
+        ("stopped", 2, True),
+        ("stopped", 3, True),
+        ("stopped", 4, True),
+        ("stopped", 5, True),
+    ],
+)
+def test_retained_lifecycle_accepts_reachable_instance_revision_boundaries(
+    state: str, revision: int, known: bool
+) -> None:
+    data = active()
+    before = data["lookup"].lifecycle
+    # Late instance discovery is allowed only when reconciliation closes the stop.
+    instance = (
+        changed(before.instance, confirmed_at=1203 if state == "stopped" and revision < 5 else 1202)
+        if known
+        else None
+    )
+    lifecycle = changed(
+        before,
+        state=state,
+        revision=revision,
+        instance=instance,
+        first_fenced_at=1202,
+        stopped_at=1203 if state == "stopped" else None,
+        stop_outcome=("terminated" if known else "never_started") if state == "stopped" else None,
+    )
+    lookup = changed(data["lookup"], lifecycle=lifecycle)
+    assert e._closure(lookup, now=1203)[1] == lifecycle
+
+
+def test_unknown_dispatch_can_discover_instance_only_in_exact_stop_completion() -> None:
+    data = args()
+    retain(data, planned(data))
+    data["lookup"] = changed(data["lookup"], lifecycle=advance(data, None).after)
+    stop_data, plan = stopped_plan(data)
+    receipt = plan.termination
+    instance = w.RuntimeInstance(
+        provider_namespace="synthetic-provider",
+        instance_id="late-instance",
+        launch_id=receipt.request.launch_id,
+        launch_record_sha256=receipt.request.launch_record_sha256,
+        confirmed_at=1201,
+    )
+    proof = w.WorkerTerminationEvidence(
+        verification_id="late-stop-proof",
+        verifier_id="synthetic-verifier",
+        termination_id=receipt.termination_id,
+        request_sha256=receipt.request_sha256,
+        launch_id=receipt.request.launch_id,
+        launch_record_sha256=receipt.request.launch_record_sha256,
+        fenced_lifecycle_revision=receipt.fenced_lifecycle_revision,
+        outcome="terminated",
+        instance=instance,
+        observed_at=1202,
+    )
+    result = e.complete_worker_termination(
+        receipt,
+        proof,
+        control_policy=stop_data["control_policy"],
+        authority=stop_data["authority"],
+        lookup=stop_data["lookup"],
+        outbox=stop_data["outbox"],
+        now=1202,
+    )
+    assert result.transition.after.revision == 3
+    assert result.transition.after.instance == instance
+    lookup = changed(stop_data["lookup"], lifecycle=result.transition.after)
+    assert e._closure(lookup, now=1202)[1] == result.transition.after
+
+
+@pytest.mark.parametrize("state,revision", [("fenced", 3), ("stopped", 5)])
+def test_termination_replay_rejects_consistently_rehashed_impossible_old_receipt(
+    state: str, revision: int
+) -> None:
+    stopped, _ = stopped_plan(active())
+    request = changed(stopped["request"], expected_lifecycle_revision=0)
+    digest = message_sha256(request)
+    receipt = changed(
+        stopped["receipt"], request=request, request_sha256=digest, fenced_lifecycle_revision=1
+    )
+    lifecycle = stopped["lookup"].lifecycle
+    if state == "stopped":
+        lifecycle = changed(
+            lifecycle, state=state, revision=revision, stopped_at=1203, stop_outcome="terminated"
+        )
+    stopped.update(
+        request=request,
+        receipt=receipt,
+        outbox=changed(stopped["outbox"], request_sha256=digest),
+        lookup=changed(stopped["lookup"], lifecycle=lifecycle),
+        now=1203,
+    )
+    with denied("recovery_required", 409):
+        e.terminate_worker_launch(**stopped)
+
+
+@pytest.mark.parametrize("phase", ["stopping", "stopped"])
+@pytest.mark.parametrize("which", ["original_fence", "later_stop"])
+def test_original_and_later_termination_receipts_replay_after_legal_progress(
+    phase: str, which: str
+) -> None:
+    data = active()
+    first, _ = stopped_plan(data)
+    data["lookup"] = first["lookup"]
+    data["now"] = 1203
+    second = stop_args(data)
+    second["termination_id"] = "termination-2"
+    result = e.terminate_worker_launch(**second)
+    assert isinstance(result, w.WorkerTerminationPlan)
+    second.update(
+        receipt=result.termination,
+        outbox=result.outbox,
+        lookup=changed(second["lookup"], lifecycle=result.transition.after),
+    )
+    assert second["lookup"].lifecycle.state == "stopping"
+    assert second["lookup"].lifecycle.revision == 4
+    if phase == "stopped":
+        completed = e.complete_worker_termination(**completion(second))
+        second["lookup"] = changed(second["lookup"], lifecycle=completed.transition.after)
+        second["now"] += 1
+        assert second["lookup"].lifecycle.revision == 5
+    original = first if which == "original_fence" else second
+    replay = original | {"lookup": second["lookup"], "now": second["now"]}
+    assert e.terminate_worker_launch(**replay) == original["receipt"]

@@ -215,27 +215,22 @@ def _closure(
     if record is None or state is None or outbox is None:
         raise ContractViolation("recovery_required", 409)
     digest = message_sha256(record)
-    minimum = {
-        "prepared": 0,
-        "dispatch_unknown": 1,
-        "active": 2,
-        "fenced": 1,
-        "stopping": 2,
-        "stopped": 2,
-    }
-    maximum = {
-        "prepared": 0,
-        "dispatch_unknown": 1,
-        "active": 2,
-        "fenced": 3,
-        "stopping": 4,
-        "stopped": 5,
-    }
+    # A known instance enters during active confirmation (revision 2), or
+    # later during stop reconciliation. Fenced/stopping cannot invent one.
+    known = state.instance is not None
+    minimum, maximum = {
+        "prepared": (0, 0),
+        "dispatch_unknown": (1, 1),
+        "active": (2, 2),
+        "fenced": (3, 3) if known else (1, 2),
+        "stopping": (4, 4) if known else (2, 3),
+        "stopped": (2, 5) if known else (2, 4),
+    }[state.state]
     if (
         record.created_at > now
         or state.launch_id != record.launch_id
         or state.launch_record_sha256 != digest
-        or not minimum[state.state] <= state.revision <= maximum[state.state]
+        or not minimum <= state.revision <= maximum
         or (state.state == "prepared" and state.revision != 0)
         or outbox.kind != "launch"
         or outbox.launch_id != record.launch_id
@@ -250,6 +245,15 @@ def _closure(
         or (
             state.first_fenced_at is not None
             and not record.created_at <= state.first_fenced_at <= now
+        )
+        or (
+            (
+                state.state in {"fenced", "stopping"}
+                or (state.state == "stopped" and state.revision == 5)
+            )
+            and state.instance is not None
+            and state.first_fenced_at is not None
+            and state.instance.confirmed_at > state.first_fenced_at
         )
         or (state.stopped_at is not None and state.stopped_at > now)
         or (
@@ -549,6 +553,12 @@ def _termination_receipt(
 ) -> None:
     if receipt.request_sha256 != message_sha256(request):
         raise ContractViolation("idempotency_conflict", 409)
+    # From its committed fence a receipt can remain fenced, advance once to
+    # stopping, and then stop. A later receipt may itself commit stopping.
+    distance = state.revision - receipt.fenced_lifecycle_revision
+    allowed_distances = {"fenced": {0}, "stopping": {0, 1}, "stopped": {1, 2}}
+    if distance not in allowed_distances.get(state.state, set()):
+        raise ContractViolation("recovery_required", 409)
     if (
         receipt.request != request
         or outbox is None
