@@ -10922,7 +10922,7 @@
     },
     "checkout_ownership": {
       "scientific": "Project lead owns primary progress/integration; reviewers use immutable source.",
-      "identity": "Research exclusively authors WORLD1 runtime on feat/world-preview-models after accepted API fd6bac2 and documentation52ba4ee; Platform/Quality review immutable source. Existing independent environment and checkout are reused.",
+      "identity": "Research released clean WORLD1 authorf7b1cb1. Project lead owns integration and the retained identity checkout pending an explicit WEB1 author handoff; all engineer preparation is read-only. Existing independent environment and checkout will be reused.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
