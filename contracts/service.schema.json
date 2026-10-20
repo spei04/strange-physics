@@ -1,0 +1,1372 @@
+{
+  "$defs": {
+    "BrowserActor": {
+      "additionalProperties": false,
+      "description": "Verified human session lookup and HTTP context; never a public body.",
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/BrowserContext"
+        },
+        "credential": {
+          "$ref": "#/$defs/SessionCredential"
+        },
+        "session": {
+          "$ref": "#/$defs/SessionRecord"
+        }
+      },
+      "required": [
+        "session",
+        "credential",
+        "context"
+      ],
+      "title": "BrowserActor",
+      "type": "object"
+    },
+    "BrowserContext": {
+      "additionalProperties": false,
+      "description": "Trusted HTTP adapter projection; CSRF comparisons must be constant-time.",
+      "properties": {
+        "browser_binding_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Browser Binding Sha256"
+        },
+        "csrf_matches": {
+          "title": "Csrf Matches",
+          "type": "boolean"
+        },
+        "csrf_scope": {
+          "anyOf": [
+            {
+              "enum": [
+                "preauth",
+                "session"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Csrf Scope"
+        },
+        "has_bearer": {
+          "title": "Has Bearer",
+          "type": "boolean"
+        },
+        "has_session_cookie": {
+          "title": "Has Session Cookie",
+          "type": "boolean"
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 9,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^https://[!-~]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Origin"
+        },
+        "target_origin": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Target Origin",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_origin",
+        "origin",
+        "has_session_cookie",
+        "has_bearer",
+        "csrf_scope",
+        "csrf_matches",
+        "browser_binding_sha256"
+      ],
+      "title": "BrowserContext",
+      "type": "object"
+    },
+    "CredentialOwner": {
+      "additionalProperties": false,
+      "properties": {
+        "grant": {
+          "$ref": "#/$defs/GrantAuthority"
+        },
+        "principal": {
+          "$ref": "#/$defs/PrincipalAuthority"
+        }
+      },
+      "required": [
+        "principal",
+        "grant"
+      ],
+      "title": "CredentialOwner",
+      "type": "object"
+    },
+    "GrantAuthority": {
+      "additionalProperties": false,
+      "description": "Incarnation advances on remove/regrant; membership revision is ordinary CAS.",
+      "properties": {
+        "incarnation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Incarnation",
+          "type": "integer"
+        },
+        "membership": {
+          "$ref": "#/$defs/Membership"
+        }
+      },
+      "required": [
+        "membership",
+        "incarnation"
+      ],
+      "title": "GrantAuthority",
+      "type": "object"
+    },
+    "Membership": {
+      "additionalProperties": false,
+      "description": "Current application grant, loaded independently of credential claims.",
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "role": {
+          "enum": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "role",
+        "active",
+        "revision"
+      ],
+      "title": "Membership",
+      "type": "object"
+    },
+    "PrincipalAuthority": {
+      "additionalProperties": false,
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "kind": {
+          "enum": [
+            "human",
+            "service"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "principal_id",
+        "active",
+        "generation"
+      ],
+      "title": "PrincipalAuthority",
+      "type": "object"
+    },
+    "ServiceAudit": {
+      "additionalProperties": false,
+      "properties": {
+        "actor_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Actor Generation",
+          "type": "integer"
+        },
+        "actor_grant_incarnation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Actor Grant Incarnation",
+          "type": "integer"
+        },
+        "actor_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Actor Id",
+          "type": "string"
+        },
+        "event_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "outcome": {
+          "$ref": "#/$defs/ServiceMutationOutcome"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "actor_id",
+        "actor_generation",
+        "actor_grant_incarnation",
+        "request_sha256",
+        "outcome"
+      ],
+      "title": "ServiceAudit",
+      "type": "object"
+    },
+    "ServiceCreateRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        },
+        "expected_workspace_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Workspace Revision",
+          "type": "integer"
+        },
+        "role": {
+          "enum": [
+            "researcher",
+            "viewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "scope_ceiling": {
+          "items": {
+            "enum": [
+              "runs:read",
+              "runs:create",
+              "runs:cancel"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 1,
+          "title": "Scope Ceiling",
+          "type": "array"
+        }
+      },
+      "required": [
+        "expected_workspace_revision",
+        "display_name",
+        "role",
+        "scope_ceiling"
+      ],
+      "title": "ServiceCreateRequest",
+      "type": "object"
+    },
+    "ServiceCredentialPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "max_key_records": {
+          "maximum": 10000,
+          "minimum": 2,
+          "title": "Max Key Records",
+          "type": "integer"
+        },
+        "max_key_ttl_seconds": {
+          "maximum": 31536000,
+          "minimum": 1,
+          "title": "Max Key Ttl Seconds",
+          "type": "integer"
+        },
+        "max_overlap_seconds": {
+          "maximum": 86400,
+          "minimum": 0,
+          "title": "Max Overlap Seconds",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "receipt_retention_seconds": {
+          "maximum": 31536000,
+          "minimum": 1,
+          "title": "Receipt Retention Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "policy_id",
+        "max_key_ttl_seconds",
+        "max_overlap_seconds",
+        "receipt_retention_seconds",
+        "max_key_records"
+      ],
+      "title": "ServiceCredentialPolicy",
+      "type": "object"
+    },
+    "ServiceError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_request",
+            "policy_unavailable",
+            "unauthenticated",
+            "forbidden",
+            "ambiguous_credentials",
+            "reauthentication_required",
+            "not_found",
+            "idempotency_conflict",
+            "incompatible_state",
+            "recovery_required",
+            "quota_exceeded",
+            "temporarily_unavailable",
+            "rate_limited"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "request_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Request Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "request_id"
+      ],
+      "title": "ServiceError",
+      "type": "object"
+    },
+    "ServiceKeyIssueRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Revision",
+          "type": "integer"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "scopes": {
+          "items": {
+            "enum": [
+              "runs:read",
+              "runs:create",
+              "runs:cancel"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 1,
+          "title": "Scopes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "expected_revision",
+        "scopes",
+        "expires_at"
+      ],
+      "title": "ServiceKeyIssueRequest",
+      "type": "object"
+    },
+    "ServiceKeyIssuedResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "delivery": {
+          "const": "issued",
+          "title": "Delivery",
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/ServiceMutationResponse"
+        },
+        "secret": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_.-]"
+          },
+          "pattern": "^spk1\\.[A-Za-z0-9][A-Za-z0-9_-]{0,63}\\.[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+          "title": "Secret",
+          "type": "string"
+        }
+      },
+      "required": [
+        "delivery",
+        "result",
+        "secret"
+      ],
+      "title": "ServiceKeyIssuedResponse",
+      "type": "object"
+    },
+    "ServiceKeyPage": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ServiceKeyView"
+          },
+          "maxItems": 100,
+          "title": "Items",
+          "type": "array"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "maxLength": 512,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        },
+        "principal": {
+          "$ref": "#/$defs/ServicePrincipalView"
+        }
+      },
+      "required": [
+        "principal",
+        "items",
+        "next_cursor"
+      ],
+      "title": "ServiceKeyPage",
+      "type": "object"
+    },
+    "ServiceKeyRecord": {
+      "additionalProperties": false,
+      "description": "Private verifier digest; never expose this record through a public route.",
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/ServiceKeyState"
+        },
+        "verifier_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Verifier Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "verifier_sha256"
+      ],
+      "title": "ServiceKeyRecord",
+      "type": "object"
+    },
+    "ServiceKeyRecoverRequest": {
+      "additionalProperties": false,
+      "description": "Recovery deliberately has no scope or lifetime controls.",
+      "properties": {
+        "expected_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expected_revision"
+      ],
+      "title": "ServiceKeyRecoverRequest",
+      "type": "object"
+    },
+    "ServiceKeyReplayResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "delivery": {
+          "const": "metadata_only",
+          "title": "Delivery",
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/ServiceMutationResponse"
+        }
+      },
+      "required": [
+        "delivery",
+        "result"
+      ],
+      "title": "ServiceKeyReplayResponse",
+      "type": "object"
+    },
+    "ServiceKeyRevokeRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expected_revision"
+      ],
+      "title": "ServiceKeyRevokeRequest",
+      "type": "object"
+    },
+    "ServiceKeyRotateRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Revision",
+          "type": "integer"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "overlap_seconds": {
+          "maximum": 86400,
+          "minimum": 0,
+          "title": "Overlap Seconds",
+          "type": "integer"
+        },
+        "scopes": {
+          "items": {
+            "enum": [
+              "runs:read",
+              "runs:create",
+              "runs:cancel"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 1,
+          "title": "Scopes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "expected_revision",
+        "scopes",
+        "expires_at",
+        "overlap_seconds"
+      ],
+      "title": "ServiceKeyRotateRequest",
+      "type": "object"
+    },
+    "ServiceKeySet": {
+      "additionalProperties": false,
+      "description": "Complete retained key records under the shared principal lock, never one page.",
+      "properties": {
+        "principal": {
+          "$ref": "#/$defs/ServicePrincipalView"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/ServiceKeyRecord"
+          },
+          "maxItems": 10000,
+          "title": "Records",
+          "type": "array"
+        }
+      },
+      "required": [
+        "principal",
+        "records"
+      ],
+      "title": "ServiceKeySet",
+      "type": "object"
+    },
+    "ServiceKeyState": {
+      "additionalProperties": false,
+      "description": "Secret-free durable key state; current validity still needs current ancestry.",
+      "properties": {
+        "authority_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authority Generation",
+          "type": "integer"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "credential_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Credential Id",
+          "type": "string"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "grant_incarnation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Grant Incarnation",
+          "type": "integer"
+        },
+        "issued_by": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Issued By",
+          "type": "string"
+        },
+        "key_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Key Generation",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "retain_until": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Retain Until",
+          "type": "integer"
+        },
+        "retire_at": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Retire At"
+        },
+        "revoked_at": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Revoked At"
+        },
+        "scopes": {
+          "items": {
+            "enum": [
+              "runs:read",
+              "runs:create",
+              "runs:cancel"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 1,
+          "title": "Scopes",
+          "type": "array"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_id",
+        "workspace_id",
+        "principal_id",
+        "credential_id",
+        "authority_generation",
+        "grant_incarnation",
+        "key_generation",
+        "scopes",
+        "issued_by",
+        "created_at",
+        "expires_at",
+        "retire_at",
+        "revoked_at",
+        "retain_until"
+      ],
+      "title": "ServiceKeyState",
+      "type": "object"
+    },
+    "ServiceKeyView": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/ServiceKeyState"
+        },
+        "principal_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Principal Revision",
+          "type": "integer"
+        },
+        "valid_now": {
+          "title": "Valid Now",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "key",
+        "principal_revision",
+        "valid_now"
+      ],
+      "title": "ServiceKeyView",
+      "type": "object"
+    },
+    "ServiceManager": {
+      "additionalProperties": false,
+      "description": "Current human owner plus original session principal-generation binding.",
+      "properties": {
+        "actor": {
+          "$ref": "#/$defs/BrowserActor"
+        },
+        "owner": {
+          "$ref": "#/$defs/CredentialOwner"
+        },
+        "session_principal_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Session Principal Generation",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "actor",
+        "owner",
+        "session_principal_generation"
+      ],
+      "title": "ServiceManager",
+      "type": "object"
+    },
+    "ServiceMutationOutcome": {
+      "additionalProperties": false,
+      "description": "Original committed metadata, distinct from the current state on replay.",
+      "properties": {
+        "authority_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authority Generation",
+          "type": "integer"
+        },
+        "committed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Committed At",
+          "type": "integer"
+        },
+        "committed_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Committed Revision",
+          "type": "integer"
+        },
+        "credential_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Credential Id"
+        },
+        "grant_incarnation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Grant Incarnation",
+          "type": "integer"
+        },
+        "operation": {
+          "enum": [
+            "service_create",
+            "service_state",
+            "key_issue",
+            "key_rotate",
+            "key_recover",
+            "key_revoke"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "replaced_credential_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Replaced Credential Id"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation",
+        "workspace_id",
+        "principal_id",
+        "credential_id",
+        "replaced_credential_id",
+        "committed_revision",
+        "authority_generation",
+        "grant_incarnation",
+        "committed_at"
+      ],
+      "title": "ServiceMutationOutcome",
+      "type": "object"
+    },
+    "ServiceMutationResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "credential": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ServiceKeyView"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disposition": {
+          "enum": [
+            "committed",
+            "replayed"
+          ],
+          "title": "Disposition",
+          "type": "string"
+        },
+        "outcome": {
+          "$ref": "#/$defs/ServiceMutationOutcome"
+        },
+        "principal": {
+          "$ref": "#/$defs/ServicePrincipalView"
+        }
+      },
+      "required": [
+        "disposition",
+        "outcome",
+        "principal",
+        "credential"
+      ],
+      "title": "ServiceMutationResponse",
+      "type": "object"
+    },
+    "ServicePrincipalPage": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ServicePrincipalView"
+          },
+          "maxItems": 100,
+          "title": "Items",
+          "type": "array"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "maxLength": 512,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "items",
+        "next_cursor"
+      ],
+      "title": "ServicePrincipalPage",
+      "type": "object"
+    },
+    "ServicePrincipalView": {
+      "additionalProperties": false,
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "authority_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authority Generation",
+          "type": "integer"
+        },
+        "display_name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        },
+        "grant": {
+          "$ref": "#/$defs/GrantAuthority"
+        },
+        "last_key_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Last Key Generation",
+          "type": "integer"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "scope_ceiling": {
+          "items": {
+            "enum": [
+              "runs:read",
+              "runs:create",
+              "runs:cancel"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 1,
+          "title": "Scope Ceiling",
+          "type": "array"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "display_name",
+        "active",
+        "revision",
+        "authority_generation",
+        "grant",
+        "scope_ceiling",
+        "last_key_generation"
+      ],
+      "title": "ServicePrincipalView",
+      "type": "object"
+    },
+    "ServiceReceipt": {
+      "additionalProperties": false,
+      "description": "Scoped secret-free deduplication record; never retain an issued response.",
+      "properties": {
+        "actor_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Actor Generation",
+          "type": "integer"
+        },
+        "actor_grant_incarnation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Actor Grant Incarnation",
+          "type": "integer"
+        },
+        "actor_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Actor Id",
+          "type": "string"
+        },
+        "key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^[!-~]+$",
+          "title": "Key",
+          "type": "string"
+        },
+        "operation": {
+          "enum": [
+            "service_create",
+            "service_state",
+            "key_issue",
+            "key_rotate",
+            "key_recover",
+            "key_revoke"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "outcome": {
+          "$ref": "#/$defs/ServiceMutationOutcome"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "retain_until": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Retain Until",
+          "type": "integer"
+        },
+        "target_credential_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Credential Id"
+        },
+        "target_principal_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Principal Id"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_id",
+        "actor_id",
+        "actor_generation",
+        "actor_grant_incarnation",
+        "operation",
+        "workspace_id",
+        "target_principal_id",
+        "target_credential_id",
+        "key",
+        "request_sha256",
+        "outcome",
+        "retain_until"
+      ],
+      "title": "ServiceReceipt",
+      "type": "object"
+    },
+    "ServiceStateRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "expected_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expected_revision",
+        "active"
+      ],
+      "title": "ServiceStateRequest",
+      "type": "object"
+    },
+    "SessionCredential": {
+      "additionalProperties": false,
+      "description": "Trusted hash lookup result, including narrowly retained logout-only history.",
+      "properties": {
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "generation"
+      ],
+      "title": "SessionCredential",
+      "type": "object"
+    },
+    "SessionRecord": {
+      "additionalProperties": false,
+      "description": "Current server session family; no opaque cookie secret is stored here.",
+      "properties": {
+        "absolute_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Absolute Expires At",
+          "type": "integer"
+        },
+        "authenticated_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authenticated At",
+          "type": "integer"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "last_seen_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Last Seen At",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "principal_active": {
+          "title": "Principal Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revoked": {
+          "title": "Revoked",
+          "type": "boolean"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "policy_id",
+        "principal_id",
+        "generation",
+        "created_at",
+        "authenticated_at",
+        "last_seen_at",
+        "absolute_expires_at",
+        "revoked",
+        "principal_active"
+      ],
+      "title": "SessionRecord",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/service.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "C1 service/key messages. Private authority, verifier and receipt records are trusted producer inputs, never public bodies. No HTTP, SQL or token verifier."
+}
