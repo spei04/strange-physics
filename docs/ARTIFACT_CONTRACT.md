@@ -177,3 +177,30 @@ epoch than the latest record; equal epochs identify the same attempt in both.
 Restore compatibility applies the same expected-attempt lineage rule: a future
 epoch or another attempt in the same epoch is invalid, while an older compatible
 checkpoint may be considered by the separately authorized recovery adapter.
+
+## Local validation record
+
+Runtime source checkpoint `29a968be3e4e7d5d593c0f3a0ea27d9c01918a07`
+passed 1,875 full-suite tests and 288 focused artifact/control cases. Ruff lint
+and formatting (97 files), strict mypy (61 files), 654 external JSON Schema
+fixture checks with reference resolution, and the repository's configured
+Bandit gate passed. CORE and SCI source/schema bytes and dependency manifests
+are unchanged from the ART1 starter.
+
+The focused cases cover current authority before fresh admission and replay,
+actual ordered request/object/policy binding, partial latest/target/outbox
+evidence, historical revision/time/attempt consistency, completed-prefix gaps,
+resource bounds, object corruption/truncation, exact catalog lifecycle snapshots,
+renewed readbacks, and non-authorizing restore compatibility. Independent
+reviews reproduced the repaired failure paths and detected targeted guard
+mutations.
+
+Pinned offline wheel and source-distribution builds passed the reviewed archive
+allowlist. An isolated wheel-origin import smoke test exercised a synthetic
+checkpoint proposal, exact lost-acknowledgement replay, restore-candidate
+validation and raw-byte hash verification. These are local executable contract
+checks. They do not establish real object availability, transactional SQL,
+current-state adapter enforcement, crash recovery, storage/IAM isolation, or
+hosted production readiness. Exact integrated-head and hosted CI checks remain
+the integration owner's responsibility; SP-01.c remains open through the
+package/worker and final composition units.
