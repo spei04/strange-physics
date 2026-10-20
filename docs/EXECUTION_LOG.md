@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | C2 run-credential preparation | C1 source independently accepted; implementation waits C1 integration and identity handoff |
+| Platform | ID-C/C2 run credentials and product authority | Exclusive identity writer after C1 PR/main acceptance; early interface and independent review required |
 | Research | SP-04.e/I1 SDK/CLI preparation and scorer review | Read-only preparation; SDK/CLI source waits accepted scorer |
 | Quality | SP-06.a/#83 independent development scorer | Exclusive primary writer after accepted predictor; publish protocol/API for review before implementation |
-| Project lead | C1 integration and scorer coordination | Owns identity integration; Quality owns primary; exact-head checks before each merge |
+| Project lead | Review scoring and coordinate C2 acceptance | Quality owns primary, Platform owns identity; reconcile immutable sources and exact-head checks before each merge |
 
 ## Assignments
 
@@ -100,6 +100,8 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-20 03:12 | Platform | C2 preparation | C1 source accepted; identity authoring begins after C1 integration and writer handoff |
 | 2026-10-20 03:13 | Quality | C1 service/key lifecycle source complete | 5009fdf accepted by Platform and lead; 1,032 branch tests, 114 focused cases, seven detected repair mutants; writer released |
 | 2026-10-20 03:13 | Project lead + Platform | C1 integration with accepted prediction | 251694f has exact reviewed source blobs and complete package allowlist; 1,434 tests, Ruff/format, mypy48 and 555 schemas pass; hosted checks remain |
+| 2026-10-20 03:19 | Project lead | C1 integrated; identity writer handoff | PR #84 and protected main passed with matching reviewed tree; same checkout reused for C2 |
+| 2026-10-20 03:19 | Platform | ID-C/C2 run credentials and product-authority composition | Accepted bounded plan; immutable run ownership, required composed admission, lease/generation fencing and safe coordinator replay; no public mint route |
 
 ## Review evidence and management checkpoint
 
@@ -123,6 +125,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 - Linking delta: ID-B/B3 source051d8f708a5f5cc1a9182448466eb6dbdeb10f55 passed Research, Quality and lead review. Platform passed 714 full branch tests, 222 focused session/link tests, Ruff/format (62 files), strict mypy (34), 478 external schema checks, configured Bandit severity gate and offline wheel/sdist allowlist validation. Research independently ran 100 linking cases; Quality ran all222 and confirmed repaired guard-mutation coverage. Fixes bind audit replay, expose public commit revision, reject invalid primary authority before freshness advice, prevent cross-provider login/link callback collisions and define safe429 responses. Shared trusted proof purpose/owner is an explicit internal producer amendment; public login HTTP is unchanged. Root integrated accepted scientific progress before exact-head checks. No real verifier, broker, HTTP, SQL or recovery enforcement is claimed; ID-C and final parent freeze remain open.
 - Calibration integration: [PR #78](https://github.com/spei04/strange-physics/pull/78) merged as db18278821d72d3ba02336e45827d441af0a00b6; tree08efb97564ff99f7056551a04b93b27b5460f3eb matches independently accepted7b27bad5a6d947580d231b337df8836558a62131. PR CI39358928012 and protected-main CI39359050024 passed all applicable jobs, including the main candidate build. SP-03.b is complete for its bounded calibration scope; SP-04.a is now assigned.
 - Calibration delta: SP-03.b source 43e05897587ba3b7e1a4266c2d40af7cbaa1b5b6 passed independent Quality and lead review. Preregistration 5e524a1 and proof clarification f55d38f preceded measurements. All 63 primary and seven mixed-mass noiseless prefixes meet the joint criteria; maximum per-probe RMSE 8.46960e-6. Weak excitation retains 34 unsupported / 48 cases. Noise retains all 64 prefixes: six negative estimates, 13 joint passes, 406 computed probes over the bound and 144 failed probes. Derived arithmetic/propagation failures remain JSON-safe and counted. 817 full tests and 204 focused cases, Ruff/format and strict mypy passed; exact-head hosted CI remains an integration gate. SPRING_DOMAIN.md documents reproduction, analytic bounds and finite-matrix limitations. This is test-only calibration, not a production fitter/predictor/scorer or I1 exit.
+- C1 integration: PR #84/main 2cb3df7ace64708cb5ec53887ca8a0ad9aceb7d7 matches reviewed 0fcc989446769a2dcb6a85fe29bb71b734a5f90e/tree 79ee5efd3b4448a4f23d12cbf8b87712c7b21a07. PR CI39363278629 and main CI39363488562 passed every applicable job, including the protected-main candidate. C1 is complete; C2 and final SP-01.b composition remain open. Remaining ID-C execution estimate is 3–6 human engineer-days (C2 2–4 plus shared final review/integration 1–2), distinct from historical baseline estimates and elapsed agent time.
 - C1 service credential delta: 5009fdf7c0ddd36fd2704b37549217b397876c04 defines owner-authorized service creation and key issue/rotate/recover/revoke, immutable creation ceilings, monotonic authority/key generations and grant incarnations, bounded overlap, safe metadata-only retries and atomic commit/audit proposals. Review repairs keep live key counts independent of current role, extend all referenced records through receipt retention, and require committed workspace/principal/key revisions before replay. Platform independently passed 114 cases plus two additional checks and detected seven repair mutations; lead reviewed the fixes. Author passed 1,032 tests and all static/schema/security/offline package gates. Reconciled source 251694f passed 1,434 tests, Ruff/format (80 files), strict mypy (48) and 555 external schema checks. Private source evidence is sealed outside checkouts. Exact-head hosted acceptance remains; C2, final identity composition, real verification, SQL and HTTP remain unfinished.
 - Predictor integration: PR #82/main 9c341f8c282865387b2c562d15568a953d7bc7b5 matches reviewed d37118e35f8b7d970e9237a95bcf845322468110/tree 4d33a099fa47c18e6f4e78d1892f1005538adccc. PR CI39362603040 and protected-main CI39362758495 passed, including the installed candidate. SP-04.b is complete for its bounded runtime; independent scoring and SDK/CLI I1 evidence remain.
 - Predictor delta: ec959b5e89ac1489ff8ba35c4fd431a928e89787 preserves accepted runtime 205b3fc and preregistration 9f30fa2. All 1,320 tests, lint/format, strict mypy (43 files), 506 external schema checks, configured Bandit gate and offline package verification passed. Lead reran both focused files from immutable source; Platform ran all 314 plus 27 boundary/varied-input checks and detected five deliberate numerical defects. All 168 direct oracle and 18 near-zero requests satisfy the fixed 1e-12 component threshold. All 70 fitted models generated all 1,680 probes; worst per-probe RMSE 8.4695975e-6, zero failed outcomes. Prediction uses exact timestamps and returns no partial response. Hosted exact-head checks remain; no scorer, official benchmark or I1 claim.
@@ -139,8 +142,8 @@ SP-03.a and SP-03.b are integrated, including exact-head PR/main checks.
 SP-04.a/#77 is integrated with matching reviewed tree and PR/main CI.
 SP-04.b/#81 is integrated with passing PR/main CI. Quality owns the primary
 checkout for independent SP-06.a/#83 scoring. Research prepares SP-04.e read-only.
-C1 source 5009fdf is independently accepted; the lead owns identity integration.
-Platform takes C2 after C1 integration and identity writer handoff.
+C1 is integrated with passing PR/main CI. Platform owns the identity checkout
+for C2. ID-C and final identity composition remain unfinished.
 
 The approved dependency path is SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b →
 SP-06.a → SP-04.e/I1. SP-03.a also requires completed SP-00.b; SP-03.b requires
