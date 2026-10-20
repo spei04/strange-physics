@@ -167,6 +167,8 @@ class RunAuthorityState(Message):
 
     @model_validator(mode="after")
     def same_resources(self) -> Self:
+        if self.owner.principal.kind == "service" and self.owner.grant.membership.role == "owner":
+            raise ValueError("Service run owner cannot hold an administrative owner grant")
         ownership = self.credentials.ownership
         if (
             (self.run.workspace_id, self.run.run_id) != (ownership.workspace_id, ownership.run_id)

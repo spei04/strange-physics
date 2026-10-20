@@ -941,3 +941,22 @@ def test_original_admission_requires_untouched_experiment_budget() -> None:
             worker_scopes=("experiments:read",),
             now=1200,
         )
+
+
+def test_service_run_owner_cannot_be_projected_as_administrative_owner() -> None:
+    original = value(c.RunAuthorityState)
+    ownership = changed(original.credentials.ownership, principal_kind="service")
+    claims = changed(
+        original.credentials.records[0].claims, ownership_sha256=message_sha256(ownership)
+    )
+    state = changed(
+        original.credentials,
+        ownership=ownership,
+        records=(changed(original.credentials.records[0], claims=claims),),
+    )
+    owner = changed(original.owner, principal=changed(original.owner.principal, kind="service"))
+    assert owner.grant.membership.role == "owner"
+    with pytest.raises(
+        ValidationError, match="Service run owner cannot hold an administrative owner grant"
+    ):
+        changed(original, owner=owner, credentials=state)
