@@ -592,9 +592,10 @@ def validate_security_revocation(
     )
 
 
-def _product_workspace(
+def validate_product_workspace(
     workspace: WorkspaceAuthority, workspace_id: str, membership: Membership
 ) -> None:
+    """Incomplete workspace fence; callers still need current identity and permission."""
     if workspace.workspace.workspace_id != workspace_id:
         raise ContractViolation("not_found", 404)
     _member_binding(workspace, membership)
@@ -640,7 +641,7 @@ def authorize_product(
         run_id=run_id,
         lease=lease,
     )
-    _product_workspace(workspace, workspace_id, membership)
+    validate_product_workspace(workspace, workspace_id, membership)
 
 
 def check_product_idempotency(
@@ -675,7 +676,7 @@ def check_product_idempotency(
         lease=lease,
     )
     # Authorize and bind the complete scope before inspecting any stored outcome.
-    _product_workspace(workspace, scope.workspace_id, membership)
+    validate_product_workspace(workspace, scope.workspace_id, membership)
     check_idempotency(credential, membership, scope, request, None, now=now, lease=lease)
     return check_idempotency(
         credential,

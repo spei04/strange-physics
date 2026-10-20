@@ -271,3 +271,24 @@ owner-readable verification index and logs remain outside the checkout, bound
 to that source/tree. This final prose clarification changes no model, schema,
 predicate, test or permission. Runtime predicates and hosted validation are
 still separate gates.
+
+## Runtime checkpoint: shared boundary only
+
+The first runtime unit adds the complete browser-world capability guard and
+extracts incomplete current-human/workspace checks already used by C2. Existing
+product permission branches, cookie/session duplicate bindings and service/run
+scope ceilings remain mandatory. Ordinary world writes require Origin/CSRF;
+owner preview mutations additionally require recent authentication only after
+current identity, membership, workspace and role checks. Owner metadata reads
+do not require recent authentication.
+
+Strict JSON decoding and incremental SCI canonical hashing are shared with
+COMP1. COMP1 keeps its existing distinct raw caps, configured depth/node limits
+and JSON-mode validation. WORLD1 uses fixed depth 32 and 1,000,000 lexical node
+starts plus its configured byte bounds. These utilities are incomplete and
+must only process private material after a complete current-authority guard.
+Canonical encoding preserves signed zero and the existing ASCII escaping.
+
+This checkpoint does not yet implement world/version or preview persistence
+proposals, disclosure, run selection or their recovery paths. No HTTP, database,
+browser serializer or production readiness is claimed.

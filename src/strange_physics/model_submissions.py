@@ -3,15 +3,14 @@
 from __future__ import annotations
 
 import hashlib
-import json
-import math
 from dataclasses import dataclass
-from typing import Any
 
 from pydantic import ValidationError
 
 from strange_physics.artifact_checkpoints import checkpoint_committed_prefix
 from strange_physics.artifact_contracts import VerifiedArtifact
+from strange_physics.bounded_json import bounded_canonical as _bounded_canonical
+from strange_physics.bounded_json import parse_bounded_json
 from strange_physics.contracts import Message, ObservationBundle
 from strange_physics.control_contracts import (
     ContractViolation,
@@ -68,89 +67,15 @@ class NativeModelEnvironment:
     artifact: VerifiedArtifact
 
 
-def _bounded_canonical(value: Message, limit: int) -> tuple[str, int]:
-    """SCI-equivalent encoding without accumulating an unbounded encoded string."""
-    digest = hashlib.sha256()
-    size = 0
-    encoder = json.JSONEncoder(sort_keys=True, separators=(",", ":"), allow_nan=False)
-    for chunk in encoder.iterencode(value.model_dump(mode="json")):
-        # ensure_ascii=True makes every emitted character one UTF-8 byte.
-        size += len(chunk)
-        if size > limit:
-            raise ContractViolation("invalid_request", 422)
-        digest.update(chunk.encode("utf-8"))
-    return digest.hexdigest(), size
-
-
-def _json_structure(raw: bytes, policy: ModelRegistrationPolicy) -> None:
-    """Bound nesting and lexical node starts before a decoder allocates containers."""
-    depth = nodes = 0
-    quoted = escaped = scalar = False
-    for byte in raw:
-        if quoted:
-            if escaped:
-                escaped = False
-            elif byte == 92:
-                escaped = True
-            elif byte == 34:
-                quoted = False
-            continue
-        if byte == 34:
-            quoted = True
-            scalar = False
-            nodes += 1
-        elif byte in (91, 123):
-            depth += 1
-            nodes += 1
-            scalar = False
-        elif byte in (93, 125):
-            depth -= 1
-            scalar = False
-        elif byte in (9, 10, 13, 32, 44, 58):
-            scalar = False
-        elif not scalar:
-            nodes += 1
-            scalar = True
-        if depth < 0 or depth > policy.max_json_depth or nodes > policy.max_json_nodes:
-            raise ContractViolation("invalid_request", 422)
-    if depth != 0 or quoted:
-        raise ContractViolation("invalid_request", 422)
-
-
-def _unique_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
-    result: dict[str, Any] = {}
-    for key, value in pairs:
-        if key in result:
-            raise ValueError("Duplicate JSON key")
-        result[key] = value
-    return result
-
-
-def _finite_float(text: str) -> float:
-    value = float(text)
-    if not math.isfinite(value):
-        raise ValueError("Nonfinite JSON number")
-    return value
-
-
-def _no_constant(text: str) -> None:
-    raise ValueError("Nonstandard JSON constant")
-
-
 def _parse[M: Message](raw: bytes, model: type[M], policy: ModelRegistrationPolicy) -> M:
-    _json_structure(raw, policy)
-    try:
-        # This bounded first parse establishes strict JSON semantics. Discard it
-        # before Pydantic's JSON-mode parse, which preserves strict tuple rules.
-        json.loads(
-            raw.decode("utf-8"),
-            object_pairs_hook=_unique_pairs,
-            parse_float=_finite_float,
-            parse_constant=_no_constant,
-        )
-        return model.model_validate_json(raw)
-    except (ValueError, UnicodeError, RecursionError):
-        raise ContractViolation("invalid_request", 422) from None
+    # _material already enforces the distinct model/ledger raw caps before this call.
+    return parse_bounded_json(
+        raw,
+        model,
+        max_bytes=max(policy.max_model_bytes, policy.max_ledger_bytes),
+        max_depth=policy.max_json_depth,
+        max_nodes=policy.max_json_nodes,
+    )
 
 
 def _worker(

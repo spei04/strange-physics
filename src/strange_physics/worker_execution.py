@@ -59,8 +59,8 @@ from strange_physics.worker_contracts import (
 )
 from strange_physics.workspace_contracts import (
     WorkspaceAuthority,
-    _product_workspace,
     authorize_product,
+    validate_product_workspace,
 )
 
 
@@ -142,7 +142,9 @@ def _work(
 ) -> RunCredentialRecord:
     current, policy = environment.current, environment.credential_policy
     validate_run_authority(current, now=now)
-    _product_workspace(environment.workspace, request.workspace_id, current.owner.grant.membership)
+    validate_product_workspace(
+        environment.workspace, request.workspace_id, current.owner.grant.membership
+    )
     if policy is None:
         raise ContractViolation("policy_unavailable", 503)
     if (
