@@ -1,0 +1,850 @@
+{
+  "$defs": {
+    "BrowserActor": {
+      "additionalProperties": false,
+      "description": "Verified human session lookup and HTTP context; never a public body.",
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/BrowserContext"
+        },
+        "credential": {
+          "$ref": "#/$defs/SessionCredential"
+        },
+        "session": {
+          "$ref": "#/$defs/SessionRecord"
+        }
+      },
+      "required": [
+        "session",
+        "credential",
+        "context"
+      ],
+      "title": "BrowserActor",
+      "type": "object"
+    },
+    "BrowserContext": {
+      "additionalProperties": false,
+      "description": "Trusted HTTP adapter projection; CSRF comparisons must be constant-time.",
+      "properties": {
+        "browser_binding_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Browser Binding Sha256"
+        },
+        "csrf_matches": {
+          "title": "Csrf Matches",
+          "type": "boolean"
+        },
+        "csrf_scope": {
+          "anyOf": [
+            {
+              "enum": [
+                "preauth",
+                "session"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Csrf Scope"
+        },
+        "has_bearer": {
+          "title": "Has Bearer",
+          "type": "boolean"
+        },
+        "has_session_cookie": {
+          "title": "Has Session Cookie",
+          "type": "boolean"
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 9,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^https://[!-~]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Origin"
+        },
+        "target_origin": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Target Origin",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_origin",
+        "origin",
+        "has_session_cookie",
+        "has_bearer",
+        "csrf_scope",
+        "csrf_matches",
+        "browser_binding_sha256"
+      ],
+      "title": "BrowserContext",
+      "type": "object"
+    },
+    "CreateWorkspaceRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "display_name"
+      ],
+      "title": "CreateWorkspaceRequest",
+      "type": "object"
+    },
+    "ManagementReceipt": {
+      "additionalProperties": false,
+      "description": "Immutable receipt identity; stored response must be bound to this outcome.",
+      "properties": {
+        "grant_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Grant Id"
+        },
+        "key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^[!-~]+$",
+          "title": "Key",
+          "type": "string"
+        },
+        "operation": {
+          "enum": [
+            "workspace_create",
+            "member_role",
+            "member_revoke"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "outcome_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Outcome Id",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "target_principal_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Principal Id"
+        },
+        "workspace_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Workspace Id"
+        }
+      },
+      "required": [
+        "principal_id",
+        "operation",
+        "workspace_id",
+        "target_principal_id",
+        "grant_id",
+        "key",
+        "request_sha256",
+        "outcome_id"
+      ],
+      "title": "ManagementReceipt",
+      "type": "object"
+    },
+    "MemberChangeResult": {
+      "additionalProperties": false,
+      "properties": {
+        "membership": {
+          "$ref": "#/$defs/Membership"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "workspace_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Workspace Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "workspace_revision",
+        "membership"
+      ],
+      "title": "MemberChangeResult",
+      "type": "object"
+    },
+    "MemberPage": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/Membership"
+          },
+          "maxItems": 100,
+          "title": "Items",
+          "type": "array"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "maxLength": 512,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "workspace_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Workspace Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "workspace_revision",
+        "items",
+        "next_cursor"
+      ],
+      "title": "MemberPage",
+      "type": "object"
+    },
+    "MemberRevokeRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_membership_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Membership Revision",
+          "type": "integer"
+        },
+        "expected_workspace_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Workspace Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expected_workspace_revision",
+        "expected_membership_revision"
+      ],
+      "title": "MemberRevokeRequest",
+      "type": "object"
+    },
+    "MemberRoleRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_membership_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Membership Revision",
+          "type": "integer"
+        },
+        "expected_workspace_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Workspace Revision",
+          "type": "integer"
+        },
+        "role": {
+          "enum": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "expected_workspace_revision",
+        "expected_membership_revision",
+        "role"
+      ],
+      "title": "MemberRoleRequest",
+      "type": "object"
+    },
+    "Membership": {
+      "additionalProperties": false,
+      "description": "Current application grant, loaded independently of credential claims.",
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "role": {
+          "enum": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "role",
+        "active",
+        "revision"
+      ],
+      "title": "Membership",
+      "type": "object"
+    },
+    "PrincipalStatus": {
+      "additionalProperties": false,
+      "description": "Current verified human app-principal state, bound to its stable identity.",
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "kind": {
+          "const": "human",
+          "title": "Kind",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "principal_id",
+        "active"
+      ],
+      "title": "PrincipalStatus",
+      "type": "object"
+    },
+    "SecurityRevocation": {
+      "additionalProperties": false,
+      "description": "Verified internal event, never an elective HTTP reason or a caller credential.",
+      "properties": {
+        "actor_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Actor Id",
+          "type": "string"
+        },
+        "authorization_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Authorization Id",
+          "type": "string"
+        },
+        "event_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "actor_id",
+        "authorization_id",
+        "workspace_id",
+        "principal_id"
+      ],
+      "title": "SecurityRevocation",
+      "type": "object"
+    },
+    "SecurityRevocationAuthority": {
+      "additionalProperties": false,
+      "description": "Current verified internal permission; never supplied by the public caller.",
+      "properties": {
+        "actor_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Actor Id",
+          "type": "string"
+        },
+        "authorization_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Authorization Id",
+          "type": "string"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "permission": {
+          "const": "members:security-revoke",
+          "title": "Permission",
+          "type": "string"
+        },
+        "revoked": {
+          "title": "Revoked",
+          "type": "boolean"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "actor_id",
+        "authorization_id",
+        "workspace_id",
+        "permission",
+        "expires_at",
+        "revoked"
+      ],
+      "title": "SecurityRevocationAuthority",
+      "type": "object"
+    },
+    "SessionCredential": {
+      "additionalProperties": false,
+      "description": "Trusted hash lookup result, including narrowly retained logout-only history.",
+      "properties": {
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "generation"
+      ],
+      "title": "SessionCredential",
+      "type": "object"
+    },
+    "SessionRecord": {
+      "additionalProperties": false,
+      "description": "Current server session family; no opaque cookie secret is stored here.",
+      "properties": {
+        "absolute_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Absolute Expires At",
+          "type": "integer"
+        },
+        "authenticated_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authenticated At",
+          "type": "integer"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "last_seen_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Last Seen At",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "principal_active": {
+          "title": "Principal Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revoked": {
+          "title": "Revoked",
+          "type": "boolean"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "policy_id",
+        "principal_id",
+        "generation",
+        "created_at",
+        "authenticated_at",
+        "last_seen_at",
+        "absolute_expires_at",
+        "revoked",
+        "principal_active"
+      ],
+      "title": "SessionRecord",
+      "type": "object"
+    },
+    "WorkspaceAuthority": {
+      "additionalProperties": false,
+      "description": "Complete current owner set from the same locked workspace revision.\n\nSQL producers establish completeness and currency under the shared lock.\nactive_owner_ids counts active human owner membership rows; disabled_owner_ids\nidentifies rows whose principals are currently disabled. During security fan-out,\nstored workspace state can lag; composed authorization checks both facts.",
+      "properties": {
+        "active_owner_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Active Owner Ids",
+          "type": "array"
+        },
+        "disabled_owner_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Disabled Owner Ids",
+          "type": "array"
+        },
+        "workspace": {
+          "$ref": "#/$defs/WorkspaceView"
+        }
+      },
+      "required": [
+        "workspace",
+        "active_owner_ids",
+        "disabled_owner_ids"
+      ],
+      "title": "WorkspaceAuthority",
+      "type": "object"
+    },
+    "WorkspaceCreationGrant": {
+      "additionalProperties": false,
+      "description": "One current server-approved onboarding grant permits one private workspace.",
+      "properties": {
+        "consumed_workspace_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Consumed Workspace Id"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "grant_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Grant Id",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revoked": {
+          "title": "Revoked",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "grant_id",
+        "principal_id",
+        "expires_at",
+        "revoked",
+        "consumed_workspace_id"
+      ],
+      "title": "WorkspaceCreationGrant",
+      "type": "object"
+    },
+    "WorkspacePage": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/WorkspaceView"
+          },
+          "maxItems": 100,
+          "title": "Items",
+          "type": "array"
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "maxLength": 512,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Cursor"
+        }
+      },
+      "required": [
+        "items",
+        "next_cursor"
+      ],
+      "title": "WorkspacePage",
+      "type": "object"
+    },
+    "WorkspaceView": {
+      "additionalProperties": false,
+      "properties": {
+        "display_name": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Display Name",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "quarantined"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "visibility": {
+          "const": "private",
+          "title": "Visibility",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "display_name",
+        "visibility",
+        "state",
+        "revision"
+      ],
+      "title": "WorkspaceView",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/workspace.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Private workspace and membership contracts, not handlers, SQL isolation or verified authority. Internal snapshots are never public request inputs.",
+  "x-contract-status": "ID-B/B1; invitations/linking and full SP-01.b remain incomplete",
+  "x-public-models": [
+    "CreateWorkspaceRequest",
+    "WorkspaceView",
+    "WorkspacePage",
+    "Membership",
+    "MemberPage",
+    "MemberRoleRequest",
+    "MemberRevokeRequest",
+    "MemberChangeResult"
+  ]
+}

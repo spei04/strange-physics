@@ -1,0 +1,267 @@
+{
+  "freshness_failure": {
+    "body": {
+      "code": "unauthenticated",
+      "message": "Recent authentication required.",
+      "operation_id": null,
+      "request_id": "request-1",
+      "retryable": false
+    },
+    "headers": {
+      "X-Authentication-Action": "reauthenticate"
+    },
+    "internal_code": "reauthentication_required",
+    "status": 401
+  },
+  "notice": "Synthetic conformance fixtures, not verified authority or deployment approval.",
+  "runtime_negative": [
+    {
+      "field": "active_owner_ids",
+      "model": "WorkspaceAuthority",
+      "value": []
+    },
+    {
+      "field": "active_owner_ids",
+      "model": "WorkspaceAuthority",
+      "value": [
+        "principal-1",
+        "principal-1"
+      ]
+    },
+    {
+      "field": "items",
+      "model": "MemberPage",
+      "value": [
+        {
+          "active": true,
+          "principal_id": "principal-1",
+          "revision": 4,
+          "role": "owner",
+          "workspace_id": "other"
+        }
+      ]
+    },
+    {
+      "field": "items",
+      "model": "WorkspacePage",
+      "value": [
+        {
+          "display_name": "Research lab",
+          "revision": 2,
+          "state": "active",
+          "visibility": "private",
+          "workspace_id": "ws-1"
+        },
+        {
+          "display_name": "Research lab",
+          "revision": 2,
+          "state": "active",
+          "visibility": "private",
+          "workspace_id": "ws-1"
+        }
+      ]
+    },
+    {
+      "field": "grant_id",
+      "model": "ManagementReceipt",
+      "value": null
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "owner_id",
+      "model": "CreateWorkspaceRequest",
+      "value": "attacker"
+    },
+    {
+      "field": "visibility",
+      "model": "CreateWorkspaceRequest",
+      "value": "public"
+    },
+    {
+      "field": "display_name",
+      "model": "CreateWorkspaceRequest",
+      "value": ""
+    },
+    {
+      "field": "role",
+      "model": "MemberRoleRequest",
+      "value": "admin"
+    },
+    {
+      "field": "expected_workspace_revision",
+      "model": "MemberRoleRequest",
+      "value": true
+    },
+    {
+      "field": "force",
+      "model": "MemberRevokeRequest",
+      "value": true
+    },
+    {
+      "field": "reason",
+      "model": "MemberRevokeRequest",
+      "value": "security"
+    },
+    {
+      "field": "key",
+      "model": "ManagementReceipt",
+      "value": "bad\n"
+    },
+    {
+      "field": "permission",
+      "model": "SecurityRevocationAuthority",
+      "value": "members:write"
+    },
+    {
+      "field": "visibility",
+      "model": "WorkspaceView",
+      "value": "public"
+    },
+    {
+      "field": "kind",
+      "model": "PrincipalStatus",
+      "value": "service"
+    },
+    {
+      "field": "kind",
+      "model": "PrincipalStatus",
+      "value": "run"
+    }
+  ],
+  "valid": {
+    "BrowserActor": {
+      "context": {
+        "browser_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "csrf_matches": true,
+        "csrf_scope": "session",
+        "has_bearer": false,
+        "has_session_cookie": true,
+        "origin": "https://app.example",
+        "target_origin": "https://app.example"
+      },
+      "credential": {
+        "generation": 0,
+        "session_id": "session-1"
+      },
+      "session": {
+        "absolute_expires_at": 4610,
+        "authenticated_at": 990,
+        "created_at": 1010,
+        "generation": 0,
+        "last_seen_at": 1010,
+        "policy_id": "synthetic-policy-1",
+        "principal_active": true,
+        "principal_id": "principal-1",
+        "revoked": false,
+        "session_id": "session-1"
+      }
+    },
+    "CreateWorkspaceRequest": {
+      "display_name": "Research lab"
+    },
+    "ManagementReceipt": {
+      "grant_id": "grant-1",
+      "key": "create-1",
+      "operation": "workspace_create",
+      "outcome_id": "ws-1",
+      "principal_id": "principal-1",
+      "request_sha256": "e7e169d9f5c0f55e523d5e7a207cf4f182fb10b4db90362c5492204954e65fc3",
+      "target_principal_id": null,
+      "workspace_id": null
+    },
+    "MemberChangeResult": {
+      "membership": {
+        "active": true,
+        "principal_id": "principal-1",
+        "revision": 4,
+        "role": "owner",
+        "workspace_id": "ws-1"
+      },
+      "workspace_id": "ws-1",
+      "workspace_revision": 2
+    },
+    "MemberPage": {
+      "items": [
+        {
+          "active": true,
+          "principal_id": "principal-1",
+          "revision": 4,
+          "role": "owner",
+          "workspace_id": "ws-1"
+        }
+      ],
+      "next_cursor": null,
+      "workspace_id": "ws-1",
+      "workspace_revision": 2
+    },
+    "MemberRevokeRequest": {
+      "expected_membership_revision": 4,
+      "expected_workspace_revision": 2
+    },
+    "MemberRoleRequest": {
+      "expected_membership_revision": 4,
+      "expected_workspace_revision": 2,
+      "role": "viewer"
+    },
+    "PrincipalStatus": {
+      "active": true,
+      "kind": "human",
+      "principal_id": "principal-2"
+    },
+    "SecurityRevocation": {
+      "actor_id": "security-1",
+      "authorization_id": "authorization-1",
+      "event_id": "event-1",
+      "principal_id": "principal-1",
+      "workspace_id": "ws-1"
+    },
+    "SecurityRevocationAuthority": {
+      "actor_id": "security-1",
+      "authorization_id": "authorization-1",
+      "expires_at": 2000,
+      "permission": "members:security-revoke",
+      "revoked": false,
+      "workspace_id": "ws-1"
+    },
+    "WorkspaceAuthority": {
+      "active_owner_ids": [
+        "principal-1"
+      ],
+      "disabled_owner_ids": [],
+      "workspace": {
+        "display_name": "Research lab",
+        "revision": 2,
+        "state": "active",
+        "visibility": "private",
+        "workspace_id": "ws-1"
+      }
+    },
+    "WorkspaceCreationGrant": {
+      "consumed_workspace_id": null,
+      "expires_at": 2000,
+      "grant_id": "grant-1",
+      "principal_id": "principal-1",
+      "revoked": false
+    },
+    "WorkspacePage": {
+      "items": [
+        {
+          "display_name": "Research lab",
+          "revision": 2,
+          "state": "active",
+          "visibility": "private",
+          "workspace_id": "ws-1"
+        }
+      ],
+      "next_cursor": null
+    },
+    "WorkspaceView": {
+      "display_name": "Research lab",
+      "revision": 2,
+      "state": "active",
+      "visibility": "private",
+      "workspace_id": "ws-1"
+    }
+  }
+}

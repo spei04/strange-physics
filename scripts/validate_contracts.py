@@ -75,6 +75,40 @@ def main() -> None:
                 f"session.schema.json#/$defs/{fixture['model']}", value, group == "runtime_negative"
             )
 
+    workspaces = json.loads((ROOT / "workspace.examples.json").read_text())
+    for name, fixture in workspaces["valid"].items():
+        check(f"workspace.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in workspaces[group]:
+            value = copy.deepcopy(workspaces["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"workspace.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+    check("control.schema.json#/$defs/Error", workspaces["freshness_failure"]["body"])
+    workspace_api = documents[ROOT / "workspace.openapi.json"]
+    for path, routes in workspace_api["paths"].items():
+        for method, operation in routes.items():
+            escaped = path.replace("~", "~0").replace("/", "~1")
+            for index, parameter in enumerate(operation["parameters"]):
+                values = (
+                    control["idempotency_keys"]
+                    if parameter["name"] == "Idempotency-Key"
+                    else sessions["path_identifiers"]
+                    if parameter["in"] == "path"
+                    else None
+                )
+                if values is not None:
+                    reference = (
+                        f"workspace.openapi.json#/paths/{escaped}/{method}"
+                        f"/parameters/{index}/schema"
+                    )
+                    for group, items in values.items():
+                        for item in items:
+                            check(reference, item, group == "valid")
+
     for fixture in sessions["workspace_session_failures"]:
         check("control.schema.json#/$defs/Error", fixture["output"])
 
