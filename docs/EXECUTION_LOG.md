@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | WEB1 complete source/evidence; read-only review next | Clean b5f69f0 released; lead owns integration; Quality receives identity after acceptance |
-| Platform | WEB1 final integration consistency review | Runtime accepted; exact integrated source, progress and CI next |
-| Quality | WEB1 final readback; SP-01.e/#98 handoff prepared | VAL1 authoring waits exact WEB1 integration and writer release |
-| Project lead | WEB1 primary integration and progress; native proposal scope decision | Exclusive primary owner; PR #96 integrated, RA_EXEC remains pending |
+| Research | SP-01.e/VAL1 scientific fixture review | Raw versus typed identity, numeric boundaries and incomplete science; read-only |
+| Platform | SP-01.e/VAL1 contract/tooling review | Approved roots, audiences, reference closure and drift; read-only |
+| Quality | SP-01.e/#98 VAL1 manifest and fixture checkpoint | Exclusive identity writer; generator follows checkpoint review |
+| Project lead | Completion records, primary integration and dependency gates | WEB1 integrated; native proposal and RA_EXEC decision pending |
 
 ## Assignments
 
@@ -109,7 +109,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 ## Review evidence and management checkpoint
 
-- Outcome: an enterprise research product that measures discovery and adaptation. Bounded local I1 and SP-01.b/c are accepted. The next contract task is SP-01.d/#94, split into WORLD1 and WEB1.
+- Outcome: an enterprise research product that measures discovery and adaptation. Bounded local I1 and SP-01.b/c are accepted. SP-01.d/#94 is complete; the current contract task is SP-01.e/#98, beginning with VAL1.
 - Historical evidence: the following delta bullets record their own source/checkpoint state. Earlier remaining-work statements are historical; the current assignment board and latest acceptance sections govern current work.
 - Baseline delta: research and recovery reviews at 2d78e35; 55 tests, lint/format and strict mypy pass; same-head CI covers Python 3.12/3.14, packaging and eight-particle CLI smoke. Two factual documentation corrections committed as 9833e6f and peer reviewed. PR #1 merged as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f; git diff verified its tree matches reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70. All four GitHub CI checks at that head passed on Python 3.12/3.14. [Merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060. SP-00.b is complete; this is not a product release.
 - Forecast repair: adding the DB-to-artifact freeze edge changes R0 to W6–7 and first spring integration to W11–13; R1 reserve becomes W26. GA remains W52–67. These remain nine-human-team reference estimates; actual engineer assignments are separate.
@@ -445,3 +445,11 @@ Planning PR #96 is integrated as ee4831a with reviewed tree3192574; all four app
 2026-10-20 — Final WEB1 source f2d1068 passes3,104 tests,321 WEB cases,1,431 external schemas, Ruff/format136, strict mypy95, exact configured Bandit and offline package/installed-callable checks. Final author b5f69f0 adds evidence documentation only. Runtime85c0a98 is independently accepted by lead, Platform and Quality; exact PR #97/main and private candidate verification remain before SP-01.d completion. Quality is assigned SP-01.e/#98 next, beginning with VAL1 manifest/fixtures after writer release and exact integration.
 
 2026-10-20 09:38 UTC — Research explicitly released the clean identity checkout at b5f69f0 after Quality accepted final documentation/evidence. No author process, uncommitted work or temporary installation remains. Lead retains that checkout for Quality SP-01.e/#98 after exact WEB1 integration; no additional checkout or dependency installation is needed.
+
+## WEB1 complete; contract validation handoff
+
+2026-10-20T09:48:03.950454+00:00 — SP-01.d is complete through WORLD1 PR #95 and WEB1 PR #97/main15714e6ac4b6b300f0170e5aa22722987decd786, matching reviewed73d943b8bfb96be6a898a511af3053e4e5cca568/tree0a10921751ced4f6bf3120035ab102630067b60d. All four applicable PR CI39402376299 and all five protected-main CI39402868552 jobs passed. WEB1 passed 3,104 full tests, 321 focused cases, 1,431 external schema cases, configured lint/type/security checks and offline package/installed-callable checks. Independent reviews accepted the repaired snapshot, event and exact-request joins. Candidate artifact12255421593 was checksum, provenance, lock and packaged-source verified and retained privately. These are pure contracts and predicates; live HTTP/database/storage producers remain later tasks.
+
+Quality owns SP-01.e/#98 VAL1 in the reused identity checkout at accepted WEB1 main15714e6. The first immutable checkpoint contains the public-root/audience manifest, synthetic fixtures and raw/canonical byte goldens. Research reviews scientific identity and fixture semantics; Platform reviews public/private boundaries, references and drift. Generator and CI integration follow checkpoint acceptance; CLIENT1 and MOCK1 remain separate. Lead owns primary integration and progress. No additional checkout or dependency installation; the native proposal and RA_EXEC remain pending.
+
+Private integration index SHA256 5eac34c152c87a13a663a3ebad284a806eb8061932c226bc081e9c6aad20c919. Available cloud space at handoff: 103,385,505,792 bytes. Both checkouts remain in use; no checkout or dependency copy created or removed. Evidence review date: 2026-11-19. The candidate is unpublished; same-VM retention is not an off-device backup.
