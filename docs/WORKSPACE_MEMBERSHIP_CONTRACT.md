@@ -177,7 +177,13 @@ owner-set updates, quarantine, audit/outbox and event dedup atomically.
 A duplicate committed event is acknowledged from the trusted internal event
 receipt; fresh proposal validation intentionally rejects an already-inactive target.
 Security revocation cannot resurrect membership, erase quarantine or delegate
-recovery authority to the disabled principal. Partial fan-out is retryable and
+recovery authority to the disabled principal. Principal disablement must durably
+record a pending security-event fence. Reactivation is forbidden while any
+affected workspace settlement is pending; an effectively ownerless interval must
+latch persisted quarantine before that fence can be released. Re-enabling a
+principal cannot erase that interval or infer workspace recovery. The future
+reviewed recovery producer must enforce this ordering across crashes and retries;
+B1 exposes no principal-reactivation API. Partial fan-out is retryable and
 observable; failed delivery is never silently declared complete.
 
 Required future evidence includes concurrent owner changes with principal disable,
