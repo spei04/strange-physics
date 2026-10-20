@@ -48,6 +48,10 @@ MODULES = frozenset(
         "worlds.py",
         "workspace_contracts.py",
         "workflow_contracts.py",
+        "workflow_io.py",
+        "workflow_journal.py",
+        "workflow_cli.py",
+        "scientific_workflow.py",
     }
 )
 MAX_MEMBER_BYTES = 4 * 1024 * 1024

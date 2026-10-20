@@ -19,6 +19,7 @@ from strange_physics.contracts import (
 )
 from strange_physics.sdk import RandomAgent, run_agent
 from strange_physics.session import LocalSession
+from strange_physics.workflow_cli import COMMANDS, add_commands, run_workflow
 from strange_physics.worlds import reference_world
 
 
@@ -59,11 +60,14 @@ def parser() -> argparse.ArgumentParser:
     inspect.add_argument("path", type=Path)
     schema = commands.add_parser("schema", help="export a public JSON schema")
     schema.add_argument("contract", choices=("experiment", "space", "observations", "checkpoint"))
+    add_commands(commands)
     return root
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
+    if args.command in COMMANDS:
+        return run_workflow(args)
     try:
         if args.command == "schema":
             models: dict[str, type[Message]] = {
