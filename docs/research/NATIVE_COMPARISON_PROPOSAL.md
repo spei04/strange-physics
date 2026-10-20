@@ -6,7 +6,7 @@ Status: **proposal only — not approved, activated or implemented**. Prepared 2
 
 Approve five native PR tasks and replace only the RA-06/RA-07 prerequisites of RA-07.b with RA-N03/RA-N04. Keep RA-01 and RA-02 in full, preserve all broader tasks, and use an additive native prediction/scoring profile instead of weakening existing contracts. Separately activate RA_EXEC before implementation; any approval should explicitly identify whether it also authorizes the bounded local comparison below. Provider, paid, official-study and release gates remain separate.
 
-This path uses the grid reference as the common online inference engine for three selectors. Laplace is a required, separately calibrated approximation diagnostic. The proposed action bank has128 actions; the proposed discrepancy sensitivity set is half/base/double, all strictly positive. Exact nodes, priors, likelihood, numerical scales and tolerances must be preregistered and independently accepted before measurements; they are not guessed here.
+This path uses the grid reference as the common online inference engine for three selectors. The reviewed sequencing recommendation places the first comparison after grid calibration and moves the required Laplace diagnostic and its approximation-versus-grid audit to a later unit. This preserves the full programme while separating the first grid-only result from completion of the grid-plus-Laplace programme. The proposed action bank has128 actions; the proposed discrepancy sensitivity set is half/base/double, all strictly positive. Exact nodes, priors, likelihood, numerical scales and tolerances must be preregistered and independently accepted before measurements; they are not guessed here.
 
 ## Why the current graph needs a decision
 
@@ -49,25 +49,27 @@ Source: [prediction contract](../../src/strange_physics/prediction_contracts.py)
 ### RA-N02.b — Add and measure the declared native Laplace approximation
 
 - **Objective:** Quantify one approximation against the accepted finite-grid reference.
-- **Implementation scope:** Implement a bounded Laplace approximation to the declared scalar log posterior, with explicit support/boundary treatment and conditioning diagnostics. Evaluate or project it onto the same declared cells/nodes and prior/reference measure. Compute approximation posterior weights independently; they are not forced to equal grid weights. Persist actual inputs, method/config identity, approximation/reference error, failures and costs. Laplace is a separately validated diagnostic, not a fourth selector.
+- **Implementation scope:** Implement a bounded Laplace approximation to the declared scalar log posterior, with explicit support/boundary treatment and conditioning diagnostics. Evaluate or project it onto the same declared cells/nodes and prior/reference measure. Compute approximation posterior weights independently; they are not forced to equal grid weights. Persist actual inputs, method/config identity, approximation/reference error, failures and costs. Laplace is a separately validated diagnostic, not a fourth selector. After the first grid-only result, consume the accepted, frozen RA-N03 development fixtures and perform the transferred Laplace-versus-grid calibration, predictive, ranking, boundary and misspecification audit. Preserve fixture identities and audit-only labels; later findings cannot retroactively tune the first comparison.
 - **Out of scope:** No additional inference backend, approximation-selected grid/prior, unrecorded fallback, online-engine substitution or exact-continuous-inference claim.
-- **Prerequisites:** RA-N02.a.
+- **Prerequisites:** RA-N03.
 - **Contracts:** BELIEF, STUDY, COST.
-- **Acceptance criteria:** Independent tractable cases meet preregistered tolerances. Boundary modes, singular/nonpositive curvature, numerical collapse and unsupported cases fail explicitly. Discretization error and approximation error remain distinct. Grid remains the common online engine unless separately amended.
-- **Required automated tests:** Independent quadratic posterior and bounded/truncated cases; boundary, multimodal and misspecified cases; Hessian degeneracy; same-cell comparisons; exact-input mismatch; reproducibility and call-budget exhaustion.
+- **Acceptance criteria:** Independent tractable cases meet preregistered tolerances. Boundary modes, singular/nonpositive curvature, numerical collapse and unsupported cases fail explicitly. Discretization error and approximation error remain distinct. Grid remains the common online engine unless separately amended. Approximation-versus-grid tolerances, predictions and acquisition rankings are independently assessed on those fixtures with all failures and costs. No Laplace validity or speedup claim precedes this acceptance.
+- **Required automated tests:** Independent quadratic posterior and bounded/truncated cases; boundary, multimodal and misspecified cases; Hessian degeneracy; same-cell comparisons; exact-input mismatch; reproducibility and call-budget exhaustion. Frozen fixture identity and label isolation; posterior/predictive/ranking comparisons; transferred audit failures; rejection of retroactive comparison tuning.
 - **Security and reliability:** Cap optimization/derivative evaluations and outputs. Do not clip failures into valid estimates, access hidden data or switch approximation silently.
-- **Effort / confidence:** 2–3 engineer-days; low.
+- **Effort / confidence:** 3–5 engineer-days; low.
 - **Responsible role:** Research; independent Quality and Platform review.
 - **Definition of done:** One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates.
+
+The revised 3–5-day estimate includes 1–1.5 days of implementation, 1–1.5 days of independent reference tests, 0.5–1 day of transferred grid audit, and 0.5–1 day of review, integration and documentation. With 25% reserve: 3.75–6.25 days. The former 2–3-day allowance is historical. Re-estimate before assignment; split before assignment if delivery exceeds five days. Numerical conditioning or inadequate reference cases use contingency or require a reviewed rescope, not a silent backend replacement.
 
 ### RA-N03 — Calibrate native beliefs and numerical-discrepancy sensitivity
 
 - **Objective:** Retain the scientific safeguards otherwise supplied by the broader calibration task.
-- **Implementation scope:** Perform independent development calibration and prequential residual/predictive checks with tolerances fixed before outcomes. Justify positive numerical-discrepancy scale using accepted solver/analytic error evidence plus declared residual/correlation assumptions. Freeze a bounded sensitivity set; proposed half/base/double scales must all remain positive. Compare grid and Laplace errors, boundary/misspecification behavior and rankings on disjoint development fixtures. Labels flow only into audit output. Sensitivity over fixed purchased histories is diagnostic, not an uncounted adaptive sweep.
+- **Implementation scope:** Perform independent development calibration and prequential residual/predictive checks with tolerances fixed before outcomes. Justify positive numerical-discrepancy scale using accepted solver/analytic error evidence plus declared residual/correlation assumptions. Freeze a bounded sensitivity set; proposed half/base/double scales must all remain positive. Validate grid finite-sum/analytic references, refinement, predictive behavior, boundary/misspecification behavior and rankings on disjoint development fixtures. Freeze accepted fixture identities for the later RA-N02.b approximation audit; Laplace-specific comparison moves there. Labels flow only into audit output. Sensitivity over fixed purchased histories is diagnostic, not an uncounted adaptive sweep.
 - **Out of scope:** No tuning on the six measured worlds or held-out probes, universal coverage, reinterpretation of zero observation noise as discrepancy, silent domain widening or outcome-driven filtering.
-- **Prerequisites:** RA-N02.b.
+- **Prerequisites:** RA-N02.a.
 - **Contracts:** BELIEF, STUDY, COST.
-- **Acceptance criteria:** Predeclared native-domain reference/approximation tolerances and applicable development checks pass, or the profile is rejected and comparison remains blocked. Preserve poor calibration, failures, prior/scale sensitivity and pass/fail/incomplete eligibility. Weights are approximate model-belief weights, not calibrated observation-noise probabilities. Domain/approximation changes require a recorded amendment.
+- **Acceptance criteria:** Predeclared native-domain grid-reference tolerances and applicable development checks pass, or the profile is rejected and comparison remains blocked. Preserve poor calibration, failures, prior/scale sensitivity and pass/fail/incomplete eligibility. Weights are approximate model-belief weights, not calibrated observation-noise probabilities. Domain/inference changes require a recorded amendment.
 - **Required automated tests:** Separately labeled synthetic-noise sanity cases; correlated discrepancy, weak excitation, boundary coefficients, misspecification, zero-noise limits with positive discrepancy; prequential ordering; replay/reset; evaluator-feedback rejection.
 - **Security and reliability:** Calibration audit cannot write selector state. Bound reference/sensitivity work and outputs, record costs and all outcomes, prohibit silent redraws or successful-only summaries.
 - **Effort / confidence:** 3–5 engineer-days; low.
@@ -96,22 +98,22 @@ Proposed edges:
 | --- | --- |
 | RA-N01 | RA-01, SP-04.e |
 | RA-N02.a | RA-N01, RA-02 |
-| RA-N02.b | RA-N02.a |
-| RA-N03 | RA-N02.b |
+| RA-N02.b | RA-N03; later approximation implementation and transferred audit |
+| RA-N03 | RA-N02.a; grid calibration required before first result |
 | RA-N04 | RA-N02.a |
 | RA-07.b | RA-N03, RA-N04, SP-04.e; replaces RA-06/RA-07 only |
 
-The proposed graph is acyclic and resolves every ID. RA-07.b has21 nodes:12 accepted prerequisites (including APPROVAL), eight proposed research tasks and pending RA_EXEC. The extension would have23 tasks,60 task-dependency edges and nine fixed gate edges:69 fixed edges plus the unchanged six conditional edges. The current published graph remains18 tasks,62 fixed plus six conditional edges. The approved baseline168-task/369-edge/ten-gate graph is unchanged.
+The proposed graph is acyclic and resolves every ID. RA-07.b has 20 nodes: 12 accepted prerequisites (including APPROVAL), seven unfinished research tasks and pending RA_EXEC. The seven tasks are RA-01, RA-02, RA-N01, RA-N02.a, RA-N03, RA-N04 and RA-07.b; only Laplace leaves the first-result closure. The extension would have23 tasks,60 task-dependency edges and nine fixed gate edges:69 fixed edges plus the unchanged six conditional edges. The current published graph remains18 tasks,62 fixed plus six conditional edges. The approved baseline168-task/369-edge/ten-gate graph is unchanged.
 
-After RA_EXEC, RA-01 is first. RA-N01 and RA-02 can proceed in parallel after RA-01; RA-N02.a joins them. RA-N02.b and RA-N04 can proceed in parallel; RA-N03 follows RA-N02.b; RA-07.b joins RA-N03/N04 and the accepted SDK workflow. This is dependency concurrency, not a promise of simultaneous staff availability.
+After RA_EXEC, RA-01 is first. RA-N01 and RA-02 can proceed in parallel after RA-01; RA-N02.a joins them. RA-N03 and RA-N04 can proceed in parallel after RA-N02.a; RA-07.b joins RA-N03/N04 and the accepted SDK workflow. Schedule RA-N02.b after the first result, consuming accepted frozen RA-N03 fixtures. Those fixtures remain disjoint from the six comparison worlds and scoring probes; later Laplace findings cannot retroactively tune the first comparison. This is dependency concurrency, not a promise of simultaneous staff availability.
 
-The five native tasks add12–19 engineer-days. Including RA-01, RA-02 and RA-07.b, the unfinished path is19–29 days, or23.75–36.25 with25% reserve. These are engineering effort estimates. Do not subtract speculative reuse from broader tasks or alter the conditional GA forecast. If a task grows beyond a small independently reviewable PR, split it before assignment.
+The four native tasks on the first-result path require 10–16 engineer-days. Including RA-01, RA-02 and RA-07.b, that path is provisionally 17–26 days, or 21.25–32.5 with 25% reserve. N03 retains its full 3–5-day allowance. The later Laplace implementation plus transferred audit is 3–5 days, or 3.75–6.25 with reserve. The five native tasks therefore total 13–21 days, or 20–31 when including RA-01, RA-02 and RA-07.b. These arithmetic totals cover this proposal, not the broader research programme; they are engineering effort, not calendar duration. Historical 12–19 / 19–29 estimates predate the revised audit allocation. Full-programme scope and the conditional GA forecast are unchanged; no total-programme saving is established. Re-estimate at each gate and before later assignment. Split any task that exceeds a small independently reviewable PR.
 
 Integration gates:
 
 1. RA-01: source/license/recipe go/no-go evidence accepted before code reuse.
 2. RA-N01 + RA-02: native producer/predictor/scorer identity round trip and complete manifest/cost ledger accepted.
-3. RA-N02.a/b: independent reference and approximation tests accepted; no hidden-data or provenance shortcut.
+3. RA-N02.a: independent finite-sum/analytic and refinement reference checks accepted for the grid-only first result; no hidden-data or provenance shortcut. RA-N02.b acceptance is required later before any Laplace validity or speedup claim.
 4. RA-N03 + RA-N04: calibration/sensitivity passes, common menu/ranking/accounting/arm isolation is accepted, and the full study manifest is frozen.
 5. RA-07.b: independently scored paired descriptive results reproduce within the caps, or every failed/incomplete cell and stop reason is retained.
 
@@ -123,8 +125,8 @@ Six frozen stationary spring development worlds × two policy seeds × three sel
 
 Freeze pool and producer/config identities, priors/likelihood/discrepancy policy, all six world identities, seeds, menus, disjoint scoring probes, tie/failure/termination policies, budget counters and output records before measurements. The pool definition is common; every serialized candidate and posterior binds its own arm’s purchased prefix. Failed calibrations remain purchased failures. If no usable observations remain, record a typed failure instead of inventing record indices.
 
-Use the existing machine, at most8 CPU-core-hours and1GiB new artifacts, with zero network, provider calls or provisioning. Count ranking, reference, sensitivity, prediction, scoring, retries and failures in the declared comparison cost; no uncounted second sweep. Aggregate policy seeds within each world and report world-paired descriptive outcomes with all failures/incomplete cells. No population-superiority, adaptation or official-score claim.
+Use the existing machine, at most8 CPU-core-hours and1GiB new artifacts, with zero network, provider calls or provisioning. Count ranking, reference, sensitivity, prediction, scoring, retries and failures in the declared comparison cost; no uncounted second sweep. Aggregate policy seeds within each world and report world-paired descriptive outcomes with all failures/incomplete cells. Report only the finite-grid development comparison. No exact continuous-posterior, calibrated observation-noise probability, Laplace validity/speedup, population-superiority, adaptation or official-score claim.
 
 ## Current assignment
 
-Quality independently accepted this as a planning proposal at ad89f8d: source compatibility, resolved acyclic dependencies, closure counts and effort totals agree. The active graphs and gates are unchanged. WEB1 is integrated through PR #97 with exact PR/main/candidate acceptance. Quality owns SP-01.e/VAL1; Research and Platform review, and lead owns integration and progress. No native implementation task or experiment has started. RA_EXEC remains pending.
+Quality independently accepted the original planning proposal at ad89f8d. Research and Quality reviewed the grid-first sequencing recommendation against accepted main 1ac8875d5641b834a3361621b1ce03ad07c3f2e6; the saved revision receives a separate source and dependency review. The earlier review/publication identities and estimates remain historical in the machine-readable proposal. The active graphs and gates are unchanged. WEB1 is integrated through PR #97 with exact PR/main/candidate acceptance. Quality owns SP-01.e/VAL1; Research and Platform review, and lead owns integration and progress. No native implementation task or experiment has started. RA_EXEC remains pending.

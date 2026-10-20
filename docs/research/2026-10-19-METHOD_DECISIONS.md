@@ -95,7 +95,7 @@ Only purchased observations enter fitting, hypothesis memory, selection or chang
 
 Prediction error is primary. Symbolic recovery is a secondary, explicitly equivalence-aware diagnostic; an LLM judge with the true expression cannot be the primary quality metric. Retain unidentifiable worlds, invalid hypotheses, solver failures, provider failures, timeouts and missing outputs under predeclared rules.
 
-The first belief engine uses a grid reference plus exactly one Laplace approximation. BIC is a separately labeled diagnostic. SMC stays deferred until a measured failure justifies a new scoped task.
+The first belief engine uses a grid reference plus exactly one Laplace approximation. BIC is a separately labeled diagnostic. SMC stays deferred until a measured failure justifies a new scoped task. The later [native sequencing proposal](NATIVE_COMPARISON_PROPOSAL.md) preserves that full programme while recommending a grid-only first selector comparison: accepted finite-grid calibration precedes the first result; Laplace implementation and its transferred approximation-versus-grid calibration, predictive, ranking and boundary audit follow on frozen disjoint development fixtures. Laplace validity or speedup requires that later acceptance, and cannot be inferred from the first result. This is a planning recommendation only; the active RA graph, RA_EXEC and bounded-run approval remain unchanged.
 
 No new real-world dataset or private corpus is required for the first extension. External NewtonBench or paper-domain checks need a distinct dataset/license/contamination manifest. Public examples used in prompts or development cannot be described as unseen.
 

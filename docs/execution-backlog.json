@@ -17,7 +17,7 @@
       "FE",
       "QE"
     ],
-    "fractional_roles": "Product/TPM 0.5, design 0.25\u20130.5, security 0.5; independent assessment separately booked"
+    "fractional_roles": "Product/TPM 0.5, design 0.25–0.5, security 0.5; independent assessment separately booked"
   },
   "estimate": {
     "base_days": 689,
@@ -50,7 +50,7 @@
     [
       "D03",
       "Accept the revised conditional horizon",
-      "Recommended: plan pilot onboarding W38\u201350, pilot evidence exit W45\u201359 and GA W52\u201367; reforecast after two weeks, R0 and each integration checkpoint.",
+      "Recommended: plan pilot onboarding W38–50, pilot evidence exit W45–59 and GA W52–67; reforecast after two weeks, R0 and each integration checkpoint.",
       "Accepted as a conditional reference horizon, not a promise for subagent execution. Reforecast from actual throughput and external capacity."
     ],
     [
@@ -91,11 +91,11 @@
     [
       "AR04",
       "SP-01 tried to freeze all present/future interfaces in two weeks and blocked unrelated work.",
-      "Subset freezes owned by SP-01.a\u2013d, SP-17.a, SP-19.a, SP-34.a/SP-35.a; consumer dependencies explicit."
+      "Subset freezes owned by SP-01.a–d, SP-17.a, SP-19.a, SP-34.a/SP-35.a; consumer dependencies explicit."
     ],
     [
       "AR05",
-      "42 epics of 1\u20134 person-weeks were not independently assignable PR tasks.",
+      "42 epics of 1–4 person-weeks were not independently assignable PR tasks.",
       "Replace assignment unit with 168 leaf records; parent issues become rollups, not implementation tickets."
     ],
     [
@@ -111,17 +111,17 @@
     [
       "AR08",
       "Pilot delete/recovery tests needed tombstones/audit assigned to GA.",
-      "Move SP-37.a\u2013c to R3; keep audit export/enterprise retention in R8."
+      "Move SP-37.a–c to R3; keep audit export/enterprise retention in R8."
     ],
     [
       "AR09",
       "First spring slice depended on complete three-family research packages.",
-      "SP-03.b\u219204.a/b\u219206.a\u219204.e creates early independent evidence; later fitting cannot hide its failure."
+      "SP-03.b→04.a/b→06.a→04.e creates early independent evidence; later fitting cannot hide its failure."
     ],
     [
       "AR10",
       "Early integration dates and 118 PW estimate did not model reviewer capacity, missing endpoints or specialist queues.",
-      "Bottom-up 689 delivery days, confidence-weighted contingency and nine explicit resource lanes replace unverified dates; one feasible plan forecasts GA W52\u201367, pilot onboarding W38\u201350."
+      "Bottom-up 689 delivery days, confidence-weighted contingency and nine explicit resource lanes replace unverified dates; one feasible plan forecasts GA W52–67, pilot onboarding W38–50."
     ],
     [
       "AR11",
@@ -151,7 +151,7 @@
     [
       "AR16",
       "SP-01.c lists DB obligations but its freeze could precede SP-01.b acceptance.",
-      "Add SP-01.b as a prerequisite to SP-01.c; drafting may proceed earlier, but freeze waits for DB acceptance. Regenerate both reference schedules: R0 W6\u20137, spring slice W11\u201313, R1 W18\u201326; GA remains W52\u201367."
+      "Add SP-01.b as a prerequisite to SP-01.c; drafting may proceed earlier, but freeze waits for DB acceptance. Regenerate both reference schedules: R0 W6–7, spring slice W11–13, R1 W18–26; GA remains W52–67."
     ]
   ],
   "contracts": {
@@ -180,7 +180,7 @@
       "name": "Identity, membership and credential authority",
       "owner": "Backend + security",
       "freeze": "SP-01.b",
-      "source": "[roadmap sections 5\u20136 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze), [accepted control and identity contract set](IDENTITY_RUN_CONTRACT.md) (SP-01.b bounded freeze complete; live producers remain later tasks)",
+      "source": "[roadmap sections 5–6 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze), [accepted control and identity contract set](IDENTITY_RUN_CONTRACT.md) (SP-01.b bounded freeze complete; live producers remain later tasks)",
       "obligations": "Issuer/subject identity, explicit workspace roles/invitations, scoped machine and run credentials, revocation and secure browser session semantics. Enterprise federation refined by SP-34.a; SCIM frozen by SP-35.a before those consumers."
     },
     "DB": {
@@ -1026,7 +1026,7 @@
         "SP-37.c"
       ],
       "exit": "Real staged remote recovery and hostile build/runtime/network evidence; immutable artifacts/checkpoints; basic audit/delete/tombstone replay; signed deploy/rollback/telemetry.",
-      "risk": "SP-37.a\u2013c moved here; managed runtime fail-closed and no missing committed artifacts are nonwaivable.",
+      "risk": "SP-37.a–c moved here; managed runtime fail-closed and no missing committed artifacts are nonwaivable.",
       "effortDays": 119,
       "reserveDays": 41.75,
       "startWeek": 2,
@@ -1063,7 +1063,7 @@
         "SP-25.e",
         "SP-26.d"
       ],
-      "exit": "Accessible author\u2192run\u2192inspect\u2192export; durable SSE/resync; offline replay; supported fresh install/upgrade with explicit trust limitations.",
+      "exit": "Accessible author→run→inspect→export; durable SSE/resync; offline replay; supported fresh install/upgrade with explicit trust limitations.",
       "risk": "World/provider/publication/SSE backend tasks precede consumers; internal install is not external adoption.",
       "effortDays": 97,
       "reserveDays": 26.75,
@@ -1081,7 +1081,7 @@
         "SP-30.d",
         "SP-31.e"
       ],
-      "exit": "R1\u2013R5 integrated at exact candidate; 100-run hold/soak/fairness, real failover/restore, negative security, deletion, migration and complete journeys pass.",
+      "exit": "R1–R5 integrated at exact candidate; 100-run hold/soak/fairness, real failover/restore, negative security, deletion, migration and complete journeys pass.",
       "risk": "Any lost acknowledged state, duplicate logical debit, critical/high exploit, leak or failed restore blocks pilot.",
       "effortDays": 71,
       "reserveDays": 27.75,
@@ -1158,7 +1158,7 @@
       "contracts": [
         "GOV"
       ],
-      "scope": "Record D01\u2013D06 dispositions, current execution lane owners, reviewer availability and start conditions. Preserve the nine-person forecast as a reference until human staffing exists.",
+      "scope": "Record D01–D06 dispositions, current execution lane owners, reviewer availability and start conditions. Preserve the nine-person forecast as a reference until human staffing exists.",
       "accept": "Each current execution lane has a responsible owner and assignments obey the three-engineer concurrency limit; external human staffing remains an explicit release dependency.",
       "tests": "Validate decision IDs, accountable execution roles, three-engineer concurrency, independent review and approval evidence.",
       "risk": "No implied infrastructure-spend authority; private staffing evidence.",
@@ -1574,7 +1574,7 @@
       ],
       "execution_owner": "Engineer Platform",
       "issue": "https://github.com/spei04/strange-physics/issues/49",
-      "evidence": "Priced proposal saved in STAGING_PROPOSAL.md at 0eba987; approximately $450\u2013550/month low traffic, proposed seven-day $250 operational envelope, neither approved. Target project/credit/IAM/quota facts, exact IaC and concrete authorization remain gates; no provisioning."
+      "evidence": "Priced proposal saved in STAGING_PROPOSAL.md at 0eba987; approximately $450–550/month low traffic, proposed seven-day $250 operational envelope, neither approved. Target project/credit/IAM/quota facts, exact IaC and concrete authorization remain gates; no provisioning."
     },
     {
       "id": "SP-03.a",
@@ -1629,7 +1629,7 @@
         "SCI"
       ],
       "scope": "Calibrate excitation/mass cases, timestep refinements and conditioning.",
-      "accept": "Ratify or justify \u22641% coefficient error and \u22640.001 position RMSE over two seconds before fit acceptance.",
+      "accept": "Ratify or justify ≤1% coefficient error and ≤0.001 position RMSE over two seconds before fit acceptance.",
       "tests": "Analytic convergence, zero excitation and mass/order boundary fixtures.",
       "risk": "Failed tests require numerical justification, not arbitrary loosening.",
       "out": "Full-family calibration.",
@@ -2237,8 +2237,8 @@
         "SCI",
         "OPS"
       ],
-      "scope": "Measure snapshots\u00d7probes\u00d7ensemble workload, failures and limits; update compute model.",
-      "accept": "40\u00d764 rollout count and ensemble multiplier explicit.",
+      "scope": "Measure snapshots×probes×ensemble workload, failures and limits; update compute model.",
+      "accept": "40×64 rollout count and ensemble multiplier explicit.",
       "tests": "Repeatable count, timeout, memory and estimator checks.",
       "risk": "Do not size from simulator-only timing.",
       "out": "Production capacity or GPU training.",
@@ -2840,7 +2840,7 @@
         "WEB"
       ],
       "scope": "Check current membership/credential status on requests and before every SSE payload batch; reauthorize idle connections at most 30 seconds apart.",
-      "accept": "Revoked caller denied new work; current authoritative checks before every payload batch; idle reauthorization \u226430 seconds.",
+      "accept": "Revoked caller denied new work; current authoritative checks before every payload batch; idle reauthorization ≤30 seconds.",
       "tests": "Revocation races, stale token, sole-owner and safe audit/redaction tests.",
       "risk": "No stale membership cache bypass.",
       "out": "SCIM provisioning.",
@@ -3578,7 +3578,7 @@
         "OPS"
       ],
       "scope": "Revoke launch/broker access, terminate attempts, reconcile held allowances and preserve accepted results.",
-      "accept": "New work revoked \u22645s; controlled workers terminate \u226460s or explicit fault recorded.",
+      "accept": "New work revoked ≤5s; controlled workers terminate ≤60s or explicit fault recorded.",
       "tests": "Cancel/complete races, uncooperative agent, deadline and orphan reconciliation.",
       "risk": "Do not refund pending usage before settlement.",
       "out": "Excludes SP-16.a coordinate one remote investigation; SP-16.b resume an agent from committed checkpoints; SP-16.d prove end-to-end interruption invariants; SP-16.e instrument remote execution and recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -4671,7 +4671,7 @@
         "ID"
       ],
       "scope": "Support Last-Event-ID, cursor expiry, authoritative snapshot and archived history pagination with reauthorization.",
-      "accept": "Reconnect has no silent committed-event gaps; current authoritative checks before every payload batch; revoked idle stream closes \u226430s.",
+      "accept": "Reconnect has no silent committed-event gaps; current authoritative checks before every payload batch; revoked idle stream closes ≤30s.",
       "tests": "Duplicate/gap/expired cursor, archive outage and membership revocation tests.",
       "risk": "Archive and snapshot use same tenant/privacy policy.",
       "out": "Excludes SP-23.a publish committed event and replay endpoints; SP-23.c render live investigation timeline; SP-23.d integrate reconnect and cancellation ux. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -4779,7 +4779,7 @@
         "ART"
       ],
       "scope": "Load bounded immutable frame chunks; interpolate server data with play/pause/scrub/speed controls.",
-      "accept": "Reference frames exact at timestamps; reference-device interaction \u2264100ms and \u226530fps target measured.",
+      "accept": "Reference frames exact at timestamps; reference-device interaction ≤100ms and ≥30fps target measured.",
       "tests": "Frame alignment, seek/end boundaries, malformed chunk and performance fixtures.",
       "risk": "No second physics solver; bound memory and sanitize content.",
       "out": "Excludes SP-24.b overlay prediction and uncertainty diagnostics; SP-24.c compare recorded strategies and failures; SP-24.d verify accessible diagnostic journeys. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -5546,7 +5546,7 @@
       "contracts": [
         "OPS"
       ],
-      "scope": "Run 10\u219225\u219250\u2192100 investigations, 100 viewers and declared API mix; measure DB/queue/event budgets.",
+      "scope": "Run 10→25→50→100 investigations, 100 viewers and declared API mix; measure DB/queue/event budgets.",
       "accept": "Two-hour target hold meets section 7 envelope or fails with bottleneck evidence.",
       "tests": "Automated latency, throughput, integrity and zero-duplicate budget assertions.",
       "risk": "Do not equate offered load or connected sockets with completed capacity.",
@@ -5581,7 +5581,7 @@
         "OPS",
         "EXEC"
       ],
-      "scope": "Execute 24-hour soak and 300 offered-run/5\u00d7 burst with slow and malicious workloads.",
+      "scope": "Execute 24-hour soak and 300 offered-run/5× burst with slow and malicious workloads.",
       "accept": "Bounded queue/memory growth; fair rejection and evaluator backlog <24h within supported envelope.",
       "tests": "Long-run leak, overload rejection, backlog and persistence integrity checks.",
       "risk": "300 offered is stress, not capacity promise; stop on corruption.",
@@ -5698,7 +5698,7 @@
         "DB"
       ],
       "scope": "Restore into isolation, fence old leases/tokens and reapply deletion/revocation records before access.",
-      "accept": "Pilot \u226415min RPO/\u22644h RTO measured; no deleted object resurrected to users.",
+      "accept": "Pilot ≤15min RPO/≤4h RTO measured; no deleted object resurrected to users.",
       "tests": "Timed restore, corrupt object, interrupted replay and revoked identity tests.",
       "risk": "No production data exposed during drill; preserve private evidence.",
       "out": "Excludes SP-29.a implement backup and recovery-set manifests; SP-29.c exercise worker loss and database failover; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -5738,7 +5738,7 @@
         "EXEC"
       ],
       "scope": "Force worker/process loss and real HA failover; validate reconnection, epochs, artifact and budget integrity.",
-      "accept": "Worker p95 recovery \u22645min; DB failover \u226415min target with committed-state validation.",
+      "accept": "Worker p95 recovery ≤5min; DB failover ≤15min target with committed-state validation.",
       "tests": "Fault matrix, stale worker, pool exhaustion and no-duplicate invariants.",
       "risk": "Targets measured in deployed configuration, not assumed from service SLA.",
       "out": "Excludes SP-29.a implement backup and recovery-set manifests; SP-29.b restore sql and objects with tombstone replay; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -6620,7 +6620,7 @@
         "WEB"
       ],
       "scope": "Revoke account/service/run access, close streams and stop unauthorized new work; reconcile active jobs.",
-      "accept": "Disabled principal denied new calls immediately; current authoritative checks before every stream payload batch; idle stream closure \u226430s and job launch \u22645s revocation targets.",
+      "accept": "Disabled principal denied new calls immediately; current authoritative checks before every stream payload batch; idle stream closure ≤30s and job launch ≤5s revocation targets.",
       "tests": "Active session/token/job/SSE disable races and sole-owner exceptions.",
       "risk": "No stale authorization caches or forgotten machine keys.",
       "out": "Excludes SP-35.a freeze scim mapping and lifecycle semantics; SP-35.b implement bounded provisioning and reconciliation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -6847,7 +6847,7 @@
         "DB"
       ],
       "scope": "Add owner delete/retention configuration, immediate access tombstone and bounded background active-object removal.",
-      "accept": "Interactive access revoked on accepted delete; removal target \u22647 days with retriable state.",
+      "accept": "Interactive access revoked on accepted delete; removal target ≤7 days with retriable state.",
       "tests": "Concurrent read/delete, shared artifact refs, legal-hold flag and repeated job tests.",
       "risk": "Keep minimum tombstone identity; no silent auto-expiry.",
       "out": "Excludes SP-37.a persist basic security audit events; SP-37.c preserve deletion and revocation across recovery; SP-37.d export tamper-evident enterprise audit history; SP-37.e verify enterprise retention and privacy operations; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -7044,7 +7044,7 @@
         "DB"
       ],
       "scope": "Copy recoverable DB/object generations and suppression ledger into approved secondary US location with independent access.",
-      "accept": "Copy completion and consistency measured; recovery set age \u226424h.",
+      "accept": "Copy completion and consistency measured; recovery set age ≤24h.",
       "tests": "Missing-generation, key/IAM denial and lag/copy integrity tests.",
       "risk": "Residency/key requirements reviewed before replication.",
       "out": "Excludes SP-38.b perform timed secondary-region recovery; SP-38.c resolve and repeat failed recovery steps. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -7083,7 +7083,7 @@
         "EXEC"
       ],
       "scope": "Restore isolated services, fence former region, reapply tombstones/credentials and rehearse endpoint cutover.",
-      "accept": "Measured regional RPO/RTO \u226424h with tenant/integrity suite passing.",
+      "accept": "Measured regional RPO/RTO ≤24h with tenant/integrity suite passing.",
       "tests": "Timed failover, stale worker, DNS/cutover and duplicate-launch tests.",
       "risk": "No active-active claim; preserve original incident evidence.",
       "out": "Excludes SP-38.a create an independent regional recovery set; SP-38.c resolve and repeat failed recovery steps. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -7231,7 +7231,7 @@
         "GOV",
         "OPS"
       ],
-      "scope": "Reserve assessor window, scope APIs/build/runtime/evaluator and appoint \u22654 trained responders with explicit coverage.",
+      "scope": "Reserve assessor window, scope APIs/build/runtime/evaluator and appoint ≥4 trained responders with explicit coverage.",
       "accept": "External assessment slot and actual on-call plan confirmed before GA window.",
       "tests": "Checklist validates trained primary/secondary and escalation coverage.",
       "risk": "No unsupported 24/7 commitment; lead time external.",
@@ -7421,7 +7421,7 @@
         "GOV",
         "OPS"
       ],
-      "scope": "Reconcile REQ01\u201316, support/data terms, release identity, residual risks and signed gate owners.",
+      "scope": "Reconcile REQ01–16, support/data terms, release identity, residual risks and signed gate owners.",
       "accept": "No blocking requirement unresolved; product/security/research/platform sign exact candidate.",
       "tests": "Traceability, artifact hash, required-gate and exception-expiry checks.",
       "risk": "GA approval is separate from backlog approval.",
@@ -7660,7 +7660,7 @@
       "I1",
       "First independent learning slice",
       "SP-04.e",
-      "Observe\u2192fit\u2192predict\u2192independent development score; analytic accuracy, explicit failure and provenance. Stop research expansion if architecture fails."
+      "Observe→fit→predict→independent development score; analytic accuracy, explicit failure and provenance. Stop research expansion if architecture fails."
     ],
     [
       "I2",
@@ -7684,7 +7684,7 @@
       "I5",
       "Production pilot release candidate",
       "SP-30.d SP-32.a",
-      "R1\u2013R6 gates, security specialist and actual support/partner/data readiness; explicit pilot release authorization."
+      "R1–R6 gates, security specialist and actual support/partner/data readiness; explicit pilot release authorization."
     ],
     [
       "I6",
@@ -10738,7 +10738,7 @@
         ],
         "confidence": "medium to medium-low",
         "status": "provisional_after_ID-B_acceptance",
-        "note": "Provisional remaining ID-C human effort: C1 service/key lifecycle 3\u20135 engineer-days (medium); C2 run credentials/composition 2\u20134 (medium-low); shared final composition review/integration 1\u20132, counted once. Total6\u201311 engineer-days includes uncertainty; no additional reserve is added. This supersedes the original two-day ID-C expectation for current execution only; the nine-human reference forecast remains historical and agent elapsed time is not human effort evidence."
+        "note": "Provisional remaining ID-C human effort: C1 service/key lifecycle 3–5 engineer-days (medium); C2 run credentials/composition 2–4 (medium-low); shared final composition review/integration 1–2, counted once. Total6–11 engineer-days includes uncertainty; no additional reserve is added. This supersedes the original two-day ID-C expectation for current execution only; the nine-human reference forecast remains historical and agent elapsed time is not human effort evidence."
       }
     ],
     "additional_work": [
@@ -12039,7 +12039,17 @@
       "writer_handoff": "Quality owns identity after exact WEB1 PR/main/candidate acceptance and clean Research release.",
       "starting_commit": "15714e6ac4b6b300f0170e5aa22722987decd786",
       "branch": "feat/contract-tooling-validation",
-      "started_at": "2026-10-20T09:48:03.950454+00:00"
+      "started_at": "2026-10-20T09:48:03.950454+00:00",
+      "access_recovery": {
+        "verified_at": "2026-10-20T16:08:47.073081+00:00",
+        "primary_source": "1ac8875d5641b834a3361621b1ce03ad07c3f2e6",
+        "identity_source": "19500bcea1109ec9bc003a71853883a3f70563f5",
+        "clean_checkouts": true,
+        "same_account": true,
+        "free_bytes": 103368593408,
+        "assignment": "Existing Quality writer resumes checkpoint corrections; Research and Platform independent review. Generator waits for replacement acceptance.",
+        "initial_platform_index_sha256": "dec0d363863b691908258e2deacb0992e797c36680e22076423fd363972ae309"
+      }
     },
     "local_comparison_prerequisite_review": {
       "status": "planning_decision_pending_no_runtime_authorization",
@@ -12074,7 +12084,7 @@
       "finding": "Research and Quality independently audited the planned36-episode local comparison. Its29-node prerequisite closure contains14 accepted nodes and15 unfinished nodes: eight RA tasks, six baseline tasks and pendingRA_EXEC. It has no WEB1, hosted deployment or provider prerequisite. However, native LinearSpringModel selection still depends transitively on symbolic execution and all-family calibration/sparse/bootstrap work. Preserve this graph now; the recommended planning decision is a separately reviewed native-only belief/calibration and fixed-menu/acquisition path using accepted spring fitting/prediction/scoring, with source/license provenance, manifest/cost, arm isolation and discrepancy-scale safeguards retained. This proposal does not approve RA_EXEC or complete the broader tasks.",
       "next_task": "Next executable scientific preparation: Research owns the native-versus-rich prerequisite proposal and fixed manifest/oracle design; Quality reviews isolation/calibration/accounting and Platform reviews provenance. After explicit RA_EXEC acceptance, the first RA implementation is RA-01 (Research + Platform): dated source/license/recipe go/no-go evidence. SP-03.c and SP-19.a are dependency-ready baseline tasks but need separate assignment outside the completed bounded I1 slice. Any authorized comparison must first freeze pool/priors/likelihood, common calibration and candidate menu, six world identities, two seeds, budget/failure policy, discrepancy scale and sensitivity, disjoint scoring probes and complete output records. Retain36 episodes,12 slots including4 common calibrations,432 maximum slots,8 CPU-core-hours,1GiB new artifacts, existing machine and zero network/provider/provisioning; incomplete outcomes stay visible, with no population/adaptation/official-score claim.",
       "graph_unchanged": true,
-      "current_assignment": "Native proposal PR #96 scope/RA_EXEC/run decision pending. WEB1 integrated via PR #97. Quality owns SP-01.e/VAL1; Research and Platform review.",
+      "current_assignment": "Reviewed grid-first sequencing recommendation saved as proposal only; scope/RA_EXEC/run decisions pending. Quality resumes VAL1 checkpoint corrections after same-account SSH recovery; Research and Platform review immutable source, lead owns primary planning/integration.",
       "proposal": {
         "id": "NATIVE_PATH_PROPOSAL_2026_10_20",
         "status": "proposed_not_approved_or_activated",
@@ -12084,7 +12094,7 @@
             "id": "RA-N01",
             "title": "Bind native spring candidates to prediction and independent scoring",
             "objective": "Give fixed-grid candidates honest, independently scoreable native identities.",
-            "scope": "Add bounded pool/config/candidate receipt and prediction types. Produce real LinearSpringModel artifacts from each arm\u2019s actual purchased ObservationBundle with a distinct native producer/config, full-prefix hash, through_index and completed-record selection. Separate the common immutable pool hash from prefix-dependent model hashes. Add a separate prediction profile that shares the reviewed analytic kernel and accepted domain/work limits while preserving existing v1 bytes and rejection behavior. Add a journal/prefix/model/config/protocol/submission adapter into the unchanged independent evaluator, with disjoint probes. Keep the classical fitter as an honestly labeled same-prefix diagnostic.",
+            "scope": "Add bounded pool/config/candidate receipt and prediction types. Produce real LinearSpringModel artifacts from each arm’s actual purchased ObservationBundle with a distinct native producer/config, full-prefix hash, through_index and completed-record selection. Separate the common immutable pool hash from prefix-dependent model hashes. Add a separate prediction profile that shares the reviewed analytic kernel and accepted domain/work limits while preserving existing v1 bytes and rejection behavior. Add a journal/prefix/model/config/protocol/submission adapter into the unchanged independent evaluator, with disjoint probes. Keep the classical fitter as an honestly labeled same-prefix diagnostic.",
             "out": "No new law families, symbolic DAGs, executable models, mixtures under linear IDs, hosted registration, CORE/SCI changes, broadened v1 predictor acceptance, fake SpringFitArtifact or paired-Simpson provenance.",
             "deps": [
               "RA-01",
@@ -12097,7 +12107,7 @@
               "STUDY",
               "COST"
             ],
-            "accept": "Native candidates predict and score with their actual hashes; original v1 rejects their distinct producer/config. Pool identity is shared while each model binds its own arm\u2019s prefix. No completed observations yields a typed failure without invented indices. A primary MAP output names one actual candidate. Preparation rejects changed raw journal or canonical prefix/model/config, wrong requests/responses/protocols and overlapping probes. Missing/invalid predictions and evaluator arithmetic failure remain distinct.",
+            "accept": "Native candidates predict and score with their actual hashes; original v1 rejects their distinct producer/config. Pool identity is shared while each model binds its own arm’s prefix. No completed observations yields a typed failure without invented indices. A primary MAP output names one actual candidate. Preparation rejects changed raw journal or canonical prefix/model/config, wrong requests/responses/protocols and overlapping probes. Missing/invalid predictions and evaluator arithmetic failure remain distinct.",
             "tests": "Producer/config rejection; changed-prefix/hash and signed-zero cases; missing/failed selections; analytic domain/boundary cases; poisoned private inputs; raw/canonical journal and request/probe joins; disjointness; complete failure counts; old/new profile separation.",
             "risk": "Strict byte/count/domain/compute bounds; no eval, dynamic imports, plugins or network; private world/reference labels cannot enter public candidate inputs. Local conformance is not hostile-process isolation.",
             "effort_days": [
@@ -12139,8 +12149,61 @@
             "id": "RA-N02.b",
             "title": "Add and measure the declared native Laplace approximation",
             "objective": "Quantify one approximation against the accepted finite-grid reference.",
-            "scope": "Implement a bounded Laplace approximation to the declared scalar log posterior, with explicit support/boundary treatment and conditioning diagnostics. Evaluate or project it onto the same declared cells/nodes and prior/reference measure. Compute approximation posterior weights independently; they are not forced to equal grid weights. Persist actual inputs, method/config identity, approximation/reference error, failures and costs. Laplace is a separately validated diagnostic, not a fourth selector.",
+            "scope": "Implement a bounded Laplace approximation to the declared scalar log posterior, with explicit support/boundary treatment and conditioning diagnostics. Evaluate or project it onto the same declared cells/nodes and prior/reference measure. Compute approximation posterior weights independently; they are not forced to equal grid weights. Persist actual inputs, method/config identity, approximation/reference error, failures and costs. Laplace is a separately validated diagnostic, not a fourth selector. After the first grid-only result, consume the accepted, frozen RA-N03 development fixtures and perform the transferred Laplace-versus-grid calibration, predictive, ranking, boundary and misspecification audit. Preserve fixture identities and audit-only labels; later findings cannot retroactively tune the first comparison.",
             "out": "No additional inference backend, approximation-selected grid/prior, unrecorded fallback, online-engine substitution or exact-continuous-inference claim.",
+            "deps": [
+              "RA-N03"
+            ],
+            "contracts": [
+              "BELIEF",
+              "STUDY",
+              "COST"
+            ],
+            "accept": "Independent tractable cases meet preregistered tolerances. Boundary modes, singular/nonpositive curvature, numerical collapse and unsupported cases fail explicitly. Discretization error and approximation error remain distinct. Grid remains the common online engine unless separately amended. Approximation-versus-grid tolerances, predictions and acquisition rankings are independently assessed on those fixtures with all failures and costs. No Laplace validity or speedup claim precedes this acceptance.",
+            "tests": "Independent quadratic posterior and bounded/truncated cases; boundary, multimodal and misspecified cases; Hessian degeneracy; same-cell comparisons; exact-input mismatch; reproducibility and call-budget exhaustion. Frozen fixture identity and label isolation; posterior/predictive/ranking comparisons; transferred audit failures; rejection of retroactive comparison tuning.",
+            "risk": "Cap optimization/derivative evaluations and outputs. Do not clip failures into valid estimates, access hidden data or switch approximation silently.",
+            "effort_days": [
+              3,
+              5
+            ],
+            "confidence": "low",
+            "owner": "Research; independent Quality and Platform review",
+            "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates.",
+            "estimate_basis": {
+              "implementation_days": [
+                1,
+                1.5
+              ],
+              "independent_reference_tests_days": [
+                1,
+                1.5
+              ],
+              "transferred_grid_audit_days": [
+                0.5,
+                1
+              ],
+              "review_integration_docs_days": [
+                0.5,
+                1
+              ],
+              "with_25_percent_reserve_days": [
+                3.75,
+                6.25
+              ],
+              "confidence": "low",
+              "contingency": "Re-estimate before assignment. Preserve unsupported cases as explicit failures; no added inference backend. Re-scope into independently reviewable units if delivery would exceed five days.",
+              "historical_estimate_days": [
+                2,
+                3
+              ]
+            }
+          },
+          {
+            "id": "RA-N03",
+            "title": "Calibrate native beliefs and numerical-discrepancy sensitivity",
+            "objective": "Retain the scientific safeguards otherwise supplied by the broader calibration task.",
+            "scope": "Perform independent development calibration and prequential residual/predictive checks with tolerances fixed before outcomes. Justify positive numerical-discrepancy scale using accepted solver/analytic error evidence plus declared residual/correlation assumptions. Freeze a bounded sensitivity set; proposed half/base/double scales must all remain positive. Validate grid finite-sum/analytic references, refinement, predictive behavior, boundary/misspecification behavior and rankings on disjoint development fixtures. Freeze accepted fixture identities for the later RA-N02.b approximation audit; Laplace-specific comparison moves there. Labels flow only into audit output. Sensitivity over fixed purchased histories is diagnostic, not an uncounted adaptive sweep.",
+            "out": "No tuning on the six measured worlds or held-out probes, universal coverage, reinterpretation of zero observation noise as discrepancy, silent domain widening or outcome-driven filtering.",
             "deps": [
               "RA-N02.a"
             ],
@@ -12149,32 +12212,7 @@
               "STUDY",
               "COST"
             ],
-            "accept": "Independent tractable cases meet preregistered tolerances. Boundary modes, singular/nonpositive curvature, numerical collapse and unsupported cases fail explicitly. Discretization error and approximation error remain distinct. Grid remains the common online engine unless separately amended.",
-            "tests": "Independent quadratic posterior and bounded/truncated cases; boundary, multimodal and misspecified cases; Hessian degeneracy; same-cell comparisons; exact-input mismatch; reproducibility and call-budget exhaustion.",
-            "risk": "Cap optimization/derivative evaluations and outputs. Do not clip failures into valid estimates, access hidden data or switch approximation silently.",
-            "effort_days": [
-              2,
-              3
-            ],
-            "confidence": "low",
-            "owner": "Research; independent Quality and Platform review",
-            "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates."
-          },
-          {
-            "id": "RA-N03",
-            "title": "Calibrate native beliefs and numerical-discrepancy sensitivity",
-            "objective": "Retain the scientific safeguards otherwise supplied by the broader calibration task.",
-            "scope": "Perform independent development calibration and prequential residual/predictive checks with tolerances fixed before outcomes. Justify positive numerical-discrepancy scale using accepted solver/analytic error evidence plus declared residual/correlation assumptions. Freeze a bounded sensitivity set; proposed half/base/double scales must all remain positive. Compare grid and Laplace errors, boundary/misspecification behavior and rankings on disjoint development fixtures. Labels flow only into audit output. Sensitivity over fixed purchased histories is diagnostic, not an uncounted adaptive sweep.",
-            "out": "No tuning on the six measured worlds or held-out probes, universal coverage, reinterpretation of zero observation noise as discrepancy, silent domain widening or outcome-driven filtering.",
-            "deps": [
-              "RA-N02.b"
-            ],
-            "contracts": [
-              "BELIEF",
-              "STUDY",
-              "COST"
-            ],
-            "accept": "Predeclared native-domain reference/approximation tolerances and applicable development checks pass, or the profile is rejected and comparison remains blocked. Preserve poor calibration, failures, prior/scale sensitivity and pass/fail/incomplete eligibility. Weights are approximate model-belief weights, not calibrated observation-noise probabilities. Domain/approximation changes require a recorded amendment.",
+            "accept": "Predeclared native-domain grid-reference tolerances and applicable development checks pass, or the profile is rejected and comparison remains blocked. Preserve poor calibration, failures, prior/scale sensitivity and pass/fail/incomplete eligibility. Weights are approximate model-belief weights, not calibrated observation-noise probabilities. Domain/inference changes require a recorded amendment.",
             "tests": "Separately labeled synthetic-noise sanity cases; correlated discrepancy, weak excitation, boundary coefficients, misspecification, zero-noise limits with positive discrepancy; prequential ordering; replay/reset; evaluator-feedback rejection.",
             "risk": "Calibration audit cannot write selector state. Bound reference/sensitivity work and outputs, record costs and all outcomes, prohibit silent redraws or successful-only summaries.",
             "effort_days": [
@@ -12230,19 +12268,35 @@
         "implementation_gate": "RA_EXEC",
         "unchanged": "All existing baseline tasks, broad research tasks and gates stay unchanged. No task is marked complete by this proposal; RA-01 and RA-02 remain prerequisites in full.",
         "effort": {
-          "new_native_days": [
-            12,
-            19
+          "first_result_native_days": [
+            10,
+            16
           ],
           "unfinished_path_days": [
-            19,
-            29
+            17,
+            26
           ],
           "unfinished_path_with_25_percent_reserve": [
-            23.75,
-            36.25
+            21.25,
+            32.5
           ],
-          "scope": "Engineering effort, not elapsed schedule. No speculative reuse deduction or GA forecast change."
+          "later_laplace_days": [
+            3,
+            5
+          ],
+          "later_laplace_with_25_percent_reserve": [
+            3.75,
+            6.25
+          ],
+          "all_five_native_tasks_days": [
+            13,
+            21
+          ],
+          "native_proposal_with_RA01_RA02_RA07b_days": [
+            20,
+            31
+          ],
+          "scope": "Provisional engineering effort, not calendar duration or the full research programme. N03 retains its full 3–5 days. The later Laplace implementation includes its transferred audit. Broader programme scope is unchanged; no total-programme or calendar saving is established. Re-estimate at each gate and before later assignment; GA forecast unchanged."
         },
         "counts": {
           "original_tasks": 18,
@@ -12253,34 +12307,97 @@
           "original_fixed_edges": 62,
           "proposed_fixed_edges": 69,
           "conditional_edges": 6,
-          "native_closure": 21,
+          "native_closure": 20,
           "accepted_ancestors": 12,
-          "proposed_native_path_tasks": 8,
+          "proposed_native_path_tasks": 7,
           "pending_gates": 1
         },
-        "review": {
-          "source": "ad89f8d26264fff5ca96ea8c200decb1ff0582e2",
-          "reviewer": "Engineer Quality",
-          "status": "accepted_as_planning_proposal_only",
-          "checks": [
-            "Actual predictor and workflow producer/provenance seam verified.",
-            "All proposed dependencies resolve; graph acyclic; 23 tasks and69 fixed plus6 conditional edges.",
-            "RA-07.b closure21:12 accepted,8 proposed research tasks, pendingRA_EXEC.",
-            "Effort12\u201319 new,19\u201329 unfinished,23.75\u201336.25 with25% reserve.",
-            "Baseline tasks/gates/forecast and active research amendment unchanged."
-          ],
-          "activation": "Dependency amendment, RA_EXEC and bounded comparison run scope still require explicit decision.",
-          "index_sha256": "deb8971a674940fe4a8879c8e78b2c52ed38781084334f12e1561f9430f2ebac"
+        "previous_revision": {
+          "source": "1ac8875d5641b834a3361621b1ce03ad07c3f2e6",
+          "effort": {
+            "new_native_days": [
+              12,
+              19
+            ],
+            "unfinished_path_days": [
+              19,
+              29
+            ],
+            "unfinished_path_with_25_percent_reserve": [
+              23.75,
+              36.25
+            ],
+            "scope": "Engineering effort, not elapsed schedule. No speculative reuse deduction or GA forecast change."
+          },
+          "counts": {
+            "original_tasks": 18,
+            "proposed_tasks": 23,
+            "original_task_edges": 53,
+            "proposed_task_edges": 60,
+            "fixed_gate_edges": 9,
+            "original_fixed_edges": 62,
+            "proposed_fixed_edges": 69,
+            "conditional_edges": 6,
+            "native_closure": 21,
+            "accepted_ancestors": 12,
+            "proposed_native_path_tasks": 8,
+            "pending_gates": 1
+          },
+          "review": {
+            "source": "ad89f8d26264fff5ca96ea8c200decb1ff0582e2",
+            "reviewer": "Engineer Quality",
+            "status": "accepted_as_planning_proposal_only",
+            "checks": [
+              "Actual predictor and workflow producer/provenance seam verified.",
+              "All proposed dependencies resolve; graph acyclic; 23 tasks and69 fixed plus6 conditional edges.",
+              "RA-07.b closure21:12 accepted,8 proposed research tasks, pendingRA_EXEC.",
+              "Effort12–19 new,19–29 unfinished,23.75–36.25 with25% reserve.",
+              "Baseline tasks/gates/forecast and active research amendment unchanged."
+            ],
+            "activation": "Dependency amendment, RA_EXEC and bounded comparison run scope still require explicit decision.",
+            "index_sha256": "deb8971a674940fe4a8879c8e78b2c52ed38781084334f12e1561f9430f2ebac"
+          },
+          "publication": {
+            "pull_request": 96,
+            "merge_commit": "ee4831a23ded97de514075a88923c69b04316170",
+            "reviewed_head": "8ff2e8165b60746baaac2bdf1480c4e49fc6641d",
+            "tree": "31925740d9bfa8cc642a4d41fa8ae2861a26ebd0",
+            "pr_ci": 39395368138,
+            "main_ci": 39395654760,
+            "status": "published_proposal_only",
+            "index_sha256": "5233e10240b72bf5a5ea352d2ae7ab9fb965633af5c18243f4e04578c4ed5fde"
+          }
         },
-        "publication": {
-          "pull_request": 96,
-          "merge_commit": "ee4831a23ded97de514075a88923c69b04316170",
-          "reviewed_head": "8ff2e8165b60746baaac2bdf1480c4e49fc6641d",
-          "tree": "31925740d9bfa8cc642a4d41fa8ae2861a26ebd0",
-          "pr_ci": 39395368138,
-          "main_ci": 39395654760,
-          "status": "published_proposal_only",
-          "index_sha256": "5233e10240b72bf5a5ea352d2ae7ab9fb965633af5c18243f4e04578c4ed5fde"
+        "proposed_internal_dependency_changes": [
+          {
+            "task": "RA-N03",
+            "before": [
+              "RA-N02.b"
+            ],
+            "after": [
+              "RA-N02.a"
+            ]
+          },
+          {
+            "task": "RA-N02.b",
+            "before": [
+              "RA-N02.a"
+            ],
+            "after": [
+              "RA-N03"
+            ]
+          }
+        ],
+        "sequencing_review": {
+          "source_base": "1ac8875d5641b834a3361621b1ce03ad07c3f2e6",
+          "reviewers": [
+            "Engineer Research",
+            "Engineer Quality"
+          ],
+          "status": "recommendation_reviewed_saved_delta_pending_independent_review",
+          "decision": "Grid-only first comparison; RA-N03 depends on RA-N02.a and later RA-N02.b depends on accepted RA-N03. All five native tasks and broader work retained.",
+          "schedule": "Allocate RA-N02.b after the first result; RA-N03 and RA-N04 may proceed after RA-N02.a. This scheduling recommendation grants no implementation or experiment permission.",
+          "activation": "Active dependency graph and RA_EXEC unchanged; explicit scope, implementation gate and bounded-run decisions still required."
         }
       },
       "proposal_document": "docs/research/NATIVE_COMPARISON_PROPOSAL.md"
@@ -12575,7 +12692,7 @@
         "out": "Richer DAG scoring, new symbolic adapters, provider calls, hosted deployment, population superiority, adaptation claims, official scores or new machines.",
         "accept": "Within8 CPU-core-hours and1GiB new artifacts on the existing machine, independent scoring and world-paired descriptive results reproduce or a cap-limited incomplete result is recorded. Aggregate policy seeds within each world. Use actual native model/request hashes; no dummy linear identity or cross-arm data. No provider/network invocation.",
         "tests": "Analytic ranking equivalence, independent scoring, arm-history separation, absent-provider/network spy, cap/interrupt/replay and failure accounting.",
-        "risk": "Development-only12-slot budget; sealed labels cannot affect selection. No SP-18/20, RA-04.a/b or RA-09\u201312 dependency. Richer profiles separately bind actual MODEL identities to the reviewed SP-19/20 evaluator interface.",
+        "risk": "Development-only12-slot budget; sealed labels cannot affect selection. No SP-18/20, RA-04.a/b or RA-09–12 dependency. Richer profiles separately bind actual MODEL identities to the reviewed SP-19/20 evaluator interface.",
         "confidence": "medium",
         "owner": "Quality + Research",
         "status": "proposed_runtime_not_authorized",
