@@ -1139,6 +1139,9 @@ Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue c
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-10"></a>
+- **Execution constraint (ledger scaling):** Persist immutable observation body identity/hash with authoritative tenant/run/operation/ordinal/status metadata. Production prefix checks use indexed, byte-capped metadata reads under a consistent run revision; they must not materialize complete trajectory history.
+- **Additional production evidence:** Verify complete contiguous rows, unique operation IDs, scientific-failure inclusion, incomplete-operation stopping, body-commit/hash joins, concurrent append and bounded rows/bytes read.
+
 ## SP-10 — Add outbox, fencing and reconciliation
 
 Parent: [#12](https://github.com/spei04/strange-physics/issues/12). This issue closes only when its leaf tasks and applicable gate evidence pass.
@@ -1266,6 +1269,9 @@ Parent: [#14](https://github.com/spei04/strange-physics/issues/14). This issue c
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-12-b"></a>
+- **Execution constraint (ledger scaling):** Enforce cumulative scientific/output/artifact allowances across attempts and before decoding/materializing data. Per-launch ceilings and a maximum experiment count do not establish a bounded run footprint.
+- **Additional production evidence:** Verify replacement cannot reset allowances, unknown amounts remain reserved, and configured input/output byte limits reject before oversized allocation without silent truncation.
+
 ### SP-12.b — Implement fair bounded admission
 
 - **Objective:** Bound resource consumption and account for usage fairly across tenants. This PR delivers implement fair bounded admission.
@@ -1351,6 +1357,9 @@ Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue c
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-13-d"></a>
+- **Execution constraint (ledger scaling):** Consume a reviewed internal transactional ledger closure, with exact body/hash and checkpoint/model joins. Native model prefix binding requires producer-verified canonical bundle identities or a bounded streaming hasher proven byte-equivalent to SCI; until available, reject over-limit input before allocation.
+- **Additional production evidence:** Exercise missing/duplicate/gapped metadata, append races and exact canonical digest equivalence including scientific failures; verify reference commits and prefix evidence share a snapshot.
+
 ### SP-13.d — Collect abandoned uploads without deleting live state
 
 - **Objective:** Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers collect abandoned uploads without deleting live state.
@@ -1558,6 +1567,9 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-16-c"></a>
+- **Execution constraint (ledger scaling):** Restore through a reviewed internal compact ledger projection with explicit page/row/byte limits and the exact checkpoint target/latest closure. No client-supplied prefix scalar or full-trajectory materialization per restore. Payload delivery separately rechecks current read authority.
+- **Additional production evidence:** Measure bounded bytes/rows under maximum supported history and concurrent append/recovery; reject missing body commits, gaps and stale snapshots while preserving initial -1 and committed scientific-failure semantics.
+
 ### SP-16.c — Cancel, expire and reconcile remote work
 
 - **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers cancel, expire and reconcile remote work.
@@ -3392,3 +3404,5 @@ ART1 integration checkpoint: lead owns primary integration of accepted7a90e96 wi
 ART1 completion and next assignment: PR #91/main95bdd85e6163147b6b1e29e6f59648a02e8c3d59 matches reviewed8c282eb2072e59c43290ea10991e09adc990d5b6 and treecb539fa21f89ffc5562a66f2c1fa42cb5acdec07; PR CI39370833204 and all five protected-main CI39370975462 jobs passed. Platform receives the reused identity checkout for EXEC1 API contracts/fixtures after this record’s review and explicit handoff; independent API review precedes predicates. Research reviews runtime provenance and SCI boundaries; Quality reviews authorization/lifecycle. Lead maintains primary progress and integration. Full SP-01.c freeze, live enforcement and paid/release gates remain open.
 
 EXEC1 runtime assignment: the API at57f2f303a5fec4b65b1df022b4239a64f537f6bc is accepted by lead, Quality and Research after chronology, lookup-uniqueness, normal-completion and aggregate-configuration repairs. Platform retains exclusive identity source ownership for bounded current-authority/replay/broker/termination predicates. Independent runtime review and exact PR/main checks remain; COMP1 and the full SP-01.c freeze are not complete. The four delivery plus one reserve days and all baseline dependency/gate records remain unchanged.
+
+Production ledger measurement: one schema-valid maximum-shape Operation at57f2f303 serialized to1,757,976 bytes; a10,000-operation history extrapolates to17,579,767,781 bytes (about16.37GiB). No giant history was allocated. Count limits and pure conformance predicates do not prove bounded database reads. Exact existing producer owners and acceptance evidence are added above at SP-09.d, SP-12.a, SP-13.c and SP-16.b; SP-11 retains authorization. COMP1 must preserve actual canonical prefix identity with an explicit byte bound or verified streaming producer. Baseline task graph and estimates remain unchanged.

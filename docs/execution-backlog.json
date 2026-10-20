@@ -2621,7 +2621,9 @@
         "SDK",
         "Backend",
         "frontend"
-      ]
+      ],
+      "execution_constraint": "Persist immutable observation body identity/hash with authoritative tenant/run/operation/ordinal/status metadata. Production prefix checks use indexed, byte-capped metadata reads under a consistent run revision; they must not materialize complete trajectory history.",
+      "execution_constraint_tests": "Verify complete contiguous rows, unique operation IDs, scientific-failure inclusion, incomplete-operation stopping, body-commit/hash joins, concurrent append and bounded rows/bytes read."
     },
     {
       "id": "SP-10.a",
@@ -2888,7 +2890,9 @@
         "Platform",
         "QE",
         "security"
-      ]
+      ],
+      "execution_constraint": "Enforce cumulative scientific/output/artifact allowances across attempts and before decoding/materializing data. Per-launch ceilings and a maximum experiment count do not establish a bounded run footprint.",
+      "execution_constraint_tests": "Verify replacement cannot reset allowances, unknown amounts remain reserved, and configured input/output byte limits reject before oversized allocation without silent truncation."
     },
     {
       "id": "SP-12.b",
@@ -3085,7 +3089,9 @@
         "Backend",
         "Research",
         "QE"
-      ]
+      ],
+      "execution_constraint": "Consume a reviewed internal transactional ledger closure, with exact body/hash and checkpoint/model joins. Native model prefix binding requires producer-verified canonical bundle identities or a bounded streaming hasher proven byte-equivalent to SCI; until available, reject over-limit input before allocation.",
+      "execution_constraint_tests": "Exercise missing/duplicate/gapped metadata, append races and exact canonical digest equivalence including scientific failures; verify reference commits and prefix evidence share a snapshot."
     },
     {
       "id": "SP-13.d",
@@ -3545,7 +3551,9 @@
         "research",
         "Research",
         "SDK"
-      ]
+      ],
+      "execution_constraint": "Restore through a reviewed internal compact ledger projection with explicit page/row/byte limits and the exact checkpoint target/latest closure. No client-supplied prefix scalar or full-trajectory materialization per restore. Payload delivery separately rechecks current read authority.",
+      "execution_constraint_tests": "Measure bounded bytes/rows under maximum supported history and concurrent append/recovery; reject missing body commits, gaps and stale snapshots while preserving initial -1 and committed scientific-failure semantics."
     },
     {
       "id": "SP-16.c",
@@ -11271,6 +11279,24 @@
         ],
         "scope": "API shapes and intrinsic consistency only; runtime authority, actual producers, final integration and full SP-01.c remain pending.",
         "quality_index_sha256": "42768dde06d64f91bbd2f754df32f5535ad74f338b719555ccc2c460006bf9ff"
+      },
+      "production_ledger_scaling": {
+        "status": "required_before_hosted_producer_acceptance",
+        "source": "57f2f303a5fec4b65b1df022b4239a64f537f6bc",
+        "single_operation_canonical_bytes": 1757976,
+        "extrapolated_10000_operation_canonical_bytes": 17579767781,
+        "measurement_boundary": "One schema-valid maximum-shape Operation allocated and measured; full-run size extrapolated. Not a simulation, RSS benchmark, load test or upper bound on Python memory.",
+        "owners": [
+          "SP-09.d",
+          "SP-12.a",
+          "SP-13.c",
+          "SP-16.b"
+        ],
+        "authorization_owner": "SP-11",
+        "evidence_index_sha256": "8701a2d838c8c6d0f8f8b4aa58d64dd870d4949a656ce5c356af84356d600c5b",
+        "ownership_addendum_sha256": "5f343528c4b32ed5a5ffd6e049b0fba89749b82d7d7d5bbbeae8f8a67a4c1746",
+        "constraint": "The pure full-Operation prefix validator is a bounded conformance reference, not proof of scalable DB reads. Production requires reviewed internal compact metadata closure with actual durable body/hash joins and bounded snapshot reads; no client prefix assertion. COMP1 must preserve exact SCI canonical prefix identity without unchecked materialization.",
+        "forecast_boundary": "Refines existing producer acceptance; no task/dependency/gate/estimate change. Human estimates remain provisional."
       }
     },
     "spring_workflow_evidence": {
