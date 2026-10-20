@@ -1365,10 +1365,10 @@
         "security",
         "Backend"
       ],
-      "execution_owner": "Platform author; lead integrates ART1; Quality/Research/lead independently review. EXEC1/COMP1 remain.",
+      "execution_owner": "Platform authors EXEC1 after reviewed handoff; Quality/Research/lead independently review. ART1 integrated; COMP1 remains.",
       "issue": "https://github.com/spei04/strange-physics/issues/89",
       "execution_plan": "ART1 artifact/checkpoint admission and recovery; EXEC1 package quarantine and worker/broker authority; COMP1 predictor/DB composition. Accepted SP-01.b integration precedes source. Three review units preserve the baseline task/effort/gates.",
-      "evidence": "ART1 runtime29a968b and author7a90e96 accepted by three reviewers. Combined5ad0ef3 passed1954 tests,669schemas,static/security/package checks; exact-head hosted gates remain. Full SP-01.c is not complete."
+      "evidence": "ART1 complete via PR91/main95bdd85 matching reviewed8c282eb/treecb539fa2; PRCI39370833204 and all five mainCI39370975462 jobs passed. Combined1954 tests/669schemas/static/security/package checks. EXEC1 API is assigned; full SP-01.c freeze awaits EXEC1 and COMP1."
     },
     {
       "id": "SP-01.d",
@@ -10554,7 +10554,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Project lead integrates ART1; Platform prepares EXEC1 and Research prepares SCI-facing COMP1 read-only.",
+      "BE1": "Platform authors EXEC1 contracts after reviewed handoff; project lead integrates, Quality and Research review.",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10815,7 +10815,7 @@
       "status": "complete",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "Platform receives EXEC1 after ART1 integration; Research prepares SCI-facing COMP1 and retains completed SP-01.d read-only design; Quality reviews upcoming contracts and prepares SP-01.e.",
+      "next_authoring_task": "Platform assigned EXEC1 API contracts after ART1 accepted integration. Research reviews provenance and retains COMP1/SP-01.d plans; Quality reviews security/interfaces and retains SP-01.e preparation.",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10909,8 +10909,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Project lead exclusively integrates ART1 in primary with accepted SDK/I1 records.",
-      "identity": "Clean released ART1 checkout reserved for Platform EXEC1 after exact ART1 main acceptance and reviewed handoff; no active writer meanwhile.",
+      "scientific": "Project lead owns primary progress/integration; Research and Quality review immutable source read-only.",
+      "identity": "Reserved for Platform EXEC1 API authoring after ART1 main acceptance and explicit handoff of this reviewed record; reuse existing checkout and pinned environment.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11154,16 +11154,19 @@
         {
           "id": "ART1",
           "title": "Artifact identity and complete checkpoint admission/recovery",
-          "status": "reviewed_pending_hosted_integration"
+          "status": "complete",
+          "pull_request": "https://github.com/spei04/strange-physics/pull/91",
+          "merge_commit": "95bdd85e6163147b6b1e29e6f59648a02e8c3d59"
         },
         {
           "id": "EXEC1",
           "title": "Quarantined package/build and launch/broker envelopes",
-          "status": "approved_unstarted",
+          "status": "in_progress",
           "depends_on": [
             "ART1"
           ],
-          "preparation": "Read-only API/lifecycle challenge; source after ART1 main acceptance and exclusive handoff."
+          "preparation": "Lead/Quality accepted bounded API design; API review precedes runtime predicates.",
+          "phase": "Approved API authoring assignment; explicit checkout handoff follows this reviewed record."
         },
         {
           "id": "COMP1",
@@ -11186,7 +11189,7 @@
       "scope_boundary": "Three review units under the unchanged SP-01.c task, dependencies, four delivery plus one reserve days. No provisioning, live adapters/SQL, build execution or isolation proof.",
       "review_checkpoint": {
         "source": "29a968be3e4e7d5d593c0f3a0ea27d9c01918a07",
-        "status": "accepted_pending_hosted_integration",
+        "status": "complete",
         "findings": [
           "Add bounded latest-record/latest-outbox witnesses to reject a dangling head before fresh or replay writes.",
           "Retained available catalog rows must equal their original snapshot; the frozen lifecycle has no available-to-available revision jump."
@@ -11225,8 +11228,25 @@
         "integration_check_index_sha256": "7e01c7781eeb81fdffa2f9cc76c82da5a675354f1d5d5d0766985604a1dcbcbc",
         "package_acceptance_index_sha256": "087440a4e57ff138f4d3786111c1e17fe1101f29b8ff7fe17f33785a28a8a2d3",
         "harness_corrections": "Lead independent config fixture corrected to existing agent_config_sha256; lead package invocation corrected to exact CI --no-create-gitignore. Initial diagnostics retained; no source, assertions or allowlist weakened.",
-        "boundary": "Pure contracts/predicates only; full SP-01.c freeze and live storage/SQL/authority/build/isolation producers remain later gates."
-      }
+        "boundary": "Pure contracts/predicates only; full SP-01.c freeze and live storage/SQL/authority/build/isolation producers remain later gates.",
+        "reviewed_head": "8c282eb2072e59c43290ea10991e09adc990d5b6",
+        "merge_commit": "95bdd85e6163147b6b1e29e6f59648a02e8c3d59",
+        "tree": "cb539fa21f89ffc5562a66f2c1fa42cb5acdec07",
+        "pull_request": "https://github.com/spei04/strange-physics/pull/91",
+        "pr_ci": 39370833204,
+        "main_ci": 39370975462,
+        "integration_index_sha256": "d3b93df0c795b5b9b680dbd68b3a55e2c6bccae346f77c5d57a9bb5473f57b53",
+        "status": "complete"
+      },
+      "exec1_decisions": [
+        "Separate package-owned artifact projection; no fake run identity.",
+        "Versioned archive/build/worker resource policies with actual original admission, total budget and deadline; current counters may advance.",
+        "Submitted-agent and built-in analytic runtime approval provenance are distinct; WorkerLaunch accepts submitted-agent only.",
+        "Explicit current workers:launch and workers:terminate internal purposes; no new public/service/run scopes.",
+        "Broker operations use closed existing-permission mapping and current C2 authority, runtime approval, launch lifecycle and isolation policy before every operation/commit/payload.",
+        "Exact older-launch termination remains authorized after owner/lease/policy invalidation; fence unknown dispatch first and never report unknown processes stopped or affect a newer launch.",
+        "Manifest/profile syntax checks are not import/conformance proof; no actual extraction/build/controller/sandbox or new predictor execution."
+      ]
     },
     "spring_workflow_evidence": {
       "source": "fff854b39fc72c46a785a7d581417425d67261c9",

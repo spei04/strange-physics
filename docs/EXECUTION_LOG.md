@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | SP-01.c/#89 EXEC1 package/worker preparation | ART1 source released and accepted; next identity writer handoff follows ART1 main acceptance and API review |
-| Research | SCI-facing COMP1 identity/recovery preparation; SP-01.d design ready | Read-only; COMP1 implementation waits ART1/EXEC1 and SP-01.d source/freeze waits full SP-01.c |
-| Quality | ART1 integration/progress review; EXEC1 design challenge | Source and additive merge accepted; SP-01.e tooling remains read-only until prerequisites pass |
-| Project lead | Integrate accepted ART1 with SDK/I1 records | Exclusive primary writer; identity reserved for Platform reuse; exact reviewed-source PR/main gates before handoff |
+| Platform | SP-01.c/#89 EXEC1 package/worker API contracts | ART1 integrated; reuse identity after explicit reviewed handoff, publish API checkpoint before runtime predicates |
+| Research | EXEC1 provenance/SCI review; COMP1 and SP-01.d design ready | Read-only reviewer; COMP1 source waits EXEC1 and SP-01.d source/freeze waits full SP-01.c |
+| Quality | EXEC1 API/security review; handoff verification | ART1 complete; API review precedes runtime, and SP-01.e tooling remains prerequisite-gated |
+| Project lead | Coordinate EXEC1 handoff, review and integration | Primary progress owner; Platform receives identity for source authoring after this reviewed handoff |
 
 ## Assignments
 
@@ -266,3 +266,9 @@ Author checks passed1,875 full tests,654 schemas,lint/format97,mypy61,configured
 Private author index SHA256 bf086518d0c379b2b3adb1092f36fc7839f6ae79bef73ad19e64fd430d76e7a8, lead review2707577d945868af47a97a19236537bbdac11ef6fb0701b9115049cc245764cd and corrected package acceptance087440a4e57ff138f4d3786111c1e17fe1101f29b8ff7fe17f33785a28a8a2d3 remain outside checkouts, owner-readable, review2026-11-19. Earlier diagnostics are retained with their source identities; same-VM storage is not an off-device backup.
 
 Assignments: lead integrates ART1 in primary; Platform prepares EXEC1 package/worker contracts read-only; Research prepares SCI-facing COMP1 predictor identity/recovery composition and retains completed SP-01.d design preparation; Quality reviews integration and challenges EXEC1. Identity is released and reserved for the next sequential Platform task, with independent dependencies. No checkout or dependency copy was created. SP-01.c remains open through EXEC1/COMP1; RA, paid, staging and release gates remain unchanged.
+
+## ART1 integration complete; EXEC1 API assignment
+
+2026-10-20 04:44 UTC — PR #91/main95bdd85e6163147b6b1e29e6f59648a02e8c3d59 matches reviewed8c282eb2072e59c43290ea10991e09adc990d5b6 and treecb539fa21f89ffc5562a66f2c1fa42cb5acdec07; PR CI39370833204 and all five protected-main CI39370975462 jobs passed. ART1 is complete for its pure contract/predicate scope; SP-01.c remains open through EXEC1 and COMP1. Combined1,954 tests,669 schemas,static/security checks and exact36-entry packages are accepted. Private integration index SHA256 d3b93df0c795b5b9b680dbd68b3a55e2c6bccae346f77c5d57a9bb5473f57b53 remains owner-readable outside checkouts, review2026-11-19; same-VM storage is not an off-device backup.
+
+Platform is assigned EXEC1 API contracts/fixtures in the existing identity checkout after this record’s independent review and explicit writer handoff. Design review accepted separate package ownership, original immutable admission/resource ceilings, distinct submitted-agent/built-in provenance, current internal launch/termination purposes and closed C2 broker permissions. Broker authority rechecks current approval/isolation and irreversible launch fencing; exact older-launch termination survives owner/lease/policy loss and cannot affect a replacement. No unknown-start outcome is reported stopped. An early immutable API checkpoint precedes runtime predicates. Research reviews provenance/SCI and preserves completed COMP1/SP-01.d preparation; Quality reviews authorization/lifecycle and preserves SP-01.e tooling preparation. Lead owns primary progress and integration. Both existing checkouts are reused, dependency manifests unchanged; no source/outputs move to the Mac.
