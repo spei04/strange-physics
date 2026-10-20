@@ -1,6 +1,6 @@
 # WORLD1: immutable worlds and explicit preview grants
 
-This is the reviewed pure-contract and predicate unit for SP-01.d/WORLD1,
+This is the integrated pure-contract and predicate unit for SP-01.d/WORLD1,
 issue #94. It defines bounded messages, lossless codecs, current-authorization
 checks, version/grant proposals and exact retained-recovery joins. Hosted
 authority producers, persistence, HTTP, catalog resolution and browser clients
@@ -456,8 +456,10 @@ Directories are 0700 and files 0600, with a diagnostic review date of 2026-11-19
 Earlier checkpoints and diagnostic failures remain separately identified;
 they are not substituted for the final result.
 
-The subsequent author handoff changes documentation and contract-status
-annotations only; runtime predicates and validation semantics remain those of
-the reviewed source above. Hosted exact-head CI and integration are lead-owned
-gates. WORLD1 does not finish SP-01.d: WEB1 stream/snapshot/replay contracts and
-the later hosted producers remain outstanding.
+The final author handoff changes documentation only; runtime predicates and
+validation semantics remain those of the reviewed source above. PR #95 merged
+as caeb58a with the same tree as reviewed e42fb87. All four applicable PR
+CI39391162963 and all five protected-main CI39391431584 jobs passed;
+the unpublished candidate was checksum/provenance/source verified privately.
+WORLD1 is accepted. SP-01.d remains open for WEB1 stream/snapshot/replay
+contracts; live hosted producers are separate later implementation work.

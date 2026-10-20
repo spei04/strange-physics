@@ -1410,9 +1410,9 @@
         "research"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/94",
-      "execution_owner": "Lead integrates reviewed WORLD1; Research audits local comparison prerequisites and prepares WEB1; Platform reviews stream/artifact joins; Quality reviews union and authority/recovery.",
+      "execution_owner": "Research owns WEB1 after explicit handoff; Platform and Quality review; lead integrates.",
       "execution_plan": "WORLD1 immutable world/version, safe and granted views, browser capability and exact run selection; WEB1 bounded streams/snapshots/cursors/replay/artifact retrieval. API checkpoint before predicates in each independent PR.",
-      "evidence": "2026-10-20 08:04 UTC \u2014 Final WORLD1 runtime2b882fe is accepted by lead, Platform and Quality after 2,783 full tests, 360 WORLD1 cases, 557 broader focused cases, 1,201 schemas, Ruff/format127, strict mypy87, static security and offline package/installed-callable checks. Final composition repairs validate all six supplied historical/current version pairs and prevent fresh allocation from reusing a visible version ID; valid retries still ignore unused allocation inputs. Final authorf7b1cb1 changes documentation only. This supersedes the qualified9267733 acceptance. Exact final PR #95/main checks remain before integration acceptance; WEB1 and full SP-01.d remain open."
+      "evidence": "WORLD1 is complete through PR #95/maincaeb58adae55e77187446ac65dc3c85cd98ce37c, matching reviewede42fb87c19a9ffe95edc26c91a9a806e17d1e260/tree648f7775f5ae1b4dc72d72f3833b659fbaf4a977. All four applicable PR CI39391162963 and all five protected-main CI39391431584 jobs passed. The reviewed runtime passed 2,783 tests, 1,201 schema fixtures and configured static/type/security/package checks; current authority, retained-history and allocation repairs were independently accepted. Candidate artifact12249238534 was checksum/provenance/source verified and retained privately. This accepts pure contracts/proposals; live HTTP/database/storage producers remain later work. Research receives WEB1 API/fixture authoring in the existing identity checkout after the lead verifies this handoff; Platform reviews stream/artifact joins, Quality reviews current authority/recovery and lead owns primary integration. The first checkpoint defines bounded events, cursors, immutable snapshot/archive recovery and exact scientific artifact retrieval before runtime predicates. Viewer reads use current browser/service runs:read, including terminal runs, without worker-lease requirements. SP-01.d stays in progress and SP-01.e stays preparation-only until WEB1 is accepted."
     },
     {
       "id": "SP-01.e",
@@ -10922,7 +10922,7 @@
     },
     "checkout_ownership": {
       "scientific": "Project lead owns primary progress/integration; reviewers use immutable source.",
-      "identity": "Research released clean WORLD1 authorf7b1cb1. Project lead owns integration and the retained identity checkout pending an explicit WEB1 author handoff; all engineer preparation is read-only. Existing independent environment and checkout will be reused.",
+      "identity": "Research exclusively authors WEB1 API/fixtures on feat/stream-replay-models at accepted handoff69c027c. Platform/Quality review immutable source; API acceptance precedes runtime predicates. Existing independent environment and checkout are reused.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11524,36 +11524,45 @@
     },
     "web_contract_preparation": {
       "owner": "Engineer Research",
-      "status": "world1_final_integration",
+      "status": "web1_api_review_repairs",
       "task": "SP-01.d",
       "depends_on": [
         "SP-01.b",
         "SP-01.c"
       ],
-      "scope": "Accepted WORLD1 API precedes bounded runtime and independent review; WEB1 follows separately and SP-01.e waits complete SP-01.d.",
+      "scope": "WORLD1 integrated; WEB1 API/fixture authoring next, with review before runtime. SP-01.e waits full SP-01.d.",
       "issue": 94,
       "pr_units": [
         {
           "id": "WORLD1",
-          "status": "reviewed_pending_final_ci",
+          "status": "complete",
           "scope": "Immutable world/version, safe and granted views, browser-only capability and exact run selection.",
           "api_source": "fd6bac2d76b1cf83f5935bb214d0cb13802af13d",
           "api_tree": "f27d83fe78debc42ee8bd41485b5b7339ce99003",
           "runtime_source": "2b882fe3d26879cd7fc1abe7ca623833aef52372",
           "author_head": "f7b1cb1a94d589b4b70ad5625f60414b1d6a50c8",
-          "pull_request": 95
+          "pull_request": 95,
+          "merge_commit": "caeb58adae55e77187446ac65dc3c85cd98ce37c",
+          "reviewed_head": "e42fb87c19a9ffe95edc26c91a9a806e17d1e260"
         },
         {
           "id": "WEB1",
-          "status": "prepared",
+          "status": "api_review_repairs",
           "depends_on": [
             "WORLD1"
           ],
-          "scope": "Bounded stream/snapshot/cursor/archive/artifact retrieval and recovery."
+          "scope": "Bounded stream/snapshot/cursor/archive/artifact retrieval and recovery.",
+          "owner": "Engineer Research",
+          "reviewers": [
+            "Platform",
+            "Quality"
+          ],
+          "starting_commit": "69c027cdfa85468ddab79ab7dc533015c6aac1e0",
+          "started_at": "2026-10-20T08:15:54.588377+00:00"
         }
       ],
       "starting_commit": "c74975b730cb020b23e338ff466a52d9282c7177",
-      "branch": "feat/world-preview-models",
+      "branch": "feat/stream-replay-models",
       "started_at": "2026-10-20T06:23:04Z",
       "world1_api_evidence": {
         "source": "fd6bac2d76b1cf83f5935bb214d0cb13802af13d",
@@ -11630,7 +11639,7 @@
       "world1_runtime_evidence": {
         "source": "2b882fe3d26879cd7fc1abe7ca623833aef52372",
         "tree": "bd387b6bbf4f86a8a8f70617d65a10ec8f607b5f",
-        "status": "accepted_pending_exact_final_ci",
+        "status": "complete",
         "author_head": "f7b1cb1a94d589b4b70ad5625f60414b1d6a50c8",
         "author_tree": "364c3d6e906334e58b7e920d6a1bb15666bda1b4",
         "full_tests": 2783,
@@ -11679,7 +11688,16 @@
           "Reject a new version ID already visible in the current head records, after exact replay and expected-head checks.",
           "Retain chronology, canonical identity, irreversible revocation and minimum renewal-expiry growth checks."
         ],
-        "boundary": "Pure trusted-projection contracts/proposals; no live HTTP/SQL/storage/UI or full-history authenticity proof. Known-ID checks do not replace global producer uniqueness. Overlapping review suites are not summed. Exact PR/main acceptance remains required."
+        "boundary": "Reviewed pure contracts/proposals with exact PR/main acceptance. No live HTTP/SQL/storage/UI or full-history authenticity proof; global uniqueness and current reads remain producer obligations. Overlapping suites are not summed.",
+        "reviewed_head": "e42fb87c19a9ffe95edc26c91a9a806e17d1e260",
+        "merge_commit": "caeb58adae55e77187446ac65dc3c85cd98ce37c",
+        "reviewed_tree": "648f7775f5ae1b4dc72d72f3833b659fbaf4a977",
+        "merge_tree": "648f7775f5ae1b4dc72d72f3833b659fbaf4a977",
+        "pr_ci": 39391162963,
+        "main_ci": 39391431584,
+        "integration_index_sha256": "4c1a7aa966163ffc29aabc28afbae8f8e31102eb339e0e227a35cd5d97c1b72b",
+        "candidate_artifact_id": 12249238534,
+        "candidate_sha256": "63d0c22f58ea89f7a538ea147e9b911236790e2f820894afdce37b34fae1b5ca"
       },
       "world1_runtime_history": [
         {
@@ -11737,7 +11755,37 @@
           "boundary": "Pure trusted-projection contracts/proposals, not live HTTP/SQL/storage/UI or full-history authenticity. Review suites overlap. Final exact PR/main acceptance remains required.",
           "qualification": "Final composition qualified the earlier 9267733 acceptance: the original receipt parent/version pair also needs validation. Research repaired that supplied pair at6abdb3 and retains the identity writer while Platform checks visible version-ID reuse at fresh append allocation; Quality verifies all six supplied-record pairs. Publication and full final acceptance remain held for the replacement. Existing full-test evidence stays attached to its original source."
         }
-      ]
+      ],
+      "web1_starting_commit": "69c027cdfa85468ddab79ab7dc533015c6aac1e0",
+      "web1_started_at": "2026-10-20T08:15:54.588377+00:00",
+      "web1_api_review": {
+        "source": "3b01cfca44d61127927ca396ae54a04f06a0026d",
+        "tree": "afc27fc746785d8f9a4eacbc0db512bca4b0d43b",
+        "status": "replacement_required_before_runtime",
+        "full_tests": 2928,
+        "focused": 371,
+        "web_cases": 145,
+        "schemas": 1373,
+        "ruff_files": 130,
+        "mypy_files": 89,
+        "author_index_sha256": "5e38a762435dc86e0d43aa2f72df2df968fd023c00f023fed0c373811226a61d",
+        "lead_wire_cases": 102,
+        "lead_index_sha256": "f0a43055900c9e61e4ece8265ed135c31b50ab4ba9ffafb3e33233e09a40ebe6",
+        "findings": [
+          "Join the immutable root to an available predecessor page zero and reject known page/event identity reuse.",
+          "Constrain supplied prefix/suffix page/chunk counts and feasible remaining nonempty chunk bytes.",
+          "Match the recovery JSON Schema to its runtime code/nonretryable/no-operation constraints.",
+          "Reject control characters in Retry-After header schemas."
+        ],
+        "assignments": {
+          "Research": "Bounded source/schema/fixture repairs; runtime waits replacement acceptance.",
+          "Platform": "Independent history, artifact and stream provenance review.",
+          "Quality": "Independent authority, recovery and schema review; native proposal review separately.",
+          "Lead": "Independent wire/counter review, primary progress and integration."
+        },
+        "boundary": "API/source evidence only. Existing full-test results remain tied to their exact checkpoint; replacement requires review. No hosted producer, SP-01.d completion or native research gate acceptance.",
+        "review_date": "2026-11-19"
+      }
     },
     "contract_tooling_preparation": {
       "owner": "Engineer Quality",
@@ -11745,6 +11793,239 @@
       "task": "SP-01.e",
       "scope": "VAL1 shared public contract fixtures, CLIENT1 separately locked TypeScript/Ajv contract harness, MOCK1 bounded HTTP/SSE fixtures; no install, generation or freeze before actual leaf prerequisites.",
       "compatibility_requirements": "Cross-language fixtures must cover Unicode/defaults, float formatting boundaries, signed zero, uint64 decimal strings and opaque JSON numeric identity. Raw artifact SHA verification uses original bytes; typed SCI recomputation must match the frozen profile rather than ordinary JavaScript serialization."
+    },
+    "local_comparison_prerequisite_review": {
+      "status": "planning_decision_pending_no_runtime_authorization",
+      "source": "dc212461b8b5cdf68e1b724130f244de5c01603f",
+      "reviewers": [
+        "Research",
+        "Quality"
+      ],
+      "closure_nodes": 29,
+      "accepted": 14,
+      "unfinished": 15,
+      "unfinished_baseline": [
+        "SP-03.c",
+        "SP-04.c",
+        "SP-04.d",
+        "SP-05.a",
+        "SP-05.b",
+        "SP-19.a"
+      ],
+      "unfinished_ra": [
+        "RA-01",
+        "RA-02",
+        "RA-03",
+        "RA-03.b",
+        "RA-05",
+        "RA-06",
+        "RA-07",
+        "RA-07.b"
+      ],
+      "pending_gate": "RA_EXEC",
+      "no_hosted_dependency": true,
+      "finding": "Research and Quality independently audited the planned36-episode local comparison. Its29-node prerequisite closure contains14 accepted nodes and15 unfinished nodes: eight RA tasks, six baseline tasks and pendingRA_EXEC. It has no WEB1, hosted deployment or provider prerequisite. However, native LinearSpringModel selection still depends transitively on symbolic execution and all-family calibration/sparse/bootstrap work. Preserve this graph now; the recommended planning decision is a separately reviewed native-only belief/calibration and fixed-menu/acquisition path using accepted spring fitting/prediction/scoring, with source/license provenance, manifest/cost, arm isolation and discrepancy-scale safeguards retained. This proposal does not approve RA_EXEC or complete the broader tasks.",
+      "next_task": "Next executable scientific preparation: Research owns the native-versus-rich prerequisite proposal and fixed manifest/oracle design; Quality reviews isolation/calibration/accounting and Platform reviews provenance. After explicit RA_EXEC acceptance, the first RA implementation is RA-01 (Research + Platform): dated source/license/recipe go/no-go evidence. SP-03.c and SP-19.a are dependency-ready baseline tasks but need separate assignment outside the completed bounded I1 slice. Any authorized comparison must first freeze pool/priors/likelihood, common calibration and candidate menu, six world identities, two seeds, budget/failure policy, discrepancy scale and sensitivity, disjoint scoring probes and complete output records. Retain36 episodes,12 slots including4 common calibrations,432 maximum slots,8 CPU-core-hours,1GiB new artifacts, existing machine and zero network/provider/provisioning; incomplete outcomes stay visible, with no population/adaptation/official-score claim.",
+      "graph_unchanged": true,
+      "current_assignment": "Platform drafts a concrete proposed native-only prerequisite amendment while Research authors WEB1. Root reviews and records it; no dependency/gate/runtime change is authorized by preparation.",
+      "proposal": {
+        "id": "NATIVE_PATH_PROPOSAL_2026_10_20",
+        "status": "proposed_not_approved_or_activated",
+        "source": "e01e3b424dae9894d0b087035fec038c6a2d3855",
+        "tasks": [
+          {
+            "id": "RA-N01",
+            "title": "Bind native spring candidates to prediction and independent scoring",
+            "objective": "Give fixed-grid candidates honest, independently scoreable native identities.",
+            "scope": "Add bounded pool/config/candidate receipt and prediction types. Produce real LinearSpringModel artifacts from each arm\u2019s actual purchased ObservationBundle with a distinct native producer/config, full-prefix hash, through_index and completed-record selection. Separate the common immutable pool hash from prefix-dependent model hashes. Add a separate prediction profile that shares the reviewed analytic kernel and accepted domain/work limits while preserving existing v1 bytes and rejection behavior. Add a journal/prefix/model/config/protocol/submission adapter into the unchanged independent evaluator, with disjoint probes. Keep the classical fitter as an honestly labeled same-prefix diagnostic.",
+            "out": "No new law families, symbolic DAGs, executable models, mixtures under linear IDs, hosted registration, CORE/SCI changes, broadened v1 predictor acceptance, fake SpringFitArtifact or paired-Simpson provenance.",
+            "deps": [
+              "RA-01",
+              "SP-04.e"
+            ],
+            "contracts": [
+              "MODEL",
+              "BELIEF",
+              "SCI",
+              "STUDY",
+              "COST"
+            ],
+            "accept": "Native candidates predict and score with their actual hashes; original v1 rejects their distinct producer/config. Pool identity is shared while each model binds its own arm\u2019s prefix. No completed observations yields a typed failure without invented indices. A primary MAP output names one actual candidate. Preparation rejects changed raw journal or canonical prefix/model/config, wrong requests/responses/protocols and overlapping probes. Missing/invalid predictions and evaluator arithmetic failure remain distinct.",
+            "tests": "Producer/config rejection; changed-prefix/hash and signed-zero cases; missing/failed selections; analytic domain/boundary cases; poisoned private inputs; raw/canonical journal and request/probe joins; disjointness; complete failure counts; old/new profile separation.",
+            "risk": "Strict byte/count/domain/compute bounds; no eval, dynamic imports, plugins or network; private world/reference labels cannot enter public candidate inputs. Local conformance is not hostile-process isolation.",
+            "effort_days": [
+              3,
+              4
+            ],
+            "confidence": "medium",
+            "owner": "Platform + Research; independent Quality review",
+            "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates."
+          },
+          {
+            "id": "RA-N02.a",
+            "title": "Compute the native finite-grid reference",
+            "objective": "Produce reproducible bounded spring-parameter beliefs from purchased observations.",
+            "scope": "Freeze coefficient nodes/cells, prior/reference measure, likelihood features/covariance assumptions and strictly positive numerical-discrepancy policy. Enumerate all nodes for stable normalized weights and evidence, recording actual pool/config/prefix/candidate identities, usable records, failed observations and every forward/likelihood cost. Specify bounded scalar prior/likelihood functions for the later approximation. Grid is the common online engine for all three selectors.",
+            "out": "No Laplace, SMC, symbolic models, bootstrap, pool search/growth, evaluator feedback, BIC probabilities or claim of exact continuous inference.",
+            "deps": [
+              "RA-N01",
+              "RA-02"
+            ],
+            "contracts": [
+              "BELIEF",
+              "MODEL",
+              "STUDY",
+              "COST"
+            ],
+            "accept": "Independent finite-sum references match preregistered tolerances. Exact means normalization of the declared finite grid; numerical and discretization errors remain separate. Every candidate and failed purchased record stays accounted for. No usable observations or nonfinite/unnormalizable weights yields an explicit failure. All arms use the same definitions and only their own prefix.",
+            "tests": "High-precision finite sums and tractable analytic cases; refinement; extreme log weights; prior/discrepancy sensitivity; ordering and failed-record accounting; deterministic replay; cross-arm poisoning; resource exhaustion.",
+            "risk": "Bound nodes, bytes and calls before work; no evaluator input, unmetered retry, clipping or silent candidate removal. Preserve source, prior, likelihood and conditioning identities.",
+            "effort_days": [
+              2,
+              3
+            ],
+            "confidence": "low",
+            "owner": "Research; independent Quality and Platform review",
+            "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates."
+          },
+          {
+            "id": "RA-N02.b",
+            "title": "Add and measure the declared native Laplace approximation",
+            "objective": "Quantify one approximation against the accepted finite-grid reference.",
+            "scope": "Implement a bounded Laplace approximation to the declared scalar log posterior, with explicit support/boundary treatment and conditioning diagnostics. Evaluate or project it onto the same declared cells/nodes and prior/reference measure. Compute approximation posterior weights independently; they are not forced to equal grid weights. Persist actual inputs, method/config identity, approximation/reference error, failures and costs. Laplace is a separately validated diagnostic, not a fourth selector.",
+            "out": "No additional inference backend, approximation-selected grid/prior, unrecorded fallback, online-engine substitution or exact-continuous-inference claim.",
+            "deps": [
+              "RA-N02.a"
+            ],
+            "contracts": [
+              "BELIEF",
+              "STUDY",
+              "COST"
+            ],
+            "accept": "Independent tractable cases meet preregistered tolerances. Boundary modes, singular/nonpositive curvature, numerical collapse and unsupported cases fail explicitly. Discretization error and approximation error remain distinct. Grid remains the common online engine unless separately amended.",
+            "tests": "Independent quadratic posterior and bounded/truncated cases; boundary, multimodal and misspecified cases; Hessian degeneracy; same-cell comparisons; exact-input mismatch; reproducibility and call-budget exhaustion.",
+            "risk": "Cap optimization/derivative evaluations and outputs. Do not clip failures into valid estimates, access hidden data or switch approximation silently.",
+            "effort_days": [
+              2,
+              3
+            ],
+            "confidence": "low",
+            "owner": "Research; independent Quality and Platform review",
+            "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates."
+          },
+          {
+            "id": "RA-N03",
+            "title": "Calibrate native beliefs and numerical-discrepancy sensitivity",
+            "objective": "Retain the scientific safeguards otherwise supplied by the broader calibration task.",
+            "scope": "Perform independent development calibration and prequential residual/predictive checks with tolerances fixed before outcomes. Justify positive numerical-discrepancy scale using accepted solver/analytic error evidence plus declared residual/correlation assumptions. Freeze a bounded sensitivity set; proposed half/base/double scales must all remain positive. Compare grid and Laplace errors, boundary/misspecification behavior and rankings on disjoint development fixtures. Labels flow only into audit output. Sensitivity over fixed purchased histories is diagnostic, not an uncounted adaptive sweep.",
+            "out": "No tuning on the six measured worlds or held-out probes, universal coverage, reinterpretation of zero observation noise as discrepancy, silent domain widening or outcome-driven filtering.",
+            "deps": [
+              "RA-N02.b"
+            ],
+            "contracts": [
+              "BELIEF",
+              "STUDY",
+              "COST"
+            ],
+            "accept": "Predeclared native-domain reference/approximation tolerances and applicable development checks pass, or the profile is rejected and comparison remains blocked. Preserve poor calibration, failures, prior/scale sensitivity and pass/fail/incomplete eligibility. Weights are approximate model-belief weights, not calibrated observation-noise probabilities. Domain/approximation changes require a recorded amendment.",
+            "tests": "Separately labeled synthetic-noise sanity cases; correlated discrepancy, weak excitation, boundary coefficients, misspecification, zero-noise limits with positive discrepancy; prequential ordering; replay/reset; evaluator-feedback rejection.",
+            "risk": "Calibration audit cannot write selector state. Bound reference/sensitivity work and outputs, record costs and all outcomes, prohibit silent redraws or successful-only summaries.",
+            "effort_days": [
+              3,
+              5
+            ],
+            "confidence": "low",
+            "owner": "Quality + Research; Platform boundary review",
+            "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates."
+          },
+          {
+            "id": "RA-N04",
+            "title": "Freeze the native action menu and three acquisition policies",
+            "objective": "Isolate experiment selection under common model and inference settings.",
+            "scope": "Freeze a proposed seeded 128-action bank and four calibration actions within accepted purchased-action bounds, with immutable IDs and duplicate/repetition rules. Implement random, uniform-candidate disagreement and posterior-weighted disagreement with fixed observable vector/scaling, reduction and ties. Common-prefix rankings share identical pool/prior/likelihood/posterior/menu. Online arms share definitions and use only their own prefixes. All outputs use the same declared MAP rule. Retain pending/failed action identities and slot/call accounting.",
+            "out": "No full-family generator, bootstrap, LLM selector, EIG arm, evaluator-guided menu, adaptive pool or easier-menu fallback after failure.",
+            "deps": [
+              "RA-N02.a"
+            ],
+            "contracts": [
+              "ACQUISITION",
+              "BELIEF",
+              "STUDY",
+              "COST"
+            ],
+            "accept": "Common-prefix identities and ties are deterministic. Random selects only eligible declared actions; weighted/uniform disagreement match hand calculations. Invalid/nonfinite candidates or scores follow the preregistered whole-selection failure policy, without silent dropping. Each arm separately purchases four calibration plus eight remaining slots. Demonstrate scalar constant-noise monotone information-surrogate equivalence without claiming a new EIG method.",
+            "tests": "Ranking/ties; permutation/identity integrity; shared menu and divergent own histories; cross-arm poisoning; four-plus-eight accounting; invalid candidates and cap exhaustion; absent provider/network invocation; deterministic replay.",
+            "risk": "Bound bank/scoring calls, forbid evaluator feedback and unmetered retries, and fail closed on inconsistent state.",
+            "effort_days": [
+              2,
+              4
+            ],
+            "confidence": "medium",
+            "owner": "Research + Quality; Platform contract review",
+            "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates."
+          }
+        ],
+        "proposed_dependency_changes": [
+          {
+            "task": "RA-07.b",
+            "before": [
+              "RA-06",
+              "RA-07",
+              "SP-04.e"
+            ],
+            "after": [
+              "RA-N03",
+              "RA-N04",
+              "SP-04.e"
+            ]
+          }
+        ],
+        "implementation_gate": "RA_EXEC",
+        "unchanged": "All existing baseline tasks, broad research tasks and gates stay unchanged. No task is marked complete by this proposal; RA-01 and RA-02 remain prerequisites in full.",
+        "effort": {
+          "new_native_days": [
+            12,
+            19
+          ],
+          "unfinished_path_days": [
+            19,
+            29
+          ],
+          "unfinished_path_with_25_percent_reserve": [
+            23.75,
+            36.25
+          ],
+          "scope": "Engineering effort, not elapsed schedule. No speculative reuse deduction or GA forecast change."
+        },
+        "counts": {
+          "original_tasks": 18,
+          "proposed_tasks": 23,
+          "original_task_edges": 53,
+          "proposed_task_edges": 60,
+          "fixed_gate_edges": 9,
+          "original_fixed_edges": 62,
+          "proposed_fixed_edges": 69,
+          "conditional_edges": 6,
+          "native_closure": 21,
+          "accepted_ancestors": 12,
+          "proposed_native_path_tasks": 8,
+          "pending_gates": 1
+        },
+        "review": {
+          "source": "ad89f8d26264fff5ca96ea8c200decb1ff0582e2",
+          "reviewer": "Engineer Quality",
+          "status": "accepted_as_planning_proposal_only",
+          "checks": [
+            "Actual predictor and workflow producer/provenance seam verified.",
+            "All proposed dependencies resolve; graph acyclic; 23 tasks and69 fixed plus6 conditional edges.",
+            "RA-07.b closure21:12 accepted,8 proposed research tasks, pendingRA_EXEC.",
+            "Effort12\u201319 new,19\u201329 unfinished,23.75\u201336.25 with25% reserve.",
+            "Baseline tasks/gates/forecast and active research amendment unchanged."
+          ],
+          "activation": "Dependency amendment, RA_EXEC and bounded comparison run scope still require explicit decision."
+        }
+      },
+      "proposal_document": "docs/research/NATIVE_COMPARISON_PROPOSAL.md"
     }
   },
   "research_amendment": {

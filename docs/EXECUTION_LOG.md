@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | Local comparison prerequisite audit; WEB1 API preparation | WORLD1 writer released; WEB1 source waits exact integration/handoff |
-| Platform | WEB1 stream/artifact producer and consumer handoff | Final WORLD1 runtime accepted; read-only preparation |
-| Quality | Final WORLD1 union review; WEB1 authority/recovery | Runtime accepted; SP-01.e stays preparation only |
-| Project lead | Integrate reviewed WORLD1 and update progress | Exclusive primary owner; exact PR/main acceptance before WEB1 handoff |
+| Research | WEB1 API/fixtures, then runtime after review | Assigned after exact WORLD1 acceptance and reviewed identity handoff |
+| Platform | Native-only research prerequisite proposal; then WEB1 stream/artifact review | Planning only; returns to immutable API review when ready |
+| Quality | Completion/handoff, then WEB1 authority/recovery/schema review | Independent reviewer; SP-01.e remains preparation-only |
+| Project lead | Record WORLD1 acceptance and hand off WEB1 | Exclusive primary owner; integration and progress |
 
 ## Assignments
 
@@ -401,3 +401,25 @@ Final composition qualified the earlier 9267733 acceptance: the original receipt
 Private evidence binds runtime2b882fe, final authorf7b1cb1 and both replacement reviews; review date2026-11-19, directories0700/files0600. Quality passed42 overlapping six-pair cases, six direct contradictions and eight guard mutations; Platform passed180 public composition cases and eleven guard mutations. Lead passed17 allocation/replay and five history/head cases. These suites overlap and are not additive unique totals. The four session/linking status annotations were independently verified to leave schema fields unchanged;222 related tests and1,201 external-schema cases pass.
 
 Assignments: Research released the clean identity writer and is auditing the36-episode comparison prerequisites read-only, then prepares WEB1 API. Platform prepares the WEB1 stream/artifact handoff; Quality reviews the final source/progress union and WEB1 authority/recovery; lead owns primary integration. No research-amendment gate, deployment, provider, official-study or release approval is inferred. Both existing checkouts remain needed for immediate reuse.
+
+## WORLD1 integration and next assignments
+
+2026-10-20 08:13 UTC — WORLD1 is complete through PR #95/maincaeb58adae55e77187446ac65dc3c85cd98ce37c, matching reviewede42fb87c19a9ffe95edc26c91a9a806e17d1e260/tree648f7775f5ae1b4dc72d72f3833b659fbaf4a977. All four applicable PR CI39391162963 and all five protected-main CI39391431584 jobs passed. The reviewed runtime passed 2,783 tests, 1,201 schema fixtures and configured static/type/security/package checks; current authority, retained-history and allocation repairs were independently accepted. Candidate artifact12249238534 was checksum/provenance/source verified and retained privately. This accepts pure contracts/proposals; live HTTP/database/storage producers remain later work.
+
+Research receives WEB1 API/fixture authoring in the existing identity checkout after the lead verifies this handoff; Platform reviews stream/artifact joins, Quality reviews current authority/recovery and lead owns primary integration. The first checkpoint defines bounded events, cursors, immutable snapshot/archive recovery and exact scientific artifact retrieval before runtime predicates. Viewer reads use current browser/service runs:read, including terminal runs, without worker-lease requirements. SP-01.d stays in progress and SP-01.e stays preparation-only until WEB1 is accepted.
+
+Research and Quality independently audited the planned36-episode local comparison. Its29-node prerequisite closure contains14 accepted nodes and15 unfinished nodes: eight RA tasks, six baseline tasks and pendingRA_EXEC. It has no WEB1, hosted deployment or provider prerequisite. However, native LinearSpringModel selection still depends transitively on symbolic execution and all-family calibration/sparse/bootstrap work. Preserve this graph now; the recommended planning decision is a separately reviewed native-only belief/calibration and fixed-menu/acquisition path using accepted spring fitting/prediction/scoring, with source/license provenance, manifest/cost, arm isolation and discrepancy-scale safeguards retained. This proposal does not approve RA_EXEC or complete the broader tasks.
+
+Next executable scientific preparation: Research owns the native-versus-rich prerequisite proposal and fixed manifest/oracle design; Quality reviews isolation/calibration/accounting and Platform reviews provenance. After explicit RA_EXEC acceptance, the first RA implementation is RA-01 (Research + Platform): dated source/license/recipe go/no-go evidence. SP-03.c and SP-19.a are dependency-ready baseline tasks but need separate assignment outside the completed bounded I1 slice. Any authorized comparison must first freeze pool/priors/likelihood, common calibration and candidate menu, six world identities, two seeds, budget/failure policy, discrepancy scale and sensitivity, disjoint scoring probes and complete output records. Retain36 episodes,12 slots including4 common calibrations,432 maximum slots,8 CPU-core-hours,1GiB new artifacts, existing machine and zero network/provider/provisioning; incomplete outcomes stay visible, with no population/adaptation/official-score claim.
+
+Private integration index SHA2564c1a7aa966163ffc29aabc28afbae8f8e31102eb339e0e227a35cd5d97c1b72b; candidate and diagnostics are owner-readable outside checkouts, review2026-11-19. Same-VM storage is not an off-device backup. No new checkout or dependency installation; identity remains retained for immediate reuse.
+
+WEB1 API authoring started 2026-10-20T08:15:54.588377+00:00 at accepted handoff69c027c after WORLD1 exact PR/main and candidate acceptance. Research owns the reused identity checkout; Platform reviews stream/artifact joins, Quality current authority/recovery and lead primary integration. Runtime predicates wait for API review. Pins are unchanged; no active prior consumer, cross-checkout dependency symlink or mutable hardlink remains. Available space 103,439,900,672 bytes; no additional checkout or installation.
+
+2026-10-20 08:19 UTC — Platform is assigned a planning-only native comparison prerequisite proposal while Research authors WEB1. Return small reviewable task definitions and explicit proposed dependency changes; root reviews before any approval request. The approved graph, RA_EXEC and all experiment limits remain unchanged. Platform returns to WEB1 review when the API checkpoint arrives.
+
+2026-10-20 — Lead saved Platform’s native prerequisite proposal after splitting reference and approximation into separate PR tasks. Five proposed tasks preserve all broader work and gates; Quality reviews before any approval request. Research continues WEB1 API authoring.
+
+2026-10-20 08:41 UTC — WEB1 API checkpoint3b01cfc passed 2,928 full tests and1,373 schema cases, but independent review requires bounded history-link/count and recovery/header-schema repairs before acceptance. Research owns those repairs in identity; Platform reviews stream/artifact provenance, Quality authority/recovery, and lead primary integration. Lead passed102 independent wire/token/counter/signed-zero and parameterized frame/batch-bound checks. Existing evidence remains tied to3b01cfc; runtime waits replacement review. No hosted producer, native research gate or full SP-01.d acceptance is implied.
+
+2026-10-20 — Quality accepted the native comparison prerequisite proposal as planning-only after independent source, DAG, closure and effort checks. The five tasks and RA-07.b prerequisite replacement are reviewable in docs/research/NATIVE_COMPARISON_PROPOSAL.md. No dependency amendment, RA_EXEC, experiment or infrastructure gate has been activated. WEB1 replacementc066900 is under independent delta review.
