@@ -26,12 +26,17 @@ classification rule: accepted service metadata legitimately includes
 GrantAuthority, while trusted current-authority projections remain private.
 
 Audience labels distinguish browser authentication material, one-time secrets,
-owner management, explicit world author input, granted private definitions,
-run-viewer data, purchased observations, prediction traffic and evaluator-only
-development diagnostics. They describe intended handling, not current access.
+owner management, recipient-browser invitation redemption, explicit world author
+input, granted private definitions, browser-only world catalog metadata,
+browser/service run-viewer data, purchased observations, prediction traffic
+and evaluator-only development diagnostics. They describe intended handling, not current access.
 Agent-safe structure does not grant permission to view a run. Opaque checkpoint
 state is agent-supplied JSON; arbitrary contents are not certified safe to publish.
 No preview/owner/author role automatically grants private truth access.
+Invitation redemption input carries the recipient's invitation token; its result
+is recipient membership metadata, not an owner-management flow. WORLD1 safe
+catalog/head/version roots are browser-only. Their structure does not extend
+service `runs:read` access to world routes.
 
 ## Byte vectors and validation layers
 
@@ -43,11 +48,21 @@ field/default/null, sorted Python code-point keys, compact ASCII-escaped JSON,
 and nonfinite rejection. This is not JCS or JavaScript JSON.stringify.
 
 Each case names independent expectations for strict JSON syntax/representability,
-JSON Schema structure, direct typed parsing, complete bounded typed ingress,
-canonicalization and, where needed, a cross-message helper. Null schema
+JSON Schema structure, direct base-message typed parsing, bounded base-message
+parsing, canonicalization and, where needed, a cross-message helper. Null schema
 expectations mean strict JSON decoding was rejected and structural validation
 was not assessed. Canonical bytes are derived from direct typed parsing, even
 when strict ingress rejects the raw input; they do not imply ingress acceptance.
+
+`runtime_model` names a base-message JSON parser, not a complete route ingress
+validator. `bounded_typed` applies the declared byte/depth/node limits and strict
+JSON checks before that base parser. It does not include a route's additional
+schema constraints, current authorization or contextual joins. The four initial/
+append request vectors demonstrate both lawful routes and the opposite route's
+schema rejection while the common CreateWorldVersionRequest parser accepts.
+Bounded acceptance requires strict and direct-typed acceptance, but the converse
+does not hold: depth 32 succeeds and depth 33 fails at the declared bound while
+both remain valid at the other layers, including direct typed canonicalization.
 
 Existing opaque JsonValue parsing preserves integer versus float identity:
 `1` differs from `1.0`, and `-0` becomes integer zero while `-0.0` retains its
@@ -55,10 +70,12 @@ sign. Typed Number fields normalize integral inputs to floats. Underflow and
 subnormal behavior remains the existing binary64 behavior. Direct opaque
 Pydantic parsing can accept nonfinite values that strict ingress and canonical
 encoding reject. The fixtures record these different layers without changing
-CORE. Unicode normalization is not performed; astral/BMP key ordering follows
-the frozen Python profile.
+CORE. The compact fixture set includes ordinary exponent-format boundaries and
+maximum finite values, with exact Python-profile bytes. Unicode normalization
+is not performed; astral/BMP key ordering follows the frozen Python profile.
 
-WORLD seed strings cover the exact uint64 range without JS Number conversion.
+WORLD seed strings include zero, the 2^53 neighbors and the uint64 maximum,
+with invalid leading-zero/overflow cases, without JS Number conversion.
 ART generation strings have their own broader range. Failed scientific records
 remain in the purchased prefix/hash; an all-failed fit input is rejected, and a
 model selecting a failed record is rejected by the actual-prefix helper.
@@ -70,8 +87,17 @@ numerical accuracy, storage authenticity or authorization.
 
 After independent acceptance of this manifest/fixture checkpoint, VAL1 will add
 deterministic offline closure generation, explicit unsupported-root/reference
-errors, check-mode drift detection and CI integration. The existing
-workspace/invitation status annotations will be reconciled with schema equality
+errors, check-mode drift detection and CI integration. The metadata JSON Schemas
+at this checkpoint validate structure only; they do not independently prove
+registered local paths, pointer validity, identity uniqueness or the approved
+root allowlist for an arbitrary substituted manifest. Those complete-validator
+checks remain next-stage requirements, including foreign/traversal references,
+malformed pointers, duplicate IDs, private-root substitution and no network
+fallback. Closure rewriting must include discriminator mapping references as
+well as `$ref`. Drift checks must reject changed/removed sources, fixtures and
+outputs. Toolchain validation must match actual installed pydantic/jsonschema/
+referencing distributions and their uv.lock records, not only the lock digest.
+The existing workspace/invitation status annotations will be reconciled with schema equality
 excluding that metadata. No product contract shape changes are planned.
 
 VAL1 uses the existing uv 0.11.21 and lockfile, with no added dependencies.

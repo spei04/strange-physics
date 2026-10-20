@@ -130,6 +130,9 @@ def test_manifest_schema_and_version() -> None:
     for field, value in [
         ("schema_version", "strange-physics.contract-tooling.v999"),
         ("generation_profile", "unknown"),
+        ("source_base", MANIFEST["source_base"] + "\n"),
+        ("source_base", MANIFEST["source_base"][:-1]),
+        ("source_base", MANIFEST["source_base"] + "0"),
         ("extra", True),
     ]:
         altered = copy.deepcopy(MANIFEST)
@@ -151,7 +154,8 @@ def test_fixture_schema_and_identity_links() -> None:
     for case in FIXTURES["cases"]:
         assert case["root"] in ROOTS
         expected = case["expected"]
-        assert expected["bounded_typed"] == (expected["strict_json"] and expected["typed_json"])
+        if expected["bounded_typed"]:
+            assert expected["strict_json"] and expected["typed_json"]
         assert (expected["canonical_base64"] is None) == (expected["canonical_sha256"] is None)
         if case["cross_message"] is not None:
             assert case["cross_message"]["other_case"] in CASES
@@ -206,6 +210,8 @@ def test_audience_boundaries_are_not_blanket_agent_grants() -> None:
         "world.CreateWorldVersionRequest": "world-author",
         "world.GrantedWorldDefinition": "world-grantee",
         "invitation.InvitationIssued": "credential-once",
+        "invitation.RedeemInvitationRequest": "invitation-recipient",
+        "invitation.RedemptionResult": "invitation-recipient",
         "service.ServiceKeyIssuedResponse": "credential-once",
         "service.ServiceKeyReplayResponse": "owner-management",
         "session.SessionBootstrap": "browser-auth",
@@ -215,6 +221,9 @@ def test_audience_boundaries_are_not_blanket_agent_grants() -> None:
     }.items():
         assert ROOTS[key]["audience"] == audience
         assert ROOTS[key]["agent_safe_structure"] is False
+    for root in MANIFEST["roots"]:
+        if root["id"].startswith("world.") and root["agent_safe_structure"]:
+            assert root["audience"] == "browser-world-viewer"
     assert ROOTS["world.WorldVersionView"]["agent_safe_structure"] is True
     assert ROOTS["web.EventDelivery"]["agent_safe_structure"] is True
 
@@ -298,3 +307,46 @@ def test_byte_identity_relationships_and_explicit_failures() -> None:
     assert digest("opaque-number-8") is None
     assert CASES["all-failed-fit-input"]["expected"]["json_schema"] is True
     assert CASES["all-failed-fit-input"]["expected"]["typed_json"] is False
+
+
+def test_route_schema_is_distinct_from_base_parsing() -> None:
+    for request_kind in ("initial", "append"):
+        pair = [CASES[f"route-{request_kind}-as-{route}"] for route in ("initial", "append")]
+        assert raw(pair[0]) == raw(pair[1])
+        assert pair[0]["expected"]["canonical_sha256"] == pair[1]["expected"]["canonical_sha256"]
+        for case in pair:
+            assert case["expected"]["typed_json"] is True
+            assert case["expected"]["bounded_typed"] is True
+            route_kind = case["id"].rsplit("-", 1)[1]
+            assert case["expected"]["json_schema"] is (request_kind == route_kind)
+
+
+def test_depth_limit_and_float_format_goldens_are_explicit() -> None:
+    def depth(value: Any) -> int:
+        if isinstance(value, dict):
+            return 1 + max((depth(item) for item in value.values()), default=0)
+        if isinstance(value, list):
+            return 1 + max((depth(item) for item in value), default=0)
+        return 0
+
+    for actual_depth in (32, 33):
+        case = CASES[f"depth-{actual_depth}"]
+        assert depth(strict_value(raw(case))) == actual_depth
+        assert case["expected"]["typed_json"] is True
+        assert case["expected"]["json_schema"] is True
+        assert case["expected"]["canonical_base64"] is not None
+        assert case["expected"]["bounded_typed"] is (
+            actual_depth <= FIXTURES["bounds"]["max_depth"]
+        )
+
+    for name, token in {
+        "small-decimal": "1e-06",
+        "small-exponent": "1e-07",
+        "large-decimal": "1e+20",
+        "large-exponent": "1e+21",
+        "max-finite": "1.7976931348623157e+308",
+    }.items():
+        for kind, field in (("opaque", "value"), ("typed", "linear")):
+            expected = CASES[f"{kind}-format-{name}"]["expected"]
+            canonical = base64.b64decode(expected["canonical_base64"], validate=True)
+            assert f'"{field}":{token}'.encode() in canonical

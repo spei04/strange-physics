@@ -20,7 +20,9 @@
     "worker-submission": "Run-worker model/checkpoint submission; does not invoke a predictor or grant evaluator authority.",
     "control-client-input": "Approved control message input only; draft routes remain excluded.",
     "control-client-output": "Approved control message output only; full result/error union is included, no generic agent-safety claim.",
-    "error": "Safe structural error envelope; error ordering/authentication remain complete-boundary obligations."
+    "error": "Safe structural error envelope; error ordering/authentication remain complete-boundary obligations.",
+    "invitation-recipient": "Recipient-browser invitation redemption: secret-bearing invitation input and the recipient membership result; not owner-management or agent data.",
+    "browser-world-viewer": "Authorized browser-only WORLD1 catalog/head/version metadata; not service runs:read data. Agent-safe structure is not authorization."
   },
   "sources": [
     {
@@ -272,7 +274,7 @@
     {
       "id": "invitation.RedeemInvitationRequest",
       "schema": "contracts/invitation.schema.json#/$defs/RedeemInvitationRequest",
-      "audience": "owner-management",
+      "audience": "invitation-recipient",
       "agent_safe_structure": false,
       "runtime_model": "strange_physics.invitation_contracts:RedeemInvitationRequest",
       "origin": "reviewed-message"
@@ -280,7 +282,7 @@
     {
       "id": "invitation.RedemptionResult",
       "schema": "contracts/invitation.schema.json#/$defs/RedemptionResult",
-      "audience": "owner-management",
+      "audience": "invitation-recipient",
       "agent_safe_structure": false,
       "runtime_model": "strange_physics.invitation_contracts:RedemptionResult",
       "origin": "reviewed-message"
@@ -864,7 +866,7 @@
     {
       "id": "world.WorldHead",
       "schema": "contracts/world.schema.json#/$defs/WorldHead",
-      "audience": "run-viewer",
+      "audience": "browser-world-viewer",
       "agent_safe_structure": true,
       "runtime_model": "strange_physics.world_contracts:WorldHead",
       "origin": "reviewed-message"
@@ -872,7 +874,7 @@
     {
       "id": "world.WorldPage",
       "schema": "contracts/world.schema.json#/$defs/WorldPage",
-      "audience": "run-viewer",
+      "audience": "browser-world-viewer",
       "agent_safe_structure": true,
       "runtime_model": "strange_physics.world_contracts:WorldPage",
       "origin": "reviewed-message"
@@ -880,7 +882,7 @@
     {
       "id": "world.WorldVersionResult",
       "schema": "contracts/world.schema.json#/$defs/WorldVersionResult",
-      "audience": "run-viewer",
+      "audience": "browser-world-viewer",
       "agent_safe_structure": true,
       "runtime_model": "strange_physics.world_contracts:WorldVersionResult",
       "origin": "reviewed-message"
@@ -888,7 +890,7 @@
     {
       "id": "world.WorldVersionView",
       "schema": "contracts/world.schema.json#/$defs/WorldVersionView",
-      "audience": "run-viewer",
+      "audience": "browser-world-viewer",
       "agent_safe_structure": true,
       "runtime_model": "strange_physics.world_preview_contracts:WorldVersionView",
       "origin": "reviewed-message"

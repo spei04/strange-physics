@@ -18,7 +18,9 @@
     },
     "source_base": {
       "type": "string",
-      "pattern": "^[0-9a-f]{40}$"
+      "pattern": "^[0-9a-f]{40}$",
+      "minLength": 40,
+      "maxLength": 40
     },
     "audiences": {
       "type": "object",
@@ -90,7 +92,9 @@
               "worker-submission",
               "control-client-input",
               "control-client-output",
-              "error"
+              "error",
+              "invitation-recipient",
+              "browser-world-viewer"
             ]
           },
           "agent_safe_structure": {
@@ -98,7 +102,8 @@
           },
           "runtime_model": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "Base-message JSON parser only. Bounded parsing adds byte/depth/node/strict-JSON checks; neither parsing result proves route-schema, authorization or contextual acceptance."
           },
           "origin": {
             "enum": [

@@ -6,7 +6,7 @@
     "max_depth": 32,
     "max_nodes": 100000
   },
-  "description": "Synthetic compatibility vectors. Null schema expectation means strict JSON decoding was rejected, so structural validation is deliberately unassessed. Canonical expectations concern direct typed parsing, independent of strict-ingress acceptance. No fixture is scientific or authorization evidence.",
+  "description": "Synthetic compatibility vectors. Null schema expectation means strict JSON decoding was rejected, so structural validation is deliberately unassessed. Direct typed and bounded_typed use the manifest's base-message parser; bounded_typed additionally applies the declared byte/depth/node limits and strict JSON checks. Route schemas and cross-message/context checks are separate. Canonical expectations concern direct typed parsing, independent of strict/bounded acceptance. No fixture is scientific or authorization evidence.",
   "cases": [
     {
       "id": "opaque-number-0",
@@ -766,6 +766,278 @@
         "canonical_sha256": null
       },
       "note": "Control message-only fixture. Running operation cannot retain a completed result; no hosted route or SSE body approval.",
+      "cross_message": null
+    },
+    {
+      "id": "route-initial-as-initial",
+      "root": "world-route.InitialWorldRequest",
+      "raw_base64": "eyJkZWZpbml0aW9uIjp7ImNoYW5nZV9hZnRlciI6bnVsbCwiY2hhbmdlZF9sYXciOm51bGwsImluaXRpYWxfbGF3Ijp7ImtpbmQiOiJzcHJpbmciLCJwYXJhbWV0ZXJzIjp7ImxpbmVhciI6MC41fX0sIm5vaXNlX3NlZWQiOiIxODQ0Njc0NDA3MzcwOTU1MTYxNSIsInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLmJyb3dzZXItd29ybGQudjEiLCJzcGFjZSI6eyJidWRnZXQiOjYsImNhbGlicmF0aW9uX2V4cGVyaW1lbnRzIjoyLCJsaW1pdHMiOnsiaW1wdWxzZV9ub3JtIjoxLjAsIm1heF9tYXNzIjoyLjAsIm1pbl9tYXNzIjowLjUsInBvc2l0aW9uX25vcm0iOjIuMCwidmVsb2NpdHlfbm9ybSI6Mi4wfSwic2FtcGxpbmciOnsiZHQiOjAuMDEsImR1cmF0aW9uIjowLjEsInBvc2l0aW9uX25vaXNlIjowLjAsInNhbXBsZV9pbnRlcnZhbCI6MC4wNSwidmVsb2NpdHlfbm9pc2UiOjAuMH0sInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLnNwYWNlLnYxIiwic3RydWN0dXJlIjp7ImFuY2hvcnMiOlt7ImlkIjoiYSIsInBvc2l0aW9uIjpbMC4wLDAuMF19XSwiY29ubmVjdGlvbnMiOlt7ImEiOiJwIiwiYiI6ImEifV0sInBhcnRpY2xlX2lkcyI6WyJwIl19fX0sImV4cGVjdGVkX2hlYWRfcmV2aXNpb24iOjAsImV4cGVjdGVkX3ZlcnNpb25faWQiOm51bGwsInRpdGxlIjoiU3ludGhldGljIHdvcmxkIn0=",
+      "raw_sha256": "26b20d3f0a2334b88ecdf3e328126ef750688041e34edde2bcce4a605284cf24",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJkZWZpbml0aW9uIjp7ImNoYW5nZV9hZnRlciI6bnVsbCwiY2hhbmdlZF9sYXciOm51bGwsImluaXRpYWxfbGF3Ijp7ImtpbmQiOiJzcHJpbmciLCJwYXJhbWV0ZXJzIjp7ImxpbmVhciI6MC41fX0sIm5vaXNlX3NlZWQiOiIxODQ0Njc0NDA3MzcwOTU1MTYxNSIsInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLmJyb3dzZXItd29ybGQudjEiLCJzcGFjZSI6eyJidWRnZXQiOjYsImNhbGlicmF0aW9uX2V4cGVyaW1lbnRzIjoyLCJsaW1pdHMiOnsiaW1wdWxzZV9ub3JtIjoxLjAsIm1heF9tYXNzIjoyLjAsIm1pbl9tYXNzIjowLjUsInBvc2l0aW9uX25vcm0iOjIuMCwidmVsb2NpdHlfbm9ybSI6Mi4wfSwic2FtcGxpbmciOnsiZHQiOjAuMDEsImR1cmF0aW9uIjowLjEsInBvc2l0aW9uX25vaXNlIjowLjAsInNhbXBsZV9pbnRlcnZhbCI6MC4wNSwidmVsb2NpdHlfbm9pc2UiOjAuMH0sInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLnNwYWNlLnYxIiwic3RydWN0dXJlIjp7ImFuY2hvcnMiOlt7ImlkIjoiYSIsInBvc2l0aW9uIjpbMC4wLDAuMF19XSwiY29ubmVjdGlvbnMiOlt7ImEiOiJwIiwiYiI6ImEifV0sInBhcnRpY2xlX2lkcyI6WyJwIl19fX0sImV4cGVjdGVkX2hlYWRfcmV2aXNpb24iOjAsImV4cGVjdGVkX3ZlcnNpb25faWQiOm51bGwsInRpdGxlIjoiU3ludGhldGljIHdvcmxkIn0=",
+        "canonical_sha256": "26b20d3f0a2334b88ecdf3e328126ef750688041e34edde2bcce4a605284cf24"
+      },
+      "note": "Base-message direct/bounded parsing accepts this request; the selected route schema separately enforces initial versus append preconditions.",
+      "cross_message": null
+    },
+    {
+      "id": "route-initial-as-append",
+      "root": "world-route.AppendWorldRequest",
+      "raw_base64": "eyJkZWZpbml0aW9uIjp7ImNoYW5nZV9hZnRlciI6bnVsbCwiY2hhbmdlZF9sYXciOm51bGwsImluaXRpYWxfbGF3Ijp7ImtpbmQiOiJzcHJpbmciLCJwYXJhbWV0ZXJzIjp7ImxpbmVhciI6MC41fX0sIm5vaXNlX3NlZWQiOiIxODQ0Njc0NDA3MzcwOTU1MTYxNSIsInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLmJyb3dzZXItd29ybGQudjEiLCJzcGFjZSI6eyJidWRnZXQiOjYsImNhbGlicmF0aW9uX2V4cGVyaW1lbnRzIjoyLCJsaW1pdHMiOnsiaW1wdWxzZV9ub3JtIjoxLjAsIm1heF9tYXNzIjoyLjAsIm1pbl9tYXNzIjowLjUsInBvc2l0aW9uX25vcm0iOjIuMCwidmVsb2NpdHlfbm9ybSI6Mi4wfSwic2FtcGxpbmciOnsiZHQiOjAuMDEsImR1cmF0aW9uIjowLjEsInBvc2l0aW9uX25vaXNlIjowLjAsInNhbXBsZV9pbnRlcnZhbCI6MC4wNSwidmVsb2NpdHlfbm9pc2UiOjAuMH0sInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLnNwYWNlLnYxIiwic3RydWN0dXJlIjp7ImFuY2hvcnMiOlt7ImlkIjoiYSIsInBvc2l0aW9uIjpbMC4wLDAuMF19XSwiY29ubmVjdGlvbnMiOlt7ImEiOiJwIiwiYiI6ImEifV0sInBhcnRpY2xlX2lkcyI6WyJwIl19fX0sImV4cGVjdGVkX2hlYWRfcmV2aXNpb24iOjAsImV4cGVjdGVkX3ZlcnNpb25faWQiOm51bGwsInRpdGxlIjoiU3ludGhldGljIHdvcmxkIn0=",
+      "raw_sha256": "26b20d3f0a2334b88ecdf3e328126ef750688041e34edde2bcce4a605284cf24",
+      "expected": {
+        "strict_json": true,
+        "json_schema": false,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJkZWZpbml0aW9uIjp7ImNoYW5nZV9hZnRlciI6bnVsbCwiY2hhbmdlZF9sYXciOm51bGwsImluaXRpYWxfbGF3Ijp7ImtpbmQiOiJzcHJpbmciLCJwYXJhbWV0ZXJzIjp7ImxpbmVhciI6MC41fX0sIm5vaXNlX3NlZWQiOiIxODQ0Njc0NDA3MzcwOTU1MTYxNSIsInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLmJyb3dzZXItd29ybGQudjEiLCJzcGFjZSI6eyJidWRnZXQiOjYsImNhbGlicmF0aW9uX2V4cGVyaW1lbnRzIjoyLCJsaW1pdHMiOnsiaW1wdWxzZV9ub3JtIjoxLjAsIm1heF9tYXNzIjoyLjAsIm1pbl9tYXNzIjowLjUsInBvc2l0aW9uX25vcm0iOjIuMCwidmVsb2NpdHlfbm9ybSI6Mi4wfSwic2FtcGxpbmciOnsiZHQiOjAuMDEsImR1cmF0aW9uIjowLjEsInBvc2l0aW9uX25vaXNlIjowLjAsInNhbXBsZV9pbnRlcnZhbCI6MC4wNSwidmVsb2NpdHlfbm9pc2UiOjAuMH0sInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLnNwYWNlLnYxIiwic3RydWN0dXJlIjp7ImFuY2hvcnMiOlt7ImlkIjoiYSIsInBvc2l0aW9uIjpbMC4wLDAuMF19XSwiY29ubmVjdGlvbnMiOlt7ImEiOiJwIiwiYiI6ImEifV0sInBhcnRpY2xlX2lkcyI6WyJwIl19fX0sImV4cGVjdGVkX2hlYWRfcmV2aXNpb24iOjAsImV4cGVjdGVkX3ZlcnNpb25faWQiOm51bGwsInRpdGxlIjoiU3ludGhldGljIHdvcmxkIn0=",
+        "canonical_sha256": "26b20d3f0a2334b88ecdf3e328126ef750688041e34edde2bcce4a605284cf24"
+      },
+      "note": "Base-message direct/bounded parsing accepts this request; the selected route schema separately enforces initial versus append preconditions.",
+      "cross_message": null
+    },
+    {
+      "id": "route-append-as-initial",
+      "root": "world-route.InitialWorldRequest",
+      "raw_base64": "eyJkZWZpbml0aW9uIjp7ImNoYW5nZV9hZnRlciI6bnVsbCwiY2hhbmdlZF9sYXciOm51bGwsImluaXRpYWxfbGF3Ijp7ImtpbmQiOiJzcHJpbmciLCJwYXJhbWV0ZXJzIjp7ImxpbmVhciI6MC41fX0sIm5vaXNlX3NlZWQiOiIxODQ0Njc0NDA3MzcwOTU1MTYxNSIsInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLmJyb3dzZXItd29ybGQudjEiLCJzcGFjZSI6eyJidWRnZXQiOjYsImNhbGlicmF0aW9uX2V4cGVyaW1lbnRzIjoyLCJsaW1pdHMiOnsiaW1wdWxzZV9ub3JtIjoxLjAsIm1heF9tYXNzIjoyLjAsIm1pbl9tYXNzIjowLjUsInBvc2l0aW9uX25vcm0iOjIuMCwidmVsb2NpdHlfbm9ybSI6Mi4wfSwic2FtcGxpbmciOnsiZHQiOjAuMDEsImR1cmF0aW9uIjowLjEsInBvc2l0aW9uX25vaXNlIjowLjAsInNhbXBsZV9pbnRlcnZhbCI6MC4wNSwidmVsb2NpdHlfbm9pc2UiOjAuMH0sInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLnNwYWNlLnYxIiwic3RydWN0dXJlIjp7ImFuY2hvcnMiOlt7ImlkIjoiYSIsInBvc2l0aW9uIjpbMC4wLDAuMF19XSwiY29ubmVjdGlvbnMiOlt7ImEiOiJwIiwiYiI6ImEifV0sInBhcnRpY2xlX2lkcyI6WyJwIl19fX0sImV4cGVjdGVkX2hlYWRfcmV2aXNpb24iOjEsImV4cGVjdGVkX3ZlcnNpb25faWQiOiJ3b3JsZC12ZXJzaW9uLTEiLCJ0aXRsZSI6IlN5bnRoZXRpYyB3b3JsZCJ9",
+      "raw_sha256": "269e7f632fb6ed79153984a8a7709b3a96e0ef790517d1fb17b841aaf70b1181",
+      "expected": {
+        "strict_json": true,
+        "json_schema": false,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJkZWZpbml0aW9uIjp7ImNoYW5nZV9hZnRlciI6bnVsbCwiY2hhbmdlZF9sYXciOm51bGwsImluaXRpYWxfbGF3Ijp7ImtpbmQiOiJzcHJpbmciLCJwYXJhbWV0ZXJzIjp7ImxpbmVhciI6MC41fX0sIm5vaXNlX3NlZWQiOiIxODQ0Njc0NDA3MzcwOTU1MTYxNSIsInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLmJyb3dzZXItd29ybGQudjEiLCJzcGFjZSI6eyJidWRnZXQiOjYsImNhbGlicmF0aW9uX2V4cGVyaW1lbnRzIjoyLCJsaW1pdHMiOnsiaW1wdWxzZV9ub3JtIjoxLjAsIm1heF9tYXNzIjoyLjAsIm1pbl9tYXNzIjowLjUsInBvc2l0aW9uX25vcm0iOjIuMCwidmVsb2NpdHlfbm9ybSI6Mi4wfSwic2FtcGxpbmciOnsiZHQiOjAuMDEsImR1cmF0aW9uIjowLjEsInBvc2l0aW9uX25vaXNlIjowLjAsInNhbXBsZV9pbnRlcnZhbCI6MC4wNSwidmVsb2NpdHlfbm9pc2UiOjAuMH0sInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLnNwYWNlLnYxIiwic3RydWN0dXJlIjp7ImFuY2hvcnMiOlt7ImlkIjoiYSIsInBvc2l0aW9uIjpbMC4wLDAuMF19XSwiY29ubmVjdGlvbnMiOlt7ImEiOiJwIiwiYiI6ImEifV0sInBhcnRpY2xlX2lkcyI6WyJwIl19fX0sImV4cGVjdGVkX2hlYWRfcmV2aXNpb24iOjEsImV4cGVjdGVkX3ZlcnNpb25faWQiOiJ3b3JsZC12ZXJzaW9uLTEiLCJ0aXRsZSI6IlN5bnRoZXRpYyB3b3JsZCJ9",
+        "canonical_sha256": "269e7f632fb6ed79153984a8a7709b3a96e0ef790517d1fb17b841aaf70b1181"
+      },
+      "note": "Base-message direct/bounded parsing accepts this request; the selected route schema separately enforces initial versus append preconditions.",
+      "cross_message": null
+    },
+    {
+      "id": "route-append-as-append",
+      "root": "world-route.AppendWorldRequest",
+      "raw_base64": "eyJkZWZpbml0aW9uIjp7ImNoYW5nZV9hZnRlciI6bnVsbCwiY2hhbmdlZF9sYXciOm51bGwsImluaXRpYWxfbGF3Ijp7ImtpbmQiOiJzcHJpbmciLCJwYXJhbWV0ZXJzIjp7ImxpbmVhciI6MC41fX0sIm5vaXNlX3NlZWQiOiIxODQ0Njc0NDA3MzcwOTU1MTYxNSIsInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLmJyb3dzZXItd29ybGQudjEiLCJzcGFjZSI6eyJidWRnZXQiOjYsImNhbGlicmF0aW9uX2V4cGVyaW1lbnRzIjoyLCJsaW1pdHMiOnsiaW1wdWxzZV9ub3JtIjoxLjAsIm1heF9tYXNzIjoyLjAsIm1pbl9tYXNzIjowLjUsInBvc2l0aW9uX25vcm0iOjIuMCwidmVsb2NpdHlfbm9ybSI6Mi4wfSwic2FtcGxpbmciOnsiZHQiOjAuMDEsImR1cmF0aW9uIjowLjEsInBvc2l0aW9uX25vaXNlIjowLjAsInNhbXBsZV9pbnRlcnZhbCI6MC4wNSwidmVsb2NpdHlfbm9pc2UiOjAuMH0sInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLnNwYWNlLnYxIiwic3RydWN0dXJlIjp7ImFuY2hvcnMiOlt7ImlkIjoiYSIsInBvc2l0aW9uIjpbMC4wLDAuMF19XSwiY29ubmVjdGlvbnMiOlt7ImEiOiJwIiwiYiI6ImEifV0sInBhcnRpY2xlX2lkcyI6WyJwIl19fX0sImV4cGVjdGVkX2hlYWRfcmV2aXNpb24iOjEsImV4cGVjdGVkX3ZlcnNpb25faWQiOiJ3b3JsZC12ZXJzaW9uLTEiLCJ0aXRsZSI6IlN5bnRoZXRpYyB3b3JsZCJ9",
+      "raw_sha256": "269e7f632fb6ed79153984a8a7709b3a96e0ef790517d1fb17b841aaf70b1181",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJkZWZpbml0aW9uIjp7ImNoYW5nZV9hZnRlciI6bnVsbCwiY2hhbmdlZF9sYXciOm51bGwsImluaXRpYWxfbGF3Ijp7ImtpbmQiOiJzcHJpbmciLCJwYXJhbWV0ZXJzIjp7ImxpbmVhciI6MC41fX0sIm5vaXNlX3NlZWQiOiIxODQ0Njc0NDA3MzcwOTU1MTYxNSIsInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLmJyb3dzZXItd29ybGQudjEiLCJzcGFjZSI6eyJidWRnZXQiOjYsImNhbGlicmF0aW9uX2V4cGVyaW1lbnRzIjoyLCJsaW1pdHMiOnsiaW1wdWxzZV9ub3JtIjoxLjAsIm1heF9tYXNzIjoyLjAsIm1pbl9tYXNzIjowLjUsInBvc2l0aW9uX25vcm0iOjIuMCwidmVsb2NpdHlfbm9ybSI6Mi4wfSwic2FtcGxpbmciOnsiZHQiOjAuMDEsImR1cmF0aW9uIjowLjEsInBvc2l0aW9uX25vaXNlIjowLjAsInNhbXBsZV9pbnRlcnZhbCI6MC4wNSwidmVsb2NpdHlfbm9pc2UiOjAuMH0sInNjaGVtYV92ZXJzaW9uIjoic3RyYW5nZS1waHlzaWNzLnNwYWNlLnYxIiwic3RydWN0dXJlIjp7ImFuY2hvcnMiOlt7ImlkIjoiYSIsInBvc2l0aW9uIjpbMC4wLDAuMF19XSwiY29ubmVjdGlvbnMiOlt7ImEiOiJwIiwiYiI6ImEifV0sInBhcnRpY2xlX2lkcyI6WyJwIl19fX0sImV4cGVjdGVkX2hlYWRfcmV2aXNpb24iOjEsImV4cGVjdGVkX3ZlcnNpb25faWQiOiJ3b3JsZC12ZXJzaW9uLTEiLCJ0aXRsZSI6IlN5bnRoZXRpYyB3b3JsZCJ9",
+        "canonical_sha256": "269e7f632fb6ed79153984a8a7709b3a96e0ef790517d1fb17b841aaf70b1181"
+      },
+      "note": "Base-message direct/bounded parsing accepts this request; the selected route schema separately enforces initial versus append preconditions.",
+      "cross_message": null
+    },
+    {
+      "id": "depth-32",
+      "root": "core.Checkpoint",
+      "raw_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJ0aHJvdWdoX2luZGV4IjotMSwic3RhdGUiOnsidmFsdWUiOltbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbWzBdXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV19fQ==",
+      "raw_sha256": "8f2d0c8d5ce588cca0049355fe3db2f1d1cad85fe2411585fa91d5f43025b689",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5jaGVja3BvaW50LnYxIiwic3RhdGUiOnsidmFsdWUiOltbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbWzBdXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV19LCJ0aHJvdWdoX2luZGV4IjotMX0=",
+        "canonical_sha256": "086a13329848f34206f531e7c9924263b4018d0660ce34bdd7315f660b9cc5d3"
+      },
+      "note": "Actual container depth 32; direct typed/schema/canonical layers accept while declared max_depth=32 independently controls bounded parsing.",
+      "cross_message": null
+    },
+    {
+      "id": "depth-33",
+      "root": "core.Checkpoint",
+      "raw_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJ0aHJvdWdoX2luZGV4IjotMSwic3RhdGUiOnsidmFsdWUiOltbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1swXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXX19",
+      "raw_sha256": "2098c8156c91fde9fbf742b2552feb77d71ca8631842aa28e3c9217779b24ab5",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": false,
+        "canonical_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5jaGVja3BvaW50LnYxIiwic3RhdGUiOnsidmFsdWUiOltbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1swXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXX0sInRocm91Z2hfaW5kZXgiOi0xfQ==",
+        "canonical_sha256": "7fe5fba82575d9cf348f18d80c3d4ff78e8df1ba7d510eee5b43e291f1f7de08"
+      },
+      "note": "Actual container depth 33; direct typed/schema/canonical layers accept while declared max_depth=32 independently controls bounded parsing.",
+      "cross_message": null
+    },
+    {
+      "id": "opaque-format-small-decimal",
+      "root": "core.Checkpoint",
+      "raw_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJ0aHJvdWdoX2luZGV4IjotMSwic3RhdGUiOnsidmFsdWUiOjFlLTZ9fQ==",
+      "raw_sha256": "0b0450ff5d968d7d455ea0cf5afec234ef155a256ca91919bc3cf62ac495d538",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5jaGVja3BvaW50LnYxIiwic3RhdGUiOnsidmFsdWUiOjFlLTA2fSwidGhyb3VnaF9pbmRleCI6LTF9",
+        "canonical_sha256": "147c033b4194149e680121d96f87617d0b6062a27c63e136ca3a8fd48e7ef262"
+      },
+      "note": "Frozen Python binary64 formatting, not JavaScript JSON.stringify. Maximum finite remains representable.",
+      "cross_message": null
+    },
+    {
+      "id": "typed-format-small-decimal",
+      "root": "research.LinearSpringModel",
+      "raw_base64": "eyJmaXRfY29uZmlnX3NoYTI1NiI6IjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIiLCJmaXRfcmVjb3JkX2luZGljZXMiOlswXSwiZml0dGVyX3ZlcnNpb24iOiJmaXh0dXJlLc6yLXYxIiwibGluZWFyIjoxZS02LCJvYnNlcnZhdGlvbl9zaGEyNTYiOiIyNTUyZmRiYzZjZTFiZmU4Nzk2YWM5YTAyMzg3ZmU5YmFmZmUxOTI1MjQ5ZmNlMTcxODEyZmFiNTRiZWVmYzIwIiwic2NoZW1hX3ZlcnNpb24iOiJzdHJhbmdlLXBoeXNpY3MubGluZWFyLXNwcmluZy1tb2RlbC52MSIsInRocm91Z2hfaW5kZXgiOjF9",
+      "raw_sha256": "6d9fc0ac346038340d9fd9b6fdd0779ce797ed87f45cde4a5e4a9b91b09602a9",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJmaXRfY29uZmlnX3NoYTI1NiI6IjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIiLCJmaXRfcmVjb3JkX2luZGljZXMiOlswXSwiZml0dGVyX3ZlcnNpb24iOiJmaXh0dXJlLVx1MDNiMi12MSIsImxpbmVhciI6MWUtMDYsIm9ic2VydmF0aW9uX3NoYTI1NiI6IjI1NTJmZGJjNmNlMWJmZTg3OTZhYzlhMDIzODdmZTliYWZmZTE5MjUyNDlmY2UxNzE4MTJmYWI1NGJlZWZjMjAiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5saW5lYXItc3ByaW5nLW1vZGVsLnYxIiwidGhyb3VnaF9pbmRleCI6MX0=",
+        "canonical_sha256": "e25ffe36cdd1c956783475bcffe6efabc7b6457dd1de66e5d2cd64184caa69e4"
+      },
+      "note": "Typed Number finite formatting; model parsing makes no predictor-domain or accuracy claim.",
+      "cross_message": null
+    },
+    {
+      "id": "opaque-format-small-exponent",
+      "root": "core.Checkpoint",
+      "raw_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJ0aHJvdWdoX2luZGV4IjotMSwic3RhdGUiOnsidmFsdWUiOjFlLTd9fQ==",
+      "raw_sha256": "b831a0219eb1b415cc4ec20a96daa91ceeec40e5945a1576a86ac1b834a68e33",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5jaGVja3BvaW50LnYxIiwic3RhdGUiOnsidmFsdWUiOjFlLTA3fSwidGhyb3VnaF9pbmRleCI6LTF9",
+        "canonical_sha256": "165a742be51bfc2ff4aa085ee0ed3d2f3d39777c5dee7d6fbcf8fbe4d183172d"
+      },
+      "note": "Frozen Python binary64 formatting, not JavaScript JSON.stringify. Maximum finite remains representable.",
+      "cross_message": null
+    },
+    {
+      "id": "typed-format-small-exponent",
+      "root": "research.LinearSpringModel",
+      "raw_base64": "eyJmaXRfY29uZmlnX3NoYTI1NiI6IjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIiLCJmaXRfcmVjb3JkX2luZGljZXMiOlswXSwiZml0dGVyX3ZlcnNpb24iOiJmaXh0dXJlLc6yLXYxIiwibGluZWFyIjoxZS03LCJvYnNlcnZhdGlvbl9zaGEyNTYiOiIyNTUyZmRiYzZjZTFiZmU4Nzk2YWM5YTAyMzg3ZmU5YmFmZmUxOTI1MjQ5ZmNlMTcxODEyZmFiNTRiZWVmYzIwIiwic2NoZW1hX3ZlcnNpb24iOiJzdHJhbmdlLXBoeXNpY3MubGluZWFyLXNwcmluZy1tb2RlbC52MSIsInRocm91Z2hfaW5kZXgiOjF9",
+      "raw_sha256": "7564c3503050ea1eba8336395c3d1ac7113a2a14a3eb9fdf99904c179aab770a",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJmaXRfY29uZmlnX3NoYTI1NiI6IjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIiLCJmaXRfcmVjb3JkX2luZGljZXMiOlswXSwiZml0dGVyX3ZlcnNpb24iOiJmaXh0dXJlLVx1MDNiMi12MSIsImxpbmVhciI6MWUtMDcsIm9ic2VydmF0aW9uX3NoYTI1NiI6IjI1NTJmZGJjNmNlMWJmZTg3OTZhYzlhMDIzODdmZTliYWZmZTE5MjUyNDlmY2UxNzE4MTJmYWI1NGJlZWZjMjAiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5saW5lYXItc3ByaW5nLW1vZGVsLnYxIiwidGhyb3VnaF9pbmRleCI6MX0=",
+        "canonical_sha256": "96307a673141e6cc3de8549378f5fa74de71819c1fb08f95959c9bd41ba5daea"
+      },
+      "note": "Typed Number finite formatting; model parsing makes no predictor-domain or accuracy claim.",
+      "cross_message": null
+    },
+    {
+      "id": "opaque-format-large-decimal",
+      "root": "core.Checkpoint",
+      "raw_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJ0aHJvdWdoX2luZGV4IjotMSwic3RhdGUiOnsidmFsdWUiOjFlMjB9fQ==",
+      "raw_sha256": "bfe98cc8615459baff721f7ecead34e146625e85f90a56e4b8b1b35e0a0d7b44",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5jaGVja3BvaW50LnYxIiwic3RhdGUiOnsidmFsdWUiOjFlKzIwfSwidGhyb3VnaF9pbmRleCI6LTF9",
+        "canonical_sha256": "02fe0eab30153f83f95516288d1264512d3f2e7cd69aa0018a932d8829167f67"
+      },
+      "note": "Frozen Python binary64 formatting, not JavaScript JSON.stringify. Maximum finite remains representable.",
+      "cross_message": null
+    },
+    {
+      "id": "typed-format-large-decimal",
+      "root": "research.LinearSpringModel",
+      "raw_base64": "eyJmaXRfY29uZmlnX3NoYTI1NiI6IjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIiLCJmaXRfcmVjb3JkX2luZGljZXMiOlswXSwiZml0dGVyX3ZlcnNpb24iOiJmaXh0dXJlLc6yLXYxIiwibGluZWFyIjoxZTIwLCJvYnNlcnZhdGlvbl9zaGEyNTYiOiIyNTUyZmRiYzZjZTFiZmU4Nzk2YWM5YTAyMzg3ZmU5YmFmZmUxOTI1MjQ5ZmNlMTcxODEyZmFiNTRiZWVmYzIwIiwic2NoZW1hX3ZlcnNpb24iOiJzdHJhbmdlLXBoeXNpY3MubGluZWFyLXNwcmluZy1tb2RlbC52MSIsInRocm91Z2hfaW5kZXgiOjF9",
+      "raw_sha256": "6787bb5c37aeff2fa56ff1b5578f99a03b09efbe5817e973039fc7b21e649b15",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJmaXRfY29uZmlnX3NoYTI1NiI6IjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIiLCJmaXRfcmVjb3JkX2luZGljZXMiOlswXSwiZml0dGVyX3ZlcnNpb24iOiJmaXh0dXJlLVx1MDNiMi12MSIsImxpbmVhciI6MWUrMjAsIm9ic2VydmF0aW9uX3NoYTI1NiI6IjI1NTJmZGJjNmNlMWJmZTg3OTZhYzlhMDIzODdmZTliYWZmZTE5MjUyNDlmY2UxNzE4MTJmYWI1NGJlZWZjMjAiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5saW5lYXItc3ByaW5nLW1vZGVsLnYxIiwidGhyb3VnaF9pbmRleCI6MX0=",
+        "canonical_sha256": "f0b72cb1e4b38b2c4cb70908fce3108f35d8fe3232287d77ff524b497d305450"
+      },
+      "note": "Typed Number finite formatting; model parsing makes no predictor-domain or accuracy claim.",
+      "cross_message": null
+    },
+    {
+      "id": "opaque-format-large-exponent",
+      "root": "core.Checkpoint",
+      "raw_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJ0aHJvdWdoX2luZGV4IjotMSwic3RhdGUiOnsidmFsdWUiOjFlMjF9fQ==",
+      "raw_sha256": "b9fd64107f5f2a122f155fd58c09f85b5ba959dcb9e9ac1b52b5e0492f961469",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5jaGVja3BvaW50LnYxIiwic3RhdGUiOnsidmFsdWUiOjFlKzIxfSwidGhyb3VnaF9pbmRleCI6LTF9",
+        "canonical_sha256": "c8b6bb1089969a8118b4175d0fc71e1270c2e5c2817c24b082ba95f93c463625"
+      },
+      "note": "Frozen Python binary64 formatting, not JavaScript JSON.stringify. Maximum finite remains representable.",
+      "cross_message": null
+    },
+    {
+      "id": "typed-format-large-exponent",
+      "root": "research.LinearSpringModel",
+      "raw_base64": "eyJmaXRfY29uZmlnX3NoYTI1NiI6IjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIiLCJmaXRfcmVjb3JkX2luZGljZXMiOlswXSwiZml0dGVyX3ZlcnNpb24iOiJmaXh0dXJlLc6yLXYxIiwibGluZWFyIjoxZTIxLCJvYnNlcnZhdGlvbl9zaGEyNTYiOiIyNTUyZmRiYzZjZTFiZmU4Nzk2YWM5YTAyMzg3ZmU5YmFmZmUxOTI1MjQ5ZmNlMTcxODEyZmFiNTRiZWVmYzIwIiwic2NoZW1hX3ZlcnNpb24iOiJzdHJhbmdlLXBoeXNpY3MubGluZWFyLXNwcmluZy1tb2RlbC52MSIsInRocm91Z2hfaW5kZXgiOjF9",
+      "raw_sha256": "9353c9643f4dd3d2ac4aa2aa668e9ff7cba19c7ba7276fccba2ecfc66bb0bbce",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJmaXRfY29uZmlnX3NoYTI1NiI6IjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIiLCJmaXRfcmVjb3JkX2luZGljZXMiOlswXSwiZml0dGVyX3ZlcnNpb24iOiJmaXh0dXJlLVx1MDNiMi12MSIsImxpbmVhciI6MWUrMjEsIm9ic2VydmF0aW9uX3NoYTI1NiI6IjI1NTJmZGJjNmNlMWJmZTg3OTZhYzlhMDIzODdmZTliYWZmZTE5MjUyNDlmY2UxNzE4MTJmYWI1NGJlZWZjMjAiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5saW5lYXItc3ByaW5nLW1vZGVsLnYxIiwidGhyb3VnaF9pbmRleCI6MX0=",
+        "canonical_sha256": "65884d74923d5ae56f03aaafeaf8d9ab96e1ab088aaf0ca3e913274ab0908cc1"
+      },
+      "note": "Typed Number finite formatting; model parsing makes no predictor-domain or accuracy claim.",
+      "cross_message": null
+    },
+    {
+      "id": "opaque-format-max-finite",
+      "root": "core.Checkpoint",
+      "raw_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJ0aHJvdWdoX2luZGV4IjotMSwic3RhdGUiOnsidmFsdWUiOjEuNzk3NjkzMTM0ODYyMzE1N2UzMDh9fQ==",
+      "raw_sha256": "1039a7528031c8c74a1a37f75ceecb8024ff0f2531356b5196033a44e61489d3",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJhZ2VudF9pZCI6ImZpeHR1cmUiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5jaGVja3BvaW50LnYxIiwic3RhdGUiOnsidmFsdWUiOjEuNzk3NjkzMTM0ODYyMzE1N2UrMzA4fSwidGhyb3VnaF9pbmRleCI6LTF9",
+        "canonical_sha256": "3a56a9a6769fe1548d8ad93bba3dfb99a38e728d6f0a507b8a2115d2e6eba246"
+      },
+      "note": "Frozen Python binary64 formatting, not JavaScript JSON.stringify. Maximum finite remains representable.",
+      "cross_message": null
+    },
+    {
+      "id": "typed-format-max-finite",
+      "root": "research.LinearSpringModel",
+      "raw_base64": "eyJmaXRfY29uZmlnX3NoYTI1NiI6IjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIiLCJmaXRfcmVjb3JkX2luZGljZXMiOlswXSwiZml0dGVyX3ZlcnNpb24iOiJmaXh0dXJlLc6yLXYxIiwibGluZWFyIjoxLjc5NzY5MzEzNDg2MjMxNTdlMzA4LCJvYnNlcnZhdGlvbl9zaGEyNTYiOiIyNTUyZmRiYzZjZTFiZmU4Nzk2YWM5YTAyMzg3ZmU5YmFmZmUxOTI1MjQ5ZmNlMTcxODEyZmFiNTRiZWVmYzIwIiwic2NoZW1hX3ZlcnNpb24iOiJzdHJhbmdlLXBoeXNpY3MubGluZWFyLXNwcmluZy1tb2RlbC52MSIsInRocm91Z2hfaW5kZXgiOjF9",
+      "raw_sha256": "6c15a6d8774debafc2db253b2e923c19f47e62787fd3773c10435c58c84cc645",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJmaXRfY29uZmlnX3NoYTI1NiI6IjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIiLCJmaXRfcmVjb3JkX2luZGljZXMiOlswXSwiZml0dGVyX3ZlcnNpb24iOiJmaXh0dXJlLVx1MDNiMi12MSIsImxpbmVhciI6MS43OTc2OTMxMzQ4NjIzMTU3ZSszMDgsIm9ic2VydmF0aW9uX3NoYTI1NiI6IjI1NTJmZGJjNmNlMWJmZTg3OTZhYzlhMDIzODdmZTliYWZmZTE5MjUyNDlmY2UxNzE4MTJmYWI1NGJlZWZjMjAiLCJzY2hlbWFfdmVyc2lvbiI6InN0cmFuZ2UtcGh5c2ljcy5saW5lYXItc3ByaW5nLW1vZGVsLnYxIiwidGhyb3VnaF9pbmRleCI6MX0=",
+        "canonical_sha256": "22a2c3361b4612de5be7e91cfbb3d33823f5623387f1743c53343893123b6274"
+      },
+      "note": "Typed Number finite formatting; model parsing makes no predictor-domain or accuracy claim.",
+      "cross_message": null
+    },
+    {
+      "id": "world-seed-zero",
+      "root": "world.CreateWorldVersionRequest",
+      "raw_base64": "eyJkZWZpbml0aW9uIjp7ImNoYW5nZV9hZnRlciI6bnVsbCwiY2hhbmdlZF9sYXciOm51bGwsImluaXRpYWxfbGF3Ijp7ImtpbmQiOiJzcHJpbmciLCJwYXJhbWV0ZXJzIjp7ImxpbmVhciI6MC41fX0sIm5vaXNlX3NlZWQiOiIwIiwic2NoZW1hX3ZlcnNpb24iOiJzdHJhbmdlLXBoeXNpY3MuYnJvd3Nlci13b3JsZC52MSIsInNwYWNlIjp7ImJ1ZGdldCI6NiwiY2FsaWJyYXRpb25fZXhwZXJpbWVudHMiOjIsImxpbWl0cyI6eyJpbXB1bHNlX25vcm0iOjEuMCwibWF4X21hc3MiOjIuMCwibWluX21hc3MiOjAuNSwicG9zaXRpb25fbm9ybSI6Mi4wLCJ2ZWxvY2l0eV9ub3JtIjoyLjB9LCJzYW1wbGluZyI6eyJkdCI6MC4wMSwiZHVyYXRpb24iOjAuMSwicG9zaXRpb25fbm9pc2UiOjAuMCwic2FtcGxlX2ludGVydmFsIjowLjA1LCJ2ZWxvY2l0eV9ub2lzZSI6MC4wfSwic2NoZW1hX3ZlcnNpb24iOiJzdHJhbmdlLXBoeXNpY3Muc3BhY2UudjEiLCJzdHJ1Y3R1cmUiOnsiYW5jaG9ycyI6W3siaWQiOiJhIiwicG9zaXRpb24iOlswLjAsMC4wXX1dLCJjb25uZWN0aW9ucyI6W3siYSI6InAiLCJiIjoiYSJ9XSwicGFydGljbGVfaWRzIjpbInAiXX19fSwiZXhwZWN0ZWRfaGVhZF9yZXZpc2lvbiI6MCwiZXhwZWN0ZWRfdmVyc2lvbl9pZCI6bnVsbCwidGl0bGUiOiJTeW50aGV0aWMgd29ybGQifQ==",
+      "raw_sha256": "f258c383e7dc8d68a7f105de5c688491e79fcd5a680ac181d95ab99132d60618",
+      "expected": {
+        "strict_json": true,
+        "json_schema": true,
+        "typed_json": true,
+        "bounded_typed": true,
+        "canonical_base64": "eyJkZWZpbml0aW9uIjp7ImNoYW5nZV9hZnRlciI6bnVsbCwiY2hhbmdlZF9sYXciOm51bGwsImluaXRpYWxfbGF3Ijp7ImtpbmQiOiJzcHJpbmciLCJwYXJhbWV0ZXJzIjp7ImxpbmVhciI6MC41fX0sIm5vaXNlX3NlZWQiOiIwIiwic2NoZW1hX3ZlcnNpb24iOiJzdHJhbmdlLXBoeXNpY3MuYnJvd3Nlci13b3JsZC52MSIsInNwYWNlIjp7ImJ1ZGdldCI6NiwiY2FsaWJyYXRpb25fZXhwZXJpbWVudHMiOjIsImxpbWl0cyI6eyJpbXB1bHNlX25vcm0iOjEuMCwibWF4X21hc3MiOjIuMCwibWluX21hc3MiOjAuNSwicG9zaXRpb25fbm9ybSI6Mi4wLCJ2ZWxvY2l0eV9ub3JtIjoyLjB9LCJzYW1wbGluZyI6eyJkdCI6MC4wMSwiZHVyYXRpb24iOjAuMSwicG9zaXRpb25fbm9pc2UiOjAuMCwic2FtcGxlX2ludGVydmFsIjowLjA1LCJ2ZWxvY2l0eV9ub2lzZSI6MC4wfSwic2NoZW1hX3ZlcnNpb24iOiJzdHJhbmdlLXBoeXNpY3Muc3BhY2UudjEiLCJzdHJ1Y3R1cmUiOnsiYW5jaG9ycyI6W3siaWQiOiJhIiwicG9zaXRpb24iOlswLjAsMC4wXX1dLCJjb25uZWN0aW9ucyI6W3siYSI6InAiLCJiIjoiYSJ9XSwicGFydGljbGVfaWRzIjpbInAiXX19fSwiZXhwZWN0ZWRfaGVhZF9yZXZpc2lvbiI6MCwiZXhwZWN0ZWRfdmVyc2lvbl9pZCI6bnVsbCwidGl0bGUiOiJTeW50aGV0aWMgd29ybGQifQ==",
+        "canonical_sha256": "f258c383e7dc8d68a7f105de5c688491e79fcd5a680ac181d95ab99132d60618"
+      },
+      "note": "Canonical uint64 decimal-string lower endpoint; no JavaScript Number conversion.",
       "cross_message": null
     }
   ],

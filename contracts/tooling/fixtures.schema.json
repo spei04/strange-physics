@@ -75,10 +75,12 @@
                 ]
               },
               "typed_json": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Direct JSON-mode parsing by the manifest's base-message model; not route or context acceptance."
               },
               "bounded_typed": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Strict JSON and declared resource bounds followed by that same base-message parser; route schema and authority/context checks remain separate."
               },
               "canonical_base64": {
                 "anyOf": [
