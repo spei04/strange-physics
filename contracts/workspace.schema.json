@@ -411,6 +411,30 @@
       "title": "Membership",
       "type": "object"
     },
+    "PrincipalStatus": {
+      "additionalProperties": false,
+      "description": "Current verified app-principal state, bound to its stable identity.",
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "principal_id",
+        "active"
+      ],
+      "title": "PrincipalStatus",
+      "type": "object"
+    },
     "SecurityRevocation": {
       "additionalProperties": false,
       "description": "Verified internal event, never an elective HTTP reason or a caller credential.",
@@ -631,7 +655,7 @@
     },
     "WorkspaceAuthority": {
       "additionalProperties": false,
-      "description": "Complete current owner set from the same locked workspace revision.\n\nSQL producers establish completeness, principal status and snapshot currency.\nThis shape only checks uniqueness and consistency of the supplied snapshot.",
+      "description": "Complete current owner set from the same locked workspace revision.\n\nSQL producers establish completeness and currency under the shared lock.\nactive_owner_ids counts active owner membership rows; disabled_owner_ids\nidentifies rows whose principals are currently disabled. During security fan-out,\nstored workspace state can lag; composed authorization checks both facts.",
       "properties": {
         "active_owner_ids": {
           "items": {
@@ -644,13 +668,25 @@
           "title": "Active Owner Ids",
           "type": "array"
         },
+        "disabled_owner_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "title": "Disabled Owner Ids",
+          "type": "array"
+        },
         "workspace": {
           "$ref": "#/$defs/WorkspaceView"
         }
       },
       "required": [
         "workspace",
-        "active_owner_ids"
+        "active_owner_ids",
+        "disabled_owner_ids"
       ],
       "title": "WorkspaceAuthority",
       "type": "object"

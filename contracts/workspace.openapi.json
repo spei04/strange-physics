@@ -1,0 +1,1085 @@
+{
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "csrfHeader": {
+        "in": "header",
+        "name": "X-CSRF-Token",
+        "type": "apiKey"
+      },
+      "sessionCookie": {
+        "in": "cookie",
+        "name": "__Host-sp_session",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "Bounded contract freeze candidate. Invitations, linking and full C-ID remain unfinished. Internal authority models are not public inputs.",
+    "title": "Workspace membership contract \u2014 ID-B/B1",
+    "version": "1.0.0-draft-review"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/workspaces": {
+      "get": {
+        "description": "Creation and owner mutations/retries require recent actual authentication under DeploymentSessionPolicy.recent_auth_seconds. Read routes require a current session only. No bearer-only or mixed authentication. Current quarantine blocks mutations and member listing; only caller-visible workspace/self status reads are permitted. Browser transport must enforce the complete ID-A cookie, origin, CSRF, caching and fixed-error rules.",
+        "operationId": "listWorkspaces",
+        "parameters": [
+          {
+            "description": "Bounded page size.",
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Opaque server cursor bound to principal, workspace (for members), filter and snapshot. Recheck authority on each page.",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "maxLength": 512,
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "workspace.schema.json#/$defs/WorkspacePage"
+                }
+              }
+            },
+            "description": "Successful safe projection; mutations may replay their immutable historical result after current authorization."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "Present with value reauthenticate ONLY when the current valid session lacks recent actual authentication. Absent for invalid/missing/expired/revoked sessions. No new credential is issued.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "listWorkspaces",
+        "x-current-authority": "Current human session and applicable onboarding grant/current membership.",
+        "x-implementation-status": "contract only; no handler or database isolation implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Vary": "Cookie, Origin"
+        }
+      },
+      "post": {
+        "description": "Creation and owner mutations/retries require recent actual authentication under DeploymentSessionPolicy.recent_auth_seconds. Read routes require a current session only. No bearer-only or mixed authentication. Current quarantine blocks mutations and member listing; only caller-visible workspace/self status reads are permitted. Browser transport must enforce the complete ID-A cookie, origin, CSRF, caching and fixed-error rules.",
+        "operationId": "createWorkspace",
+        "parameters": [
+          {
+            "description": "Exact allowed origin from versioned deployment policy.",
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "description": "ID-A session-bound CSRF token; never a bearer credential.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Caller/operation/target-scoped receipt key. Current authority precedes lookup; fresh CAS follows absence.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^[!-~]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "workspace.schema.json#/$defs/CreateWorkspaceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "workspace.schema.json#/$defs/WorkspaceView"
+                }
+              }
+            },
+            "description": "Successful safe projection; mutations may replay their immutable historical result after current authorization."
+          },
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "workspace.schema.json#/$defs/WorkspaceView"
+                }
+              }
+            },
+            "description": "New private workspace and its initial owner committed atomically."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "Present with value reauthenticate ONLY when the current valid session lacks recent actual authentication. Absent for invalid/missing/expired/revoked sessions. No new credential is issued.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "summary": "createWorkspace",
+        "x-current-authority": "Current human session and applicable onboarding grant/current membership.",
+        "x-implementation-status": "contract only; no handler or database isolation implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Vary": "Cookie, Origin"
+        }
+      }
+    },
+    "/v1/workspaces/{workspace_id}": {
+      "get": {
+        "description": "Creation and owner mutations/retries require recent actual authentication under DeploymentSessionPolicy.recent_auth_seconds. Read routes require a current session only. No bearer-only or mixed authentication. Current quarantine blocks mutations and member listing; only caller-visible workspace/self status reads are permitted. Browser transport must enforce the complete ID-A cookie, origin, CSRF, caching and fixed-error rules.",
+        "operationId": "getWorkspace",
+        "parameters": [
+          {
+            "description": "Exact app identifier; a foreign or nonvisible resource returns 404.",
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "workspace.schema.json#/$defs/WorkspaceView"
+                }
+              }
+            },
+            "description": "Successful safe projection; mutations may replay their immutable historical result after current authorization."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "Present with value reauthenticate ONLY when the current valid session lacks recent actual authentication. Absent for invalid/missing/expired/revoked sessions. No new credential is issued.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "getWorkspace",
+        "x-current-authority": "Current human session and applicable onboarding grant/current membership.",
+        "x-implementation-status": "contract only; no handler or database isolation implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Vary": "Cookie, Origin"
+        }
+      }
+    },
+    "/v1/workspaces/{workspace_id}/members": {
+      "get": {
+        "description": "Creation and owner mutations/retries require recent actual authentication under DeploymentSessionPolicy.recent_auth_seconds. Read routes require a current session only. No bearer-only or mixed authentication. Current quarantine blocks mutations and member listing; only caller-visible workspace/self status reads are permitted. Browser transport must enforce the complete ID-A cookie, origin, CSRF, caching and fixed-error rules.",
+        "operationId": "listMembers",
+        "parameters": [
+          {
+            "description": "Exact app identifier; a foreign or nonvisible resource returns 404.",
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Bounded page size.",
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Opaque server cursor bound to principal, workspace (for members), filter and snapshot. Recheck authority on each page.",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "maxLength": 512,
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "workspace.schema.json#/$defs/MemberPage"
+                }
+              }
+            },
+            "description": "Successful safe projection; mutations may replay their immutable historical result after current authorization."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "Present with value reauthenticate ONLY when the current valid session lacks recent actual authentication. Absent for invalid/missing/expired/revoked sessions. No new credential is issued.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "listMembers",
+        "x-current-authority": "Current human session; current tenant visibility before roles/targets/revisions. Owner authority required.",
+        "x-implementation-status": "contract only; no handler or database isolation implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Vary": "Cookie, Origin"
+        }
+      }
+    },
+    "/v1/workspaces/{workspace_id}/members/me": {
+      "get": {
+        "description": "Creation and owner mutations/retries require recent actual authentication under DeploymentSessionPolicy.recent_auth_seconds. Read routes require a current session only. No bearer-only or mixed authentication. Current quarantine blocks mutations and member listing; only caller-visible workspace/self status reads are permitted. Browser transport must enforce the complete ID-A cookie, origin, CSRF, caching and fixed-error rules.",
+        "operationId": "getOwnMembership",
+        "parameters": [
+          {
+            "description": "Exact app identifier; a foreign or nonvisible resource returns 404.",
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "workspace.schema.json#/$defs/Membership"
+                }
+              }
+            },
+            "description": "Successful safe projection; mutations may replay their immutable historical result after current authorization."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "Present with value reauthenticate ONLY when the current valid session lacks recent actual authentication. Absent for invalid/missing/expired/revoked sessions. No new credential is issued.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "getOwnMembership",
+        "x-current-authority": "Current human session and applicable onboarding grant/current membership.",
+        "x-implementation-status": "contract only; no handler or database isolation implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Vary": "Cookie, Origin"
+        }
+      }
+    },
+    "/v1/workspaces/{workspace_id}/members/{principal_id}": {
+      "patch": {
+        "description": "Creation and owner mutations/retries require recent actual authentication under DeploymentSessionPolicy.recent_auth_seconds. Read routes require a current session only. No bearer-only or mixed authentication. Current quarantine blocks mutations and member listing; only caller-visible workspace/self status reads are permitted. Browser transport must enforce the complete ID-A cookie, origin, CSRF, caching and fixed-error rules.",
+        "operationId": "changeMemberRole",
+        "parameters": [
+          {
+            "description": "Exact app identifier; a foreign or nonvisible resource returns 404.",
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Exact app identifier; a foreign or nonvisible resource returns 404.",
+            "in": "path",
+            "name": "principal_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Exact allowed origin from versioned deployment policy.",
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "description": "ID-A session-bound CSRF token; never a bearer credential.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Caller/operation/target-scoped receipt key. Current authority precedes lookup; fresh CAS follows absence.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^[!-~]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "workspace.schema.json#/$defs/MemberRoleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "workspace.schema.json#/$defs/MemberChangeResult"
+                }
+              }
+            },
+            "description": "Successful safe projection; mutations may replay their immutable historical result after current authorization."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "Present with value reauthenticate ONLY when the current valid session lacks recent actual authentication. Absent for invalid/missing/expired/revoked sessions. No new credential is issued.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "summary": "changeMemberRole",
+        "x-current-authority": "Current human session; current tenant visibility before roles/targets/revisions. Owner authority required.",
+        "x-implementation-status": "contract only; no handler or database isolation implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Vary": "Cookie, Origin"
+        }
+      }
+    },
+    "/v1/workspaces/{workspace_id}/members/{principal_id}/revoke": {
+      "post": {
+        "description": "Creation and owner mutations/retries require recent actual authentication under DeploymentSessionPolicy.recent_auth_seconds. Read routes require a current session only. No bearer-only or mixed authentication. Current quarantine blocks mutations and member listing; only caller-visible workspace/self status reads are permitted. Browser transport must enforce the complete ID-A cookie, origin, CSRF, caching and fixed-error rules.",
+        "operationId": "revokeMember",
+        "parameters": [
+          {
+            "description": "Exact app identifier; a foreign or nonvisible resource returns 404.",
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Exact app identifier; a foreign or nonvisible resource returns 404.",
+            "in": "path",
+            "name": "principal_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Exact allowed origin from versioned deployment policy.",
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "description": "ID-A session-bound CSRF token; never a bearer credential.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Caller/operation/target-scoped receipt key. Current authority precedes lookup; fresh CAS follows absence.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^[!-~]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "workspace.schema.json#/$defs/MemberRevokeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "workspace.schema.json#/$defs/MemberChangeResult"
+                }
+              }
+            },
+            "description": "Successful safe projection; mutations may replay their immutable historical result after current authorization."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "Present with value reauthenticate ONLY when the current valid session lacks recent actual authentication. Absent for invalid/missing/expired/revoked sessions. No new credential is issued.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Safe fixed control Error; no account/provider details. Reauthenticate on the documented freshness signal; never retry automatically."
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "summary": "revokeMember",
+        "x-current-authority": "Current human session; current tenant visibility before roles/targets/revisions. Owner authority required.",
+        "x-implementation-status": "contract only; no handler or database isolation implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Vary": "Cookie, Origin"
+        }
+      }
+    }
+  }
+}

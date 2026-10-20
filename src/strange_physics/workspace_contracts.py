@@ -127,20 +127,34 @@ class WorkspaceCreationGrant(Message):
 class WorkspaceAuthority(Message):
     """Complete current owner set from the same locked workspace revision.
 
-    SQL producers establish completeness, principal status and snapshot currency.
-    This shape only checks uniqueness and consistency of the supplied snapshot.
+    SQL producers establish completeness and currency under the shared lock.
+    active_owner_ids counts active owner membership rows; disabled_owner_ids
+    identifies rows whose principals are currently disabled. During security fan-out,
+    stored workspace state can lag; composed authorization checks both facts.
     """
 
     workspace: WorkspaceView
     active_owner_ids: tuple[Identifier, ...]
+    disabled_owner_ids: tuple[Identifier, ...]
 
     @model_validator(mode="after")
     def validate_owners(self) -> Self:
         if tuple(sorted(set(self.active_owner_ids))) != self.active_owner_ids:
             raise ValueError("Owner identities must be unique and sorted")
+        if tuple(sorted(set(self.disabled_owner_ids))) != self.disabled_owner_ids or not set(
+            self.disabled_owner_ids
+        ).issubset(self.active_owner_ids):
+            raise ValueError("Disabled owners must be a unique sorted subset of membership owners")
         if self.workspace.state == "active" and not self.active_owner_ids:
             raise ValueError("An active workspace requires a current active owner")
         return self
+
+
+class PrincipalStatus(Message):
+    """Current verified app-principal state, bound to its stable identity."""
+
+    principal_id: Identifier
+    active: bool
 
 
 class SecurityRevocationAuthority(Message):
@@ -231,6 +245,17 @@ def management_session_error(
     return status, error, {}
 
 
+def enabled_owners(authority: WorkspaceAuthority) -> frozenset[str]:
+    return frozenset(authority.active_owner_ids).difference(authority.disabled_owner_ids)
+
+
+def workspace_status(authority: WorkspaceAuthority) -> WorkspaceView:
+    """Safe current status projection, including security fan-out before state persistence."""
+    if not enabled_owners(authority):
+        return authority.workspace.model_copy(update={"state": "quarantined"})
+    return authority.workspace
+
+
 def _member_binding(authority: WorkspaceAuthority, member: Membership) -> None:
     if member.workspace_id != authority.workspace.workspace_id:
         raise ContractViolation("not_found", 404)
@@ -261,8 +286,12 @@ def authorize_management(
     if not membership.active or (owner_required and membership.role != "owner"):
         raise ContractViolation("forbidden", 403)
     _member_binding(authority, membership)
+    if membership.principal_id in authority.disabled_owner_ids:
+        raise ContractViolation("forbidden", 403)
     # Only safe workspace/self status reads are permitted through quarantine.
-    if authority.workspace.state != "active" and (mutation or owner_required):
+    if (authority.workspace.state != "active" or not enabled_owners(authority)) and (
+        mutation or owner_required
+    ):
         raise ContractViolation("forbidden", 403)
 
 
@@ -408,6 +437,7 @@ def validate_workspace_creation(
         or workspace.state != "active"
         or workspace.revision != 0
         or created.active_owner_ids != (actor.session.principal_id,)
+        or created.disabled_owner_ids
         or initial_member
         != Membership(
             workspace_id=workspace.workspace_id,
@@ -440,9 +470,14 @@ def _validate_member_proposal(
     owners.discard(target.principal_id)
     if active and role == "owner":
         owners.add(target.principal_id)
-    if not owners and not security:
+    disabled = set(before.disabled_owner_ids).intersection(owners)
+    if not owners.difference(disabled) and not security:
         raise ContractViolation("incompatible_state", 409)
-    state = "quarantined" if not owners or before.workspace.state == "quarantined" else "active"
+    state = (
+        "quarantined"
+        if not owners.difference(disabled) or before.workspace.state == "quarantined"
+        else "active"
+    )
     expected_workspace = before.workspace.model_dump() | {
         "revision": before.workspace.revision + 1,
         "state": state,
@@ -451,6 +486,7 @@ def _validate_member_proposal(
         updated.model_dump() != expected_member
         or after.workspace.model_dump() != expected_workspace
         or after.active_owner_ids != tuple(sorted(owners))
+        or after.disabled_owner_ids != tuple(sorted(disabled))
     ):
         raise ContractViolation("incompatible_state", 409)
 
@@ -467,6 +503,7 @@ def validate_member_change(
     *,
     workspace_id: str,
     target_principal_id: str,
+    target_principal: PrincipalStatus,
     now: int,
 ) -> None:
     """Fresh elective mutation only; receipts are checked before these CAS preconditions."""
@@ -480,7 +517,11 @@ def validate_member_change(
         owner_required=True,
         mutation=True,
     )
-    if target.workspace_id != workspace_id or target.principal_id != target_principal_id:
+    if (
+        target.workspace_id != workspace_id
+        or target.principal_id != target_principal_id
+        or target_principal.principal_id != target.principal_id
+    ):
         raise ContractViolation("not_found", 404)
     if target.principal_id == actor_membership.principal_id and target != actor_membership:
         raise ContractViolation("incompatible_state", 409)
@@ -488,6 +529,11 @@ def validate_member_change(
         request.expected_workspace_revision != before.workspace.revision
         or request.expected_membership_revision != target.revision
         or not target.active
+        or (isinstance(request, MemberRoleRequest) and not target_principal.active)
+    ):
+        raise ContractViolation("incompatible_state", 409)
+    if target.role == "owner" and target_principal.active != (
+        target.principal_id not in before.disabled_owner_ids
     ):
         raise ContractViolation("incompatible_state", 409)
     _validate_member_proposal(
@@ -541,15 +587,22 @@ def validate_security_revocation(
     )
 
 
-def _product_workspace(workspace: WorkspaceView, workspace_id: str) -> None:
-    if workspace.workspace_id != workspace_id:
+def _product_workspace(
+    workspace: WorkspaceAuthority, workspace_id: str, membership: Membership
+) -> None:
+    if workspace.workspace.workspace_id != workspace_id:
         raise ContractViolation("not_found", 404)
-    if workspace.state != "active":
+    _member_binding(workspace, membership)
+    if (
+        workspace.workspace.state != "active"
+        or not enabled_owners(workspace)
+        or membership.principal_id in workspace.disabled_owner_ids
+    ):
         raise ContractViolation("forbidden", 403)
 
 
 def authorize_product(
-    workspace: WorkspaceView,
+    workspace: WorkspaceAuthority,
     credential: VerifiedCredential,
     membership: Membership,
     *,
@@ -569,11 +622,11 @@ def authorize_product(
         run_id=run_id,
         lease=lease,
     )
-    _product_workspace(workspace, workspace_id)
+    _product_workspace(workspace, workspace_id, membership)
 
 
 def check_product_idempotency(
-    workspace: WorkspaceView,
+    workspace: WorkspaceAuthority,
     credential: VerifiedCredential,
     membership: Membership,
     scope: IdempotencyScope,
@@ -586,7 +639,7 @@ def check_product_idempotency(
     """Never return an existing operation or admit new work from a quarantined workspace."""
     # Authorize and bind the complete scope before inspecting any stored outcome.
     check_idempotency(credential, membership, scope, request, None, now=now, lease=lease)
-    _product_workspace(workspace, scope.workspace_id)
+    _product_workspace(workspace, scope.workspace_id, membership)
     return check_idempotency(
         credential,
         membership,
@@ -610,6 +663,7 @@ WORKSPACE_MODELS: tuple[type[Message], ...] = (
     WorkspaceCreationGrant,
     WorkspaceAuthority,
     SecurityRevocationAuthority,
+    PrincipalStatus,
     SecurityRevocation,
     ManagementReceipt,
 )

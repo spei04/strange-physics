@@ -194,6 +194,10 @@
       "expected_workspace_revision": 2,
       "role": "viewer"
     },
+    "PrincipalStatus": {
+      "active": true,
+      "principal_id": "principal-2"
+    },
     "SecurityRevocation": {
       "actor_id": "security-1",
       "authorization_id": "authorization-1",
@@ -213,6 +217,7 @@
       "active_owner_ids": [
         "principal-1"
       ],
+      "disabled_owner_ids": [],
       "workspace": {
         "display_name": "Research lab",
         "revision": 2,
