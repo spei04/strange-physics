@@ -1,5 +1,181 @@
 {
   "components": {
+    "headers": {
+      "CacheControl": {
+        "description": "Required on success and errors.",
+        "schema": {
+          "const": "no-store",
+          "type": "string"
+        }
+      },
+      "CrossOriginResourcePolicy": {
+        "description": "Required on success and errors.",
+        "schema": {
+          "const": "same-origin",
+          "type": "string"
+        }
+      },
+      "Pragma": {
+        "description": "Required on success and errors.",
+        "schema": {
+          "const": "no-cache",
+          "type": "string"
+        }
+      },
+      "ReferrerPolicy": {
+        "description": "Required on success and errors.",
+        "schema": {
+          "const": "no-referrer",
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "Auth400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "session.schema.json#/$defs/SessionError"
+            }
+          }
+        },
+        "description": "Malformed or ambiguous credentials.",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/CacheControl"
+          },
+          "Cross-Origin-Resource-Policy": {
+            "$ref": "#/components/headers/CrossOriginResourcePolicy"
+          },
+          "Pragma": {
+            "$ref": "#/components/headers/Pragma"
+          },
+          "Referrer-Policy": {
+            "$ref": "#/components/headers/ReferrerPolicy"
+          }
+        }
+      },
+      "Auth401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "session.schema.json#/$defs/SessionError"
+            }
+          }
+        },
+        "description": "Unauthenticated, expired or rejected proof.",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/CacheControl"
+          },
+          "Cross-Origin-Resource-Policy": {
+            "$ref": "#/components/headers/CrossOriginResourcePolicy"
+          },
+          "Pragma": {
+            "$ref": "#/components/headers/Pragma"
+          },
+          "Referrer-Policy": {
+            "$ref": "#/components/headers/ReferrerPolicy"
+          }
+        }
+      },
+      "Auth403": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "session.schema.json#/$defs/SessionError"
+            }
+          }
+        },
+        "description": "Origin or CSRF/current authority denied.",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/CacheControl"
+          },
+          "Cross-Origin-Resource-Policy": {
+            "$ref": "#/components/headers/CrossOriginResourcePolicy"
+          },
+          "Pragma": {
+            "$ref": "#/components/headers/Pragma"
+          },
+          "Referrer-Policy": {
+            "$ref": "#/components/headers/ReferrerPolicy"
+          }
+        }
+      },
+      "Auth409": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "session.schema.json#/$defs/SessionError"
+            }
+          }
+        },
+        "description": "CAS conflict or reconciliation required; never repeat consumed proof.",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/CacheControl"
+          },
+          "Cross-Origin-Resource-Policy": {
+            "$ref": "#/components/headers/CrossOriginResourcePolicy"
+          },
+          "Pragma": {
+            "$ref": "#/components/headers/Pragma"
+          },
+          "Referrer-Policy": {
+            "$ref": "#/components/headers/ReferrerPolicy"
+          }
+        }
+      },
+      "Auth422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "session.schema.json#/$defs/SessionError"
+            }
+          }
+        },
+        "description": "Invalid request or unsupported configured flow.",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/CacheControl"
+          },
+          "Cross-Origin-Resource-Policy": {
+            "$ref": "#/components/headers/CrossOriginResourcePolicy"
+          },
+          "Pragma": {
+            "$ref": "#/components/headers/Pragma"
+          },
+          "Referrer-Policy": {
+            "$ref": "#/components/headers/ReferrerPolicy"
+          }
+        }
+      },
+      "Auth503": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "session.schema.json#/$defs/SessionError"
+            }
+          }
+        },
+        "description": "Required deployment policy or dependency unavailable; outcome may need reconciliation.",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/CacheControl"
+          },
+          "Cross-Origin-Resource-Policy": {
+            "$ref": "#/components/headers/CrossOriginResourcePolicy"
+          },
+          "Pragma": {
+            "$ref": "#/components/headers/Pragma"
+          },
+          "Referrer-Policy": {
+            "$ref": "#/components/headers/ReferrerPolicy"
+          }
+        }
+      }
+    },
     "schemas": {
       "BrokerExchangeRequest": {
         "$ref": "session.schema.json#/$defs/BrokerExchangeRequest"
@@ -108,274 +284,36 @@
             "description": "Safe status; cookie delivery is not proven by this response.",
             "headers": {
               "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CacheControl"
               },
               "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CrossOriginResourcePolicy"
               },
               "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/Pragma"
               },
               "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/ReferrerPolicy"
               }
             }
           },
           "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Malformed or ambiguous credentials.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth400"
           },
           "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Unauthenticated, expired or rejected proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth401"
           },
           "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Origin or CSRF/current authority denied.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth403"
           },
           "409": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "CAS conflict or reconciliation required; never repeat consumed proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth409"
           },
           "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Invalid request or unsupported configured flow.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth422"
           },
           "503": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Required deployment policy or dependency unavailable; outcome may need reconciliation.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth503"
           }
         },
         "security": [
@@ -425,274 +363,36 @@
             "description": "Safe status; cookie delivery is not proven by this response.",
             "headers": {
               "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CacheControl"
               },
               "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CrossOriginResourcePolicy"
               },
               "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/Pragma"
               },
               "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/ReferrerPolicy"
               }
             }
           },
           "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Malformed or ambiguous credentials.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth400"
           },
           "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Unauthenticated, expired or rejected proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth401"
           },
           "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Origin or CSRF/current authority denied.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth403"
           },
           "409": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "CAS conflict or reconciliation required; never repeat consumed proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth409"
           },
           "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Invalid request or unsupported configured flow.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth422"
           },
           "503": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Required deployment policy or dependency unavailable; outcome may need reconciliation.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth503"
           }
         },
         "security": [
@@ -754,274 +454,36 @@
             "description": "Safe status; cookie delivery is not proven by this response.",
             "headers": {
               "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CacheControl"
               },
               "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CrossOriginResourcePolicy"
               },
               "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/Pragma"
               },
               "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/ReferrerPolicy"
               }
             }
           },
           "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Malformed or ambiguous credentials.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth400"
           },
           "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Unauthenticated, expired or rejected proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth401"
           },
           "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Origin or CSRF/current authority denied.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth403"
           },
           "409": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "CAS conflict or reconciliation required; never repeat consumed proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth409"
           },
           "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Invalid request or unsupported configured flow.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth422"
           },
           "503": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Required deployment policy or dependency unavailable; outcome may need reconciliation.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth503"
           }
         },
         "security": [
@@ -1068,274 +530,36 @@
             "description": "Safe status; cookie delivery is not proven by this response.",
             "headers": {
               "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CacheControl"
               },
               "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CrossOriginResourcePolicy"
               },
               "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/Pragma"
               },
               "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/ReferrerPolicy"
               }
             }
           },
           "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Malformed or ambiguous credentials.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth400"
           },
           "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Unauthenticated, expired or rejected proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth401"
           },
           "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Origin or CSRF/current authority denied.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth403"
           },
           "409": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "CAS conflict or reconciliation required; never repeat consumed proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth409"
           },
           "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Invalid request or unsupported configured flow.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth422"
           },
           "503": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Required deployment policy or dependency unavailable; outcome may need reconciliation.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth503"
           }
         },
         "security": [
@@ -1404,274 +628,36 @@
             "description": "Safe status; cookie delivery is not proven by this response.",
             "headers": {
               "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CacheControl"
               },
               "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CrossOriginResourcePolicy"
               },
               "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/Pragma"
               },
               "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/ReferrerPolicy"
               }
             }
           },
           "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Malformed or ambiguous credentials.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth400"
           },
           "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Unauthenticated, expired or rejected proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth401"
           },
           "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Origin or CSRF/current authority denied.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth403"
           },
           "409": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "CAS conflict or reconciliation required; never repeat consumed proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth409"
           },
           "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Invalid request or unsupported configured flow.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth422"
           },
           "503": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Required deployment policy or dependency unavailable; outcome may need reconciliation.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth503"
           }
         },
         "security": [
@@ -1717,274 +703,36 @@
             "description": "Safe status; cookie delivery is not proven by this response.",
             "headers": {
               "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CacheControl"
               },
               "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CrossOriginResourcePolicy"
               },
               "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/Pragma"
               },
               "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/ReferrerPolicy"
               }
             }
           },
           "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Malformed or ambiguous credentials.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth400"
           },
           "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Unauthenticated, expired or rejected proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth401"
           },
           "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Origin or CSRF/current authority denied.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth403"
           },
           "409": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "CAS conflict or reconciliation required; never repeat consumed proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth409"
           },
           "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Invalid request or unsupported configured flow.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth422"
           },
           "503": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Required deployment policy or dependency unavailable; outcome may need reconciliation.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth503"
           }
         },
         "security": [
@@ -2016,274 +764,36 @@
             "description": "Safe status; cookie delivery is not proven by this response.",
             "headers": {
               "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CacheControl"
               },
               "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CrossOriginResourcePolicy"
               },
               "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/Pragma"
               },
               "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/ReferrerPolicy"
               }
             }
           },
           "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Malformed or ambiguous credentials.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth400"
           },
           "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Unauthenticated, expired or rejected proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth401"
           },
           "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Origin or CSRF/current authority denied.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth403"
           },
           "409": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "CAS conflict or reconciliation required; never repeat consumed proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth409"
           },
           "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Invalid request or unsupported configured flow.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth422"
           },
           "503": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Required deployment policy or dependency unavailable; outcome may need reconciliation.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth503"
           }
         },
         "security": [
@@ -2337,274 +847,36 @@
             "description": "Safe status; cookie delivery is not proven by this response.",
             "headers": {
               "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CacheControl"
               },
               "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CrossOriginResourcePolicy"
               },
               "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/Pragma"
               },
               "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/ReferrerPolicy"
               }
             }
           },
           "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Malformed or ambiguous credentials.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth400"
           },
           "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Unauthenticated, expired or rejected proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth401"
           },
           "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Origin or CSRF/current authority denied.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth403"
           },
           "409": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "CAS conflict or reconciliation required; never repeat consumed proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth409"
           },
           "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Invalid request or unsupported configured flow.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth422"
           },
           "503": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Required deployment policy or dependency unavailable; outcome may need reconciliation.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth503"
           }
         },
         "security": [
@@ -2668,274 +940,36 @@
             "description": "Safe status; cookie delivery is not proven by this response.",
             "headers": {
               "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CacheControl"
               },
               "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/CrossOriginResourcePolicy"
               },
               "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/Pragma"
               },
               "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
+                "$ref": "#/components/headers/ReferrerPolicy"
               }
             }
           },
           "400": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Malformed or ambiguous credentials.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth400"
           },
           "401": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Unauthenticated, expired or rejected proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth401"
           },
           "403": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Origin or CSRF/current authority denied.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth403"
           },
           "409": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "CAS conflict or reconciliation required; never repeat consumed proof.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth409"
           },
           "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Invalid request or unsupported configured flow.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth422"
           },
           "503": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "session.schema.json#/$defs/SessionError"
-                }
-              }
-            },
-            "description": "Required deployment policy or dependency unavailable; outcome may need reconciliation.",
-            "headers": {
-              "Cache-Control": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-store",
-                  "type": "string"
-                }
-              },
-              "Cross-Origin-Resource-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "same-origin",
-                  "type": "string"
-                }
-              },
-              "Pragma": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-cache",
-                  "type": "string"
-                }
-              },
-              "Referrer-Policy": {
-                "description": "Required on success and errors.",
-                "schema": {
-                  "const": "no-referrer",
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/components/responses/Auth503"
           }
         },
         "security": [
