@@ -276,3 +276,53 @@ the replacement preserves the public fields and adds regression cases. The
 Retry-After schemas reject non-ASCII-digit framing characters explicitly.
 Replacement checks and independent review are recorded separately; neither API
 checkpoint establishes runtime authorization or hosted readiness.
+
+### API review completion and first partial runtime unit
+
+The repaired API source `c066900b875c4393f74d6e34b7b9fec09e15a83f`
+passed 2,962 full tests, 405 focused WEB/control/session cases (179 WEB),
+Ruff/format over 130 files, strict mypy over 89 files, and 1,431 external
+schema checks. Its original author security command was the narrower
+`bandit -r src -ll -ii`; the lead separately checked the exact CI command
+`bandit -r src scripts -ll`. These evidence scopes must not be conflated.
+All three independent API review scopes accepted the repaired page-history,
+resync and header contracts before runtime authoring.
+
+The first runtime unit implements `authorize_viewer`, `resolve_cursor`,
+`read_snapshot`, and `prepare_event_batch`. These are pure decisions over
+trusted current projections, with no HTTP server, database adapter, cursor
+minting or network delivery. Every boundary rechecks current browser or
+service `runs:read` authority before private lookup or retained-state inspection.
+The private viewer context includes actual transport-presence evidence for
+both branches: a service authority object alone does not prove that the HTTP
+request omitted a session cookie. Worker credentials and user bearer
+presentation remain excluded. Viewer reads have no worker-lease, running-state,
+write, mutation-CSRF or management-freshness prerequisite.
+
+A current head and current run come from the same authoritative snapshot and
+therefore have the same run revision. A historical capture may precede them;
+its immutable space is compared by canonical hash, while later run revision,
+reservation progress and status remain valid. Equal revisions require exact
+canonical RunView identity. Supplied event/cursor/snapshot contradictions fail
+closed. Unknown/foreign cursors differ from malformed, expired and beyond-head
+positions only after current authorization. An expired response requires an
+actual scoped current resync snapshot; a missing required producer witness
+cannot invent one.
+
+Private stream state records the last verified watermark, a bounded 256-event
+duplicate window, policy identity, cumulative wire bytes and the original
+deadline. Exact duplicates in that window do not advance or consume delivery
+bytes; an old duplicate outside it requires resync. Current policy changes
+invalidate that state rather than resetting its budget or deadline. The empty
+watermark −1 and terminal MAX_SAFE watermark can both produce a lawful empty
+poll without emitting an out-of-range next sequence.
+
+This unit does **not yet implement** complete actual-byte artifact validation,
+incremental full history verification or reauthorization between raw body
+batches. Those are the next bounded runtime unit. The later history walk must
+retain every consumed page/object/event identity, with an internal 8 MiB
+canonical-metadata ceiling additionally capped by policy.max_history_bytes.
+That separate metadata bound limits locally verifiable history; it is not a
+hosted RSS/load claim. Page bytes plus raw chunk bytes have their own cumulative
+delivery budget, and raw chunk totals separately bind the manifest. No index
+entry may be silently evicted to declare a history complete.
