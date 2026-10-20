@@ -372,6 +372,7 @@ class Assessment:
     coefficient_pass: bool
     probe_rmses: tuple[float, ...]
     failed_probe_count: int
+    failed_probe_indices: tuple[int, ...] = ()
 
     @property
     def accepted(self) -> bool:
@@ -390,14 +391,28 @@ def _assess(k_true: float, estimate: Estimate) -> Assessment:
             coefficient_pass=False,
             probe_rmses=(),
             failed_probe_count=len(probes),
+            failed_probe_indices=tuple(range(len(probes))),
         )
     assert estimate.raw is not None
     error = abs(estimate.raw - k_true)
+    rmses: list[float] = []
+    failed_indices: list[int] = []
+    for index, probe in enumerate(probes):
+        try:
+            rmse = _probe_rmse(k_true, estimate.raw, probe)
+        except (ValueError, OverflowError):
+            failed_indices.append(index)
+            continue
+        if math.isfinite(rmse):
+            rmses.append(rmse)
+        else:
+            failed_indices.append(index)
     return Assessment(
         coefficient_error=error,
         coefficient_pass=error <= max(COEFFICIENT_ABSOLUTE_FLOOR, 0.01 * k_true),
-        probe_rmses=tuple(_probe_rmse(k_true, estimate.raw, probe) for probe in probes),
-        failed_probe_count=0,
+        probe_rmses=tuple(rmses),
+        failed_probe_count=len(failed_indices),
+        failed_probe_indices=tuple(failed_indices),
     )
 
 
@@ -756,6 +771,24 @@ def test_nonfinite_derived_values_fail_and_remain_json_safe(kind: str, reason: s
     assert json.loads(json.dumps(report, allow_nan=False))["failed_probe_count"] == 24
 
 
+def test_finite_coefficient_with_prediction_overflow_retains_every_probe() -> None:
+    prefix = _column_prefix(DESIGN_RMS_FLOOR, residual=1e302)
+    estimate = _estimate(_fit_input(prefix))
+    assert estimate.status == "estimated"
+    assert estimate.raw is not None and math.isfinite(estimate.raw)
+    report = _report_case(0.0, prefix)
+    assert report["raw_coefficient"] == estimate.raw
+    assert report["joint_accuracy_pass"] is False
+    assert report["prediction_failure_reason"] == "nonfinite_prediction"
+    assert report["failed_probe_count"] == 8
+    assert report["failed_probe_indices"] == tuple(range(8))
+    serialized = json.loads(json.dumps(report, allow_nan=False))
+    outcomes = serialized["per_probe_coordinate_rmse"]
+    assert len(outcomes) == 24
+    assert outcomes[:8] == [None] * 8
+    assert all(value is not None and math.isfinite(value) for value in outcomes[8:])
+
+
 def _report_case(
     k: float,
     prefix: ObservationBundle,
@@ -765,6 +798,11 @@ def _report_case(
 ) -> dict[str, object]:
     estimate = _estimate(_fit_input(prefix, method), method)
     assessment = _assess(k, estimate)
+    computed_rmses = iter(assessment.probe_rmses)
+    aligned_rmses = tuple(
+        None if index in assessment.failed_probe_indices else next(computed_rmses)
+        for index in range(24)
+    )
     report: dict[str, object] = {
         "true_k_evaluator_only": k,
         "masses": [record.experiment.particles[0].mass for record in prefix.records],
@@ -780,7 +818,11 @@ def _report_case(
         "prefix_sha256": estimate.prefix_sha256,
         "absolute_coefficient_error": assessment.coefficient_error,
         "coefficient_pass": assessment.coefficient_pass,
-        "per_probe_coordinate_rmse": assessment.probe_rmses,
+        "per_probe_coordinate_rmse": aligned_rmses,
+        "failed_probe_indices": assessment.failed_probe_indices,
+        "prediction_failure_reason": "nonfinite_prediction"
+        if estimate.status == "estimated" and assessment.failed_probe_count
+        else None,
         "max_probe_coordinate_rmse": max(assessment.probe_rmses, default=None),
         "failed_probe_count": assessment.failed_probe_count,
         "probes_over_rmse_limit": sum(
