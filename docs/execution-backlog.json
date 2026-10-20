@@ -1456,7 +1456,8 @@
         "QE",
         "Frontend",
         "backend"
-      ]
+      ],
+      "issue": "https://github.com/spei04/strange-physics/issues/98"
     },
     {
       "id": "SP-02.a",
@@ -11906,7 +11907,7 @@
       "web1_material_review": {
         "source": "96f4b5779a0d5116b06562b440d6e5303250f11a",
         "tree": "65b33b537d56dc5a6c7ea7017a3fc4a42d60e3ca",
-        "status": "independent_review_repairs_required",
+        "status": "historical_repaired_at_85c0a98",
         "focused": 312,
         "mypy_files": 95,
         "author_index_sha256": "5c2bab84b436abe507e9c55e8544834dd29afafa0ab959253b313f2e8219854c",
@@ -11931,14 +11932,75 @@
         },
         "original_full_tests": 3095,
         "original_full_index_sha256": "16fd28a2d373bb4dacf08323af9a1ce6029afdbae40af3541ec9b0ffa649db01"
+      },
+      "web1_runtime_evidence": {
+        "runtime": "85c0a98a3cf20e7063564e73b0625694d162ba38",
+        "tree": "92cb45dbab4fd4591a99f8c8a10b4a858b9f6d6b",
+        "focused": 321,
+        "api": 179,
+        "stream": 83,
+        "material": 59,
+        "mypy": 95,
+        "schemas": 1431,
+        "quality": {
+          "base": "93902d3c243b4a0dac5a74b50d98ed0ef5975a37",
+          "baseIndex": "5f9c652dfdbd86b9c7920bfef887b2dfbaea2489171a0cceb3be2e01589dcf96",
+          "selectedOriginal": 398,
+          "extra": 259,
+          "mutants": 11,
+          "finalIndex": "02910d67952c91bb6a43a348482777d1aa1bbdc68eeb7a06e11a13dece32770e",
+          "finalSelected": 59,
+          "finalExtra": 31,
+          "finalMutants": 1
+        },
+        "platform": {
+          "baseIndex": "6e1c7b2240b20a80cbf1ec329380db7c17318f307aeeaf149ea3f9d79958091f",
+          "baseExtra": 23,
+          "baseMutants": 7,
+          "qualification": "6e87b4a54cc085ef77c617028ba2be67ef292d37d07582952ab0c85eca5667ca",
+          "finalIndex": "bede054f16156eb3ff23395aa1f74e28e92a619d757355b7f758188c8ae26922",
+          "finalSelected": 59,
+          "finalExtra": 5
+        },
+        "lead": {
+          "source": "96f4b5779a0d5116b06562b440d6e5303250f11a",
+          "cases": 44,
+          "index": "4a5660670ff162e6223056ecfe629575654452a74f29d3d432cf181015453197",
+          "bytes": 1779612,
+          "sha": "0080e57fbe8f93f6cf9b445785e6295ba7ae524d64cfbb9b3f8171fa245997af",
+          "defaultSlices": 28,
+          "stricterSlices": 218
+        },
+        "pending": "Final annotation source full/static/schema/security/package checks and exact integration",
+        "status": "independently_accepted_final_checks_pending",
+        "source": "00800555da03ddda98f4eb4f4945101706787141",
+        "source_tree": "30fb380349edc902c7bf6dc50e9614158d6443b6",
+        "boundary": "Pure contracts and current trusted-projection predicates. All source findings repaired; final exact checks and integration pending. Prior review suites overlap and retain original source identities; no hosted enforcement or production-readiness claim."
       }
     },
     "contract_tooling_preparation": {
       "owner": "Engineer Quality",
-      "status": "read_only_preparation",
+      "status": "handoff_prepared_waiting_exact_SP-01.d_acceptance",
       "task": "SP-01.e",
       "scope": "VAL1 shared public contract fixtures, CLIENT1 separately locked TypeScript/Ajv contract harness, MOCK1 bounded HTTP/SSE fixtures; no install, generation or freeze before actual leaf prerequisites.",
-      "compatibility_requirements": "Cross-language fixtures must cover Unicode/defaults, float formatting boundaries, signed zero, uint64 decimal strings and opaque JSON numeric identity. Raw artifact SHA verification uses original bytes; typed SCI recomputation must match the frozen profile rather than ordinary JavaScript serialization."
+      "compatibility_requirements": "Cross-language fixtures must cover Unicode/defaults, float formatting boundaries, signed zero, uint64 decimal strings and opaque JSON numeric identity. Raw artifact SHA verification uses original bytes; typed SCI recomputation must match the frozen profile rather than ordinary JavaScript serialization.",
+      "issue": 98,
+      "units": [
+        {
+          "id": "VAL1",
+          "scope": "Versioned approved-root/audience manifest, complete public closures, byte/hash fixtures, deterministic offline regeneration/check and narrow historical status annotation repair. No new dependency."
+        },
+        {
+          "id": "CLIENT1",
+          "scope": "Separately reviewed and pinned Node/TypeScript/Ajv consumer harness and cross-language execution."
+        },
+        {
+          "id": "MOCK1",
+          "scope": "Bounded deterministic HTTP/SSE mock and recorded failure/recovery fixtures."
+        }
+      ],
+      "first_checkpoint": "Immutable VAL1 manifest/fixtures for independent review before generator implementation.",
+      "writer_handoff": "Quality receives existing identity only after exact WEB1 PR/main acceptance and Research releases ownership; not yet started."
     },
     "local_comparison_prerequisite_review": {
       "status": "planning_decision_pending_no_runtime_authorization",

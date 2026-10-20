@@ -10,9 +10,9 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | WEB1 body/history review repairs | Guard/cursor/snapshot/event runtime accepted; captured-state fixes reviewed; exact chunk request binding repair remains |
+| Research | WEB1 final checks and evidence | Runtime85c0a98 accepted; annotation00800555 verified; full/package checks active |
 | Platform | WEB1 state, provenance and budget composition review | Immutable source checkpoints; native prerequisite proposal review is complete |
-| Quality | WEB1 current authority, recovery and raw-byte safety review | Independent reviewer; SP-01.e remains preparation-only |
+| Quality | WEB1 final readback; SP-01.e/#98 handoff prepared | VAL1 authoring waits exact WEB1 integration and writer release |
 | Project lead | WEB1 primary integration and progress; native proposal scope decision | Exclusive primary owner; PR #96 integrated, RA_EXEC remains pending |
 
 ## Assignments
@@ -439,3 +439,5 @@ Planning PR #96 is integrated as ee4831a with reviewed tree3192574; all four app
 2026-10-20 09:18 UTC — Research committed body/history checkpoint96f4b57 and repaired the full-CI test import convention;312 focused cases and full mypy95 pass. Platform owns history/provenance/budget review, Quality current authority/parser review, and lead large-record delivery review. Lead passed44 cases using a matching-run 1,779,612-byte scientific record,28 default or218 stricter slices, and late revocation for browser/service callers. Platform found two single-replay-body capture joins missing: a historical RunView can exceed its snapshot revision, and an interior event can reuse the captured root last-event identity after the live head advances. Research owns repairs; full material acceptance remains open.
 
 2026-10-20 09:25 UTC — Platform accepted replay capture repair93902d3 after317 WEB and23 independent cases plus seven guard mutations; Quality authority/parser review also passed at that source. Research then reproduced a distinct private request-hash alias between two chunk requests on one page. Research owns a purpose/snapshot/page/descriptor/object binding repair; reviewers retain earlier evidence and verify the replacement. Integration remains held; no external authority-bypass claim.
+
+2026-10-20 — WEB1 runtime85c0a98 is independently accepted after captured-run/final-event and exact replay-request binding repairs. Annotation source00800555 changes only WEB status metadata and documentation; final source checks remain active. Quality has prepared SP-01.e/#98 as VAL1 public fixtures/drift checks, CLIENT1 pinned TypeScript compatibility and MOCK1 deterministic streams. Its first manifest/fixture checkpoint and source authoring wait for exact WEB1 PR/main acceptance and the identity writer handoff; existing task dependencies and estimates remain unchanged.
