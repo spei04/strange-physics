@@ -363,17 +363,31 @@
     {
       "schema": "draft/openapi.json#/components/schemas/RunEvent",
       "value": {
-        "event_id": "event-000001",
-        "occurred_at": "2026-10-19T00:00:00Z",
-        "operation_id": null,
-        "payload": {
-          "through_index": -1
+        "event_id": "event-0",
+        "namespace": {
+          "event_schema_version": "strange-physics.run-event.v1",
+          "projection_version": "agent-safe.v1",
+          "run_id": "run-1",
+          "workspace_id": "ws-1"
         },
-        "run_id": "run-example",
-        "schema_version": "strange-physics.run-event.draft1",
-        "sequence": 1,
-        "type": "checkpoint.committed",
-        "workspace_id": "workspace-example"
+        "occurred_at": 100,
+        "operation_id": "experiment-1",
+        "payload": {
+          "artifact": {
+            "artifact_id": "record-1",
+            "generation": "1",
+            "media_type": "application/json",
+            "sha256": "fc714f11f764cc3dd09c46f942462bb5d48a22d45c67402a458dc4f973c8116a",
+            "size_bytes": 430
+          },
+          "index": 0,
+          "operation_id": "experiment-1",
+          "record_sha256": "6e2c23f65d7c626b6403069e714d7cb5c72ce0c0630c3c0a05780ce06dc00fab",
+          "status": "failed"
+        },
+        "schema_version": "strange-physics.run-event.v1",
+        "sequence": 0,
+        "type": "experiment.committed"
       }
     }
   ]

@@ -1,0 +1,1001 @@
+{
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "sessionCookie": {
+        "description": "Current human browser session; reads require accepted Origin policy, no mutation CSRF/freshness.",
+        "in": "cookie",
+        "name": "__Host-sp_session",
+        "type": "apiKey"
+      },
+      "workspaceBearer": {
+        "description": "Verified current workspace service identity only; user and worker bearer credentials are not accepted on viewer routes.",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Typed API and fixture checkpoint. Runtime guards, durable producers, HTTP transport and clients are not implemented. Read contracts compose current C2 human browser or service runs:read; no worker lease or running-state requirement.",
+    "title": "Bounded run streams and replay \u2014 WEB1",
+    "version": "1.0.0-api-review"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/workspaces/{workspace_id}/runs/{run_id}/events": {
+      "get": {
+        "operationId": "streamRunEvents",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Opaque exact committed resume token. Absent differs from empty; reject empty/malformed400, unknown/foreign404, expired410, known beyond-head409 after current authorization.",
+            "in": "header",
+            "name": "Last-Event-ID",
+            "required": false,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/event-stream": {
+                "example": "id: cursor-0\nevent: experiment.committed\ndata: {\"event\":{\"event_id\":\"event-0\",\"namespace\":{\"event_schema_version\":\"strange-physics.run-event.v1\",\"projection_version\":\"agent-safe.v1\",\"run_id\":\"run-1\",\"workspace_id\":\"ws-1\"},\"occurred_at\":100,\"operation_id\":\"experiment-1\",\"payload\":{\"artifact\":{\"artifact_id\":\"record-1\",\"generation\":\"1\",\"media_type\":\"application/json\",\"sha256\":\"fc714f11f764cc3dd09c46f942462bb5d48a22d45c67402a458dc4f973c8116a\",\"size_bytes\":430},\"index\":0,\"operation_id\":\"experiment-1\",\"record_sha256\":\"6e2c23f65d7c626b6403069e714d7cb5c72ce0c0630c3c0a05780ce06dc00fab\",\"status\":\"failed\"},\"schema_version\":\"strange-physics.run-event.v1\",\"sequence\":0,\"type\":\"experiment.committed\"},\"event_sha256\":\"30291c89daca89487801134197027fd45fab4f3d55a663da73d83cd76ceeae4f\",\"resume_cursor\":\"cursor-0\"}\n\n",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Fetch-stream SSE: id is opaque resume_cursor; event is the RunEvent discriminator; canonical data is EventDelivery. Exact duplicates are deduplicated; conflicts/gaps stop application. Comment heartbeat has no id and cannot advance cursor.",
+            "x-event-schema": {
+              "$ref": "web.schema.json#/$defs/EventDelivery"
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed cursor or mixed/ambiguous credentials; invalid_request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current authentication is absent, expired or revoked; stop the stream."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role, scope, service ceiling or workspace eligibility denies this read."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Unknown/foreign/unavailable scoped resource after current authorization; no enumeration."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Known cursor beyond authoritative head, conflicting identity or incomplete retained closure; incompatible_state. Never clamp or blindly retry."
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "cursor_expired",
+                    "message": "Resume from the captured snapshot.",
+                    "operation_id": null,
+                    "request_id": "request-web",
+                    "retryable": false
+                  },
+                  "history_route": "getRunHistoryPage",
+                  "namespace": {
+                    "event_schema_version": "strange-physics.run-event.v1",
+                    "projection_version": "agent-safe.v1",
+                    "run_id": "run-1",
+                    "workspace_id": "ws-1"
+                  },
+                  "snapshot_id": "snapshot-1",
+                  "snapshot_route": "getRunSnapshot"
+                },
+                "schema": {
+                  "$ref": "web.schema.json#/$defs/ResyncRequired"
+                }
+              }
+            },
+            "description": "Application/json resync instruction; inspect status/content type before event-stream parsing. Route IDs and scoped opaque snapshot identity are not URLs or authority."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Invalid bounded semantic request; invalid_request."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Admission limit; Retry-After does not override revocation or a deadline.",
+            "headers": {
+              "Retry-After": {
+                "description": "Nonnegative delay in seconds. Recheck current authority before retry.",
+                "schema": {
+                  "maxLength": 10,
+                  "not": {
+                    "pattern": "[^0-9]"
+                  },
+                  "pattern": "^(0|[1-9][0-9]{0,9})$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Required identity/projection/retention policy or transactional state unavailable; temporarily_unavailable, fail closed."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          },
+          {
+            "workspaceBearer": []
+          }
+        ],
+        "summary": "streamRunEvents",
+        "x-authority-order": "Current C2 human/service runs:read before private lookup/error distinction and every body/event batch; no worker lease/write/run-state gate. Reject ambiguous presentation.",
+        "x-implementation-status": "not-implemented",
+        "x-required-scope": "runs:read"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/runs/{run_id}/events/{event_id}/record": {
+      "get": {
+        "operationId": "getRunExperimentRecord",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "event_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "core.schema.json#/$defs/ExperimentRecord"
+                }
+              }
+            },
+            "description": "Bounded exact scoped representation. Complete raw body verification precedes scientific material delivery; interruption is incomplete. Captured historical state need not equal current live state."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed cursor or mixed/ambiguous credentials; invalid_request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current authentication is absent, expired or revoked; stop the stream."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role, scope, service ceiling or workspace eligibility denies this read."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Unknown/foreign/unavailable scoped resource after current authorization; no enumeration."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Known cursor beyond authoritative head, conflicting identity or incomplete retained closure; incompatible_state. Never clamp or blindly retry."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Invalid bounded semantic request; invalid_request."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Admission limit; Retry-After does not override revocation or a deadline.",
+            "headers": {
+              "Retry-After": {
+                "description": "Nonnegative delay in seconds. Recheck current authority before retry.",
+                "schema": {
+                  "maxLength": 10,
+                  "not": {
+                    "pattern": "[^0-9]"
+                  },
+                  "pattern": "^(0|[1-9][0-9]{0,9})$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Required identity/projection/retention policy or transactional state unavailable; temporarily_unavailable, fail closed."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          },
+          {
+            "workspaceBearer": []
+          }
+        ],
+        "summary": "getRunExperimentRecord",
+        "x-authority-order": "Current C2 human/service runs:read before private lookup/error distinction and every body/event batch; no worker lease/write/run-state gate. Reject ambiguous presentation.",
+        "x-implementation-status": "not-implemented",
+        "x-required-scope": "runs:read"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/runs/{run_id}/snapshots": {
+      "get": {
+        "operationId": "getRunSnapshot",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Return this immutable capture, or atomically capture a new snapshot when omitted. No latest alias is a retained identity.",
+            "in": "query",
+            "name": "snapshot_id",
+            "required": false,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "web.schema.json#/$defs/RunSnapshot"
+                }
+              }
+            },
+            "description": "Bounded exact scoped representation. Complete raw body verification precedes scientific material delivery; interruption is incomplete. Captured historical state need not equal current live state."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed cursor or mixed/ambiguous credentials; invalid_request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current authentication is absent, expired or revoked; stop the stream."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role, scope, service ceiling or workspace eligibility denies this read."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Unknown/foreign/unavailable scoped resource after current authorization; no enumeration."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Known cursor beyond authoritative head, conflicting identity or incomplete retained closure; incompatible_state. Never clamp or blindly retry."
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "cursor_expired",
+                    "message": "Resume from the captured snapshot.",
+                    "operation_id": null,
+                    "request_id": "request-web",
+                    "retryable": false
+                  },
+                  "history_route": "getRunHistoryPage",
+                  "namespace": {
+                    "event_schema_version": "strange-physics.run-event.v1",
+                    "projection_version": "agent-safe.v1",
+                    "run_id": "run-1",
+                    "workspace_id": "ws-1"
+                  },
+                  "snapshot_id": "snapshot-1",
+                  "snapshot_route": "getRunSnapshot"
+                },
+                "schema": {
+                  "$ref": "web.schema.json#/$defs/ResyncRequired"
+                }
+              }
+            },
+            "description": "Application/json resync instruction; inspect status/content type before event-stream parsing. Route IDs and scoped opaque snapshot identity are not URLs or authority."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Invalid bounded semantic request; invalid_request."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Admission limit; Retry-After does not override revocation or a deadline.",
+            "headers": {
+              "Retry-After": {
+                "description": "Nonnegative delay in seconds. Recheck current authority before retry.",
+                "schema": {
+                  "maxLength": 10,
+                  "not": {
+                    "pattern": "[^0-9]"
+                  },
+                  "pattern": "^(0|[1-9][0-9]{0,9})$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Required identity/projection/retention policy or transactional state unavailable; temporarily_unavailable, fail closed."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          },
+          {
+            "workspaceBearer": []
+          }
+        ],
+        "summary": "getRunSnapshot",
+        "x-authority-order": "Current C2 human/service runs:read before private lookup/error distinction and every body/event batch; no worker lease/write/run-state gate. Reject ambiguous presentation.",
+        "x-implementation-status": "not-implemented",
+        "x-required-scope": "runs:read"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/runs/{run_id}/snapshots/{snapshot_id}/chunks/{artifact_id}": {
+      "get": {
+        "operationId": "getRunReplayChunk",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "snapshot_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "artifact_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Exact generation pinned by this snapshot manifest; possession is not permission.",
+            "in": "query",
+            "name": "generation",
+            "required": true,
+            "schema": {
+              "maxLength": 20,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^0-9]"
+              },
+              "pattern": "^[1-9][0-9]{0,19}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "web.schema.json#/$defs/ReplayChunk"
+                }
+              }
+            },
+            "description": "Bounded exact scoped representation. Complete raw body verification precedes scientific material delivery; interruption is incomplete. Captured historical state need not equal current live state."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed cursor or mixed/ambiguous credentials; invalid_request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current authentication is absent, expired or revoked; stop the stream."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role, scope, service ceiling or workspace eligibility denies this read."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Unknown/foreign/unavailable scoped resource after current authorization; no enumeration."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Known cursor beyond authoritative head, conflicting identity or incomplete retained closure; incompatible_state. Never clamp or blindly retry."
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "cursor_expired",
+                    "message": "Resume from the captured snapshot.",
+                    "operation_id": null,
+                    "request_id": "request-web",
+                    "retryable": false
+                  },
+                  "history_route": "getRunHistoryPage",
+                  "namespace": {
+                    "event_schema_version": "strange-physics.run-event.v1",
+                    "projection_version": "agent-safe.v1",
+                    "run_id": "run-1",
+                    "workspace_id": "ws-1"
+                  },
+                  "snapshot_id": "snapshot-1",
+                  "snapshot_route": "getRunSnapshot"
+                },
+                "schema": {
+                  "$ref": "web.schema.json#/$defs/ResyncRequired"
+                }
+              }
+            },
+            "description": "Application/json resync instruction; inspect status/content type before event-stream parsing. Route IDs and scoped opaque snapshot identity are not URLs or authority."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Invalid bounded semantic request; invalid_request."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Admission limit; Retry-After does not override revocation or a deadline.",
+            "headers": {
+              "Retry-After": {
+                "description": "Nonnegative delay in seconds. Recheck current authority before retry.",
+                "schema": {
+                  "maxLength": 10,
+                  "not": {
+                    "pattern": "[^0-9]"
+                  },
+                  "pattern": "^(0|[1-9][0-9]{0,9})$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Required identity/projection/retention policy or transactional state unavailable; temporarily_unavailable, fail closed."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          },
+          {
+            "workspaceBearer": []
+          }
+        ],
+        "summary": "getRunReplayChunk",
+        "x-authority-order": "Current C2 human/service runs:read before private lookup/error distinction and every body/event batch; no worker lease/write/run-state gate. Reject ambiguous presentation.",
+        "x-implementation-status": "not-implemented",
+        "x-required-scope": "runs:read"
+      }
+    },
+    "/v1/workspaces/{workspace_id}/runs/{run_id}/snapshots/{snapshot_id}/history/{page_id}": {
+      "get": {
+        "operationId": "getRunHistoryPage",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "snapshot_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "page_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "web.schema.json#/$defs/HistoryPage"
+                }
+              }
+            },
+            "description": "Bounded exact scoped representation. Complete raw body verification precedes scientific material delivery; interruption is incomplete. Captured historical state need not equal current live state."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Malformed cursor or mixed/ambiguous credentials; invalid_request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current authentication is absent, expired or revoked; stop the stream."
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Current role, scope, service ceiling or workspace eligibility denies this read."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Unknown/foreign/unavailable scoped resource after current authorization; no enumeration."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Known cursor beyond authoritative head, conflicting identity or incomplete retained closure; incompatible_state. Never clamp or blindly retry."
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "cursor_expired",
+                    "message": "Resume from the captured snapshot.",
+                    "operation_id": null,
+                    "request_id": "request-web",
+                    "retryable": false
+                  },
+                  "history_route": "getRunHistoryPage",
+                  "namespace": {
+                    "event_schema_version": "strange-physics.run-event.v1",
+                    "projection_version": "agent-safe.v1",
+                    "run_id": "run-1",
+                    "workspace_id": "ws-1"
+                  },
+                  "snapshot_id": "snapshot-1",
+                  "snapshot_route": "getRunSnapshot"
+                },
+                "schema": {
+                  "$ref": "web.schema.json#/$defs/ResyncRequired"
+                }
+              }
+            },
+            "description": "Application/json resync instruction; inspect status/content type before event-stream parsing. Route IDs and scoped opaque snapshot identity are not URLs or authority."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Invalid bounded semantic request; invalid_request."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Admission limit; Retry-After does not override revocation or a deadline.",
+            "headers": {
+              "Retry-After": {
+                "description": "Nonnegative delay in seconds. Recheck current authority before retry.",
+                "schema": {
+                  "maxLength": 10,
+                  "not": {
+                    "pattern": "[^0-9]"
+                  },
+                  "pattern": "^(0|[1-9][0-9]{0,9})$",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Required identity/projection/retention policy or transactional state unavailable; temporarily_unavailable, fail closed."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          },
+          {
+            "workspaceBearer": []
+          }
+        ],
+        "summary": "getRunHistoryPage",
+        "x-authority-order": "Current C2 human/service runs:read before private lookup/error distinction and every body/event batch; no worker lease/write/run-state gate. Reject ambiguous presentation.",
+        "x-implementation-status": "not-implemented",
+        "x-required-scope": "runs:read"
+      }
+    }
+  },
+  "x-canonical-profile": "strange-physics.python-json.v1; raw stored bytes and typed semantic digests are distinct. No JSON.stringify identity assumption.",
+  "x-contract-status": "WEB1 API review; runtime and hosted producers pending",
+  "x-counter-profile": "Strict JSON integers0..9007199254740991; only captured empty watermark may be-1. Overflow fails before append, never resets.",
+  "x-fetch-stream-only": true,
+  "x-reference-bounds": {
+    "canonical_page_bytes": 1048576,
+    "chunk_events": 256,
+    "history_page_refs": 128,
+    "raw_and_canonical_chunk_bytes": 4194304,
+    "raw_delivery_batch_bytes": 65536,
+    "raw_scientific_bytes": 4194304,
+    "scientific_depth": 32,
+    "scientific_nodes": 1000000,
+    "sse_batch_bytes": 1048576,
+    "sse_batch_events": 100,
+    "sse_frame_bytes": 65536
+  },
+  "x-reject-mixed-credentials": true
+}
