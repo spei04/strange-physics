@@ -1368,7 +1368,7 @@
       "execution_owner": "Project lead integrates accepted COMP1; Quality reviews final composition. Research/Platform prepare dependent SP-01.d read-only.",
       "issue": "https://github.com/spei04/strange-physics/issues/89",
       "execution_plan": "ART1 artifact/checkpoint admission and recovery; EXEC1 package quarantine and worker/broker authority; COMP1 predictor/DB composition. Accepted SP-01.b integration precedes source. Three review units preserve the baseline task/effort/gates.",
-      "evidence": "ART1 complete via PR91/main95bdd85. EXEC1 complete via PR92/main750db158 matching reviewed671f109/tree13894d9c, with PRCI39375391014 and all five mainCI39375611645 jobs passed. COMP1 API21cb201 and runtimeb7c944c/finalauthor3ceb846 are independently accepted;2423 full tests/141 COMP1 cases/764 schemas/static/security/offline package checks passed. Combined60a8ac5 is under final verification; exact final PR93/main acceptance and parent freeze remain pending."
+      "evidence": "ART1 complete via PR91/main95bdd85. EXEC1 complete via PR92/main750db158 matching reviewed671f109/tree13894d9c, with PRCI39375391014 and all five mainCI39375611645 jobs passed. COMP1 API21cb201 and runtimeb7c944c/finalauthor3ceb846 are independently accepted;2423 full tests/141 COMP1 cases/764 schemas/static/security/offline package checks passed. Combined60a8ac5 passed2423 full tests,lint/format,mypy78 and764 schemas; exact final PR93/main acceptance and parent freeze remain pending."
     },
     {
       "id": "SP-01.d",
@@ -11442,7 +11442,12 @@
         "integrated_tree": "6d6d453774cdfe0fc67158a16eeef320b7acd449",
         "union_index": "2325cca286090feb3dd4f8e0035f1ad93cf610f4e398e20adfb46ca8b1e5e2f6",
         "boundary": "Reviewed pure contracts/proposals only. Metadata replay trusts immutable prior committed projections; completion validates material. Live producers, final PR/main and parent freeze remain pending.",
-        "lead_total_tests": 58
+        "lead_total_tests": 58,
+        "integrated_full_tests": 2423,
+        "integrated_ruff_files": 117,
+        "integrated_mypy_files": 78,
+        "integrated_schema_checks": 764,
+        "integration_check_index": "989c28e24c32236165b6351f1c031a5d7385d188921d55816e2a69c1318e0100"
       }
     },
     "spring_workflow_evidence": {
