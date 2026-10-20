@@ -99,7 +99,8 @@
         "principal_id": "recipient-1"
       },
       "provider_id": "managed",
-      "subject": "recipient-subject"
+      "subject": "recipient-subject",
+      "tenant_id": null
     },
     "InvitationIssued": {
       "invitation": {
@@ -161,6 +162,7 @@
       "created_at": 1020,
       "expires_at": 1620,
       "invitation_id": "invite-1",
+      "inviter_membership_revision": 4,
       "inviter_principal_id": "principal-1",
       "policy_id": "invite-policy-1",
       "recipient_email": "Recipient+lab@example.test",
@@ -217,6 +219,7 @@
       },
       "email_assertion": {
         "assertion_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "audience": "example-project",
         "email": "Recipient+lab@example.test",
         "email_verified": true,
         "expires_at": 2000,
@@ -226,6 +229,8 @@
         "session_generation": 0,
         "session_id": "recipient-session",
         "subject": "recipient-subject",
+        "tenant_id": null,
+        "upstream_provider": "google.com",
         "verified_at": 1011
       },
       "inviter_membership": {
@@ -249,7 +254,8 @@
           "principal_id": "recipient-1"
         },
         "provider_id": "managed",
-        "subject": "recipient-subject"
+        "subject": "recipient-subject",
+        "tenant_id": null
       },
       "recipient_membership": null,
       "workspace": {
@@ -282,6 +288,7 @@
     },
     "VerifiedEmailAssertion": {
       "assertion_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "audience": "example-project",
       "email": "Recipient+lab@example.test",
       "email_verified": true,
       "expires_at": 2000,
@@ -291,6 +298,8 @@
       "session_generation": 0,
       "session_id": "recipient-session",
       "subject": "recipient-subject",
+      "tenant_id": null,
+      "upstream_provider": "google.com",
       "verified_at": 1011
     }
   }

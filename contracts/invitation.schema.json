@@ -174,11 +174,27 @@
           "minLength": 1,
           "title": "Subject",
           "type": "string"
+        },
+        "tenant_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tenant Id"
         }
       },
       "required": [
         "principal",
         "provider_id",
+        "tenant_id",
         "issuer",
         "subject",
         "identity_active"
@@ -447,6 +463,12 @@
           "title": "Invitation Id",
           "type": "string"
         },
+        "inviter_membership_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Inviter Membership Revision",
+          "type": "integer"
+        },
         "inviter_principal_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -531,6 +553,7 @@
         "policy_id",
         "workspace_id",
         "inviter_principal_id",
+        "inviter_membership_revision",
         "recipient_email",
         "role",
         "created_at",
@@ -975,6 +998,12 @@
           "title": "Assertion Sha256",
           "type": "string"
         },
+        "audience": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Audience",
+          "type": "string"
+        },
         "email": {
           "maxLength": 254,
           "minLength": 3,
@@ -1035,6 +1064,36 @@
           "title": "Subject",
           "type": "string"
         },
+        "tenant_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tenant Id"
+        },
+        "upstream_provider": {
+          "anyOf": [
+            {
+              "enum": [
+                "google.com",
+                "github.com"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Upstream Provider"
+        },
         "verified_at": {
           "maximum": 9007199254740991,
           "minimum": 0,
@@ -1044,12 +1103,15 @@
       },
       "required": [
         "provider_id",
+        "tenant_id",
         "issuer",
         "subject",
         "session_id",
         "session_generation",
         "email",
         "email_verified",
+        "audience",
+        "upstream_provider",
         "issued_at",
         "expires_at",
         "verified_at",

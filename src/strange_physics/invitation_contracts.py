@@ -12,7 +12,15 @@ import hmac
 import re
 from typing import Annotated, Literal, Self
 
-from pydantic import AfterValidator, Field, SecretStr, TypeAdapter, WithJsonSchema, model_validator
+from pydantic import (
+    AfterValidator,
+    ConfigDict,
+    Field,
+    SecretStr,
+    TypeAdapter,
+    WithJsonSchema,
+    model_validator,
+)
 from pydantic.json_schema import JsonSchemaValue, models_json_schema
 
 from strange_physics.contracts import Identifier, Message
@@ -137,6 +145,7 @@ class RevokeInvitationRequest(Message):
 
 
 class RedeemInvitationRequest(Message):
+    model_config = ConfigDict(hide_input_in_errors=True)
     token: Token
 
 
@@ -147,6 +156,7 @@ class InvitationRecord(Message):
     policy_id: Identifier
     workspace_id: Identifier
     inviter_principal_id: Identifier
+    inviter_membership_revision: Count
     recipient_email: Email
     role: Role
     created_at: Count
@@ -205,6 +215,7 @@ class InvitationPage(Message):
 
 
 class InvitationIssued(Message):
+    model_config = ConfigDict(hide_input_in_errors=True)
     invitation: InvitationView
     token: IssuedToken
 
@@ -232,6 +243,7 @@ class CurrentRecipientIdentity(Message):
 
     principal: PrincipalStatus
     provider_id: Identifier
+    tenant_id: Identifier | None
     issuer: Annotated[str, Field(min_length=1, max_length=2048)]
     subject: Annotated[str, Field(min_length=1, max_length=512)]
     identity_active: bool
@@ -241,12 +253,15 @@ class VerifiedEmailAssertion(Message):
     """Verified upstream evidence; issued_at is upstream time, not local parsing."""
 
     provider_id: Identifier
+    tenant_id: Identifier | None
     issuer: Annotated[str, Field(min_length=1, max_length=2048)]
     subject: Annotated[str, Field(min_length=1, max_length=512)]
     session_id: Identifier
     session_generation: Count
     email: Email
     email_verified: bool
+    audience: Annotated[str, Field(min_length=1, max_length=512)]
+    upstream_provider: Literal["google.com", "github.com"] | None
     issued_at: Count
     expires_at: Count
     verified_at: Count
@@ -305,7 +320,9 @@ def redemption_request_sha256(request: RedeemInvitationRequest) -> str:
 
 def invitation_view(record: InvitationRecord, *, now: int) -> InvitationView:
     server_time(now)
-    data = record.model_dump(mode="json", exclude={"policy_id", "token_sha256"})
+    data = record.model_dump(
+        mode="json", exclude={"policy_id", "token_sha256", "inviter_membership_revision"}
+    )
     if record.state == "pending" and now >= record.expires_at:
         data["state"] = "expired"
     return InvitationView.model_validate(data)
@@ -432,6 +449,7 @@ def validate_invitation_issue(
     )
     configured = require_invitation_policy(invitation_policy)
     TypeAdapter(Count).validate_python(pending_count, strict=True)
+    TypeAdapter(bool).validate_python(recipient_pending, strict=True)
     if request.expected_workspace_revision != workspace.workspace.revision:
         raise ContractViolation("incompatible_state", 409)
     if pending_count >= configured.max_pending_per_workspace or recipient_pending:
@@ -440,6 +458,7 @@ def validate_invitation_issue(
         record.policy_id != configured.policy_id
         or record.workspace_id != workspace_id
         or record.inviter_principal_id != actor.session.principal_id
+        or record.inviter_membership_revision != membership.revision
         or record.recipient_email != request.recipient_email
         or record.role != request.role
         or record.created_at != now
@@ -524,12 +543,24 @@ def _redemption_authority(
         or identity.principal.principal_id != session.principal_id
         or not identity.principal.active
         or not identity.identity_active
-        or (identity.provider_id, identity.issuer, identity.subject)
-        != (assertion.provider_id, assertion.issuer, assertion.subject)
+        or (identity.provider_id, identity.issuer, identity.tenant_id, identity.subject)
+        != (assertion.provider_id, assertion.issuer, assertion.tenant_id, assertion.subject)
         or (assertion.session_id, assertion.session_generation)
         != (session.session_id, session.generation)
         or provider is None
-        or (provider is not None and provider.issuer != assertion.issuer)
+        or (
+            provider is not None
+            and (
+                provider.issuer != assertion.issuer
+                or provider.tenant_id != assertion.tenant_id
+                or provider.audience != assertion.audience
+                or (
+                    provider.flow == "managed_broker"
+                    and assertion.upstream_provider not in provider.upstream_providers
+                )
+                or (provider.flow == "oidc_code" and assertion.upstream_provider is not None)
+            )
+        )
         or not assertion.email_verified
         or assertion.email != record.recipient_email
         or assertion.issued_at > now
@@ -550,6 +581,7 @@ def _redemption_authority(
         or not enabled_owners(workspace)
         or inviter.workspace_id != record.workspace_id
         or inviter.principal_id != record.inviter_principal_id
+        or inviter.revision != record.inviter_membership_revision
         or principal.principal_id != inviter.principal_id
         or not principal.active
         or not inviter.active

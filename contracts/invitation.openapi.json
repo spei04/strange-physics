@@ -1,0 +1,778 @@
+{
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "csrfHeader": {
+        "in": "header",
+        "name": "X-CSRF-Token",
+        "type": "apiKey"
+      },
+      "sessionCookie": {
+        "in": "cookie",
+        "name": "__Host-sp_session",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "No email delivery, linking or token URLs. Tokens are accepted only in HTTPS POST JSON bodies. Linking and credential lifecycle remain unfinished.",
+    "title": "Invitation contracts \u2014 ID-B/B2",
+    "version": "1.0.0-draft-review"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/invitations/redeem": {
+      "post": {
+        "description": "Current human session only. Mutations require recent actual authentication, exact Origin and session CSRF. No bearer or mixed credentials. Creation/list/revoke require current owner and usable workspace; redemption separately verifies recipient evidence and the current issuing owner grant. Accepted invitations cannot be revoked to remove membership.",
+        "operationId": "redeemInvitation",
+        "parameters": [
+          {
+            "description": "Exact configured ID-A origin.",
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Current session-bound CSRF token.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Current authority precedes lookup. Redemption lookup is caller+operation+key, before any workspace/target partition.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^[!-~]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "invitation.schema.json#/$defs/RedeemInvitationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "invitation.schema.json#/$defs/RedemptionResult"
+                }
+              }
+            },
+            "description": "Current safe metadata/current resulting membership after authorization. No token is present on any idempotent retry."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "reauthenticate only for insufficiently recent actual session authentication; absent for invalid/missing/revoked sessions.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Resource unavailable. Unknown token, wrong recipient, revoked grant and invalid inviter authority share a fixed nonenumerating response."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Generic temporarily_unavailable Error with retryable=true; required distributed request-rate enforcement is not implemented by these contracts.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded server delay independent of invitation existence.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "x-implementation-status": "contract only; handlers/SQL/verification/rate limiting are not implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Referrer-Policy": "no-referrer",
+          "Vary": "Cookie, Origin"
+        },
+        "x-sensitive-fields": [
+          "token",
+          "recipient_email"
+        ]
+      }
+    },
+    "/v1/workspaces/{workspace_id}/invitations": {
+      "get": {
+        "description": "Current human session only. Mutations require recent actual authentication, exact Origin and session CSRF. No bearer or mixed credentials. Creation/list/revoke require current owner and usable workspace; redemption separately verifies recipient evidence and the current issuing owner grant. Accepted invitations cannot be revoked to remove membership.",
+        "operationId": "listInvitations",
+        "parameters": [
+          {
+            "description": "App identifier; current caller visibility checked before target details.",
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Bounded owner-visible page.",
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Opaque current-owner/caller/tenant/filter/snapshot-bound cursor; not authority.",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "maxLength": 512,
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "invitation.schema.json#/$defs/InvitationPage"
+                }
+              }
+            },
+            "description": "Current safe metadata/current resulting membership after authorization. No token is present on any idempotent retry."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "reauthenticate only for insufficiently recent actual session authentication; absent for invalid/missing/revoked sessions.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Resource unavailable. Unknown token, wrong recipient, revoked grant and invalid inviter authority share a fixed nonenumerating response."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Generic temporarily_unavailable Error with retryable=true; required distributed request-rate enforcement is not implemented by these contracts.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded server delay independent of invitation existence.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "x-implementation-status": "contract only; handlers/SQL/verification/rate limiting are not implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Referrer-Policy": "no-referrer",
+          "Vary": "Cookie, Origin"
+        },
+        "x-sensitive-fields": [
+          "token",
+          "recipient_email"
+        ]
+      },
+      "post": {
+        "description": "Current human session only. Mutations require recent actual authentication, exact Origin and session CSRF. No bearer or mixed credentials. Creation/list/revoke require current owner and usable workspace; redemption separately verifies recipient evidence and the current issuing owner grant. Accepted invitations cannot be revoked to remove membership.",
+        "operationId": "issueInvitation",
+        "parameters": [
+          {
+            "description": "App identifier; current caller visibility checked before target details.",
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Exact configured ID-A origin.",
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Current session-bound CSRF token.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Current authority precedes lookup. Redemption lookup is caller+operation+key, before any workspace/target partition.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^[!-~]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "invitation.schema.json#/$defs/CreateInvitationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "invitation.schema.json#/$defs/InvitationView"
+                }
+              }
+            },
+            "description": "Current safe metadata/current resulting membership after authorization. No token is present on any idempotent retry."
+          },
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "invitation.schema.json#/$defs/InvitationIssued"
+                }
+              }
+            },
+            "description": "Fresh committed issuance: plaintext token in this response attempt only. Delivery is not guaranteed or acknowledged. Retry yields only 200 metadata, even if this response was lost."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "reauthenticate only for insufficiently recent actual session authentication; absent for invalid/missing/revoked sessions.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Resource unavailable. Unknown token, wrong recipient, revoked grant and invalid inviter authority share a fixed nonenumerating response."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Generic temporarily_unavailable Error with retryable=true; required distributed request-rate enforcement is not implemented by these contracts.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded server delay independent of invitation existence.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "x-implementation-status": "contract only; handlers/SQL/verification/rate limiting are not implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Referrer-Policy": "no-referrer",
+          "Vary": "Cookie, Origin"
+        },
+        "x-sensitive-fields": [
+          "token",
+          "recipient_email"
+        ]
+      }
+    },
+    "/v1/workspaces/{workspace_id}/invitations/{invitation_id}/revoke": {
+      "post": {
+        "description": "Current human session only. Mutations require recent actual authentication, exact Origin and session CSRF. No bearer or mixed credentials. Creation/list/revoke require current owner and usable workspace; redemption separately verifies recipient evidence and the current issuing owner grant. Accepted invitations cannot be revoked to remove membership.",
+        "operationId": "revokeInvitation",
+        "parameters": [
+          {
+            "description": "App identifier; current caller visibility checked before target details.",
+            "in": "path",
+            "name": "workspace_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "App identifier; current caller visibility checked before target details.",
+            "in": "path",
+            "name": "invitation_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Exact configured ID-A origin.",
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Current session-bound CSRF token.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Current authority precedes lookup. Redemption lookup is caller+operation+key, before any workspace/target partition.",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 1,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^[!-~]+$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "invitation.schema.json#/$defs/RevokeInvitationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "invitation.schema.json#/$defs/InvitationView"
+                }
+              }
+            },
+            "description": "Current safe metadata/current resulting membership after authorization. No token is present on any idempotent retry."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "reauthenticate only for insufficiently recent actual session authentication; absent for invalid/missing/revoked sessions.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Resource unavailable. Unknown token, wrong recipient, revoked grant and invalid inviter authority share a fixed nonenumerating response."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Generic temporarily_unavailable Error with retryable=true; required distributed request-rate enforcement is not implemented by these contracts.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded server delay independent of invitation existence.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "control.schema.json#/$defs/Error"
+                }
+              }
+            },
+            "description": "Fixed safe control Error; do not expose token/recipient/identity/provider details."
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "x-implementation-status": "contract only; handlers/SQL/verification/rate limiting are not implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Referrer-Policy": "no-referrer",
+          "Vary": "Cookie, Origin"
+        },
+        "x-sensitive-fields": [
+          "token",
+          "recipient_email"
+        ]
+      }
+    }
+  }
+}
