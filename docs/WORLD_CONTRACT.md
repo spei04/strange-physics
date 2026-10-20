@@ -395,10 +395,10 @@ conformance remains separate; no new hash dialect is introduced.
 ## Reviewed runtime evidence
 
 The final runtime source is
-`926773379afa3e30d9bcf454a44e0041598a26b8`
-(tree `e560aec4f8d5b236a9ba29a6bda29bc7a24bf5c1`). It passed
-2,768 repository tests, including 345 WORLD1 API/authority/runtime cases.
-The broader focused compatibility selection passed 542 cases, including
+`2b882fe3d26879cd7fc1abe7ca623833aef52372`
+(tree `bd387b6bbf4f86a8a8f70617d65a10ec8f607b5f`). It passed
+2,783 repository tests, including 360 WORLD1 API/authority/runtime cases.
+The broader focused compatibility selection passed 557 cases, including
 existing C2 and COMP1 consumers. These selections overlap and are not additional
 independent test totals. Full Ruff/format checks (127 files), strict mypy
 (87 source/test/example files), 1,201 external schema fixtures and the configured
@@ -418,7 +418,15 @@ historical receipt's parent and the current head's parent. They bind known
 opaque IDs to their implied ordinals, require exact canonical identity at equal
 ordinals, enforce adjacent parent links and retain nondecreasing creation times.
 They reject reuse of an earlier own or parent ID at another known ordinal.
-No additional history is fetched.
+No additional history is fetched. Final composition review also verified the
+historical receipt's own parent/version pair, completing all six pairs among
+the four supplied records. Fresh append proposals reject newly allocated IDs
+already present in the supplied current version/parent records, including their
+parent references. Replay still ignores newly supplied allocation IDs. Global
+uniqueness for unseen versions remains a required atomic database constraint.
+The earlier 9267733/f23f92f evidence is retained separately; its initial acceptance
+was qualified by these final composition findings and superseded by the source
+identified above.
 
 Grant history compares the historical outcome with both the current transition's
 predecessor and outcome. Equal revisions require exact canonical record/commit
@@ -439,10 +447,10 @@ not HTTP/database enforcement or a deployed browser client.
 
 Owner-readable evidence remains outside the checkout under
 `/home/serenapei/.local/state/strange-physics-reviews/world1-author/`.
-The `92677337-full/index.json` SHA-256 is
-`b4c2bbd0ab8321fa6b38c621727fc082c0009a818bb7ad74bcfaf57ed3bd6420`;
-the `92677337-package/index.json` SHA-256 is
-`db236fd5614de6720a903452bc44c4405f4a1708d86a73145cb02658e6ea3fba`.
+The `2b882fe3-full/index.json` SHA-256 is
+`17463ebca6fec18b349f58b6ec1df0b9312a2274dc476896282281d01a0ef95b`;
+the `2b882fe3-package/index.json` SHA-256 is
+`8b4c7e9fc8ec6b5f3dd82dd8579ed6e863586d7f5d8f83a488ef7e072ae4994f`.
 They bind exact source/tree, commands, logs and retained archive hashes.
 Directories are 0700 and files 0600, with a diagnostic review date of 2026-11-19.
 Earlier checkpoints and diagnostic failures remain separately identified;
