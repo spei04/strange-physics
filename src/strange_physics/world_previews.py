@@ -96,8 +96,7 @@ def _current(
     return grant, latest
 
 
-def _history(old: PreviewMutationCommit, current: PreviewMutationCommit) -> None:
-    before, after = old.after, current.after
+def _grant_history(older: PreviewGrantRecord, newer: PreviewGrantRecord) -> None:
     immutable = (
         "grant_id",
         "workspace_id",
@@ -108,17 +107,32 @@ def _history(old: PreviewMutationCommit, current: PreviewMutationCommit) -> None
         "issuance_policy_sha256",
         "created_at",
     )
+    distance = newer.revision - older.revision
+    # Every revision after issuance is a renewal, except a possible final revoke.
+    # Integer expiry must increase by at least one for each such renewal.
+    renewals = distance - int(newer.revoked_at is not None)
     if (
-        message_sha256(old.version) != message_sha256(current.version)
-        or any(getattr(before, name) != getattr(after, name) for name in immutable)
-        or after.revision < before.revision
-        or after.updated_at < before.updated_at
-        or after.expires_at < before.expires_at
-        or (after.revision == before.revision and message_sha256(old) != message_sha256(current))
-        or (after.revision > before.revision and before.revoked_at is not None)
-        or (after.revision == before.revision + 1 and current.before != before)
+        any(getattr(older, name) != getattr(newer, name) for name in immutable)
+        or distance < 0
+        or newer.updated_at < older.updated_at
+        or (distance == 0 and message_sha256(older) != message_sha256(newer))
+        or (distance > 0 and older.revoked_at is not None)
+        or (distance > 0 and newer.expires_at < older.expires_at + renewals)
     ):
         raise ContractViolation("recovery_required", 409)
+
+
+def _history(old: PreviewMutationCommit, current: PreviewMutationCommit) -> None:
+    if message_sha256(old.version) != message_sha256(current.version):
+        raise ContractViolation("recovery_required", 409)
+    _grant_history(old.after, current.after)
+    if old.after.revision == current.after.revision:
+        if message_sha256(old) != message_sha256(current):
+            raise ContractViolation("recovery_required", 409)
+    else:
+        if current.before is None:
+            raise ContractViolation("recovery_required", 409)
+        _grant_history(old.after, current.before)
 
 
 def _recipient(

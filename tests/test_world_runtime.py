@@ -23,11 +23,13 @@ from strange_physics.world_contracts import (
     WorldVersionCommit,
     WorldVersionLookup,
     WorldVersionRecord,
+    WorldVersionResult,
 )
 from strange_physics.world_preview_contracts import (
     IssuePreviewRequest,
     PreviewGrantLookup,
     PreviewGrantPage,
+    PreviewGrantView,
     PreviewMutationCommit,
     RenewPreviewRequest,
     RevokePreviewRequest,
@@ -232,11 +234,15 @@ def transition(
     old: PreviewMutationCommit,
     operation: str,
     now: int,
+    *,
+    ttl_seconds: int = 400,
 ) -> PreviewMutationCommit:
     scope = preview_scope(operation, key=f"{operation}-{old.after.revision}")
     if operation == "renew_preview":
         request: Message = RenewPreviewRequest(
-            grant_id=old.after.grant_id, expected_revision=old.after.revision, ttl_seconds=400
+            grant_id=old.after.grant_id,
+            expected_revision=old.after.revision,
+            ttl_seconds=ttl_seconds,
         )
     else:
         request = RevokePreviewRequest(
@@ -1106,3 +1112,163 @@ def test_preview_recovery_rejects_contradictory_metadata(change: str) -> None:
     assert caught.value.code == (
         "idempotency_conflict" if change == "wrong_body" else "recovery_required"
     )
+
+
+def replay_version(receipt: WorldVersionCommit, latest: WorldVersionCommit) -> WorldVersionResult:
+    result = propose_world_version(
+        raw(receipt.request),
+        receipt.scope,
+        auth(1060),
+        example(WorldPolicy),
+        version_lookup(receipt, latest),
+        new_world_id=None,
+        version_id="ignored",
+        receipt_id="ignored",
+        now=1060,
+    )
+    assert result.commit is None
+    return result.result
+
+
+def replay_preview(
+    receipt: PreviewMutationCommit, latest: PreviewMutationCommit
+) -> PreviewGrantView:
+    result = propose_preview_mutation(
+        raw(receipt.request),
+        receipt.scope,
+        auth(1060),
+        example(WorldPolicy),
+        receipt.version,
+        preview_lookup(receipt, latest),
+        None,
+        grant_id="ignored",
+        receipt_id="ignored",
+        now=1060,
+    )
+    assert result.commit is None
+    return result.result
+
+
+@pytest.mark.parametrize(
+    "contradiction",
+    [
+        "predecessor_time",
+        "adjacent_parent_id",
+        "predecessor_reused_id",
+        "distant_parent_reused_id",
+        "same_ordinal_different_content",
+    ],
+)
+def test_version_replay_checks_available_predecessor(contradiction: str) -> None:
+    first = fresh_version(1020)
+    second = append_version(first, 1030)
+    third = append_version(second, 1040)
+    fourth = append_version(third, 1050)
+    target, latest = first, fourth
+    if contradiction == "adjacent_parent_id":
+        latest = third
+    elif contradiction == "same_ordinal_different_content":
+        target = third
+    data = latest.model_dump(mode="json")
+    if contradiction == "predecessor_time":
+        data["parent"]["view"]["created_at"] = 1010
+        data["before"]["changed_at"] = 1010
+    elif contradiction == "adjacent_parent_id":
+        data["parent"]["view"]["parent_version_id"] = "alternate-version-1"
+    elif contradiction == "predecessor_reused_id":
+        data["parent"]["view"]["version_id"] = first.version.view.version_id
+        data["before"]["version_id"] = first.version.view.version_id
+        data["request"]["expected_version_id"] = first.version.view.version_id
+        data["request_sha256"] = message_sha256(
+            CreateWorldVersionRequest.model_validate_json(json.dumps(data["request"]))
+        )
+        data["version"]["view"]["parent_version_id"] = first.version.view.version_id
+        data["result"]["version"]["parent_version_id"] = first.version.view.version_id
+    elif contradiction == "distant_parent_reused_id":
+        data["parent"]["view"]["parent_version_id"] = first.version.view.version_id
+    else:
+        data["parent"]["view"]["title"] = "Different retained predecessor"
+    contradictory = WorldVersionCommit.model_validate_json(json.dumps(data))
+    with pytest.raises(ContractViolation, match="recovery_required"):
+        replay_version(target, contradictory)
+
+
+@pytest.mark.parametrize("equal_times", [False, True])
+@pytest.mark.parametrize("target_number", [1, 2, 3, 4])
+def test_version_history_preserves_current_adjacent_and_older_replay(
+    equal_times: bool, target_number: int
+) -> None:
+    history = [fresh_version(1020)]
+    for i in range(3):
+        history.append(append_version(history[-1], 1020 if equal_times else 1030 + i * 10))
+    target = history[target_number - 1]
+    assert replay_version(target, history[-1]) == target.result
+
+
+@pytest.mark.parametrize(
+    "contradiction",
+    ["unchanged_expiry", "insufficient_expiry_steps", "predecessor_time", "revoked_target"],
+)
+def test_preview_replay_checks_available_predecessor(contradiction: str) -> None:
+    first = issue(1020)
+    second = transition(first, "renew_preview", 1030)
+    third = transition(second, "renew_preview", 1040)
+    fourth = transition(third, "renew_preview", 1050)
+    target, latest = first, third
+    if contradiction == "predecessor_time":
+        target, latest = second, fourth
+    elif contradiction == "insufficient_expiry_steps":
+        latest = fourth
+    elif contradiction == "revoked_target":
+        target, latest = transition(first, "revoke_preview", 1030), fourth
+    data = latest.model_dump(mode="json")
+    if contradiction in {"unchanged_expiry", "insufficient_expiry_steps"}:
+        extra = 0 if contradiction == "unchanged_expiry" else 2
+        expiry = first.after.expires_at + extra
+        data["before"]["expires_at"] = expiry - 1
+        data["after"]["expires_at"] = expiry
+        data["result"]["expires_at"] = expiry
+        data["request"]["ttl_seconds"] = expiry - data["committed_at"]
+        data["request_sha256"] = message_sha256(
+            RenewPreviewRequest.model_validate_json(json.dumps(data["request"]))
+        )
+    elif contradiction == "predecessor_time":
+        data["before"]["updated_at"] = 1025
+    contradictory = PreviewMutationCommit.model_validate_json(json.dumps(data))
+    with pytest.raises(ContractViolation, match="recovery_required"):
+        replay_preview(target, contradictory)
+
+
+@pytest.mark.parametrize("revoke", [False, True])
+@pytest.mark.parametrize("target_revision", [1, 2, 3, 4])
+def test_preview_history_preserves_equal_time_minimum_expiry_steps(
+    revoke: bool, target_revision: int
+) -> None:
+    history = [issue(1020)]
+    for i in range(3):
+        history.append(transition(history[-1], "renew_preview", 1020, ttl_seconds=101 + i))
+    if revoke:
+        history.append(transition(history[-1], "revoke_preview", 1020))
+    target = history[target_revision - 1]
+    assert replay_preview(target, history[-1]) == target.result
+
+
+def test_preview_history_preserves_same_revocation_and_sole_revoke_expiry() -> None:
+    first = issue(1020)
+    revoked = transition(first, "revoke_preview", 1020)
+    assert revoked.after.expires_at == first.after.expires_at
+    assert replay_preview(first, revoked) == first.result
+    assert replay_preview(revoked, revoked) == revoked.result
+
+
+def test_preview_history_counts_renewals_before_final_revocation() -> None:
+    first = issue(1020)
+    second = transition(first, "renew_preview", 1030)
+    third = transition(second, "renew_preview", 1040)
+    revoked = transition(third, "revoke_preview", 1050)
+    data = revoked.model_dump(mode="json")
+    for field in ("before", "after", "result"):
+        data[field]["expires_at"] = first.after.expires_at + 1
+    contradictory = PreviewMutationCommit.model_validate_json(json.dumps(data))
+    with pytest.raises(ContractViolation, match="recovery_required"):
+        replay_preview(first, contradictory)

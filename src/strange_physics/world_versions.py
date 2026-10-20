@@ -99,23 +99,29 @@ def _head(
     return commit
 
 
-def _history(target: WorldVersionRecord, current: WorldVersionCommit) -> None:
-    old, new = target.view, current.version.view
+def _version_history(older: WorldVersionRecord, newer: WorldVersionRecord) -> None:
+    old, new = older.view, newer.view
+    distance = new.version_number - old.version_number
     if (
         (old.workspace_id, old.world_id) != (new.workspace_id, new.world_id)
-        or old.version_number > new.version_number
+        or distance < 0
         or old.created_at > new.created_at
-        or (
-            old.version_number == new.version_number
-            and message_sha256(target) != message_sha256(current.version)
-        )
-        or (
-            old.version_number + 1 == new.version_number
-            and (current.parent is None or message_sha256(target) != message_sha256(current.parent))
-        )
-        or (old.version_number < new.version_number and old.version_id == new.version_id)
+        or (distance == 0 and message_sha256(older) != message_sha256(newer))
+        or (distance > 0 and old.version_id == new.version_id)
+        or (distance == 1 and new.parent_version_id != old.version_id)
+        or (distance > 1 and new.parent_version_id == old.version_id)
     ):
         raise ContractViolation("recovery_required", 409)
+
+
+def _history(target: WorldVersionRecord, current: WorldVersionCommit) -> None:
+    _version_history(target, current.version)
+    if target.view.version_number < current.version.view.version_number:
+        # The latest commit already retains this predecessor. Compare both
+        # witnesses without fetching or claiming verification of the full history.
+        if current.parent is None:
+            raise ContractViolation("recovery_required", 409)
+        _version_history(target, current.parent)
 
 
 def reject_expired_world_key(
