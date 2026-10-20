@@ -3,8 +3,8 @@
 Status: first local SCI subset accepted and integrated for SP-01.a in PR #51,
 merge cc24aef592f3157b67024e3cab41159489c77ffa. Independent review and matching
 Python 3.12/3.14 CI passed; the execution log records the evidence. The calibrated
-scientific domain and local fitter are documented separately;
-prediction and independent evaluation remain separate implementation tasks.
+scientific domain, local fitter and local predictor are documented separately.
+Independent evaluation remains a separate implementation task.
 
 The authoritative messages are in
 [src/strange_physics/research_contracts.py](../src/strange_physics/research_contracts.py),
@@ -30,7 +30,7 @@ byte identity, not authorship or scientific validity.
    on success, with separate configuration-bound diagnostics. Call
    `validate_model_for_fit(model, fit_input)` before accepting a model.
 3. Parse `PredictionRequest`, then call
-   `validate_prediction_model(model, request)` before running the future predictor.
+   `validate_prediction_model(model, request)` before running the [local predictor](PREDICTION.md).
 4. Parse `PredictionResponse`, then call
    `validate_prediction_response(request, response)` before accepting predictions.
 5. A future development evaluator produces `EvaluationReport`. Its validator
@@ -42,7 +42,7 @@ coefficient. Its interpretation is bounded by the separate
 [SP-03.b calibration](SPRING_DOMAIN.md) and [SP-04.a fitting evidence](FITTING.md);
 its schema alone claims no accuracy, generalization range or conditioning.
 Prediction runtime compatibility beyond this versioned local model remains the
-responsibility of the later predictor implementation.
+responsibility of the predictor runtime and its fixed configuration.
 
 All messages reject extra fields and nonfinite numbers. JSON parsing applies
 strict Pydantic types. In trusted Python code use normal constructors or
@@ -102,8 +102,8 @@ A prediction request uses public structure, initial conditions and one optional
 initial impulse. Particle identities and their order must match the structure.
 Frame arrays use that order; frames have no separate identity labels, so shape
 validation cannot detect a predictor that lies about the meaning of an array
-position. Analytic and permutation tests of the predictor itself remain required
-under SP-04.b.
+position. The [SP-04.b predictor tests](PREDICTION.md) independently check the supported
+single-particle runtime; broader multi-particle runtimes remain future work.
 
 Prediction probes may exceed purchased-action bounds, because they include
 initial-condition extrapolation. Do not pass them through
@@ -174,4 +174,5 @@ review evidence or the later numerical and production readiness gates.
 
 The local production fitting API and its fixed configuration, explicit failure
 results and evidence limits are documented in [FITTING.md](FITTING.md).
-Prediction and independent scoring remain separate gates.
+The [local analytic predictor](PREDICTION.md) propagates supported requests;
+independent scoring and SDK/CLI integration remain separate gates.
