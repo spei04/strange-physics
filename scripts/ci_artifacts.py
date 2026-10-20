@@ -36,6 +36,7 @@ MODULES = frozenset(
         "prediction_contracts.py",
         "py.typed",
         "research_contracts.py",
+        "run_credential_contracts.py",
         "sdk.py",
         "serialization.py",
         "session.py",

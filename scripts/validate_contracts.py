@@ -201,6 +201,19 @@ def main() -> None:
                 f"service.schema.json#/$defs/{fixture['model']}", value, group == "runtime_negative"
             )
 
+    run_credentials = json.loads((ROOT / "run-credentials.examples.json").read_text())
+    for name, fixture in run_credentials["valid"].items():
+        check(f"run-credentials.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in run_credentials[group]:
+            value = copy.deepcopy(run_credentials["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"run-credentials.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     for fixture in sessions["workspace_session_failures"]:
         check("control.schema.json#/$defs/Error", fixture["output"])
 
