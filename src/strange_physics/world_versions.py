@@ -311,7 +311,13 @@ def propose_world_version(
             or current.result.head.revision != request.expected_head_revision
         ):
             raise ContractViolation("incompatible_state", 409)
-        if version_id == parent.view.version_id:
+        known_ids = set()
+        for retained in (current.version, current.parent):
+            if retained is not None:
+                known_ids.add(retained.view.version_id)
+                if retained.view.parent_version_id is not None:
+                    known_ids.add(retained.view.parent_version_id)
+        if version_id in known_ids:
             raise ContractViolation("incompatible_state", 409)
     try:
         view = WorldVersionView(

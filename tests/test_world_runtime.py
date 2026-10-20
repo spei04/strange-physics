@@ -162,7 +162,9 @@ def fresh_version(now: int = 1020) -> WorldVersionCommit:
     return decision.commit
 
 
-def append_version(previous: WorldVersionCommit, now: int = 1030) -> WorldVersionCommit:
+def append_version(
+    previous: WorldVersionCommit, now: int = 1030, *, version_id: str | None = None
+) -> WorldVersionCommit:
     number = previous.version.view.version_number + 1
     scope = version_scope(world_id="world-1", key=f"append-{number}")
     request = changed(
@@ -179,7 +181,7 @@ def append_version(previous: WorldVersionCommit, now: int = 1030) -> WorldVersio
         example(WorldPolicy),
         lookup,
         new_world_id=None,
-        version_id=f"world-version-{number}",
+        version_id=f"world-version-{number}" if version_id is None else version_id,
         receipt_id=f"receipt-{number}",
         now=now,
     )
@@ -1371,3 +1373,57 @@ def test_distant_replay_checks_historical_receipt_parent_pair(
             replay_version(receipt, latest)
     else:
         assert replay_version(receipt, latest) == receipt.result
+
+
+@pytest.mark.parametrize(
+    ("current_number", "reused_number"),
+    [(2, 1), (2, 2), (3, 1), (3, 2), (3, 3), (4, 2), (4, 3), (4, 4)],
+)
+def test_fresh_append_rejects_all_known_allocated_version_ids(
+    current_number: int, reused_number: int
+) -> None:
+    history = [fresh_version(1020)]
+    for i in range(1, current_number):
+        history.append(append_version(history[-1], 1020 + i * 5))
+    with pytest.raises(ContractViolation, match="incompatible_state"):
+        append_version(
+            history[-1], 1050, version_id=history[reused_number - 1].version.view.version_id
+        )
+
+
+def test_fresh_unseen_version_allocation_has_readable_head() -> None:
+    first = fresh_version(1020)
+    second = append_version(first, 1030)
+    third = append_version(second, 1040, version_id="new-opaque-version")
+    assert (
+        read_world_head(
+            auth(1050),
+            example(WorldPolicy),
+            third.result.head,
+            third,
+            workspace_id="workspace-1",
+            world_id="world-1",
+            now=1050,
+        )
+        == third.result.head
+    )
+
+
+@pytest.mark.parametrize("historical", [False, True])
+def test_version_replay_ignores_conflicting_new_allocation_ids(historical: bool) -> None:
+    first = fresh_version(1020)
+    second = append_version(first, 1030)
+    target = first if historical else second
+    result = propose_world_version(
+        raw(target.request),
+        target.scope,
+        auth(1040),
+        example(WorldPolicy),
+        version_lookup(target, second),
+        new_world_id="ignored-even-on-append",
+        version_id=second.version.view.version_id,
+        receipt_id=second.receipt_id,
+        now=1040,
+    )
+    assert result.commit is None
+    assert result.result == target.result
