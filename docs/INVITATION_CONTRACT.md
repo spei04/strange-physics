@@ -164,7 +164,7 @@ existing SCI Python canonical JSON codec applied to an object with token_sha256
 containing the domain-separated decoded-token digest. No raw token is stored in
 that canonical request identity.
 
-Every retry rechecks current session, freshness, recipient mapping/email eligibility,
+Every redemption retry rechecks current session, freshness, recipient mapping/email eligibility,
 inviter grant and workspace state before receipt lookup/response. It also requires
 current recipient membership for an already-accepted result. Do not reapply the
 original mutation revision after an exact receipt has been found. A removed member
