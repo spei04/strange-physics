@@ -104,6 +104,19 @@ def main() -> None:
                 group == "runtime_negative",
             )
 
+    workflow = json.loads((ROOT / "workflow.examples.json").read_text())
+    for name, fixture in workflow["valid"].items():
+        check(f"workflow.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in workflow[group]:
+            value = copy.deepcopy(workflow["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"workflow.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     sessions = json.loads((ROOT / "session.examples.json").read_text())
     for name, fixture in sessions["valid"].items():
         check(f"session.schema.json#/$defs/{name}", fixture)
