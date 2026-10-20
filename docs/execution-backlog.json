@@ -10917,8 +10917,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Project lead owns primary progress/integration; Research and Quality review immutable source read-only.",
-      "identity": "Reserved for Platform EXEC1 API authoring after ART1 main acceptance and explicit handoff of this reviewed record; reuse existing checkout and pinned environment.",
+      "scientific": "Project lead owns primary progress/integration; Quality and Research independently review immutable source.",
+      "identity": "Platform released clean after EXEC1 review; reserved for sequential Research COMP1 authoring after exact PR/main acceptance and explicit handoff. No checkout/dependency copy created.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11173,10 +11173,13 @@
           "depends_on": [
             "ART1"
           ],
-          "preparation": "API57f2f303 accepted by lead, Quality and Research; independent runtime review remains before integration.",
-          "phase": "Runtime predicate authoring in reused identity checkout; no live extraction/build/controller/isolation or SQL adapters.",
+          "preparation": "API and runtime independently accepted; final PR/main CI pending.",
+          "phase": "Accepted pure predicates; lead integrates, Research queued for COMP1 after exact CI acceptance.",
           "api_source": "57f2f303a5fec4b65b1df022b4239a64f537f6bc",
-          "api_tree": "ecd3facfcd1f3e5086ef3fca9c30a4c29f8a0b3a"
+          "api_tree": "ecd3facfcd1f3e5086ef3fca9c30a4c29f8a0b3a",
+          "runtime_source": "fe3b0088d4bca0623459f9024eceb42036e8d491",
+          "author_source": "c66b6a0d6bc82a81195797c742353718bc155136",
+          "pull_request": "https://github.com/spei04/strange-physics/pull/92"
         },
         {
           "id": "COMP1",
@@ -11297,6 +11300,33 @@
         "ownership_addendum_sha256": "5f343528c4b32ed5a5ffd6e049b0fba89749b82d7d7d5bbbeae8f8a67a4c1746",
         "constraint": "The pure full-Operation prefix validator is a bounded conformance reference, not proof of scalable DB reads. Production requires reviewed internal compact metadata closure with actual durable body/hash joins and bounded snapshot reads; no client prefix assertion. COMP1 must preserve exact SCI canonical prefix identity without unchecked materialization.",
         "forecast_boundary": "Refines existing producer acceptance; no task/dependency/gate/estimate change. Human estimates remain provisional."
+      },
+      "exec1_runtime_evidence": {
+        "source": "fe3b0088d4bca0623459f9024eceb42036e8d491",
+        "tree": "f1a0b88e2d3fad2232536be8a6a45faf66a7304c",
+        "initial": "77da80b06f6f07173d6950d5ff64f65969f4ee6f",
+        "focused": 615,
+        "lead_tests": 202,
+        "lead_extra": 12,
+        "research_extra": 12,
+        "quality_state_cases": 84,
+        "quality_receipt_cases": 65,
+        "quality_time_cases": 6,
+        "quality_repair_mutants": 3,
+        "quality_prior_other_mutants": 4,
+        "research_mutants": 3,
+        "lead_index": "a5d52b8bd1ea77fa9d4112ce5b1d6146d603b37c722a7a61272540815c2218c1",
+        "quality_index": "8aa1f6f8de57c3d64439aad62775a4c7235e182a48ad11ffd083a94df3ef684b",
+        "research_index": "ccf4e744a227b907e08a72a196fbcaa0a8b9980099a8ac127682d05b7f602bd2",
+        "status": "source_accepted_final_ci_pending",
+        "author_source": "c66b6a0d6bc82a81195797c742353718bc155136",
+        "author_index": "05f71a072fd3721cefc339d70997e7e7cf1007e0b1f9d605a84fc87530bf4f18",
+        "integrated_source": "5f643665000a08cad1eedc0f011910ec70c0ad34",
+        "union_index_sha256": "b9a113994ad13220b82327df820090f75858fdc312958a7c06ef1a36d2dea307",
+        "full_tests": 2281,
+        "format_files": 112,
+        "mypy_files": 74,
+        "external_schema_checks": 722
       }
     },
     "spring_workflow_evidence": {

@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | SP-01.c/#89 EXEC1 runtime admission, replay, broker and termination predicates | API accepted; runtime77da80b published, full checks passed, peer review active |
-| Research | EXEC1 provenance/SCI review; COMP1 and SP-01.d design ready | Read-only reviewer; COMP1 source waits EXEC1 and SP-01.d source/freeze waits full SP-01.c |
-| Quality | EXEC1 runtime security/lifecycle review and progress verification | API accepted; SP-01.e tooling preparation remains prerequisite-gated |
-| Project lead | Coordinate EXEC1 runtime review and integration | Exclusive primary progress owner; Platform owns identity source authoring |
+| Platform | EXEC1 source released; next COMP1 build/runtime review | Reused identity checkout reserved for Research handoff after CI |
+| Research | COMP1 native-model identity/recovery authoring next | EXEC1 accepted; source waits exact PR/main acceptance |
+| Quality | Final EXEC1 integration/CI review | Retains prerequisite-gated SP-01.e tooling preparation |
+| Project lead | Integrate EXEC1 and assign COMP1 | Exclusive primary progress owner; exact reviewed-source and CI gates |
 
 ## Assignments
 
@@ -301,3 +301,11 @@ The four existing producer tasks now carry concrete constraints/tests; task IDs,
 2026-10-20 05:23 UTC — Platform published immutable runtime77da80b06f6f07173d6950d5ff64f65969f4ee6f/treed38d9dda73d8300610e8c6048c2a52c2989477a3 and retains the identity writer for review repairs. Quality is assigned current authority, lifecycle and termination/recovery challenges; Research is assigned scientific provenance, committed-prefix and restore compatibility. Lead reviews independently and integrates only after accepted source and matching checks. Author reports2,253 tests,722 external schema cases, Ruff/format112, full mypy74 and configured Bandit checks passed, with offline wheel/sdist allowlist validation. These author results are subject to peer and final integration verification.
 
 Quality caught four scaling requirement bullet pairs located after the next task's HTML anchor; lead moved them within their owning sections. JSON ownership, task graph and estimates were already correct. No additional checkout or environment was created; both existing cloud checkouts remain in use. The draft PR still contains API-only evidence until reviewed runtime integration.
+
+## EXEC1 runtime accepted; integration assignment
+
+EXEC1 runtime fe3b0088d4bca0623459f9024eceb42036e8d491 and doc-only author c66b6a0d6bc82a81195797c742353718bc155136 are independently accepted. All2,281 tests,615 focused cases,722 schemas,Ruff/format112,full mypy74,configured Bandit and offline archive checks passed. Three related lifecycle/history defects were repaired; Quality independently checked84 state/instance combinations,65 receipt histories and6 chronology cases. Research and lead each passed12 additional cases. Pure predicates remain distinct from live producers. Final PR #92 and protected-main checks are pending; COMP1 and full SP-01.c remain open.
+
+Platform released the existing identity checkout clean after Quality accepted the final documentation. Lead owns primary integration; Quality checks the source/progress union, and Research takes COMP1 only after exact PR/main acceptance. Original CORE/SCI/C2 contracts and dependency pins remain unchanged. The current closure checks establish neither live transactional storage nor sandbox/provider enforcement; no deployment or paid gate is advanced.
+
+Private evidence remains outside checkouts, owner-only, with review2026-11-19: author index SHA25605f71a072fd3721cefc339d70997e7e7cf1007e0b1f9d605a84fc87530bf4f18, Quality 8aa1f6f8de57c3d64439aad62775a4c7235e182a48ad11ffd083a94df3ef684b, Research ccf4e744a227b907e08a72a196fbcaa0a8b9980099a8ac127682d05b7f602bd2, lead a5d52b8bd1ea77fa9d4112ce5b1d6146d603b37c722a7a61272540815c2218c1. Initial diagnostics remain linked to their original source; the initial wheel-smoke strict-JSON fixture correction and review error-code expectation correction did not weaken source assertions. Same-VM evidence is not an off-device backup.
