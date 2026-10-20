@@ -242,9 +242,9 @@ class CheckpointOutbox(Message):
 
 
 class CheckpointLookup(Message):
-    """Bounded current natural-key lookup plus latest pointer, under the same run lock.
+    """Bounded target and latest committed closures, under the same run lock.
 
-    A missing record/outbox projection is representable so recovery can fail explicitly.
+    Missing target or latest record/outbox projections permit explicit recovery failure.
     Producers establish completeness, absence and currency; parsing proves none of them.
     """
 
@@ -255,6 +255,8 @@ class CheckpointLookup(Message):
     head: CheckpointHead | None
     record: CheckpointRecord | None
     outbox: CheckpointOutbox | None
+    latest_record: CheckpointRecord | None
+    latest_outbox: CheckpointOutbox | None
 
 
 class CheckpointCommitPlan(Message):

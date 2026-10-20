@@ -121,6 +121,8 @@ def args(**changes: Any) -> dict[str, Any]:
                 head=None,
                 record=None,
                 outbox=None,
+                latest_record=None,
+                latest_outbox=None,
             ),
             path_index=-1,
             now=1200,
@@ -149,6 +151,8 @@ def replay_args(data: dict[str, Any], committed: a.CheckpointCommitPlan) -> dict
             head=committed.head,
             record=committed.record,
             outbox=committed.outbox,
+            latest_record=committed.record,
+            latest_outbox=committed.outbox,
         ),
     )
 
@@ -517,11 +521,19 @@ def test_physics_failure_advances_prefix_and_historical_replay_preserves_later_h
             head=first.head,
             record=None,
             outbox=None,
+            latest_record=first.record,
+            latest_outbox=first.outbox,
         )
     }
     second = plan(later)
     retry = replay_args(data, first)
-    retry["lookup"] = changed(retry["lookup"], revision=2, head=second.head)
+    retry["lookup"] = changed(
+        retry["lookup"],
+        revision=2,
+        head=second.head,
+        latest_record=second.record,
+        latest_outbox=second.outbox,
+    )
     assert isinstance(validate_checkpoint_write(**retry), a.CheckpointReplay)
     assert retry["lookup"].head.index == 1
 
@@ -653,3 +665,265 @@ def test_artifact_lifecycle_preserves_immutable_identity_and_cas() -> None:
     ):
         with denied("incompatible_state", 409):
             validate_artifact_update(before, after)
+
+
+def next_checkpoint_args() -> dict[str, Any]:
+    data = at_index(ledger_data(), 0)
+    first = plan(data)
+    later = at_index(data, 1) | {"event_id": "checkpoint-event-2"}
+    later["lookup"] = a.CheckpointLookup(
+        workspace_id=first.record.workspace_id,
+        run_id=first.record.run_id,
+        index=1,
+        revision=1,
+        head=first.head,
+        record=None,
+        outbox=None,
+        latest_record=first.record,
+        latest_outbox=first.outbox,
+    )
+    return later
+
+
+@pytest.mark.parametrize(
+    "fault",
+    [
+        "missing_latest_record",
+        "missing_latest_outbox",
+        "missing_both",
+        "outbox_foreign_run",
+        "outbox_hash",
+        "record_revision",
+        "record_future_run",
+        "head_index",
+    ],
+)
+def test_new_write_cannot_advance_past_dangling_or_partial_latest_commit(fault: str) -> None:
+    data = next_checkpoint_args()
+    assert plan(data)
+    lookup = data["lookup"]
+    if fault == "missing_latest_record":
+        lookup = changed(lookup, latest_record=None)
+    elif fault == "missing_latest_outbox":
+        lookup = changed(lookup, latest_outbox=None)
+    elif fault == "missing_both":
+        lookup = changed(lookup, latest_record=None, latest_outbox=None)
+    elif fault == "outbox_foreign_run":
+        lookup = changed(lookup, latest_outbox=changed(lookup.latest_outbox, run_id="foreign"))
+    elif fault == "outbox_hash":
+        lookup = changed(
+            lookup, latest_outbox=changed(lookup.latest_outbox, record_sha256="b" * 64)
+        )
+    elif fault in {"record_revision", "record_future_run"}:
+        record = changed(
+            lookup.latest_record,
+            **({"checkpoint_revision": 2} if fault == "record_revision" else {"run_revision": 5}),
+        )
+        outbox = changed(
+            lookup.latest_outbox,
+            record_sha256=message_sha256(record),
+            checkpoint_revision=record.checkpoint_revision,
+        )
+        lookup = changed(lookup, latest_record=record, latest_outbox=outbox)
+    else:
+        lookup = changed(lookup, head=changed(lookup.head, index=-1))
+    with denied("recovery_required", 409):
+        validate_checkpoint_write(**(data | {"lookup": lookup}))
+
+
+def test_duplicate_target_and_latest_projections_must_match_exactly() -> None:
+    data = args()
+    retry = replay_args(data, plan(data))
+    lookup = retry["lookup"]
+    lookup = changed(lookup, outbox=changed(lookup.outbox, event_id="different-event"))
+    with denied("recovery_required", 409):
+        validate_checkpoint_write(**(retry | {"lookup": lookup}))
+
+
+def test_available_catalog_revision_cannot_advance_without_a_legal_transition() -> None:
+    data = args()
+    retry = replay_args(data, plan(data))
+    item = retry["artifacts"].objects[0]
+    item = changed(item, record=changed(item.record, revision=item.record.revision + 1))
+    with denied("recovery_required", 409):
+        validate_checkpoint_write(
+            **(retry | {"artifacts": changed(retry["artifacts"], objects=(item,))})
+        )
+
+
+def test_renewed_byte_readback_preserves_exact_available_catalog_row() -> None:
+    data = args()
+    retry = replay_args(data, plan(data))
+    item = retry["artifacts"].objects[0]
+    item = changed(
+        item,
+        verification=changed(
+            item.verification, verification_id="new-readback", observed_at=retry["now"]
+        ),
+    )
+    assert isinstance(
+        validate_checkpoint_write(
+            **(retry | {"artifacts": changed(retry["artifacts"], objects=(item,))})
+        ),
+        a.CheckpointReplay,
+    )
+
+
+def test_checkpoint_after_budget_exhaustion_does_not_require_new_experiment_admission() -> None:
+    data = at_index(ledger_data(), 1)
+    authority = data["authority"]
+    run = authority.current.run
+    data["authority"] = changed(
+        authority,
+        current=changed(
+            authority.current,
+            run=changed(run, space=changed(run.space, budget=2), budget_remaining=0),
+        ),
+    )
+    assert plan(data)
+    assert data["authority"].current.run.budget_remaining == 0
+
+
+@pytest.mark.parametrize("fault", ["config", "package", "future_epoch", "wrong_same_epoch_attempt"])
+def test_latest_commit_must_match_current_immutable_run_and_attempt_history(fault: str) -> None:
+    data = next_checkpoint_args()
+    lookup = data["lookup"]
+    record = lookup.latest_record
+    if fault in {"config", "package"}:
+        key = "agent_config_sha256" if fault == "config" else "agent_package_sha256"
+        record = changed(record, binding=changed(record.binding, **{key: "f" * 64}))
+    elif fault == "future_epoch":
+        record = changed(record, lease_epoch=data["attempt"].lease_epoch + 1)
+    else:
+        record = changed(record, attempt_id="foreign-attempt")
+    lookup = changed(
+        lookup,
+        latest_record=record,
+        latest_outbox=changed(lookup.latest_outbox, record_sha256=message_sha256(record)),
+    )
+    with denied("recovery_required", 409):
+        validate_checkpoint_write(**(data | {"lookup": lookup}))
+
+
+def test_current_replacement_attempt_can_replay_an_older_compatible_checkpoint() -> None:
+    data = args()
+    retry = replay_args(data, plan(data))
+    authority = retry["authority"]
+    current = authority.current
+    old = current.credentials.records[0]
+    claims = changed(
+        authority.verified_claims,
+        credential_id="worker-key-2",
+        generation=2,
+        attempt_id="attempt-2",
+        lease_epoch=4,
+        issued_at=retry["now"],
+        expires_at=1500,
+    )
+    replacement = changed(old, claims=claims)
+    credentials = changed(
+        current.credentials,
+        revision=2,
+        last_generation=2,
+        current_credential_id=claims.credential_id,
+        records=(changed(old, revoked_at=retry["now"]), replacement),
+    )
+    current = changed(
+        current,
+        run=changed(current.run, revision=5),
+        lease=changed(current.lease, attempt_id=claims.attempt_id, epoch=claims.lease_epoch),
+        credentials=credentials,
+    )
+    retry["authority"] = changed(authority, current=current, verified_claims=claims)
+    retry["credential"] = changed(
+        retry["credential"],
+        credential_id=claims.credential_id,
+        expires_at=claims.expires_at,
+        attempt_id=claims.attempt_id,
+        lease_epoch=claims.lease_epoch,
+    )
+    retry["attempt"] = changed(
+        retry["attempt"], attempt_id=claims.attempt_id, lease_epoch=claims.lease_epoch
+    )
+    assert isinstance(validate_checkpoint_write(**retry), a.CheckpointReplay)
+
+
+@pytest.mark.parametrize(
+    "fault",
+    [
+        "missing_record",
+        "missing_outbox",
+        "foreign_outbox",
+        "bad_hash",
+        "future_commit",
+        "future_run",
+    ],
+)
+def test_historical_replay_requires_current_latest_commit_closure(fault: str) -> None:
+    data = at_index(ledger_data(), 0)
+    first = plan(data)
+    later = next_checkpoint_args()
+    second = plan(later)
+    retry = replay_args(data, first)
+    lookup = changed(
+        retry["lookup"],
+        revision=second.head.checkpoint_revision,
+        head=second.head,
+        latest_record=second.record,
+        latest_outbox=second.outbox,
+    )
+    if fault == "missing_record":
+        lookup = changed(lookup, latest_record=None)
+    elif fault == "missing_outbox":
+        lookup = changed(lookup, latest_outbox=None)
+    elif fault == "foreign_outbox":
+        lookup = changed(lookup, latest_outbox=changed(second.outbox, run_id="foreign"))
+    elif fault == "bad_hash":
+        lookup = changed(lookup, latest_outbox=changed(second.outbox, record_sha256="f" * 64))
+    else:
+        record = changed(
+            second.record,
+            **(
+                {
+                    "committed_at": retry["now"] + 1,
+                    "artifacts": changed(second.record.artifacts, checked_at=retry["now"] + 1),
+                }
+                if fault == "future_commit"
+                else {"run_revision": 5}
+            ),
+        )
+        lookup = changed(
+            lookup,
+            latest_record=record,
+            latest_outbox=changed(second.outbox, record_sha256=message_sha256(record)),
+        )
+    with denied("recovery_required", 409):
+        validate_checkpoint_write(**(retry | {"lookup": lookup}))
+
+
+def test_restore_rejects_advanced_available_row_but_accepts_renewed_proof() -> None:
+    data = args()
+    record = plan(data).record
+    item = data["artifacts"].objects[0]
+    advanced = changed(item, record=changed(item.record, revision=item.record.revision + 1))
+    with denied("recovery_required", 409):
+        validate_checkpoint_restore_candidate(
+            record,
+            expected_attempt=data["attempt"],
+            policy=data["policy"],
+            artifacts=changed(data["artifacts"], objects=(advanced,)),
+            now=data["now"],
+        )
+    renewed = changed(
+        item,
+        verification=changed(
+            item.verification, verification_id="restore-readback", observed_at=data["now"] + 1
+        ),
+    )
+    validate_checkpoint_restore_candidate(
+        record,
+        expected_attempt=data["attempt"],
+        policy=data["policy"],
+        artifacts=changed(data["artifacts"], objects=(renewed,), checked_at=data["now"] + 1),
+        now=data["now"] + 1,
+    )

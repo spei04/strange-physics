@@ -375,6 +375,101 @@
         "request_sha256": "07a211d8c72353273aef9c1da19bb7cc5840e70715641046d66296b694898031"
       },
       "index": -1,
+      "latest_outbox": {
+        "checkpoint_revision": 1,
+        "event_id": "checkpoint-event-1",
+        "index": -1,
+        "record_sha256": "273e14a0f8e0ce690a8a69dc43f08a8e8dd3c67280de0a610f7563c13cbc918f",
+        "request_sha256": "07a211d8c72353273aef9c1da19bb7cc5840e70715641046d66296b694898031",
+        "run_id": "run-1",
+        "workspace_id": "ws-1"
+      },
+      "latest_record": {
+        "artifacts": {
+          "checked_at": 300,
+          "objects": [
+            {
+              "record": {
+                "created_at": 100,
+                "locator": {
+                  "namespace_id": "checkpoint-storage",
+                  "object_key": "ws-1/run-1/artifact-1",
+                  "provider": "gcs"
+                },
+                "ref": {
+                  "artifact_id": "artifact-1",
+                  "generation": "9007199254740993",
+                  "media_type": "application/json",
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "size_bytes": 12
+                },
+                "revision": 2,
+                "run_id": "run-1",
+                "state": "available",
+                "visibility": "agent-visible",
+                "workspace_id": "ws-1"
+              },
+              "verification": {
+                "completeness": "complete",
+                "generation": "9007199254740993",
+                "locator": {
+                  "namespace_id": "checkpoint-storage",
+                  "object_key": "ws-1/run-1/artifact-1",
+                  "provider": "gcs"
+                },
+                "media_type": "application/json",
+                "observed_at": 200,
+                "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "size_bytes": 12,
+                "verification_id": "verification-1",
+                "verifier_id": "storage-reader-1"
+              }
+            }
+          ],
+          "policy_sha256": "812faff2ad7164c0a67c826a97a803bd7a6cb16ac39d3378d668a55a01d52017",
+          "request_sha256": "07a211d8c72353273aef9c1da19bb7cc5840e70715641046d66296b694898031",
+          "run_id": "run-1",
+          "workspace_id": "ws-1"
+        },
+        "attempt_id": "attempt-1",
+        "binding": {
+          "agent_config_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+          "agent_id": "agent-1",
+          "agent_package_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "checkpoint_protocol": "strange-physics.checkpoint.v1",
+          "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "checkpoint_revision": 1,
+        "committed_at": 300,
+        "index": -1,
+        "lease_epoch": 1,
+        "request": {
+          "artifacts": [
+            {
+              "artifact_id": "artifact-1",
+              "generation": "9007199254740993",
+              "media_type": "application/json",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "size_bytes": 12
+            }
+          ],
+          "checkpoint": {
+            "agent_id": "agent-1",
+            "schema_version": "strange-physics.checkpoint.v1",
+            "state": {
+              "model": {
+                "step": 0
+              }
+            },
+            "through_index": -1
+          },
+          "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "request_sha256": "07a211d8c72353273aef9c1da19bb7cc5840e70715641046d66296b694898031",
+        "run_id": "run-1",
+        "run_revision": 2,
+        "workspace_id": "ws-1"
+      },
       "outbox": {
         "checkpoint_revision": 1,
         "event_id": "checkpoint-event-1",

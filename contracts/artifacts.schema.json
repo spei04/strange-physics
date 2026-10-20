@@ -390,7 +390,7 @@
     },
     "CheckpointLookup": {
       "additionalProperties": false,
-      "description": "Bounded current natural-key lookup plus latest pointer, under the same run lock.\n\nA missing record/outbox projection is representable so recovery can fail explicitly.\nProducers establish completeness, absence and currency; parsing proves none of them.",
+      "description": "Bounded target and latest committed closures, under the same run lock.\n\nMissing target or latest record/outbox projections permit explicit recovery failure.\nProducers establish completeness, absence and currency; parsing proves none of them.",
       "properties": {
         "head": {
           "anyOf": [
@@ -407,6 +407,26 @@
           "minimum": -1,
           "title": "Index",
           "type": "integer"
+        },
+        "latest_outbox": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CheckpointOutbox"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "latest_record": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CheckpointRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "outbox": {
           "anyOf": [
@@ -458,7 +478,9 @@
         "revision",
         "head",
         "record",
-        "outbox"
+        "outbox",
+        "latest_record",
+        "latest_outbox"
       ],
       "title": "CheckpointLookup",
       "type": "object"

@@ -86,9 +86,11 @@ identity is retained for the run lifetime even after dispatch; delivery state
 is separate. No proposal acknowledges that SQL or storage actually committed.
 
 The bounded `CheckpointLookup` contains the natural-key target, current latest
-head and independently read retained outbox projection. It deliberately permits
+head, and explicit target/latest record and retained outbox projections. It deliberately permits
 missing projections so runtime recovery can deny partial evidence explicitly,
-without loading the entire checkpoint history. Producers prove lookup absence
+without loading the entire checkpoint history (at most two checkpoint records).
+Even a fresh write requires the latest head to join its actual committed record
+and outbox; a pointer alone cannot let a new checkpoint advance past corruption. Producers prove lookup absence
 and currency under the same lock. Exact historical replay must not move latest,
 allocate another checkpoint or debit resources.
 
@@ -157,3 +159,15 @@ tombstoned → deleted, with revision CAS and immutable identity/visibility.
 It never resurrects deleted/tombstoned state. Promotion to available still
 requires trusted storage completion evidence; visibility changes need a
 separately authorized publication/sharing flow, not this lifecycle helper.
+
+Replay and restore-candidate validation require each current available artifact catalog row to equal its
+retained snapshot exactly. This lifecycle has no available-to-available revision
+transition; a higher available revision cannot imply legitimate resurrection.
+A new independently bound byte readback may differ without changing that row.
+
+Latest and historical commit witnesses must match the current immutable run
+binding, cannot name a future lease epoch or run revision, and cannot claim a
+future commit time. The same lease epoch implies the same attempt identity.
+A currently authorized replacement attempt may replay a compatible older
+checkpoint. When target and latest denote the same checkpoint, both retained
+record and outbox projections must be identical.

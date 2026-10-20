@@ -131,47 +131,25 @@ def _objects(
             raise ContractViolation("invalid_request", 422)
 
 
-def _lookup(
-    lookup: CheckpointLookup,
+def _commit_evidence(
+    record: CheckpointRecord,
+    outbox: CheckpointOutbox,
     *,
     workspace_id: str,
     run_id: str,
     index: int,
-    prefix: int,
     run_revision: int,
+    attempt: CheckpointAttempt,
     now: int,
 ) -> None:
-    if (lookup.workspace_id, lookup.run_id, lookup.index) != (workspace_id, run_id, index):
-        raise ContractViolation("recovery_required", 409)
-    head, record, outbox = lookup.head, lookup.record, lookup.outbox
-    if head is None:
-        if lookup.revision != 0 or record is not None or outbox is not None:
-            raise ContractViolation("recovery_required", 409)
-        return
-    if (
-        head.checkpoint_revision != lookup.revision
-        or head.index > prefix
-        or (record is None) != (outbox is None)
-        or (record is None and head.index == index)
-    ):
-        raise ContractViolation("recovery_required", 409)
-    if record is None or outbox is None:
-        return
     if (
         (record.workspace_id, record.run_id, record.index) != (workspace_id, run_id, index)
-        or record.checkpoint_revision > lookup.revision
+        or record.binding != attempt.binding
+        or record.lease_epoch > attempt.lease_epoch
+        or (record.lease_epoch == attempt.lease_epoch and record.attempt_id != attempt.attempt_id)
         or record.run_revision > run_revision
         or record.committed_at > now
         or record.request_sha256 != message_sha256(record.request)
-        or record.index > head.index
-        or (record.checkpoint_revision == lookup.revision and record.index != head.index)
-        or (
-            record.index == head.index
-            and (
-                record.request_sha256 != head.request_sha256
-                or record.checkpoint_revision != lookup.revision
-            )
-        )
         or (outbox.workspace_id, outbox.run_id, outbox.index) != (workspace_id, run_id, index)
         or outbox.request_sha256 != record.request_sha256
         or outbox.checkpoint_revision != record.checkpoint_revision
@@ -180,19 +158,82 @@ def _lookup(
         raise ContractViolation("recovery_required", 409)
 
 
-def _retained_objects(record: CheckpointRecord, current: CheckpointArtifacts) -> None:
-    if len(record.artifacts.objects) != len(current.objects):
+def _lookup(
+    lookup: CheckpointLookup,
+    *,
+    workspace_id: str,
+    run_id: str,
+    index: int,
+    prefix: int,
+    run_revision: int,
+    attempt: CheckpointAttempt,
+    now: int,
+) -> None:
+    if (lookup.workspace_id, lookup.run_id, lookup.index) != (workspace_id, run_id, index):
         raise ContractViolation("recovery_required", 409)
-    for old, new in zip(record.artifacts.objects, current.objects, strict=True):
-        before, after = old.record, new.record
-        if (
-            before.ref != after.ref
-            or before.locator != after.locator
-            or before.created_at != after.created_at
-            or after.revision < before.revision
-            or (after.revision == before.revision and after != before)
+    head, record, outbox = lookup.head, lookup.record, lookup.outbox
+    latest, latest_outbox = lookup.latest_record, lookup.latest_outbox
+    if head is None:
+        if lookup.revision != 0 or any(
+            item is not None for item in (record, outbox, latest, latest_outbox)
         ):
             raise ContractViolation("recovery_required", 409)
+        return
+    if (
+        latest is None
+        or latest_outbox is None
+        or head.checkpoint_revision != lookup.revision
+        or head.index > prefix
+        or (record is None) != (outbox is None)
+        or (record is None and head.index == index)
+    ):
+        raise ContractViolation("recovery_required", 409)
+    _commit_evidence(
+        latest,
+        latest_outbox,
+        workspace_id=workspace_id,
+        run_id=run_id,
+        index=head.index,
+        run_revision=run_revision,
+        attempt=attempt,
+        now=now,
+    )
+    if (
+        latest.checkpoint_revision != head.checkpoint_revision
+        or latest.request_sha256 != head.request_sha256
+    ):
+        raise ContractViolation("recovery_required", 409)
+    if record is None or outbox is None:
+        return
+    _commit_evidence(
+        record,
+        outbox,
+        workspace_id=workspace_id,
+        run_id=run_id,
+        index=index,
+        run_revision=run_revision,
+        attempt=attempt,
+        now=now,
+    )
+    if record.index == head.index:
+        if record != latest or outbox != latest_outbox:
+            raise ContractViolation("recovery_required", 409)
+    elif (
+        record.index > head.index
+        or record.checkpoint_revision >= latest.checkpoint_revision
+        or record.run_revision > latest.run_revision
+        or record.committed_at > latest.committed_at
+    ):
+        raise ContractViolation("recovery_required", 409)
+
+
+def _retained_objects(record: CheckpointRecord, current: CheckpointArtifacts) -> None:
+    # This lifecycle has no available-to-available catalog revision transition.
+    # Renewed byte readbacks may differ; the retained available row may not.
+    if tuple(item.record for item in record.artifacts.objects) != tuple(
+        item.record for item in current.objects
+    ):
+        raise ContractViolation("recovery_required", 409)
 
 
 def validate_checkpoint_write(
@@ -278,6 +319,7 @@ def validate_checkpoint_write(
         index=path_index,
         prefix=prefix,
         run_revision=run.revision,
+        attempt=attempt,
         now=now,
     )
     digest = message_sha256(request)
