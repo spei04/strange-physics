@@ -45,6 +45,21 @@
           "title": "Approval Id",
           "type": "string"
         },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "quarantined",
+            "approved",
+            "revoked"
+          ],
+          "title": "State",
+          "type": "string"
+        },
         "approval_policy_sha256": {
           "maxLength": 64,
           "minLength": 64,
@@ -59,11 +74,12 @@
           "title": "Build Sha256",
           "type": "string"
         },
-        "decided_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Decided At",
-          "type": "integer"
+        "scan_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Scan Sha256",
+          "type": "string"
         },
         "profile_sha256": {
           "maxLength": 64,
@@ -72,27 +88,11 @@
           "title": "Profile Sha256",
           "type": "string"
         },
-        "revision": {
+        "decided_at": {
           "maximum": 9007199254740991,
           "minimum": 0,
-          "title": "Revision",
+          "title": "Decided At",
           "type": "integer"
-        },
-        "scan_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Scan Sha256",
-          "type": "string"
-        },
-        "state": {
-          "enum": [
-            "quarantined",
-            "approved",
-            "revoked"
-          ],
-          "title": "State",
-          "type": "string"
         }
       },
       "required": [
@@ -111,6 +111,30 @@
     "ArchiveEntry": {
       "additionalProperties": false,
       "properties": {
+        "path": {
+          "maxLength": 512,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^A-Za-z0-9_./-]"
+          },
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$",
+          "title": "Path",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "file",
+            "directory"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "expanded_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expanded Bytes",
+          "type": "integer"
+        },
         "bytes_sha256": {
           "anyOf": [
             {
@@ -124,30 +148,6 @@
             }
           ],
           "title": "Bytes Sha256"
-        },
-        "expanded_bytes": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Expanded Bytes",
-          "type": "integer"
-        },
-        "kind": {
-          "enum": [
-            "file",
-            "directory"
-          ],
-          "title": "Kind",
-          "type": "string"
-        },
-        "path": {
-          "maxLength": 512,
-          "minLength": 1,
-          "not": {
-            "pattern": "[^A-Za-z0-9_./-]"
-          },
-          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$",
-          "title": "Path",
-          "type": "string"
         }
       },
       "required": [
@@ -181,16 +181,6 @@
           "title": "Generation",
           "type": "string"
         },
-        "media_type": {
-          "maxLength": 128,
-          "minLength": 3,
-          "not": {
-            "pattern": "[^a-z0-9!#$&^_.+/-]"
-          },
-          "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]*/[a-z0-9][a-z0-9!#$&^_.+-]*$",
-          "title": "Media Type",
-          "type": "string"
-        },
         "sha256": {
           "maxLength": 64,
           "minLength": 64,
@@ -203,6 +193,16 @@
           "minimum": 0,
           "title": "Size Bytes",
           "type": "integer"
+        },
+        "media_type": {
+          "maxLength": 128,
+          "minLength": 3,
+          "not": {
+            "pattern": "[^a-z0-9!#$&^_.+/-]"
+          },
+          "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]*/[a-z0-9][a-z0-9!#$&^_.+-]*$",
+          "title": "Media Type",
+          "type": "string"
         }
       },
       "required": [
@@ -218,12 +218,6 @@
     "BuiltinAnalyticApproval": {
       "additionalProperties": false,
       "properties": {
-        "approval": {
-          "$ref": "#/$defs/ApprovalState"
-        },
-        "build": {
-          "$ref": "#/$defs/BuiltinBuild"
-        },
         "kind": {
           "const": "builtin_analytic",
           "title": "Kind",
@@ -232,8 +226,14 @@
         "profile": {
           "$ref": "#/$defs/BuiltinPredictionProfile"
         },
+        "build": {
+          "$ref": "#/$defs/BuiltinBuild"
+        },
         "scan": {
           "$ref": "#/$defs/ImageScanEvidence"
+        },
+        "approval": {
+          "$ref": "#/$defs/ApprovalState"
         }
       },
       "required": [
@@ -249,9 +249,6 @@
     "BuiltinBuild": {
       "additionalProperties": false,
       "properties": {
-        "build": {
-          "$ref": "#/$defs/VerifiedBuildEvidence"
-        },
         "kind": {
           "const": "builtin_analytic",
           "title": "Kind",
@@ -259,6 +256,9 @@
         },
         "source": {
           "$ref": "#/$defs/BuiltinSource"
+        },
+        "build": {
+          "$ref": "#/$defs/VerifiedBuildEvidence"
         }
       },
       "required": [
@@ -277,11 +277,9 @@
           "title": "Kind",
           "type": "string"
         },
-        "prediction_config_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Prediction Config Sha256",
+        "purpose": {
+          "const": "native_prediction",
+          "title": "Purpose",
           "type": "string"
         },
         "predictor_profile": {
@@ -290,16 +288,15 @@
           "type": "string"
         },
         "predictor_version": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "const": "strange-physics.linear-spring.analytic.v1",
           "title": "Predictor Version",
           "type": "string"
         },
-        "purpose": {
-          "const": "native_prediction",
-          "title": "Purpose",
+        "prediction_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Prediction Config Sha256",
           "type": "string"
         }
       },
@@ -317,6 +314,14 @@
       "additionalProperties": false,
       "description": "Real trusted repository/build inputs; never a fabricated uploaded package.",
       "properties": {
+        "repository_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Repository Id",
+          "type": "string"
+        },
         "commit": {
           "maxLength": 64,
           "minLength": 40,
@@ -325,6 +330,16 @@
           },
           "pattern": "^([0-9a-f]{40}|[0-9a-f]{64})$",
           "title": "Commit",
+          "type": "string"
+        },
+        "tree": {
+          "maxLength": 64,
+          "minLength": 40,
+          "not": {
+            "pattern": "[^0-9a-f]"
+          },
+          "pattern": "^([0-9a-f]{40}|[0-9a-f]{64})$",
+          "title": "Tree",
           "type": "string"
         },
         "lock_bytes_sha256": {
@@ -339,24 +354,6 @@
           "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Recipe Sha256",
-          "type": "string"
-        },
-        "repository_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Repository Id",
-          "type": "string"
-        },
-        "tree": {
-          "maxLength": 64,
-          "minLength": 40,
-          "not": {
-            "pattern": "[^0-9a-f]"
-          },
-          "pattern": "^([0-9a-f]{40}|[0-9a-f]{64})$",
-          "title": "Tree",
           "type": "string"
         }
       },
@@ -392,13 +389,6 @@
     "CheckpointBinding": {
       "additionalProperties": false,
       "properties": {
-        "agent_config_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Agent Config Sha256",
-          "type": "string"
-        },
         "agent_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -414,10 +404,11 @@
           "title": "Agent Package Sha256",
           "type": "string"
         },
-        "checkpoint_protocol": {
-          "const": "strange-physics.checkpoint.v1",
-          "default": "strange-physics.checkpoint.v1",
-          "title": "Checkpoint Protocol",
+        "agent_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Config Sha256",
           "type": "string"
         },
         "runtime_image_sha256": {
@@ -425,6 +416,12 @@
           "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Runtime Image Sha256",
+          "type": "string"
+        },
+        "checkpoint_protocol": {
+          "const": "strange-physics.checkpoint.v1",
+          "default": "strange-physics.checkpoint.v1",
+          "title": "Checkpoint Protocol",
           "type": "string"
         }
       },
@@ -446,18 +443,18 @@
           "title": "Index",
           "type": "integer"
         },
-        "record_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Record Sha256",
-          "type": "string"
-        },
         "request_sha256": {
           "maxLength": 64,
           "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Request Sha256",
+          "type": "string"
+        },
+        "record_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Record Sha256",
           "type": "string"
         }
       },
@@ -499,11 +496,27 @@
     "CreateRunRequest": {
       "additionalProperties": false,
       "properties": {
+        "world_version_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Version Id",
+          "type": "string"
+        },
         "agent_package_sha256": {
           "maxLength": 64,
           "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Agent Package Sha256",
+          "type": "string"
+        },
+        "track": {
+          "enum": [
+            "controlled_selection",
+            "agent_discovery"
+          ],
+          "title": "Track",
           "type": "string"
         },
         "experiment_budget": {
@@ -514,22 +527,6 @@
         },
         "limits": {
           "$ref": "#/$defs/ResourceLimits"
-        },
-        "track": {
-          "enum": [
-            "controlled_selection",
-            "agent_discovery"
-          ],
-          "title": "Track",
-          "type": "string"
-        },
-        "world_version_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "World Version Id",
-          "type": "string"
         }
       },
       "required": [
@@ -569,6 +566,18 @@
           "title": "Message",
           "type": "string"
         },
+        "request_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Request Id",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        },
         "operation_id": {
           "anyOf": [
             {
@@ -583,18 +592,6 @@
             }
           ],
           "title": "Operation Id"
-        },
-        "request_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Request Id",
-          "type": "string"
-        },
-        "retryable": {
-          "title": "Retryable",
-          "type": "boolean"
         }
       },
       "required": [
@@ -616,16 +613,16 @@
           "title": "Cpu Seconds",
           "type": "integer"
         },
+        "wall_seconds": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        },
         "memory_bytes": {
           "maximum": 9007199254740991,
           "minimum": 1,
           "title": "Memory Bytes",
-          "type": "integer"
-        },
-        "output_bytes": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Output Bytes",
           "type": "integer"
         },
         "process_count": {
@@ -640,10 +637,10 @@
           "title": "Scratch Bytes",
           "type": "integer"
         },
-        "wall_seconds": {
+        "output_bytes": {
           "maximum": 9007199254740991,
-          "minimum": 1,
-          "title": "Wall Seconds",
+          "minimum": 0,
+          "title": "Output Bytes",
           "type": "integer"
         }
       },
@@ -661,16 +658,11 @@
     "Experiment": {
       "additionalProperties": false,
       "properties": {
-        "impulse": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Impulse"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
+        "schema_version": {
+          "const": "strange-physics.experiment.v1",
+          "default": "strange-physics.experiment.v1",
+          "title": "Schema Version",
+          "type": "string"
         },
         "particles": {
           "items": {
@@ -681,11 +673,16 @@
           "title": "Particles",
           "type": "array"
         },
-        "schema_version": {
-          "const": "strange-physics.experiment.v1",
-          "default": "strange-physics.experiment.v1",
-          "title": "Schema Version",
-          "type": "string"
+        "impulse": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Impulse"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "required": [
@@ -697,27 +694,6 @@
     "ExperimentRecord": {
       "additionalProperties": false,
       "properties": {
-        "error": {
-          "anyOf": [
-            {
-              "const": "simulation_failed",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Error"
-        },
-        "experiment": {
-          "$ref": "#/$defs/Experiment"
-        },
-        "index": {
-          "minimum": 0,
-          "title": "Index",
-          "type": "integer"
-        },
         "operation_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -725,6 +701,14 @@
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Operation Id",
           "type": "string"
+        },
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "experiment": {
+          "$ref": "#/$defs/Experiment"
         },
         "status": {
           "enum": [
@@ -744,6 +728,19 @@
             }
           ],
           "default": null
+        },
+        "error": {
+          "anyOf": [
+            {
+              "const": "simulation_failed",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
         }
       },
       "required": [
@@ -777,6 +774,28 @@
     "ExperimentSpace": {
       "additionalProperties": false,
       "properties": {
+        "schema_version": {
+          "const": "strange-physics.space.v1",
+          "default": "strange-physics.space.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "structure": {
+          "$ref": "#/$defs/Structure"
+        },
+        "sampling": {
+          "$ref": "#/$defs/Sampling"
+        },
+        "limits": {
+          "$ref": "#/$defs/Limits",
+          "default": {
+            "position_norm": 2.0,
+            "velocity_norm": 2.0,
+            "impulse_norm": 1.0,
+            "min_mass": 0.5,
+            "max_mass": 2.0
+          }
+        },
         "budget": {
           "default": 40,
           "maximum": 10000,
@@ -789,28 +808,6 @@
           "minimum": 0,
           "title": "Calibration Experiments",
           "type": "integer"
-        },
-        "limits": {
-          "$ref": "#/$defs/Limits",
-          "default": {
-            "impulse_norm": 1.0,
-            "max_mass": 2.0,
-            "min_mass": 0.5,
-            "position_norm": 2.0,
-            "velocity_norm": 2.0
-          }
-        },
-        "sampling": {
-          "$ref": "#/$defs/Sampling"
-        },
-        "schema_version": {
-          "const": "strange-physics.space.v1",
-          "default": "strange-physics.space.v1",
-          "title": "Schema Version",
-          "type": "string"
-        },
-        "structure": {
-          "$ref": "#/$defs/Structure"
         }
       },
       "required": [
@@ -823,6 +820,11 @@
     "Frame": {
       "additionalProperties": false,
       "properties": {
+        "time": {
+          "minimum": 0,
+          "title": "Time",
+          "type": "number"
+        },
         "positions": {
           "items": {
             "maxItems": 2,
@@ -841,11 +843,6 @@
           "minItems": 1,
           "title": "Positions",
           "type": "array"
-        },
-        "time": {
-          "minimum": 0,
-          "title": "Time",
-          "type": "number"
         },
         "velocities": {
           "items": {
@@ -878,14 +875,20 @@
     "IdempotencyScope": {
       "additionalProperties": false,
       "properties": {
-        "key": {
-          "maxLength": 128,
-          "minLength": 1,
+        "workspace_id": {
           "not": {
-            "pattern": "[^!-~]"
+            "pattern": "[^A-Za-z0-9_-]"
           },
-          "pattern": "^[!-~]+$",
-          "title": "Key",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
           "type": "string"
         },
         "kind": {
@@ -898,14 +901,6 @@
           "title": "Kind",
           "type": "string"
         },
-        "principal_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Principal Id",
-          "type": "string"
-        },
         "resource_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -914,12 +909,14 @@
           "title": "Resource Id",
           "type": "string"
         },
-        "workspace_id": {
+        "key": {
+          "maxLength": 128,
+          "minLength": 1,
           "not": {
-            "pattern": "[^A-Za-z0-9_-]"
+            "pattern": "[^!-~]"
           },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Workspace Id",
+          "pattern": "^[!-~]+$",
+          "title": "Key",
           "type": "string"
         }
       },
@@ -936,6 +933,22 @@
     "ImageScanEvidence": {
       "additionalProperties": false,
       "properties": {
+        "scan_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Scan Id",
+          "type": "string"
+        },
+        "verifier_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verifier Id",
+          "type": "string"
+        },
         "build_sha256": {
           "maxLength": 64,
           "minLength": 64,
@@ -943,11 +956,19 @@
           "title": "Build Sha256",
           "type": "string"
         },
-        "observed_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Observed At",
-          "type": "integer"
+        "runtime_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Image Sha256",
+          "type": "string"
+        },
+        "scan_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Scan Policy Sha256",
+          "type": "string"
         },
         "outcome": {
           "enum": [
@@ -958,41 +979,17 @@
           "title": "Outcome",
           "type": "string"
         },
-        "runtime_image_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Runtime Image Sha256",
-          "type": "string"
-        },
-        "scan_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Scan Id",
-          "type": "string"
-        },
-        "scan_policy_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Scan Policy Sha256",
-          "type": "string"
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
         },
         "valid_until": {
           "maximum": 9007199254740991,
           "minimum": 0,
           "title": "Valid Until",
           "type": "integer"
-        },
-        "verifier_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Verifier Id",
-          "type": "string"
         }
       },
       "required": [
@@ -1045,43 +1042,6 @@
       "additionalProperties": false,
       "description": "Current trusted policy/capability observation; constructing it proves no isolation.",
       "properties": {
-        "network_policy": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Network Policy",
-          "type": "string"
-        },
-        "observed_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Observed At",
-          "type": "integer"
-        },
-        "sandbox_profile": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Sandbox Profile",
-          "type": "string"
-        },
-        "state": {
-          "enum": [
-            "available",
-            "unavailable",
-            "unknown"
-          ],
-          "title": "State",
-          "type": "string"
-        },
-        "valid_until": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Valid Until",
-          "type": "integer"
-        },
         "verification_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -1104,6 +1064,43 @@
           "pattern": "^[0-9a-f]{64}$",
           "title": "Worker Policy Sha256",
           "type": "string"
+        },
+        "sandbox_profile": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Sandbox Profile",
+          "type": "string"
+        },
+        "network_policy": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Network Policy",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
+        },
+        "valid_until": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Valid Until",
+          "type": "integer"
         }
       },
       "required": [
@@ -1123,27 +1120,6 @@
     "Limits": {
       "additionalProperties": false,
       "properties": {
-        "impulse_norm": {
-          "default": 1.0,
-          "exclusiveMinimum": 0,
-          "maximum": 10,
-          "title": "Impulse Norm",
-          "type": "number"
-        },
-        "max_mass": {
-          "default": 2.0,
-          "exclusiveMinimum": 0,
-          "maximum": 10,
-          "title": "Max Mass",
-          "type": "number"
-        },
-        "min_mass": {
-          "default": 0.5,
-          "exclusiveMinimum": 0,
-          "maximum": 10,
-          "title": "Min Mass",
-          "type": "number"
-        },
         "position_norm": {
           "default": 2.0,
           "exclusiveMinimum": 0,
@@ -1157,6 +1133,27 @@
           "maximum": 10,
           "title": "Velocity Norm",
           "type": "number"
+        },
+        "impulse_norm": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Impulse Norm",
+          "type": "number"
+        },
+        "min_mass": {
+          "default": 0.5,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Min Mass",
+          "type": "number"
+        },
+        "max_mass": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Max Mass",
+          "type": "number"
         }
       },
       "title": "Limits",
@@ -1166,38 +1163,6 @@
       "additionalProperties": false,
       "description": "Actual trusted lock interpretation; digest equality alone does not prove pinned inputs.",
       "properties": {
-        "inspection_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Inspection Sha256",
-          "type": "string"
-        },
-        "lock_bytes_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Lock Bytes Sha256",
-          "type": "string"
-        },
-        "observed_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Observed At",
-          "type": "integer"
-        },
-        "outcome": {
-          "const": "complete_pinned",
-          "title": "Outcome",
-          "type": "string"
-        },
-        "policy_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Policy Sha256",
-          "type": "string"
-        },
         "verification_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -1213,6 +1178,38 @@
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Verifier Id",
           "type": "string"
+        },
+        "inspection_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Inspection Sha256",
+          "type": "string"
+        },
+        "lock_bytes_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Lock Bytes Sha256",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "outcome": {
+          "const": "complete_pinned",
+          "title": "Outcome",
+          "type": "string"
+        },
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
         }
       },
       "required": [
@@ -1283,10 +1280,24 @@
       "additionalProperties": false,
       "description": "Trusted complete stored-byte readback, not object user metadata or a client claim.\n\nThe producer verifies the entire raw byte stream at this exact generation,\nwith transport checksum validation where supported. This message does not do I/O.",
       "properties": {
-        "completeness": {
-          "const": "complete",
-          "title": "Completeness",
+        "verification_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verification Id",
           "type": "string"
+        },
+        "verifier_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verifier Id",
+          "type": "string"
+        },
+        "locator": {
+          "$ref": "#/$defs/StorageLocator"
         },
         "generation": {
           "maxLength": 20,
@@ -1298,8 +1309,18 @@
           "title": "Generation",
           "type": "string"
         },
-        "locator": {
-          "$ref": "#/$defs/StorageLocator"
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
         },
         "media_type": {
           "maxLength": 128,
@@ -1317,33 +1338,9 @@
           "title": "Observed At",
           "type": "integer"
         },
-        "sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Sha256",
-          "type": "string"
-        },
-        "size_bytes": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Size Bytes",
-          "type": "integer"
-        },
-        "verification_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Verification Id",
-          "type": "string"
-        },
-        "verifier_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Verifier Id",
+        "completeness": {
+          "const": "complete",
+          "title": "Completeness",
           "type": "string"
         }
       },
@@ -1364,6 +1361,58 @@
     "Operation": {
       "additionalProperties": false,
       "properties": {
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "run_creation",
+            "experiment",
+            "cancellation",
+            "model_submission"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed",
+            "cancelled"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
         "accepted_experiment_index": {
           "anyOf": [
             {
@@ -1376,41 +1425,6 @@
             }
           ],
           "title": "Accepted Experiment Index"
-        },
-        "error": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Error"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "kind": {
-          "enum": [
-            "run_creation",
-            "experiment",
-            "cancellation",
-            "model_submission"
-          ],
-          "title": "Kind",
-          "type": "string"
-        },
-        "operation_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Operation Id",
-          "type": "string"
-        },
-        "request_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Request Sha256",
-          "type": "string"
         },
         "result": {
           "anyOf": [
@@ -1445,32 +1459,15 @@
           ],
           "title": "Result"
         },
-        "run_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Run Id",
-          "type": "string"
-        },
-        "status": {
-          "enum": [
-            "pending",
-            "running",
-            "completed",
-            "failed",
-            "cancelled"
-          ],
-          "title": "Status",
-          "type": "string"
-        },
-        "workspace_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Workspace Id",
-          "type": "string"
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Error"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1499,8 +1496,17 @@
           "title": "Admission Id",
           "type": "string"
         },
+        "request": {
+          "$ref": "#/$defs/CreateRunRequest"
+        },
+        "stored_request": {
+          "$ref": "#/$defs/StoredRequest"
+        },
         "admitted_run": {
           "$ref": "#/$defs/RunView"
+        },
+        "ownership": {
+          "$ref": "#/$defs/RunOwnership"
         },
         "agent_configuration": {
           "additionalProperties": {
@@ -1511,15 +1517,6 @@
         },
         "checkpoint_binding": {
           "$ref": "#/$defs/CheckpointBinding"
-        },
-        "ownership": {
-          "$ref": "#/$defs/RunOwnership"
-        },
-        "request": {
-          "$ref": "#/$defs/CreateRunRequest"
-        },
-        "stored_request": {
-          "$ref": "#/$defs/StoredRequest"
         }
       },
       "required": [
@@ -1538,15 +1535,6 @@
       "additionalProperties": false,
       "description": "Trusted bounded full-archive inspection; not an extractor or proof by construction.",
       "properties": {
-        "entries": {
-          "items": {
-            "$ref": "#/$defs/ArchiveEntry"
-          },
-          "maxItems": 10000,
-          "minItems": 1,
-          "title": "Entries",
-          "type": "array"
-        },
         "inspection_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -1563,11 +1551,8 @@
           "title": "Inspector Id",
           "type": "string"
         },
-        "observed_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Observed At",
-          "type": "integer"
+        "source": {
+          "$ref": "#/$defs/PackageSource"
         },
         "policy_sha256": {
           "maxLength": 64,
@@ -1576,8 +1561,20 @@
           "title": "Policy Sha256",
           "type": "string"
         },
-        "source": {
-          "$ref": "#/$defs/PackageSource"
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/ArchiveEntry"
+          },
+          "maxItems": 10000,
+          "minItems": 1,
+          "title": "Entries",
+          "type": "array"
+        },
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
         }
       },
       "required": [
@@ -1595,6 +1592,14 @@
       "additionalProperties": false,
       "description": "Detached JSON manifest: syntax/profile only, never an import or Agent conformance test.\n\nmessage_sha256 of this complete parsed manifest is agent_package_sha256 in\nCreateRunRequest and CheckpointBinding, distinct from raw archive, detached\nmanifest, lock and OCI image hashes.\n\nThe source archive does not contain this generation-bearing manifest, avoiding\na self-referential archive hash. Configuration-dependent Agent.identity is\nretained in original run admission, separately from this package entrypoint.",
       "properties": {
+        "schema_version": {
+          "const": "strange-physics.python-agent.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
         "agent_protocol": {
           "const": "strange-physics.agent.v1",
           "title": "Agent Protocol",
@@ -1610,11 +1615,9 @@
           "title": "Entrypoint",
           "type": "string"
         },
-        "lock_bytes_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Lock Bytes Sha256",
+        "lock_profile": {
+          "const": "uv-lock.v1",
+          "title": "Lock Profile",
           "type": "string"
         },
         "lock_path": {
@@ -1627,18 +1630,12 @@
           "title": "Lock Path",
           "type": "string"
         },
-        "lock_profile": {
-          "const": "uv-lock.v1",
-          "title": "Lock Profile",
+        "lock_bytes_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Lock Bytes Sha256",
           "type": "string"
-        },
-        "schema_version": {
-          "const": "strange-physics.python-agent.v1",
-          "title": "Schema Version",
-          "type": "string"
-        },
-        "source": {
-          "$ref": "#/$defs/ArtifactRef"
         }
       },
       "required": [
@@ -1657,14 +1654,13 @@
       "additionalProperties": false,
       "description": "Workspace/package ownership; no fabricated run ID.",
       "properties": {
-        "created_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Created At",
-          "type": "integer"
-        },
-        "locator": {
-          "$ref": "#/$defs/StorageLocator"
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
         },
         "package_id": {
           "not": {
@@ -1677,11 +1673,8 @@
         "ref": {
           "$ref": "#/$defs/ArtifactRef"
         },
-        "revision": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Revision",
-          "type": "integer"
+        "locator": {
+          "$ref": "#/$defs/StorageLocator"
         },
         "state": {
           "enum": [
@@ -1693,13 +1686,17 @@
           "title": "State",
           "type": "string"
         },
-        "workspace_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Workspace Id",
-          "type": "string"
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
         }
       },
       "required": [
@@ -1718,38 +1715,31 @@
       "additionalProperties": false,
       "description": "Explicit producer/predecode/cumulative caps; these are not deployment defaults.",
       "properties": {
-        "build_limits": {
-          "$ref": "#/$defs/ExecutionResources"
-        },
-        "build_recipe_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Build Recipe Sha256",
-          "type": "string"
-        },
-        "build_sandbox_profile": {
+        "policy_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
           },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Build Sandbox Profile",
+          "title": "Policy Id",
           "type": "string"
         },
-        "builder_image_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Builder Image Sha256",
-          "type": "string"
+        "max_metadata_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Max Metadata Bytes",
+          "type": "integer"
         },
-        "dependency_network_policy": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Dependency Network Policy",
-          "type": "string"
+        "max_manifest_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Max Manifest Bytes",
+          "type": "integer"
+        },
+        "max_lock_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Max Lock Bytes",
+          "type": "integer"
         },
         "max_archive_bytes": {
           "maximum": 9007199254740991,
@@ -1761,6 +1751,18 @@
           "maximum": 10000,
           "minimum": 1,
           "title": "Max Entries",
+          "type": "integer"
+        },
+        "max_path_bytes": {
+          "maximum": 512,
+          "minimum": 1,
+          "title": "Max Path Bytes",
+          "type": "integer"
+        },
+        "max_path_depth": {
+          "maximum": 64,
+          "minimum": 1,
+          "title": "Max Path Depth",
           "type": "integer"
         },
         "max_entry_bytes": {
@@ -1781,42 +1783,37 @@
           "title": "Max Expansion Ratio",
           "type": "integer"
         },
-        "max_lock_bytes": {
-          "maximum": 9007199254740991,
-          "minimum": 1,
-          "title": "Max Lock Bytes",
-          "type": "integer"
+        "build_limits": {
+          "$ref": "#/$defs/ExecutionResources"
         },
-        "max_manifest_bytes": {
-          "maximum": 9007199254740991,
-          "minimum": 1,
-          "title": "Max Manifest Bytes",
-          "type": "integer"
+        "build_recipe_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Build Recipe Sha256",
+          "type": "string"
         },
-        "max_metadata_bytes": {
-          "maximum": 9007199254740991,
-          "minimum": 1,
-          "title": "Max Metadata Bytes",
-          "type": "integer"
+        "builder_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Builder Image Sha256",
+          "type": "string"
         },
-        "max_path_bytes": {
-          "maximum": 512,
-          "minimum": 1,
-          "title": "Max Path Bytes",
-          "type": "integer"
-        },
-        "max_path_depth": {
-          "maximum": 64,
-          "minimum": 1,
-          "title": "Max Path Depth",
-          "type": "integer"
-        },
-        "policy_id": {
+        "build_sandbox_profile": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
           },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Policy Id",
+          "title": "Build Sandbox Profile",
+          "type": "string"
+        },
+        "dependency_network_policy": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Dependency Network Policy",
           "type": "string"
         }
       },
@@ -1848,11 +1845,11 @@
         "archive": {
           "$ref": "#/$defs/VerifiedPackageObject"
         },
-        "manifest": {
-          "$ref": "#/$defs/PackageManifest"
-        },
         "manifest_object": {
           "$ref": "#/$defs/VerifiedPackageObject"
+        },
+        "manifest": {
+          "$ref": "#/$defs/PackageManifest"
         }
       },
       "required": [
@@ -1873,12 +1870,6 @@
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Id",
           "type": "string"
-        },
-        "mass": {
-          "default": 1.0,
-          "exclusiveMinimum": 0,
-          "title": "Mass",
-          "type": "number"
         },
         "position": {
           "maxItems": 2,
@@ -1911,6 +1902,12 @@
           ],
           "title": "Velocity",
           "type": "array"
+        },
+        "mass": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "title": "Mass",
+          "type": "number"
         }
       },
       "required": [
@@ -1923,22 +1920,16 @@
     "ResourceLimits": {
       "additionalProperties": false,
       "properties": {
-        "max_artifact_bytes": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Max Artifact Bytes",
-          "type": "integer"
-        },
         "max_cpu_seconds": {
           "maximum": 9007199254740991,
           "minimum": 1,
           "title": "Max Cpu Seconds",
           "type": "integer"
         },
-        "max_input_tokens": {
+        "max_wall_seconds": {
           "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Max Input Tokens",
+          "minimum": 1,
+          "title": "Max Wall Seconds",
           "type": "integer"
         },
         "max_model_calls": {
@@ -1947,22 +1938,28 @@
           "title": "Max Model Calls",
           "type": "integer"
         },
+        "max_input_tokens": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Input Tokens",
+          "type": "integer"
+        },
         "max_output_tokens": {
           "maximum": 9007199254740991,
           "minimum": 0,
           "title": "Max Output Tokens",
           "type": "integer"
         },
+        "max_artifact_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Artifact Bytes",
+          "type": "integer"
+        },
         "max_provider_cost_microusd": {
           "maximum": 9007199254740991,
           "minimum": 0,
           "title": "Max Provider Cost Microusd",
-          "type": "integer"
-        },
-        "max_wall_seconds": {
-          "maximum": 9007199254740991,
-          "minimum": 1,
-          "title": "Max Wall Seconds",
           "type": "integer"
         }
       },
@@ -2001,31 +1998,21 @@
       "additionalProperties": false,
       "description": "Immutable admission record; creator leaf credentials are audit metadata only.",
       "properties": {
-        "created_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Created At",
-          "type": "integer"
-        },
-        "created_by_credential_id": {
+        "workspace_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
           },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Created By Credential Id",
+          "title": "Workspace Id",
           "type": "string"
         },
-        "grant_incarnation": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Grant Incarnation",
-          "type": "integer"
-        },
-        "principal_generation": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Principal Generation",
-          "type": "integer"
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
         },
         "principal_id": {
           "not": {
@@ -2043,19 +2030,29 @@
           "title": "Principal Kind",
           "type": "string"
         },
+        "principal_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Principal Generation",
+          "type": "integer"
+        },
+        "grant_incarnation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Grant Incarnation",
+          "type": "integer"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
         "run_deadline": {
           "maximum": 9007199254740991,
           "minimum": 0,
           "title": "Run Deadline",
           "type": "integer"
-        },
-        "run_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Run Id",
-          "type": "string"
         },
         "scopes": {
           "items": {
@@ -2072,12 +2069,12 @@
           "title": "Scopes",
           "type": "array"
         },
-        "workspace_id": {
+        "created_by_credential_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
           },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Workspace Id",
+          "title": "Created By Credential Id",
           "type": "string"
         }
       },
@@ -2099,23 +2096,13 @@
     "RunView": {
       "additionalProperties": false,
       "properties": {
-        "budget_remaining": {
-          "maximum": 10000,
-          "minimum": 0,
-          "title": "Budget Remaining",
-          "type": "integer"
-        },
-        "experiments_accepted": {
-          "maximum": 10000,
-          "minimum": 0,
-          "title": "Experiments Accepted",
-          "type": "integer"
-        },
-        "revision": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Revision",
-          "type": "integer"
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
         },
         "run_id": {
           "not": {
@@ -2124,9 +2111,6 @@
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Run Id",
           "type": "string"
-        },
-        "space": {
-          "$ref": "#/$defs/ExperimentSpace"
         },
         "status": {
           "enum": [
@@ -2144,13 +2128,26 @@
           "title": "Status",
           "type": "string"
         },
-        "workspace_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Workspace Id",
-          "type": "string"
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "space": {
+          "$ref": "#/$defs/ExperimentSpace"
+        },
+        "experiments_accepted": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Experiments Accepted",
+          "type": "integer"
+        },
+        "budget_remaining": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Budget Remaining",
+          "type": "integer"
         }
       },
       "required": [
@@ -2169,11 +2166,13 @@
       "additionalProperties": false,
       "description": "Provider identity is private and trusted; no client URL or command.",
       "properties": {
-        "confirmed_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Confirmed At",
-          "type": "integer"
+        "provider_namespace": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Namespace",
+          "type": "string"
         },
         "instance_id": {
           "not": {
@@ -2198,13 +2197,11 @@
           "title": "Launch Record Sha256",
           "type": "string"
         },
-        "provider_namespace": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Provider Namespace",
-          "type": "string"
+        "confirmed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Confirmed At",
+          "type": "integer"
         }
       },
       "required": [
@@ -2220,13 +2217,6 @@
     "Sampling": {
       "additionalProperties": false,
       "properties": {
-        "dt": {
-          "default": 0.01,
-          "maximum": 0.05,
-          "minimum": 0.0001,
-          "title": "Dt",
-          "type": "number"
-        },
         "duration": {
           "default": 2.0,
           "exclusiveMinimum": 0,
@@ -2234,11 +2224,11 @@
           "title": "Duration",
           "type": "number"
         },
-        "position_noise": {
-          "default": 0.0,
-          "maximum": 0.1,
-          "minimum": 0,
-          "title": "Position Noise",
+        "dt": {
+          "default": 0.01,
+          "maximum": 0.05,
+          "minimum": 0.0001,
+          "title": "Dt",
           "type": "number"
         },
         "sample_interval": {
@@ -2246,6 +2236,13 @@
           "exclusiveMinimum": 0,
           "maximum": 1,
           "title": "Sample Interval",
+          "type": "number"
+        },
+        "position_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Position Noise",
           "type": "number"
         },
         "velocity_noise": {
@@ -2263,6 +2260,11 @@
       "additionalProperties": false,
       "description": "Private configured namespace and server-assigned key; no client URL or credentials.",
       "properties": {
+        "provider": {
+          "const": "gcs",
+          "title": "Provider",
+          "type": "string"
+        },
         "namespace_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -2280,11 +2282,6 @@
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_./-]*$",
           "title": "Object Key",
           "type": "string"
-        },
-        "provider": {
-          "const": "gcs",
-          "title": "Provider",
-          "type": "string"
         }
       },
       "required": [
@@ -2298,8 +2295,8 @@
     "StoredRequest": {
       "additionalProperties": false,
       "properties": {
-        "operation": {
-          "$ref": "#/$defs/Operation"
+        "scope": {
+          "$ref": "#/$defs/IdempotencyScope"
         },
         "request_sha256": {
           "maxLength": 64,
@@ -2308,8 +2305,8 @@
           "title": "Request Sha256",
           "type": "string"
         },
-        "scope": {
-          "$ref": "#/$defs/IdempotencyScope"
+        "operation": {
+          "$ref": "#/$defs/Operation"
         }
       },
       "required": [
@@ -2323,6 +2320,19 @@
     "Structure": {
       "additionalProperties": false,
       "properties": {
+        "particle_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particle Ids",
+          "type": "array"
+        },
         "anchors": {
           "default": [],
           "items": {
@@ -2340,19 +2350,6 @@
           "maxItems": 120,
           "title": "Connections",
           "type": "array"
-        },
-        "particle_ids": {
-          "items": {
-            "not": {
-              "pattern": "[^A-Za-z0-9_-]"
-            },
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-            "type": "string"
-          },
-          "maxItems": 8,
-          "minItems": 1,
-          "title": "Particle Ids",
-          "type": "array"
         }
       },
       "required": [
@@ -2364,14 +2361,14 @@
     "SubmittedAgentProfile": {
       "additionalProperties": false,
       "properties": {
-        "agent_protocol": {
-          "const": "strange-physics.agent.v1",
-          "title": "Agent Protocol",
-          "type": "string"
-        },
         "kind": {
           "const": "submitted_agent",
           "title": "Kind",
+          "type": "string"
+        },
+        "agent_protocol": {
+          "const": "strange-physics.agent.v1",
+          "title": "Agent Protocol",
           "type": "string"
         }
       },
@@ -2385,19 +2382,19 @@
     "SubmittedBuild": {
       "additionalProperties": false,
       "properties": {
-        "build": {
-          "$ref": "#/$defs/VerifiedBuildEvidence"
-        },
-        "inspection": {
-          "$ref": "#/$defs/PackageInspection"
-        },
         "kind": {
           "const": "submitted_agent",
           "title": "Kind",
           "type": "string"
         },
+        "inspection": {
+          "$ref": "#/$defs/PackageInspection"
+        },
         "lock": {
           "$ref": "#/$defs/LockResolutionEvidence"
+        },
+        "build": {
+          "$ref": "#/$defs/VerifiedBuildEvidence"
         }
       },
       "required": [
@@ -2412,12 +2409,6 @@
     "SubmittedRuntimeApproval": {
       "additionalProperties": false,
       "properties": {
-        "approval": {
-          "$ref": "#/$defs/ApprovalState"
-        },
-        "build": {
-          "$ref": "#/$defs/SubmittedBuild"
-        },
         "kind": {
           "const": "submitted_agent",
           "title": "Kind",
@@ -2426,8 +2417,14 @@
         "profile": {
           "$ref": "#/$defs/SubmittedAgentProfile"
         },
+        "build": {
+          "$ref": "#/$defs/SubmittedBuild"
+        },
         "scan": {
           "$ref": "#/$defs/ImageScanEvidence"
+        },
+        "approval": {
+          "$ref": "#/$defs/ApprovalState"
         }
       },
       "required": [
@@ -2471,38 +2468,12 @@
           "title": "Build Id",
           "type": "string"
         },
-        "build_policy_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Build Policy Sha256",
-          "type": "string"
-        },
-        "builder_image_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Builder Image Sha256",
-          "type": "string"
-        },
-        "completed_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Completed At",
-          "type": "integer"
-        },
-        "lock_bytes_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Lock Bytes Sha256",
-          "type": "string"
-        },
-        "provenance_bytes_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Provenance Bytes Sha256",
+        "verifier_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verifier Id",
           "type": "string"
         },
         "provenance_verification_id": {
@@ -2513,18 +2484,11 @@
           "title": "Provenance Verification Id",
           "type": "string"
         },
-        "recipe_sha256": {
+        "provenance_bytes_sha256": {
           "maxLength": 64,
           "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
-          "title": "Recipe Sha256",
-          "type": "string"
-        },
-        "runtime_image_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Runtime Image Sha256",
+          "title": "Provenance Bytes Sha256",
           "type": "string"
         },
         "source_sha256": {
@@ -2534,19 +2498,52 @@
           "title": "Source Sha256",
           "type": "string"
         },
+        "lock_bytes_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Lock Bytes Sha256",
+          "type": "string"
+        },
+        "recipe_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Recipe Sha256",
+          "type": "string"
+        },
+        "builder_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Builder Image Sha256",
+          "type": "string"
+        },
+        "runtime_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Image Sha256",
+          "type": "string"
+        },
+        "build_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Build Policy Sha256",
+          "type": "string"
+        },
+        "completed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Completed At",
+          "type": "integer"
+        },
         "verified_at": {
           "maximum": 9007199254740991,
           "minimum": 0,
           "title": "Verified At",
           "type": "integer"
-        },
-        "verifier_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Verifier Id",
-          "type": "string"
         }
       },
       "required": [
@@ -2602,6 +2599,22 @@
           "title": "Kind",
           "type": "string"
         },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
         "launch_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -2622,22 +2635,6 @@
           "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
           "title": "Request Sha256",
-          "type": "string"
-        },
-        "run_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Run Id",
-          "type": "string"
-        },
-        "workspace_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Workspace Id",
           "type": "string"
         }
       },
@@ -2674,12 +2671,6 @@
       "additionalProperties": false,
       "description": "Verified internal claims, never a public/service/run credential scope.",
       "properties": {
-        "audience": {
-          "maxLength": 512,
-          "minLength": 1,
-          "title": "Audience",
-          "type": "string"
-        },
         "authorization_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -2688,17 +2679,13 @@
           "title": "Authorization Id",
           "type": "string"
         },
-        "expires_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Expires At",
-          "type": "integer"
-        },
-        "issued_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Issued At",
-          "type": "integer"
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
         },
         "issuer": {
           "maxLength": 2048,
@@ -2708,6 +2695,50 @@
           },
           "pattern": "^https://[!-~]+$",
           "title": "Issuer",
+          "type": "string"
+        },
+        "audience": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Audience",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "principal_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Principal Generation",
+          "type": "integer"
+        },
+        "purpose": {
+          "enum": [
+            "workers:launch",
+            "workers:terminate"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
           "type": "string"
         },
         "launch_id": {
@@ -2725,55 +2756,21 @@
           ],
           "title": "Launch Id"
         },
-        "policy_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Policy Id",
-          "type": "string"
-        },
-        "principal_generation": {
+        "issued_at": {
           "maximum": 9007199254740991,
           "minimum": 0,
-          "title": "Principal Generation",
+          "title": "Issued At",
           "type": "integer"
         },
-        "principal_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Principal Id",
-          "type": "string"
-        },
-        "purpose": {
-          "enum": [
-            "workers:launch",
-            "workers:terminate"
-          ],
-          "title": "Purpose",
-          "type": "string"
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
         },
         "revoked": {
           "title": "Revoked",
           "type": "boolean"
-        },
-        "run_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Run Id",
-          "type": "string"
-        },
-        "workspace_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Workspace Id",
-          "type": "string"
         }
       },
       "required": [
@@ -2798,10 +2795,12 @@
       "additionalProperties": false,
       "description": "Internal control identity policy, independent of worker admission/isolation policy.",
       "properties": {
-        "audience": {
-          "maxLength": 512,
-          "minLength": 1,
-          "title": "Audience",
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
           "type": "string"
         },
         "issuer": {
@@ -2814,19 +2813,17 @@
           "title": "Issuer",
           "type": "string"
         },
+        "audience": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Audience",
+          "type": "string"
+        },
         "max_authorization_seconds": {
           "maximum": 9007199254740991,
           "minimum": 1,
           "title": "Max Authorization Seconds",
           "type": "integer"
-        },
-        "policy_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Policy Id",
-          "type": "string"
         }
       },
       "required": [
@@ -2841,16 +2838,6 @@
     "WorkerInternalPrincipal": {
       "additionalProperties": false,
       "properties": {
-        "active": {
-          "title": "Active",
-          "type": "boolean"
-        },
-        "generation": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Generation",
-          "type": "integer"
-        },
         "principal_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -2858,6 +2845,16 @@
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Principal Id",
           "type": "string"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "active": {
+          "title": "Active",
+          "type": "boolean"
         },
         "purposes": {
           "items": {
@@ -2885,29 +2882,6 @@
     "WorkerLaunchLifecycle": {
       "additionalProperties": false,
       "properties": {
-        "first_fenced_at": {
-          "anyOf": [
-            {
-              "maximum": 9007199254740991,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "First Fenced At"
-        },
-        "instance": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/RuntimeInstance"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "launch_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -2941,6 +2915,42 @@
           "title": "State",
           "type": "string"
         },
+        "instance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RuntimeInstance"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_fenced_at": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "First Fenced At"
+        },
+        "stopped_at": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Stopped At"
+        },
         "stop_outcome": {
           "anyOf": [
             {
@@ -2955,19 +2965,6 @@
             }
           ],
           "title": "Stop Outcome"
-        },
-        "stopped_at": {
-          "anyOf": [
-            {
-              "maximum": 9007199254740991,
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Stopped At"
         }
       },
       "required": [
@@ -2987,6 +2984,22 @@
       "additionalProperties": false,
       "description": "Keyed authoritative lookup; partial projections remain representable for recovery.\n\nA matching key does not prove absence. Atomic unique attempt admission is required.",
       "properties": {
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
         "attempt_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -3000,6 +3013,16 @@
           "minimum": 0,
           "title": "Lease Epoch",
           "type": "integer"
+        },
+        "record": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorkerLaunchRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "lifecycle": {
           "anyOf": [
@@ -3020,32 +3043,6 @@
               "type": "null"
             }
           ]
-        },
-        "record": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/WorkerLaunchRecord"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "run_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Run Id",
-          "type": "string"
-        },
-        "workspace_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Workspace Id",
-          "type": "string"
         }
       },
       "required": [
@@ -3063,26 +3060,26 @@
     "WorkerLaunchPlan": {
       "additionalProperties": false,
       "properties": {
-        "expected_credential_revision": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Expected Credential Revision",
-          "type": "integer"
-        },
         "expected_run_revision": {
           "maximum": 9007199254740991,
           "minimum": 0,
           "title": "Expected Run Revision",
           "type": "integer"
         },
+        "expected_credential_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Credential Revision",
+          "type": "integer"
+        },
+        "record": {
+          "$ref": "#/$defs/WorkerLaunchRecord"
+        },
         "lifecycle": {
           "$ref": "#/$defs/WorkerLaunchLifecycle"
         },
         "outbox": {
           "$ref": "#/$defs/WorkerCommandOutbox"
-        },
-        "record": {
-          "$ref": "#/$defs/WorkerLaunchRecord"
         }
       },
       "required": [
@@ -3099,50 +3096,12 @@
       "additionalProperties": false,
       "description": "Immutable launch intent and retained provenance; logical running is not a process.",
       "properties": {
-        "admission": {
-          "$ref": "#/$defs/OriginalExecutionAdmission"
-        },
-        "approval": {
-          "$ref": "#/$defs/SubmittedRuntimeApproval"
-        },
-        "created_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Created At",
-          "type": "integer"
-        },
-        "credential_revision": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Credential Revision",
-          "type": "integer"
-        },
-        "deadline": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Deadline",
-          "type": "integer"
-        },
         "launch_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
           },
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Launch Id",
-          "type": "string"
-        },
-        "original_credential_generation": {
-          "maximum": 9007199254740991,
-          "minimum": 1,
-          "title": "Original Credential Generation",
-          "type": "integer"
-        },
-        "original_credential_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Original Credential Id",
           "type": "string"
         },
         "request": {
@@ -3155,10 +3114,48 @@
           "title": "Request Sha256",
           "type": "string"
         },
+        "admission": {
+          "$ref": "#/$defs/OriginalExecutionAdmission"
+        },
+        "approval": {
+          "$ref": "#/$defs/SubmittedRuntimeApproval"
+        },
+        "original_credential_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Original Credential Id",
+          "type": "string"
+        },
+        "original_credential_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Original Credential Generation",
+          "type": "integer"
+        },
         "run_revision": {
           "maximum": 9007199254740991,
           "minimum": 0,
           "title": "Run Revision",
+          "type": "integer"
+        },
+        "credential_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Credential Revision",
+          "type": "integer"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "deadline": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Deadline",
           "type": "integer"
         }
       },
@@ -3190,6 +3187,13 @@
           "title": "Launch Id",
           "type": "string"
         },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
         "launch_record_sha256": {
           "maxLength": 64,
           "minLength": 64,
@@ -3202,13 +3206,6 @@
           "minimum": 0,
           "title": "Lifecycle Revision",
           "type": "integer"
-        },
-        "request_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Request Sha256",
-          "type": "string"
         },
         "state": {
           "enum": [
@@ -3236,18 +3233,20 @@
     "WorkerLaunchRequest": {
       "additionalProperties": false,
       "properties": {
-        "admission_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Admission Sha256",
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
           "type": "string"
         },
-        "approval_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Approval Sha256",
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
           "type": "string"
         },
         "attempt_id": {
@@ -3264,6 +3263,27 @@
           "title": "Lease Epoch",
           "type": "integer"
         },
+        "admission_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Admission Sha256",
+          "type": "string"
+        },
+        "approval_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Approval Sha256",
+          "type": "string"
+        },
+        "worker_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Worker Policy Sha256",
+          "type": "string"
+        },
         "resources": {
           "$ref": "#/$defs/ExecutionResources"
         },
@@ -3276,29 +3296,6 @@
               "type": "null"
             }
           ]
-        },
-        "run_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Run Id",
-          "type": "string"
-        },
-        "worker_policy_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Worker Policy Sha256",
-          "type": "string"
-        },
-        "workspace_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Workspace Id",
-          "type": "string"
         }
       },
       "required": [
@@ -3319,10 +3316,10 @@
       "additionalProperties": false,
       "description": "Pure transition shape, not authorization or a successful process mutation.",
       "properties": {
-        "after": {
+        "before": {
           "$ref": "#/$defs/WorkerLaunchLifecycle"
         },
-        "before": {
+        "after": {
           "$ref": "#/$defs/WorkerLaunchLifecycle"
         }
       },
@@ -3336,40 +3333,6 @@
     "WorkerPolicy": {
       "additionalProperties": false,
       "properties": {
-        "approval_policy_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Approval Policy Sha256",
-          "type": "string"
-        },
-        "build_policy_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Build Policy Sha256",
-          "type": "string"
-        },
-        "max_configuration_bytes": {
-          "maximum": 262144,
-          "minimum": 1,
-          "title": "Max Configuration Bytes",
-          "type": "integer"
-        },
-        "max_metadata_bytes": {
-          "maximum": 9007199254740991,
-          "minimum": 1,
-          "title": "Max Metadata Bytes",
-          "type": "integer"
-        },
-        "network_policy": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Network Policy",
-          "type": "string"
-        },
         "policy_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -3377,6 +3340,21 @@
           "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
           "title": "Policy Id",
           "type": "string"
+        },
+        "max_metadata_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Max Metadata Bytes",
+          "type": "integer"
+        },
+        "max_configuration_bytes": {
+          "maximum": 262144,
+          "minimum": 1,
+          "title": "Max Configuration Bytes",
+          "type": "integer"
+        },
+        "worker_limits": {
+          "$ref": "#/$defs/ExecutionResources"
         },
         "sandbox_profile": {
           "not": {
@@ -3386,6 +3364,21 @@
           "title": "Sandbox Profile",
           "type": "string"
         },
+        "network_policy": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Network Policy",
+          "type": "string"
+        },
+        "build_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Build Policy Sha256",
+          "type": "string"
+        },
         "scan_policy_sha256": {
           "maxLength": 64,
           "minLength": 64,
@@ -3393,8 +3386,12 @@
           "title": "Scan Policy Sha256",
           "type": "string"
         },
-        "worker_limits": {
-          "$ref": "#/$defs/ExecutionResources"
+        "approval_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Approval Policy Sha256",
+          "type": "string"
         }
       },
       "required": [
@@ -3415,11 +3412,11 @@
       "additionalProperties": false,
       "description": "Per-launch acknowledgement only. It never changes a current lease or global run state.",
       "properties": {
-        "evidence": {
-          "$ref": "#/$defs/WorkerTerminationEvidence"
-        },
         "termination": {
           "$ref": "#/$defs/WorkerTerminationRecord"
+        },
+        "evidence": {
+          "$ref": "#/$defs/WorkerTerminationEvidence"
         },
         "transition": {
           "$ref": "#/$defs/WorkerLifecycleTransition"
@@ -3437,21 +3434,36 @@
       "additionalProperties": false,
       "description": "Trusted exact-instance stop or fenced never-started reconciliation.",
       "properties": {
-        "fenced_lifecycle_revision": {
-          "maximum": 9007199254740991,
-          "minimum": 1,
-          "title": "Fenced Lifecycle Revision",
-          "type": "integer"
+        "verification_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verification Id",
+          "type": "string"
         },
-        "instance": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/RuntimeInstance"
-            },
-            {
-              "type": "null"
-            }
-          ]
+        "verifier_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verifier Id",
+          "type": "string"
+        },
+        "termination_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Termination Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
         },
         "launch_id": {
           "not": {
@@ -3468,10 +3480,10 @@
           "title": "Launch Record Sha256",
           "type": "string"
         },
-        "observed_at": {
+        "fenced_lifecycle_revision": {
           "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Observed At",
+          "minimum": 1,
+          "title": "Fenced Lifecycle Revision",
           "type": "integer"
         },
         "outcome": {
@@ -3482,36 +3494,21 @@
           "title": "Outcome",
           "type": "string"
         },
-        "request_sha256": {
-          "maxLength": 64,
-          "minLength": 64,
-          "pattern": "^[0-9a-f]{64}$",
-          "title": "Request Sha256",
-          "type": "string"
+        "instance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RuntimeInstance"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
-        "termination_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Termination Id",
-          "type": "string"
-        },
-        "verification_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Verification Id",
-          "type": "string"
-        },
-        "verifier_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Verifier Id",
-          "type": "string"
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
         }
       },
       "required": [
@@ -3535,14 +3532,14 @@
         "launch": {
           "$ref": "#/$defs/WorkerLaunchRecord"
         },
-        "outbox": {
-          "$ref": "#/$defs/WorkerCommandOutbox"
-        },
         "termination": {
           "$ref": "#/$defs/WorkerTerminationRecord"
         },
         "transition": {
           "$ref": "#/$defs/WorkerLifecycleTransition"
+        },
+        "outbox": {
+          "$ref": "#/$defs/WorkerCommandOutbox"
         }
       },
       "required": [
@@ -3557,17 +3554,13 @@
     "WorkerTerminationRecord": {
       "additionalProperties": false,
       "properties": {
-        "accepted_at": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Accepted At",
-          "type": "integer"
-        },
-        "fenced_lifecycle_revision": {
-          "maximum": 9007199254740991,
-          "minimum": 1,
-          "title": "Fenced Lifecycle Revision",
-          "type": "integer"
+        "termination_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Termination Id",
+          "type": "string"
         },
         "request": {
           "$ref": "#/$defs/WorkerTerminationRequest"
@@ -3579,13 +3572,17 @@
           "title": "Request Sha256",
           "type": "string"
         },
-        "termination_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Termination Id",
-          "type": "string"
+        "fenced_lifecycle_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Fenced Lifecycle Revision",
+          "type": "integer"
+        },
+        "accepted_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Accepted At",
+          "type": "integer"
         }
       },
       "required": [
@@ -3601,11 +3598,21 @@
     "WorkerTerminationRequest": {
       "additionalProperties": false,
       "properties": {
-        "expected_lifecycle_revision": {
-          "maximum": 9007199254740991,
-          "minimum": 0,
-          "title": "Expected Lifecycle Revision",
-          "type": "integer"
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
         },
         "launch_id": {
           "not": {
@@ -3622,6 +3629,12 @@
           "title": "Launch Record Sha256",
           "type": "string"
         },
+        "expected_lifecycle_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Lifecycle Revision",
+          "type": "integer"
+        },
         "reason": {
           "enum": [
             "cancelled",
@@ -3634,22 +3647,6 @@
             "budget_exhausted"
           ],
           "title": "Reason",
-          "type": "string"
-        },
-        "run_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Run Id",
-          "type": "string"
-        },
-        "workspace_id": {
-          "not": {
-            "pattern": "[^A-Za-z0-9_-]"
-          },
-          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
-          "title": "Workspace Id",
           "type": "string"
         }
       },
@@ -3665,11 +3662,11 @@
       "type": "object"
     }
   },
-  "$id": "https://strange-physics.dev/contracts/execution.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "Only detached PackageManifest is public. Inspection, build, approval, internal authority and launch/termination records require trusted producers; no execution or isolation proof.",
+  "$id": "https://strange-physics.dev/contracts/execution.schema.json",
   "x-contract-status": "EXEC1 API review; runtime predicates and full SP-01.c freeze pending",
   "x-public-models": [
     "PackageManifest"
-  ]
+  ],
+  "description": "Only detached PackageManifest is public. Inspection, build, approval, internal authority and launch/termination records require trusted producers; no execution or isolation proof."
 }
