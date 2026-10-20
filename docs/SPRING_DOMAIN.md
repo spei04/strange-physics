@@ -195,12 +195,14 @@ Measured 2026-10-20 on Linux x86_64, Python 3.12.3, NumPy 2.5.3 and Pydantic
 mixed-mass clarification: `f55d38fcecd5ed08c8d6ec73f21e70680569ba57`.
 The unchanged matrices and thresholds preceded measurements.
 
-Harness source: `418c6cb622e48cf2a10eb0bed2b43df389788796`,
+Harness source: `a92bab9b5b7431bd26c55e720d5c1d4eff64ce55`,
 [test_spring_domain.py](../tests/test_spring_domain.py), SHA-256
-`95e20fbac32ed4da401d2e21d3b46db64aa97b10e747841480a17ae4b7f8ce4a`.
+`2678116fd88e67f904237fd904ba354021331016cc7b71028f72db680a1a70b7`.
 Its deterministic JSON report retains every case, configuration, public-prefix
 hash, raw estimate/status, completed/failed counts, coefficient error and
-individual probe RMSE. It is synthetic calibration output, **not an
+individual probe RMSE. The 24 report entries stay aligned to the probe manifest;
+failed predictions have null metrics and explicit failed indices. It is
+synthetic calibration output, **not an
 EvaluationReport or official score**. It writes no journals or private data.
 
 ### Noiseless finite matrix
@@ -270,6 +272,17 @@ contract before estimation. Partial windows, mismatched configuration,
 unsupported topology/mass, wrong public particle identity and purchased versus
 prediction bounds have explicit rejection tests.
 
+Finite public observation values can still overflow derived arithmetic.
+Independent review found this edge outside the physical manifest; the harness
+now explicitly fails nonfinite derived columns, reductions and coefficients.
+It retains the public-prefix hash, row/probe counts and failure reason; an
+unrepresentable raw coefficient or design RMS becomes JSON null, never zero
+or an accepted model. A finite but extreme coefficient can also overflow
+analytic prediction; each probe is attempted, failures retain null metrics,
+and any failure prevents joint acceptance. Five overflow regressions verify
+report serialization and all 24 outcomes. These repairs change no scientific
+manifest or tolerance.
+
 ### Noise sensitivity: failures retained
 
 All 64 prefixes and 256 records remain in the report. There are six negative
@@ -307,7 +320,7 @@ The second command recomputes the full report on stdout, including source hash,
 environment, preregistration identities and per-probe errors. No output file,
 new package, training GPU or hosted service is required.
 
-The focused suite passed 199 cases and the full suite passed 812 tests.
+The calibration suite has 204 passing cases and the full suite passed 817 tests.
 Repository-wide Ruff and formatting passed (61 files), as did strict mypy
 (33 checked files). Required Python 3.12/3.14 hosted CI and exact-head
 independent review remain integration acceptance gates.
