@@ -1323,9 +1323,9 @@
         "frontend",
         "security"
       ],
-      "execution_owner": "Project lead coordinates; Quality owns ID-C/C1 then C2, Platform/Research review.",
+      "execution_owner": "Project lead integrates accepted C2 and records final parent gate; Platform prepares SP-01.c read-only.",
       "issue": "https://github.com/spei04/strange-physics/issues/52",
-      "evidence": "Control part1, ID-A and ID-B/B1/B2/B3 integrated; B3 PR79/main24c8796/treeaedc6064 matches reviewedc716ede; PR/main CI pass,918 integrated tests. ID-C/C1 in progress, C2 then final composition review remain; full-contract consumers stay blocked."
+      "evidence": "All earlier subsets integrated. C2 source33caa917/runtime67d1128 independently accepted by Research/Quality/lead; parent composition audit passed749 conformance cases,597 schema checks and45 routes/112 refs. Exact-head PR/main integration remains; consumers stay gated."
     },
     {
       "id": "SP-01.c",
@@ -10549,7 +10549,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Engineer Platform (C2 run credentials in identity checkout)",
+      "BE1": "Project lead integrates accepted C2; Platform prepares SP-01.c read-only.",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10565,7 +10565,7 @@
     "schedule_repair": "2026-10-19: technical lead accepted SP-01.b before SP-01.c freeze. One added edge (369 total); both reference schedules regenerated without changing effort, capacity, approval gates or current execution staffing.",
     "reviewed_scientific_head": "6e724152e5c947db1662bd65cea36412a8498b22",
     "integrated_scientific_subset": "cc24aef592f3157b67024e3cab41159489c77ffa",
-    "contract_scope_note": "Control part1, ID-A, ID-B and C1 service credentials are integrated. Platform authors C2; final identity composition and dependent consumers remain gated.",
+    "contract_scope_note": "All control, ID-A, ID-B and C1 subsets are integrated. C2 and final SP-01.b composition are independently accepted at33caa917; exact-head PR/main integration remains before parent freeze and consumer handoff.",
     "integrated_control_subset": "d6204aaab82e1b100532f40bae00e224d9334c65",
     "identity_remaining_units": [
       {
@@ -10627,7 +10627,7 @@
         "depends_on": [
           "SP-01.b/ID-B"
         ],
-        "owner": "Engineer Quality authors C1; Engineer Platform authors C2 after C1 acceptance.",
+        "owner": "C1 authored by Quality and C2 by Platform; lead integrates accepted sources.",
         "issue": "https://github.com/spei04/strange-physics/issues/64",
         "pr_units": [
           {
@@ -10666,13 +10666,20 @@
             "depends_on": [
               "C1"
             ],
-            "owner": "Engineer Platform, exclusive identity writer",
+            "owner": "Engineer Platform completed authoring; Research and Quality accepted; lead owns integration.",
             "human_effort_days": [
               2,
               4
             ],
             "confidence": "medium-low",
-            "execution_plan": "Immutable RunOwnership and complete run credential state; mandatory keyword-only ProductAuthority on existing authorize_product/check_product_idempotency. Current session/service/run authority before receipts; per-operation role checks; original owner and deadline independent of creator leaf key; private coordinator-only atomic lifecycle proposals and metadata-only retry. Early API and independent review before freeze."
+            "execution_plan": "Immutable RunOwnership and complete run credential state; mandatory keyword-only ProductAuthority on existing authorize_product/check_product_idempotency. Current session/service/run authority before receipts; per-operation role checks; original owner and deadline independent of creator leaf key; private coordinator-only atomic lifecycle proposals and metadata-only retry. Early API and independent review before freeze.",
+            "source": "33caa9178ccf6547f9f70762afd45c0fb0fe088e",
+            "runtime_source": "67d1128d262d9fcf7cca4884eb472a73041d7606",
+            "integrated_source": "cb14e3486915087081978aacb2176848fca9ca46",
+            "review_status": "source_and_final_composition_accepted_pending_hosted_integration",
+            "author_full_tests": 1595,
+            "focused_tests": 222,
+            "author_schema_checks": 597
           }
         ],
         "execution_plan": "Lead accepted two dependent reviewable increments. New trusted principal authority generation and durable grant incarnation prevent disable/re-enable and remove/regrant resurrection; existing public session/B1 shapes remain unchanged. Creator and leaf key are audit metadata, not enduring run authority. ID-C and SP-01.b stay open until both and final composition review. C1 uses the reused identity checkout after B3 mainCI acceptance. Recovery preserves the original scopes/expiry, changes only key identity/verifier/generation and immediately revokes the target; exact retries return metadata only after current authority checks.",
@@ -10680,7 +10687,7 @@
           1,
           2
         ],
-        "remaining_human_effort_days": [
+        "pre_c2_estimate_human_effort_days": [
           3,
           6
         ]
@@ -11065,6 +11072,41 @@
       "integrated_mypy_files": 52,
       "integrated_formatted_files": 86,
       "integrated_schema_checks": 571
+    },
+    "run_credential_evidence": {
+      "source": "33caa9178ccf6547f9f70762afd45c0fb0fe088e",
+      "runtime_source": "67d1128d262d9fcf7cca4884eb472a73041d7606",
+      "integrated_source": "cb14e3486915087081978aacb2176848fca9ca46",
+      "status": "reviewed_pending_hosted_integration",
+      "author": "Engineer Platform",
+      "reviewers": [
+        "Engineer Research",
+        "Engineer Quality",
+        "Project lead"
+      ],
+      "full_tests": 1595,
+      "focused_tests": 222,
+      "quality_extra_checks": 6,
+      "quality_original_mutations": 9,
+      "quality_repair_mutations": 3,
+      "research_mutations": 8,
+      "mypy_files": 53,
+      "schema_checks": 597,
+      "record": "docs/RUN_CREDENTIAL_CONTRACT.md",
+      "private_index_sha256": "85a05d494101dc0cf70bf3b38f94008b8a68ca29cfe06a00eaf2f2147112065e",
+      "boundary": "Pure current-authority contracts, coordinator proposals and metadata replay. No live token verification/signing, HTTP/provider configuration, durable SQL/RLS/locking, streams or recovery drill claim."
+    },
+    "identity_composition_review": {
+      "status": "accepted_pending_C2_integration",
+      "reviewer": "Engineer Quality",
+      "source": "33caa9178ccf6547f9f70762afd45c0fb0fe088e",
+      "runtime_source": "67d1128d262d9fcf7cca4884eb472a73041d7606",
+      "conformance_tests": 749,
+      "external_schema_checks": 597,
+      "public_routes": 45,
+      "schema_references": 112,
+      "scope": "Interface/semantic/SQL obligations only. Namespace tuple/null uniqueness, purpose-bound proof ownership, durable run ancestry, replay, per-payload stream checks and non-resurrecting browser-family producers align.",
+      "gate": "Parent SP-01.b closes only after C2 exact-head PR/main acceptance."
     }
   },
   "research_amendment": {
