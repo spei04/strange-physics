@@ -1,0 +1,9 @@
+# These paths require explicit maintenance review.
+# One owner is configured today; an author cannot approve their own PR.
+# Repository settings and adding another authorized reviewer are separate work.
+/.github/ @spei04
+/pyproject.toml @spei04
+/uv.lock @spei04
+/scripts/ @spei04
+/tests/test_ci_policy.py @spei04
+/docs/CI_CD.md @spei04
