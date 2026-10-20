@@ -11,7 +11,7 @@ The 42 existing GitHub issues become epic rollups. **168 reviewable PR tasks, 36
 
 ## Research methods amendment (2026-10-19 cutoff)
 
-The [dated method decision record](research/2026-10-19-METHOD_DECISIONS.md) adds18 proposed PR tasks, explicit sources/license checks and separate comparisons for shared-model selection, richer symbolic models and law-change recovery. Existing random/classical controls and the current I1/C2 assignments continue. New runtime remains behind RA_EXEC; provider, sizing, official-study and release gates remain separate.
+The [dated method decision record](research/2026-10-19-METHOD_DECISIONS.md) adds18 proposed PR tasks, explicit sources/license checks and separate comparisons for shared-model selection, richer symbolic models and law-change recovery. Existing random/classical controls remain; I1 and the artifact/worker contract assignments continue after accepted C2 integration. New runtime remains behind RA_EXEC; provider, sizing, official-study and release gates remain separate.
 
 The first new result is a local fixed-pool linear-model comparison after its scientific prerequisites:36 development episodes,432 purchased slots maximum,8 CPU-core-hours,1GiB new artifacts and zero provider calls. It does not wait for hosted deployment or all paper-inspired profiles. The optional later feasibility pilot has at most162 episodes; replicated-world sizing requires a separate approval and evidence before confirmatory freeze.
 
@@ -323,21 +323,21 @@ Versioned model/provenance, exact purchased-data-only fitter prefix, distinct in
 <a id="contract-http"></a>
 ### C-HTTP: HTTP operations and error envelopes
 
-**Owner:** Backend + SDK + frontend. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [openapi.json](../contracts/draft/openapi.json), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending).
+**Owner:** Backend + SDK + frontend. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [openapi.json](../contracts/draft/openapi.json), [accepted control and identity contract set](IDENTITY_RUN_CONTRACT.md) (SP-01.b bounded freeze complete; live producers remain later tasks).
 
-OpenAPI 3.1, scoped operation polling, Idempotency-Key on applicable mutations, immutable checkpoint PUT, explicit 401/403/404/409/422/429/503 semantics, version policy. Current draft has 11 operations, not complete product API.
+OpenAPI 3.1, scoped operation polling, Idempotency-Key on applicable mutations, immutable checkpoint PUT, explicit 401/403/404/409/422/429/503 semantics, version policy. The accepted bounded control/identity route set is not the complete product API; later groups retain their own freeze tasks.
 
 <a id="contract-id"></a>
 ### C-ID: Identity, membership and credential authority
 
-**Owner:** Backend + security. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [roadmap sections 5–6 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending).
+**Owner:** Backend + security. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [roadmap sections 5–6 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze), [accepted control and identity contract set](IDENTITY_RUN_CONTRACT.md) (SP-01.b bounded freeze complete; live producers remain later tasks).
 
 Issuer/subject identity, explicit workspace roles/invitations, scoped machine and run credentials, revocation and secure browser session semantics. Enterprise federation refined by SP-34.a; SCIM frozen by SP-35.a before those consumers.
 
 <a id="contract-db"></a>
 ### C-DB: Transactional relational invariants
 
-**Owner:** Backend. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [roadmap data model](ROADMAP.md#6-data-model-ownership-and-lifecycle), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending).
+**Owner:** Backend. **Freeze:** [SP-01.b](#sp-01-b). **Source:** [roadmap data model](ROADMAP.md#6-data-model-ownership-and-lifecycle), [accepted control and identity contract set](IDENTITY_RUN_CONTRACT.md) (SP-01.b bounded freeze complete; live producers remain later tasks).
 
 Composite tenant ownership, unique operation/ordinal, atomic debit/result/outbox, revision/epoch checks, immutable terminal state, safe migration/runtime-role separation.
 
@@ -528,10 +528,12 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Security and reliability:** Membership separate from identity; immutable terminal states.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Backend engineer; base reference lane BE1. Required review: Backend, SDK, frontend, security. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; in progress. Part 1 integrated by PR #53 at d6204aaab82e1b100532f40bae00e224d9334c65, matching reviewed f6cead9 tree. Four head CI checks and merge-main CI passed; 252 tests, 67 external schema/header cases and independent Research/Platform reviews passed. ID-A sessions/bootstrap is integrated via PR #65 at cc576da, matching reviewed 34d26d9, with 413 tests/207 external schema cases and green PR/main CI. ID-B/B1 membership is integrated via PR #67 at 1ec45aa, matching reviewed b9c4754, with 474 tests and passing required PR CI. B2 invitations are integrated via PR #69 at 89e6117, matching reviewed 8267865, with 560 tests and green PR/main CI. B3 linking is integrated via PR #79/main24c8796 with matching reviewed tree and passing PR/main CI; 918 integrated tests. ID-C/C1 is integrated through PR #84/main 2cb3df7 with matching reviewed tree, 1,434 integrated tests and passing PR/main CI. Platform authors C2; final composition review remains. Capacity is recovered; full-contract consumers remain blocked.
+- **Milestone / state:** R0; complete. PR #88/main 92320173ff0d3278c65cfc251983d57fab9960b1 matches accepted b8d3e5ee96b3b07da53eccbabddebc5a73223ba3 and tree 515e27ebbb594a15ce439b24a14463ed7a4cf9a7; PR CI39367180231 and all protected-main CI39367439199 jobs passed. Integrated 1,692 tests, Ruff/format92, strict mypy57,613 schema checks, configured security checks and offline package validation passed. Earlier control/ID-A/ID-B/C1 integrations and final 749-case composition review are accepted. Interface/SQL obligations are frozen; actual hosted producers, signing and storage remain later tasks.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-01-c"></a>
+
+
 ### SP-01.c — Freeze artifacts, packages and worker interfaces
 
 - **Objective:** Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze artifacts, packages and worker interfaces.
@@ -544,10 +546,12 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Security and reliability:** No trusted pickle; bounded inputs and scoped identities.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, security, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; backlog approved; not started; prerequisites and slice checkpoints still apply.
+- **Milestone / state:** R0; in progress under Engineer Platform, issue #89, after accepted SP-00.b and SP-01.b. Three reviewed PR units: ART1 object/checkpoint admission, EXEC1 package/worker envelopes, COMP1 predictor/DB composition. Existing four delivery plus one reserve days and all gates are unchanged.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-01-d"></a>
+
+
 ### SP-01.d — Freeze world, SSE and replay contracts
 
 - **Objective:** Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze world, sse and replay contracts.
@@ -3353,19 +3357,21 @@ No implementation was started by this planning review. No new checkout, dependen
 
 ## Current execution refinements
 
-SP-01.b is being delivered as smaller PR units under its existing completion gate: control part 1, ID-A sessions/bootstrap, ID-B/B1 workspace/membership and B2 invitations are integrated. B3 explicit identity linking and ID-C credential lifecycle remain separately reviewed units. ID-C is split into C1 service/key lifecycle and dependent C2 run credentials/authority composition; neither the ID-C parent nor SP-01.b closes before both and final composition review. B3 and C1 integration are accepted; Platform owns C2 in the reused identity checkout; new trusted principal-generation/grant-incarnation projections preserve existing public session/membership messages. Original ID-C reference effort: C1 service/key lifecycle 3–5 engineer-days (medium), now completed; C2 run credentials/composition 2–4 (medium-low); shared final composition review/integration 1–2, counted once. Current remaining effort is 3–6 human engineer-days, including uncertainty; no additional reserve is added. This supersedes the original two-day ID-C expectation for current execution only; the nine-human reference forecast remains historical and agent elapsed time is not human effort evidence. The original decomposition estimated 6–8 engineer-days (medium confidence) before ID-A delivery. That estimate now needs a human-resource reforecast; neither the original four-day reference estimate nor agent elapsed time is a current delivery forecast. All full-contract consumers remain blocked until the parent freeze passes.
+SP-01.b is complete through the independently reviewed control, ID-A, ID-B/B1–B3 and ID-C/C1–C2 units plus final composition. PR #88/main 92320173ff0d3278c65cfc251983d57fab9960b1 matches accepted b8d3e5ee96b3b07da53eccbabddebc5a73223ba3 and tree 515e27ebbb594a15ce439b24a14463ed7a4cf9a7; PR CI39367180231 and all protected-main CI39367439199 jobs passed. Integrated 1,692 tests, Ruff/format92, strict mypy57,613 schema checks, configured security checks and offline package validation passed. The earlier 3–6-day remaining identity estimate is historical and no longer an outstanding assignment. Agent elapsed time is not human effort evidence. Full-contract consumers may use this bounded freeze once their other actual prerequisites pass; no live enforcement or release claim follows.
+
+SP-01.c/#89 is assigned to Platform in three sequential review units: ART1 immutable object identity and mandatory bound checkpoint evidence; EXEC1 quarantined package/build and current launch/broker authority; COMP1 predictor identities and explicit object/DB recovery fixtures. Public generation and internal locator remain separate. Broker authority reuses the C2 current credential tuple. Resource limits are explicit versioned policy inputs. CORE/SCI bytes stay unchanged; Research owns local workflow/CLI source. No provisioning, build execution or sandbox proof. This decomposition changes no baseline estimate, dependency or approval gate.
 
 The coordinated [CI-01 request](https://github.com/spei04/strange-physics/issues/54) adds bounded repository CI/CD maintenance. It does not waive the cloud storage/provisioning gates or complete SP-27.a. Repository-settings coordination owns branch protection; candidate delivery requires protected main and successful required checks. Publication/deployment remain separately gated.
 
-Execution checkpoint 2026-10-20: CI-01 is complete for the current package via PR #56 and protected-main run 39347053265; [DELIVERY_RECORD.md](DELIVERY_RECORD.md) preserves exact evidence and limitations. [ID-A/#57](https://github.com/spei04/strange-physics/issues/57) is integrated through PR #65, merge cc576da and reviewed head 34d26d9; both independent reviews and PR/main CI passed. Platform delivered ID-B/B1 in PR #67 at 1ec45aa after both peer reviews; required PR CI39350544354 and protected-main CI39350659100 passed with 474 tests. Platform delivered B2 in [PR #69](https://github.com/spei04/strange-physics/pull/69), main 89e6117 matching reviewed 8267865; PR CI39351960120 and main CI39352075786 passed with 560 tests. B3/#63 is integrated through PR #79/main24c8796 with passing PR/main CI. C1 is integrated through PR #84/main 2cb3df7 with passing PR/main CI; Platform owns C2 in the reused identity checkout. Quality owns the independent scorer after accepted predictor integration. The product owner separately approved the recovery snapshot and online 200→300 GiB disk expansion; Platform completed it and Quality independently accepted ~96.96 GiB free plus preserved source, dependencies and consumers. The single clean checkout was reconciled from c773946 to main 89a44ed; Research then received the first writer slot for SP-03.a/#73. Platform owns the active C2 slice of [ID-C/#64](https://github.com/spei04/strange-physics/issues/64) after accepted C1. The full SP-01.b freeze, ID-C/final composition, staging provisioning gates and human forecast re-estimation remain open. SP-02.b capacity is complete; its acceptance is not a restore rehearsal or production-readiness claim. PR #55 integrated journey/staging documentation without approving UI or provisioning.
+Execution checkpoint 2026-10-20: SP-01.b and ID-C are complete; Platform now owns SP-01.c/#89, Research owns SP-04.e/#87, and Quality reviews both. Earlier source/PR/check identities remain in EXECUTION_LOG.md and the machine ledger. SP-02.b capacity is complete after the approved recovery snapshot and 200→300 GiB expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
 
 
 Scientific execution checkpoint 2026-10-20: Research's read-only dependency review
 confirms SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b → SP-06.a → SP-04.e/I1,
 with the additional approved joins and accepted predecessors recorded in
 [EXECUTION_LOG.md](EXECUTION_LOG.md#next-scientific-acceptance-checkpoint--i1).
-Quality owns SP-06.a/#83 in the primary checkout after accepted SP-04.b.
-C1 is integrated; Platform owns C2 in the identity checkout. The six scientific tasks retain
+SP-06.a/#83 is integrated; Research owns SP-04.e/#87 in the primary checkout.
+SP-01.b is integrated; Platform owns SP-01.c/#89 in the identity checkout. The six scientific tasks retain
 19 reference engineering days plus 4.75 reserve, not a subagent schedule promise.
 No unfinished identity contract or whole-R0 gate is a prerequisite for this local
 slice. Enterprise work and its actual consumer gates remain unchanged. I1 needs

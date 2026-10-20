@@ -14,11 +14,16 @@ from strange_physics.control_contracts import (
     CreateRunRequest,
     IdempotencyScope,
     Membership,
-    RunLease,
     StoredRequest,
     VerifiedCredential,
 )
+from strange_physics.credential_authority import CredentialOwner, GrantAuthority, PrincipalAuthority
 from strange_physics.research_contracts import message_sha256
+from strange_physics.run_credential_contracts import (
+    HumanProductAuthority,
+    RunProductAuthority,
+    ServiceProductAuthority,
+)
 from strange_physics.session_contracts import DeploymentSessionPolicy
 from strange_physics.workspace_contracts import (
     PUBLIC_MODELS,
@@ -470,36 +475,83 @@ def test_security_revocation_can_quarantine_last_owner_without_public_bypass() -
             validate_security_revocation(**security_args(**patch))
 
 
+def product_context(
+    kind: str = "user",
+) -> tuple[VerifiedCredential, Membership, HumanProductAuthority | ServiceProductAuthority]:
+    if kind == "user":
+        browser = actor()
+        member = owner()
+        credential = value(
+            VerifiedCredential,
+            credential_id=browser.session.session_id,
+            expires_at=browser.session.absolute_expires_at,
+        )
+        composed = HumanProductAuthority(
+            kind="user",
+            policy=policy(),
+            actor=browser,
+            owner=CredentialOwner(
+                principal=PrincipalAuthority(
+                    kind="human", principal_id=member.principal_id, active=True, generation=0
+                ),
+                grant=GrantAuthority(membership=member, incarnation=0),
+            ),
+            session_principal_generation=0,
+        )
+        return credential, member, composed
+    data = json.loads((ROOT / "contracts/run-credentials.examples.json").read_text())["valid"][
+        "ServiceProductAuthority"
+    ]
+    data["current"]["principal"]["workspace_id"] = "ws-1"
+    data["current"]["principal"]["grant"]["membership"]["workspace_id"] = "ws-1"
+    data["current"]["records"][0]["key"]["workspace_id"] = "ws-1"
+    data["current"]["records"][0]["key"]["scopes"] = ["runs:create", "runs:read"]
+    service = ServiceProductAuthority.model_validate_json(json.dumps(data))
+    member = service.current.principal.grant.membership
+    key = service.current.records[0].key
+    credential = value(
+        VerifiedCredential,
+        kind="service",
+        principal_id=member.principal_id,
+        credential_id=key.credential_id,
+        scopes=list(key.scopes),
+        expires_at=key.expires_at,
+    )
+    return credential, member, service
+
+
 def test_quarantine_fences_product_and_cached_operation_before_conflict_details() -> None:
-    credential = value(VerifiedCredential)
-    member = owner()
     for kind in ("user", "service"):
-        current = changed(credential, kind=kind)
+        current, member, composed = product_context(kind)
         authorize_product(
             authority(),
             current,
             member,
+            authority=composed,
             permission="runs:create",
             workspace_id="ws-1",
-            now=100,
+            now=1100,
         )
         with denied("forbidden"):
             authorize_product(
                 authority(state="quarantined"),
                 current,
                 member,
+                authority=composed,
                 permission="runs:create",
                 workspace_id="ws-1",
-                now=100,
+                now=1100,
             )
+    credential, member, composed = product_context()
     args: dict[str, Any] = dict(
         workspace=authority(),
         credential=credential,
         membership=member,
+        authority=composed,
         scope=value(IdempotencyScope),
         request=value(CreateRunRequest),
         stored=value(StoredRequest),
-        now=100,
+        now=1100,
     )
     assert check_product_idempotency(**args) == value(StoredRequest).operation
     with denied("forbidden"):
@@ -515,14 +567,7 @@ def test_quarantine_fences_product_and_cached_operation_before_conflict_details(
             )
         )
     with denied("not_found", 404):
-        check_product_idempotency(
-            **(
-                args
-                | {
-                    "workspace": authority(workspace_id="foreign"),
-                }
-            )
-        )
+        check_product_idempotency(**(args | {"workspace": authority(workspace_id="foreign")}))
 
 
 def test_http_boundaries_headers_and_exact_shared_constraints() -> None:
@@ -639,15 +684,17 @@ def test_effective_quarantine_precedes_persisted_state_and_cached_receipt() -> N
     lagging = changed(authority(), disabled_owner_ids=("principal-1",))
     assert lagging.workspace.state == "active"  # Persisted field before event settlement.
     assert workspace_status(lagging).state == "quarantined"
+    credential, member, composed = product_context()
     with denied("forbidden"):
         check_product_idempotency(
             lagging,
-            value(VerifiedCredential),
-            owner(),
+            credential,
+            member,
             value(IdempotencyScope),
             value(CreateRunRequest),
             value(StoredRequest),
-            now=100,
+            authority=composed,
+            now=1100,
         )
     # Use an enabled non-owner for the safe caller-bound status exception.
     observer = changed(actor(), session=SESSION["SessionRecord"] | {"principal_id": "observer"})
@@ -668,27 +715,51 @@ def test_effective_quarantine_precedes_persisted_state_and_cached_receipt() -> N
 
 
 def test_run_worker_lease_checks_remain_required_through_product_composition() -> None:
+    data = json.loads((ROOT / "contracts/run-credentials.examples.json").read_text())["valid"][
+        "RunProductAuthority"
+    ]
+    composed = RunProductAuthority.model_validate_json(json.dumps(data))
+    claims = composed.verified_claims
     current = value(
         VerifiedCredential,
         kind="run",
-        run_id="run-1",
-        attempt_id="attempt-1",
-        lease_epoch=3,
-        scopes=["checkpoints:write"],
+        issuer=claims.issuer,
+        subject=claims.principal_id,
+        credential_id=claims.credential_id,
+        workspace_id=claims.workspace_id,
+        run_id=claims.run_id,
+        attempt_id=claims.attempt_id,
+        lease_epoch=claims.lease_epoch,
+        expires_at=claims.expires_at,
+        scopes=list(claims.scopes),
     )
-    lease = value(RunLease)
+    workspace = authority(workspace_id=claims.workspace_id)
+    lease = composed.current.lease
     args: dict[str, Any] = dict(
-        workspace=authority(),
+        workspace=workspace,
         credential=current,
-        membership=owner(),
+        membership=composed.current.owner.grant.membership,
+        authority=composed,
         permission="checkpoints:write",
-        workspace_id="ws-1",
-        now=100,
-        run_id="run-1",
+        workspace_id=claims.workspace_id,
+        now=1100,
+        run_id=claims.run_id,
         lease=lease,
     )
     authorize_product(**args)
     with denied("forbidden"):
-        authorize_product(**(args | {"workspace": authority(state="quarantined")}))
+        authorize_product(
+            **(
+                args
+                | {
+                    "workspace": changed(
+                        workspace,
+                        workspace=changed(workspace.workspace, state="quarantined").model_dump(
+                            mode="json"
+                        ),
+                    )
+                }
+            )
+        )
     with denied("forbidden"):
         authorize_product(**(args | {"lease": changed(lease, epoch=4)}))

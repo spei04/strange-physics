@@ -1,16 +1,40 @@
 # Browser sessions and bootstrap contract v1
 
 SP-01.b / ID-A / issue #57. This freezes the browser-session subset alongside
-the [first control subset](IDENTITY_RUN_CONTRACT.md). ID-B (workspaces, membership,
-invitations, explicit identity linking) and ID-C (service/run credential lifecycle)
-remain unfinished. The full parent and its downstream implementation gates stay
-open; this is not a hosted authentication service or production-readiness claim.
+the [first control subset](IDENTITY_RUN_CONTRACT.md). The ID-B workspace,
+invitation and linking contracts and ID-C/C1 service lifecycle are separately
+integrated; the reviewed ID-C/C2 run/composition runtime awaits integration.
+See the [reviewed C-ID inventory](IDENTITY_RUN_CONTRACT.md#reviewed-c-id-inventory-and-remaining-acceptance).
+The final parent acceptance gate remains open. This is not a hosted authentication
+service or production-readiness claim.
 
 [Schema](../contracts/session.schema.json), [HTTP subset](../contracts/session.openapi.json),
 [synthetic fixtures](../contracts/session.examples.json) and
 [pure predicates](../src/strange_physics/session_contracts.py) describe the interface.
 The fixtures use invented origins, times, digests and credentials. Their lifetime
 values are not deployment recommendations or approval.
+
+
+## Principal disablement and browser-family continuity
+
+Every current BrowserActor/SessionRecord producer, including B1 management,
+B2 invitations and B3 linking, must preserve revocation across principal
+disable/re-enable. It must either irreversibly revoke the affected browser
+families or compare each family's original principal authority generation with
+the current principal generation before supplying a usable projection. A newly
+active principal flag cannot make an older family valid again. A new login creates
+fresh provenance; producers never rewrite an old family's original generation or
+clear its revocation to restore access.
+
+SessionRecord.generation is the cookie credential generation, not the principal
+authority generation. principal_active is a current status projection, not proof
+that the family survived earlier security events. A producer must reject the old
+family or mark it revoked/inadmissible before management/linking predicates run.
+C1/C2 carry an explicit original-generation wrapper; those wrappers do not
+retroactively enforce this obligation for B1/B2/B3. Public session wire shapes
+remain unchanged. Actual adapters, durable session state and later HTTP/SQL
+security tests must demonstrate this behavior, including disable → re-enable
+followed by old-family mutation, status and receipt replay attempts.
 
 ## Trust boundary and required policy
 

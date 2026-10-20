@@ -153,7 +153,7 @@ def authorize(
     run_id: str | None = None,
     lease: RunLease | None = None,
 ) -> None:
-    """Recheck on every call, including retries, and inside each write transaction."""
+    """Incomplete primitive: hosted callers must use workspace authorize_product."""
     if not isinstance(now, int) or isinstance(now, bool) or now < 0:
         raise ValueError("server time must be a nonnegative integer")
     if credential.revoked or now >= credential.expires_at:
@@ -460,7 +460,7 @@ def check_idempotency(
     now: int,
     lease: RunLease | None = None,
 ) -> Operation | None:
-    """Authorize before replay; None means fresh admission is still required."""
+    """Incomplete primitive: hosted callers must use check_product_idempotency."""
     permissions: dict[str, Permission] = {
         "run_creation": "runs:create",
         "experiment": "experiments:write",
