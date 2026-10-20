@@ -952,3 +952,40 @@ def test_historical_target_and_latest_have_consistent_attempt_history(fault: str
     )
     with denied("recovery_required", 409):
         validate_checkpoint_write(**(retry | {"lookup": lookup}))
+
+
+@pytest.mark.parametrize("fault", ["future_epoch", "same_epoch_foreign_attempt"])
+def test_restore_rejects_incompatible_attempt_lineage(fault: str) -> None:
+    data = args()
+    record = plan(data).record
+    record = changed(
+        record,
+        **(
+            {"lease_epoch": data["attempt"].lease_epoch + 1}
+            if fault == "future_epoch"
+            else {"attempt_id": "foreign-attempt"}
+        ),
+    )
+    with denied("incompatible_state", 409):
+        validate_checkpoint_restore_candidate(
+            record,
+            expected_attempt=data["attempt"],
+            policy=data["policy"],
+            artifacts=data["artifacts"],
+            now=data["now"],
+        )
+
+
+def test_restore_accepts_compatible_checkpoint_from_an_older_attempt() -> None:
+    data = args()
+    record = plan(data).record
+    next_attempt = changed(
+        data["attempt"], lease_epoch=data["attempt"].lease_epoch + 1, attempt_id="next-attempt"
+    )
+    validate_checkpoint_restore_candidate(
+        record,
+        expected_attempt=next_attempt,
+        policy=data["policy"],
+        artifacts=data["artifacts"],
+        now=data["now"],
+    )

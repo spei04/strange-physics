@@ -1,4 +1,4 @@
-# Artifact and checkpoint contract — ART1 API checkpoint
+# Artifact and checkpoint contract — ART1
 
 SP-01.c / issue #89, first review unit. Typed messages and pure admission/recovery
 predicates are implemented for review. Full ART/EXEC acceptance still requires
@@ -173,3 +173,7 @@ checkpoint. When target and latest denote the same checkpoint, both retained
 record and outbox projections must be identical.
 The older target also cannot have a later run revision, commit time or lease
 epoch than the latest record; equal epochs identify the same attempt in both.
+
+Restore compatibility applies the same expected-attempt lineage rule: a future
+epoch or another attempt in the same epoch is invalid, while an older compatible
+checkpoint may be considered by the separately authorized recovery adapter.

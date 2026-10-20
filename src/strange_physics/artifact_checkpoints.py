@@ -393,6 +393,11 @@ def validate_checkpoint_restore_candidate(
         (record.workspace_id, record.run_id)
         != (expected_attempt.workspace_id, expected_attempt.run_id)
         or record.binding != expected_attempt.binding
+        or record.lease_epoch > expected_attempt.lease_epoch
+        or (
+            record.lease_epoch == expected_attempt.lease_epoch
+            and record.attempt_id != expected_attempt.attempt_id
+        )
         or record.committed_at > now
         or record.request_sha256 != message_sha256(record.request)
     ):

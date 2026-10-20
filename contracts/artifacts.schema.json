@@ -909,7 +909,7 @@
   "$id": "https://strange-physics.dev/contracts/artifacts.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Bounded artifact and checkpoint messages. Internal storage, authority and commit evidence are producer obligations, never public inputs or proof of live enforcement.",
-  "x-contract-status": "ART1 API review; no runtime acceptance or SP-01.c freeze",
+  "x-contract-status": "ART1 pure contracts and predicates; full SP-01.c freeze pending",
   "x-public-models": [
     "ArtifactRef",
     "CheckpointRequest"

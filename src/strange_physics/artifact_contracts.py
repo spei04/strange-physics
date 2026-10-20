@@ -322,7 +322,7 @@ def artifact_json_schema() -> JsonSchemaValue:
     _, schema = models_json_schema([(model, "validation") for model in ARTIFACT_MODELS])
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
     schema["$id"] = "https://strange-physics.dev/contracts/artifacts.schema.json"
-    schema["x-contract-status"] = "ART1 API review; no runtime acceptance or SP-01.c freeze"
+    schema["x-contract-status"] = "ART1 pure contracts and predicates; full SP-01.c freeze pending"
     schema["x-public-models"] = [model.__name__ for model in PUBLIC_MODELS]
     schema["description"] = (
         "Bounded artifact and checkpoint messages. Internal storage, authority and commit "
