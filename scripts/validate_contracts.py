@@ -22,7 +22,7 @@ def main() -> None:
     documents = {
         p: json.loads(p.read_text())
         for p in ROOT.rglob("*.json")
-        if (p.name.endswith(".schema.json") or p.name == "openapi.json")
+        if (p.name.endswith(".schema.json") or p.name.endswith("openapi.json"))
     }
     registry: Any = Registry()
     for path, document in documents.items():
@@ -30,7 +30,7 @@ def main() -> None:
         registry = registry.with_resource(path.as_uri(), resource)
         if "$id" in document:
             registry = registry.with_resource(document["$id"], resource)
-        if path.name != "openapi.json":
+        if not path.name.endswith("openapi.json"):
             Draft202012Validator.check_schema(document)
         else:
             for schema in document["components"]["schemas"].values():
@@ -63,6 +63,29 @@ def main() -> None:
         value = copy.deepcopy(control["valid"][fixture["model"]])
         value[fixture["field"]] = fixture["value"]
         check(f"control.schema.json#/$defs/{fixture['model']}", value, False)
+
+    sessions = json.loads((ROOT / "session.examples.json").read_text())
+    for name, fixture in sessions["valid"].items():
+        check(f"session.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in sessions[group]:
+            value = copy.deepcopy(sessions["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"session.schema.json#/$defs/{fixture['model']}", value, group == "runtime_negative"
+            )
+
+    for fixture in sessions["workspace_session_failures"]:
+        check("control.schema.json#/$defs/Error", fixture["output"])
+
+    for group, values in sessions["path_identifiers"].items():
+        for value in values:
+            check(
+                "session.openapi.json#/paths/~1v1~1auth~1logins~1{transaction_id}"
+                "/get/parameters/0/schema",
+                value,
+                group == "valid",
+            )
 
     boundary_paths = {
         "identifiers": [

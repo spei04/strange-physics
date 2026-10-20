@@ -1,0 +1,376 @@
+{
+  "notice": "Synthetic contract fixtures. Origins, time limits, digests and secrets are invented; not deployment approval or credentials.",
+  "path_identifiers": {
+    "invalid": [
+      "p\n",
+      "-p",
+      "p space",
+      "p\r\n",
+      "\u03c0",
+      "p\u2028",
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    ],
+    "valid": [
+      "p",
+      "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+      "p_-1"
+    ]
+  },
+  "runtime_negative": [
+    {
+      "field": "authenticated",
+      "model": "SessionBootstrap",
+      "value": false
+    },
+    {
+      "field": "absolute_expires_at",
+      "model": "SessionRecord",
+      "value": 1010
+    },
+    {
+      "field": "state",
+      "model": "LoginTransaction",
+      "value": "pending"
+    },
+    {
+      "field": "idle_seconds",
+      "model": "DeploymentSessionPolicy",
+      "value": 4000
+    },
+    {
+      "field": "app_origins",
+      "model": "DeploymentSessionPolicy",
+      "value": [
+        "https://app.example/"
+      ]
+    },
+    {
+      "field": "issuer",
+      "model": "ProviderPolicy",
+      "value": "https://securetoken.google.com/wrong-project"
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "principal_id",
+      "model": "LoginStartRequest",
+      "value": "attacker"
+    },
+    {
+      "field": "verified",
+      "model": "BrokerExchangeRequest",
+      "value": true
+    },
+    {
+      "field": "nonce_matches",
+      "model": "OIDCCallbackRequest",
+      "value": true
+    },
+    {
+      "field": "access_token",
+      "model": "SessionBootstrap",
+      "value": "secret"
+    },
+    {
+      "field": "code",
+      "model": "SessionError",
+      "value": "private-provider-message"
+    },
+    {
+      "field": "expected_generation",
+      "model": "RenewalRequest",
+      "value": true
+    },
+    {
+      "field": "idle_seconds",
+      "model": "DeploymentSessionPolicy",
+      "value": 0
+    },
+    {
+      "field": "app_origins",
+      "model": "DeploymentSessionPolicy",
+      "value": []
+    },
+    {
+      "field": "callback_method",
+      "model": "ProviderPolicy",
+      "value": "POST"
+    },
+    {
+      "field": "method",
+      "model": "OIDCCallbackEvidence",
+      "value": "POST"
+    },
+    {
+      "field": "generation",
+      "model": "SessionCredential",
+      "value": -1
+    },
+    {
+      "field": "return_uri",
+      "model": "LoginStartRequest",
+      "value": "https://app.example/\n"
+    },
+    {
+      "field": "id_token",
+      "model": "BrokerExchangeRequest",
+      "value": ""
+    },
+    {
+      "field": "token",
+      "model": "CSRFResponse",
+      "value": ""
+    }
+  ],
+  "valid": {
+    "BrokerExchangeRequest": {
+      "id_token": "synthetic-not-a-token",
+      "transaction_id": "login-1"
+    },
+    "BrowserContext": {
+      "browser_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "csrf_matches": true,
+      "csrf_scope": "preauth",
+      "has_bearer": false,
+      "has_session_cookie": false,
+      "origin": "https://app.example",
+      "target_origin": "https://app.example"
+    },
+    "CSRFResponse": {
+      "scope": "preauth",
+      "token": "synthetic-not-csrf"
+    },
+    "DeploymentSessionPolicy": {
+      "absolute_seconds": 3600,
+      "app_origins": [
+        "https://app.example"
+      ],
+      "clock_skew_seconds": 5,
+      "idle_seconds": 300,
+      "login_ttl_seconds": 180,
+      "policy_id": "synthetic-policy-1",
+      "providers": [
+        {
+          "audience": "example-project",
+          "callback_method": null,
+          "callback_uri": null,
+          "flow": "managed_broker",
+          "issuer": "https://securetoken.google.com/example-project",
+          "provider_id": "managed",
+          "response_mode": null,
+          "tenant_id": null,
+          "upstream_providers": [
+            "google.com",
+            "github.com"
+          ]
+        },
+        {
+          "audience": "example-client",
+          "callback_method": "GET",
+          "callback_uri": "https://app.example/v1/auth/oidc/callback",
+          "flow": "oidc_code",
+          "issuer": "https://idp.example",
+          "provider_id": "oidc",
+          "response_mode": "query",
+          "tenant_id": null,
+          "upstream_providers": []
+        }
+      ],
+      "recent_auth_seconds": 120,
+      "return_uris": [
+        "https://app.example/workspace"
+      ],
+      "transaction_retention_seconds": 3600
+    },
+    "LoginOption": {
+      "flow": "managed_broker",
+      "provider_id": "managed"
+    },
+    "LoginOptions": {
+      "providers": [
+        {
+          "flow": "managed_broker",
+          "provider_id": "managed"
+        }
+      ]
+    },
+    "LoginStartRequest": {
+      "provider_id": "managed",
+      "return_uri": "https://app.example/workspace"
+    },
+    "LoginStartResponse": {
+      "authorization_url": null,
+      "expires_at": 1180,
+      "flow": "managed_broker",
+      "provider_id": "managed",
+      "transaction_id": "login-1"
+    },
+    "LoginStatusResponse": {
+      "expired": false,
+      "next_action": "commit_same_transaction",
+      "state": "verified",
+      "transaction_id": "login-1"
+    },
+    "LoginTransaction": {
+      "browser_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "created_at": 1000,
+      "expires_at": 1180,
+      "policy_id": "synthetic-policy-1",
+      "proof": {
+        "audience": "example-project",
+        "auth_time": 990,
+        "browser_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expires_at": 1200,
+        "flow": "managed_broker",
+        "issued_at": 995,
+        "issuer": "https://securetoken.google.com/example-project",
+        "proof_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "provider_id": "managed",
+        "subject": "synthetic-subject",
+        "tenant_id": null,
+        "transaction_id": "login-1",
+        "upstream_provider": "google.com",
+        "verified_at": 1005
+      },
+      "provider_id": "managed",
+      "return_uri": "https://app.example/workspace",
+      "revision": 2,
+      "session_id": null,
+      "state": "verified",
+      "transaction_id": "login-1"
+    },
+    "OIDCCallbackEvidence": {
+      "callback_uri": "https://app.example/v1/auth/oidc/callback",
+      "method": "GET",
+      "nonce_matches": true,
+      "pkce_s256_verified": true,
+      "response_mode": "query",
+      "state_matches": true
+    },
+    "OIDCCallbackRequest": {
+      "code": "synthetic-not-a-code",
+      "state": "synthetic-not-state"
+    },
+    "OIDCDeniedCallbackRequest": {
+      "error": "synthetic-denial",
+      "state": "synthetic-state"
+    },
+    "ProviderPolicy": {
+      "audience": "example-project",
+      "callback_method": null,
+      "callback_uri": null,
+      "flow": "managed_broker",
+      "issuer": "https://securetoken.google.com/example-project",
+      "provider_id": "managed",
+      "response_mode": null,
+      "tenant_id": null,
+      "upstream_providers": [
+        "google.com",
+        "github.com"
+      ]
+    },
+    "RenewalRequest": {
+      "expected_generation": 0
+    },
+    "SessionBootstrap": {
+      "authenticated": true,
+      "principal_id": "principal-1",
+      "session": {
+        "absolute_expires_at": 4610,
+        "authenticated_at": 990,
+        "generation": 0,
+        "idle_expires_at": 1310,
+        "session_id": "session-1"
+      }
+    },
+    "SessionCredential": {
+      "generation": 0,
+      "session_id": "session-1"
+    },
+    "SessionError": {
+      "code": "proof_rejected",
+      "request_id": "request-1"
+    },
+    "SessionRecord": {
+      "absolute_expires_at": 4610,
+      "authenticated_at": 990,
+      "created_at": 1010,
+      "generation": 0,
+      "last_seen_at": 1010,
+      "policy_id": "synthetic-policy-1",
+      "principal_active": true,
+      "principal_id": "principal-1",
+      "revoked": false,
+      "session_id": "session-1"
+    },
+    "SessionView": {
+      "absolute_expires_at": 4610,
+      "authenticated_at": 990,
+      "generation": 0,
+      "idle_expires_at": 1310,
+      "session_id": "session-1"
+    },
+    "TrustedIdentityProof": {
+      "audience": "example-project",
+      "auth_time": 990,
+      "browser_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "expires_at": 1200,
+      "flow": "managed_broker",
+      "issued_at": 995,
+      "issuer": "https://securetoken.google.com/example-project",
+      "proof_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "provider_id": "managed",
+      "subject": "synthetic-subject",
+      "tenant_id": null,
+      "transaction_id": "login-1",
+      "upstream_provider": "google.com",
+      "verified_at": 1005
+    }
+  },
+  "workspace_session_failures": [
+    {
+      "input_code": "ambiguous_credentials",
+      "output": {
+        "code": "invalid_request",
+        "message": "Use one authentication method.",
+        "operation_id": null,
+        "request_id": "request-1",
+        "retryable": false
+      },
+      "status": 400
+    },
+    {
+      "input_code": "policy_unavailable",
+      "output": {
+        "code": "temporarily_unavailable",
+        "message": "Authentication policy is unavailable.",
+        "operation_id": null,
+        "request_id": "request-1",
+        "retryable": true
+      },
+      "status": 503
+    },
+    {
+      "input_code": "unauthenticated",
+      "output": {
+        "code": "unauthenticated",
+        "message": "Authentication required.",
+        "operation_id": null,
+        "request_id": "request-1",
+        "retryable": false
+      },
+      "status": 401
+    },
+    {
+      "input_code": "forbidden",
+      "output": {
+        "code": "forbidden",
+        "message": "Request is not permitted.",
+        "operation_id": null,
+        "request_id": "request-1",
+        "retryable": false
+      },
+      "status": 403
+    }
+  ]
+}

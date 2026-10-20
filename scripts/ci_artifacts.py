@@ -32,6 +32,7 @@ MODULES = frozenset(
         "sdk.py",
         "serialization.py",
         "session.py",
+        "session_contracts.py",
         "simulation.py",
         "worlds.py",
     }
