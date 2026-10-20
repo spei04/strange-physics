@@ -1899,8 +1899,9 @@
         "SDK"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/87",
-      "execution_owner": "Engineer Research, exclusive primary writer; Quality and lead review.",
-      "execution_plan": "Preregister accepted24 fixed probes before measurement; publish additive artifact API, then shared SDK/CLI adapters over accepted fitter/predictor/scorer. Exact public-prefix/private-journal binding, bounded owner-only artifacts, all failures retained, per-probe acceptance. No RA runtime or paid work."
+      "execution_owner": "Engineer Research released accepted source; project lead integrates, Quality reviews.",
+      "execution_plan": "Preregister accepted24 fixed probes before measurement; publish additive artifact API, then shared SDK/CLI adapters over accepted fitter/predictor/scorer. Exact public-prefix/private-journal binding, bounded owner-only artifacts, all failures retained, per-probe acceptance. No RA runtime or paid work.",
+      "evidence": "Accepted fff854b/runtime ed3ce1d after Quality/lead review. Installed-wheel CLI4 purchases and SDK known-k fixture each score24/24 probes within0.001 RMSE. Exact PR/main acceptance remains before I1 closure."
     },
     {
       "id": "SP-05.a",
@@ -10810,10 +10811,10 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-04.e_in_progress",
+      "status": "SP-04.e_reviewed_pending_integration",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "Research continues SP-04.e SDK/CLI in primary; Platform independently authors SP-01.c in identity.",
+      "next_authoring_task": "Lead integrates accepted SDK in primary. Research prepares SP-01.d read-only; source/freeze waits SP-01.c. Platform authors ART1 in identity.",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10835,7 +10836,7 @@
       "forecast_boundary": "Reference human effort only; not a subagent delivery forecast. Dependencies, gates and schedules unchanged.",
       "identity_boundary": "SP-01.b/c/d/e, B3, ID-C, SP-08, staging and whole R0 exit are not prerequisites for the local slice; their hosted/later consumer gates remain.",
       "acceptance": "Purchased-prefix-only fit, unseen-condition predictions, independent analytic development score and SDK/CLI evidence; any failed probe unscorable, primary MSE null; derive RMSE from position_mse.",
-      "evidence_gap": "Fitting, prediction and independent scoring are integrated; purchased-prefix SDK/CLI reproduction and actual I1 acceptance remain.",
+      "evidence_gap": "SDK/CLI source, installed-wheel runs and independent review accepted; integrated source checks passed; exact-head PR/main acceptance remains before I1 closes.",
       "capacity_approval": "Concrete disk expansion and snapshot approved and independently accepted 2026-10-20; other paid/release gates unchanged."
     },
     "capacity_recovery": {
@@ -10905,7 +10906,7 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research exclusively authors SP-04.e SDK/CLI in primary; Quality and lead independently review.",
+      "scientific": "Project lead exclusively integrates accepted SP-04.e in primary; Research prepares SP-01.d and reviews ART1 read-only.",
       "identity": "Platform authors SP-01.c in the reused identity checkout after SP-01.b PR/main acceptance and reviewed lead handoff.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
@@ -11178,6 +11179,56 @@
         "Raw object byte hashes and canonical message/model hashes remain distinct. Full custom predictor protocol remains SP-19.a."
       ],
       "scope_boundary": "Three review units under the unchanged SP-01.c task, dependencies, four delivery plus one reserve days. No provisioning, live adapters/SQL, build execution or isolation proof."
+    },
+    "spring_workflow_evidence": {
+      "source": "fff854b39fc72c46a785a7d581417425d67261c9",
+      "runtime_source": "ed3ce1d09106788501391aca8987fc18862a6ef4",
+      "initial_runtime": "0587c333806655732b442beb00461f9f8a1f8541",
+      "preregistration": "4678c514f3d20a1401f2ff7822e7ff3d16b56ce9",
+      "installed_wheel_source": "1bec36474e8896129e26355f2714f468960d59c3",
+      "integrated_source": "3506b0c73e1093d7d0a370ea5d720626b7c19af5",
+      "status": "reviewed_pending_hosted_integration",
+      "author": "Engineer Research",
+      "reviewers": [
+        "Engineer Quality",
+        "Project lead"
+      ],
+      "author_full_tests": 1609,
+      "focused_tests": 79,
+      "quality_additional_cases": 7,
+      "quality_mutations_detected": 5,
+      "lead_additional_io_cases": 13,
+      "author_schema_checks": 586,
+      "installed_wheel_cli": {
+        "purchased_records": 4,
+        "probes": 24,
+        "valid": 24,
+        "failed": 0,
+        "estimated_k": 0.6750572721112501,
+        "worst_probe_rmse": 3.154199886178306e-08
+      },
+      "installed_wheel_sdk": {
+        "purchased_records": 1,
+        "true_k": 1.0,
+        "estimated_k": 0.9999999651839258,
+        "probes": 24,
+        "valid": 24,
+        "failed": 0,
+        "worst_probe_rmse": 1.0098004529061669e-07
+      },
+      "per_probe_rmse_limit": 0.001,
+      "coefficient_relative_limit": 0.01,
+      "private_index_sha256": "6ab8da36924ffcce882e8a93f1a4a8b5323ec1fec40e4f0af8cc75b75ea251c4",
+      "lead_review_index_sha256": "bc510af99323fcf2d506150b1f0df98752aa518d5e2568f8221609904bb5fa8b",
+      "record": "docs/LOCAL_SCIENTIFIC_WORKFLOW.md",
+      "boundary": "Bounded trusted-local purchased-prefix I1 workflow; private evaluator artifacts retained, every fixed probe checked. No active discovery, population generalization, official study, hosted security or enterprise readiness claim.",
+      "integrated_full_tests": 1771,
+      "integrated_formatted_files": 100,
+      "integrated_mypy_files": 64,
+      "integrated_schema_checks": 628,
+      "quality_focused_tests": 78,
+      "integrated_package_modules": 34,
+      "integrated_check_index_sha256": "d21ba09bd2082d4a4b4cd0f4b8e303bb7b635db92748bd35d24d0d00c2752fb8"
     }
   },
   "research_amendment": {

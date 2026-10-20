@@ -788,7 +788,7 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 - **Security and reliability:** Trusted local and development-only labels; no provider dependency.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R1; in progress under Engineer Research, issue #87. SP-04.b and SP-06.a are integrated with accepted PR/main checks; primary checkout is handed off after planning PR #86 acceptance.
+- **Milestone / state:** R1; in progress pending hosted integration. Research released accepted fff854b/runtime ed3ce1d; Quality and lead accepted the source and installed-wheel evidence. CLI4 purchases and the known-k SDK fixture each retain24/24 independent scores, every probe within0.001 RMSE. Lead integrates3506b0c; exact-head PR/main acceptance remains before I1 closure.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-05"></a>
@@ -797,6 +797,8 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 Parent: [#7](https://github.com/spei04/strange-physics/issues/7). This issue closes only when its leaf tasks and applicable gate evidence pass.
 
 <a id="sp-05-a"></a>
+
+
 ### SP-05.a — Bootstrap complete experiments
 
 - **Objective:** Measure adaptive experiment selection and uncertainty without privileged information. This PR delivers bootstrap complete experiments.
@@ -3363,14 +3365,14 @@ SP-01.c/#89 is assigned to Platform in three sequential review units: ART1 immut
 
 The coordinated [CI-01 request](https://github.com/spei04/strange-physics/issues/54) adds bounded repository CI/CD maintenance. It does not waive the cloud storage/provisioning gates or complete SP-27.a. Repository-settings coordination owns branch protection; candidate delivery requires protected main and successful required checks. Publication/deployment remain separately gated.
 
-Execution checkpoint 2026-10-20: SP-01.b and ID-C are complete; Platform now owns SP-01.c/#89, Research owns SP-04.e/#87, and Quality reviews both. Earlier source/PR/check identities remain in EXECUTION_LOG.md and the machine ledger. SP-02.b capacity is complete after the approved recovery snapshot and 200→300 GiB expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
+Execution checkpoint 2026-10-20: SP-01.b and ID-C are complete; Platform now owns SP-01.c/#89, Research prepares SP-01.d read-only after releasing SP-04.e/#87 to lead integration, and Quality reviews both. Earlier source/PR/check identities remain in EXECUTION_LOG.md and the machine ledger. SP-02.b capacity is complete after the approved recovery snapshot and 200→300 GiB expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
 
 
 Scientific execution checkpoint 2026-10-20: Research's read-only dependency review
 confirms SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b → SP-06.a → SP-04.e/I1,
 with the additional approved joins and accepted predecessors recorded in
 [EXECUTION_LOG.md](EXECUTION_LOG.md#next-scientific-acceptance-checkpoint--i1).
-SP-06.a/#83 is integrated; Research owns SP-04.e/#87 in the primary checkout.
+SP-06.a/#83 is integrated; lead integrates accepted SP-04.e/#87 in the primary checkout.
 SP-01.b is integrated; Platform owns SP-01.c/#89 in the identity checkout. The six scientific tasks retain
 19 reference engineering days plus 4.75 reserve, not a subagent schedule promise.
 No unfinished identity contract or whole-R0 gate is a prerequisite for this local
