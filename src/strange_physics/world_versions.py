@@ -216,6 +216,7 @@ def _version_replay(
         raise ContractViolation("recovery_required", 409)
     _history(target, current)
     if receipt.parent is not None:
+        _version_history(receipt.parent, receipt.version)
         _history(receipt.parent, current)
     if receipt.request_sha256 != message_sha256(request):
         raise ContractViolation("idempotency_conflict", 409)

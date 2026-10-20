@@ -1352,3 +1352,22 @@ def test_safe_head_read_rejects_id_reused_from_its_retained_grandparent() -> Non
             world_id="world-1",
             now=1060,
         )
+
+
+@pytest.mark.parametrize("equal_times", [False, True])
+@pytest.mark.parametrize("corrupt_parent_reference", [False, True])
+def test_distant_replay_checks_historical_receipt_parent_pair(
+    equal_times: bool, corrupt_parent_reference: bool
+) -> None:
+    history = [fresh_version(1020)]
+    for i in range(1, 6):
+        history.append(append_version(history[-1], 1020 if equal_times else 1020 + i * 5))
+    receipt, latest = history[2], history[-1]
+    if corrupt_parent_reference:
+        data = receipt.model_dump(mode="json")
+        data["parent"]["view"]["parent_version_id"] = receipt.version.view.version_id
+        receipt = WorldVersionCommit.model_validate_json(json.dumps(data))
+        with pytest.raises(ContractViolation, match="recovery_required"):
+            replay_version(receipt, latest)
+    else:
+        assert replay_version(receipt, latest) == receipt.result
