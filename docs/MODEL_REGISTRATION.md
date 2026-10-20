@@ -139,7 +139,8 @@ verification, engine binding, original acceptance, committing worker and bounded
 provenance identities. Historical acceptance and committing-worker identities
 remain separate so a later eligible attempt can finish the same operation.
 Same-epoch aliases are rejected; run revisions and commit chronology cannot
-move backwards. A renewed credential in the same immutable worker launch does
+move backwards. A later-epoch worker must have a run revision at least as new as
+the accepted submission, not only an eventual commit revision that dominates both. A renewed credential in the same immutable worker launch does
 not change that launch's identity.
 
 A completed operation must join the exact model receipt, normalized request,

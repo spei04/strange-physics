@@ -289,3 +289,27 @@ def test_frozen_core_scientific_messages_remain_external() -> None:
     assert schema["$defs"]["ModelReceipt"] == control["$defs"]["ModelReceipt"]
     assert schema["$defs"]["LinearSpringModel"] == research["$defs"]["LinearSpringModel"]
     assert OriginalExecutionAdmission is type(value(m.ModelRegistrationRecord).worker.admission)
+
+
+@pytest.mark.parametrize("revision,valid", [(3, False), (4, True), (5, True)])
+def test_later_worker_revision_cannot_predate_accepted_submission(
+    revision: int, valid: bool
+) -> None:
+    record = value(m.ModelRegistrationRecord)
+    worker = record.worker
+    request = changed(
+        worker.request, attempt_id="attempt-next", lease_epoch=worker.request.lease_epoch + 1
+    )
+    later = changed(
+        worker,
+        launch_id="launch-next",
+        request=request,
+        request_sha256=message_sha256(request),
+        created_at=1202,
+        run_revision=revision,
+    )
+    if valid:
+        assert changed(record, worker=later, run_revision=5)
+    else:
+        with pytest.raises(ValidationError):
+            changed(record, worker=later, run_revision=5)

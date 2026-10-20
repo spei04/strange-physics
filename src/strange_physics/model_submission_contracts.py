@@ -199,7 +199,10 @@ class ModelRegistrationRecord(Message):
             or (worker.request.lease_epoch == old.request.lease_epoch and worker != old)
             or (
                 worker.request.lease_epoch > old.request.lease_epoch
-                and worker.created_at < accepted.accepted_at
+                and (
+                    worker.created_at < accepted.accepted_at
+                    or worker.run_revision < accepted.run_revision
+                )
             )
             or self.run_revision < max(accepted.run_revision, worker.run_revision)
             or self.committed_at < max(accepted.accepted_at, self.engine.committed_at)
