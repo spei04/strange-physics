@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | SP-01.c/#89 artifact/package/worker contracts | ART1 first, then EXEC1 and COMP1; exclusive identity writer after accepted SP-01.b integration |
-| Research | SP-01.d world/SSE/replay preparation; ART1 scientific review | Read-only after accepted SDK release; source/freeze waits SP-01.c completion |
-| Quality | SDK integrated-source and ART1 API review | Runtime/evidence accepted; exact combined source and hosted gates next |
-| Project lead | Integrate accepted SP-04.e SDK/CLI | Exclusive primary writer; Platform owns identity ART1; peer review and exact PR/main gates before I1 closure |
+| Platform | SP-01.c/#89 EXEC1 package/worker preparation | ART1 source released and accepted; next identity writer handoff follows ART1 main acceptance and API review |
+| Research | SCI-facing COMP1 identity/recovery preparation; SP-01.d design ready | Read-only; COMP1 implementation waits ART1/EXEC1 and SP-01.d source/freeze waits full SP-01.c |
+| Quality | ART1 integration/progress review; EXEC1 design challenge | Source and additive merge accepted; SP-01.e tooling remains read-only until prerequisites pass |
+| Project lead | Integrate accepted ART1 with SDK/I1 records | Exclusive primary writer; identity reserved for Platform reuse; exact reviewed-source PR/main gates before handoff |
 
 ## Assignments
 
@@ -109,7 +109,8 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 ## Review evidence and management checkpoint
 
-- Outcome: an enterprise research product that measures discovery and adaptation. Next evidence-producing milestone is the approved noiseless spring path: purchased observations → fit → unseen-condition predictions → independently scored report.
+- Outcome: an enterprise research product that measures discovery and adaptation. Bounded local I1 is accepted: purchased observations → fit → unseen-condition predictions → independently scored report. The next contract units are ART1, EXEC1 and COMP1 under SP-01.c.
+- Historical evidence: the following delta bullets record their own source/checkpoint state. Earlier remaining-work statements are historical; the current assignment board and latest acceptance sections govern current work.
 - Baseline delta: research and recovery reviews at 2d78e35; 55 tests, lint/format and strict mypy pass; same-head CI covers Python 3.12/3.14, packaging and eight-particle CLI smoke. Two factual documentation corrections committed as 9833e6f and peer reviewed. PR #1 merged as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f; git diff verified its tree matches reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70. All four GitHub CI checks at that head passed on Python 3.12/3.14. [Merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060. SP-00.b is complete; this is not a product release.
 - Forecast repair: adding the DB-to-artifact freeze edge changes R0 to W6–7 and first spring integration to W11–13; R1 reserve becomes W26. GA remains W52–67. These remain nine-human-team reference estimates; actual engineer assignments are separate.
 - SCI delta: SP-01.a complete via [PR #51](https://github.com/spei04/strange-physics/pull/51), merge cc24aef tree equals reviewed 6e72415; all four head checks and [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39343441273) pass. 147 tests and independent schema checks passed after three repairs. No fitter, hosted service or benchmark result is claimed.
@@ -138,14 +139,14 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 - Budget: the approved expansion adds an estimated ~$10/month and the snapshot up to roughly ~$10/month while retained, before credits/tax; actual billing is not yet measured. Only this capacity action was approved. Staging, provider trials, official sweeps and releases retain their concrete approval gates. Existing VM billing is outside this incremental estimate.
 - Tracking: SP-00.a [#44](https://github.com/spei04/strange-physics/issues/44), SP-00.b [#45](https://github.com/spei04/strange-physics/issues/45), SP-02.a [#46](https://github.com/spei04/strange-physics/issues/46), SP-02.b [#72](https://github.com/spei04/strange-physics/issues/72), SP-03.a [#73](https://github.com/spei04/strange-physics/issues/73).
 
-## Next scientific acceptance checkpoint — I1
+## Scientific acceptance checkpoint — I1 complete
 
 Research owns the local spring proof; Quality independently authors its development
 scorer. SP-02.b is accepted and SP-03.a fixtures have passed independent review.
 SP-03.a and SP-03.b are integrated, including exact-head PR/main checks.
 SP-04.a/#77 is integrated with matching reviewed tree and PR/main CI.
-SP-04.b/#81 and SP-06.a/#83 are integrated with passing PR/main CI. Lead integrates
-accepted SP-04.e/#87 SDK/CLI in primary; Research prepares SP-01.d read-only. SP-01.b/C2 and final composition are integrated;
+SP-04.b/#81, SP-06.a/#83 and SP-04.e/#87 are integrated with passing PR/main CI.
+I1 is accepted through PR #90; Research prepares SP-01.d read-only. SP-01.b/C2 and final composition are integrated;
 Platform owns SP-01.c/#89 in identity after the recorded handoff.
 
 The approved dependency path is SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b →
@@ -174,10 +175,10 @@ outputs require explicit failures. Any failed probe makes primary MSE fields nul
 and the report unscorable; never average only surviving probes. A correctly
 reported negative result is valid evidence, not permission to relax tolerances.
 
-Simulation, purchased journals, calibration, fitting and bounded prediction are
-integrated, as is independent scoring. The SDK/CLI I1 exit and recovery evaluation
-remain unfinished. I1 is a local development proof, not the full held-out
-benchmark, hosted execution or a product release.
+Simulation, purchased journals, calibration, fitting, bounded prediction, independent
+scoring and the SDK/CLI I1 exit are integrated. Recovery evaluation remains later
+work. I1 is a local development proof, not the full held-out benchmark, hosted
+execution or a product release.
 
 Unfinished SP-01.c/d/e, SP-08 identity implementation, staging and whole
 R0 exit are not prerequisites in this local path. They remain prerequisites for
@@ -249,3 +250,19 @@ Platform is assigned SP-01.c/#89 in the reused identity checkout: ART1 artifact/
 Installed-wheel acceptance at1bec364 executed both the actual seed7 CLI sequence (four purchases,24/24 scores, worst per-probe RMSE3.154199886178306e-8) and known-k1 SDK fixture (estimate0.9999999651839258,24/24 scores,worst1.0098004529061669e-7). Every fixed probe is under0.001, failures and negative scientific outcomes remain explicit, and no outcome selected the protocol. Private author index SHA2566ab8da36924ffcce882e8a93f1a4a8b5323ec1fec40e4f0af8cc75b75ea251c4 and lead I/O indexbc510af99323fcf2d506150b1f0df98752aa518d5e2568f8221609904bb5fa8b remain owner-only outside checkouts, review2026-11-19. The initial lead raw-hash fixture grew a file and correctly hit its size bound; a same-size whitespace mutation then exercised hash rejection without weakening the assertion.
 
 Lead combined accepted SDK with accepted C2 and handoff84974fed into3506b0c73e1093d7d0a370ea5d720626b7c19af5. Primary belongs exclusively to lead during integration; Platform continues ART1 in identity. Research is reassigned to read-only SP-01.d world/SSE/replay preparation and ART1 scientific review. SP-01.d source/freeze waits actual SP-01.c acceptance. Integrated3506b0c passed1,771 tests, Ruff/format100, strict mypy64,628 schema cases, the configured Bandit medium/high gate and offline34-module archive validation. Private integrated-check index SHA256d21ba09bd2082d4a4b4cd0f4b8e303bb7b635db92748bd35d24d0d00c2752fb8. Exact-head PR/main checks remain before I1 completion; the broader benchmark, active discovery, hosted enforcement, research amendment runtime and paid/release gates remain open.
+
+## I1 integration acceptance and next assignments
+
+2026-10-20 04:25 UTC — PR #90/main d9311584ea7d719770013f4d41bcd31dc48485a9 matches accepted 8336ca54ebb8d8c4a413765869d886a1ad81152c and tree e3198a560331d2d7688a00668f3b943f4471f358; PR CI39368869540 and all five protected-main CI39369037416 jobs passed. Integrated 1,771 tests and the installed-wheel SDK/CLI evidence close SP-04.e/#87 and bounded I1. The 24 fixed probes were preregistered; every probe meets the unchanged 0.001 RMSE limit. This does not close R1 or authorize research-method runtime, provider trials, staging or release. Private integration index SHA256 27f34f32e8c96de1cb38d4b608e42f11f892b31090d237db1ff7851c71ab1ad9 is outside checkouts, owner-readable, review 2026-11-19; same-VM storage is not an off-device backup.
+
+Platform continues ART1/#89 in identity. Lead and Quality independently reproduced a dangling latest-head acceptance and an impossible retained available-catalog revision jump at67c9df; Platform owns bounded repairs before acceptance. Research reviews the scientific boundary and prepares SP-01.d world/preview/SSE/replay contracts read-only. Quality prepares SP-01.e as VAL1 shared fixtures, CLIENT1 TypeScript contract harness and MOCK1 bounded transport fixtures read-only. These are sequential PR units under existing leaf tasks, not new effort or approval. Actual dependencies and API review remain required before their implementation/freeze. Lead maintains progress and integration in primary. Both existing cloud checkouts remain active and reused; no new checkout or dependency installation was created.
+
+## ART1 source and combined integration acceptance
+
+2026-10-20 04:38 UTC — Platform released clean7a90e960a8c85db06726c12daaa8af3d037fbfb5, retaining accepted runtime29a968be3e4e7d5d593c0f3a0ea27d9c01918a07. Quality and Research each passed288 immutable focused cases. Quality detected11 guard mutants and checked two additional contradictory histories; Research checked eight additional SCI boundaries and two restore mutants. Lead passed15 independent persistence/restore cases. Review repaired dangling latest evidence, impossible catalog revision jumps, pairwise history ordering and restore attempt lineage. These are pure contract checks; storage/SQL/current-state adapters and isolation remain later implementation.
+
+Author checks passed1,875 full tests,654 schemas,lint/format97,mypy61,configured Bandit and offline/wheel-origin package smoke. Lead merged accepted SDK/progress8cf6fea with ART1 into5ad0ef370e7dd4249b9926a68ab3f0a0985ca377. Quality verified150 nonshared files, including102 source/test/schema blobs, the36-entry package union and both validator blocks. Combined checks passed1,954 tests,669 schemas,Ruff/format105,strict mypy68,the configured Bandit gate and offline archives. The first lead package command omitted CI’s --no-create-gitignore option; strict archive validation correctly rejected the scratch file. Repeating only package verification with the repository’s exact build flags passed; no source or allowlist changed. The independent config fixture likewise used the actual agent_config_sha256 field after a construction-only diagnostic; no assertions were weakened. Exact-head PR/main CI remains before ART1 integration acceptance.
+
+Private author index SHA256 bf086518d0c379b2b3adb1092f36fc7839f6ae79bef73ad19e64fd430d76e7a8, lead review2707577d945868af47a97a19236537bbdac11ef6fb0701b9115049cc245764cd and corrected package acceptance087440a4e57ff138f4d3786111c1e17fe1101f29b8ff7fe17f33785a28a8a2d3 remain outside checkouts, owner-readable, review2026-11-19. Earlier diagnostics are retained with their source identities; same-VM storage is not an off-device backup.
+
+Assignments: lead integrates ART1 in primary; Platform prepares EXEC1 package/worker contracts read-only; Research prepares SCI-facing COMP1 predictor identity/recovery composition and retains completed SP-01.d design preparation; Quality reviews integration and challenges EXEC1. Identity is released and reserved for the next sequential Platform task, with independent dependencies. No checkout or dependency copy was created. SP-01.c remains open through EXEC1/COMP1; RA, paid, staging and release gates remain unchanged.
