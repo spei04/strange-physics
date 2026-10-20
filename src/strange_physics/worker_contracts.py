@@ -605,7 +605,7 @@ def execution_json_schema() -> JsonSchemaValue:
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
     schema["$id"] = "https://strange-physics.dev/contracts/execution.schema.json"
     schema["x-contract-status"] = (
-        "EXEC1 API review; runtime predicates and full SP-01.c freeze pending"
+        "EXEC1 pure contracts and predicates; hosted producers and full SP-01.c freeze pending"
     )
     schema["x-public-models"] = ["PackageManifest"]
     schema["description"] = (
