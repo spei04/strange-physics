@@ -659,7 +659,7 @@ Parent: [#5](https://github.com/spei04/strange-physics/issues/5). This issue clo
 - **Security and reliability:** Failed tests require numerical justification, not arbitrary loosening.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Research engineer; base reference lane RS1. Required review: Research, SDK, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R1; independently accepted locally at 43e05897587ba3b7e1a4266c2d40af7cbaa1b5b6; exact-head CI and integration remain. All 70 primary/mixed-mass noiseless prefixes meet the preregistered joint bounds; 13/64 noisy prefixes pass, failures retained. 817 full tests and 204 focused cases/static checks pass. See SPRING_DOMAIN.md; no production fitter/predictor/scorer claim.
+- **Milestone / state:** R1; completed through PR #78/main db18278821d72d3ba02336e45827d441af0a00b6, tree08efb975 matching reviewed7b27bad. PR CI39358928012 and main CI39359050024 passed. All 70 primary/mixed-mass noiseless prefixes meet the preregistered joint bounds; 13/64 noisy prefixes pass, failures retained. 817 full tests and 204 focused cases/static checks pass. See SPRING_DOMAIN.md; no production fitter/predictor/scorer claim.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-03-c"></a>
@@ -712,7 +712,7 @@ Parent: [#6](https://github.com/spei04/strange-physics/issues/6). This issue clo
 - **Security and reliability:** No evaluator access; bounded compute and safe diagnostics.
 - **Effort and confidence:** 3 delivery engineer-days; medium confidence; +0.75 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Research engineer; base reference lane RS2. Required review: Research, QE, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R1; backlog approved; not started; prerequisites and slice checkpoints still apply.
+- **Milestone / state:** R1; in progress under Research, issue #77, after accepted SP-03.b/SP-02.b. Versioned config/result plan accepted; independent review and exact-head CI required. Fitting only; prediction/scoring/I1 remain later tasks.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-04-b"></a>
@@ -3365,7 +3365,7 @@ purchased-prefix-only fitting, unseen-condition predictions and independent
 analytic scoring with explicit failures; existing simulation/schema/CI evidence
 does not satisfy it. The concrete disk/snapshot action is approved and complete;
 SP-03.a is integrated through PR #76/main 8510243 with matching tree and passing
-PR/main CI. SP-03.b/#75 source 43e05897587ba3b7e1a4266c2d40af7cbaa1b5b6 is independently accepted locally
-with 817 tests. Exact-head CI and integration precede SP-04.a/#77 authoring;
-Research prepares its bounded production API while that gate completes. Noise
+PR/main CI. SP-03.b/#75 is integrated through PR #78/main db182788 with matching reviewed tree
+and passing PR/main CI, including 817 tests. Research now authors SP-04.a/#77
+under the accepted bounded production config/result API plan. Noise
 sensitivity failures remain explicit; no thresholds or manifests were relaxed.

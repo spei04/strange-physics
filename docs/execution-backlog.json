@@ -1629,7 +1629,7 @@
         "RS2"
       ],
       "objective": "Ensure numerical results and supported interventions are scientifically defensible. This PR delivers ratify first-spring domain and tolerances.",
-      "status": "in_progress",
+      "status": "completed",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1638,8 +1638,8 @@
         "QE"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/75",
-      "execution_owner": "Engineer Research; independently reviewed by Quality and lead; primary checkout handed to lead for integration.",
-      "evidence": "Source 43e05897587ba3b7e1a4266c2d40af7cbaa1b5b6; 817 full local tests and 204 focused cases/static checks pass. All 70 primary/mixed-mass noiseless prefixes pass; 13/64 noisy prefixes pass, failures retained. Exact-head CI and integration pending; docs/SPRING_DOMAIN.md."
+      "execution_owner": "Engineer Research; Quality/lead review and integration accepted.",
+      "evidence": "PR #78/main db18278821d72d3ba02336e45827d441af0a00b6/tree08efb975 matches reviewed7b27bad; PR CI39358928012 and main CI39359050024 passed with 817 tests. Bounded calibration in docs/SPRING_DOMAIN.md; all 70 noiseless prefixes pass and 13/64 noisy prefixes pass, failures retained."
     },
     {
       "id": "SP-03.c",
@@ -1741,7 +1741,7 @@
         "RS2"
       ],
       "objective": "Turn purchased observations into inspectable predictive models with explicit failure behavior. This PR delivers fit a spring using purchased observations.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1750,7 +1750,8 @@
         "SDK"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/77",
-      "execution_owner": "Engineer Research; read-only bounded API preparation; authoring after accepted SP-03.b integration."
+      "execution_owner": "Engineer Research; exclusive primary cloud checkout after accepted SP-03.b/02.b; Quality/Platform/lead review.",
+      "execution_plan": "Versioned explicit actual-config digest, all-completed paired-Simpson windows and public masses; frozen LinearSpringModel plus separate JSON-safe diagnostics. Fitted is numerical success, not ground-truth acceptance. Nonzero noise and coefficients outside calibrated range remain explicit; no clipping or private inputs."
     },
     {
       "id": "SP-04.b",
@@ -10715,10 +10716,10 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-03.b_reviewed_integration_pending",
+      "status": "SP-04.a_in_progress",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "SP-04.a after SP-03.b integration",
+      "next_authoring_task": "SP-04.a",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10839,8 +10840,14 @@
       "noise_computed_probe_failures": 406,
       "noise_missing_predictions": 144,
       "record": "docs/SPRING_DOMAIN.md",
-      "status": "independently_reviewed_integration_pending",
-      "boundary": "Synthetic test-only calibration. Fixed noiseless finite matrices and exact-sample quadrature bounds; no blanket noisy accuracy, continuous RK4 guarantee, production fitter/predictor/scorer, I1 or release claim. Derived arithmetic and propagation failures explicitly retained as JSON-safe diagnostics."
+      "status": "accepted_and_integrated",
+      "boundary": "Synthetic test-only calibration. Fixed noiseless finite matrices and exact-sample quadrature bounds; no blanket noisy accuracy, continuous RK4 guarantee, production fitter/predictor/scorer, I1 or release claim. Derived arithmetic and propagation failures explicitly retained as JSON-safe diagnostics.",
+      "pull_request": 78,
+      "merge": "db18278821d72d3ba02336e45827d441af0a00b6",
+      "reviewed_integration_head": "7b27bad5a6d947580d231b337df8836558a62131",
+      "tree": "08efb97564ff99f7056551a04b93b27b5460f3eb",
+      "pr_ci": 39358928012,
+      "main_ci": 39359050024
     }
   }
 }
