@@ -201,3 +201,22 @@ def test_candidate_rejects_noncommit_provenance(
     monkeypatch.setenv("GITHUB_SHA", "main")
     with pytest.raises(ValueError, match="full source commit"):
         write_provenance((tmp_path / "a", tmp_path / "b"), tmp_path, tmp_path / "runtime")
+
+
+@pytest.mark.parametrize("kind", ["wheel", "sdist"])
+def test_archive_allowlist_diagnostics_report_names_only(tmp_path: Path, kind: str) -> None:
+    root = tmp_path / "source"
+    make_source(root)
+    wheel, sdist = archive_contents(root)
+    selected = wheel if kind == "wheel" else sdist
+    prefix = "strange_physics" if kind == "wheel" else f"{STEM}/src/strange_physics"
+    missing = f"{prefix}/sdk.py"
+    unexpected = f"{prefix}/private.json"
+    del selected[missing]
+    selected[unexpected] = b"do not print this content"
+    write_archives(tmp_path / "dist", wheel, sdist)
+    with pytest.raises(ValueError, match="allowlist") as error:
+        validate_archives(tmp_path / "dist", root)
+    assert repr(missing) in str(error.value)
+    assert repr(unexpected) in str(error.value)
+    assert "do not print this content" not in str(error.value)

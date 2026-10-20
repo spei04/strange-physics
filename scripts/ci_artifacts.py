@@ -122,8 +122,13 @@ def validate_archives(dist: Path, source_root: Path) -> tuple[Path, Path]:
         f"{info}/RECORD",
         f"{info}/licenses/LICENSE",
     }
-    if set(wheel_files) != {f"strange_physics/{n}" for n in MODULES} | wheel_metadata:
-        raise ValueError("Wheel contents differ from the package allowlist")
+    expected_wheel = {f"strange_physics/{n}" for n in MODULES} | wheel_metadata
+    if set(wheel_files) != expected_wheel:
+        raise ValueError(
+            "Wheel contents differ from the package allowlist; "
+            f"unexpected={sorted(set(wheel_files) - expected_wheel)[:10]!r}; "
+            f"missing={sorted(expected_wheel - set(wheel_files))[:10]!r}"
+        )
     source_files = read_archive(sdist)
     fixed_source = {"README.md", "LICENSE", "pyproject.toml"}
     expected_source = (
@@ -132,7 +137,11 @@ def validate_archives(dist: Path, source_root: Path) -> tuple[Path, Path]:
         | {f"{stem}/PKG-INFO"}
     )
     if set(source_files) != expected_source:
-        raise ValueError("Source archive contents differ from the package allowlist")
+        raise ValueError(
+            "Source archive contents differ from the package allowlist; "
+            f"unexpected={sorted(set(source_files) - expected_source)[:10]!r}; "
+            f"missing={sorted(expected_source - set(source_files))[:10]!r}"
+        )
     for name, content in source.items():
         if (
             wheel_files[f"strange_physics/{name}"] != content
