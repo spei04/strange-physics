@@ -10616,7 +10616,28 @@
         ],
         "owner": "Engineer Quality",
         "issue": "https://github.com/spei04/strange-physics/issues/64",
-        "blocker": "Accepted ID-B/B3"
+        "blocker": "Accepted ID-B/B3",
+        "pr_units": [
+          {
+            "id": "C1",
+            "title": "Service principal and API key lifecycle",
+            "status": "queued",
+            "depends_on": [
+              "SP-01.b/ID-B/B3 integration"
+            ],
+            "owner": "Engineer Quality"
+          },
+          {
+            "id": "C2",
+            "title": "Run credentials and product-authority composition",
+            "status": "blocked",
+            "depends_on": [
+              "C1"
+            ],
+            "owner": "Engineer Quality"
+          }
+        ],
+        "execution_plan": "Lead accepted two dependent reviewable increments. New trusted principal authority generation and durable grant incarnation prevent disable/re-enable and remove/regrant resurrection; existing public session/B1 shapes remain unchanged. Creator and leaf key are audit metadata, not enduring run authority. ID-C and SP-01.b stay open until both and final composition review."
       }
     ],
     "estimate_adjustments": [

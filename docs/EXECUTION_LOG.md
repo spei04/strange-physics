@@ -84,7 +84,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-20 02:29 | Research | SP-04.a/#77 — versioned public-prefix spring fitter | Bounded config/result API accepted; no prediction/scoring claim; Quality and Platform independently review |
 | 2026-10-20 02:31 | Platform | ID-B/B3/#63 — reviewed linking contract and repairs | Source051d8f7 accepted by Research/Quality/lead; 714 branch tests, 222 focused, static/schema/package checks passed; identity writer released |
 | 2026-10-20 02:31 | Project lead | Integrate B3 with accepted scientific main and reconcile stream contracts | Exact integrated-head checks before merge; three stream acceptance statements clarified without changing graph/effort/gates |
-| 2026-10-20 02:31 | Quality | ID-C/#64 — bounded credential API preparation | Read-only until B3 integration; Platform independently prepares fitter review |
+| 2026-10-20 02:31 | Quality | ID-C/#64 — bounded credential API preparation | C1 service/key lifecycle then C2 run credentials/composition; read-only until B3 integration; Platform reviews fitter |
 
 ## Review evidence and management checkpoint
 
@@ -114,9 +114,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 Research owns the local spring proof; Quality independently authors its development
 scorer. SP-02.b is accepted and SP-03.a fixtures have passed independent review.
 SP-03.a and SP-03.b are integrated, including exact-head PR/main checks.
-Research now authors SP-04.a/#77 in the reused primary checkout. Platform authors
-B3 linking is under lead integration in the separate cloud checkout; Quality
-prepares ID-C read-only until accepted ID-B.
+Research now authors SP-04.a/#77 in the reused primary checkout. B3 linking is
+under lead integration in the separate cloud checkout. Quality prepares ID-C as
+two dependent increments: C1 service/key lifecycle, then C2 run credentials and
+product-authority composition. Authoring waits for accepted ID-B.
 
 The approved dependency path is SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b →
 SP-06.a → SP-04.e/I1. SP-03.a also requires completed SP-00.b; SP-03.b requires
