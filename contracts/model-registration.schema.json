@@ -1,0 +1,3499 @@
+{
+  "$defs": {
+    "Anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "Anchor",
+      "type": "object"
+    },
+    "ApprovalState": {
+      "additionalProperties": false,
+      "description": "Current promotion/revocation row; retained approval snapshots are provenance only.",
+      "properties": {
+        "approval_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Approval Id",
+          "type": "string"
+        },
+        "approval_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Approval Policy Sha256",
+          "type": "string"
+        },
+        "build_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Build Sha256",
+          "type": "string"
+        },
+        "decided_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Decided At",
+          "type": "integer"
+        },
+        "profile_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Profile Sha256",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "scan_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Scan Sha256",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "quarantined",
+            "approved",
+            "revoked"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "approval_id",
+        "revision",
+        "state",
+        "approval_policy_sha256",
+        "build_sha256",
+        "scan_sha256",
+        "profile_sha256",
+        "decided_at"
+      ],
+      "title": "ApprovalState",
+      "type": "object"
+    },
+    "ArchiveEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Bytes Sha256"
+        },
+        "expanded_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expanded Bytes",
+          "type": "integer"
+        },
+        "kind": {
+          "enum": [
+            "file",
+            "directory"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 512,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^A-Za-z0-9_./-]"
+          },
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$",
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "kind",
+        "expanded_bytes",
+        "bytes_sha256"
+      ],
+      "title": "ArchiveEntry",
+      "type": "object"
+    },
+    "ArtifactRef": {
+      "additionalProperties": false,
+      "description": "Public immutable object-version identity; neither location nor access authority.",
+      "properties": {
+        "artifact_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "generation": {
+          "maxLength": 20,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^0-9]"
+          },
+          "pattern": "^[1-9][0-9]{0,19}$",
+          "title": "Generation",
+          "type": "string"
+        },
+        "media_type": {
+          "maxLength": 128,
+          "minLength": 3,
+          "not": {
+            "pattern": "[^a-z0-9!#$&^_.+/-]"
+          },
+          "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]*/[a-z0-9][a-z0-9!#$&^_.+-]*$",
+          "title": "Media Type",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "generation",
+        "sha256",
+        "size_bytes",
+        "media_type"
+      ],
+      "title": "ArtifactRef",
+      "type": "object"
+    },
+    "BuiltinAnalyticApproval": {
+      "additionalProperties": false,
+      "properties": {
+        "approval": {
+          "$ref": "#/$defs/ApprovalState"
+        },
+        "build": {
+          "$ref": "#/$defs/BuiltinBuild"
+        },
+        "kind": {
+          "const": "builtin_analytic",
+          "title": "Kind",
+          "type": "string"
+        },
+        "profile": {
+          "$ref": "#/$defs/BuiltinPredictionProfile"
+        },
+        "scan": {
+          "$ref": "#/$defs/ImageScanEvidence"
+        }
+      },
+      "required": [
+        "kind",
+        "profile",
+        "build",
+        "scan",
+        "approval"
+      ],
+      "title": "BuiltinAnalyticApproval",
+      "type": "object"
+    },
+    "BuiltinBuild": {
+      "additionalProperties": false,
+      "properties": {
+        "build": {
+          "$ref": "#/$defs/VerifiedBuildEvidence"
+        },
+        "kind": {
+          "const": "builtin_analytic",
+          "title": "Kind",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/BuiltinSource"
+        }
+      },
+      "required": [
+        "kind",
+        "source",
+        "build"
+      ],
+      "title": "BuiltinBuild",
+      "type": "object"
+    },
+    "BuiltinPredictionProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "builtin_analytic",
+          "title": "Kind",
+          "type": "string"
+        },
+        "prediction_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Prediction Config Sha256",
+          "type": "string"
+        },
+        "predictor_profile": {
+          "const": "strange-physics.linear-spring-prediction.v1",
+          "title": "Predictor Profile",
+          "type": "string"
+        },
+        "predictor_version": {
+          "const": "strange-physics.linear-spring.analytic.v1",
+          "title": "Predictor Version",
+          "type": "string"
+        },
+        "purpose": {
+          "const": "native_prediction",
+          "title": "Purpose",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "purpose",
+        "predictor_profile",
+        "predictor_version",
+        "prediction_config_sha256"
+      ],
+      "title": "BuiltinPredictionProfile",
+      "type": "object"
+    },
+    "BuiltinSource": {
+      "additionalProperties": false,
+      "description": "Real trusted repository/build inputs; never a fabricated uploaded package.",
+      "properties": {
+        "commit": {
+          "maxLength": 64,
+          "minLength": 40,
+          "not": {
+            "pattern": "[^0-9a-f]"
+          },
+          "pattern": "^([0-9a-f]{40}|[0-9a-f]{64})$",
+          "title": "Commit",
+          "type": "string"
+        },
+        "lock_bytes_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Lock Bytes Sha256",
+          "type": "string"
+        },
+        "recipe_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Recipe Sha256",
+          "type": "string"
+        },
+        "repository_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Repository Id",
+          "type": "string"
+        },
+        "tree": {
+          "maxLength": 64,
+          "minLength": 40,
+          "not": {
+            "pattern": "[^0-9a-f]"
+          },
+          "pattern": "^([0-9a-f]{40}|[0-9a-f]{64})$",
+          "title": "Tree",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository_id",
+        "commit",
+        "tree",
+        "lock_bytes_sha256",
+        "recipe_sha256"
+      ],
+      "title": "BuiltinSource",
+      "type": "object"
+    },
+    "CancellationResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "cancellation",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/RunView"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "CancellationResult",
+      "type": "object"
+    },
+    "CheckpointBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Config Sha256",
+          "type": "string"
+        },
+        "agent_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "agent_package_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Package Sha256",
+          "type": "string"
+        },
+        "checkpoint_protocol": {
+          "const": "strange-physics.checkpoint.v1",
+          "default": "strange-physics.checkpoint.v1",
+          "title": "Checkpoint Protocol",
+          "type": "string"
+        },
+        "runtime_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Image Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_id",
+        "agent_package_sha256",
+        "agent_config_sha256",
+        "runtime_image_sha256"
+      ],
+      "title": "CheckpointBinding",
+      "type": "object"
+    },
+    "CheckpointRestoreRef": {
+      "additionalProperties": false,
+      "properties": {
+        "index": {
+          "maximum": 9999,
+          "minimum": -1,
+          "title": "Index",
+          "type": "integer"
+        },
+        "record_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Record Sha256",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "index",
+        "request_sha256",
+        "record_sha256"
+      ],
+      "title": "CheckpointRestoreRef",
+      "type": "object"
+    },
+    "Connection": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "A",
+          "type": "string"
+        },
+        "b": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "B",
+          "type": "string"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "title": "Connection",
+      "type": "object"
+    },
+    "CreateRunRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_package_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Package Sha256",
+          "type": "string"
+        },
+        "experiment_budget": {
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Experiment Budget",
+          "type": "integer"
+        },
+        "limits": {
+          "$ref": "#/$defs/ResourceLimits"
+        },
+        "track": {
+          "enum": [
+            "controlled_selection",
+            "agent_discovery"
+          ],
+          "title": "Track",
+          "type": "string"
+        },
+        "world_version_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Version Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "world_version_id",
+        "agent_package_sha256",
+        "track",
+        "experiment_budget",
+        "limits"
+      ],
+      "title": "CreateRunRequest",
+      "type": "object"
+    },
+    "Error": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "unauthenticated",
+            "forbidden",
+            "not_found",
+            "idempotency_conflict",
+            "incompatible_state",
+            "invalid_request",
+            "budget_exhausted",
+            "quota_exceeded",
+            "temporarily_unavailable",
+            "cursor_expired",
+            "unsupported_version",
+            "execution_failed"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "operation_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Operation Id"
+        },
+        "request_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Request Id",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "request_id",
+        "retryable",
+        "operation_id"
+      ],
+      "title": "Error",
+      "type": "object"
+    },
+    "ExecutionResources": {
+      "additionalProperties": false,
+      "properties": {
+        "cpu_seconds": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Cpu Seconds",
+          "type": "integer"
+        },
+        "memory_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Memory Bytes",
+          "type": "integer"
+        },
+        "output_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Output Bytes",
+          "type": "integer"
+        },
+        "process_count": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Process Count",
+          "type": "integer"
+        },
+        "scratch_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Scratch Bytes",
+          "type": "integer"
+        },
+        "wall_seconds": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "cpu_seconds",
+        "wall_seconds",
+        "memory_bytes",
+        "process_count",
+        "scratch_bytes",
+        "output_bytes"
+      ],
+      "title": "ExecutionResources",
+      "type": "object"
+    },
+    "Experiment": {
+      "additionalProperties": false,
+      "properties": {
+        "impulse": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Impulse"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "particles": {
+          "items": {
+            "$ref": "#/$defs/ParticleInitial"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particles",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "strange-physics.experiment.v1",
+          "default": "strange-physics.experiment.v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "particles"
+      ],
+      "title": "Experiment",
+      "type": "object"
+    },
+    "ExperimentRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "anyOf": [
+            {
+              "const": "simulation_failed",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        },
+        "experiment": {
+          "$ref": "#/$defs/Experiment"
+        },
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "failed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "trajectory": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Trajectory"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "operation_id",
+        "index",
+        "experiment",
+        "status"
+      ],
+      "title": "ExperimentRecord",
+      "type": "object"
+    },
+    "ExperimentResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "experiment",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/ExperimentRecord"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "ExperimentResult",
+      "type": "object"
+    },
+    "ExperimentSpace": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "default": 40,
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Budget",
+          "type": "integer"
+        },
+        "calibration_experiments": {
+          "default": 4,
+          "minimum": 0,
+          "title": "Calibration Experiments",
+          "type": "integer"
+        },
+        "limits": {
+          "$ref": "#/$defs/Limits",
+          "default": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          }
+        },
+        "sampling": {
+          "$ref": "#/$defs/Sampling"
+        },
+        "schema_version": {
+          "const": "strange-physics.space.v1",
+          "default": "strange-physics.space.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "structure": {
+          "$ref": "#/$defs/Structure"
+        }
+      },
+      "required": [
+        "structure",
+        "sampling"
+      ],
+      "title": "ExperimentSpace",
+      "type": "object"
+    },
+    "Frame": {
+      "additionalProperties": false,
+      "properties": {
+        "positions": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Positions",
+          "type": "array"
+        },
+        "time": {
+          "minimum": 0,
+          "title": "Time",
+          "type": "number"
+        },
+        "velocities": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Velocities",
+          "type": "array"
+        }
+      },
+      "required": [
+        "time",
+        "positions",
+        "velocities"
+      ],
+      "title": "Frame",
+      "type": "object"
+    },
+    "IdempotencyScope": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "maxLength": 128,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^[!-~]+$",
+          "title": "Key",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "run_creation",
+            "experiment",
+            "cancellation",
+            "model_submission"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "resource_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Resource Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "principal_id",
+        "kind",
+        "resource_id",
+        "key"
+      ],
+      "title": "IdempotencyScope",
+      "type": "object"
+    },
+    "ImageScanEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "build_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Build Sha256",
+          "type": "string"
+        },
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
+        },
+        "outcome": {
+          "enum": [
+            "passed",
+            "rejected",
+            "unknown"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "runtime_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Image Sha256",
+          "type": "string"
+        },
+        "scan_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Scan Id",
+          "type": "string"
+        },
+        "scan_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Scan Policy Sha256",
+          "type": "string"
+        },
+        "valid_until": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Valid Until",
+          "type": "integer"
+        },
+        "verifier_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verifier Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scan_id",
+        "verifier_id",
+        "build_sha256",
+        "runtime_image_sha256",
+        "scan_policy_sha256",
+        "outcome",
+        "observed_at",
+        "valid_until"
+      ],
+      "title": "ImageScanEvidence",
+      "type": "object"
+    },
+    "Impulse": {
+      "additionalProperties": false,
+      "properties": {
+        "particle_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Particle Id",
+          "type": "string"
+        },
+        "vector": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Vector",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_id",
+        "vector"
+      ],
+      "title": "Impulse",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "Limits": {
+      "additionalProperties": false,
+      "properties": {
+        "impulse_norm": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Impulse Norm",
+          "type": "number"
+        },
+        "max_mass": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Max Mass",
+          "type": "number"
+        },
+        "min_mass": {
+          "default": 0.5,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Min Mass",
+          "type": "number"
+        },
+        "position_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Position Norm",
+          "type": "number"
+        },
+        "velocity_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Velocity Norm",
+          "type": "number"
+        }
+      },
+      "title": "Limits",
+      "type": "object"
+    },
+    "LinearSpringModel": {
+      "additionalProperties": false,
+      "description": "A fitted shared linear coefficient, with explicit observation provenance.",
+      "properties": {
+        "fit_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Fit Config Sha256",
+          "type": "string"
+        },
+        "fit_record_indices": {
+          "items": {
+            "maximum": 9999,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 10000,
+          "minItems": 1,
+          "title": "Fit Record Indices",
+          "type": "array"
+        },
+        "fitter_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Fitter Version",
+          "type": "string"
+        },
+        "linear": {
+          "minimum": 0,
+          "title": "Linear",
+          "type": "number"
+        },
+        "observation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Observation Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.linear-spring-model.v1",
+          "default": "strange-physics.linear-spring-model.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "through_index": {
+          "maximum": 9999,
+          "minimum": 0,
+          "title": "Through Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "linear",
+        "through_index",
+        "fit_record_indices",
+        "observation_sha256",
+        "fitter_version",
+        "fit_config_sha256"
+      ],
+      "title": "LinearSpringModel",
+      "type": "object"
+    },
+    "LockResolutionEvidence": {
+      "additionalProperties": false,
+      "description": "Actual trusted lock interpretation; digest equality alone does not prove pinned inputs.",
+      "properties": {
+        "inspection_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Inspection Sha256",
+          "type": "string"
+        },
+        "lock_bytes_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Lock Bytes Sha256",
+          "type": "string"
+        },
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
+        },
+        "outcome": {
+          "const": "complete_pinned",
+          "title": "Outcome",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "verification_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verification Id",
+          "type": "string"
+        },
+        "verifier_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verifier Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "verification_id",
+        "verifier_id",
+        "inspection_sha256",
+        "lock_bytes_sha256",
+        "policy_sha256",
+        "outcome",
+        "observed_at"
+      ],
+      "title": "LockResolutionEvidence",
+      "type": "object"
+    },
+    "ModelAdmissionPlan": {
+      "additionalProperties": false,
+      "description": "Atomic new pending operation/admission proposal; not a completed model.",
+      "properties": {
+        "admission": {
+          "$ref": "#/$defs/ModelSubmissionAdmission"
+        },
+        "stored": {
+          "$ref": "#/$defs/StoredRequest"
+        }
+      },
+      "required": [
+        "admission",
+        "stored"
+      ],
+      "title": "ModelAdmissionPlan",
+      "type": "object"
+    },
+    "ModelCommitPlan": {
+      "additionalProperties": false,
+      "description": "Atomic pending/running to completed operation, immutable record and outbox proposal.",
+      "properties": {
+        "after": {
+          "$ref": "#/$defs/StoredRequest"
+        },
+        "before": {
+          "$ref": "#/$defs/StoredRequest"
+        },
+        "outbox": {
+          "$ref": "#/$defs/ModelRegistrationOutbox"
+        },
+        "record": {
+          "$ref": "#/$defs/ModelRegistrationRecord"
+        }
+      },
+      "required": [
+        "before",
+        "after",
+        "record",
+        "outbox"
+      ],
+      "title": "ModelCommitPlan",
+      "type": "object"
+    },
+    "ModelLedgerSnapshot": {
+      "additionalProperties": false,
+      "description": "Private complete ledger from one transaction. Raw bytes must be capped before parsing.",
+      "properties": {
+        "engine": {
+          "$ref": "#/$defs/RunEngineBinding"
+        },
+        "operations": {
+          "items": {
+            "$ref": "#/$defs/Operation"
+          },
+          "maxItems": 10000,
+          "title": "Operations",
+          "type": "array"
+        },
+        "run_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Run Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "engine",
+        "run_revision",
+        "operations"
+      ],
+      "title": "ModelLedgerSnapshot",
+      "type": "object"
+    },
+    "ModelReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "model_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "through_index": {
+          "maximum": 9999,
+          "minimum": -1,
+          "title": "Through Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "model_id",
+        "model_sha256",
+        "through_index"
+      ],
+      "title": "ModelReceipt",
+      "type": "object"
+    },
+    "ModelRegistrationLookup": {
+      "additionalProperties": false,
+      "description": "Exact scoped authoritative lookup; partial crash states remain representable for repair.",
+      "properties": {
+        "admission": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ModelSubmissionAdmission"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outbox": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ModelRegistrationOutbox"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ModelRegistrationRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/IdempotencyScope"
+        },
+        "stored": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StoredRequest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "scope",
+        "stored",
+        "admission",
+        "record",
+        "outbox"
+      ],
+      "title": "ModelRegistrationLookup",
+      "type": "object"
+    },
+    "ModelRegistrationOutbox": {
+      "additionalProperties": false,
+      "properties": {
+        "committed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Committed At",
+          "type": "integer"
+        },
+        "event_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "model_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "record_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Record Sha256",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "workspace_id",
+        "run_id",
+        "operation_id",
+        "model_id",
+        "request_sha256",
+        "record_sha256",
+        "committed_at"
+      ],
+      "title": "ModelRegistrationOutbox",
+      "type": "object"
+    },
+    "ModelRegistrationPolicy": {
+      "additionalProperties": false,
+      "description": "Required configured policy; reference maxima may be lowered, never silently truncated.",
+      "properties": {
+        "approval_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Approval Policy Sha256",
+          "type": "string"
+        },
+        "build_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Build Policy Sha256",
+          "type": "string"
+        },
+        "builder_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Builder Image Sha256",
+          "type": "string"
+        },
+        "max_canonical_prefix_bytes": {
+          "maximum": 8388608,
+          "minimum": 1,
+          "title": "Max Canonical Prefix Bytes",
+          "type": "integer"
+        },
+        "max_json_depth": {
+          "maximum": 32,
+          "minimum": 1,
+          "title": "Max Json Depth",
+          "type": "integer"
+        },
+        "max_json_nodes": {
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Max Json Nodes",
+          "type": "integer"
+        },
+        "max_ledger_bytes": {
+          "maximum": 8388608,
+          "minimum": 1,
+          "title": "Max Ledger Bytes",
+          "type": "integer"
+        },
+        "max_metadata_bytes": {
+          "maximum": 4194304,
+          "minimum": 1,
+          "title": "Max Metadata Bytes",
+          "type": "integer"
+        },
+        "max_model_bytes": {
+          "maximum": 262144,
+          "minimum": 1,
+          "title": "Max Model Bytes",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "recipe_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Recipe Sha256",
+          "type": "string"
+        },
+        "scan_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Scan Policy Sha256",
+          "type": "string"
+        },
+        "trusted_repository_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Trusted Repository Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_id",
+        "max_model_bytes",
+        "max_ledger_bytes",
+        "max_canonical_prefix_bytes",
+        "max_metadata_bytes",
+        "max_json_depth",
+        "max_json_nodes",
+        "trusted_repository_id",
+        "recipe_sha256",
+        "builder_image_sha256",
+        "build_policy_sha256",
+        "scan_policy_sha256",
+        "approval_policy_sha256"
+      ],
+      "title": "ModelRegistrationPolicy",
+      "type": "object"
+    },
+    "ModelRegistrationRecord": {
+      "additionalProperties": false,
+      "description": "Immutable commit evidence. Actual bytes/prefix and current authority need runtime checks.",
+      "properties": {
+        "approval": {
+          "$ref": "#/$defs/BuiltinAnalyticApproval"
+        },
+        "artifact": {
+          "$ref": "#/$defs/VerifiedArtifact"
+        },
+        "canonical_prefix_bytes": {
+          "maximum": 8388608,
+          "minimum": 1,
+          "title": "Canonical Prefix Bytes",
+          "type": "integer"
+        },
+        "committed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Committed At",
+          "type": "integer"
+        },
+        "engine": {
+          "$ref": "#/$defs/RunEngineBinding"
+        },
+        "ledger_bytes_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Ledger Bytes Sha256",
+          "type": "string"
+        },
+        "ledger_size_bytes": {
+          "maximum": 8388608,
+          "minimum": 1,
+          "title": "Ledger Size Bytes",
+          "type": "integer"
+        },
+        "model": {
+          "$ref": "#/$defs/LinearSpringModel"
+        },
+        "model_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "prediction_config": {
+          "$ref": "#/$defs/SpringPredictionConfig"
+        },
+        "run_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Run Revision",
+          "type": "integer"
+        },
+        "submission": {
+          "$ref": "#/$defs/ModelSubmissionAdmission"
+        },
+        "worker": {
+          "$ref": "#/$defs/WorkerLaunchRecord"
+        }
+      },
+      "required": [
+        "model_id",
+        "submission",
+        "model",
+        "artifact",
+        "prediction_config",
+        "approval",
+        "engine",
+        "worker",
+        "run_revision",
+        "committed_at",
+        "policy_sha256",
+        "ledger_bytes_sha256",
+        "ledger_size_bytes",
+        "canonical_prefix_bytes"
+      ],
+      "title": "ModelRegistrationRecord",
+      "type": "object"
+    },
+    "ModelSubmissionAdmission": {
+      "additionalProperties": false,
+      "description": "Immutable accepted operation identity, separate from its mutable execution status.",
+      "properties": {
+        "accepted_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Accepted At",
+          "type": "integer"
+        },
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "request": {
+          "$ref": "#/$defs/SubmitModelRequest"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "run_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Run Revision",
+          "type": "integer"
+        },
+        "scope": {
+          "$ref": "#/$defs/IdempotencyScope"
+        },
+        "worker": {
+          "$ref": "#/$defs/WorkerLaunchRecord"
+        }
+      },
+      "required": [
+        "request",
+        "request_sha256",
+        "scope",
+        "operation_id",
+        "worker",
+        "run_revision",
+        "accepted_at"
+      ],
+      "title": "ModelSubmissionAdmission",
+      "type": "object"
+    },
+    "ModelSubmissionReplay": {
+      "additionalProperties": false,
+      "description": "Safe operation projection. Producing it requires current complete worker authorization.",
+      "properties": {
+        "operation": {
+          "$ref": "#/$defs/Operation"
+        }
+      },
+      "required": [
+        "operation"
+      ],
+      "title": "ModelSubmissionReplay",
+      "type": "object"
+    },
+    "ModelSubmissionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "model_submission",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/ModelReceipt"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "ModelSubmissionResult",
+      "type": "object"
+    },
+    "ObjectVerification": {
+      "additionalProperties": false,
+      "description": "Trusted complete stored-byte readback, not object user metadata or a client claim.\n\nThe producer verifies the entire raw byte stream at this exact generation,\nwith transport checksum validation where supported. This message does not do I/O.",
+      "properties": {
+        "completeness": {
+          "const": "complete",
+          "title": "Completeness",
+          "type": "string"
+        },
+        "generation": {
+          "maxLength": 20,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^0-9]"
+          },
+          "pattern": "^[1-9][0-9]{0,19}$",
+          "title": "Generation",
+          "type": "string"
+        },
+        "locator": {
+          "$ref": "#/$defs/StorageLocator"
+        },
+        "media_type": {
+          "maxLength": 128,
+          "minLength": 3,
+          "not": {
+            "pattern": "[^a-z0-9!#$&^_.+/-]"
+          },
+          "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]*/[a-z0-9][a-z0-9!#$&^_.+-]*$",
+          "title": "Media Type",
+          "type": "string"
+        },
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "verification_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verification Id",
+          "type": "string"
+        },
+        "verifier_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verifier Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "verification_id",
+        "verifier_id",
+        "locator",
+        "generation",
+        "sha256",
+        "size_bytes",
+        "media_type",
+        "observed_at",
+        "completeness"
+      ],
+      "title": "ObjectVerification",
+      "type": "object"
+    },
+    "Operation": {
+      "additionalProperties": false,
+      "properties": {
+        "accepted_experiment_index": {
+          "anyOf": [
+            {
+              "maximum": 9999,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Accepted Experiment Index"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Error"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "kind": {
+          "enum": [
+            "run_creation",
+            "experiment",
+            "cancellation",
+            "model_submission"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "result": {
+          "anyOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "cancellation": "#/$defs/CancellationResult",
+                  "experiment": "#/$defs/ExperimentResult",
+                  "model_submission": "#/$defs/ModelSubmissionResult",
+                  "run_creation": "#/$defs/RunCreationResult"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/RunCreationResult"
+                },
+                {
+                  "$ref": "#/$defs/ExperimentResult"
+                },
+                {
+                  "$ref": "#/$defs/CancellationResult"
+                },
+                {
+                  "$ref": "#/$defs/ModelSubmissionResult"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Result"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed",
+            "cancelled"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "operation_id",
+        "kind",
+        "request_sha256",
+        "status",
+        "accepted_experiment_index",
+        "result",
+        "error"
+      ],
+      "title": "Operation",
+      "type": "object"
+    },
+    "OriginalExecutionAdmission": {
+      "additionalProperties": false,
+      "description": "Original atomic producer record, never assembled from a launch caller's current values.",
+      "properties": {
+        "admission_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Admission Id",
+          "type": "string"
+        },
+        "admitted_run": {
+          "$ref": "#/$defs/RunView"
+        },
+        "agent_configuration": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Agent Configuration",
+          "type": "object"
+        },
+        "checkpoint_binding": {
+          "$ref": "#/$defs/CheckpointBinding"
+        },
+        "ownership": {
+          "$ref": "#/$defs/RunOwnership"
+        },
+        "request": {
+          "$ref": "#/$defs/CreateRunRequest"
+        },
+        "stored_request": {
+          "$ref": "#/$defs/StoredRequest"
+        }
+      },
+      "required": [
+        "admission_id",
+        "request",
+        "stored_request",
+        "admitted_run",
+        "ownership",
+        "agent_configuration",
+        "checkpoint_binding"
+      ],
+      "title": "OriginalExecutionAdmission",
+      "type": "object"
+    },
+    "PackageInspection": {
+      "additionalProperties": false,
+      "description": "Trusted bounded full-archive inspection; not an extractor or proof by construction.",
+      "properties": {
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/ArchiveEntry"
+          },
+          "maxItems": 10000,
+          "minItems": 1,
+          "title": "Entries",
+          "type": "array"
+        },
+        "inspection_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Inspection Id",
+          "type": "string"
+        },
+        "inspector_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Inspector Id",
+          "type": "string"
+        },
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
+        },
+        "policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/PackageSource"
+        }
+      },
+      "required": [
+        "inspection_id",
+        "inspector_id",
+        "source",
+        "policy_sha256",
+        "entries",
+        "observed_at"
+      ],
+      "title": "PackageInspection",
+      "type": "object"
+    },
+    "PackageManifest": {
+      "additionalProperties": false,
+      "description": "Detached JSON manifest: syntax/profile only, never an import or Agent conformance test.\n\nmessage_sha256 of this complete parsed manifest is agent_package_sha256 in\nCreateRunRequest and CheckpointBinding, distinct from raw archive, detached\nmanifest, lock and OCI image hashes.\n\nThe source archive does not contain this generation-bearing manifest, avoiding\na self-referential archive hash. Configuration-dependent Agent.identity is\nretained in original run admission, separately from this package entrypoint.",
+      "properties": {
+        "agent_protocol": {
+          "const": "strange-physics.agent.v1",
+          "title": "Agent Protocol",
+          "type": "string"
+        },
+        "entrypoint": {
+          "maxLength": 256,
+          "minLength": 3,
+          "not": {
+            "pattern": "[^A-Za-z0-9_.:]"
+          },
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*(\\.[A-Za-z_][A-Za-z0-9_]*)*:[A-Za-z_][A-Za-z0-9_]*$",
+          "title": "Entrypoint",
+          "type": "string"
+        },
+        "lock_bytes_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Lock Bytes Sha256",
+          "type": "string"
+        },
+        "lock_path": {
+          "maxLength": 512,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^A-Za-z0-9_./-]"
+          },
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_./-]*$",
+          "title": "Lock Path",
+          "type": "string"
+        },
+        "lock_profile": {
+          "const": "uv-lock.v1",
+          "title": "Lock Profile",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.python-agent.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/ArtifactRef"
+        }
+      },
+      "required": [
+        "schema_version",
+        "source",
+        "agent_protocol",
+        "entrypoint",
+        "lock_profile",
+        "lock_path",
+        "lock_bytes_sha256"
+      ],
+      "title": "PackageManifest",
+      "type": "object"
+    },
+    "PackageObjectRecord": {
+      "additionalProperties": false,
+      "description": "Workspace/package ownership; no fabricated run ID.",
+      "properties": {
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "locator": {
+          "$ref": "#/$defs/StorageLocator"
+        },
+        "package_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Package Id",
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "uploading",
+            "available",
+            "tombstoned",
+            "deleted"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "package_id",
+        "ref",
+        "locator",
+        "state",
+        "revision",
+        "created_at"
+      ],
+      "title": "PackageObjectRecord",
+      "type": "object"
+    },
+    "PackageSource": {
+      "additionalProperties": false,
+      "description": "Trusted producer parsed actual verified detached manifest bytes into manifest.",
+      "properties": {
+        "archive": {
+          "$ref": "#/$defs/VerifiedPackageObject"
+        },
+        "manifest": {
+          "$ref": "#/$defs/PackageManifest"
+        },
+        "manifest_object": {
+          "$ref": "#/$defs/VerifiedPackageObject"
+        }
+      },
+      "required": [
+        "archive",
+        "manifest_object",
+        "manifest"
+      ],
+      "title": "PackageSource",
+      "type": "object"
+    },
+    "ParticleInitial": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "mass": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "title": "Mass",
+          "type": "number"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        },
+        "velocity": {
+          "default": [
+            0.0,
+            0.0
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Velocity",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "ParticleInitial",
+      "type": "object"
+    },
+    "ResourceLimits": {
+      "additionalProperties": false,
+      "properties": {
+        "max_artifact_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Artifact Bytes",
+          "type": "integer"
+        },
+        "max_cpu_seconds": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Max Cpu Seconds",
+          "type": "integer"
+        },
+        "max_input_tokens": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Input Tokens",
+          "type": "integer"
+        },
+        "max_model_calls": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Model Calls",
+          "type": "integer"
+        },
+        "max_output_tokens": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "max_provider_cost_microusd": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Provider Cost Microusd",
+          "type": "integer"
+        },
+        "max_wall_seconds": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Max Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_cpu_seconds",
+        "max_wall_seconds",
+        "max_model_calls",
+        "max_input_tokens",
+        "max_output_tokens",
+        "max_artifact_bytes",
+        "max_provider_cost_microusd"
+      ],
+      "title": "ResourceLimits",
+      "type": "object"
+    },
+    "RunArtifactRecord": {
+      "additionalProperties": false,
+      "description": "Current tenant/run catalog row; producer establishes currency and namespace ownership.",
+      "properties": {
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "locator": {
+          "$ref": "#/$defs/StorageLocator"
+        },
+        "ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "uploading",
+            "available",
+            "tombstoned",
+            "deleted"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "agent-visible",
+            "workspace-private",
+            "evaluator-only",
+            "public"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "ref",
+        "locator",
+        "visibility",
+        "state",
+        "revision",
+        "created_at"
+      ],
+      "title": "RunArtifactRecord",
+      "type": "object"
+    },
+    "RunCreationResult": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "run_creation",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/RunView"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "RunCreationResult",
+      "type": "object"
+    },
+    "RunEngineBinding": {
+      "additionalProperties": false,
+      "description": "Immutable trusted run-creation engine selection, not a client or predictor claim.",
+      "properties": {
+        "admission_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Admission Id",
+          "type": "string"
+        },
+        "admission_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Admission Sha256",
+          "type": "string"
+        },
+        "committed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Committed At",
+          "type": "integer"
+        },
+        "creation_request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Creation Request Sha256",
+          "type": "string"
+        },
+        "engine_fingerprint": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Engine Fingerprint",
+          "type": "string"
+        },
+        "engine_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Engine Version",
+          "type": "string"
+        },
+        "ownership_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Ownership Sha256",
+          "type": "string"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "space_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Space Sha256",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        },
+        "world_version_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Version Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "admission_id",
+        "admission_sha256",
+        "creation_request_sha256",
+        "world_version_id",
+        "ownership_sha256",
+        "space_sha256",
+        "engine_version",
+        "engine_fingerprint",
+        "committed_at"
+      ],
+      "title": "RunEngineBinding",
+      "type": "object"
+    },
+    "RunOwnership": {
+      "additionalProperties": false,
+      "description": "Immutable admission record; creator leaf credentials are audit metadata only.",
+      "properties": {
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "created_by_credential_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Created By Credential Id",
+          "type": "string"
+        },
+        "grant_incarnation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Grant Incarnation",
+          "type": "integer"
+        },
+        "principal_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Principal Generation",
+          "type": "integer"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "principal_kind": {
+          "enum": [
+            "human",
+            "service"
+          ],
+          "title": "Principal Kind",
+          "type": "string"
+        },
+        "run_deadline": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Run Deadline",
+          "type": "integer"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "scopes": {
+          "items": {
+            "enum": [
+              "experiments:read",
+              "experiments:write",
+              "checkpoints:write",
+              "models:write"
+            ],
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Scopes",
+          "type": "array"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "principal_id",
+        "principal_kind",
+        "principal_generation",
+        "grant_incarnation",
+        "created_at",
+        "run_deadline",
+        "scopes",
+        "created_by_credential_id"
+      ],
+      "title": "RunOwnership",
+      "type": "object"
+    },
+    "RunView": {
+      "additionalProperties": false,
+      "properties": {
+        "budget_remaining": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Budget Remaining",
+          "type": "integer"
+        },
+        "experiments_accepted": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Experiments Accepted",
+          "type": "integer"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "space": {
+          "$ref": "#/$defs/ExperimentSpace"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "preparing",
+            "running",
+            "recovering",
+            "evaluating",
+            "cancelling",
+            "completed",
+            "failed",
+            "cancelled",
+            "expired"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "status",
+        "revision",
+        "space",
+        "experiments_accepted",
+        "budget_remaining"
+      ],
+      "title": "RunView",
+      "type": "object"
+    },
+    "Sampling": {
+      "additionalProperties": false,
+      "properties": {
+        "dt": {
+          "default": 0.01,
+          "maximum": 0.05,
+          "minimum": 0.0001,
+          "title": "Dt",
+          "type": "number"
+        },
+        "duration": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Duration",
+          "type": "number"
+        },
+        "position_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Position Noise",
+          "type": "number"
+        },
+        "sample_interval": {
+          "default": 0.05,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Sample Interval",
+          "type": "number"
+        },
+        "velocity_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Velocity Noise",
+          "type": "number"
+        }
+      },
+      "title": "Sampling",
+      "type": "object"
+    },
+    "SpringPredictionConfig": {
+      "additionalProperties": false,
+      "description": "A fixed analytic profile; different domains or policies need a version decision.",
+      "properties": {
+        "algorithm": {
+          "const": "closed-form-oscillator-sinc.v1",
+          "default": "closed-form-oscillator-sinc.v1",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "anchor_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Anchor Count",
+          "type": "integer"
+        },
+        "connection_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Connection Count",
+          "type": "integer"
+        },
+        "coordinates": {
+          "default": 2,
+          "maximum": 2,
+          "minimum": 2,
+          "title": "Coordinates",
+          "type": "integer"
+        },
+        "equation": {
+          "const": "stationary-shared-zero-rest-linear-spring.v1",
+          "default": "stationary-shared-zero-rest-linear-spring.v1",
+          "title": "Equation",
+          "type": "string"
+        },
+        "failure_policy": {
+          "const": "no-partial-response.v1",
+          "default": "no-partial-response.v1",
+          "title": "Failure Policy",
+          "type": "string"
+        },
+        "max_anchor_norm": {
+          "default": 0.5,
+          "maximum": 0.5,
+          "minimum": 0.5,
+          "title": "Max Anchor Norm",
+          "type": "number"
+        },
+        "max_coefficient": {
+          "default": 4.0,
+          "maximum": 4.0,
+          "minimum": 4.0,
+          "title": "Max Coefficient",
+          "type": "number"
+        },
+        "max_horizon": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Horizon",
+          "type": "number"
+        },
+        "max_impulse_norm": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 1.0,
+          "title": "Max Impulse Norm",
+          "type": "number"
+        },
+        "max_initial_position_norm": {
+          "default": 3.0,
+          "maximum": 3.0,
+          "minimum": 3.0,
+          "title": "Max Initial Position Norm",
+          "type": "number"
+        },
+        "max_initial_velocity_norm": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Initial Velocity Norm",
+          "type": "number"
+        },
+        "max_integration_dt": {
+          "default": 0.05,
+          "maximum": 0.05,
+          "minimum": 0.05,
+          "title": "Max Integration Dt",
+          "type": "number"
+        },
+        "max_mass": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Mass",
+          "type": "number"
+        },
+        "max_output_frames": {
+          "default": 2001,
+          "maximum": 2001,
+          "minimum": 2001,
+          "title": "Max Output Frames",
+          "type": "integer"
+        },
+        "max_output_position_norm": {
+          "default": 12.0,
+          "maximum": 12.0,
+          "minimum": 12.0,
+          "title": "Max Output Position Norm",
+          "type": "number"
+        },
+        "max_output_velocity_norm": {
+          "default": 14.0,
+          "maximum": 14.0,
+          "minimum": 14.0,
+          "title": "Max Output Velocity Norm",
+          "type": "number"
+        },
+        "max_reference_steps": {
+          "default": 20000,
+          "maximum": 20000,
+          "minimum": 20000,
+          "title": "Max Reference Steps",
+          "type": "integer"
+        },
+        "min_coefficient": {
+          "default": 0.0,
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "title": "Min Coefficient",
+          "type": "number"
+        },
+        "min_integration_dt": {
+          "default": 0.0001,
+          "maximum": 0.0001,
+          "minimum": 0.0001,
+          "title": "Min Integration Dt",
+          "type": "number"
+        },
+        "min_mass": {
+          "default": 0.5,
+          "maximum": 0.5,
+          "minimum": 0.5,
+          "title": "Min Mass",
+          "type": "number"
+        },
+        "particle_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Particle Count",
+          "type": "integer"
+        },
+        "predictor_version": {
+          "const": "strange-physics.linear-spring.analytic.v1",
+          "default": "strange-physics.linear-spring.analytic.v1",
+          "title": "Predictor Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.spring-prediction-config.v1",
+          "default": "strange-physics.spring-prediction-config.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "step_policy": {
+          "const": "alignment-replay-metadata-only.v1",
+          "default": "alignment-replay-metadata-only.v1",
+          "title": "Step Policy",
+          "type": "string"
+        },
+        "supported_fit_config_sha256": {
+          "const": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+          "default": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+          "title": "Supported Fit Config Sha256",
+          "type": "string"
+        },
+        "supported_fitter_version": {
+          "const": "strange-physics.linear-spring.paired-simpson.v1",
+          "default": "strange-physics.linear-spring.paired-simpson.v1",
+          "title": "Supported Fitter Version",
+          "type": "string"
+        },
+        "supported_model_version": {
+          "const": "strange-physics.linear-spring-model.v1",
+          "default": "strange-physics.linear-spring-model.v1",
+          "title": "Supported Model Version",
+          "type": "string"
+        },
+        "time_policy": {
+          "const": "exact-requested-times.v1",
+          "default": "exact-requested-times.v1",
+          "title": "Time Policy",
+          "type": "string"
+        }
+      },
+      "title": "SpringPredictionConfig",
+      "type": "object"
+    },
+    "StorageLocator": {
+      "additionalProperties": false,
+      "description": "Private configured namespace and server-assigned key; no client URL or credentials.",
+      "properties": {
+        "namespace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Namespace Id",
+          "type": "string"
+        },
+        "object_key": {
+          "maxLength": 512,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^A-Za-z0-9_./-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_./-]*$",
+          "title": "Object Key",
+          "type": "string"
+        },
+        "provider": {
+          "const": "gcs",
+          "title": "Provider",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider",
+        "namespace_id",
+        "object_key"
+      ],
+      "title": "StorageLocator",
+      "type": "object"
+    },
+    "StoredRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "$ref": "#/$defs/Operation"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/IdempotencyScope"
+        }
+      },
+      "required": [
+        "scope",
+        "request_sha256",
+        "operation"
+      ],
+      "title": "StoredRequest",
+      "type": "object"
+    },
+    "Structure": {
+      "additionalProperties": false,
+      "properties": {
+        "anchors": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Anchor"
+          },
+          "maxItems": 8,
+          "title": "Anchors",
+          "type": "array"
+        },
+        "connections": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Connection"
+          },
+          "maxItems": 120,
+          "title": "Connections",
+          "type": "array"
+        },
+        "particle_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particle Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_ids"
+      ],
+      "title": "Structure",
+      "type": "object"
+    },
+    "SubmitModelRequest": {
+      "additionalProperties": false,
+      "description": "Public native JSON profile. Registration does not invoke a predictor.",
+      "properties": {
+        "model_artifact": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "prediction_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Prediction Config Sha256",
+          "type": "string"
+        },
+        "prediction_request_schema": {
+          "const": "strange-physics.prediction-request.v1",
+          "default": "strange-physics.prediction-request.v1",
+          "title": "Prediction Request Schema",
+          "type": "string"
+        },
+        "prediction_response_schema": {
+          "const": "strange-physics.prediction-response.v1",
+          "default": "strange-physics.prediction-response.v1",
+          "title": "Prediction Response Schema",
+          "type": "string"
+        },
+        "predictor_profile": {
+          "const": "strange-physics.linear-spring-prediction.v1",
+          "default": "strange-physics.linear-spring-prediction.v1",
+          "title": "Predictor Profile",
+          "type": "string"
+        },
+        "predictor_version": {
+          "const": "strange-physics.linear-spring.analytic.v1",
+          "default": "strange-physics.linear-spring.analytic.v1",
+          "title": "Predictor Version",
+          "type": "string"
+        },
+        "runtime_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Image Sha256",
+          "type": "string"
+        },
+        "through_index": {
+          "maximum": 9999,
+          "minimum": 0,
+          "title": "Through Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "model_artifact",
+        "model_sha256",
+        "through_index",
+        "prediction_config_sha256",
+        "runtime_image_sha256"
+      ],
+      "title": "SubmitModelRequest",
+      "type": "object"
+    },
+    "SubmittedAgentProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_protocol": {
+          "const": "strange-physics.agent.v1",
+          "title": "Agent Protocol",
+          "type": "string"
+        },
+        "kind": {
+          "const": "submitted_agent",
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "agent_protocol"
+      ],
+      "title": "SubmittedAgentProfile",
+      "type": "object"
+    },
+    "SubmittedBuild": {
+      "additionalProperties": false,
+      "properties": {
+        "build": {
+          "$ref": "#/$defs/VerifiedBuildEvidence"
+        },
+        "inspection": {
+          "$ref": "#/$defs/PackageInspection"
+        },
+        "kind": {
+          "const": "submitted_agent",
+          "title": "Kind",
+          "type": "string"
+        },
+        "lock": {
+          "$ref": "#/$defs/LockResolutionEvidence"
+        }
+      },
+      "required": [
+        "kind",
+        "inspection",
+        "lock",
+        "build"
+      ],
+      "title": "SubmittedBuild",
+      "type": "object"
+    },
+    "SubmittedRuntimeApproval": {
+      "additionalProperties": false,
+      "properties": {
+        "approval": {
+          "$ref": "#/$defs/ApprovalState"
+        },
+        "build": {
+          "$ref": "#/$defs/SubmittedBuild"
+        },
+        "kind": {
+          "const": "submitted_agent",
+          "title": "Kind",
+          "type": "string"
+        },
+        "profile": {
+          "$ref": "#/$defs/SubmittedAgentProfile"
+        },
+        "scan": {
+          "$ref": "#/$defs/ImageScanEvidence"
+        }
+      },
+      "required": [
+        "kind",
+        "profile",
+        "build",
+        "scan",
+        "approval"
+      ],
+      "title": "SubmittedRuntimeApproval",
+      "type": "object"
+    },
+    "Trajectory": {
+      "additionalProperties": false,
+      "properties": {
+        "frames": {
+          "items": {
+            "$ref": "#/$defs/Frame"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "title": "Frames",
+          "type": "array"
+        }
+      },
+      "required": [
+        "frames"
+      ],
+      "title": "Trajectory",
+      "type": "object"
+    },
+    "VerifiedArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "record": {
+          "$ref": "#/$defs/RunArtifactRecord"
+        },
+        "verification": {
+          "$ref": "#/$defs/ObjectVerification"
+        }
+      },
+      "required": [
+        "record",
+        "verification"
+      ],
+      "title": "VerifiedArtifact",
+      "type": "object"
+    },
+    "VerifiedBuildEvidence": {
+      "additionalProperties": false,
+      "description": "Real build/provenance verifier output. No unsigned client attestation is accepted.",
+      "properties": {
+        "build_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Build Id",
+          "type": "string"
+        },
+        "build_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Build Policy Sha256",
+          "type": "string"
+        },
+        "builder_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Builder Image Sha256",
+          "type": "string"
+        },
+        "completed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Completed At",
+          "type": "integer"
+        },
+        "lock_bytes_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Lock Bytes Sha256",
+          "type": "string"
+        },
+        "provenance_bytes_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Provenance Bytes Sha256",
+          "type": "string"
+        },
+        "provenance_verification_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provenance Verification Id",
+          "type": "string"
+        },
+        "recipe_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Recipe Sha256",
+          "type": "string"
+        },
+        "runtime_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Image Sha256",
+          "type": "string"
+        },
+        "source_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        },
+        "verified_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Verified At",
+          "type": "integer"
+        },
+        "verifier_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verifier Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "build_id",
+        "verifier_id",
+        "provenance_verification_id",
+        "provenance_bytes_sha256",
+        "source_sha256",
+        "lock_bytes_sha256",
+        "recipe_sha256",
+        "builder_image_sha256",
+        "runtime_image_sha256",
+        "build_policy_sha256",
+        "completed_at",
+        "verified_at"
+      ],
+      "title": "VerifiedBuildEvidence",
+      "type": "object"
+    },
+    "VerifiedPackageObject": {
+      "additionalProperties": false,
+      "properties": {
+        "record": {
+          "$ref": "#/$defs/PackageObjectRecord"
+        },
+        "verification": {
+          "$ref": "#/$defs/ObjectVerification"
+        }
+      },
+      "required": [
+        "record",
+        "verification"
+      ],
+      "title": "VerifiedPackageObject",
+      "type": "object"
+    },
+    "WorkerLaunchRecord": {
+      "additionalProperties": false,
+      "description": "Immutable launch intent and retained provenance; logical running is not a process.",
+      "properties": {
+        "admission": {
+          "$ref": "#/$defs/OriginalExecutionAdmission"
+        },
+        "approval": {
+          "$ref": "#/$defs/SubmittedRuntimeApproval"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "credential_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Credential Revision",
+          "type": "integer"
+        },
+        "deadline": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Deadline",
+          "type": "integer"
+        },
+        "launch_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Launch Id",
+          "type": "string"
+        },
+        "original_credential_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Original Credential Generation",
+          "type": "integer"
+        },
+        "original_credential_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Original Credential Id",
+          "type": "string"
+        },
+        "request": {
+          "$ref": "#/$defs/WorkerLaunchRequest"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "run_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Run Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "launch_id",
+        "request",
+        "request_sha256",
+        "admission",
+        "approval",
+        "original_credential_id",
+        "original_credential_generation",
+        "run_revision",
+        "credential_revision",
+        "created_at",
+        "deadline"
+      ],
+      "title": "WorkerLaunchRecord",
+      "type": "object"
+    },
+    "WorkerLaunchRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "admission_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Admission Sha256",
+          "type": "string"
+        },
+        "approval_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Approval Sha256",
+          "type": "string"
+        },
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "lease_epoch": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Lease Epoch",
+          "type": "integer"
+        },
+        "resources": {
+          "$ref": "#/$defs/ExecutionResources"
+        },
+        "restore": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CheckpointRestoreRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "worker_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Worker Policy Sha256",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "attempt_id",
+        "lease_epoch",
+        "admission_sha256",
+        "approval_sha256",
+        "worker_policy_sha256",
+        "resources",
+        "restore"
+      ],
+      "title": "WorkerLaunchRequest",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/model-registration.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Only SubmitModelRequest is public. Other projections require trusted current producers; schemas do not authenticate engine selection, byte identity, fitting or execution.",
+  "x-contract-status": "COMP1 reviewed pure contracts and proposals; hosted producers pending",
+  "x-public-models": [
+    "SubmitModelRequest"
+  ]
+}

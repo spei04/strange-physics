@@ -13,6 +13,7 @@ from strange_physics.artifact_contracts import (
     StorageLocator,
 )
 from strange_physics.contracts import Identifier, Message
+from strange_physics.prediction_contracts import PredictorVersion
 from strange_physics.research_contracts import Digest, message_sha256
 
 Positive = Annotated[int, Field(strict=True, ge=1, le=2**53 - 1)]
@@ -354,7 +355,7 @@ class BuiltinPredictionProfile(Message):
     kind: Literal["builtin_analytic"]
     purpose: Literal["native_prediction"]
     predictor_profile: Literal["strange-physics.linear-spring-prediction.v1"]
-    predictor_version: Identifier
+    predictor_version: PredictorVersion
     prediction_config_sha256: Digest
 
 

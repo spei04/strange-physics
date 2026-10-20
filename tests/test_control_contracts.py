@@ -574,8 +574,8 @@ def test_openapi_keeps_exact_route_set_and_marks_unfrozen_dependencies() -> None
     for name, operation in operations.items():
         assert operation["x-required-scope"] == ROUTE_PERMISSIONS[name]
         assert operation["x-implementation-status"] == "not-implemented"
-    assert operations["saveCheckpoint"]["x-pending-contracts"] == ["ART"]
-    assert operations["submitModel"]["x-pending-contracts"] == ["ART", "EXEC"]
+    assert operations["saveCheckpoint"]["x-pending-contracts"] == []
+    assert operations["submitModel"]["x-pending-contracts"] == []
     assert operations["streamRunEvents"]["x-pending-contracts"] == ["WEB"]
     assert api["components"]["schemas"]["Operation"]["$ref"] == (
         "../control.schema.json#/$defs/Operation"

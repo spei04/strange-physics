@@ -1365,10 +1365,10 @@
         "security",
         "Backend"
       ],
-      "execution_owner": "Project lead integrates reviewed EXEC1; Quality reviews integration. Research queued for COMP1 after exact PR/main CI; Platform reviews its build/runtime boundary.",
+      "execution_owner": "Project lead integrates accepted COMP1; Quality reviews final composition. Research/Platform prepare dependent SP-01.d read-only.",
       "issue": "https://github.com/spei04/strange-physics/issues/89",
       "execution_plan": "ART1 artifact/checkpoint admission and recovery; EXEC1 package quarantine and worker/broker authority; COMP1 predictor/DB composition. Accepted SP-01.b integration precedes source. Three review units preserve the baseline task/effort/gates.",
-      "evidence": "ART1 complete via PR91/main95bdd85 matching reviewed8c282eb/treecb539fa2; PRCI39370833204 and all five mainCI39370975462 jobs passed. EXEC1 API/runtime independently accepted atfe3b008 and doc-onlyc66b6a0:2281 tests/722schemas/static/security/package checks passed. Final PR92/main CI and COMP1 remain before full SP-01.c freeze."
+      "evidence": "ART1 complete via PR91/main95bdd85. EXEC1 complete via PR92/main750db158 matching reviewed671f109/tree13894d9c, with PRCI39375391014 and all five mainCI39375611645 jobs passed. COMP1 API21cb201 and runtimeb7c944c/finalauthor3ceb846 are independently accepted;2423 full tests/141 COMP1 cases/764 schemas/static/security/offline package checks passed. Combined60a8ac5 passed2423 full tests,lint/format,mypy78 and764 schemas; exact final PR93/main acceptance and parent freeze remain pending."
     },
     {
       "id": "SP-01.d",
@@ -10562,7 +10562,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Lead integrates reviewed EXEC1; Research queued for COMP1 after exact PR/main CI, with Platform/Quality independent review.",
+      "BE1": "Research authors COMP1 after reviewed handoff; Platform/Quality review, lead integrates.",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10918,7 +10918,7 @@
     },
     "checkout_ownership": {
       "scientific": "Project lead owns primary progress/integration; Quality and Research independently review immutable source.",
-      "identity": "Platform released clean after EXEC1 review; reserved for sequential Research COMP1 authoring after exact PR/main acceptance and explicit handoff. No checkout/dependency copy created.",
+      "identity": "Research is exclusive COMP1 writer on feat/model-registration-contracts from accepted6933f2f; existing environment/pins revalidated. Platform/Quality review immutable checkpoints read-only.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11151,7 +11151,7 @@
     },
     "artifact_worker_contracts": {
       "issue": 89,
-      "owner": "Project lead coordinates integration; Research queued for COMP1, Platform/Quality review.",
+      "owner": "Project lead integrates accepted COMP1; Quality reviews final composition. Research/Platform prepare dependent SP-01.d read-only.",
       "reviewers": [
         "Engineer Quality",
         "Engineer Research",
@@ -11169,27 +11169,41 @@
         {
           "id": "EXEC1",
           "title": "Quarantined package/build and launch/broker envelopes",
-          "status": "in_progress",
+          "status": "complete",
           "depends_on": [
             "ART1"
           ],
-          "preparation": "API and runtime independently accepted; final PR/main CI pending.",
-          "phase": "Accepted pure predicates; lead integrates, Research queued for COMP1 after exact CI acceptance.",
+          "preparation": "API/runtime/final progress reviewed; exact PR and protected-main checks passed.",
+          "phase": "Integrated pure contracts/predicates; live producers remain later tasks.",
           "api_source": "57f2f303a5fec4b65b1df022b4239a64f537f6bc",
           "api_tree": "ecd3facfcd1f3e5086ef3fca9c30a4c29f8a0b3a",
           "runtime_source": "fe3b0088d4bca0623459f9024eceb42036e8d491",
           "author_source": "c66b6a0d6bc82a81195797c742353718bc155136",
-          "pull_request": "https://github.com/spei04/strange-physics/pull/92"
+          "pull_request": "https://github.com/spei04/strange-physics/pull/92",
+          "merge_commit": "750db15810f4a58a4a8d34776cb3708dc310ef5a"
         },
         {
           "id": "COMP1",
           "title": "Predictor identity and DB/recovery composition",
-          "status": "approved_unstarted",
+          "status": "in_progress",
           "depends_on": [
             "ART1",
             "EXEC1"
           ],
-          "preparation": "Research and Platform prepare SCI identity/recovery composition read-only; source/freeze waits ART1 and EXEC1."
+          "preparation": "API and runtime independently accepted; final integration in progress.",
+          "owner": "Engineer Research",
+          "reviewers": [
+            "Engineer Platform",
+            "Engineer Quality",
+            "Project lead"
+          ],
+          "phase": "Final integration and exact PR/main checks before parent completion.",
+          "starting_commit": "6933f2faa5a7fa769f2b4812047cfa0eee674276",
+          "api_source": "21cb20146bea3ff42aa15dafe43136ff24ff6081",
+          "api_tree": "d3e0b3417dfc518215e19123a7fb5c185268e420",
+          "pull_request": "https://github.com/spei04/strange-physics/pull/93",
+          "runtime_source": "b7c944c0c4065a96a62e777e3d6d2975ba3787d5",
+          "author_source": "3ceb846b72b08d0dccc913192563981e92ae68d0"
         }
       ],
       "decisions": [
@@ -11318,7 +11332,7 @@
         "lead_index": "a5d52b8bd1ea77fa9d4112ce5b1d6146d603b37c722a7a61272540815c2218c1",
         "quality_index": "8aa1f6f8de57c3d64439aad62775a4c7235e182a48ad11ffd083a94df3ef684b",
         "research_index": "ccf4e744a227b907e08a72a196fbcaa0a8b9980099a8ac127682d05b7f602bd2",
-        "status": "source_accepted_final_ci_pending",
+        "status": "complete",
         "author_source": "c66b6a0d6bc82a81195797c742353718bc155136",
         "author_index": "05f71a072fd3721cefc339d70997e7e7cf1007e0b1f9d605a84fc87530bf4f18",
         "integrated_source": "5f643665000a08cad1eedc0f011910ec70c0ad34",
@@ -11326,7 +11340,114 @@
         "full_tests": 2281,
         "format_files": 112,
         "mypy_files": 74,
-        "external_schema_checks": 722
+        "external_schema_checks": 722,
+        "reviewed_head": "671f10930a743acfb9da888a0eb2c97c6e7f471f",
+        "merge_commit": "750db15810f4a58a4a8d34776cb3708dc310ef5a",
+        "pr_ci": 39375391014,
+        "main_ci": 39375611645,
+        "integration_index_sha256": "bf98163b959a260f23f2c5412818855d26dacd326b8ff267206abafc91ddd5c0",
+        "candidate_artifact_id": 12242708007,
+        "candidate_sha256": "2d6b7d08d4be5d49049bed08b5e6544cbf77940ee5a9a73c0d2bdd6b302b3f3a",
+        "reviewed_tree": "13894d9c09bdde0ae8278a5a331c56b377a485fc",
+        "merge_tree": "13894d9c09bdde0ae8278a5a331c56b377a485fc"
+      },
+      "comp1_plan": {
+        "owner": "Engineer Research",
+        "reviewers": [
+          "Engineer Platform",
+          "Engineer Quality",
+          "Project lead"
+        ],
+        "status": "integration_pending",
+        "api_checkpoint_before_runtime": true,
+        "required_worker_boundary": "Mandatory authorize_worker_broker submit_model before private parse/lookup/replay, with actual current environment and launch closure; separate native analytic approval.",
+        "immutable_binding": "Actual original admission/request/world-version and scope/space joined to a trusted retained engine binding; actual SCI ObservationBundle identity, not an asserted prefix digest.",
+        "reference_bounds": {
+          "model_raw_bytes": 262144,
+          "ledger_raw_bytes": 8388608,
+          "canonical_prefix_bytes": 8388608
+        },
+        "bound_scope": "Check supplied raw-byte limits before decoding and structural limits before JSON container allocation; hash incrementally byte-equivalent to SCI. Real producers must bound fetching before allocation. No scalable indexed storage or RSS proof.",
+        "recovery": "Separate pending/running/failed/cancelled from completed exact StoredRequest/Operation/ModelReceipt/model-record/outbox closure. No latest model pointer.",
+        "preserved": "Frozen ModelReceipt/SCI/CORE; valid poor-fit or unsupported-domain learned artifacts; fit_config digest remains provenance, not fitter authenticity.",
+        "excluded": "No custom predictor execution, evaluator/provider authority, live adapters, deployment or paid calls."
+      },
+      "comp1_api_evidence": {
+        "source": "21cb20146bea3ff42aa15dafe43136ff24ff6081",
+        "tree": "d3e0b3417dfc518215e19123a7fb5c185268e420",
+        "status": "accepted_for_runtime_authoring",
+        "focused_tests": 422,
+        "external_schema_checks": 764,
+        "formatted_files": 115,
+        "mypy_files": 76,
+        "quality_focused_tests": 710,
+        "quality_extra_cases": 18,
+        "quality_mutations": 6,
+        "platform_extra_cases": 13,
+        "platform_mutations": 4,
+        "lead_extra_cases": 19,
+        "quality_index_sha256": "f2f6459b202a69b6334fa0b01f27240f102f70eaa73e877273d974711c2dcc84",
+        "platform_index_sha256": "04867b5e6bdf716fc6f5072cba54ef82b48c3dd34849d9b56b9a397ff659fb35",
+        "lead_index_sha256": "ff9643f95fbcb12a1cf3251a641b2bfabb424af9564a2ccc67975f6fdba84660",
+        "earlier_full_suite": {
+          "source": "b18b0ec6a6fa1457bb91dce5c4715edbfe45e0bd",
+          "tests": 2373,
+          "boundary": "Predates repaired API; not final full-suite evidence."
+        },
+        "repairs": [
+          "Later-epoch committing worker revision cannot predate accepted submission.",
+          "Private BuiltinPredictionProfile uses actual frozen PredictorVersion; no alias or public worker change."
+        ],
+        "scope": "API and intrinsic consistency only. Current runtime authorization, bytes/prefix checks, approval renewal and real producers remain unverified.",
+        "draft_integration": {
+          "source": "a62972996b9fdaa53b102386daccf30756a85d45",
+          "tree": "b87d988f4a5c72f127fb2b2461a84256e0fcc55f",
+          "pull_request": 93,
+          "ci": 39377520114,
+          "status": "all_four_applicable_jobs_passed",
+          "union_index_sha256": "7965a8d9cb93c297200dbb6525c57772dad9b39859c043668ff55237df39def8",
+          "boundary": "API only; protected-main candidate skipped. Runtime/full freeze remain pending."
+        }
+      },
+      "comp1_runtime_evidence": {
+        "source": "b7c944c0c4065a96a62e777e3d6d2975ba3787d5",
+        "tree": "c96b85506ce660d9cf83b4598467650363967e38",
+        "initial_runtime": "59ea2ca9f2867d6a1a81956fb4f5e6ad8ede1d1b",
+        "full_tests": 2423,
+        "focused_comp1": 141,
+        "runtime_tests": 47,
+        "api_tests": 94,
+        "schemas": 764,
+        "ruff_files": 117,
+        "mypy_files": 78,
+        "quality_focused": 757,
+        "quality_auth": 56,
+        "quality_status_witness": 160,
+        "quality_credential_attempt": 10,
+        "quality_trust_outcomes": 2,
+        "quality_mutants": 8,
+        "platform_focused": 141,
+        "platform_extra": 38,
+        "platform_chronology": 6,
+        "platform_mutants": 7,
+        "lead_focused": 47,
+        "lead_extra": 11,
+        "quality_index": "40f8eee51e439daeec188f344078bace101ab66b15c26c7a6786ab92a074928c",
+        "platform_index": "8e938872977f2896f9493d8d1979cf78465a1a7780a53d1b27e27c2be353ba03",
+        "lead_index": "6fcb44124d332fef0d782d67676a8f5ff3492749776e8c44d9a073fd25a31787",
+        "status": "source_accepted_integration_pending",
+        "author_source": "3ceb846b72b08d0dccc913192563981e92ae68d0",
+        "author_index": "b21ade1a706be6034bbe297f66a1d157c7a15ad3e8ac86123da5e5bddc10654e",
+        "integrated_source": "60a8ac581fcfed2df9f9381ce116b6d905064242",
+        "integrated_tree": "6d6d453774cdfe0fc67158a16eeef320b7acd449",
+        "union_index": "2325cca286090feb3dd4f8e0035f1ad93cf610f4e398e20adfb46ca8b1e5e2f6",
+        "boundary": "Reviewed pure contracts/proposals only. Metadata replay trusts immutable prior committed projections; completion validates material. Live producers, final PR/main and parent freeze remain pending.",
+        "lead_total_tests": 58,
+        "integrated_full_tests": 2423,
+        "integrated_ruff_files": 117,
+        "integrated_mypy_files": 78,
+        "integrated_schema_checks": 764,
+        "integration_check_index": "989c28e24c32236165b6351f1c031a5d7385d188921d55816e2a69c1318e0100"
       }
     },
     "spring_workflow_evidence": {
