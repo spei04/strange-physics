@@ -151,9 +151,13 @@ Paired Simpson fitting gives
 
 k_simpson/k = 3*sin(theta)/(theta*(2+cos(theta))).
 
-Both ratios have limit one at zero. These identities hold across phases and
-pooled windows when the integrated design is informative. They do not authorize
-correcting an estimate using the unknown true k.
+Both ratios have limit one at zero. Each displayed identity holds across phases
+and pooled windows sharing k/m and cadence (fixed mass), when the integrated
+design is informative. A mixed-mass prefix has one theta_j per record. Its
+pooled ratio is sum(W_j*R(theta_j))/sum(W_j), where W_j is that record's sum of
+squared observed design rows and R is the applicable ratio above. The weights
+are nonnegative, so the same maximum-bias bound holds by convexity. These
+identities do not authorize correcting an estimate using the unknown true k.
 
 A conservative continuous Simpson bound follows by defining
 N(theta)=theta*(2+cos(theta))-3*sin(theta). At zero N, N' and N'' vanish, and
