@@ -10,9 +10,9 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | CI-01/#54 workflow and candidate-delivery author; preparation complete, writer slot next | Research/Platform review; protected main required for delivery |
-| Research | CI-01 scientific/package review; ID-A preparation complete and authoring queued | Full SP-01.b remains open; no hidden-truth expansion |
-| Platform | Journey/cost documentation delivered; next CI-01 security/workflow review | SP-22.a product acceptance and SP-02.c concrete approval still pending |
+| Quality | CI-01 complete; next independent ID-A security review | Authoring released; review Research source before integration |
+| Research | ID-A/#57 browser-session contracts; next exclusive writer | Quality/Platform review; full SP-01.b remains open |
+| Platform | CI-01 review complete; ID-B threat analysis prepared; next ID-A policy review | Journey acceptance, full identity freeze and concrete provisioning approval remain pending |
 | Project lead | Integrate reviewed PRs, update evidence and manage exclusive writer handoffs | No repo-settings races or paid-resource approval inferred |
 
 ## Assignments
@@ -47,6 +47,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-20 00:04 | Platform | SP-22.a / SP-02.c — save reviewable documents | 90c010c journeys and 0eba987 staging proposal; three consistency tests/static checks pass; no UI/provisioning approval |
 | 2026-10-20 00:04 | Research | SP-01.b ID-A/B/C — remaining freeze preparation | Three units, estimated 6–8 engineer-days remaining; ID-A ready to author after CI priority; consumers remain blocked |
 | 2026-10-20 00:04 | Quality | CI-01 — scoped CI/CD preparation | [#54](https://github.com/spei04/strange-physics/issues/54); writer next; pinned checks, exact CI gate, protected-main candidate artifact; Research/Platform review |
+| 2026-10-20 00:07 | Quality | CI-01/#54 — workflow, security and candidate delivery | 55137eb accepted by Research/Platform; hosted build/metadata repairs preserved strict policy; 292 tests and final PR CI pass |
+| 2026-10-20 00:09 | Platform | ID-B — independent membership/linking challenge | Last-owner serialization, recipient verification, fresh linking proof and broker/app recovery identified; no handlers |
+| 2026-10-20 00:20 | Project lead | CI-01 — integrate reviewed source and verify delivery | PR #56 merged 256b409, matching reviewed tree; strict protection read-back; main run 39347053265 delivered artifact 12231636153 |
+| 2026-10-20 00:23 | Project lead | Record delivery evidence; reassign engineer | DELIVERY_RECORD.md plus owner-readable copy/index outside checkout; Research assigned ID-A/#57, Quality/Platform reviewers |
 
 ## Review evidence and management checkpoint
 
@@ -56,9 +60,9 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 - SCI delta: SP-01.a complete via [PR #51](https://github.com/spei04/strange-physics/pull/51), merge cc24aef tree equals reviewed 6e72415; all four head checks and [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39343441273) pass. 147 tests and independent schema checks passed after three repairs. No fitter, hosted service or benchmark result is claimed.
 - Control delta: part 1 integrated via [PR #53](https://github.com/spei04/strange-physics/pull/53), merge d6204aa matching reviewed f6cead9. Four head checks and [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39344813113) passed after four review fixes at a9fa8cb. 252 total tests, Ruff, strict mypy, 67 external schema/header cases and 47 reference resolutions pass. Full SP-01.b remains incomplete: public session, membership/invitation/linking and credential lifecycle contracts still need reviewed PRs. Their consumers remain blocked; four-day reference effort needs re-estimation.
 - Cloud audit: current shared project/billing accessible; target projects/IAM/quota and credit eligibility/expiry unknown. Deployment NO-GO, Platform owns remediation; product/billing owner supplies private credit evidence. Private raw records remain outside the checkout; no account IDs published.
-- Shared storage: free space fell to 57.7 MiB and fluctuates near 100 MiB. Only ~18 MB is project-owned disposable cache. Other projects, active consumers and migration archives are excluded from cleanup.
+- Shared storage: free space fell to 57.7 MiB and was about 143 MiB at this checkpoint. Only ~18 MB is project-owned disposable cache. Other projects, active consumers and migration archives are excluded from cleanup; the >=20 GiB capacity gate remains closed.
 - Exact pending action: existing balanced boot disk 200→300 GiB (~+$10/month) with a regional recovery snapshot (up to roughly +$10/month while retained), before credits/tax. No reboot, detach or formatting; verify snapshot READY, exact disk/partition layout, running consumers and >=20 GiB free. Snapshot retention review after seven days; effective recycle retention remains to be verified. Official [pricing](https://cloud.google.com/compute/disks-image-pricing) and [resize procedure](https://docs.cloud.google.com/compute/docs/disks/resize-persistent-disk).
-- CI/CD coordination: CI-01 is prioritized; branch protection and Actions/security settings are owned separately. Reported dependency alerts and fork-run approval are settings work, not this code change. No enforced independent-human GitHub approval is claimed because current engineers share one account. Protected-main delivery, not publishing/deployment, is the requested next proof.
+- CI/CD complete for this package: PR #56 merged 256b409 with a matching reviewed tree. Main run 39347053265 passed all checks and delivered artifact 12231636153; independent in-memory bundle/checksum/source review passed, and the PR produced zero artifacts. DELIVERY_RECORD.md preserves exact hashes and policy read-back. This is unpublished candidate delivery, not deployment or production readiness. One-account GitHub approval limitation remains explicit.
 - Budget: no new cloud/provider spend incurred or reserved. Disk/snapshot proposal remains unapproved. Existing VM billing is outside this new-work spend record.
 - Tracking: SP-00.a [#44](https://github.com/spei04/strange-physics/issues/44), SP-00.b [#45](https://github.com/spei04/strange-physics/issues/45), SP-02.a [#46](https://github.com/spei04/strange-physics/issues/46).
 

@@ -141,3 +141,7 @@ Useful references: [GitHub required-check behavior](https://docs.github.com/en/p
 [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners),
 [uv locked environments](https://docs.astral.sh/uv/concepts/projects/sync/),
 and [pip-audit](https://github.com/pypa/pip-audit).
+
+## Verified rollout
+
+The first protected-main delivery is verified at 256b409 in run 39347053265. [DELIVERY_RECORD.md](DELIVERY_RECORD.md) records exact source, artifact/checksums, policy read-back and the single-account review limitation. This is evidence of package delivery only.
