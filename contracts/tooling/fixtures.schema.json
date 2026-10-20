@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://strange-physics.dev/contracts/tooling/fixtures.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "strange-physics.contract-fixtures.v1"
+    },
+    "canonical_profile": {
+      "const": "strange-physics.python-json.v1"
+    },
+    "bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_bytes": {
+          "const": 1048576
+        },
+        "max_depth": {
+          "const": 32
+        },
+        "max_nodes": {
+          "const": 100000
+        }
+      },
+      "required": [
+        "max_bytes",
+        "max_depth",
+        "max_nodes"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "root": {
+            "type": "string",
+            "minLength": 1
+          },
+          "raw_base64": {
+            "type": "string",
+            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+            "maxLength": 1398104
+          },
+          "raw_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "expected": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "strict_json": {
+                "type": "boolean"
+              },
+              "json_schema": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "typed_json": {
+                "type": "boolean"
+              },
+              "bounded_typed": {
+                "type": "boolean"
+              },
+              "canonical_base64": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+                    "maxLength": 1398104
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "canonical_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "strict_json",
+              "json_schema",
+              "typed_json",
+              "bounded_typed",
+              "canonical_base64",
+              "canonical_sha256"
+            ]
+          },
+          "note": {
+            "type": "string"
+          },
+          "cross_message": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "helper": {
+                    "enum": [
+                      "validate_model_for_fit",
+                      "validate_prediction_response"
+                    ]
+                  },
+                  "other_case": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "valid": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "helper",
+                  "other_case",
+                  "valid"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "root",
+          "raw_base64",
+          "raw_sha256",
+          "expected",
+          "note",
+          "cross_message"
+        ]
+      }
+    },
+    "wire_cases": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "valid": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "schema",
+          "value",
+          "valid"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "canonical_profile",
+    "bounds",
+    "description",
+    "cases",
+    "wire_cases"
+  ]
+}

@@ -1,0 +1,1520 @@
+{
+  "schema_version": "strange-physics.contract-tooling.v1",
+  "phase": "manifest-fixture-review",
+  "generation_profile": "strange-physics.public-closure.v1",
+  "canonical_profile": "strange-physics.python-json.v1",
+  "source_base": "15714e6ac4b6b300f0170e5aa22722987decd786",
+  "audiences": {
+    "browser-auth": "Browser authentication inputs/outputs, including proof/CSRF material; never an agent observation or public log.",
+    "owner-management": "Authorized workspace/member/credential/preview management metadata or mutation input; no general agent access.",
+    "credential-once": "One-time synthetic credential delivery; replay metadata is separately classified and cannot deliver the secret again.",
+    "world-author": "Explicit world author input; contains hidden law/seed material and requires authorized author handling.",
+    "world-grantee": "Explicit granted definition; contains private truth and is not part of the agent-safe world projection.",
+    "run-viewer": "Authorized browser/service run-viewer data; agent-safe structure does not imply permission to disclose a run.",
+    "purchased-observation": "Purchased public scientific structure/actions/outcomes; actual ownership/access remains a producer obligation.",
+    "agent-checkpoint": "Opaque agent-supplied state; arbitrary contents are not certified safe to publish.",
+    "prediction-input": "Public-condition prediction request; evaluation requests must not leak into a live agent's purchased view.",
+    "prediction-output": "Prediction artifact; not a purchased observation or proof of accuracy.",
+    "development-evaluator": "Evaluator-only development diagnostics; never given to a live agent.",
+    "package-submission": "Submitter-authored package metadata; neither execution approval nor a trusted producer projection.",
+    "worker-submission": "Run-worker model/checkpoint submission; does not invoke a predictor or grant evaluator authority.",
+    "control-client-input": "Approved control message input only; draft routes remain excluded.",
+    "control-client-output": "Approved control message output only; full result/error union is included, no generic agent-safety claim.",
+    "error": "Safe structural error envelope; error ordering/authentication remain complete-boundary obligations."
+  },
+  "sources": [
+    {
+      "path": "contracts/artifacts.schema.json",
+      "sha256": "60949171491894c77c803a2046720af0b82b73e50b5fa5837f72218d6e721b9d",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/control.schema.json",
+      "sha256": "13df7cb227311d07568154929b4a435cf12805e9fbf632b60f6a3211097fab0d",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/core.schema.json",
+      "sha256": "3ca973f10e129069a096af7111e9c383cbe48e6620481eee9f51c4a109e0ded1",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/execution.schema.json",
+      "sha256": "a727b08e408385cef841fbc6cb99c182d4c5b9685a7f655d24c0ece7343874f7",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/invitation.openapi.json",
+      "sha256": "2fca8f9e3d8fca1530e555fa1b0632b60cc2fd2a23cfa14ba5d264aafc240bd9",
+      "kind": "static-openapi"
+    },
+    {
+      "path": "contracts/invitation.schema.json",
+      "sha256": "cab609eeaa39f90d6e73895cc076e155f9adaff91f5cdd720794cc848dcb0be3",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/linking.openapi.json",
+      "sha256": "aaded00e6d1b85f0b989353b0aabdf9e6ac5342da6ca01e5bc84ca916f0af69f",
+      "kind": "static-openapi"
+    },
+    {
+      "path": "contracts/linking.schema.json",
+      "sha256": "4fd5f678e5df659b78b14336c31698d37fe518db9b6f92be4ab681adf301de1b",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/model-registration.schema.json",
+      "sha256": "252a24d909fe36e715950547229440626e0f8ee8abb505b95391a8bddf2a7aec",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/research.schema.json",
+      "sha256": "46ad5b414cc0863df293b8a794ec27eef0adcfcdf674f0c5d6dc2e3ac38e3535",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/service.openapi.json",
+      "sha256": "3be77520bff4d2f5a97f25ebce58dd2d48ff5f31e5a5e462ca71485f1b2931b8",
+      "kind": "static-openapi"
+    },
+    {
+      "path": "contracts/service.schema.json",
+      "sha256": "048e42b83881e25a79fd73b6f56ced5c2c6c1a521f2bfddb7153bd14e4f5481c",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/session.openapi.json",
+      "sha256": "12e5678441624bc789aa61d56d500afb0b31402c8dfdfdf4fedafca81917b3d6",
+      "kind": "static-openapi"
+    },
+    {
+      "path": "contracts/session.schema.json",
+      "sha256": "dd8489ff3cacfb1adaed04f2c36b7b81258f3bb6bed486a0c263dde1195482ea",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/web.openapi.json",
+      "sha256": "b184b81b693b001a076954b573b9506db2bba867b0ccfe668db6452d1eca8b88",
+      "kind": "static-openapi"
+    },
+    {
+      "path": "contracts/web.schema.json",
+      "sha256": "85e2d933abf53077525ec0eeda5d79bb41ebd477c525e6f76bd7b7a8e9db6245",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/workspace.openapi.json",
+      "sha256": "3bc075e650a51689cec9361b221a90d6e2affd07c41149e3cc6c456926d01226",
+      "kind": "static-openapi"
+    },
+    {
+      "path": "contracts/workspace.schema.json",
+      "sha256": "c7ea25ae91fb99dbc71b63ef8b3c59ec07e96f3e1e2a3367b632bed6165ed2bf",
+      "kind": "generated-schema"
+    },
+    {
+      "path": "contracts/world.openapi.json",
+      "sha256": "409751b8ebb9c3ee6c339d15cc7c9fd06cdd91c5f7398642f507feab90cfae80",
+      "kind": "static-openapi"
+    },
+    {
+      "path": "contracts/world.schema.json",
+      "sha256": "926c504b84434a19a58fb03e3f0a173396b78acf4f26e501add00c2eeb0b223f",
+      "kind": "generated-schema"
+    }
+  ],
+  "roots": [
+    {
+      "id": "artifacts.ArtifactRef",
+      "schema": "contracts/artifacts.schema.json#/$defs/ArtifactRef",
+      "audience": "run-viewer",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.artifact_contracts:ArtifactRef",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "artifacts.CheckpointRequest",
+      "schema": "contracts/artifacts.schema.json#/$defs/CheckpointRequest",
+      "audience": "worker-submission",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.artifact_contracts:CheckpointRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "control.CreateRunRequest",
+      "schema": "contracts/control.schema.json#/$defs/CreateRunRequest",
+      "audience": "control-client-input",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.control_contracts:CreateRunRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "control.Error",
+      "schema": "contracts/control.schema.json#/$defs/Error",
+      "audience": "error",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.control_contracts:Error",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "control.ModelReceipt",
+      "schema": "contracts/control.schema.json#/$defs/ModelReceipt",
+      "audience": "control-client-output",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.control_contracts:ModelReceipt",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "control.Operation",
+      "schema": "contracts/control.schema.json#/$defs/Operation",
+      "audience": "control-client-output",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.control_contracts:Operation",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "control.RunCreationResult",
+      "schema": "contracts/control.schema.json#/$defs/RunCreationResult",
+      "audience": "control-client-output",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.control_contracts:RunCreationResult",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "control.RunView",
+      "schema": "contracts/control.schema.json#/$defs/RunView",
+      "audience": "control-client-output",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.control_contracts:RunView",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "core.Checkpoint",
+      "schema": "contracts/core.schema.json#/$defs/Checkpoint",
+      "audience": "agent-checkpoint",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.contracts:Checkpoint",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "core.Experiment",
+      "schema": "contracts/core.schema.json#/$defs/Experiment",
+      "audience": "purchased-observation",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.contracts:Experiment",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "core.ExperimentRecord",
+      "schema": "contracts/core.schema.json#/$defs/ExperimentRecord",
+      "audience": "purchased-observation",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.contracts:ExperimentRecord",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "core.ExperimentSpace",
+      "schema": "contracts/core.schema.json#/$defs/ExperimentSpace",
+      "audience": "purchased-observation",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.contracts:ExperimentSpace",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "core.ObservationBundle",
+      "schema": "contracts/core.schema.json#/$defs/ObservationBundle",
+      "audience": "purchased-observation",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.contracts:ObservationBundle",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "execution.PackageManifest",
+      "schema": "contracts/execution.schema.json#/$defs/PackageManifest",
+      "audience": "package-submission",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.package_contracts:PackageManifest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "invitation.CreateInvitationRequest",
+      "schema": "contracts/invitation.schema.json#/$defs/CreateInvitationRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.invitation_contracts:CreateInvitationRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "invitation.InvitationIssued",
+      "schema": "contracts/invitation.schema.json#/$defs/InvitationIssued",
+      "audience": "credential-once",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.invitation_contracts:InvitationIssued",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "invitation.InvitationPage",
+      "schema": "contracts/invitation.schema.json#/$defs/InvitationPage",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.invitation_contracts:InvitationPage",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "invitation.InvitationView",
+      "schema": "contracts/invitation.schema.json#/$defs/InvitationView",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.invitation_contracts:InvitationView",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "invitation.RedeemInvitationRequest",
+      "schema": "contracts/invitation.schema.json#/$defs/RedeemInvitationRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.invitation_contracts:RedeemInvitationRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "invitation.RedemptionResult",
+      "schema": "contracts/invitation.schema.json#/$defs/RedemptionResult",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.invitation_contracts:RedemptionResult",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "invitation.RevokeInvitationRequest",
+      "schema": "contracts/invitation.schema.json#/$defs/RevokeInvitationRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.invitation_contracts:RevokeInvitationRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "linking.LinkCommitRequest",
+      "schema": "contracts/linking.schema.json#/$defs/LinkCommitRequest",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.linking_contracts:LinkCommitRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "linking.LinkError",
+      "schema": "contracts/linking.schema.json#/$defs/LinkError",
+      "audience": "error",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.linking_contracts:LinkError",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "linking.LinkExchangeRequest",
+      "schema": "contracts/linking.schema.json#/$defs/LinkExchangeRequest",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.linking_contracts:LinkExchangeRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "linking.LinkResult",
+      "schema": "contracts/linking.schema.json#/$defs/LinkResult",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.linking_contracts:LinkResult",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "linking.LinkStartRequest",
+      "schema": "contracts/linking.schema.json#/$defs/LinkStartRequest",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.linking_contracts:LinkStartRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "linking.LinkStartResponse",
+      "schema": "contracts/linking.schema.json#/$defs/LinkStartResponse",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.linking_contracts:LinkStartResponse",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "linking.LinkStatus",
+      "schema": "contracts/linking.schema.json#/$defs/LinkStatus",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.linking_contracts:LinkStatus",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "model-registration.SubmitModelRequest",
+      "schema": "contracts/model-registration.schema.json#/$defs/SubmitModelRequest",
+      "audience": "worker-submission",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.model_submission_contracts:SubmitModelRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "research.EvaluationReport",
+      "schema": "contracts/research.schema.json#/$defs/EvaluationReport",
+      "audience": "development-evaluator",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.research_contracts:EvaluationReport",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "research.LinearSpringModel",
+      "schema": "contracts/research.schema.json#/$defs/LinearSpringModel",
+      "audience": "prediction-output",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.research_contracts:LinearSpringModel",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "research.PredictionRequest",
+      "schema": "contracts/research.schema.json#/$defs/PredictionRequest",
+      "audience": "prediction-input",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.research_contracts:PredictionRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "research.PredictionResponse",
+      "schema": "contracts/research.schema.json#/$defs/PredictionResponse",
+      "audience": "prediction-output",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.research_contracts:PredictionResponse",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "research.SpringFitInput",
+      "schema": "contracts/research.schema.json#/$defs/SpringFitInput",
+      "audience": "purchased-observation",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.research_contracts:SpringFitInput",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServiceCreateRequest",
+      "schema": "contracts/service.schema.json#/$defs/ServiceCreateRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServiceCreateRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServiceError",
+      "schema": "contracts/service.schema.json#/$defs/ServiceError",
+      "audience": "error",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServiceError",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServiceKeyIssueRequest",
+      "schema": "contracts/service.schema.json#/$defs/ServiceKeyIssueRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServiceKeyIssueRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServiceKeyIssuedResponse",
+      "schema": "contracts/service.schema.json#/$defs/ServiceKeyIssuedResponse",
+      "audience": "credential-once",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServiceKeyIssuedResponse",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServiceKeyPage",
+      "schema": "contracts/service.schema.json#/$defs/ServiceKeyPage",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServiceKeyPage",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServiceKeyRecoverRequest",
+      "schema": "contracts/service.schema.json#/$defs/ServiceKeyRecoverRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServiceKeyRecoverRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServiceKeyReplayResponse",
+      "schema": "contracts/service.schema.json#/$defs/ServiceKeyReplayResponse",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServiceKeyReplayResponse",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServiceKeyRevokeRequest",
+      "schema": "contracts/service.schema.json#/$defs/ServiceKeyRevokeRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServiceKeyRevokeRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServiceKeyRotateRequest",
+      "schema": "contracts/service.schema.json#/$defs/ServiceKeyRotateRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServiceKeyRotateRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServiceMutationResponse",
+      "schema": "contracts/service.schema.json#/$defs/ServiceMutationResponse",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServiceMutationResponse",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServicePrincipalPage",
+      "schema": "contracts/service.schema.json#/$defs/ServicePrincipalPage",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServicePrincipalPage",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServicePrincipalView",
+      "schema": "contracts/service.schema.json#/$defs/ServicePrincipalView",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServicePrincipalView",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "service.ServiceStateRequest",
+      "schema": "contracts/service.schema.json#/$defs/ServiceStateRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.service_contracts:ServiceStateRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session-route.LoginOptions",
+      "schema": "contracts/session.openapi.json#/components/schemas/LoginOptions",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:LoginOptions",
+      "origin": "static-route-schema"
+    },
+    {
+      "id": "session.BrokerExchangeRequest",
+      "schema": "contracts/session.schema.json#/$defs/BrokerExchangeRequest",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:BrokerExchangeRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.CSRFResponse",
+      "schema": "contracts/session.schema.json#/$defs/CSRFResponse",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:CSRFResponse",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.LoginOption",
+      "schema": "contracts/session.schema.json#/$defs/LoginOption",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:LoginOption",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.LoginOptions",
+      "schema": "contracts/session.schema.json#/$defs/LoginOptions",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:LoginOptions",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.LoginStartRequest",
+      "schema": "contracts/session.schema.json#/$defs/LoginStartRequest",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:LoginStartRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.LoginStartResponse",
+      "schema": "contracts/session.schema.json#/$defs/LoginStartResponse",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:LoginStartResponse",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.LoginStatusResponse",
+      "schema": "contracts/session.schema.json#/$defs/LoginStatusResponse",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:LoginStatusResponse",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.OIDCCallbackRequest",
+      "schema": "contracts/session.schema.json#/$defs/OIDCCallbackRequest",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:OIDCCallbackRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.OIDCDeniedCallbackRequest",
+      "schema": "contracts/session.schema.json#/$defs/OIDCDeniedCallbackRequest",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:OIDCDeniedCallbackRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.RenewalRequest",
+      "schema": "contracts/session.schema.json#/$defs/RenewalRequest",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:RenewalRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.SessionBootstrap",
+      "schema": "contracts/session.schema.json#/$defs/SessionBootstrap",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:SessionBootstrap",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.SessionError",
+      "schema": "contracts/session.schema.json#/$defs/SessionError",
+      "audience": "error",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:SessionError",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "session.SessionView",
+      "schema": "contracts/session.schema.json#/$defs/SessionView",
+      "audience": "browser-auth",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.session_contracts:SessionView",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.CheckpointEvent",
+      "schema": "contracts/web.schema.json#/$defs/CheckpointEvent",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:CheckpointEvent",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.EventBatch",
+      "schema": "contracts/web.schema.json#/$defs/EventBatch",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:EventBatch",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.EventDelivery",
+      "schema": "contracts/web.schema.json#/$defs/EventDelivery",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:EventDelivery",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.EventIdentity",
+      "schema": "contracts/web.schema.json#/$defs/EventIdentity",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:EventIdentity",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.ExperimentRecordRef",
+      "schema": "contracts/web.schema.json#/$defs/ExperimentRecordRef",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:ExperimentRecordRef",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.HistoryManifest",
+      "schema": "contracts/web.schema.json#/$defs/HistoryManifest",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:HistoryManifest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.HistoryPage",
+      "schema": "contracts/web.schema.json#/$defs/HistoryPage",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:HistoryPage",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.HistoryPageRef",
+      "schema": "contracts/web.schema.json#/$defs/HistoryPageRef",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:HistoryPageRef",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.ReplayChunk",
+      "schema": "contracts/web.schema.json#/$defs/ReplayChunk",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:ReplayChunk",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.ReplayChunkRef",
+      "schema": "contracts/web.schema.json#/$defs/ReplayChunkRef",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:ReplayChunkRef",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.ResyncRequired",
+      "schema": "contracts/web.schema.json#/$defs/ResyncRequired",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:ResyncRequired",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.RunEvent",
+      "schema": "contracts/web.schema.json#/$defs/RunEvent",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:RunEvent",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.RunSnapshot",
+      "schema": "contracts/web.schema.json#/$defs/RunSnapshot",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:RunSnapshot",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "web.StreamNamespace",
+      "schema": "contracts/web.schema.json#/$defs/StreamNamespace",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.web_contracts:StreamNamespace",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "workspace.CreateWorkspaceRequest",
+      "schema": "contracts/workspace.schema.json#/$defs/CreateWorkspaceRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.workspace_contracts:CreateWorkspaceRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "workspace.MemberChangeResult",
+      "schema": "contracts/workspace.schema.json#/$defs/MemberChangeResult",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.workspace_contracts:MemberChangeResult",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "workspace.MemberPage",
+      "schema": "contracts/workspace.schema.json#/$defs/MemberPage",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.workspace_contracts:MemberPage",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "workspace.MemberRevokeRequest",
+      "schema": "contracts/workspace.schema.json#/$defs/MemberRevokeRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.workspace_contracts:MemberRevokeRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "workspace.MemberRoleRequest",
+      "schema": "contracts/workspace.schema.json#/$defs/MemberRoleRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.workspace_contracts:MemberRoleRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "workspace.Membership",
+      "schema": "contracts/workspace.schema.json#/$defs/Membership",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.workspace_contracts:Membership",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "workspace.WorkspacePage",
+      "schema": "contracts/workspace.schema.json#/$defs/WorkspacePage",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.workspace_contracts:WorkspacePage",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "workspace.WorkspaceView",
+      "schema": "contracts/workspace.schema.json#/$defs/WorkspaceView",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.workspace_contracts:WorkspaceView",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "world-route.AppendWorldRequest",
+      "schema": "contracts/world.openapi.json#/components/schemas/AppendWorldRequest",
+      "audience": "world-author",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.world_contracts:CreateWorldVersionRequest",
+      "origin": "static-route-schema"
+    },
+    {
+      "id": "world-route.InitialWorldRequest",
+      "schema": "contracts/world.openapi.json#/components/schemas/InitialWorldRequest",
+      "audience": "world-author",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.world_contracts:CreateWorldVersionRequest",
+      "origin": "static-route-schema"
+    },
+    {
+      "id": "world.CreateWorldVersionRequest",
+      "schema": "contracts/world.schema.json#/$defs/CreateWorldVersionRequest",
+      "audience": "world-author",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.world_contracts:CreateWorldVersionRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "world.GrantedWorldDefinition",
+      "schema": "contracts/world.schema.json#/$defs/GrantedWorldDefinition",
+      "audience": "world-grantee",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.world_preview_contracts:GrantedWorldDefinition",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "world.IssuePreviewRequest",
+      "schema": "contracts/world.schema.json#/$defs/IssuePreviewRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.world_preview_contracts:IssuePreviewRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "world.PreviewGrantPage",
+      "schema": "contracts/world.schema.json#/$defs/PreviewGrantPage",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.world_preview_contracts:PreviewGrantPage",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "world.PreviewGrantView",
+      "schema": "contracts/world.schema.json#/$defs/PreviewGrantView",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.world_preview_contracts:PreviewGrantView",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "world.RenewPreviewRequest",
+      "schema": "contracts/world.schema.json#/$defs/RenewPreviewRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.world_preview_contracts:RenewPreviewRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "world.RevokePreviewRequest",
+      "schema": "contracts/world.schema.json#/$defs/RevokePreviewRequest",
+      "audience": "owner-management",
+      "agent_safe_structure": false,
+      "runtime_model": "strange_physics.world_preview_contracts:RevokePreviewRequest",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "world.WorldHead",
+      "schema": "contracts/world.schema.json#/$defs/WorldHead",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.world_contracts:WorldHead",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "world.WorldPage",
+      "schema": "contracts/world.schema.json#/$defs/WorldPage",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.world_contracts:WorldPage",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "world.WorldVersionResult",
+      "schema": "contracts/world.schema.json#/$defs/WorldVersionResult",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.world_contracts:WorldVersionResult",
+      "origin": "reviewed-message"
+    },
+    {
+      "id": "world.WorldVersionView",
+      "schema": "contracts/world.schema.json#/$defs/WorldVersionView",
+      "audience": "run-viewer",
+      "agent_safe_structure": true,
+      "runtime_model": "strange_physics.world_preview_contracts:WorldVersionView",
+      "origin": "reviewed-message"
+    }
+  ],
+  "routes": [
+    {
+      "source": "contracts/invitation.openapi.json",
+      "path": "/v1/invitations/redeem",
+      "method": "post",
+      "operation_id": "redeemInvitation",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/invitation.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/invitations",
+      "method": "get",
+      "operation_id": "listInvitations",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/invitation.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/invitations",
+      "method": "post",
+      "operation_id": "issueInvitation",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/invitation.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/invitations/{invitation_id}/revoke",
+      "method": "post",
+      "operation_id": "revokeInvitation",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/linking.openapi.json",
+      "path": "/v1/identity-links",
+      "method": "post",
+      "operation_id": "startIdentityLink",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/linking.openapi.json",
+      "path": "/v1/identity-links/oidc/callback",
+      "method": "get",
+      "operation_id": "verifyOIDCIdentityLink",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/linking.openapi.json",
+      "path": "/v1/identity-links/{challenge_id}",
+      "method": "get",
+      "operation_id": "getIdentityLink",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/linking.openapi.json",
+      "path": "/v1/identity-links/{challenge_id}/commit",
+      "method": "post",
+      "operation_id": "commitIdentityLink",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/linking.openapi.json",
+      "path": "/v1/identity-links/{challenge_id}/proof",
+      "method": "post",
+      "operation_id": "verifyIdentityLink",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/service.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/service-principals",
+      "method": "get",
+      "operation_id": "listServicePrincipals",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/service.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/service-principals",
+      "method": "post",
+      "operation_id": "createServicePrincipal",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/service.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/service-principals/{service_id}",
+      "method": "get",
+      "operation_id": "getServicePrincipal",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/service.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/service-principals/{service_id}/credentials",
+      "method": "get",
+      "operation_id": "listServiceCredentials",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/service.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/service-principals/{service_id}/credentials",
+      "method": "post",
+      "operation_id": "issueServiceCredential",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/service.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/service-principals/{service_id}/credentials/{credential_id}/recover",
+      "method": "post",
+      "operation_id": "recoverServiceCredential",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/service.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/service-principals/{service_id}/credentials/{credential_id}/revoke",
+      "method": "post",
+      "operation_id": "revokeServiceCredential",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/service.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/service-principals/{service_id}/credentials/{credential_id}/rotate",
+      "method": "post",
+      "operation_id": "rotateServiceCredential",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/service.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/service-principals/{service_id}/state",
+      "method": "post",
+      "operation_id": "setServicePrincipalState",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/session.openapi.json",
+      "path": "/v1/auth/broker/exchange",
+      "method": "post",
+      "operation_id": "exchangeBrokerProof",
+      "security": [
+        {
+          "csrfHeader": [],
+          "preauthCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/session.openapi.json",
+      "path": "/v1/auth/csrf",
+      "method": "get",
+      "operation_id": "getBrowserCSRF",
+      "security": [
+        {}
+      ]
+    },
+    {
+      "source": "contracts/session.openapi.json",
+      "path": "/v1/auth/login",
+      "method": "post",
+      "operation_id": "startBrowserLogin",
+      "security": [
+        {
+          "csrfHeader": [],
+          "preauthCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/session.openapi.json",
+      "path": "/v1/auth/logins/{transaction_id}",
+      "method": "get",
+      "operation_id": "getLoginOutcome",
+      "security": [
+        {
+          "preauthCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/session.openapi.json",
+      "path": "/v1/auth/oidc/callback",
+      "method": "get",
+      "operation_id": "completeOIDCLogin",
+      "security": [
+        {
+          "preauthCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/session.openapi.json",
+      "path": "/v1/auth/policy",
+      "method": "get",
+      "operation_id": "getBrowserLoginOptions",
+      "security": [
+        {}
+      ]
+    },
+    {
+      "source": "contracts/session.openapi.json",
+      "path": "/v1/auth/session",
+      "method": "get",
+      "operation_id": "getBrowserSession",
+      "security": [
+        {},
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/session.openapi.json",
+      "path": "/v1/auth/session/logout",
+      "method": "post",
+      "operation_id": "logoutBrowserSession",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/session.openapi.json",
+      "path": "/v1/auth/session/renew",
+      "method": "post",
+      "operation_id": "renewBrowserSession",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/web.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/runs/{run_id}/events",
+      "method": "get",
+      "operation_id": "streamRunEvents",
+      "security": [
+        {
+          "sessionCookie": []
+        },
+        {
+          "workspaceBearer": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/web.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/runs/{run_id}/events/{event_id}/record",
+      "method": "get",
+      "operation_id": "getRunExperimentRecord",
+      "security": [
+        {
+          "sessionCookie": []
+        },
+        {
+          "workspaceBearer": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/web.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/runs/{run_id}/snapshots",
+      "method": "get",
+      "operation_id": "getRunSnapshot",
+      "security": [
+        {
+          "sessionCookie": []
+        },
+        {
+          "workspaceBearer": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/web.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/runs/{run_id}/snapshots/{snapshot_id}/chunks/{artifact_id}",
+      "method": "get",
+      "operation_id": "getRunReplayChunk",
+      "security": [
+        {
+          "sessionCookie": []
+        },
+        {
+          "workspaceBearer": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/web.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/runs/{run_id}/snapshots/{snapshot_id}/history/{page_id}",
+      "method": "get",
+      "operation_id": "getRunHistoryPage",
+      "security": [
+        {
+          "sessionCookie": []
+        },
+        {
+          "workspaceBearer": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/workspace.openapi.json",
+      "path": "/v1/workspaces",
+      "method": "get",
+      "operation_id": "listWorkspaces",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/workspace.openapi.json",
+      "path": "/v1/workspaces",
+      "method": "post",
+      "operation_id": "createWorkspace",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/workspace.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}",
+      "method": "get",
+      "operation_id": "getWorkspace",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/workspace.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/members",
+      "method": "get",
+      "operation_id": "listMembers",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/workspace.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/members/me",
+      "method": "get",
+      "operation_id": "getOwnMembership",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/workspace.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/members/{principal_id}",
+      "method": "patch",
+      "operation_id": "changeMemberRole",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/workspace.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/members/{principal_id}/revoke",
+      "method": "post",
+      "operation_id": "revokeMember",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds",
+      "method": "get",
+      "operation_id": "listWorlds",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds",
+      "method": "post",
+      "operation_id": "createWorld",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds/{world_id}/head",
+      "method": "get",
+      "operation_id": "readWorldHead",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds/{world_id}/preview-grants",
+      "method": "get",
+      "operation_id": "listWorldPreviewGrants",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds/{world_id}/preview-grants",
+      "method": "post",
+      "operation_id": "issueWorldPreview",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds/{world_id}/preview-grants/{grant_id}",
+      "method": "get",
+      "operation_id": "readWorldPreviewGrant",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds/{world_id}/preview-grants/{grant_id}/renew",
+      "method": "post",
+      "operation_id": "renewWorldPreview",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds/{world_id}/preview-grants/{grant_id}/revoke",
+      "method": "post",
+      "operation_id": "revokeWorldPreview",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds/{world_id}/versions",
+      "method": "get",
+      "operation_id": "listWorldVersions",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds/{world_id}/versions",
+      "method": "post",
+      "operation_id": "appendWorldVersion",
+      "security": [
+        {
+          "csrfHeader": [],
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds/{world_id}/versions/{version_id}",
+      "method": "get",
+      "operation_id": "readWorldVersion",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    },
+    {
+      "source": "contracts/world.openapi.json",
+      "path": "/v1/workspaces/{workspace_id}/worlds/{world_id}/versions/{version_id}/definition",
+      "method": "get",
+      "operation_id": "readGrantedWorldDefinition",
+      "security": [
+        {
+          "sessionCookie": []
+        }
+      ]
+    }
+  ],
+  "excluded_roots": [
+    "contracts/control.schema.json#/$defs/VerifiedCredential",
+    "contracts/world.schema.json#/$defs/WorldVersionRecord",
+    "contracts/world.schema.json#/$defs/WorldBrowserAuthority",
+    "contracts/world.schema.json#/$defs/WorldPolicy",
+    "contracts/web.schema.json#/$defs/EventCursor",
+    "contracts/web.schema.json#/$defs/SnapshotRecord",
+    "contracts/execution.schema.json#/$defs/WorkerLaunchRecord",
+    "contracts/model-registration.schema.json#/$defs/ModelRegistrationRecord"
+  ],
+  "exclusions": [
+    "contracts/draft/",
+    "trusted producer roots absent from the exact approved root list",
+    "automatic publication or authorization based on audience labels",
+    "CLIENT1 tooling and MOCK1 transport implementation"
+  ],
+  "toolchain": {
+    "uv": "0.11.21",
+    "lock": "uv.lock",
+    "lock_sha256": "b83593cf033d0459848ceb699b1067706566ac09e23d864733698a5077b04b85",
+    "pydantic": "2.13.5",
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0"
+  }
+}
