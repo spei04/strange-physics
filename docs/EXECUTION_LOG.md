@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | ID-C/C2 run credentials and product authority | Exclusive identity writer after C1 PR/main acceptance; early interface and independent review required |
-| Research | Research amendment review; SP-04.e SDK/CLI next | Read-only scientific/dependency review; SDK source follows scorer main acceptance and primary handoff |
-| Quality | C2 independent runtime review | Read-only review of Platform952f95c; scorer source/integration accepted |
-| Project lead | Integrate scorer; save research amendment | Exclusive primary writer; Platform owns identity; exact-head review/CI and main acceptance before handoff |
+| Platform | SP-01.c artifact/worker contract preparation | C2 released at33caa917; read-only preparation, freeze/source handoff waits parent integration |
+| Research | SP-04.e/#87 local scientific SDK/CLI | Exclusive primary writer after accepted scorer and planning integration; preregistration and API review precede runtime |
+| Quality | Early SDK API and C2 integration review | C2 runtime67d1128/docs33caa917 and parent composition accepted; exact integration checks remain |
+| Project lead | Coordinate SDK and C2 integration | Research owns primary; lead owns released identity for C2 integration; exact-head review/CI before each integration |
 
 ## Assignments
 
@@ -218,3 +218,21 @@ Research independently accepted amendment45e4cde:18 tasks,4 extension gates and6
 The optional pilot resolves RA-10/11/12 prerequisites from frozen admitted_profile_ids in both prose and JSON. Excluded profiles require reasons and recounted matrices; all potentially admitted dependencies are cycle-checked, and actual readiness requires the frozen completed closure.
 
 Final planning review found and repaired a missing classical PySR prerequisite when the ACES profile is excluded. RA-04.a is now mandatory for RA_PILOT and RA-13.a. The final graph has62 fixed and6 conditional extension edges; this change follows the earlier45e4cde review and requires final readback.
+
+2026-10-20 — Research amendment PR #86 integrated as e239eb2c704cd315aadd6064cdb521d1a6d9bbdc, tree558d68eda38aa513aa5ae59255190fef7a9f890d equals acceptedc48517b6fc57468375989670ce341f9d0a96489a. PR CI39365953740 and all protected-main CI39366138629 jobs passed. Scientific/dependency review accepted all18 records,62 fixed+6 conditional edges and conditional-profile readiness. The original168-task/369-edge/ten-gate graph remains unchanged; scorer completion is a progress update. New research runtime and paid work remain gated.
+
+Research is assigned SP-04.e/#87 in the reused primary checkout: preregister24 fixed probes, publish the artifact API, then wire the SDK/CLI workflow. Quality reviews after final C2 composition; lead coordinates. Root owns no primary source writer after handoff. Both existing cloud checkouts stay in use with independent dependencies; no new checkout was created.
+
+Platform released C2 at33caa917 after accepted runtime67d1128 and final parent composition review. Lead takes identity integration; Platform prepares SP-01.c read-only. Final artifact/worker freeze and source handoff wait accepted SP-01.b integration. Quality reviews the SDK API and integrated C2 source.
+
+## C2 and final identity-contract acceptance
+
+2026-10-20 03:53 UTC — Platform released clean 33caa9178ccf6547f9f70762afd45c0fb0fe088e, preserving runtime 67d1128d262d9fcf7cca4884eb472a73041d7606. Research and Quality accepted 222 immutable focused cases. Quality exercised six extra boundaries, nine original mutants and three repair guards; Research detected eight guard mutants. Review repaired retained operation/claim binding and replace/revoke request-target replay joins. Author evidence includes 1,595 full tests, Ruff/format 86, strict mypy 53, 597 schemas, configured Bandit and offline/wheel-origin checks.
+
+Quality accepted final SP-01.b composition:749 identity/control cases, 597 external schema checks, 45 public routes and112 schema references; no internal authority/proof/receipt/mint definitions are exposed. Current authority is mandatory before fresh or idempotent product outcomes. Namespace tuple/null uniqueness, global purpose-bound proof ownership, immutable run ancestry and per-payload stream checks agree. B1/B2/B3 producers must preserve browser-family revocation or validate original principal generation so disable/re-enable cannot resurrect old sessions. This freezes contractual obligations only; actual HTTP/provider verification, secure signing/delivery, database/RLS/locking, streams and recovery drills remain later implementation gates.
+
+Lead merged the accepted scientific/planning/SDK-handoff source into C2 at cb14e3486915087081978aacb2176848fca9ca46. Quality verified all 87 source/test/schema blobs match accepted parents, the 29-module allowlist is exact, and both schema-validator additions survive. Integrated checks and exact-head PR/main CI remain before parent completion. Research now exclusively authors SDK source in primary; Platform prepares SP-01.c read-only.
+
+Private C2 evidence stays outside checkouts at /home/serenapei/.local/state/strange-physics-evidence/c2. Index SHA256 85a05d494101dc0cf70bf3b38f94008b8a68ca29cfe06a00eaf2f2147112065e; final handoff SHA256 008c263e10e799e8aff669cbea0ad28e76b98b4b6698560b77dbebe013a1f83c. Owner-readable only; review 2026-11-19, no automatic deletion. Same-VM evidence is not an off-device backup.
+
+Integrated source cb14e348 passed 1,692 tests, Ruff/format (92 files), strict mypy (57 files), 613 external schema checks, the configured Bandit threshold, and offline package/allowlist validation. Exact-head hosted PR and protected-main candidate checks remain required.

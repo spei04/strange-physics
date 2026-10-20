@@ -6,8 +6,10 @@ synthetic fixtures and HTTP definitions are conformance artifacts. They do not
 verify providers, generate secure randomness, deliver email, implement HTTP/SQL
 handlers, enforce distributed throttling or demonstrate production security.
 
-B3 explicit identity linking and ID-C credential lifecycle remain separate reviews.
-SP-01.b and its full C-ID dependency gate remain unfinished. SP-08.b/SP-08.d and
+B3 explicit identity linking and ID-C/C1 service lifecycle are separately integrated;
+the reviewed C2 run/composition runtime awaits integration. The
+[reviewed C-ID inventory](IDENTITY_RUN_CONTRACT.md#reviewed-c-id-inventory-and-remaining-acceptance)
+tracks these contract slices. Final SP-01.b/C-ID acceptance remains a separate gate. SP-08.b/SP-08.d and
 their database/security dependencies must implement these interfaces and supply
 integration evidence. No invitation operation links or merges identities.
 
@@ -19,6 +21,13 @@ integration evidence. No invitation operation links or merges identities.
 | GET /v1/workspaces/{workspace_id}/invitations | Current human owner | Bounded owner-visible metadata page |
 | POST /v1/workspaces/{workspace_id}/invitations/{invitation_id}/revoke | Current recent human owner | Revoked metadata, or safe conflict if acceptance already won |
 | POST /v1/invitations/redeem | Current recent human recipient plus independently verified eligibility | Current resulting membership; never an implicit role change |
+
+The current browser producer must also enforce
+[principal disablement and browser-family continuity](BROWSER_SESSION_CONTRACT.md#principal-disablement-and-browser-family-continuity):
+an old family cannot become usable after principal re-enable. Retained family
+revocation or an original-principal-generation check is required before supplying
+BrowserActor/SessionRecord; current active=true alone is insufficient. This remains
+an adapter/durable-state obligation, not enforcement supplied by these pure predicates.
 
 Mutations use the existing ID-A recent actual authentication policy, exact Origin,
 session CSRF and Idempotency-Key. Renewal/last_seen is not fresh authentication.

@@ -5,14 +5,23 @@ It defines conformance predicates, public HTTP shapes and required transaction
 behavior. It does not implement handlers, database isolation, RLS, principal
 verification, security-event verification or production recovery.
 
-B2 invitation redemption and B3 explicit identity linking remain separate reviews
-under SP-01.b / issue #63. Service/run credential lifecycle also remains unfinished;
-this increment does not complete C-ID or unblock producers requiring its full freeze.
+B2 invitation redemption and B3 explicit identity linking are separately reviewed
+under SP-01.b / issue #63. C1 service lifecycle is accepted; the additive
+[C2 run/composition contract](RUN_CREDENTIAL_CONTRACT.md) is reviewed and awaits
+integration. Final parent acceptance remains separate; this increment does not
+unblock full C-ID consumers.
 The APIs in workspace.openapi.json are the authoritative B1 route candidates.
 Their implementation is assigned to SP-08.b/SP-08.d and their database dependencies;
 actual integration evidence is still required.
 
 ## Human authority and safe responses
+
+The current browser producer must also enforce
+[principal disablement and browser-family continuity](BROWSER_SESSION_CONTRACT.md#principal-disablement-and-browser-family-continuity):
+an old family cannot become usable after principal re-enable. Retained family
+revocation or an original-principal-generation check is required before supplying
+BrowserActor/SessionRecord; current active=true alone is insufficient. This remains
+an adapter/durable-state obligation, not enforcement supplied by these pure predicates.
 
 All B1 routes require a current ID-A human app session. A bearer credential alone
 cannot administer a workspace, list memberships or obtain the caller's membership.
@@ -35,8 +44,9 @@ the existing Error code unauthenticated, fixed message "Recent authentication
 required.", retryable false and X-Authentication-Action: reauthenticate. The
 header is absent for missing, invalid, expired, rotated or revoked sessions.
 Clients use the header to initiate the normal ID-A login flow, never an automatic
-mutation retry or inferred provider challenge. ID-C may reuse this meaning after
-its own review. Other ID-A failures preserve their existing mapping; application
+mutation retry or inferred provider challenge. C1 owner-management uses this same
+reviewed mapping; C2 ordinary product operations do not require management-only
+recent authentication. Other ID-A failures preserve their existing mapping; application
 not_found, forbidden, incompatible_state and idempotency_conflict retain the
 control envelope and safe fixed messages. No provider error, email or account
 existence detail is included.
@@ -93,9 +103,10 @@ are currently disabled. Enabled owners are their difference. Database producers
 must join current principal state; counting membership rows alone is insufficient.
 PrincipalStatus binds a target's current active status to its stable principal ID
 and explicitly requires kind=human. B1 management and owner sets use the separate
-human membership relation only. Service identities and run grants may share a
-control Membership projection, but are never candidates for administrative
-ownership or role-change targets. SQL producers must enforce this distinction;
+human membership relation only. Service identities and run credentials use a control Membership projection;
+service identities cannot own administration grants, and run credentials retain
+the stable human/service owner rather than allocating a separate app principal.
+A worker token never grants administrative ownership or role-change authority. SQL producers must enforce this distinction;
 parsing a kind=human claim is not identity verification. ID-C must preserve the
 separation rather than count service/run grants as usable owners.
 
@@ -103,8 +114,9 @@ This distinction supports a security-event interval where a principal is already
 disabled but its membership row and persisted workspace state have not yet been
 updated. The snapshot can represent that interval. workspace_status projects
 quarantined whenever no enabled owner remains. authorize_product and
-check_product_idempotency require the full WorkspaceAuthority, rather than only
-a WorkspaceView, and deny both persisted quarantine and zero enabled owners.
+check_product_idempotency require the full WorkspaceAuthority and a required
+keyword-only ProductAuthority (human, service or run) with no default. They deny
+both persisted quarantine and zero enabled owners.
 Thus delayed event fan-out cannot turn an effectively ownerless workspace into
 an authorized product workspace. Current principal disablement independently
 invalidates that principal's sessions/credentials immediately.

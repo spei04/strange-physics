@@ -3,8 +3,9 @@
 This increment defines a separate identity-association journey, strict public
 shapes and pure conformance predicates. It implements no provider verification,
 broker configuration, HTTP endpoint, SQL transaction, account mutation, recovery
-worker or production deployment. SP-01.b remains partial until its remaining
-credential and integration contracts are reviewed.
+worker or production deployment. The conformance slices are now separately
+reviewed; SP-01.b awaits C2 integration and final parent composition acceptance.
+See the [reviewed inventory](IDENTITY_RUN_CONTRACT.md#reviewed-c-id-inventory-and-remaining-acceptance).
 
 [Schema](../contracts/linking.schema.json),
 [HTTP subset](../contracts/linking.openapi.json),
@@ -49,6 +50,13 @@ issuer, including its meaningful path. No provider alias, audience, email,
 display name, email normalization or domain enters this ownership key. Null is
 a namespace value, not a wildcard or missing tenant claim. Tenant derivation must
 come from verified evidence and approved provider policy.
+
+The current browser producer must also enforce
+[principal disablement and browser-family continuity](BROWSER_SESSION_CONTRACT.md#principal-disablement-and-browser-family-continuity):
+an old family cannot become usable after principal re-enable. Retained family
+revocation or an original-principal-generation check is required before supplying
+BrowserActor/SessionRecord; current active=true alone is insufficient. This remains
+an adapter/durable-state obligation, not enforcement supplied by these pure predicates.
 
 LinkActor is a private, current server projection:
 

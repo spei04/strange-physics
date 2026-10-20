@@ -446,4 +446,4 @@ The owner must decide whether to activate this extension, which bounded pilot ma
 
 Lead checks all dependency IDs and cycles against the canonical baseline, plus the extension gates; Quality or Research independently reviews the scientific design and arithmetic. Record exact reviewed commit and CI evidence in the assignment log. Amend this record and the canonical roadmap, benchmark and backlog together if scope, budgets or conclusions change. A written plan is not production readiness or research evidence.
 
-Independent scientific/dependency review accepted45e4cdec262884d2e5e25bc1543a728d2c97b640. The final domain clarification and canonical progress update receive exact-head review before PR #86 integration. Runtime activation remains pending.
+Independent scientific/dependency review accepted final c48517b6fc57468375989670ce341f9d0a96489a, including conditional-profile readiness and exact early scorer-domain limits. PR #86 merged as e239eb2c704cd315aadd6064cdb521d1a6d9bbdc with matching tree558d68eda38aa513aa5ae59255190fef7a9f890d. PR CI39365953740 and all protected-main CI39366138629 jobs passed. Runtime activation remains pending.

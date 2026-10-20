@@ -6,7 +6,7 @@ snapshots. Public callers cannot establish those facts by parsing these models.
 
 from __future__ import annotations
 
-from typing import Annotated, Literal, Self
+from typing import TYPE_CHECKING, Annotated, Literal, Self
 
 from pydantic import Field, TypeAdapter, model_validator
 from pydantic.json_schema import JsonSchemaValue, models_json_schema
@@ -38,6 +38,10 @@ from strange_physics.session_contracts import (
     validate_session,
     workspace_session_error,
 )
+
+if TYPE_CHECKING:
+    from strange_physics.run_credential_contracts import ProductAuthority
+
 
 DisplayName = Annotated[str, Field(min_length=1, max_length=128)]
 Cursor = Annotated[str, Field(min_length=1, max_length=512)]
@@ -607,6 +611,7 @@ def authorize_product(
     credential: VerifiedCredential,
     membership: Membership,
     *,
+    authority: ProductAuthority,
     permission: Permission,
     workspace_id: str,
     now: int,
@@ -614,6 +619,18 @@ def authorize_product(
     lease: RunLease | None = None,
 ) -> None:
     """Mandatory composed product boundary; caller provides CURRENT workspace state."""
+    from strange_physics.product_authority import validate_product_authority
+
+    validate_product_authority(
+        authority,
+        credential,
+        membership,
+        permission=permission,
+        workspace_id=workspace_id,
+        now=now,
+        run_id=run_id,
+        lease=lease,
+    )
     authorize(
         credential,
         membership,
@@ -634,13 +651,32 @@ def check_product_idempotency(
     request: Message,
     stored: StoredRequest | None,
     *,
+    authority: ProductAuthority,
     now: int,
     lease: RunLease | None = None,
 ) -> Operation | None:
     """Never return an existing operation or admit new work from a quarantined workspace."""
+    from strange_physics.product_authority import validate_product_authority
+
+    permissions: dict[str, Permission] = {
+        "run_creation": "runs:create",
+        "experiment": "experiments:write",
+        "cancellation": "runs:cancel",
+        "model_submission": "models:write",
+    }
+    validate_product_authority(
+        authority,
+        credential,
+        membership,
+        permission=permissions[scope.kind],
+        workspace_id=scope.workspace_id,
+        now=now,
+        run_id=scope.resource_id if credential.kind == "run" else None,
+        lease=lease,
+    )
     # Authorize and bind the complete scope before inspecting any stored outcome.
-    check_idempotency(credential, membership, scope, request, None, now=now, lease=lease)
     _product_workspace(workspace, scope.workspace_id, membership)
+    check_idempotency(credential, membership, scope, request, None, now=now, lease=lease)
     return check_idempotency(
         credential,
         membership,
