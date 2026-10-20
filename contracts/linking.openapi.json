@@ -1,0 +1,864 @@
+{
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "csrfHeader": {
+        "in": "header",
+        "name": "X-CSRF-Token",
+        "type": "apiKey"
+      },
+      "sessionCookie": {
+        "in": "cookie",
+        "name": "__Host-sp_session",
+        "type": "apiKey"
+      }
+    }
+  },
+  "info": {
+    "description": "Contract only. Internal proof purpose/claim-owner amendment; no login, principal allocation, session creation or grant union.",
+    "title": "Explicit identity association \u2014 ID-B/B3",
+    "version": "1.0.0-draft-review"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/identity-links": {
+      "post": {
+        "description": "Current recent human primary plus exact session generation, authentication provenance, policy, browser and primary identity mapping. No cookie issuance or principal/grant changes.",
+        "operationId": "startIdentityLink",
+        "parameters": [
+          {
+            "description": "Exact approved app origin.",
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Current primary session-bound CSRF.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "linking.schema.json#/$defs/LinkStartRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkStartResponse"
+                }
+              }
+            },
+            "description": "Safe caller-owned outcome; verification alone does not associate identity."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "reauthenticate only for stale actual primary authentication; absent for invalid/revoked session.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded policy rate limit independent of identity existence.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "x-implementation-status": "contract only; verification/HTTP/SQL/recovery not implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Cross-Origin-Resource-Policy": "same-origin",
+          "Pragma": "no-cache",
+          "Referrer-Policy": "no-referrer",
+          "Vary": "Cookie, Origin"
+        }
+      }
+    },
+    "/v1/identity-links/oidc/callback": {
+      "get": {
+        "description": "Current recent human primary plus exact session generation, authentication provenance, policy, browser and primary identity mapping. No cookie issuance or principal/grant changes. Validate primary session/browser/state before code exchange; independently fresh secondary authentication and nonce/PKCE afterward. Provider denial never creates an association.",
+        "operationId": "verifyOIDCIdentityLink",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "code",
+            "required": false,
+            "schema": {
+              "maxLength": 16384,
+              "minLength": 1,
+              "type": "string",
+              "writeOnly": true
+            }
+          },
+          {
+            "in": "query",
+            "name": "state",
+            "required": true,
+            "schema": {
+              "maxLength": 16384,
+              "minLength": 1,
+              "type": "string",
+              "writeOnly": true
+            }
+          },
+          {
+            "in": "query",
+            "name": "error",
+            "required": false,
+            "schema": {
+              "maxLength": 16384,
+              "minLength": 1,
+              "type": "string",
+              "writeOnly": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkStatus"
+                }
+              }
+            },
+            "description": "Safe caller-owned outcome; verification alone does not associate identity."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "reauthenticate only for stale actual primary authentication; absent for invalid/revoked session.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded policy rate limit independent of identity existence.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "x-callback-csrf-policy": "Dedicated exact GET/query callback bound to existing primary session and purpose-specific state, nonce and S256; proof staging only. No login routing.",
+        "x-implementation-status": "contract only; verification/HTTP/SQL/recovery not implemented",
+        "x-query-schema": {
+          "oneOf": [
+            {
+              "$ref": "session.schema.json#/$defs/OIDCCallbackRequest"
+            },
+            {
+              "$ref": "session.schema.json#/$defs/OIDCDeniedCallbackRequest"
+            }
+          ]
+        },
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Cross-Origin-Resource-Policy": "same-origin",
+          "Pragma": "no-cache",
+          "Referrer-Policy": "no-referrer",
+          "Vary": "Cookie, Origin"
+        }
+      }
+    },
+    "/v1/identity-links/{challenge_id}": {
+      "get": {
+        "description": "Current recent human primary plus exact session generation, authentication provenance, policy, browser and primary identity mapping. No cookie issuance or principal/grant changes.",
+        "operationId": "getIdentityLink",
+        "parameters": [
+          {
+            "description": "Purpose-bound server challenge; never an authority credential.",
+            "in": "path",
+            "name": "challenge_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkStatus"
+                }
+              }
+            },
+            "description": "Safe caller-owned outcome; verification alone does not associate identity."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "reauthenticate only for stale actual primary authentication; absent for invalid/revoked session.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded policy rate limit independent of identity existence.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "x-implementation-status": "contract only; verification/HTTP/SQL/recovery not implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Cross-Origin-Resource-Policy": "same-origin",
+          "Pragma": "no-cache",
+          "Referrer-Policy": "no-referrer",
+          "Vary": "Cookie, Origin"
+        }
+      }
+    },
+    "/v1/identity-links/{challenge_id}/commit": {
+      "post": {
+        "description": "Current recent human primary plus exact session generation, authentication provenance, policy, browser and primary identity mapping. No cookie issuance or principal/grant changes. Challenge ID is the natural idempotency key. expected_revision binds the original verified state; an exact retry rechecks current authority and original receipt, never reconsumes proof.",
+        "operationId": "commitIdentityLink",
+        "parameters": [
+          {
+            "description": "Purpose-bound server challenge; never an authority credential.",
+            "in": "path",
+            "name": "challenge_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Exact approved app origin.",
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Current primary session-bound CSRF.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "linking.schema.json#/$defs/LinkCommitRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkResult"
+                }
+              }
+            },
+            "description": "Safe caller-owned outcome; verification alone does not associate identity."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "reauthenticate only for stale actual primary authentication; absent for invalid/revoked session.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded policy rate limit independent of identity existence.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "x-implementation-status": "contract only; verification/HTTP/SQL/recovery not implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Cross-Origin-Resource-Policy": "same-origin",
+          "Pragma": "no-cache",
+          "Referrer-Policy": "no-referrer",
+          "Vary": "Cookie, Origin"
+        }
+      }
+    },
+    "/v1/identity-links/{challenge_id}/proof": {
+      "post": {
+        "description": "Current recent human primary plus exact session generation, authentication provenance, policy, browser and primary identity mapping. No cookie issuance or principal/grant changes.",
+        "operationId": "verifyIdentityLink",
+        "parameters": [
+          {
+            "description": "Purpose-bound server challenge; never an authority credential.",
+            "in": "path",
+            "name": "challenge_id",
+            "required": true,
+            "schema": {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Exact approved app origin.",
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Current primary session-bound CSRF.",
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "linking.schema.json#/$defs/LinkExchangeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkStatus"
+                }
+              }
+            },
+            "description": "Safe caller-owned outcome; verification alone does not associate identity."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "headers": {
+              "X-Authentication-Action": {
+                "description": "reauthenticate only for stale actual primary authentication; absent for invalid/revoked session.",
+                "schema": {
+                  "const": "reauthenticate",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail.",
+            "headers": {
+              "Retry-After": {
+                "description": "Bounded policy rate limit independent of identity existence.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "linking.schema.json#/$defs/LinkError"
+                }
+              }
+            },
+            "description": "Fixed safe LinkError. Ownership conflict exposes no foreign principal, provider account, email or membership detail."
+          }
+        },
+        "security": [
+          {
+            "csrfHeader": [],
+            "sessionCookie": []
+          }
+        ],
+        "x-implementation-status": "contract only; verification/HTTP/SQL/recovery not implemented",
+        "x-response-headers": {
+          "Cache-Control": "no-store",
+          "Cross-Origin-Resource-Policy": "same-origin",
+          "Pragma": "no-cache",
+          "Referrer-Policy": "no-referrer",
+          "Vary": "Cookie, Origin"
+        }
+      }
+    }
+  },
+  "x-global-obligations": [
+    "Current recent human primary session, current principal/identity association and exact challenge binding precede every operation and receipt lookup.",
+    "Global claim key is SHA-256 of actual proof bytes alone; purpose/transaction is the owner VALUE shared by login and linking across all aliases.",
+    "No broker account-link call, email matching, principal/session allocation or grant union. Google Identity Platform tenant profile is blocked.",
+    "Atomic association, retained proof claim/consumption, consumed challenge, exact receipt and audit; uncertain outcomes require explicit reconciliation.",
+    "No-store/no-referrer on all responses/errors. Suppress callback queries, proof bodies, authorization URLs, cookies and internal identity evidence in logs.",
+    "Real provider verification, CSRF/entropy, SQL/races/recovery and broker configuration conformance remain unimplemented producer obligations."
+  ]
+}

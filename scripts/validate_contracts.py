@@ -142,6 +142,19 @@ def main() -> None:
                         for item in items:
                             check(reference, item, group == "valid")
 
+    linking = json.loads((ROOT / "linking.examples.json").read_text())
+    for name, fixture in linking["valid"].items():
+        check(f"linking.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in linking[group]:
+            value = copy.deepcopy(linking["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"linking.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     for fixture in sessions["workspace_session_failures"]:
         check("control.schema.json#/$defs/Error", fixture["output"])
 

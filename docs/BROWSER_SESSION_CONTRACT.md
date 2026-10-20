@@ -153,7 +153,7 @@ provider exchange, reserve the pending transaction by revision CAS. The
 transaction binds provider, exact return URI, immutable policy version, browser
 binding digest and server creation/expiry.
 
-Minimal TrustedIdentityProof retains issuer, subject, audience, tenant, approved
+Minimal TrustedIdentityProof requires purpose=login and retains issuer, subject, audience, tenant, approved
 upstream provider, actual auth_time, iat, exp, verification time, proof digest and
 transaction/browser binding. Verifiers check signature, algorithm, issuer keys,
 revocation and all protocol claims outside these predicates. auth_time measures
@@ -161,7 +161,9 @@ authentication; a recently refreshed iat cannot make old authentication fresh.
 Actual auth_time cannot be later than server commit time; the configured skew
 applies to verifier timing and never creates future authentication authority.
 The proof alone does not create a principal. Resolve stable identity ownership
-separately under the later identity mapping contract; email never merges it.
+by canonical issuer + verified tenant ID or explicit null + subject under the
+[B3 identity mapping contract](IDENTITY_LINKING_CONTRACT.md); provider aliases
+and email never merge or partition it.
 
 | Durable state | Permitted recovery |
 | --- | --- |
@@ -278,3 +280,24 @@ Primary references:
 and [OWASP CSRF guidance](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).
 Opaque app sessions and the conservative lost-cookie behavior are project
 choices, not claims that the providers mandate this implementation.
+
+
+## B3 internal producer amendment and broker deployment gate
+
+B3 adds required TrustedIdentityProof.purpose and replaces the internal
+claimed_by_transaction string argument with claimed_by: ProofClaimOwner | None.
+Its purpose/transaction_id is the owner value in the shared global actual-token-
+digest registry, never a partition key. Login requires purpose=login; linking
+requires link_identity. Existing producers must migrate explicitly, including
+equal IDs across both purposes and provider aliases. Public login HTTP shapes
+are unchanged; full SP-01.b remains unfrozen. See the
+[B3 amendment and recovery obligations](IDENTITY_LINKING_CONTRACT.md).
+
+The schema can describe Google Identity Platform tenant claims, but that is not
+deployment conformance: Google states that
+[tenants cannot disable account linking](https://docs.cloud.google.com/identity-platform/docs/multi-tenancy).
+That profile remains blocked until a separately reviewed broker conformance
+profile actually guarantees distinct external identities and app-controlled
+association. B3 explicitly rejects the managed tenant linking profile. Top-level
+separate-provider-account mode also requires real conformance testing; parsing
+ProviderPolicy does not prove configuration, isolation or automatic-link behavior.

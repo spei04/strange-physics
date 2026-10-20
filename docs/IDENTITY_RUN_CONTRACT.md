@@ -37,7 +37,7 @@ events remain explicitly draft.
 
 ## Identity and current authority
 
-Identity is the verified (issuer, subject) pair. The external verifier checks
+Identity is the verified (canonical issuer, verified tenant ID or explicit null, subject) pair. The external verifier checks
 issuer allowlist, audience, signature, expiry and revocation, then resolves that
 pair to a stable application principal. Email/domain neither links accounts nor
 grants workspace membership. Account linking needs explicit proof.
@@ -90,7 +90,11 @@ strictly before credential/lease/run deadlines, and running state. Replacement,
 revocation, cancellation or terminal transition invalidates old worker writes.
 Server time is integer UTC Unix seconds; equality at expiry is expired.
 Lease epoch is authority generation; run revision is a state CAS version.
-SSE periodic reauthorization (target <=30 seconds) is later integration work.
+SSE producers must check authoritative current session/credential, grant and workspace
+state immediately before every payload batch, plus any applicable run lease.
+The <=30-second bound applies only to idle checks; it is never cached authorization
+grace. Uncertain or revoked authority closes the stream before another payload.
+Actual streaming integration remains later work.
 
 ## Run and operation states
 
@@ -275,7 +279,7 @@ constraints require later migrations and concurrency evidence.
 
 | Relation | Required identity/constraints |
 | --- | --- |
-| identities | Unique (issuer, subject) → principal; no email-based account merge |
+| identities | Unique (canonical issuer, verified tenant ID or explicit null, subject) → principal; no email-based account merge |
 | memberships | Primary (workspace_id, principal_id), role/active/revision |
 | runs | Primary (workspace_id, run_id), revision, immutable world/agent/config/runtime, budget checks, deadline |
 | attempts | Tenant/run/attempt primary and composite run FK; unique tenant/run/epoch; at most one active epoch |
@@ -378,3 +382,7 @@ bytes as durable identity.
 Current tests cover pure decisions, schema examples, canonical bytes and route
 consistency. They do not execute PostgreSQL, verify real tokens, run concurrent
 workers, implement HTTP, or measure hosted security.
+
+The reviewed [B3 linking subset](IDENTITY_LINKING_CONTRACT.md) separately defines
+purpose-bound identity association and the internal proof-claim producer amendment.
+It never allocates a principal/session or unions grants; full SP-01.b stays partial.

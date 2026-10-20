@@ -644,6 +644,34 @@
       "title": "OIDCDeniedCallbackRequest",
       "type": "object"
     },
+    "ProofClaimOwner": {
+      "additionalProperties": false,
+      "description": "Owner VALUE in the global actual-proof-digest registry, never a partition key.",
+      "properties": {
+        "purpose": {
+          "enum": [
+            "login",
+            "link_identity"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "transaction_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Transaction Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "purpose",
+        "transaction_id"
+      ],
+      "title": "ProofClaimOwner",
+      "type": "object"
+    },
     "ProviderPolicy": {
       "additionalProperties": false,
       "properties": {
@@ -1011,7 +1039,6 @@
     },
     "TrustedIdentityProof": {
       "additionalProperties": false,
-      "description": "Minimal durable verifier result; never accepted from a public request.",
       "properties": {
         "audience": {
           "maxLength": 512,
@@ -1077,6 +1104,14 @@
           "title": "Provider Id",
           "type": "string"
         },
+        "purpose": {
+          "enum": [
+            "login",
+            "link_identity"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
         "subject": {
           "maxLength": 512,
           "minLength": 1,
@@ -1129,6 +1164,7 @@
         }
       },
       "required": [
+        "purpose",
         "transaction_id",
         "provider_id",
         "browser_binding_sha256",

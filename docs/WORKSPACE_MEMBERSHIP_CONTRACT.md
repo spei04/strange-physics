@@ -114,9 +114,12 @@ membership and lease fences before reads, stream establishment/delivery, worker
 claims/results/checkpoint/artifact commits or cached responses. Old control
 authorize/check_idempotency alone are insufficient after B1. In particular,
 check_product_idempotency validates current scope/authority and effective workspace
-state before examining stored identity/conflict details. Every long-lived stream
-and write fence must refresh authority; an initial check does not grant a lease
-over future revocation. Safe status routes are the explicit limited exception.
+state before examining stored identity/conflict details. Every long-lived stream must check authoritative current
+session/credential, grant and workspace state immediately before every payload
+batch, with no cached authorization grace. The <=30-second interval applies only
+to idle checks. A failed/uncertain check closes the stream before another payload.
+Every write fence also refreshes authority; initial authorization never grants a
+lease over future revocation. Safe status routes are the explicit limited exception.
 
 An elective change must preserve at least one enabled owner. Two owner rows with
 one disabled principal therefore do not permit the remaining enabled owner to

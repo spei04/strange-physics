@@ -1,0 +1,1212 @@
+{
+  "$defs": {
+    "BrowserActor": {
+      "additionalProperties": false,
+      "description": "Verified human session lookup and HTTP context; never a public body.",
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/BrowserContext"
+        },
+        "credential": {
+          "$ref": "#/$defs/SessionCredential"
+        },
+        "session": {
+          "$ref": "#/$defs/SessionRecord"
+        }
+      },
+      "required": [
+        "session",
+        "credential",
+        "context"
+      ],
+      "title": "BrowserActor",
+      "type": "object"
+    },
+    "BrowserContext": {
+      "additionalProperties": false,
+      "description": "Trusted HTTP adapter projection; CSRF comparisons must be constant-time.",
+      "properties": {
+        "browser_binding_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Browser Binding Sha256"
+        },
+        "csrf_matches": {
+          "title": "Csrf Matches",
+          "type": "boolean"
+        },
+        "csrf_scope": {
+          "anyOf": [
+            {
+              "enum": [
+                "preauth",
+                "session"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Csrf Scope"
+        },
+        "has_bearer": {
+          "title": "Has Bearer",
+          "type": "boolean"
+        },
+        "has_session_cookie": {
+          "title": "Has Session Cookie",
+          "type": "boolean"
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 9,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^https://[!-~]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Origin"
+        },
+        "target_origin": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Target Origin",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_origin",
+        "origin",
+        "has_session_cookie",
+        "has_bearer",
+        "csrf_scope",
+        "csrf_matches",
+        "browser_binding_sha256"
+      ],
+      "title": "BrowserContext",
+      "type": "object"
+    },
+    "IdentityAssociation": {
+      "additionalProperties": false,
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "identity": {
+          "$ref": "#/$defs/IdentityNamespace"
+        },
+        "linked_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Linked At",
+          "type": "integer"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "identity",
+        "principal_id",
+        "active",
+        "revision",
+        "linked_at"
+      ],
+      "title": "IdentityAssociation",
+      "type": "object"
+    },
+    "IdentityNamespace": {
+      "additionalProperties": false,
+      "description": "Exact canonical issuer + verified tenant (including explicit null) + subject.",
+      "properties": {
+        "issuer": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Issuer",
+          "type": "string"
+        },
+        "subject": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        },
+        "tenant_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tenant Id"
+        }
+      },
+      "required": [
+        "issuer",
+        "tenant_id",
+        "subject"
+      ],
+      "title": "IdentityNamespace",
+      "type": "object"
+    },
+    "LinkActor": {
+      "additionalProperties": false,
+      "properties": {
+        "actor": {
+          "$ref": "#/$defs/BrowserActor"
+        },
+        "authenticated_identity": {
+          "$ref": "#/$defs/SessionIdentity"
+        },
+        "primary": {
+          "$ref": "#/$defs/IdentityAssociation"
+        },
+        "principal": {
+          "$ref": "#/$defs/PrincipalStatus"
+        }
+      },
+      "required": [
+        "actor",
+        "principal",
+        "primary",
+        "authenticated_identity"
+      ],
+      "title": "LinkActor",
+      "type": "object"
+    },
+    "LinkAudit": {
+      "additionalProperties": false,
+      "properties": {
+        "challenge_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Challenge Id",
+          "type": "string"
+        },
+        "event": {
+          "const": "identity_linked",
+          "title": "Event",
+          "type": "string"
+        },
+        "identity": {
+          "$ref": "#/$defs/IdentityNamespace"
+        },
+        "occurred_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Occurred At",
+          "type": "integer"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "proof_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Proof Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event",
+        "challenge_id",
+        "principal_id",
+        "identity",
+        "proof_sha256",
+        "occurred_at"
+      ],
+      "title": "LinkAudit",
+      "type": "object"
+    },
+    "LinkChallenge": {
+      "additionalProperties": false,
+      "properties": {
+        "authenticated_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authenticated At",
+          "type": "integer"
+        },
+        "browser_binding_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Browser Binding Sha256",
+          "type": "string"
+        },
+        "challenge_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Challenge Id",
+          "type": "string"
+        },
+        "consumed_at": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Consumed At"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "link_policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Link Policy Id",
+          "type": "string"
+        },
+        "primary_identity": {
+          "$ref": "#/$defs/IdentityNamespace"
+        },
+        "primary_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Primary Revision",
+          "type": "integer"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "proof": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TrustedIdentityProof"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        },
+        "purpose": {
+          "const": "link_identity",
+          "title": "Purpose",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "session_policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Policy Id",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "pending",
+            "verifying",
+            "verified",
+            "committed",
+            "restart_required",
+            "recovery_required"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "purpose",
+        "challenge_id",
+        "link_policy_id",
+        "session_policy_id",
+        "provider_id",
+        "principal_id",
+        "session_id",
+        "generation",
+        "authenticated_at",
+        "primary_identity",
+        "primary_revision",
+        "browser_binding_sha256",
+        "created_at",
+        "expires_at",
+        "revision",
+        "state",
+        "proof",
+        "consumed_at"
+      ],
+      "title": "LinkChallenge",
+      "type": "object"
+    },
+    "LinkClaimConsumption": {
+      "additionalProperties": false,
+      "description": "Atomic consumed tombstone in the SAME global digest registry used by login.",
+      "properties": {
+        "consumed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Consumed At",
+          "type": "integer"
+        },
+        "owner": {
+          "$ref": "#/$defs/ProofClaimOwner"
+        },
+        "proof_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Proof Sha256",
+          "type": "string"
+        },
+        "retain_until": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Retain Until",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "proof_sha256",
+        "owner",
+        "consumed_at",
+        "retain_until"
+      ],
+      "title": "LinkClaimConsumption",
+      "type": "object"
+    },
+    "LinkCommitRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Revision",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expected_revision"
+      ],
+      "title": "LinkCommitRequest",
+      "type": "object"
+    },
+    "LinkError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_request",
+            "policy_unavailable",
+            "unauthenticated",
+            "forbidden",
+            "ambiguous_credentials",
+            "unsupported_flow",
+            "reauthentication_required",
+            "not_found",
+            "link_expired",
+            "proof_rejected",
+            "link_conflict",
+            "recovery_required",
+            "temporarily_unavailable"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "request_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Request Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "request_id"
+      ],
+      "title": "LinkError",
+      "type": "object"
+    },
+    "LinkExchangeRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "id_token": {
+          "format": "password",
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Id Token",
+          "type": "string",
+          "writeOnly": true
+        }
+      },
+      "required": [
+        "id_token"
+      ],
+      "title": "LinkExchangeRequest",
+      "type": "object"
+    },
+    "LinkPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "challenge_ttl_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Challenge Ttl Seconds",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "providers": {
+          "items": {
+            "$ref": "#/$defs/LinkProvider"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Providers",
+          "type": "array"
+        },
+        "receipt_retention_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Receipt Retention Seconds",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "strange-physics.linking-policy.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "session_policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Policy Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "policy_id",
+        "session_policy_id",
+        "providers",
+        "challenge_ttl_seconds",
+        "receipt_retention_seconds"
+      ],
+      "title": "LinkPolicy",
+      "type": "object"
+    },
+    "LinkProvider": {
+      "additionalProperties": false,
+      "properties": {
+        "callback_uri": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 9,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^https://[!-~]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Callback Uri"
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider_id",
+        "callback_uri"
+      ],
+      "title": "LinkProvider",
+      "type": "object"
+    },
+    "LinkReceipt": {
+      "additionalProperties": false,
+      "properties": {
+        "challenge_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Challenge Id",
+          "type": "string"
+        },
+        "challenge_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Challenge Revision",
+          "type": "integer"
+        },
+        "committed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Committed At",
+          "type": "integer"
+        },
+        "identity": {
+          "$ref": "#/$defs/IdentityNamespace"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "proof_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Proof Sha256",
+          "type": "string"
+        },
+        "retain_until": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Retain Until",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "challenge_id",
+        "principal_id",
+        "identity",
+        "proof_sha256",
+        "challenge_revision",
+        "committed_at",
+        "retain_until"
+      ],
+      "title": "LinkReceipt",
+      "type": "object"
+    },
+    "LinkResult": {
+      "additionalProperties": false,
+      "properties": {
+        "challenge_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Challenge Id",
+          "type": "string"
+        },
+        "state": {
+          "const": "linked",
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "challenge_id",
+        "state"
+      ],
+      "title": "LinkResult",
+      "type": "object"
+    },
+    "LinkStartRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider_id"
+      ],
+      "title": "LinkStartRequest",
+      "type": "object"
+    },
+    "LinkStartResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "authorization_url": {
+          "anyOf": [
+            {
+              "maxLength": 16384,
+              "minLength": 1,
+              "readOnly": true,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Authorization Url"
+        },
+        "challenge_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Challenge Id",
+          "type": "string"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "flow": {
+          "enum": [
+            "managed_broker",
+            "oidc_code"
+          ],
+          "title": "Flow",
+          "type": "string"
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "challenge_id",
+        "provider_id",
+        "flow",
+        "expires_at",
+        "authorization_url"
+      ],
+      "title": "LinkStartResponse",
+      "type": "object"
+    },
+    "LinkStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "challenge_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Challenge Id",
+          "type": "string"
+        },
+        "expired": {
+          "title": "Expired",
+          "type": "boolean"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "next_action": {
+          "enum": [
+            "authenticate_secondary",
+            "reconcile",
+            "commit",
+            "done",
+            "start_new_challenge"
+          ],
+          "title": "Next Action",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "pending",
+            "verifying",
+            "verified",
+            "committed",
+            "restart_required",
+            "recovery_required"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "challenge_id",
+        "state",
+        "expires_at",
+        "expired",
+        "next_action"
+      ],
+      "title": "LinkStatus",
+      "type": "object"
+    },
+    "PrincipalStatus": {
+      "additionalProperties": false,
+      "description": "Current verified human app-principal state, bound to its stable identity.",
+      "properties": {
+        "active": {
+          "title": "Active",
+          "type": "boolean"
+        },
+        "kind": {
+          "const": "human",
+          "title": "Kind",
+          "type": "string"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "principal_id",
+        "active"
+      ],
+      "title": "PrincipalStatus",
+      "type": "object"
+    },
+    "ProofClaimOwner": {
+      "additionalProperties": false,
+      "description": "Owner VALUE in the global actual-proof-digest registry, never a partition key.",
+      "properties": {
+        "purpose": {
+          "enum": [
+            "login",
+            "link_identity"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "transaction_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Transaction Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "purpose",
+        "transaction_id"
+      ],
+      "title": "ProofClaimOwner",
+      "type": "object"
+    },
+    "SessionCredential": {
+      "additionalProperties": false,
+      "description": "Trusted hash lookup result, including narrowly retained logout-only history.",
+      "properties": {
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "generation"
+      ],
+      "title": "SessionCredential",
+      "type": "object"
+    },
+    "SessionIdentity": {
+      "additionalProperties": false,
+      "description": "Current server provenance of the identity that actually authenticated this session.",
+      "properties": {
+        "authenticated_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authenticated At",
+          "type": "integer"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "identity": {
+          "$ref": "#/$defs/IdentityNamespace"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "generation",
+        "authenticated_at",
+        "identity"
+      ],
+      "title": "SessionIdentity",
+      "type": "object"
+    },
+    "SessionRecord": {
+      "additionalProperties": false,
+      "description": "Current server session family; no opaque cookie secret is stored here.",
+      "properties": {
+        "absolute_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Absolute Expires At",
+          "type": "integer"
+        },
+        "authenticated_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authenticated At",
+          "type": "integer"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "last_seen_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Last Seen At",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "principal_active": {
+          "title": "Principal Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revoked": {
+          "title": "Revoked",
+          "type": "boolean"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "policy_id",
+        "principal_id",
+        "generation",
+        "created_at",
+        "authenticated_at",
+        "last_seen_at",
+        "absolute_expires_at",
+        "revoked",
+        "principal_active"
+      ],
+      "title": "SessionRecord",
+      "type": "object"
+    },
+    "TrustedIdentityProof": {
+      "additionalProperties": false,
+      "properties": {
+        "audience": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Audience",
+          "type": "string"
+        },
+        "auth_time": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Auth Time",
+          "type": "integer"
+        },
+        "browser_binding_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Browser Binding Sha256",
+          "type": "string"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "flow": {
+          "enum": [
+            "managed_broker",
+            "oidc_code"
+          ],
+          "title": "Flow",
+          "type": "string"
+        },
+        "issued_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Issued At",
+          "type": "integer"
+        },
+        "issuer": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Issuer",
+          "type": "string"
+        },
+        "proof_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Proof Sha256",
+          "type": "string"
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        },
+        "purpose": {
+          "enum": [
+            "login",
+            "link_identity"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "subject": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        },
+        "tenant_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tenant Id"
+        },
+        "transaction_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Transaction Id",
+          "type": "string"
+        },
+        "upstream_provider": {
+          "anyOf": [
+            {
+              "enum": [
+                "google.com",
+                "github.com"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Upstream Provider"
+        },
+        "verified_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Verified At",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "purpose",
+        "transaction_id",
+        "provider_id",
+        "browser_binding_sha256",
+        "proof_sha256",
+        "flow",
+        "issuer",
+        "audience",
+        "tenant_id",
+        "upstream_provider",
+        "subject",
+        "auth_time",
+        "issued_at",
+        "expires_at",
+        "verified_at"
+      ],
+      "title": "TrustedIdentityProof",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/linking.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Public link shapes plus private trusted projections and pure conformance predicates. No crypto, broker, HTTP, persistence, race or recovery implementation.",
+  "x-contract-status": "linking-v1 review; SP-01.b remains partial",
+  "x-public-models": [
+    "LinkStartRequest",
+    "LinkStartResponse",
+    "LinkExchangeRequest",
+    "LinkCommitRequest",
+    "LinkResult",
+    "LinkStatus",
+    "LinkError"
+  ]
+}

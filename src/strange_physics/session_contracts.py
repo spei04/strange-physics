@@ -312,7 +312,18 @@ class BrowserContext(Message):
     browser_binding_sha256: Digest | None
 
 
+ProofPurpose = Literal["login", "link_identity"]
+
+
+class ProofClaimOwner(Message):
+    """Owner VALUE in the global actual-proof-digest registry, never a partition key."""
+
+    purpose: ProofPurpose
+    transaction_id: Identifier
+
+
 class TrustedIdentityProof(Message):
+    purpose: ProofPurpose
     """Minimal durable verifier result; never accepted from a public request."""
 
     transaction_id: Identifier
@@ -355,7 +366,8 @@ class LoginTransaction(Message):
         if (self.session_id is not None) != (self.state == "committed"):
             raise ValueError("Only committed transaction has a session identity")
         if self.proof and (
-            self.proof.transaction_id != self.transaction_id
+            self.proof.purpose != "login"
+            or self.proof.transaction_id != self.transaction_id
             or self.proof.provider_id != self.provider_id
             or self.proof.browser_binding_sha256 != self.browser_binding_sha256
         ):
@@ -534,6 +546,7 @@ def proof_claim_retain_until(
         transaction.policy_id != policy.policy_id
         or proof.transaction_id != transaction.transaction_id
         or proof.provider_id != transaction.provider_id
+        or proof.purpose != "login"
     ):
         raise ValueError("Proof retention requires the bound transaction and policy")
     deadline = max(
@@ -549,7 +562,7 @@ def validate_proof(
     proof: TrustedIdentityProof,
     *,
     now: int,
-    claimed_by_transaction: str | None,
+    claimed_by: ProofClaimOwner | None,
 ) -> None:
     """Check verified evidence against the owner loaded by application-wide proof_claim_key.
 
@@ -571,9 +584,13 @@ def validate_proof(
         or proof.issuer != provider.issuer
         or proof.audience != provider.audience
         or proof.tenant_id != provider.tenant_id
-        or claimed_by_transaction not in {None, transaction.transaction_id}
+        or proof.purpose != "login"
+        or claimed_by
+        not in (None, ProofClaimOwner(purpose="login", transaction_id=transaction.transaction_id))
         or (
-            transaction.state == "verified" and claimed_by_transaction != transaction.transaction_id
+            transaction.state == "verified"
+            and claimed_by
+            != ProofClaimOwner(purpose="login", transaction_id=transaction.transaction_id)
         )
         or (
             provider.flow == "managed_broker"
@@ -601,7 +618,7 @@ def validate_login_commit(
     *,
     principal_id: str,
     now: int,
-    claimed_by_transaction: str | None,
+    claimed_by: ProofClaimOwner | None,
     oidc_evidence: OIDCCallbackEvidence | None = None,
 ) -> None:
     """Check the same transaction's atomic proof-consumption/session creation proposal."""
@@ -616,7 +633,7 @@ def validate_login_commit(
         transaction,
         transaction.proof,
         now=now,
-        claimed_by_transaction=claimed_by_transaction,
+        claimed_by=claimed_by,
     )
     if provider.flow == "oidc_code":
         if oidc_evidence is None:
@@ -674,7 +691,7 @@ def validate_login_completion(
     principal_id: str,
     now: int,
     expected_revision: int,
-    claimed_by_transaction: str | None,
+    claimed_by: ProofClaimOwner | None,
     oidc_evidence: OIDCCallbackEvidence | None = None,
 ) -> None:
     validate_login_commit(
@@ -684,7 +701,7 @@ def validate_login_completion(
         session,
         principal_id=principal_id,
         now=now,
-        claimed_by_transaction=claimed_by_transaction,
+        claimed_by=claimed_by,
         oidc_evidence=oidc_evidence,
     )
     validate_login_transition(before, after, expected_revision=expected_revision)
@@ -887,6 +904,7 @@ SESSION_MODELS: tuple[type[Message], ...] = (
     RenewalRequest,
     SessionError,
     BrowserContext,
+    ProofClaimOwner,
     TrustedIdentityProof,
     LoginTransaction,
     OIDCCallbackEvidence,
