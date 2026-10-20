@@ -3377,7 +3377,7 @@ SP-01.c/#89 has three sequential review units; ART1/EXEC1 are integrated and lea
 
 The coordinated [CI-01 request](https://github.com/spei04/strange-physics/issues/54) adds bounded repository CI/CD maintenance. It does not waive the cloud storage/provisioning gates or complete SP-27.a. Repository-settings coordination owns branch protection; candidate delivery requires protected main and successful required checks. Publication/deployment remain separately gated.
 
-Execution checkpoint 2026-10-20: SP-01.b and ID-C are complete; EXEC1 is integrated under SP-01.c/#89 and Research is assigned COMP1, SP-04.e/#87 and bounded I1 are complete through PR #90; Research prepares SP-01.d read-only, and Quality reviews COMP1 authority/recovery and retains SP-01.e tooling preparation read-only. Earlier source/PR/check identities remain in EXECUTION_LOG.md and the machine ledger. SP-02.b capacity is complete after the approved recovery snapshot and 200→300 GiB expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
+Execution checkpoint 2026-10-20: SP-01.b and ID-C are complete; EXEC1 is integrated under SP-01.c/#89 and lead integrates accepted COMP1, SP-04.e/#87 and bounded I1 are complete through PR #90; Research prepares SP-01.d read-only, and Quality reviews final COMP1 composition/integration and retains SP-01.e tooling preparation read-only. Earlier source/PR/check identities remain in EXECUTION_LOG.md and the machine ledger. SP-02.b capacity is complete after the approved recovery snapshot and 200→300 GiB expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
 
 
 Scientific execution checkpoint 2026-10-20: Research's read-only dependency review
@@ -3385,7 +3385,7 @@ confirms SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b → SP-06.a →
 with the additional approved joins and accepted predecessors recorded in
 [EXECUTION_LOG.md](EXECUTION_LOG.md#scientific-acceptance-checkpoint--i1-complete).
 SP-06.a/#83 and SP-04.e/#87 are integrated; bounded I1 is complete through PR #90.
-SP-01.b is integrated; EXEC1 is integrated and Research takes COMP1 in the reused identity checkout after this reviewed handoff. The six scientific tasks retain
+SP-01.b is integrated; EXEC1 is integrated and lead integrates accepted COMP1; Research prepares SP-01.d read-only for the next reviewed handoff. The six scientific tasks retain
 19 reference engineering days plus 4.75 reserve, not a subagent schedule promise.
 No unfinished identity contract or whole-R0 gate is a prerequisite for this local
 slice. Enterprise work and its actual consumer gates remain unchanged. I1 has
