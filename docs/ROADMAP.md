@@ -66,7 +66,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 
 The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. The primary checkout and one separate identity checkout are retained for independently active writers. Existing migration archives and other experiments are not disposable build caches.
 
-Current execution roster: Lead owns primary integration and progress. WEB1 runtime review is accepted; Research completes final source checks/evidence, Platform reviews integration consistency and Quality has prepared SP-01.e/#98. Its source work waits exact WEB1 integration and writer release. The local comparison prerequisite proposal is recorded separately with RA_EXEC pending. Both existing cloud checkouts and independent environments are reused; human operations, deployment, paid and release gates remain separate.
+Current execution roster: Lead owns primary integration and progress. WEB1 runtime review is accepted; Research released verified source, Platform reviews integration consistency and Quality has prepared SP-01.e/#98. Its source work waits exact WEB1 integration and writer release. The local comparison prerequisite proposal is recorded separately with RA_EXEC pending. Both existing cloud checkouts and independent environments are reused; human operations, deployment, paid and release gates remain separate.
 
 ### 0.3 Update procedure for every implementation change
 

@@ -10,7 +10,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | WEB1 final evidence/readback and writer release | Finalf2d1068 checks pass; no additional runtime work pending |
+| Research | WEB1 complete source/evidence; read-only review next | Clean b5f69f0 released; lead owns integration; Quality receives identity after acceptance |
 | Platform | WEB1 final integration consistency review | Runtime accepted; exact integrated source, progress and CI next |
 | Quality | WEB1 final readback; SP-01.e/#98 handoff prepared | VAL1 authoring waits exact WEB1 integration and writer release |
 | Project lead | WEB1 primary integration and progress; native proposal scope decision | Exclusive primary owner; PR #96 integrated, RA_EXEC remains pending |
@@ -443,3 +443,5 @@ Planning PR #96 is integrated as ee4831a with reviewed tree3192574; all four app
 2026-10-20 — WEB1 runtime85c0a98 is independently accepted after captured-run/final-event and exact replay-request binding repairs. Annotation source00800555 changes only WEB status metadata and documentation; final source checks remain active. Quality has prepared SP-01.e/#98 as VAL1 public fixtures/drift checks, CLIENT1 pinned TypeScript compatibility and MOCK1 deterministic streams. Its first manifest/fixture checkpoint and source authoring wait for exact WEB1 PR/main acceptance and the identity writer handoff; existing task dependencies and estimates remain unchanged.
 
 2026-10-20 — Final WEB1 source f2d1068 passes3,104 tests,321 WEB cases,1,431 external schemas, Ruff/format136, strict mypy95, exact configured Bandit and offline package/installed-callable checks. Final author b5f69f0 adds evidence documentation only. Runtime85c0a98 is independently accepted by lead, Platform and Quality; exact PR #97/main and private candidate verification remain before SP-01.d completion. Quality is assigned SP-01.e/#98 next, beginning with VAL1 manifest/fixtures after writer release and exact integration.
+
+2026-10-20 09:38 UTC — Research explicitly released the clean identity checkout at b5f69f0 after Quality accepted final documentation/evidence. No author process, uncommitted work or temporary installation remains. Lead retains that checkout for Quality SP-01.e/#98 after exact WEB1 integration; no additional checkout or dependency installation is needed.
