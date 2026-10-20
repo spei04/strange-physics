@@ -27,6 +27,7 @@ from strange_physics.control_contracts import (
     ContractViolation,
     Membership,
     Operation,
+    RunView,
     VerifiedCredential,
     contiguous_record_prefix,
     validate_checkpoint_metadata,
@@ -238,6 +239,27 @@ def _retained_objects(record: CheckpointRecord, current: CheckpointArtifacts) ->
         raise ContractViolation("recovery_required", 409)
 
 
+def checkpoint_committed_prefix(run: RunView, operations: tuple[Operation, ...]) -> int:
+    """Non-authorizing complete-ledger validation, including pending and failed operation gaps."""
+    if (
+        len(operations) != run.experiments_accepted
+        or len(operations) > 10_000
+        or sorted(
+            op.accepted_experiment_index
+            for op in operations
+            if op.accepted_experiment_index is not None
+        )
+        != list(range(len(operations)))
+        or any((op.workspace_id, op.run_id) != (run.workspace_id, run.run_id) for op in operations)
+    ):
+        raise ContractViolation("recovery_required", 409)
+    try:
+        prefix = contiguous_record_prefix(operations)
+    except ValueError as error:
+        raise ContractViolation("recovery_required", 409) from error
+    return prefix
+
+
 def validate_checkpoint_write(
     request: CheckpointRequest,
     workspace: WorkspaceAuthority,
@@ -298,22 +320,7 @@ def validate_checkpoint_write(
         now=now,
     )
     run = current.run
-    if (
-        len(operations) != run.experiments_accepted
-        or len(operations) > 10_000
-        or sorted(
-            op.accepted_experiment_index
-            for op in operations
-            if op.accepted_experiment_index is not None
-        )
-        != list(range(len(operations)))
-        or any((op.workspace_id, op.run_id) != (run.workspace_id, run.run_id) for op in operations)
-    ):
-        raise ContractViolation("recovery_required", 409)
-    try:
-        prefix = contiguous_record_prefix(operations)
-    except ValueError as error:
-        raise ContractViolation("recovery_required", 409) from error
+    prefix = checkpoint_committed_prefix(run, operations)
     _lookup(
         lookup,
         workspace_id=attempt.workspace_id,

@@ -1,7 +1,8 @@
 # Package and worker execution contract
 
-Status: EXEC1 additive API review. Runtime admission predicates, real package
-processing, hosted producers, and the full SP-01.c freeze remain pending.
+Status: EXEC1 API accepted; pure runtime predicates are under independent
+review. Real package processing, hosted producers and the full SP-01.c freeze
+remain pending.
 [ART1](ARTIFACT_CONTRACT.md), [C2](RUN_CREDENTIAL_CONTRACT.md), CORE and SCI
 retain their accepted boundaries. This document defines typed inputs and pure
 proposal shapes; constructing a trusted record does not verify its provenance.
@@ -61,11 +62,10 @@ policy can be stricter. A decoded structure alone cannot enforce a transport
 cap, so adapters must apply predecode byte limits independently. The structural
 walk rejects aggregate key/string characters beyond the canonical byte ceiling
 before calling the serializer, then applies exact final UTF-8 byte validation.
-Resource
-limits separately bound CPU, wall time, memory, processes, scratch and output;
+Resource limits separately bound CPU, wall time, memory, processes, scratch and output;
 actual enforcement belongs to later producers. Per-launch ceilings do not
 prove remaining cumulative run/workspace resources across replacement attempts:
-SP-11 resource reservation and settlement remains mandatory at actual admission
+SP-12.a resource reservation and settlement remains mandatory at actual admission
 and dispatch. This slice introduces no accounting ledger.
 
 Package inspection retains the exact verified archive and detached manifest,
@@ -239,16 +239,79 @@ distinguish these two classes. Tests cover public-schema closure, distinct
 hashes, purpose substitution, original-admission corruption, irreversible
 fences and stale termination acknowledgements.
 
-This checkpoint does not implement current-state admission, package extraction,
+This checkpoint implements pure admission against supplied trusted projections;
+it does not implement package extraction,
 a lock resolver, build/scan/promotion service, token verification, resource or
 network isolation, a scheduler, object/SQL atomicity, or live recovery drills.
-The next EXEC1 runtime slice will implement bounded pure admission/replay/
-broker/termination predicates against these trusted projections and test
-unavailable/partial/stale evidence. SP-01.c remains open through EXEC1 runtime
-acceptance and COMP1.
+Bounded pure admission/replay/broker/termination predicates test unavailable,
+partial and stale evidence; later hosted producers must establish its origin
+and currency. SP-01.c remains open through EXEC1 acceptance and COMP1.
 
 Later production ownership remains SP-14.a extraction/pinned-lock validation,
 SP-14.b isolated builds, SP-14.c scans/promotion, SP-15.b resource admission,
 SP-15.c the scoped broker, SP-15.d network isolation, and SP-16.a–c orchestration,
 recovery and termination. SP-17.a owns provider-call contract freeze.
 SP-19.a retains the full custom predictor protocol and execution scope.
+
+## Pure runtime boundaries and retained recovery
+
+The complete pure launch boundary is `admit_worker_launch`; it composes
+current purpose-bound internal authority, current C2 ownership/keyset, current
+workspace and exact policies/approval/isolation before reading retained
+launch or restore evidence. `advance_worker_launch` uses that same admission
+before proposing dispatch or exact-instance confirmation.
+`authorize_worker_broker` composes current `authorize_product` for the named
+closed-map operation, checks duplicate current projections and current runtime
+policy, and permits work only in the confirmed active lifecycle.
+`terminate_worker_launch` and `complete_worker_termination` require their
+separate current internal authority and exact retained launch closure, without
+requiring the old launch to remain work-authorized.
+
+These functions return immutable proposals or safe metadata; they do not
+read authoritative storage, verify signatures, commit SQL or control a
+provider process. The producer must obtain one current authoritative
+snapshot and recheck its relevant authority, run/keyset/lifecycle CAS, policy,
+uniqueness and resource reservations in the transaction that commits the
+proposal and outbox. In particular, a policy-denial exception does not itself
+persist a fence: the later controller must durably fence and request exact
+termination on approval/isolation loss before allowing any subsequent work.
+Reapproval cannot reactivate an already fenced lifecycle.
+
+Current same-attempt credential rotation is accepted with the newer current
+pointer, generation and keyset revision; the launch's original leaf is retained
+provenance. A revoked or expired presented worker credential fails before
+broker replay. Current run progress may advance, but immutable original
+ownership, space, total budget, package/config/runtime identities and deadline
+remain pinned. Current policy may be stricter than original admission.
+The fixed acyclic lifecycle admits only reachable revision ranges; exact
+no-op replay does not increase a revision. Retained termination completion
+cannot predate that termination's acceptance.
+
+A requested restore has an explicit transient `RestoreCandidate`: actual
+complete Operation ledger, scoped ART1 target/latest/head/outbox closure,
+current artifact readback and required artifact policy. Candidate presence
+must exactly match the requested reference; there is no automatic latest
+selection. The selected record and outbox are mandatory. Its index, full
+ordered request hash and record hash must match the reference; target/latest
+history and current run revision/attempt lineage must also agree.
+The shared non-authorizing `checkpoint_committed_prefix` validates the
+complete ordinal range, unique operation IDs, exact workspace/run/count and
+the existing 10,000-operation cap before deriving the contiguous observed
+prefix. A completed Operation with a failed scientific record advances this
+prefix; pending/running/failed/cancelled Operations without a committed record
+block it even if later ordinals completed. Initial index -1 remains compatible
+with a pending first reservation, and an older compatible target may precede
+a consistent later head. All ledger/run/head/catalog projections must share
+the producer's authoritative snapshot; commit rechecks the relevant fences.
+This validation returns no checkpoint payload and grants no read authority.
+
+The full-body ledger is a conformance input, not a scalable database read
+strategy. Count caps alone do not bound trajectory materialization adequately.
+Before production, SP-09.d durable result commits, SP-13.c checkpoint/model
+reference commits and SP-16.b restore must supply a separately reviewed
+internal transactional metadata/closure projection with byte-capped paginated
+reads, exact operation/ordinal/status/body-hash joins and gap checks. Neither
+a client-supplied prefix scalar nor full trajectory materialization on every
+restore is an acceptable substitute. SP-12.a owns cumulative resource
+reservations; SP-11 owns authorization/RLS. This slice does not implement
+that future storage projection or claim scalable storage enforcement.
