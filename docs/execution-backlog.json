@@ -11525,13 +11525,13 @@
     },
     "web_contract_preparation": {
       "owner": "Engineer Research",
-      "status": "web1_final_verification",
+      "status": "web1_final_integration",
       "task": "SP-01.d",
       "depends_on": [
         "SP-01.b",
         "SP-01.c"
       ],
-      "scope": "WORLD1 integrated; WEB1 pure runtime independently accepted. Final source/package checks and exact PR/main acceptance precede SP-01.d completion; SP-01.e/#98 handoff is prepared.",
+      "scope": "WORLD1 integrated; WEB1 source passes final author checks and independent review. Exact PR/main acceptance precedes SP-01.d completion; SP-01.e/#98 handoff is prepared.",
       "issue": 94,
       "pr_units": [
         {
@@ -11548,7 +11548,7 @@
         },
         {
           "id": "WEB1",
-          "status": "final_verification",
+          "status": "final_integration",
           "depends_on": [
             "WORLD1"
           ],
@@ -11971,8 +11971,8 @@
           "defaultSlices": 28,
           "stricterSlices": 218
         },
-        "pending": "Final annotation source full/static/schema/security/package checks and exact integration",
-        "status": "independently_accepted_final_checks_pending",
+        "pending": "Exact final PR/main and private candidate acceptance.",
+        "status": "accepted_source_pending_exact_integration",
         "source": "f2d1068aaa8ddfc3f65d867121ff9362314670b0",
         "source_tree": "85a23b26cd43a0adb3e2904c87d3713ff1a5d9e3",
         "boundary": "Pure contracts and current trusted-projection predicates. All source findings repaired; final exact checks and integration pending. Prior review suites overlap and retain original source identities; no hosted enforcement or production-readiness claim.",
@@ -11980,7 +11980,12 @@
           "source": "00800555da03ddda98f4eb4f4945101706787141",
           "tests": 3104,
           "qualification": "Full pytest passed; Ruff caught an overlong status line. Formatting-only replacement f2d1068 has equal AST; final exact checks are pending."
-        }
+        },
+        "author_head": "b5f69f0b4453029a61d4a736726239e31b8f2aaf",
+        "author_tree": "948158f52a5eedeec79395e65ea1caf3aec423e3",
+        "full_tests": 3104,
+        "ruff_files": 136,
+        "full_index_sha256": "a5506d5d53a8f27565ad214af15075167fecf6aefb2ae1ff2a5b7ae596a734a2"
       }
     },
     "contract_tooling_preparation": {
