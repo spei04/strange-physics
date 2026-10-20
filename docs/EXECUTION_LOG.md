@@ -11,7 +11,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
 | Research | WEB1 API/fixtures, then runtime after review | Assigned after exact WORLD1 acceptance and reviewed identity handoff |
-| Platform | WEB1 stream/artifact and producer-boundary review | Independent reviewer; immutable API checkpoint first |
+| Platform | Native-only research prerequisite proposal; then WEB1 stream/artifact review | Planning only; returns to immutable API review when ready |
 | Quality | Completion/handoff, then WEB1 authority/recovery/schema review | Independent reviewer; SP-01.e remains preparation-only |
 | Project lead | Record WORLD1 acceptance and hand off WEB1 | Exclusive primary owner; integration and progress |
 
@@ -415,3 +415,5 @@ Next executable scientific preparation: Research owns the native-versus-rich pre
 Private integration index SHA2564c1a7aa966163ffc29aabc28afbae8f8e31102eb339e0e227a35cd5d97c1b72b; candidate and diagnostics are owner-readable outside checkouts, review2026-11-19. Same-VM storage is not an off-device backup. No new checkout or dependency installation; identity remains retained for immediate reuse.
 
 WEB1 API authoring started 2026-10-20T08:15:54.588377+00:00 at accepted handoff69c027c after WORLD1 exact PR/main and candidate acceptance. Research owns the reused identity checkout; Platform reviews stream/artifact joins, Quality current authority/recovery and lead primary integration. Runtime predicates wait for API review. Pins are unchanged; no active prior consumer, cross-checkout dependency symlink or mutable hardlink remains. Available space 103,439,900,672 bytes; no additional checkout or installation.
+
+2026-10-20 08:19 UTC — Platform is assigned a planning-only native comparison prerequisite proposal while Research authors WEB1. Return small reviewable task definitions and explicit proposed dependency changes; root reviews before any approval request. The approved graph, RA_EXEC and all experiment limits remain unchanged. Platform returns to WEB1 review when the API checkpoint arrives.
