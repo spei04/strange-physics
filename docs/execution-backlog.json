@@ -11094,7 +11094,13 @@
       "schema_checks": 597,
       "record": "docs/RUN_CREDENTIAL_CONTRACT.md",
       "private_index_sha256": "85a05d494101dc0cf70bf3b38f94008b8a68ca29cfe06a00eaf2f2147112065e",
-      "boundary": "Pure current-authority contracts, coordinator proposals and metadata replay. No live token verification/signing, HTTP/provider configuration, durable SQL/RLS/locking, streams or recovery drill claim."
+      "boundary": "Pure current-authority contracts, coordinator proposals and metadata replay. No live token verification/signing, HTTP/provider configuration, durable SQL/RLS/locking, streams or recovery drill claim.",
+      "integrated_full_tests": 1692,
+      "integrated_formatted_files": 92,
+      "integrated_mypy_files": 57,
+      "integrated_schema_checks": 613,
+      "integrated_security": "Configured Bandit medium/high threshold passed; low findings retained.",
+      "integrated_package": "Pinned offline wheel/sdist and exact29-module archive allowlist passed."
     },
     "identity_composition_review": {
       "status": "accepted_pending_C2_integration",
