@@ -58,6 +58,8 @@ MODULES = frozenset(
         "worker_contracts.py",
         "worker_execution.py",
         "world_authority.py",
+        "world_versions.py",
+        "world_previews.py",
         "world_contracts.py",
         "world_preview_contracts.py",
         "worlds.py",

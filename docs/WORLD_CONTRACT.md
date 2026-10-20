@@ -292,3 +292,102 @@ Canonical encoding preserves signed zero and the existing ASCII escaping.
 This checkpoint does not yet implement world/version or preview persistence
 proposals, disclosure, run selection or their recovery paths. No HTTP, database,
 browser serializer or production readiness is claimed.
+
+## Runtime predicates and trust boundary
+
+The current source adds `world_versions.py` and `world_previews.py`; this
+implementation checkpoint awaits independent review and final integration.
+These are pure proposals and projections, with no HTTP routes, SQL, locks,
+session verifier, cleanup worker, streaming client or browser implementation.
+
+Every complete entrypoint checks current authority before inspecting its private
+record/lookup arguments. A hosted producer must also authorize before fetching
+or parsing those private arguments, then recheck the same current transactional
+snapshots before commit/delivery. Passing a typed snapshot does not authenticate
+its producer or establish currency.
+
+- `propose_world_version` accepts actual raw author-request bytes, applies the
+  complete `worlds:write` guard, then strictly parses the request. The **whole
+  raw author request** must fit `max_definition_bytes`; the converted CORE
+  definition separately fits that canonical byte cap. This conservative whole
+  request cap includes title/envelope overhead. Both use the configured limit,
+  without truncation. Duplicate decoded keys, nonfinite numbers, invalid UTF-8,
+  excessive nesting/node starts and invalid supported laws are rejected.
+- A fresh version returns a private `WorldVersionDecision` containing the
+  atomic commit proposal and safe result. A live exact receipt returns the
+  original safe result with `commit=None`, even after later versions exist.
+  Retry allocation IDs are ignored. Actual canonical identities preserve
+  signed zero across retained request/definition/space/view joins.
+- `read_world_version`, `read_world_head` and `read_world_page` expose only
+  safe world metadata. Pages obey current count/byte bounds and exact tenant
+  scope. Cursor resolution and bounded database query production remain hosted
+  obligations; this unit does not implement pagination storage.
+- `propose_preview_mutation` checks current browser owner authority,
+  Origin/CSRF and recent authentication before parsing or private recovery.
+  New issue/renew additionally requires the current eligible human recipient.
+  Renew cannot change version, recipient generation/incarnation or issuer;
+  expired/revoked grants require a new grant ID. Revoke needs no eligible
+  recipient snapshot and may happen after grant expiry.
+- A still-retained, unexpired preview receipt with exact current/latest closure
+  can replay original **metadata** to the current authorized owner after the
+  recipient left or the grant expired/revoked. This does not reissue, extend,
+  reactivate or disclose a definition. The old recipient snapshot is historical
+  provenance on this path, not current issuance authority.
+- `read_preview_grant` and `read_preview_page` are owner-management reads
+  without freshness. `disclose_world_definition` separately checks the actual
+  current recipient, exact immutable version, grant generation/incarnation,
+  expiry, permanent revocation and current allowed reader roles. Neither
+  creator/owner status nor run completion substitutes for that grant. Only
+  customer-authored definitions qualify.
+- Policy hashes retained on grants/receipts are provenance. Current allowed-role
+  checks apply on every disclosure; a still-live unchanged-ancestry grant may
+  work again after a temporary role-policy denial is removed. The current TTL
+  ceiling governs new issue/renew only; it does not rewrite an old expiry.
+- `select_world_for_run` composes unchanged current C2 `runs:create` authority
+  for browser humans **or workspace services**. It binds actual immutable
+  definition/space, catalog eligibility, original creation request/digest and
+  current original ownership. Budget must equal the authored version's budget.
+  Existing later creation-result status/revision is allowed while its canonical
+  space remains exact. This is new-run admission only; catalog withdrawal does
+  not add a new check to already admitted worker/model replay.
+
+The private decisions retain the current authority and policy hashes as
+transaction comparison values, not signatures or authorization tokens. Producers
+must compare actual current session/principal generations, membership
+incarnation/revision, workspace owner/quarantine state and policy under the same
+transaction. Fresh grant writes also recheck recipient state and exact prior
+grant revision. Version writes CAS the exact head and enforce globally unique
+opaque version IDs plus unique per-world version numbers. Allocation IDs and
+idempotency namespace IDs are never recycled. A conflict requires scoped
+readback and closure validation, not a second allocation.
+
+Version recovery binds the retained target, current head and current immutable
+commit, including adjacent parent identity and monotonic version/time history.
+Grant recovery binds the exact current grant/latest commit and historical
+receipt, with immutable target/recipient/issuer and monotonic revision/time/expiry.
+These bounded witnesses rely on authoritative immutable records previously
+produced by validated atomic transitions; they do not independently reconstruct
+every intervening historical transition or detect coordinated corruption of all
+trusted database projections. Full receipt plus expired-key witness, missing
+required current closure or contradictory projections fail closed.
+
+An exact expired-key witness returns the deliberate expiry failure after current
+authority/scope/body/time checks. If all resource witnesses are absent after
+later retention/deletion, it still prevents key reuse; that failure-only path
+does not authorize deletion or report resource success. Supplied partial or
+contradictory resource witnesses fail recovery. Current resource transition
+provenance remains required independently of response-receipt retention, as
+described above. No cleanup producer is implemented here.
+
+Internal `receipt_expired` and `recovery_required` map to existing public
+`incompatible_state`; `policy_unavailable` maps to
+`temporarily_unavailable` (503), `reauthentication_required` to
+`unauthenticated` (401), and `ambiguous_credentials` to
+`invalid_request` (400). Adapters use fixed safe messages, request correlation
+IDs and no-store headers; exception details must not contain hidden definitions.
+
+The Python CORE/browser codec and canonical checks are not evidence of a
+lossless JavaScript serializer. Browser consumers must preserve string uint64
+seeds and signed zero. Ordinary `JSON.stringify` can lose signed zero and is
+not the frozen Python/SCI canonical byte profile. WEB1/SP-01.e consumer
+conformance remains separate; no new hash dialect is introduced.
