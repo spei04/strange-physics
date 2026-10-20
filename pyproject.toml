@@ -16,6 +16,7 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = ["pytest>=8,<10", "ruff>=0.11,<1", "mypy>=1.15,<2"]
+ci = ["bandit==1.9.4", "hatchling==1.32.4", "jsonschema==4.26.0", "pip-audit==2.10.1"]
 
 [tool.uv]
 link-mode = "copy"
@@ -37,3 +38,6 @@ testpaths = ["tests"]
 pythonpath = ["."]
 addopts = "-q"
 tmp_path_retention_policy = "failed"
+
+[tool.hatch.build.targets.sdist]
+include = ["/src/strange_physics", "/pyproject.toml", "/README.md", "/LICENSE"]
