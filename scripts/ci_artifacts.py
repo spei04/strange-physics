@@ -130,7 +130,7 @@ def validate_archives(dist: Path, source_root: Path) -> tuple[Path, Path]:
             f"missing={sorted(expected_wheel - set(wheel_files))[:10]!r}"
         )
     source_files = read_archive(sdist)
-    fixed_source = {"README.md", "LICENSE", "pyproject.toml"}
+    fixed_source = {"README.md", "LICENSE", "pyproject.toml", ".gitignore"}
     expected_source = (
         {f"{stem}/src/strange_physics/{n}" for n in MODULES}
         | {f"{stem}/{n}" for n in fixed_source}

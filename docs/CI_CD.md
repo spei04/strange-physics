@@ -82,6 +82,9 @@ compares package bytes with the checkout, checks metadata identity and rejects
 extra archive files, links, duplicate/unsafe paths and oversized members.
 Build commands use uv's supported `--no-create-gitignore` option so its default
 output-directory marker does not relax that allowlist.
+The tracked public `.gitignore` is included in the source distribution as one
+explicit metadata file and must match the reviewed checkout byte for byte; no
+other dotfile is allowed. The output directory still rejects a `.gitignore`.
 The source distribution deliberately excludes tests, docs, runs, private
 evidence and environment files. New package modules require an explicit
 allowlist review.

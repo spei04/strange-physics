@@ -40,4 +40,4 @@ addopts = "-q"
 tmp_path_retention_policy = "failed"
 
 [tool.hatch.build.targets.sdist]
-include = ["/src/strange_physics", "/pyproject.toml", "/README.md", "/LICENSE"]
+include = ["/src/strange_physics", "/pyproject.toml", "/README.md", "/LICENSE", "/.gitignore"]

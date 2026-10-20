@@ -55,6 +55,7 @@ def make_source(root: Path) -> None:
     )
     (root / "README.md").write_text("Synthetic fixture, not a release.\n")
     (root / "LICENSE").write_text("Synthetic license fixture.\n")
+    (root / ".gitignore").write_text(".venv/\n.env\n")
     (root / "uv.lock").write_text("Synthetic lock fixture.\n")
 
 
@@ -83,7 +84,7 @@ def archive_contents(root: Path) -> tuple[dict[str, bytes], dict[str, bytes]]:
     sdist.update(
         {
             f"{STEM}/{name}": (root / name).read_bytes()
-            for name in ["README.md", "LICENSE", "pyproject.toml"]
+            for name in ["README.md", "LICENSE", "pyproject.toml", ".gitignore"]
         }
     )
     sdist[f"{STEM}/PKG-INFO"] = metadata
@@ -220,3 +221,13 @@ def test_archive_allowlist_diagnostics_report_names_only(tmp_path: Path, kind: s
     assert repr(missing) in str(error.value)
     assert repr(unexpected) in str(error.value)
     assert "do not print this content" not in str(error.value)
+
+
+def test_source_archive_gitignore_must_match_reviewed_bytes(tmp_path: Path) -> None:
+    root = tmp_path / "source"
+    make_source(root)
+    wheel, sdist = archive_contents(root)
+    sdist[f"{STEM}/.gitignore"] = b"different repository metadata"
+    write_archives(tmp_path / "dist", wheel, sdist)
+    with pytest.raises(ValueError, match="Source archive differs from reviewed source"):
+        validate_archives(tmp_path / "dist", root)
