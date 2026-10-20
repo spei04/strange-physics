@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | SP-01.c/#89 EXEC1 package/worker API contracts | ART1 integrated; reuse identity after explicit reviewed handoff, publish API checkpoint before runtime predicates |
+| Platform | SP-01.c/#89 EXEC1 runtime admission, replay, broker and termination predicates | API57f2f303 accepted; exclusive identity writer, immutable runtime review next |
 | Research | EXEC1 provenance/SCI review; COMP1 and SP-01.d design ready | Read-only reviewer; COMP1 source waits EXEC1 and SP-01.d source/freeze waits full SP-01.c |
-| Quality | EXEC1 API/security review; handoff verification | ART1 complete; API review precedes runtime, and SP-01.e tooling remains prerequisite-gated |
-| Project lead | Coordinate EXEC1 handoff, review and integration | Primary progress owner; Platform receives identity for source authoring after this reviewed handoff |
+| Quality | EXEC1 runtime security/lifecycle review and progress verification | API accepted; SP-01.e tooling preparation remains prerequisite-gated |
+| Project lead | Coordinate EXEC1 runtime review and integration | Exclusive primary progress owner; Platform owns identity source authoring |
 
 ## Assignments
 
@@ -286,3 +286,5 @@ Quality is assigned authorization, lifecycle, recovery and public-schema review;
 Platform is reassigned to bounded EXEC1 runtime predicates in the same identity checkout, with current authority/approval/isolation before fresh, replay, broker and dispatch outcomes; exact older-launch termination remains independent of lost work eligibility. Original ceilings/deadline persist across attempts; cumulative resource settlement remains a named later producer obligation. Research and Quality independently review the next immutable runtime source; lead owns primary progress and integration. COMP1/SP-01.d/SP-01.e preparation stays preserved. No additional checkout, dependency copy, cloud provisioning or provider calls.
 
 Private lead API index SHA25629302b78c4e8ebe153f32822b543c17b93192a6b5e6413f4454adc38cec8582e and Research indexb1d0ac57d1706e707462238f4c061168bf0d8b4933f9b9f563b28c77fc6555f4 are outside checkouts, owner-only, review2026-11-19. Initial diagnostics remain linked to their original source. Full repository tests at3777b19 are earlier evidence, not a full-suite result for the repaired API or future runtime. Exact runtime checks and integration are still required; same-VM evidence is not an off-device backup.
+
+Quality API evidence is sealed at index SHA25642768dde06d64f91bbd2f754df32f5535ad74f338b719555ccc2c460006bf9ff for57f2f303, owner-only outside checkouts. Its observed-result record is labeled as such and preserves the exact executed reviewer script; it is not represented as a raw test log.

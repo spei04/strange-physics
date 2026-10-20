@@ -11269,7 +11269,8 @@
           "Required scoped launch lookup and named atomic uniqueness/conflict reread.",
           "Aggregate configuration key/string bound before canonical serialization."
         ],
-        "scope": "API shapes and intrinsic consistency only; runtime authority, actual producers, final integration and full SP-01.c remain pending."
+        "scope": "API shapes and intrinsic consistency only; runtime authority, actual producers, final integration and full SP-01.c remain pending.",
+        "quality_index_sha256": "42768dde06d64f91bbd2f754df32f5535ad74f338b719555ccc2c460006bf9ff"
       }
     },
     "spring_workflow_evidence": {
