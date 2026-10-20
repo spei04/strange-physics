@@ -11355,7 +11355,7 @@
           "Engineer Quality",
           "Project lead"
         ],
-        "status": "api_authoring",
+        "status": "runtime_authoring",
         "api_checkpoint_before_runtime": true,
         "required_worker_boundary": "Mandatory authorize_worker_broker submit_model before private parse/lookup/replay, with actual current environment and launch closure; separate native analytic approval.",
         "immutable_binding": "Actual original admission/request/world-version and scope/space joined to a trusted retained engine binding; actual SCI ObservationBundle identity, not an asserted prefix digest.",
