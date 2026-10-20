@@ -413,11 +413,16 @@
     },
     "PrincipalStatus": {
       "additionalProperties": false,
-      "description": "Current verified app-principal state, bound to its stable identity.",
+      "description": "Current verified human app-principal state, bound to its stable identity.",
       "properties": {
         "active": {
           "title": "Active",
           "type": "boolean"
+        },
+        "kind": {
+          "const": "human",
+          "title": "Kind",
+          "type": "string"
         },
         "principal_id": {
           "not": {
@@ -429,6 +434,7 @@
         }
       },
       "required": [
+        "kind",
         "principal_id",
         "active"
       ],
@@ -655,7 +661,7 @@
     },
     "WorkspaceAuthority": {
       "additionalProperties": false,
-      "description": "Complete current owner set from the same locked workspace revision.\n\nSQL producers establish completeness and currency under the shared lock.\nactive_owner_ids counts active owner membership rows; disabled_owner_ids\nidentifies rows whose principals are currently disabled. During security fan-out,\nstored workspace state can lag; composed authorization checks both facts.",
+      "description": "Complete current owner set from the same locked workspace revision.\n\nSQL producers establish completeness and currency under the shared lock.\nactive_owner_ids counts active human owner membership rows; disabled_owner_ids\nidentifies rows whose principals are currently disabled. During security fan-out,\nstored workspace state can lag; composed authorization checks both facts.",
       "properties": {
         "active_owner_ids": {
           "items": {

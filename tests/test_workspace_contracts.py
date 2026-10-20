@@ -328,7 +328,7 @@ def change_args(**changes: Any) -> dict[str, Any]:
         request=value(MemberRoleRequest),
         workspace_id="ws-1",
         target_principal_id="principal-2",
-        target_principal=PrincipalStatus(principal_id="principal-2", active=True),
+        target_principal=PrincipalStatus(kind="human", principal_id="principal-2", active=True),
         now=1020,
     )
     return args | changes
@@ -367,7 +367,9 @@ def test_elective_last_owner_change_denied(
                 after=authority((), state="quarantined", revision=3),
                 target=owner(),
                 target_principal_id="principal-1",
-                target_principal=PrincipalStatus(principal_id="principal-1", active=True),
+                target_principal=PrincipalStatus(
+                    kind="human", principal_id="principal-1", active=True
+                ),
                 request=mutation_request,
                 updated=owner(role="viewer", revision=5)
                 if isinstance(mutation_request, MemberRoleRequest)
@@ -589,7 +591,9 @@ def test_last_enabled_owner_cannot_leave_disabled_owner_as_replacement(
                 after=after,
                 target=owner(),
                 target_principal_id="principal-1",
-                target_principal=PrincipalStatus(principal_id="principal-1", active=True),
+                target_principal=PrincipalStatus(
+                    kind="human", principal_id="principal-1", active=True
+                ),
                 request=mutation_request,
                 updated=owner(role="viewer", revision=5)
                 if isinstance(mutation_request, MemberRoleRequest)
@@ -612,7 +616,9 @@ def test_disabled_researcher_promotion_and_misbound_principal_evidence_fail() ->
             **(
                 args
                 | {
-                    "target_principal": PrincipalStatus(principal_id="principal-2", active=False),
+                    "target_principal": PrincipalStatus(
+                        kind="human", principal_id="principal-2", active=False
+                    ),
                 }
             )
         )
@@ -621,7 +627,9 @@ def test_disabled_researcher_promotion_and_misbound_principal_evidence_fail() ->
             **(
                 args
                 | {
-                    "target_principal": PrincipalStatus(principal_id="other", active=True),
+                    "target_principal": PrincipalStatus(
+                        kind="human", principal_id="other", active=True
+                    ),
                 }
             )
         )

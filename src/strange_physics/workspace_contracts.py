@@ -128,7 +128,7 @@ class WorkspaceAuthority(Message):
     """Complete current owner set from the same locked workspace revision.
 
     SQL producers establish completeness and currency under the shared lock.
-    active_owner_ids counts active owner membership rows; disabled_owner_ids
+    active_owner_ids counts active human owner membership rows; disabled_owner_ids
     identifies rows whose principals are currently disabled. During security fan-out,
     stored workspace state can lag; composed authorization checks both facts.
     """
@@ -151,8 +151,9 @@ class WorkspaceAuthority(Message):
 
 
 class PrincipalStatus(Message):
-    """Current verified app-principal state, bound to its stable identity."""
+    """Current verified human app-principal state, bound to its stable identity."""
 
+    kind: Literal["human"]
     principal_id: Identifier
     active: bool
 

@@ -91,7 +91,13 @@ active_owner_ids is the complete sorted unique set of *active owner membership
 rows*. disabled_owner_ids is the complete sorted unique subset whose app principals
 are currently disabled. Enabled owners are their difference. Database producers
 must join current principal state; counting membership rows alone is insufficient.
-PrincipalStatus binds a target's current active status to its stable principal ID.
+PrincipalStatus binds a target's current active status to its stable principal ID
+and explicitly requires kind=human. B1 management and owner sets use the separate
+human membership relation only. Service identities and run grants may share a
+control Membership projection, but are never candidates for administrative
+ownership or role-change targets. SQL producers must enforce this distinction;
+parsing a kind=human claim is not identity verification. ID-C must preserve the
+separation rather than count service/run grants as usable owners.
 
 This distinction supports a security-event interval where a principal is already
 disabled but its membership row and persisted workspace state have not yet been
