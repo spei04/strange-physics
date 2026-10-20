@@ -277,8 +277,18 @@ class SpringEvaluationResult(Message):
             raise ValueError("Failed reference generation cannot claim computed metrics")
         if self.status == "arithmetic_failure" and self.reference is None:
             raise ValueError("Metric arithmetic follows complete reference generation")
-        if self.status == "unscorable" and self.reference is not None:
+        if self.status == "unscorable" and (
+            self.reference is not None
+            or d.reference_completed_probe_count
+            or d.reference_failed_probe_index is not None
+        ):
             raise ValueError("Unscorable predictions do not generate reference labels")
+        if self.reason == "unsupported_world" and (
+            d.reference_completed_probe_count or d.reference_failed_probe_index is not None
+        ):
+            raise ValueError("Unsupported truth must fail before reference generation")
+        if self.reason == "reference_failure" and d.reference_failed_probe_index is None:
+            raise ValueError("Reference failure must retain its failed probe index")
         if self.status == "protocol_failure" and (
             d.prediction_not_assessed_count != d.requested_probe_count
             or d.computed_metric_count

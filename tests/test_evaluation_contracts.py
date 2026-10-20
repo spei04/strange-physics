@@ -188,3 +188,53 @@ def test_semantic_bad_protocol_can_reach_the_typed_failure_boundary() -> None:
     data["probes"][0]["request_sha256"] = "f" * 64
     protocol = SpringEvaluationProtocol.model_validate_json(json.dumps(data))
     assert protocol.probes[0].request_sha256 != message_sha256(protocol.probes[0].request)
+
+
+@pytest.mark.parametrize(
+    "case",
+    [
+        "unscorable_completed",
+        "unscorable_failed_index",
+        "unsupported_world_completed",
+        "unsupported_world_failed_index",
+        "reference_failure_missing_index",
+    ],
+)
+def test_failure_stages_cannot_claim_impossible_reference_progress(case: str) -> None:
+    from strange_physics.research_contracts import EvaluationReport
+
+    data = copy.deepcopy(FIXTURES["valid"]["SpringEvaluationResult"])
+    data.update(reference=None, reference_sha256=None)
+    data["probes"][0]["position_mse"] = None
+    data["diagnostics"].update(
+        computed_metric_count=0,
+        metric_not_assessed_count=1,
+        reference_completed_probe_count=0,
+        reference_failed_probe_index=None,
+    )
+    if case.startswith("unscorable"):
+        data.update(status="unscorable", reason="prediction_failure")
+        data["probes"][0]["prediction_status"] = "missing"
+        data["diagnostics"].update(valid_prediction_count=0, failed_prediction_count=1)
+        data["report"].update(
+            status="unscorable",
+            valid_prediction_count=0,
+            failed_prediction_count=1,
+            position_mse=None,
+            normalized_position_mse=None,
+        )
+        data["report_sha256"] = message_sha256(
+            EvaluationReport.model_validate_json(json.dumps(data["report"]))
+        )
+    else:
+        data.update(
+            status="evaluator_failure", reason="unsupported_world", report=None, report_sha256=None
+        )
+    if case.endswith("completed"):
+        data["diagnostics"]["reference_completed_probe_count"] = 1
+    elif case.endswith("failed_index"):
+        data["diagnostics"]["reference_failed_probe_index"] = 0
+    else:
+        data["reason"] = "reference_failure"
+    with pytest.raises(ValidationError):
+        SpringEvaluationResult.model_validate_json(json.dumps(data))

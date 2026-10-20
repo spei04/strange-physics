@@ -59,7 +59,7 @@ These choices are fixed before measurements:
   denominators/intermediates stay below 1e5. There are fewer than 1e4 Decimal
   operations per frame; a conservative 1e6 amplification allowance on local
   absolute rounding <=1e-75 gives a 1e-64 coordinate rounding allowance.
-  Input parameter rounding sensitivity is covered by this conservative allowance.
+  Downstream recurrence-error magnifications sum to at most cosh(sqrt(32))<144;\n  final displacement weights total at most11.5, giving less than1,656 before\n  arithmetic/input-sensitivity allowances. This grounds the conservative1e6\n  allowance rather than estimating it from observed errors.
 - Final conversion to binary64 adds at most half an ulp. The position bound
   abs(anchor)+abs(x0-anchor)+abs(v0+J/m)*t <=12 gives a worst absolute conversion
   allowance of 2^-50. This float conversion dominates the two Decimal bounds.
@@ -122,7 +122,7 @@ a response, explicit failed marker or invalid marker; an omitted entry means
 missing. SpringPredictionSubmissions is the retained collection whose entries
 tuple is passed to the planned callable. It has a structural ceiling of48
 entries, allowing bounded duplicate/foreign associations to reach explicit
-protocol failure; valid evaluation accepts no more than24 submissions.
+protocol failure; valid evaluation accepts no more than24 submissions. The callable\nvalidates this48-entry structural boundary before hashing: larger tuples raise\ninput ValidationError, while25–48 entries yield typed submission_limit. Nothing\nis truncated.
 
 SpringEvaluationResult is private: its complete SpringReferenceArtifact and
 source-world hash must not be exported with public reports. ProbeAssessment
