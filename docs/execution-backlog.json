@@ -10827,7 +10827,7 @@
       "status": "complete",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "Platform assigned EXEC1 API contracts after ART1 accepted integration. Research reviews provenance and retains COMP1/SP-01.d plans; Quality reviews security/interfaces and retains SP-01.e preparation.",
+      "next_authoring_task": "Bounded I1 complete. Research authors WEB1 runtime after accepted API; native comparison proposal remains behind its separate scope and RA_EXEC decision.",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10922,7 +10922,7 @@
     },
     "checkout_ownership": {
       "scientific": "Project lead owns primary progress/integration; reviewers use immutable source.",
-      "identity": "Research exclusively authors WEB1 API/fixtures on feat/stream-replay-models at accepted handoff69c027c. Platform/Quality review immutable source; API acceptance precedes runtime predicates. Existing independent environment and checkout are reused.",
+      "identity": "Research exclusively authors WEB1 runtime on feat/stream-replay-models from accepted c066900. Platform/Quality review immutable checkpoints; lead owns primary integration. Existing independent checkout/environment reused.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11524,7 +11524,7 @@
     },
     "web_contract_preparation": {
       "owner": "Engineer Research",
-      "status": "web1_api_review_repairs",
+      "status": "web1_runtime_authoring",
       "task": "SP-01.d",
       "depends_on": [
         "SP-01.b",
@@ -11547,7 +11547,7 @@
         },
         {
           "id": "WEB1",
-          "status": "api_review_repairs",
+          "status": "runtime_authoring",
           "depends_on": [
             "WORLD1"
           ],
@@ -11558,7 +11558,10 @@
             "Quality"
           ],
           "starting_commit": "69c027cdfa85468ddab79ab7dc533015c6aac1e0",
-          "started_at": "2026-10-20T08:15:54.588377+00:00"
+          "started_at": "2026-10-20T08:15:54.588377+00:00",
+          "api_source": "c066900b875c4393f74d6e34b7b9fec09e15a83f",
+          "api_tree": "b5d47d4766ee3454d2037d5823a3e668a9e27380",
+          "runtime_assigned_at": "2026-10-20T08:49:09.121885+00:00"
         }
       ],
       "starting_commit": "c74975b730cb020b23e338ff466a52d9282c7177",
@@ -11758,33 +11761,79 @@
       ],
       "web1_starting_commit": "69c027cdfa85468ddab79ab7dc533015c6aac1e0",
       "web1_started_at": "2026-10-20T08:15:54.588377+00:00",
-      "web1_api_review": {
-        "source": "3b01cfca44d61127927ca396ae54a04f06a0026d",
-        "tree": "afc27fc746785d8f9a4eacbc0db512bca4b0d43b",
-        "status": "replacement_required_before_runtime",
-        "full_tests": 2928,
-        "focused": 371,
-        "web_cases": 145,
-        "schemas": 1373,
+      "web1_api_review_history": [
+        {
+          "source": "3b01cfca44d61127927ca396ae54a04f06a0026d",
+          "tree": "afc27fc746785d8f9a4eacbc0db512bca4b0d43b",
+          "status": "replacement_required_before_runtime",
+          "full_tests": 2928,
+          "focused": 371,
+          "web_cases": 145,
+          "schemas": 1373,
+          "ruff_files": 130,
+          "mypy_files": 89,
+          "author_index_sha256": "5e38a762435dc86e0d43aa2f72df2df968fd023c00f023fed0c373811226a61d",
+          "lead_wire_cases": 102,
+          "lead_index_sha256": "f0a43055900c9e61e4ece8265ed135c31b50ab4ba9ffafb3e33233e09a40ebe6",
+          "findings": [
+            "Join the immutable root to an available predecessor page zero and reject known page/event identity reuse.",
+            "Constrain supplied prefix/suffix page/chunk counts and feasible remaining nonempty chunk bytes.",
+            "Match the recovery JSON Schema to its runtime code/nonretryable/no-operation constraints.",
+            "Reject control characters in Retry-After header schemas."
+          ],
+          "assignments": {
+            "Research": "Bounded source/schema/fixture repairs; runtime waits replacement acceptance.",
+            "Platform": "Independent history, artifact and stream provenance review.",
+            "Quality": "Independent authority, recovery and schema review; native proposal review separately.",
+            "Lead": "Independent wire/counter review, primary progress and integration."
+          },
+          "boundary": "API/source evidence only. Existing full-test results remain tied to their exact checkpoint; replacement requires review. No hosted producer, SP-01.d completion or native research gate acceptance.",
+          "review_date": "2026-11-19"
+        }
+      ],
+      "web1_api_evidence": {
+        "source": "c066900b875c4393f74d6e34b7b9fec09e15a83f",
+        "tree": "b5d47d4766ee3454d2037d5823a3e668a9e27380",
+        "status": "accepted_for_runtime_authoring",
+        "full_tests": 2962,
+        "focused": 405,
+        "web_cases": 179,
+        "schemas": 1431,
         "ruff_files": 130,
         "mypy_files": 89,
-        "author_index_sha256": "5e38a762435dc86e0d43aa2f72df2df968fd023c00f023fed0c373811226a61d",
-        "lead_wire_cases": 102,
-        "lead_index_sha256": "f0a43055900c9e61e4ece8265ed135c31b50ab4ba9ffafb3e33233e09a40ebe6",
-        "findings": [
-          "Join the immutable root to an available predecessor page zero and reject known page/event identity reuse.",
-          "Constrain supplied prefix/suffix page/chunk counts and feasible remaining nonempty chunk bytes.",
-          "Match the recovery JSON Schema to its runtime code/nonretryable/no-operation constraints.",
-          "Reject control characters in Retry-After header schemas."
-        ],
-        "assignments": {
-          "Research": "Bounded source/schema/fixture repairs; runtime waits replacement acceptance.",
-          "Platform": "Independent history, artifact and stream provenance review.",
-          "Quality": "Independent authority, recovery and schema review; native proposal review separately.",
-          "Lead": "Independent wire/counter review, primary progress and integration."
+        "author_index_sha256": "e4a4a09b84d2854f0c983fab2093d131c9368b97123b7335668160eb93e9583d",
+        "platform": {
+          "independent_cases": 109,
+          "mutants": 8,
+          "index_sha256": "b04df750057d7b52d64e998840b56ae2621c1e80befa225f2b54a9bbc051a9e7"
         },
-        "boundary": "API/source evidence only. Existing full-test results remain tied to their exact checkpoint; replacement requires review. No hosted producer, SP-01.d completion or native research gate acceptance.",
+        "quality": {
+          "focused": 405,
+          "public_boundary_cases": 70,
+          "partial_lookup_cases": 16,
+          "route_cases": 5,
+          "recovery_cases": 3,
+          "header_cases": 1104,
+          "mutants": 9,
+          "index_sha256": "860c00ab89349e72af82fb890bb6ab4ed757e88968428303f93581ac127f8bb6"
+        },
+        "lead": {
+          "wire_cases": 102,
+          "index_sha256": "c707adb8349d3cede3098bb84ef6f3f4ad49c63658cb1ca4a1489631a4d0c589"
+        },
+        "boundary": "Typed API, intrinsic supplied joins and synthetic fixtures only. Runtime, hosted producers and complete SP-01.d remain pending. Suites overlap and are not additive unique totals.",
         "review_date": "2026-11-19"
+      },
+      "web1_runtime_assignment": {
+        "assigned_at": "2026-10-20T08:49:09.121885+00:00",
+        "owner": "Engineer Research",
+        "checkout": "identity",
+        "reviewers": [
+          "Platform: state/provenance/budget composition",
+          "Quality: current authority/recovery/raw-byte safety"
+        ],
+        "lead": "Primary integration/progress",
+        "scope": "Current viewer guard, cursor/snapshot/event boundaries, actual-byte bodies and incremental bounded complete history. No network/hosted producer or client UI."
       }
     },
     "contract_tooling_preparation": {
@@ -12022,7 +12071,17 @@
             "Effort12\u201319 new,19\u201329 unfinished,23.75\u201336.25 with25% reserve.",
             "Baseline tasks/gates/forecast and active research amendment unchanged."
           ],
-          "activation": "Dependency amendment, RA_EXEC and bounded comparison run scope still require explicit decision."
+          "activation": "Dependency amendment, RA_EXEC and bounded comparison run scope still require explicit decision.",
+          "index_sha256": "deb8971a674940fe4a8879c8e78b2c52ed38781084334f12e1561f9430f2ebac"
+        },
+        "publication": {
+          "pull_request": 96,
+          "merge_commit": "ee4831a23ded97de514075a88923c69b04316170",
+          "reviewed_head": "8ff2e8165b60746baaac2bdf1480c4e49fc6641d",
+          "tree": "31925740d9bfa8cc642a4d41fa8ae2861a26ebd0",
+          "pr_ci": 39395368138,
+          "main_ci": 39395654760,
+          "status": "published_proposal_only"
         }
       },
       "proposal_document": "docs/research/NATIVE_COMPARISON_PROPOSAL.md"
