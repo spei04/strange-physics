@@ -118,10 +118,19 @@ retention-derived receipt_expires_at, and the appropriate policy identity.
 A WorldReceiptExpiration proposal binds that original full receipt to an exact
 WorldExpiredMutation witness at or after the original expiry. Later current
 policy cannot rewrite, shorten or recreate the original retention interval.
-The producer atomically replaces the full receipt with this minimal uniqueness
-tombstone before purging receipt bodies. The witness preserves original scope,
+The producer atomically replaces the idempotency-response lookup with this minimal
+uniqueness tombstone before purging an expiring response copy. The witness preserves original scope,
 request hash, receipt ID, allocated world ID, original policy hash and retention
 chronology. It grants no cleanup, deletion or read authority.
+
+Receipt-response expiry must not purge authoritative immutable transition
+provenance still required by WorldVersionLookup.current_commit or
+PreviewGrantLookup.latest_commit. Those witnesses remain subject to the current
+head/grant and resource/deletion obligations. If one stored row serves both
+roles, its response deadline is not permission to delete the required transition
+record. An expired-key lookup can retain a current/latest commit witness while
+its separate receipt field is absent and its expired witness is present; this
+does not restore the expired idempotency response or grant definition access.
 
 Tombstone uniqueness lasts for the retained workspace/idempotency namespace's
 lifetime under the existing deletion lifecycle (SP-37); namespace IDs are never
@@ -255,3 +264,10 @@ checkpoint; the earlier full-run identity is preserved.
 The compatibility/503 replacement passes 177 focused cases, 1,201 external
 schema checks, full Ruff and strict mypy81. The current review checkpoint still
 has no runtime authorization/persistence predicates.
+
+The exact fd6bac2 API source passed all 2,600 tests, including 177 WORLD1 cases,
+full Ruff/format checks, strict mypy81 and 1,201 external schema checks. The
+owner-readable verification index and logs remain outside the checkout, bound
+to that source/tree. This final prose clarification changes no model, schema,
+predicate, test or permission. Runtime predicates and hosted validation are
+still separate gates.
