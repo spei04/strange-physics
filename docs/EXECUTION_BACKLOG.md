@@ -576,7 +576,7 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Prerequisites and dependencies:** [SP-01.a](#sp-01-a), [SP-01.b](#sp-01-b), [SP-01.c](#sp-01-c), [SP-01.d](#sp-01-d), [SP-02.b](#sp-02-b). Required inherited approvals must actually be recorded; predicted dates confer no authority.
 - **Required contracts:** [C-HTTP](#contract-http), [C-SCI](#contract-sci), [C-WEB](#contract-web); the registered semantics, fixtures and runtime obligations apply.
 - **Acceptance criteria:** Clean install regenerates approved subsets without drift.
-- **Required automated tests:** CI structural/runtime fixtures, client compatibility and version rejection.
+- **Required automated tests:** CI structural/runtime fixtures, client compatibility and version rejection. Cross-language fixtures must cover Unicode/defaults, float formatting boundaries, signed zero, uint64 decimal strings and opaque JSON numeric identity. Raw artifact SHA verification uses original bytes; typed SCI recomputation must match the frozen profile rather than ordinary JavaScript serialization.
 - **Security and reliability:** Synthetic data only; draft routes excluded from freeze.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Quality engineer; base reference lane QE. Required review: Backend, SDK, frontend, Research, QE, Frontend, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
@@ -3426,3 +3426,5 @@ Research is assigned SP-01.d/#94 in the existing identity checkout after this re
 WORLD1 source assignment began 2026-10-20 06:23 UTC after Quality accepted handoffc74975b. Research owns the reused identity checkout; Platform/Quality review, lead integrates. The four delivery plus one reserve days, dependencies and gates are unchanged.
 
 WORLD1 API fd6bac2 is independently accepted with 2,600 tests and 1,201 external schema checks. Research is assigned runtime; Platform reviews transition/provenance and Quality current authority/recovery. The accepted types do not establish live storage, HTTP or UI, and SP-01.d remains open through WORLD1 runtime and WEB1.
+
+SP-01.d consumer preparation: one accepted synthetic maximum-count scientific record measured 1,779,612 canonical bytes and needs 28 batches at 64 KiB, supporting the existing 4 MiB raw-body reference bound without proving a global maximum or load behavior. Preserve explicit raw caps and incomplete/oversized failure semantics. Draft WORLD1 PR #95 has passing API-only CI; runtime and WEB1 acceptance still precede full freeze.

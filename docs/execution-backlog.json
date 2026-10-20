@@ -1435,7 +1435,7 @@
       ],
       "scope": "Pin contract tooling; generate Python/TS fixtures, drift checks and mock server/recorded streams.",
       "accept": "Clean install regenerates approved subsets without drift.",
-      "tests": "CI structural/runtime fixtures, client compatibility and version rejection.",
+      "tests": "CI structural/runtime fixtures, client compatibility and version rejection. Cross-language fixtures must cover Unicode/defaults, float formatting boundaries, signed zero, uint64 decimal strings and opaque JSON numeric identity. Raw artifact SHA verification uses original bytes; typed SCI recomputation must match the frozen profile rather than ordinary JavaScript serialization.",
       "risk": "Synthetic data only; draft routes excluded from freeze.",
       "out": "Mocks as proof of deployed security.",
       "milestone": "R0",
@@ -11573,16 +11573,49 @@
         "platform_index": "c98abb5457f7c2dd9007204f22955384d6919b66b42538285dd1b9d32fe6d4b0",
         "author_index": "9d17f5c9628a81e329919cec0e2d72328c643e9884fea358b51da7a27b066b69",
         "author_head": "52ba4ee90d45ce5eb185de75c1c4d6cef2b4b28f",
-        "boundary": "Accepted typed API and intrinsic joins only; current runtime predicates, live producers, WEB1 and complete SP-01.d freeze remain pending."
+        "boundary": "Accepted typed API and intrinsic joins only; current runtime predicates, live producers, WEB1 and complete SP-01.d freeze remain pending.",
+        "draft_integration": {
+          "number": 95,
+          "url": "https://github.com/spei04/strange-physics/pull/95",
+          "source": "0b31f6a43d89ebe0ac70d6e07f9e89fde905c8cd",
+          "tree": "d5d820436ac846049f40e8b100472973dbc89a0b",
+          "status": "draft_api_only",
+          "api_ci": 39384486351,
+          "api_ci_status": "all_four_applicable_jobs_passed",
+          "api_ci_index_sha256": "6d7c47bbd6ebc1e53ea50c7fdc92c478f031460c75997f587048e9d9ccfd1c59"
+        }
       },
       "runtime_assignment_utc": "2026-10-20T07:03:14Z",
-      "runtime_source_started_at": "2026-10-20T07:04:02Z"
+      "runtime_source_started_at": "2026-10-20T07:04:02Z",
+      "body_sizing_preparation": {
+        "source": "fd6bac2d76b1cf83f5935bb214d0cb13802af13d",
+        "experiment_record_bytes": 1779612,
+        "observation_bundle_bytes": 1795111,
+        "spring_fit_input_bytes": 1795288,
+        "record_sha256": "0080e57fbe8f93f6cf9b445785e6295ba7ae524d64cfbb9b3f8171fa245997af",
+        "value_nodes": 104139,
+        "keys": 6047,
+        "depth_root_zero": 6,
+        "batches_at_65536": 28,
+        "index_sha256": "85332ec6dc600ce4840a103a4f815069160c73ede1327e13fbfa2482b6825d02",
+        "boundary": "One valid synthetic maximum-count case with long finite encodings, not exhaustive bound/RSS/load/full-run proof. Raw body cap before decoding and explicit rejection remain required."
+      },
+      "javascript_identity_preparation": {
+        "source": "fd6bac2d76b1cf83f5935bb214d0cb13802af13d",
+        "node_version": "v22.23.2",
+        "raw_sha_cases": 6,
+        "typed_roundtrip_cases": 4,
+        "index_sha256": "47b788df185f4576e3feec30048962dcd80ea1390420a0c0c0d2c967e8cdfe0b",
+        "finding": "Raw-byte SHA agrees; ordinary/naively sorted JSON.stringify is not frozen SCI canonical encoding. Typed normalization repairs some numeric spelling but not lost signed zero or generic JsonValue float/integer identity. Uint64 seeds remain decimal strings.",
+        "boundary": "Read-only consumer preparation; no source/dependency or CORE/SCI dialect change, no WORLD1 blocker."
+      }
     },
     "contract_tooling_preparation": {
       "owner": "Engineer Quality",
       "status": "read_only_preparation",
       "task": "SP-01.e",
-      "scope": "VAL1 shared public contract fixtures, CLIENT1 separately locked TypeScript/Ajv contract harness, MOCK1 bounded HTTP/SSE fixtures; no install, generation or freeze before actual leaf prerequisites."
+      "scope": "VAL1 shared public contract fixtures, CLIENT1 separately locked TypeScript/Ajv contract harness, MOCK1 bounded HTTP/SSE fixtures; no install, generation or freeze before actual leaf prerequisites.",
+      "compatibility_requirements": "Cross-language fixtures must cover Unicode/defaults, float formatting boundaries, signed zero, uint64 decimal strings and opaque JSON numeric identity. Raw artifact SHA verification uses original bytes; typed SCI recomputation must match the frozen profile rather than ordinary JavaScript serialization."
     }
   },
   "research_amendment": {
