@@ -676,7 +676,7 @@ def web_json_schema() -> JsonSchemaValue:
     _, schema = models_json_schema([(model, "validation") for model in WEB_MODELS])
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
     schema["$id"] = "https://strange-physics.dev/contracts/web.schema.json"
-    schema["x-contract-status"] = "WEB1 API review; runtime and hosted producers pending"
+    schema["x-contract-status"] = "WEB1 reviewed pure contracts and predicates; hosted producers pending"
     schema["x-public-models"] = list(PUBLIC_MODELS)
     schema["x-agent-safe-models"] = list(PUBLIC_MODELS)
     schema["description"] = (

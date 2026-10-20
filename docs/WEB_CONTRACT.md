@@ -260,15 +260,16 @@ production parser or browser integration.
 Review checkpoint commands are focused pytest, Ruff/format, strict mypy and the
 external contract validator. Synthetic examples are not storage/authentication,
 scientific I1, load, recovery-drill or hosted readiness evidence. Runtime
-predicates remain held until the immutable API checkpoint is accepted by the
-lead, Platform and Quality.
+authoring followed acceptance of the immutable API checkpoint by the lead,
+Platform and Quality. Accepted pure predicates still do not supply hosted producers.
 
 ## Initial API validation evidence
 
 The initial immutable API checkpoint `3b01cfca44d61127927ca396ae54a04f06a0026d`
 passed 2,928 repository tests, including 145 WEB1 cases and an overlapping
 371-case WEB/control/session selection; Ruff/format (130 files), strict mypy
-(89 source files), 1,373 external schema checks and the configured Bandit threshold.
+(89 source files), 1,373 external schema checks and its original author Bandit selection. The exact CI
+security-command scope is distinguished below.
 This evidence belongs to that exact source. Independent review then identified
 bounded supplied-page/manifest feasibility joins and response-schema constraints;
 the replacement preserves the public fields and adds regression cases. The
@@ -384,7 +385,8 @@ Growth is checked before extending the retained index, with no eviction or
 budget/deadline reset. These limits bound this local verifier's supported
 history envelope; they are not a hosted memory/load claim.
 
-The initial material selection passes 312 WEB tests (179 API, 83 stream/replay,
+At material checkpoint `96f4b5779a0d5116b06562b440d6e5303250f11a`,
+the initial selection passed 312 WEB tests (179 API, 83 stream/replay,
 50 material), full `mypy src tests examples` over 95 files, and Ruff. The full
 mypy invocation exposed the partial checkpoint's test-module import convention:
 imports now use the same bare test-module names as repository-wide discovery,
@@ -395,3 +397,31 @@ synthetic shape check, not an exhaustive serialization maximum, simulated
 trajectory, ObservationBundle admission, or RSS/load result. Full repository,
 package and independent material review results are recorded separately after
 this checkpoint; no hosted HTTP/object-store producer is implemented here.
+
+
+### Reviewed pure-runtime composition
+
+Independent review of the material unit identified two supplied-capture joins:
+a replay body's embedded RunView must be compatible with the captured RunView,
+not merely the later current run; every consumed event that shares the captured
+root's final event ID must also match its exact sequence and canonical digest.
+The repaired preparation path enforces both, including interior chunk events.
+Valid earlier/equal captures and later current progress remain supported.
+
+Author self-review then found that a whole-page request hash did not distinguish
+two requested chunks on that page. The private replay request binding now covers
+its purpose, exact requested snapshot ID and actual canonical snapshot hash,
+canonical page-binding hash, descriptor index, and exact requested ArtifactRef.
+Swapped prepared state is rejected even when both objects independently validate.
+This is internal request-state integrity; it introduces no public hash dialect,
+invocation permission, or change to SCI canonical identity. Scientific-body
+request semantics remain unchanged.
+
+Lead, Platform and Quality accepted runtime source
+`85c0a98a3cf20e7063564e73b0625694d162ba38` after the capture and request repairs.
+The earlier `93902d3` acceptance was qualified by the subsequently discovered
+request-binding gap; it must not be presented as the final composition result.
+The WEB schema status now describes reviewed pure contracts/predicates with
+hosted producers pending. This annotation changes no field, wire dialect,
+CORE/SCI/ART/C2 interface, deployment state or authorization policy. Final exact
+source checks and their evidence identity follow separately.

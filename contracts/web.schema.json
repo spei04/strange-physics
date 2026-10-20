@@ -2076,7 +2076,7 @@
     "RunSnapshot",
     "ResyncRequired"
   ],
-  "x-contract-status": "WEB1 API review; runtime and hosted producers pending",
+  "x-contract-status": "WEB1 reviewed pure contracts and predicates; hosted producers pending",
   "x-public-models": [
     "StreamNamespace",
     "ExperimentRecordRef",
