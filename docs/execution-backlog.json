@@ -11917,7 +11917,20 @@
           "Single replay body must compare every supplied event identity against captured root final identity, including interior aliases."
         ],
         "boundary": "Full material review and exact integration remain pending. Large synthetic shape is not engine output or hosted/load evidence; suites overlap.",
-        "review_date": "2026-11-19"
+        "review_date": "2026-11-19",
+        "capture_repair": {
+          "source": "93902d3c243b4a0dac5a74b50d98ed0ef5975a37",
+          "tree": "e6c082834bf5162b46785f18287413ed48988faa",
+          "status": "captured_state_fixes_accepted_request_binding_repair_pending",
+          "focused": 317,
+          "platform_extra": 23,
+          "platform_mutants": 7,
+          "platform_index_sha256": "6e1c7b2240b20a80cbf1ec329380db7c17318f307aeeaf149ea3f9d79958091f",
+          "package_index_sha256": "aa33789e5697a167eecece34a5acd4acb376513193f71bc267ac55c47d1a1fb0",
+          "qualification": "Author self-review reproduced replay private request-hash alias across two chunks on the same page. Exact purpose/snapshot/page/descriptor/object binding repair and delta review are required before acceptance."
+        },
+        "original_full_tests": 3095,
+        "original_full_index_sha256": "16fd28a2d373bb4dacf08323af9a1ce6029afdbae40af3541ec9b0ffa649db01"
       }
     },
     "contract_tooling_preparation": {
