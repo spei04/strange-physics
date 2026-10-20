@@ -183,7 +183,12 @@ affected workspace settlement is pending; an effectively ownerless interval must
 latch persisted quarantine before that fence can be released. Re-enabling a
 principal cannot erase that interval or infer workspace recovery. The future
 reviewed recovery producer must enforce this ordering across crashes and retries;
-B1 exposes no principal-reactivation API. Partial fan-out is retryable and
+B1 exposes no principal-reactivation API. Trusted PrincipalStatus,
+session and credential producers must continue projecting the principal as
+inactive/revoked while this durable fence is unsettled; an administrator
+reactivation request cannot override it. Coordinator/storage enforcement and
+crash/failure-injection evidence remain required, not demonstrated by these pure
+current-state predicates. Partial fan-out is retryable and
 observable; failed delivery is never silently declared complete.
 
 Required future evidence includes concurrent owner changes with principal disable,
