@@ -137,9 +137,10 @@ def read_snapshot(
     now: int,
 ) -> RunSnapshot:
     configured = authorize_viewer(context, policy, namespace, now=now)
-    current = _head(context, namespace, head, now)
     if requested_snapshot_id is not None:
         _token(requested_snapshot_id)
+    current = _head(context, namespace, head, now)
+    if requested_snapshot_id is not None:
         if record is None or record.snapshot.snapshot_id != requested_snapshot_id:
             raise ContractViolation("not_found", 404)
     return _snapshot(context, configured, namespace, record, current, now)
@@ -218,8 +219,10 @@ def resolve_cursor(
             raise ContractViolation("not_found", 404)
         if cursor.cursor_id != raw_last_event_id or cursor.namespace != namespace:
             raise ContractViolation("not_found", 404)
-        if cursor.issued_at > now or cursor.after_sequence > head.committed_through_sequence:
+        if cursor.issued_at > now:
             raise ContractViolation("recovery_required", 409)
+        if cursor.after_sequence > head.committed_through_sequence:
+            raise ContractViolation("incompatible_state", 409)
         after, identity = cursor.after_sequence, cursor.event
         if after == head.committed_through_sequence and identity != head.last_event:
             raise ContractViolation("recovery_required", 409)
@@ -244,7 +247,14 @@ def resolve_cursor(
             ):
                 raise ContractViolation("recovery_required", 409)
         if lookup.event is not None:
-            if _event(lookup.event, head, context, now) != identity:
+            if (
+                _event(lookup.event, head, context, now) != identity
+                or lookup.event.occurred_at > cursor.issued_at
+                or (
+                    lookup.snapshot is not None
+                    and lookup.event.occurred_at > lookup.snapshot.snapshot.captured_at
+                )
+            ):
                 raise ContractViolation("recovery_required", 409)
             occurred = lookup.event.occurred_at
         elif after >= 0 and lookup.snapshot is None and identity != head.last_event:

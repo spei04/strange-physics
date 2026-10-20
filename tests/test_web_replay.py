@@ -14,6 +14,7 @@ from strange_physics import run_credential_contracts as rc
 from strange_physics import web_contracts as w
 from strange_physics.contracts import Message
 from strange_physics.control_contracts import ContractViolation
+from strange_physics.research_contracts import message_sha256
 from strange_physics.web_access import ViewerContext, authorize_viewer
 from strange_physics.web_replay import (
     StreamPosition,
@@ -261,7 +262,8 @@ def test_cursor_supplied_evidence_contradictions(point: str) -> None:
         lookup = changed(lookup, requested_cursor="different")
     else:
         lookup = changed(lookup, cursor=None)
-    with violation("recovery_required", 409):
+    code = "incompatible_state" if point == "beyond_head" else "recovery_required"
+    with violation(code, 409):
         resolve_cursor(**(args | {"lookup": lookup}))
 
 
@@ -550,3 +552,75 @@ def test_human_get_does_not_require_csrf_or_management_freshness() -> None:
     assert isinstance(
         resolve_cursor(**(args | {"context": replace(context, authority=identity)})), StreamPosition
     )
+
+
+@pytest.mark.parametrize("issued_at,accepted", [(1198, False), (1199, True), (1200, True)])
+def test_cursor_cannot_predate_supplied_committed_event(issued_at: int, accepted: bool) -> None:
+    args = cursor_args()
+    event = changed(args["lookup"].event, occurred_at=1199)
+    identity = w.EventIdentity.from_event(event)
+    cursor = changed(
+        args["lookup"].cursor,
+        event=identity,
+        issued_at=issued_at,
+        expires_at=issued_at + 100,
+        snapshot_id=None,
+        snapshot_sha256=None,
+    )
+    args["lookup"] = changed(
+        args["lookup"], cursor=cursor, event=event, snapshot=None, head=head(last_event=identity)
+    )
+    if accepted:
+        assert isinstance(resolve_cursor(**args), StreamPosition)
+    else:
+        with violation("recovery_required", 409):
+            resolve_cursor(**args)
+
+
+@pytest.mark.parametrize("occurred_at,accepted", [(99, True), (100, True), (101, False)])
+def test_snapshot_cannot_predate_its_supplied_final_event(occurred_at: int, accepted: bool) -> None:
+    args = cursor_args()
+    event = changed(args["lookup"].event, occurred_at=occurred_at)
+    identity = w.EventIdentity.from_event(event)
+    original = args["lookup"].snapshot
+    capture = changed(
+        original.snapshot, history=changed(original.snapshot.history, last_event=identity)
+    )
+    cursor = changed(original.cursor, event=identity, snapshot_sha256=message_sha256(capture))
+    record = changed(original, snapshot=capture, cursor=cursor)
+    args["lookup"] = changed(
+        args["lookup"], cursor=cursor, event=event, snapshot=record, head=head(last_event=identity)
+    )
+    if accepted:
+        assert isinstance(resolve_cursor(**args), StreamPosition)
+    else:
+        with violation("recovery_required", 409):
+            resolve_cursor(**args)
+
+
+@pytest.mark.parametrize("token", ["", "bad\n"])
+def test_snapshot_header_validation_precedes_private_head(token: str) -> None:
+    args = cursor_args()
+    poison: Any = object()
+    with violation("invalid_request", 400):
+        read_snapshot(
+            args["context"],
+            args["policy"],
+            args["namespace"],
+            requested_snapshot_id=token,
+            record=poison,
+            head=poison,
+            now=1200,
+        )
+    context = args["context"]
+    denied = replace(context, credential=changed(context.credential, revoked=True))
+    with violation("unauthenticated", 401):
+        read_snapshot(
+            denied,
+            args["policy"],
+            args["namespace"],
+            requested_snapshot_id=token,
+            record=poison,
+            head=poison,
+            now=1200,
+        )

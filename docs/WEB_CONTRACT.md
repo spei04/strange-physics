@@ -326,3 +326,13 @@ That separate metadata bound limits locally verifiable history; it is not a
 hosted RSS/load claim. Page bytes plus raw chunk bytes have their own cumulative
 delivery budget, and raw chunk totals separately bind the manifest. No index
 entry may be silently evicted to declare a history complete.
+
+The first partial-runtime review additionally requires actual supplied event time
+to precede or equal both its cursor issuance and any supplied snapshot capture.
+Known cursors beyond the current head use the specified incompatible_state/409;
+contradictory retained witnesses use recovery_required/409 internally. Optional
+snapshot tokens are validated after current authority and before private lookup.
+The hosted producer must also preserve the at-most-30-second idle authority
+recheck obligation in IDENTITY_RUN_CONTRACT and RUN_CREDENTIAL_CONTRACT, as
+well as mandatory checks before every payload. This unit implements no idle
+loop, timer, connection manager or network producer.
