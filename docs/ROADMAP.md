@@ -50,7 +50,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 | Workspace/membership contract subset | Verified and integrated; identity parent complete | PR #67/main 1ec45aa matches reviewed b9c4754 and passed CI. Subsequent credentials/composition are integrated; hosted handlers and SQL concurrency/recovery remain later tasks |
 | Invitation contract subset | Verified and integrated; identity parent complete | PR #69/main 89e6117 matches reviewed 8267865 and all PR/main checks passed. Tenant-bound recipient evidence, issuing-grant revision and metadata-only retries remain contractual; live provider/HTTP/SQL/throttling remains later work |
 | Explicit linking contract subset | Integrated; ID-B complete | PR #79/main24c8796 and its PR/main checks passed; subsequent C1/C2 and final SP-01.b composition are now integrated |
-| Identity and credential contract freeze | SP-01.b and SP-01.c complete | C2, ART1, EXEC1 and COMP1 have reviewed exact PR/main acceptance; SP-01.d/#94 WORLD1 API authoring is in progress. Live hosted enforcement remains later work |
+| Identity and credential contract freeze | SP-01.b and SP-01.c complete | C2, ART1, EXEC1 and COMP1 have reviewed exact PR/main acceptance; SP-01.d/#94 WORLD1 runtime review and bounded history repairs are in progress. Live hosted enforcement remains later work |
 | Scientific checkpoint — I1 | Complete for bounded local spring workflow | PR #90/main d931158 accepted with matching reviewed tree and PR/main CI. Installed-wheel CLI and SDK each score24/24 fixed probes, worst RMSE3.1542e-8 and1.0098e-7 respectively; every probe is below0.001 |
 | Researcher journeys | Design reviewed; product acceptance pending | WORKSPACE_JOURNEYS.md and inventory: seven journeys, 28 scenarios, three passing consistency tests; no UI/accessibility claim |
 | Priced staging configuration | Proposed; not authorized | STAGING_PROPOSAL.md: low-traffic $450–550/month; proposed seven-day $250 envelope. Target facts, exact IaC and authorization remain open |
@@ -1100,7 +1100,7 @@ The requested artifact paths are represented by useful sections in this single f
 
 **Approval scope:** execution backlog D01–D06 and initial R0/spring scope approved on 2026-10-19. Current execution uses a lead and up to three engineer subagents; the nine-human-team schedule remains conditional. No arbitrary paid benchmark sweep, compliance claim or unlimited infrastructure spend is implied. Cloud provisioning remains tied to concrete priced configuration, verified account permissions and applicable release/approval controls.
 
-**Next executable outcome:** implement and independently review WORLD1 runtime under SP-01.d/#94, following accepted API fd6bac2. WEB1 follows as a separate reviewed PR; SP-01.e source waits complete SP-01.d. Source identities, assignments and limitations are in EXECUTION_LOG.md.
+**Next executable outcome:** repair and independently verify WORLD1 retained-history checks under SP-01.d/#94, then complete exact-source integration. WEB1 follows as a separate reviewed PR; SP-01.e source waits complete SP-01.d. Source identities, assignments and limitations are in EXECUTION_LOG.md.
 
 Research methods planning amendment: PR #86/main e239eb2c704cd315aadd6064cdb521d1a6d9bbdc matches reviewedc48517b/tree558d68ed; PR CI39365953740 and all main CI39366138629 jobs passed. The18-task extension is a reviewed plan only; RA_EXEC and paid/sizing/official gates remain pending.
 
@@ -1137,3 +1137,5 @@ WORLD1 source assignment started 2026-10-20 06:23 UTC at acceptedc74975b after e
 WORLD1 API fd6bac2 is independently accepted with 2,600 tests and 1,201 external schema checks. Research is assigned runtime; Platform reviews transition/provenance and Quality current authority/recovery. The accepted types do not establish live storage, HTTP or UI, and SP-01.d remains open through WORLD1 runtime and WEB1.
 
 WORLD1 draft PR #95/API integration 0b31f6a passed all four applicable CI39384486351 jobs. Runtime and final integration remain pending. Bounded WEB1 preparation supports the 4 MiB body cap and establishes cross-language identity fixtures as a required client check; details and limitations are in EXECUTION_LOG.md.
+
+WORLD1 runtime 8555602 passed 2,732 full tests and 1,201 schema cases; test-only abdf849 repairs explicit shared-helper imports and passes full strict typing. Independent review found three retained-predecessor consistency gaps in version/grant retry histories. Research owns bounded repairs; Platform and Quality verify the replacement, and lead holds integration. Shared authorization/parser extraction is independently accepted. WEB1 and complete SP-01.d remain pending.

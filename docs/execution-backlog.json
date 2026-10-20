@@ -1410,9 +1410,9 @@
         "research"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/94",
-      "execution_owner": "Research authors WORLD1 runtime in identity after accepted API fd6bac2; Platform and Quality independently review, lead owns primary integration.",
+      "execution_owner": "Research repairs WORLD1 retained histories in identity; Platform and Quality independently review, lead owns primary integration.",
       "execution_plan": "WORLD1 immutable world/version, safe and granted views, browser capability and exact run selection; WEB1 bounded streams/snapshots/cursors/replay/artifact retrieval. API checkpoint before predicates in each independent PR.",
-      "evidence": "WORLD1 API fd6bac2 is independently accepted with 2,600 tests and 1,201 external schema checks. Research is assigned runtime; Platform reviews transition/provenance and Quality current authority/recovery. The accepted types do not establish live storage, HTTP or UI, and SP-01.d remains open through WORLD1 runtime and WEB1."
+      "evidence": "WORLD1 runtime 8555602 passed 2,732 full tests and 1,201 schema cases; test-only abdf849 repairs explicit shared-helper imports and passes full strict typing. Independent review found three retained-predecessor consistency gaps in version/grant retry histories. Research owns bounded repairs; Platform and Quality verify the replacement, and lead holds integration. Shared authorization/parser extraction is independently accepted. WEB1 and complete SP-01.d remain pending."
     },
     {
       "id": "SP-01.e",
@@ -11524,7 +11524,7 @@
     },
     "web_contract_preparation": {
       "owner": "Engineer Research",
-      "status": "world1_runtime_authoring",
+      "status": "world1_runtime_review_repairs",
       "task": "SP-01.d",
       "depends_on": [
         "SP-01.b",
@@ -11535,7 +11535,7 @@
       "pr_units": [
         {
           "id": "WORLD1",
-          "status": "runtime_authoring",
+          "status": "runtime_review_repairs",
           "scope": "Immutable world/version, safe and granted views, browser-only capability and exact run selection.",
           "api_source": "fd6bac2d76b1cf83f5935bb214d0cb13802af13d",
           "api_tree": "f27d83fe78debc42ee8bd41485b5b7339ce99003"
@@ -11608,6 +11608,33 @@
         "index_sha256": "47b788df185f4576e3feec30048962dcd80ea1390420a0c0c0d2c967e8cdfe0b",
         "finding": "Raw-byte SHA agrees; ordinary/naively sorted JSON.stringify is not frozen SCI canonical encoding. Typed normalization repairs some numeric spelling but not lost signed zero or generic JsonValue float/integer identity. Uint64 seeds remain decimal strings.",
         "boundary": "Read-only consumer preparation; no source/dependency or CORE/SCI dialect change, no WORLD1 blocker."
+      },
+      "shared_boundary_evidence": {
+        "source": "83d304ca058a1029490700c783a04bcdcee84c48",
+        "status": "accepted",
+        "quality_focused": 240,
+        "quality_extra_authority": 29,
+        "quality_differential": 60,
+        "quality_mutants": 6,
+        "quality_index_sha256": "c5a23fa9d287db28e8bea1eca659e24056ef7debc32d5b8e604b275d59d74caa",
+        "platform_focused": 43,
+        "platform_extra": 55,
+        "platform_mutants": 7,
+        "platform_index_sha256": "f48b1590a22080cc66d9a9b9efd1e650433be70df53ccd7c2214f1e8ba804695",
+        "lead_parser_differential_cases": 29,
+        "lead_index_sha256": "3a4c7be08c7fbfaa8c982ebe3c19a285cc2d93bcc7a9dbdadc4066f78c5b5ae5"
+      },
+      "world1_runtime_evidence": {
+        "source": "855560213559054441abf91ec030ebdb929b2f12",
+        "tree": "cb99968290f03288c27f61dfcac03c569448d28a",
+        "full_tests": 2732,
+        "schemas": 1201,
+        "test_typing_repair": "abdf84981c9f8545de9445a38f3e0eb8cd3eb94e",
+        "mypy_files": 87,
+        "lead_extra_cases": 30,
+        "lead_index_sha256": "3cfd70e63ce00d64d44322f5dc8c0561b35228c244bdc13949621350bd584b1a",
+        "status": "held_for_three_retained_predecessor_repairs",
+        "boundary": "Author full suite is exact8555602; abdf849 only changes old helper test imports/call targets. No runtime acceptance or live producer proof. Earlier evidence is not final replacement evidence."
       }
     },
     "contract_tooling_preparation": {
