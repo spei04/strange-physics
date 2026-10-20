@@ -253,6 +253,22 @@ def main() -> None:
                 group == "runtime_negative",
             )
 
+    execution = json.loads((ROOT / "execution.examples.json").read_text())
+    for name, fixture in execution["valid"].items():
+        check(f"execution.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in execution[group]:
+            value = copy.deepcopy(execution["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"execution.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
+    for value in execution["normal_completion"]:
+        check("execution.schema.json#/$defs/WorkerTerminationRequest", value)
+
     for fixture in sessions["workspace_session_failures"]:
         check("control.schema.json#/$defs/Error", fixture["output"])
 
