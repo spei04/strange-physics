@@ -11,8 +11,8 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
 | Platform | ID-C/C2 run credentials and product authority | Exclusive identity writer after C1 PR/main acceptance; early interface and independent review required |
-| Research | SP-04.e/I1 SDK/CLI preparation and scorer review | Read-only preparation; SDK/CLI source waits accepted scorer |
-| Quality | Scorer integration and planning review | Authoring released at17be197; independently verified merged source464c73a |
+| Research | Research amendment review; SP-04.e SDK/CLI next | Read-only scientific/dependency review; SDK source follows scorer main acceptance and primary handoff |
+| Quality | C2 independent runtime review | Read-only review of Platform952f95c; scorer source/integration accepted |
 | Project lead | Integrate scorer; save research amendment | Exclusive primary writer; Platform owns identity; exact-head review/CI and main acceptance before handoff |
 
 ## Assignments
@@ -206,3 +206,15 @@ action is approved and complete; it grants no additional staging or release auth
 Source17be197a1499c7619718b4e5141aa34a6523e519 retains runtime82fc9145b576fcb01e58815989bc2c1ebd1087a0. The independent Decimal reference uses fixed precision/context, a proven bounded series and exact request identities; it shares no predictor or simulator math. Complete-manifest validation preserves missing, invalid and failed outputs without survivor averaging. All168 direct-model probes passed; maximum component difference2.6645352591003757e-15 and per-probe MSE4.249608827306303e-31 are finite synthetic evidence, not fitted SDK/CLI I1. Final public/private boundary and timing-bearing report bytes are documented in EVALUATION.md.
 
 Private evidence stays outside disposable checkouts at /home/serenapei/.local/state/strange-physics-evidence/evaluation/2026-10-20. Sealed index82fc9145b576-index.json SHA2561c8d43550c8b618039a6b82236f879e1d13dafd388fcd84bea44969aca991c20 identifies source, task and checks. Owner-readable only; review2026-11-19, same-VM storage is not an off-device backup. Do not mutate this record; add integration evidence separately.
+
+## Research amendment review checkpoint
+
+2026-10-20 — Lead saved research/2026-10-19-METHOD_DECISIONS.md and linked it from the roadmap, benchmark and backlog. Research challenged shared-posterior wording, mixed adapter scope, missing symbolic execution responsibility and feasibility-versus-population inference; the18-task revision addresses those findings. The first offline result is independent of provider profiles/hosted deployment. Current scorer/I1 and C2 work continues. These are proposed runtime tasks, not executed methods or approved paid experiments. Exact-commit review and CI are recorded at integration.
+
+2026-10-20 03:42 UTC — SP-06.a integrated through PR #85: reviewed3556088ebf39fdaa250e16bb4a04008f79d726e2 and main c20e3b5d1baa23f906c20b33af6da4d759920345 have identical treecad9249f89f083df26637de4dfeff0d13086b58d. PR CI39365261896 and main CI39365449219 passed all applicable jobs, including protected-main candidate. Integrated1,531 tests, Ruff/format86, strict mypy52,571 schema cases, configured Bandit gate and offline archive allowlist passed. SP-04.e awaits exclusive primary handoff after the planning amendment; Platform continues C2 and Quality reviews952f95c.
+
+Research independently accepted amendment45e4cde:18 tasks,4 extension gates and66 fixed edges, preserving the168/369/10 baseline. Review repaired model/history confounding, PR size, symbolic runtime responsibility and feasibility-versus-population sizing. The early offline checkpoint explicitly uses the supported stationary noiseless linear-spring source domain and real model identities. New runtime/paid work remains unapproved. [PR #86](https://github.com/spei04/strange-physics/pull/86) contains the reviewable plan.
+
+The optional pilot resolves RA-10/11/12 prerequisites from frozen admitted_profile_ids in both prose and JSON. Excluded profiles require reasons and recounted matrices; all potentially admitted dependencies are cycle-checked, and actual readiness requires the frozen completed closure.
+
+Final planning review found and repaired a missing classical PySR prerequisite when the ACES profile is excluded. RA-04.a is now mandatory for RA_PILOT and RA-13.a. The final graph has62 fixed and6 conditional extension edges; this change follows the earlier45e4cde review and requires final readback.

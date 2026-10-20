@@ -2056,7 +2056,7 @@
         "TL"
       ],
       "objective": "Produce unbiased, reproducible generalization and recovery measurements. This PR delivers compute independent development reports.",
-      "status": "in_progress",
+      "status": "complete",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -2065,7 +2065,7 @@
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/83",
       "execution_owner": "Engineer Quality completed authoring; Research and lead accepted source; root owns integration.",
-      "execution_plan": "Accepted17be197 with independent runtime82fc914. Integrated source464c73a preserves accepted predictor and C1 modules; exact-head PR/main checks remain. SDK/CLI I1 follows."
+      "execution_plan": "PR #85/main c20e3b5 matches reviewed3556088/treecad9249f; all required PR checks and protected-main CI39365449219 passed.1531 integrated tests; SP-04.e SDK/CLI remains next."
     },
     {
       "id": "SP-06.b",
@@ -10791,10 +10791,10 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-06.a_reviewed_pending_integration",
+      "status": "SP-04.e_ready",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "SP-04.e SDK/CLI after scorer protected-main acceptance and exclusive primary handoff",
+      "next_authoring_task": "SP-04.e SDK/CLI after primary planning-review handoff; scorer is integrated and accepted.",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -11034,7 +11034,7 @@
       "source": "17be197a1499c7619718b4e5141aa34a6523e519",
       "runtime_source": "82fc9145b576fcb01e58815989bc2c1ebd1087a0",
       "integrated_source": "464c73aed7b2cbf539549174b87e0c1a5567ea7d",
-      "status": "reviewed_pending_hosted_integration",
+      "status": "complete",
       "author": "Engineer Quality",
       "reviewers": [
         "Engineer Research",
@@ -11051,7 +11051,660 @@
       "max_per_probe_mse": 4.249608827306303e-31,
       "record": "docs/EVALUATION.md",
       "boundary": "Independent bounded Decimal reference and complete-manifest scoring only. Direct-model synthetic evidence; SDK/CLI purchased-prefix I1, official study, full penalty freeze and deployment remain unverified.",
-      "private_index_sha256": "1c8d43550c8b618039a6b82236f879e1d13dafd388fcd84bea44969aca991c20"
+      "private_index_sha256": "1c8d43550c8b618039a6b82236f879e1d13dafd388fcd84bea44969aca991c20",
+      "pull_request": 85,
+      "reviewed_head": "3556088ebf39fdaa250e16bb4a04008f79d726e2",
+      "merge": "c20e3b5d1baa23f906c20b33af6da4d759920345",
+      "tree": "cad9249f89f083df26637de4dfeff0d13086b58d",
+      "pr_ci": 39365261896,
+      "main_ci": 39365449219,
+      "integrated_full_tests": 1531,
+      "integrated_mypy_files": 52,
+      "integrated_formatted_files": 86,
+      "integrated_schema_checks": 571
     }
+  },
+  "research_amendment": {
+    "id": "RA-2026-10-19",
+    "status": "reviewed_planning_runtime_not_authorized",
+    "literature_cutoff": "2026-10-19",
+    "record": "research/2026-10-19-METHOD_DECISIONS.md",
+    "baseline_unchanged": {
+      "tasks": 168,
+      "edges": 369,
+      "gates": 10
+    },
+    "effort_days": [
+      48,
+      78
+    ],
+    "reserve_fraction": 0.25,
+    "total_with_reserve_days": [
+      60,
+      97.5
+    ],
+    "tasks": [
+      {
+        "id": "RA-01",
+        "title": "Audit source, licenses and reproduction recipes",
+        "role": "RS1",
+        "effort_days": [
+          2,
+          3
+        ],
+        "deps": [
+          "RA_EXEC"
+        ],
+        "contracts": [
+          "SOURCE"
+        ],
+        "objective": "Make each borrowed method traceable and lawful to reuse.",
+        "scope": "Pin paper versions, official code, dependency/runtime versions, license grants and artifact availability. Record the gap between an inspired adapter and faithful reproduction. Prepare one executable recipe per admitted method.",
+        "out": "Downloading restricted datasets, contacting authors, running paid providers or claiming reproduction.",
+        "accept": "Each source has a dated identity, code/license status, expected outputs and explicit go/no-go. Missing MDA solver or ambiguous licenses blocks reuse of that code.",
+        "tests": "Validate manifests, URLs/identities and required provenance fields; fixture missing-license rejection.",
+        "risk": "Do not execute external code in a privileged process; retain notices and review transitive licenses.",
+        "confidence": "medium",
+        "owner": "Research + Platform",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-02",
+        "title": "Freeze comparison manifests and cost ledger",
+        "role": "QE",
+        "effort_days": [
+          3,
+          4
+        ],
+        "deps": [
+          "RA-01",
+          "SP-04.e"
+        ],
+        "contracts": [
+          "STUDY",
+          "COST"
+        ],
+        "objective": "Make comparisons reproducible and cost-complete.",
+        "scope": "Version study cells, seeds, model and selector configurations, budget counters, termination rules and compute accounting; persist all failed/rejected proposals and selected-action identities.",
+        "out": "Changing the approved 40-slot distribution or running an official study.",
+        "accept": "A manifest prevents mixing A0/A1/B/C results, resolves all referenced hashes, and rejects unavailable budget or evaluator feedback. Pilot totals and stop rules reconcile.",
+        "tests": "Round-trip/hash tests, duplicate/missing/cross-track cases, token/retry accounting and cap exhaustion.",
+        "risk": "No provider secrets in provenance; monotonic accounting, no resume double charging or free retry.",
+        "confidence": "medium",
+        "owner": "Quality + Research",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-03",
+        "title": "Add bounded symbolic model contracts",
+        "role": "RS1",
+        "effort_days": [
+          2,
+          3
+        ],
+        "deps": [
+          "RA-01",
+          "SP-04.e",
+          "SP-04.d",
+          "SP-19.a"
+        ],
+        "contracts": [
+          "MODEL"
+        ],
+        "objective": "Represent richer hypotheses without arbitrary generated code.",
+        "scope": "Add a separately versioned typed expression DAG for approved spring/radial/velocity operators, domains, dimensionless units, parameter priors and numerical limits. Preserve frozen LinearSpringModel and SCI v1 bytes. Define the bounded consumer interface; executable solver is RA-03.b.",
+        "out": "General Python execution, arbitrary operators, latent stochastic dynamics or a silent v1 migration.",
+        "accept": "Canonical serialization/deduplication and static bounds pass; invalid shape has a typed outcome; consumer interface explicitly identifies solver/config/error artifacts.",
+        "tests": "Grammar/property tests, depth/node/parameter caps, canonical identity rules and v1 byte compatibility.",
+        "risk": "Bound depth/nodes/parameters and evaluator memory; never eval generated text.",
+        "confidence": "medium",
+        "owner": "Research + Platform",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-03.b",
+        "title": "Execute bounded symbolic models",
+        "role": "RS1",
+        "effort_days": [
+          3,
+          5
+        ],
+        "deps": [
+          "RA-03"
+        ],
+        "contracts": [
+          "MODEL"
+        ],
+        "objective": "Give every admitted hypothesis the same bounded numerical prediction runtime.",
+        "scope": "Implement validated DAG evaluation to vector fields and the recorded numerical solver; cap steps/time/memory and retain complete request/result provenance. Begin with the calibrated spring subset, extend operators only after their existing SP-03.c calibration passes.",
+        "out": "Arbitrary generated code, new solver families, full custom-agent hosting or uncalibrated law claims.",
+        "accept": "Known trajectories meet preregistered tolerance; every singularity, nonfinite value or cap violation returns a complete typed failure without partial success. Identical source/config/input reproduces metrics.",
+        "tests": "Independent analytic references, solver refinement, singularity/overflow/underflow, negative/missing IDs, timeout/output limits and interrupted execution.",
+        "risk": "No eval or dynamic imports; bounded arithmetic and isolated optional backends; evaluator labels never enter the model.",
+        "confidence": "low",
+        "owner": "Research + Platform",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-04.a",
+        "title": "Build the classical symbolic-search adapter",
+        "role": "RS2",
+        "effort_days": [
+          3,
+          5
+        ],
+        "deps": [
+          "RA-03.b",
+          "RA-02"
+        ],
+        "contracts": [
+          "MODEL",
+          "STUDY",
+          "COST"
+        ],
+        "objective": "Supply strong non-LLM structure-search controls.",
+        "scope": "Add an isolated pinned PySR adapter over purchased observations. Fix operator grammar, search budget and selection criterion before testing; retain candidate/failure records.",
+        "out": "Weak-form fitting, unrestricted Julia plugins, dependency upgrades or hidden-truth model selection.",
+        "accept": "The PySR adapter produces validated models under hard CPU/memory/time caps, with exact Python/Julia source and configuration identities.",
+        "tests": "Known-equation and misspecified dictionary fixtures, noise sensitivity, deterministic seed/config tests, subprocess timeout and malformed output.",
+        "risk": "Separate removable dependencies, no mutable cross-checkout links; untrusted optimizer output passes MODEL validation.",
+        "confidence": "low",
+        "owner": "Research + Platform",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-04.b",
+        "title": "Build the weak-form sparse adapter",
+        "role": "RS1",
+        "effort_days": [
+          3,
+          5
+        ],
+        "deps": [
+          "RA-03.b",
+          "RA-02"
+        ],
+        "contracts": [
+          "MODEL",
+          "STUDY",
+          "COST"
+        ],
+        "objective": "Test a strong noise-aware classical dictionary control.",
+        "scope": "Implement one pinned weak-form sparse-library adapter over the same purchased position/velocity observations. Record test functions, integral/noise assumptions, dictionary and regularization selection without evaluator feedback.",
+        "out": "PySR search, derivative-noise treated as state-noise, multiple weak-form backends or an unreviewed new likelihood.",
+        "accept": "Known-equation and noisy development fixtures validate the declared dictionary and weak-form error treatment; comparison with the existing integrated fitter retains all failures.",
+        "tests": "Known integrals, irregular/invalid grids, correlated integral errors, conditioning and sparse-fit failures, data-boundary and replay tests.",
+        "risk": "Validate observation shapes and integral covariance assumptions; no calibrated probability claim from sparse coefficients alone.",
+        "confidence": "low",
+        "owner": "Research + Platform",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-05",
+        "title": "Implement small-pool numerical model beliefs",
+        "role": "RS1",
+        "effort_days": [
+          4,
+          6
+        ],
+        "deps": [
+          "RA-03.b",
+          "SP-05.a",
+          "SP-06.a"
+        ],
+        "contracts": [
+          "BELIEF",
+          "MODEL"
+        ],
+        "objective": "Estimate parameter and model uncertainty with explicit assumptions.",
+        "scope": "Implement a bounded fixed-pool observation likelihood and tractable grid reference, then exactly one approximation: Laplace parameter/evidence updates. Store priors, weights, conditioning, numerical errors and likelihood evaluations. Treat BIC as a separately labeled diagnostic only; SMC is deferred until a documented failure justifies another scoped task.",
+        "out": "Adding multiple inference backends, interpreting BIC as calibrated posterior probability, latent-particle filtering or a general probabilistic programming platform.",
+        "accept": "Analytic fixtures reproduce evidence/posterior predictions; approximations are labeled and compared with the reference; misspecification and numerical collapse remain visible.",
+        "tests": "Quadrature/analytic posterior tests, prior sensitivity, conditioning, weight collapse, log-weight extremes, reproducible resume.",
+        "risk": "Validate covariance/noise domain; fail closed on nonfinite weights; preserve complete purchased-data provenance.",
+        "confidence": "low",
+        "owner": "Research + Quality",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-06",
+        "title": "Calibrate posterior predictive checks",
+        "role": "QE",
+        "effort_days": [
+          3,
+          5
+        ],
+        "deps": [
+          "RA-05",
+          "RA-02"
+        ],
+        "contracts": [
+          "BELIEF",
+          "STUDY"
+        ],
+        "objective": "Prevent overconfident model beliefs from passing as progress.",
+        "scope": "Measure predictive calibration and prequential residual behavior on tractable development worlds; separate measurement noise, parameter uncertainty and model disagreement; compare posterior approximations.",
+        "out": "Tuning thresholds on sealed test worlds or claiming universal coverage.",
+        "accept": "Predeclared coverage/error tolerances pass on held-out development replications or the arm is rejected. Persist poor-calibration results and exact thresholds before pilot selection.",
+        "tests": "Known-noise coverage tests, correlated-error and misspecified models, zero-noise limiting behavior, posterior-reset replay.",
+        "risk": "Only purchased data informs checks; evaluator labels are a one-way audit output.",
+        "confidence": "low",
+        "owner": "Quality + Research",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-07",
+        "title": "Implement and distinguish acquisition objectives",
+        "role": "RS2",
+        "effort_days": [
+          2,
+          4
+        ],
+        "deps": [
+          "RA-06",
+          "RA-02",
+          "SP-05.b"
+        ],
+        "contracts": [
+          "ACQUISITION",
+          "BELIEF",
+          "STUDY"
+        ],
+        "objective": "Isolate the effect of experiment selection.",
+        "scope": "Implement random, unweighted and posterior-weighted disagreement on a fixed action menu. Add model-EIG only after a bounded estimator has a demonstrated distinct ranking and calibrated bias/variance.",
+        "out": "Renaming monotone scalar Gaussian disagreement as an independent EIG advance or changing model pool per selector.",
+        "accept": "Scalar constant-noise equivalence test passes. Vector/non-Gaussian examples document any distinction; same posterior/menu/noise/compute policy is shared; ties use a fixed rule.",
+        "tests": "Analytic ranking/tie fixtures, categorical MI entropy-bound checks, MC error diagnostics, invalid candidate/timeout cases.",
+        "risk": "Cap likelihood/forward calls before evaluation; no silent negative-MI clipping or unmetered nested sampling.",
+        "confidence": "medium",
+        "owner": "Research + Quality",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-07.b",
+        "title": "Deliver the first offline fixed-pool comparison",
+        "role": "QE",
+        "effort_days": [
+          2,
+          3
+        ],
+        "deps": [
+          "RA-06",
+          "RA-07",
+          "SP-04.e"
+        ],
+        "contracts": [
+          "STUDY",
+          "BELIEF",
+          "ACQUISITION",
+          "COST"
+        ],
+        "objective": "Produce a useful measured research result before provider profiles or hosted deployment.",
+        "scope": "Run analytic common-prefix rankings and six frozen stationary spring development worlds, two policy seeds and three fixed-pool selectors:36 episodes,12 purchased slots including4 common calibrations,432 maximum slots. Use supported native LinearSpringModel candidates and the existing classical fitter/predictor/scorer; primary prediction is the declared MAP candidate, not an unrepresented mixture. Freeze pool, priors, likelihood, six world/noise identities, action menus and disjoint probes. Each arm uses only its own prefix. All six source worlds are stationary, one-particle, fixed-anchor, zero-cubic and zero-observation-noise, within the scorer mass/impulse/time/stiffness bounds. Freeze a separately justified positive numerical-discrepancy scale and test sensitivity before online runs; approximate model-belief weights are not calibrated observation-noise probabilities.",
+        "out": "Richer DAG scoring, new symbolic adapters, provider calls, hosted deployment, population superiority, adaptation claims, official scores or new machines.",
+        "accept": "Within8 CPU-core-hours and1GiB new artifacts on the existing machine, independent scoring and world-paired descriptive results reproduce or a cap-limited incomplete result is recorded. Aggregate policy seeds within each world. Use actual native model/request hashes; no dummy linear identity or cross-arm data. No provider/network invocation.",
+        "tests": "Analytic ranking equivalence, independent scoring, arm-history separation, absent-provider/network spy, cap/interrupt/replay and failure accounting.",
+        "risk": "Development-only12-slot budget; sealed labels cannot affect selection. No SP-18/20, RA-04.a/b or RA-09\u201312 dependency. Richer profiles separately bind actual MODEL identities to the reviewed SP-19/20 evaluator interface.",
+        "confidence": "medium",
+        "owner": "Quality + Research",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-08",
+        "title": "Implement bounded LLM structure proposals",
+        "role": "RS1",
+        "effort_days": [
+          3,
+          5
+        ],
+        "deps": [
+          "RA-03.b",
+          "RA-02",
+          "SP-18.a",
+          "SP-18.b"
+        ],
+        "contracts": [
+          "PROPOSAL",
+          "MODEL",
+          "COST"
+        ],
+        "objective": "Use the LLM for hypotheses while numerical methods fit parameters.",
+        "scope": "Parse typed structures or operator-prior suggestions from bounded purchased-data context; numerically fit/evaluate through shared engines; cap prompts, proposals, retries, deduplication and retained rejection reasons. Start with recorded fixtures.",
+        "out": "LLM-generated production Python, unbounded self-improvement, access to evaluator truth or live paid calls in this PR.",
+        "accept": "Recorded responses produce the same validated proposal pool and provenance; invalid text consumes the declared budget; numeric fitting remains separate.",
+        "tests": "Prompt/data-boundary spies, malformed/oversize responses, duplicate structures, replay/cap exhaustion and model identity tests.",
+        "risk": "Treat outputs as untrusted; provider credentials stay in existing gateway; no network from model execution.",
+        "confidence": "medium",
+        "owner": "Research + provider owner",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-09",
+        "title": "Add measured change-adaptation policies",
+        "role": "RS1",
+        "effort_days": [
+          3,
+          5
+        ],
+        "deps": [
+          "RA-06",
+          "RA-07",
+          "RA-08",
+          "SP-05.c"
+        ],
+        "contracts": [
+          "ADAPT",
+          "BELIEF",
+          "PROPOSAL"
+        ],
+        "objective": "Measure recovery when old explanations stop predicting.",
+        "scope": "Implement calibrated prequential change belief, fixed-pool reset/reweighting and gated open-pool proposal. Compare all-history, fixed-window, detector-reset and richer adaptation under the same purchased-data rules; persist pruned hypotheses and relearning costs.",
+        "out": "Gradual drift, recurrent changes or family switches in the first confirmatory study; oracle change-time input to real methods.",
+        "accept": "Stationary false alarms and failure to recover are retained. Detection uses the prediction made before observing the next outcome. Expansion cannot read change time or held-out labels.",
+        "tests": "Stationary/abrupt parameter/term fixtures, action-distribution shift, delayed/no detection, posterior collapse, resume across change.",
+        "risk": "No survivor averaging or hidden reset cost; stable slot accounting across simulation failures.",
+        "confidence": "low",
+        "owner": "Research + Quality",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-10",
+        "title": "Compose an MDA-inspired profile",
+        "role": "RS2",
+        "effort_days": [
+          2,
+          4
+        ],
+        "deps": [
+          "RA-07",
+          "RA-08",
+          "RA-09",
+          "SP-20.d"
+        ],
+        "contracts": [
+          "STUDY",
+          "BELIEF",
+          "PROPOSAL",
+          "ADAPT"
+        ],
+        "objective": "Test model-belief updates and hypothesis expansion as one declared system.",
+        "scope": "Compose existing bounded components into a named profile with weighted acquisition and predictive-check-triggered pool revision. Document every departure from the inspected MDA version.",
+        "out": "Claiming a faithful MDA reproduction without its solver/artifacts or adding latent filtering solely to match a paper.",
+        "accept": "Profile is executable from one manifest, matches information and budget controls, and reports approximation/departure tables.",
+        "tests": "Replay identity, pool expansion/pruning and fixed-pool ablations, private-label injection rejection.",
+        "risk": "Respect common isolation/output limits and count every likelihood/proposal call.",
+        "confidence": "medium",
+        "owner": "Research + Quality",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-11",
+        "title": "Compose an ACES-inspired profile",
+        "role": "RS2",
+        "effort_days": [
+          2,
+          4
+        ],
+        "deps": [
+          "RA-04.a",
+          "RA-07",
+          "RA-08",
+          "SP-20.d"
+        ],
+        "contracts": [
+          "STUDY",
+          "MODEL",
+          "PROPOSAL"
+        ],
+        "objective": "Test LLM operator priors plus classical symbolic fitting.",
+        "scope": "Use LLM operator-prior proposals, bounded PySR fits and rollout-disagreement selection. Compare against PySR-only under the same grammar/search/measurement budgets and a fixed-selector proposal ablation.",
+        "out": "Claiming that the LLM directly fits equations, copying code without license clearance or using paper validation splits as independent evaluation.",
+        "accept": "Profile records operator priors separately from fitted equations and matches the declared proposal/fitting budgets; paper-inspired status is explicit.",
+        "tests": "Operator-prior application, forbidden operator rejection, optimizer timeout, fixed-selector and no-LLM control fixtures.",
+        "risk": "Licensed implementation only; isolate Julia runtime and validate every symbolic output.",
+        "confidence": "medium",
+        "owner": "Research + Platform",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-12",
+        "title": "Compose an AutoSciLab-inspired profile",
+        "role": "RS2",
+        "effort_days": [
+          2,
+          4
+        ],
+        "deps": [
+          "RA-06",
+          "RA-07",
+          "RA-08",
+          "SP-20.d"
+        ],
+        "contracts": [
+          "STUDY",
+          "BELIEF",
+          "PROPOSAL"
+        ],
+        "objective": "Test hypothesis refinement and disambiguation separately.",
+        "scope": "Compose bounded hypothesis/search-region proposals, numerical refitting and disagreement/refinement choices; record bootstrap-confidence versus Bayesian-belief variants as different configurations.",
+        "out": "Claiming trajectory-domain or adaptation reproduction of the paper, unlicensed code reuse or post-hoc metric selection.",
+        "accept": "Replayable profile states its domain changes and confidence semantics; fixed-pool and no-refinement ablations use matched observations.",
+        "tests": "Refinement/disambiguation decision fixtures, malformed search regions, bootstrap/posterior type separation and failure propagation.",
+        "risk": "Cap all hypothesis revisions and separate evaluator access; preserve rejected searches.",
+        "confidence": "medium",
+        "owner": "Research + Quality",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-13.a",
+        "title": "Run the bounded feasibility pilot",
+        "role": "QE",
+        "effort_days": [
+          3,
+          4
+        ],
+        "deps": [
+          "RA-09",
+          "SP-07.d",
+          "SP-18.d",
+          "RA_PILOT",
+          "RA-07.b",
+          "RA-04.a"
+        ],
+        "contracts": [
+          "STUDY",
+          "COST",
+          "ADAPT"
+        ],
+        "objective": "Measure feasibility, uncertainty and real cost before a study freeze.",
+        "scope": "Run the explicit capped development matrix over admitted profiles; validate paired accounting, timing, interruption and spend. Record exclusions in a revised frozen matrix before running. This one-world-per-stratum pilot is feasibility evidence only.",
+        "out": "Population sizing inference from one world per stratum, confirmatory test-set tuning, official sweep, deployment or any cap overrun.",
+        "accept": "All planned and terminated cells are accounted for, budget totals reconcile, information boundaries pass and exact reproduction is possible. No within-stratum population variance, power or world-level precision claim is made.",
+        "tests": "Resume/retry/kill tests, deliberate missing predictions, cost reconciliation and independent report reproduction.",
+        "risk": "Stop at the first cap; preserve partial artifacts privately; no automatic purchase or larger-machine fallback.",
+        "confidence": "low",
+        "owner": "Quality + Research",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code.",
+        "conditional_deps": {
+          "manifest_field": "admitted_profile_ids",
+          "mapping": {
+            "mda_inspired": [
+              "RA-10"
+            ],
+            "aces_inspired": [
+              "RA-11"
+            ],
+            "autoscilab_inspired": [
+              "RA-12"
+            ]
+          },
+          "rule": "Before RA_PILOT approval and RA-13.a start, resolve every admitted profile to its completed prerequisites and freeze the resulting closure with matrix/counts. Excluded profiles require recorded reasons and produce no result. The proposed nine-profile matrix admits all three and therefore requires all three tasks."
+        }
+      },
+      {
+        "id": "RA-13.b",
+        "title": "Measure replicated-world precision and study size",
+        "role": "QE",
+        "effort_days": [
+          3,
+          4
+        ],
+        "deps": [
+          "RA-13.a",
+          "RA_SIZING"
+        ],
+        "contracts": [
+          "STUDY",
+          "COST",
+          "ADAPT"
+        ],
+        "objective": "Estimate world-level uncertainty before freezing a confirmatory study.",
+        "scope": "After a separate matrix/quote approval, run a preregistered pilot with multiple independent development worlds in each retained family/condition and paired policy seeds. Use measured variance, censoring and compute costs to size the official study; retain every failed cell.",
+        "out": "Unquoted runs, using policy seeds as independent worlds, tuning on sealed evaluation worlds or an automatic official sweep.",
+        "accept": "The independent-world sample and stopping rule are frozen before outcomes; interval/precision and prospective size estimates state their assumptions and uncertainty. Reviewer accepts the sizing evidence before RA-14.",
+        "tests": "World-clustered bootstrap/aggregation fixtures, censored nonrecovery, missing-cell sensitivity, spend/cap/replay checks.",
+        "risk": "Number of worlds and compute cap require an explicit quote informed by feasibility; inadequate precision is a recorded failure, not a reason for unapproved retries.",
+        "confidence": "low",
+        "owner": "Quality + Research",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      },
+      {
+        "id": "RA-14",
+        "title": "Freeze study and reforecast delivery",
+        "role": "TL",
+        "effort_days": [
+          3,
+          5
+        ],
+        "deps": [
+          "RA-13.b",
+          "SP-21.c"
+        ],
+        "contracts": [
+          "STUDY",
+          "COST"
+        ],
+        "objective": "Make a bounded evidence-backed execution decision.",
+        "scope": "Freeze admitted arms, metrics, distributions, sealed-world access, paid estimate and runtime caps; map additional work into baseline releases only after replicated-world sizing, pilot throughput and staffing review.",
+        "out": "Automatic official sweep, a SOTA/novelty claim or preserving the old GA date as if added work were free.",
+        "accept": "Independent research/security review signs the manifest and contamination audit; owner receives concrete study cost/release impact; official work still requires OFFICIAL_SWEEP.",
+        "tests": "DAG/gate/manifest consistency checks, blinded report fixture, evaluator-access and reproducibility audit.",
+        "risk": "No release or benchmark claim without actual evidence; keep source/lock/artifacts and failed outcomes.",
+        "confidence": "medium",
+        "owner": "Project lead + Quality",
+        "status": "proposed_runtime_not_authorized",
+        "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code."
+      }
+    ],
+    "gates": [
+      {
+        "id": "RA_EXEC",
+        "deps": [],
+        "status": "pending",
+        "objective": "Approve the scoped extension and staffing; no paid or release authority."
+      },
+      {
+        "id": "RA_PILOT",
+        "deps": [
+          "RA-02",
+          "RA-07.b",
+          "RA-09",
+          "SP-07.d",
+          "SP-18.d",
+          "RA-04.a"
+        ],
+        "status": "pending",
+        "objective": "Approve exact admitted feasibility matrix, provider/compute quote and stop limits; revise dependencies/counts explicitly if excluding profiles.",
+        "conditional_deps": {
+          "manifest_field": "admitted_profile_ids",
+          "mapping": {
+            "mda_inspired": [
+              "RA-10"
+            ],
+            "aces_inspired": [
+              "RA-11"
+            ],
+            "autoscilab_inspired": [
+              "RA-12"
+            ]
+          },
+          "rule": "Before RA_PILOT approval and RA-13.a start, resolve every admitted profile to its completed prerequisites and freeze the resulting closure with matrix/counts. Excluded profiles require recorded reasons and produce no result. The proposed nine-profile matrix admits all three and therefore requires all three tasks."
+        }
+      },
+      {
+        "id": "RA_SIZING",
+        "deps": [
+          "RA-13.a"
+        ],
+        "status": "pending",
+        "objective": "Approve independently replicated development worlds, stopping rule and quoted resource/cost cap."
+      },
+      {
+        "id": "RA_OFFICIAL",
+        "deps": [
+          "RA-14",
+          "OFFICIAL_SWEEP"
+        ],
+        "status": "pending",
+        "objective": "Independent science/security acceptance and existing official sweep gate; no release waiver."
+      }
+    ],
+    "early_checkpoint": {
+      "task": "RA-07.b",
+      "worlds": 6,
+      "policy_seeds": 2,
+      "selectors": 3,
+      "episodes": 36,
+      "slots_per_episode": 12,
+      "total_slots": 432,
+      "cpu_core_hours": 8,
+      "new_artifacts_gib": 1,
+      "provider_calls": 0,
+      "scope": "Run analytic common-prefix rankings and six frozen stationary spring development worlds, two policy seeds and three fixed-pool selectors:36 episodes,12 purchased slots including4 common calibrations,432 maximum slots. Use supported native LinearSpringModel candidates and the existing classical fitter/predictor/scorer; primary prediction is the declared MAP candidate, not an unrepresented mixture. Freeze pool, priors, likelihood, six world/noise identities, action menus and disjoint probes. Each arm uses only its own prefix. All six source worlds are stationary, one-particle, fixed-anchor, zero-cubic and zero-observation-noise, within the scorer mass/impulse/time/stiffness bounds. Freeze a separately justified positive numerical-discrepancy scale and test sensitivity before online runs; approximate model-belief weights are not calibrated observation-noise probabilities."
+    },
+    "feasibility_ceiling": {
+      "task": "RA-13.a",
+      "families": 3,
+      "strata": 3,
+      "worlds_per_stratum": 1,
+      "policy_seeds": 2,
+      "profiles": 9,
+      "episodes": 162,
+      "slots": 6480,
+      "computed_max_provider_attempts": 2754,
+      "hard_provider_attempts": 3000,
+      "input_tokens": 48000000,
+      "output_tokens": 6000000,
+      "cpu_core_hours": 240,
+      "new_artifacts_gib": 8,
+      "incremental_usd": 1000,
+      "approved": false,
+      "precision_claim": false
+    },
+    "review": {
+      "status": "independently_reviewed",
+      "reviewer": "Engineer Research",
+      "reviewed_commit": "45e4cdec262884d2e5e25bc1543a728d2c97b640",
+      "validation": "18 tasks,4 gates,62 fixed extension edges and6 conditional profile edges; no missing IDs/cycles. Classical PySR control is a required fixed producer; paper-inspired profiles are conditional. Exact final readback pending.",
+      "source_cutoff": "2026-10-19"
+    },
+    "dependency_policy": "Fixed deps always apply. conditional_deps are materialized from the frozen admitted_profile_ids before approval/start; validate IDs, acyclicity and completion on that exact resolved graph. No elapsed date or omitted profile task implies approval."
   }
 }
