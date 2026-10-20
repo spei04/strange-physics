@@ -1323,9 +1323,9 @@
         "frontend",
         "security"
       ],
-      "execution_owner": "Project lead coordinates; Platform owns ID-B/B3, then Quality owns ID-C",
+      "execution_owner": "Project lead coordinates; Quality owns ID-C/C1 then C2, Platform/Research review.",
       "issue": "https://github.com/spei04/strange-physics/issues/52",
-      "evidence": "Control part 1 (PR #53), ID-A sessions (PR #65), ID-B/B1 membership (PR #67) and B2 invitations (PR #69) are integrated. B2 main89e6117 matches reviewed8267865; 560 hosted tests and PR/main CI passed. B3 linking, ID-C credentials and final composed review remain open; full-contract consumers remain blocked. B3 source051d8f7 independently accepted with714 branch tests; integrated-head checks and ID-C/final composition still pending."
+      "evidence": "Control part1, ID-A and ID-B/B1/B2/B3 integrated; B3 PR79/main24c8796/treeaedc6064 matches reviewedc716ede; PR/main CI pass,918 integrated tests. ID-C/C1 in progress, C2 then final composition review remain; full-contract consumers stay blocked."
     },
     {
       "id": "SP-01.c",
@@ -1750,8 +1750,9 @@
         "SDK"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/77",
-      "execution_owner": "Engineer Research; exclusive primary cloud checkout after accepted SP-03.b/02.b; Quality/Platform/lead review.",
-      "execution_plan": "Versioned explicit actual-config digest, all-completed paired-Simpson windows and public masses; frozen LinearSpringModel plus separate JSON-safe diagnostics. Fitted is numerical success, not ground-truth acceptance. Nonzero noise and coefficients outside calibrated range remain explicit; no clipping or private inputs."
+      "execution_owner": "Engineer Research authored; Quality and Platform independently accepted; project lead owns primary integration.",
+      "execution_plan": "Versioned explicit actual-config digest, all-completed paired-Simpson windows and public masses; frozen LinearSpringModel plus separate JSON-safe diagnostics. Fitted is numerical success, not ground-truth acceptance. Nonzero noise and coefficients outside calibrated range remain explicit; no clipping or private inputs.",
+      "execution_evidence": "Source c43cd801 independently accepted; 905 author tests and 1006 integrated tests, static/schema checks pass. Required exact-head hosted checks pending; not yet completed."
     },
     {
       "id": "SP-04.b",
@@ -10538,7 +10539,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Engineer Platform B3 source accepted; Engineer Quality prepares ID-C after integration",
+      "BE1": "Engineer Quality (ID-C/C1 service/key lifecycle active in identity checkout)",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10554,7 +10555,7 @@
     "schedule_repair": "2026-10-19: technical lead accepted SP-01.b before SP-01.c freeze. One added edge (369 total); both reference schedules regenerated without changing effort, capacity, approval gates or current execution staffing.",
     "reviewed_scientific_head": "6e724152e5c947db1662bd65cea36412a8498b22",
     "integrated_scientific_subset": "cc24aef592f3157b67024e3cab41159489c77ffa",
-    "contract_scope_note": "Control part 1, ID-A sessions, ID-B/B1 membership and B2 invitations are integrated. B3 source051d8f7 is independently accepted; lead integration and exact-head CI remain. Quality prepares ID-C read-only. Full SP-01.b and dependent consumers remain gated.",
+    "contract_scope_note": "Control part1, ID-A and all ID-B/B1/B2/B3 units are integrated. Quality authors ID-C/C1; C2 and final parent composition follow acceptance. Full SP-01.b and dependent consumers remain gated.",
     "integrated_control_subset": "d6204aaab82e1b100532f40bae00e224d9334c65",
     "identity_remaining_units": [
       {
@@ -10570,7 +10571,7 @@
       {
         "id": "SP-01.b/ID-B",
         "title": "Membership, invitations and explicit account linking",
-        "status": "in_progress",
+        "status": "complete",
         "depends_on": [
           "SP-01.b/ID-A"
         ],
@@ -10597,35 +10598,41 @@
           {
             "id": "B3",
             "title": "Explicit identity linking",
-            "status": "reviewed_integration_pending",
+            "status": "complete",
             "depends_on": [
               "B1",
               "B2"
             ],
-            "execution": "Lead owns identity checkout during integration; Quality prepares ID-C read-only. Research retains the independent primary fitter checkout.",
-            "source": "051d8f708a5f5cc1a9182448466eb6dbdeb10f55"
+            "execution": "Integrated after Research/Quality/lead review and exact-head PR/main checks.",
+            "source": "051d8f708a5f5cc1a9182448466eb6dbdeb10f55",
+            "pull_request": 79,
+            "merge": "24c879612c92913d04b7b54456515a69b46ee67b"
           }
         ]
       },
       {
         "id": "SP-01.b/ID-C",
         "title": "Service and run credential lifecycle",
-        "status": "blocked",
+        "status": "in_progress",
         "depends_on": [
           "SP-01.b/ID-B"
         ],
         "owner": "Engineer Quality",
         "issue": "https://github.com/spei04/strange-physics/issues/64",
-        "blocker": "Accepted ID-B/B3",
         "pr_units": [
           {
             "id": "C1",
             "title": "Service principal and API key lifecycle",
-            "status": "queued",
+            "status": "in_progress",
             "depends_on": [
               "SP-01.b/ID-B/B3 integration"
             ],
-            "owner": "Engineer Quality"
+            "owner": "Engineer Quality",
+            "human_effort_days": [
+              3,
+              5
+            ],
+            "confidence": "medium"
           },
           {
             "id": "C2",
@@ -10634,10 +10641,19 @@
             "depends_on": [
               "C1"
             ],
-            "owner": "Engineer Quality"
+            "owner": "Engineer Quality",
+            "human_effort_days": [
+              2,
+              4
+            ],
+            "confidence": "medium-low"
           }
         ],
-        "execution_plan": "Lead accepted two dependent reviewable increments. New trusted principal authority generation and durable grant incarnation prevent disable/re-enable and remove/regrant resurrection; existing public session/B1 shapes remain unchanged. Creator and leaf key are audit metadata, not enduring run authority. ID-C and SP-01.b stay open until both and final composition review."
+        "execution_plan": "Lead accepted two dependent reviewable increments. New trusted principal authority generation and durable grant incarnation prevent disable/re-enable and remove/regrant resurrection; existing public session/B1 shapes remain unchanged. Creator and leaf key are audit metadata, not enduring run authority. ID-C and SP-01.b stay open until both and final composition review. C1 uses the reused identity checkout after B3 mainCI acceptance. Recovery preserves the original scopes/expiry, changes only key identity/verifier/generation and immediately revokes the target; exact retries return metadata only after current authority checks.",
+        "shared_final_review_days": [
+          1,
+          2
+        ]
       }
     ],
     "estimate_adjustments": [
@@ -10650,6 +10666,16 @@
         "confidence": "medium",
         "status": "reforecast_required",
         "note": "Reference four-day estimate is superseded for execution planning; retained forecast is a historical nine-human-team comparison, not a current delivery promise. Agent elapsed time is not engineer-day evidence."
+      },
+      {
+        "task": "SP-01.b/ID-C",
+        "remaining_engineer_days": [
+          6,
+          11
+        ],
+        "confidence": "medium to medium-low",
+        "status": "provisional_after_ID-B_acceptance",
+        "note": "Provisional remaining ID-C human effort: C1 service/key lifecycle 3\u20135 engineer-days (medium); C2 run credentials/composition 2\u20134 (medium-low); shared final composition review/integration 1\u20132, counted once. Total6\u201311 engineer-days includes uncertainty; no additional reserve is added. This supersedes the original two-day ID-C expectation for current execution only; the nine-human reference forecast remains historical and agent elapsed time is not human effort evidence."
       }
     ],
     "additional_work": [
@@ -10738,10 +10764,10 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-04.a_in_progress",
+      "status": "SP-04.a_reviewed_integration_pending",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "SP-04.a",
+      "next_authoring_task": "SP-04.b after accepted SP-04.a integration",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10763,7 +10789,7 @@
       "forecast_boundary": "Reference human effort only; not a subagent delivery forecast. Dependencies, gates and schedules unchanged.",
       "identity_boundary": "SP-01.b/c/d/e, B3, ID-C, SP-08, staging and whole R0 exit are not prerequisites for the local slice; their hosted/later consumer gates remain.",
       "acceptance": "Purchased-prefix-only fit, unseen-condition predictions, independent analytic development score and SDK/CLI evidence; any failed probe unscorable, primary MSE null; derive RMSE from position_mse.",
-      "evidence_gap": "817 passing local tests include bounded noiseless calibration, but no production fitter, predictor, independent scorer, generalization or recovery result.",
+      "evidence_gap": "Production fitter source is independently accepted and passes 1006 integrated tests; exact-head PR/main acceptance remains. Predictor, independent scorer and I1 evidence remain separate.",
       "capacity_approval": "Concrete disk expansion and snapshot approved and independently accepted 2026-10-20; other paid/release gates unchanged."
     },
     "capacity_recovery": {
@@ -10833,8 +10859,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research authors in the primary cloud checkout; lead takes exclusive ownership for integration handoffs.",
-      "identity": "B3 source accepted; lead owns identity checkout for integrated-head verification. Reuse for Quality ID-C only after B3 acceptance.",
+      "scientific": "Project lead owns primary for fitter integration; Research prepares predictor read-only and receives writer ownership after accepted dependency integration.",
+      "identity": "Engineer Quality owns the reused identity checkout for C1 after accepted B3 integration. C2 requires accepted C1; no extra checkout.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -10873,7 +10899,7 @@
     },
     "linking_evidence": {
       "source": "051d8f708a5f5cc1a9182448466eb6dbdeb10f55",
-      "status": "independently_reviewed_integration_pending",
+      "status": "accepted_and_integrated",
       "author": "Engineer Platform",
       "reviewers": [
         "Engineer Quality",
@@ -10888,8 +10914,37 @@
       "mypy_files": 34,
       "package_check": "Offline pinned wheel/sdist build and exact archive allowlist passed.",
       "security_check": "Configured Bandit medium/high gate passed; two unchanged baseline low findings retained. Hosted dependency audit remains required.",
-      "scope": "Pure linking/session contract amendment; no real provider verification, broker configuration, HTTP/SQL/race/recovery implementation."
+      "scope": "Pure linking/session contract amendment; no real provider verification, broker configuration, HTTP/SQL/race/recovery implementation.",
+      "pull_request": 79,
+      "merge": "24c879612c92913d04b7b54456515a69b46ee67b",
+      "reviewed_integration_head": "c716ede7cad5b745ceb5d473d7f301c448107a0a",
+      "tree": "aedc60646121d591eb593e0261e6a9c4a4abb808",
+      "pr_ci": 39359729686,
+      "main_ci": 39359864028,
+      "integrated_full_tests": 918,
+      "integrated_mypy_files": 35,
+      "integrated_formatted_files": 64
     },
-    "stream_contract_clarification": "Current authoritative session/credential, grant and workspace checks before every payload batch; applicable run lease also checked. The <=30-second interval applies only to idle connections, not cached payload authorization. SP-11.c/23.b/35.c prose aligned; graph/effort/gates unchanged."
+    "stream_contract_clarification": "Current authoritative session/credential, grant and workspace checks before every payload batch; applicable run lease also checked. The <=30-second interval applies only to idle connections, not cached payload authorization. SP-11.c/23.b/35.c prose aligned; graph/effort/gates unchanged.",
+    "spring_fitter_evidence": {
+      "source": "c43cd8011efdb6fe2dc27ce251803eba4fe36597",
+      "status": "reviewed_integration_pending",
+      "author": "Engineer Research",
+      "independent_reviewers": [
+        "Engineer Quality",
+        "Engineer Platform"
+      ],
+      "author_full_tests": 905,
+      "integrated_full_tests": 1006,
+      "focused_tests": 88,
+      "quality_mutations_detected": 5,
+      "platform_mutations_detected": 10,
+      "integrated_formatted_files": 69,
+      "integrated_mypy_files": 39,
+      "external_schema_checks": 492,
+      "config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+      "record": "docs/FITTING.md",
+      "boundary": "Public-prefix numerical fitter only; no prediction, ground-truth accuracy, scorer, I1 or release claim. Frozen SCI bytes and dependency manifests unchanged."
+    }
   }
 }

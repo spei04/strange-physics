@@ -1,0 +1,489 @@
+{
+  "$defs": {
+    "LinearSpringModel": {
+      "additionalProperties": false,
+      "description": "A fitted shared linear coefficient, with explicit observation provenance.",
+      "properties": {
+        "fit_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Fit Config Sha256",
+          "type": "string"
+        },
+        "fit_record_indices": {
+          "items": {
+            "maximum": 9999,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 10000,
+          "minItems": 1,
+          "title": "Fit Record Indices",
+          "type": "array"
+        },
+        "fitter_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Fitter Version",
+          "type": "string"
+        },
+        "linear": {
+          "minimum": 0,
+          "title": "Linear",
+          "type": "number"
+        },
+        "observation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Observation Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.linear-spring-model.v1",
+          "default": "strange-physics.linear-spring-model.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "through_index": {
+          "maximum": 9999,
+          "minimum": 0,
+          "title": "Through Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "linear",
+        "through_index",
+        "fit_record_indices",
+        "observation_sha256",
+        "fitter_version",
+        "fit_config_sha256"
+      ],
+      "title": "LinearSpringModel",
+      "type": "object"
+    },
+    "SpringFitConfig": {
+      "additionalProperties": false,
+      "description": "The reviewed v1 profile is fixed; alternative knobs need a version decision.",
+      "properties": {
+        "algorithm": {
+          "const": "paired-simpson-least-squares.v1",
+          "default": "paired-simpson-least-squares.v1",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "anchor_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Anchor Count",
+          "type": "integer"
+        },
+        "calibrated_coefficient_max": {
+          "default": 4.0,
+          "maximum": 4.0,
+          "minimum": 4.0,
+          "title": "Calibrated Coefficient Max",
+          "type": "number"
+        },
+        "coefficient_policy": {
+          "const": "finite-nonnegative-no-projection.v1",
+          "default": "finite-nonnegative-no-projection.v1",
+          "title": "Coefficient Policy",
+          "type": "string"
+        },
+        "connection_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Connection Count",
+          "type": "integer"
+        },
+        "coordinates": {
+          "default": 2,
+          "maximum": 2,
+          "minimum": 2,
+          "title": "Coordinates",
+          "type": "integer"
+        },
+        "duration": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Duration",
+          "type": "number"
+        },
+        "fitter_version": {
+          "const": "strange-physics.linear-spring.paired-simpson.v1",
+          "default": "strange-physics.linear-spring.paired-simpson.v1",
+          "title": "Fitter Version",
+          "type": "string"
+        },
+        "integration_steps": {
+          "default": [
+            0.01,
+            0.005,
+            0.0025
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "maximum": 0.01,
+              "minimum": 0.01,
+              "type": "number"
+            },
+            {
+              "maximum": 0.005,
+              "minimum": 0.005,
+              "type": "number"
+            },
+            {
+              "maximum": 0.0025,
+              "minimum": 0.0025,
+              "type": "number"
+            }
+          ],
+          "title": "Integration Steps",
+          "type": "array"
+        },
+        "max_anchor_norm": {
+          "default": 0.5,
+          "maximum": 0.5,
+          "minimum": 0.5,
+          "title": "Max Anchor Norm",
+          "type": "number"
+        },
+        "max_impulse_norm": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 1.0,
+          "title": "Max Impulse Norm",
+          "type": "number"
+        },
+        "max_mass": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Mass",
+          "type": "number"
+        },
+        "max_position_norm": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Position Norm",
+          "type": "number"
+        },
+        "max_records": {
+          "default": 10000,
+          "maximum": 10000,
+          "minimum": 10000,
+          "title": "Max Records",
+          "type": "integer"
+        },
+        "max_scalar_rows": {
+          "default": 400000,
+          "maximum": 400000,
+          "minimum": 400000,
+          "title": "Max Scalar Rows",
+          "type": "integer"
+        },
+        "max_velocity_norm": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Velocity Norm",
+          "type": "number"
+        },
+        "min_design_rms": {
+          "default": 1e-06,
+          "maximum": 1e-06,
+          "minimum": 1e-06,
+          "title": "Min Design Rms",
+          "type": "number"
+        },
+        "min_mass": {
+          "default": 0.5,
+          "maximum": 0.5,
+          "minimum": 0.5,
+          "title": "Min Mass",
+          "type": "number"
+        },
+        "model_assumption": {
+          "const": "stationary-shared-zero-rest-linear-spring.v1",
+          "default": "stationary-shared-zero-rest-linear-spring.v1",
+          "title": "Model Assumption",
+          "type": "string"
+        },
+        "noise_policy": {
+          "const": "fit-declared-noise-without-accuracy-guarantee.v1",
+          "default": "fit-declared-noise-without-accuracy-guarantee.v1",
+          "title": "Noise Policy",
+          "type": "string"
+        },
+        "particle_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Particle Count",
+          "type": "integer"
+        },
+        "record_selection": {
+          "const": "all-completed-prefix.v1",
+          "default": "all-completed-prefix.v1",
+          "title": "Record Selection",
+          "type": "string"
+        },
+        "sample_interval": {
+          "default": 0.05,
+          "maximum": 0.05,
+          "minimum": 0.05,
+          "title": "Sample Interval",
+          "type": "number"
+        },
+        "schema_version": {
+          "const": "strange-physics.spring-fit-config.v1",
+          "default": "strange-physics.spring-fit-config.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "window_samples": {
+          "default": 3,
+          "maximum": 3,
+          "minimum": 3,
+          "title": "Window Samples",
+          "type": "integer"
+        },
+        "window_stride": {
+          "default": 2,
+          "maximum": 2,
+          "minimum": 2,
+          "title": "Window Stride",
+          "type": "integer"
+        }
+      },
+      "title": "SpringFitConfig",
+      "type": "object"
+    },
+    "SpringFitDiagnostics": {
+      "additionalProperties": false,
+      "description": "Public provenance and finite scalar diagnostics, with no raw private state.",
+      "properties": {
+        "accuracy_claim": {
+          "const": "none",
+          "default": "none",
+          "title": "Accuracy Claim",
+          "type": "string"
+        },
+        "actual_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Actual Config Sha256",
+          "type": "string"
+        },
+        "completed_record_count": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Completed Record Count",
+          "type": "integer"
+        },
+        "completed_record_indices": {
+          "items": {
+            "maximum": 9999,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 10000,
+          "minItems": 1,
+          "title": "Completed Record Indices",
+          "type": "array"
+        },
+        "declared_noisy": {
+          "title": "Declared Noisy",
+          "type": "boolean"
+        },
+        "design_rms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Design Rms"
+        },
+        "estimated_coefficient_in_calibrated_range": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Estimated Coefficient In Calibrated Range"
+        },
+        "failed_record_count": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Failed Record Count",
+          "type": "integer"
+        },
+        "fitter_version": {
+          "const": "strange-physics.linear-spring.paired-simpson.v1",
+          "title": "Fitter Version",
+          "type": "string"
+        },
+        "observation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Observation Sha256",
+          "type": "string"
+        },
+        "raw_coefficient": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Raw Coefficient"
+        },
+        "record_count": {
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Record Count",
+          "type": "integer"
+        },
+        "requested_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Requested Config Sha256",
+          "type": "string"
+        },
+        "scalar_row_count": {
+          "maximum": 400000,
+          "minimum": 0,
+          "title": "Scalar Row Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "strange-physics.spring-fit-diagnostics.v1",
+          "default": "strange-physics.spring-fit-diagnostics.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "through_index": {
+          "maximum": 9999,
+          "minimum": 0,
+          "title": "Through Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "through_index",
+        "observation_sha256",
+        "requested_config_sha256",
+        "actual_config_sha256",
+        "fitter_version",
+        "record_count",
+        "completed_record_count",
+        "failed_record_count",
+        "completed_record_indices",
+        "scalar_row_count",
+        "design_rms",
+        "raw_coefficient",
+        "declared_noisy",
+        "estimated_coefficient_in_calibrated_range"
+      ],
+      "title": "SpringFitDiagnostics",
+      "type": "object"
+    },
+    "SpringFitResult": {
+      "additionalProperties": false,
+      "description": "A model and separate diagnostics, or an explicit rejected fit with no model.",
+      "properties": {
+        "diagnostics": {
+          "$ref": "#/$defs/SpringFitDiagnostics"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LinearSpringModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "configuration_digest_mismatch",
+                "unsupported_topology",
+                "anchor_outside_domain",
+                "unsupported_sampling",
+                "mass_outside_domain",
+                "position_outside_domain",
+                "velocity_outside_domain",
+                "impulse_outside_domain",
+                "work_limit",
+                "below_excitation_floor",
+                "nonfinite_columns",
+                "nonfinite_reduction",
+                "nonfinite_coefficient",
+                "negative_coefficient"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason"
+        },
+        "schema_version": {
+          "const": "strange-physics.spring-fit-result.v1",
+          "default": "strange-physics.spring-fit-result.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "fitted",
+            "configuration_mismatch",
+            "unsupported_domain",
+            "insufficient_excitation",
+            "numerical_failure",
+            "negative_estimate"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "model",
+        "diagnostics"
+      ],
+      "title": "SpringFitResult",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/fitting.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Fixed local fitter configuration and separate safe diagnostics. Fitted means a numerical estimate under an assumption, not scientific accuracy or supported prediction.",
+  "title": "Strange Physics local spring fitting v1"
+}

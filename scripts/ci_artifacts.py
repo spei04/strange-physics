@@ -25,6 +25,8 @@ MODULES = frozenset(
         "cli.py",
         "contracts.py",
         "control_contracts.py",
+        "fitting_contracts.py",
+        "fitting.py",
         "invitation_contracts.py",
         "journal.py",
         "laws.py",
