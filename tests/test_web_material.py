@@ -826,3 +826,136 @@ def test_replay_body_interior_identity_binds_captured_final_event(reuse: bool) -
             prepare_replay_body(**args)
     else:
         assert prepare_replay_body(**args).kind == "replay"
+
+
+def test_replay_request_identity_distinguishes_chunks_on_same_page() -> None:
+    template = w.RunEvent.model_validate_json(json.dumps(DATA["events"][2]))
+    events = tuple(changed(template, sequence=i, event_id=f"request-event-{i}") for i in range(2))
+    first_args = replay_groups(((events[0],), (events[1],)))
+    descriptor = first_args["page"].page.chunks[1]
+    second_raw = raw_message(
+        w.ReplayChunk(
+            namespace=first_args["namespace"],
+            first_sequence=1,
+            last_sequence=1,
+            events=(events[1],),
+        )
+    )
+    second_args = first_args | dict(
+        descriptor_index=1,
+        requested_artifact=descriptor.artifact,
+        artifact=catalog(descriptor.artifact),
+        raw=second_raw,
+    )
+    first = prepare_replay_body(**first_args)
+    second = prepare_replay_body(**second_args)
+    assert first.request_sha256 != second.request_sha256
+    for body, args, wrong in [(first, first_args, second), (second, second_args, first)]:
+        delivery = dict(
+            context=args["context"],
+            policy=args["policy"],
+            namespace=args["namespace"],
+            state=body,
+            artifact=args["artifact"],
+            now=1200,
+        )
+        with violation("incompatible_state", 409):
+            deliver_body_batch(**delivery, request_sha256=wrong.request_sha256)
+        result = deliver_body_batch(**delivery, request_sha256=body.request_sha256)
+        assert result.complete and result.data == args["raw"]
+
+
+def test_replay_request_identity_distinguishes_actual_snapshot_capture() -> None:
+    event = changed(w.RunEvent.model_validate_json(json.dumps(DATA["events"][2])), sequence=0)
+    args = replay_groups(((event,),))
+    first = prepare_replay_body(**args)
+    original = args["snapshot"]
+    capture = changed(original.snapshot, snapshot_id="second-capture")
+    record = changed(
+        original,
+        snapshot=capture,
+        cursor=changed(
+            original.cursor,
+            snapshot_id=capture.snapshot_id,
+            snapshot_sha256=message_sha256(capture),
+        ),
+    )
+    second = prepare_replay_body(
+        **(
+            args
+            | dict(
+                snapshot=record,
+                requested_snapshot_id=capture.snapshot_id,
+            )
+        )
+    )
+    assert first.request_sha256 != second.request_sha256
+    with violation("incompatible_state", 409):
+        deliver_body_batch(
+            args["context"],
+            args["policy"],
+            args["namespace"],
+            state=second,
+            artifact=args["artifact"],
+            request_sha256=first.request_sha256,
+            now=1200,
+        )
+
+
+@pytest.mark.parametrize("change", ["generation", "raw_format"])
+def test_replay_request_identity_binds_actual_artifact_reference(change: str) -> None:
+    event = changed(w.RunEvent.model_validate_json(json.dumps(DATA["events"][2])), sequence=0)
+    args = replay_groups(((event,),))
+    first = prepare_replay_body(**args)
+    raw = args["raw"] + (b" " if change == "raw_format" else b"")
+    original = args["page"]
+    ref = changed(
+        original.page.chunks[0].artifact,
+        generation="2" if change == "generation" else "1",
+        sha256=hashlib.sha256(raw).hexdigest(),
+        size_bytes=len(raw),
+    )
+    page = changed(original.page, chunks=(changed(original.page.chunks[0], artifact=ref),))
+    root = changed(
+        original.manifest,
+        total_chunk_bytes=len(raw),
+        first_page=w.HistoryPageRef(page_id=page.page_id, page_sha256=message_sha256(page)),
+    )
+    capture = changed(args["snapshot"].snapshot, history=root)
+    record = changed(
+        args["snapshot"],
+        snapshot=capture,
+        cursor=changed(args["snapshot"].cursor, snapshot_sha256=message_sha256(capture)),
+    )
+    second_args = args | dict(
+        snapshot=record,
+        page=w.HistoryPageBinding(manifest=root, page=page, previous=None),
+        requested_artifact=ref,
+        artifact=catalog(ref),
+        raw=raw,
+    )
+    second = prepare_replay_body(**second_args)
+    assert first.semantic_sha256 == second.semantic_sha256
+    assert first.request_sha256 != second.request_sha256
+    with violation("incompatible_state", 409):
+        deliver_body_batch(
+            args["context"],
+            args["policy"],
+            args["namespace"],
+            state=second,
+            artifact=second_args["artifact"],
+            request_sha256=first.request_sha256,
+            now=1200,
+        )
+    assert (
+        deliver_body_batch(
+            args["context"],
+            args["policy"],
+            args["namespace"],
+            state=second,
+            artifact=second_args["artifact"],
+            request_sha256=second.request_sha256,
+            now=1200,
+        ).data
+        == raw
+    )

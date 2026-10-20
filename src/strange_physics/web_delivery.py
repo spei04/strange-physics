@@ -17,6 +17,7 @@ from strange_physics.bounded_json import bounded_canonical, parse_bounded_json
 from strange_physics.contracts import ExperimentRecord
 from strange_physics.control_contracts import ContractViolation, RunView
 from strange_physics.research_contracts import message_sha256
+from strange_physics.serialization import canonical_json
 from strange_physics.web_access import ViewerContext, authorize_viewer, check_run_capture
 from strange_physics.web_contracts import (
     MAX_SAFE,
@@ -245,7 +246,18 @@ def prepare_replay_body(
         namespace,
         configured,
         kind="replay",
-        request_sha256=message_sha256(page),
+        request_sha256=hashlib.sha256(
+            canonical_json(
+                {
+                    "purpose": "web.replay-body.v1",
+                    "snapshot_id": requested_snapshot_id,
+                    "snapshot_sha256": message_sha256(captured),
+                    "page_binding_sha256": message_sha256(page),
+                    "descriptor_index": descriptor_index,
+                    "artifact": requested_artifact.model_dump(mode="json"),
+                }
+            ).encode("utf-8")
+        ).hexdigest(),
         ref=descriptor.artifact,
         catalog=artifact.record,
         semantic_sha256=message_sha256(chunk),
