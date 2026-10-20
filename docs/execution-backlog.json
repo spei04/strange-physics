@@ -1365,10 +1365,10 @@
         "security",
         "Backend"
       ],
-      "execution_owner": "Platform authors EXEC1 predicates after accepted API57f2f303; Quality/Research/lead review. ART1 integrated; COMP1 remains.",
+      "execution_owner": "Project lead integrates reviewed EXEC1; Quality reviews integration. Research queued for COMP1 after exact PR/main CI; Platform reviews its build/runtime boundary.",
       "issue": "https://github.com/spei04/strange-physics/issues/89",
       "execution_plan": "ART1 artifact/checkpoint admission and recovery; EXEC1 package quarantine and worker/broker authority; COMP1 predictor/DB composition. Accepted SP-01.b integration precedes source. Three review units preserve the baseline task/effort/gates.",
-      "evidence": "ART1 complete via PR91/main95bdd85 matching reviewed8c282eb/treecb539fa2; PRCI39370833204 and all five mainCI39370975462 jobs passed. Combined1954 tests/669schemas/static/security/package checks. EXEC1 API57f2f303 accepted with137 focused/722schema cases and independent review; runtime predicates assigned. Full SP-01.c freeze awaits EXEC1 runtime and COMP1."
+      "evidence": "ART1 complete via PR91/main95bdd85 matching reviewed8c282eb/treecb539fa2; PRCI39370833204 and all five mainCI39370975462 jobs passed. EXEC1 API/runtime independently accepted atfe3b008 and doc-onlyc66b6a0:2281 tests/722schemas/static/security/package checks passed. Final PR92/main CI and COMP1 remain before full SP-01.c freeze."
     },
     {
       "id": "SP-01.d",
@@ -10562,7 +10562,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Platform authors EXEC1 runtime predicates after accepted API57f2f303; lead integrates, Quality and Research review.",
+      "BE1": "Lead integrates reviewed EXEC1; Research queued for COMP1 after exact PR/main CI, with Platform/Quality independent review.",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -11151,7 +11151,7 @@
     },
     "artifact_worker_contracts": {
       "issue": 89,
-      "owner": "Engineer Platform",
+      "owner": "Project lead coordinates integration; Research queued for COMP1, Platform/Quality review.",
       "reviewers": [
         "Engineer Quality",
         "Engineer Research",
