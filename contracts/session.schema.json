@@ -1,0 +1,1172 @@
+{
+  "$defs": {
+    "BrokerExchangeRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "id_token": {
+          "format": "password",
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Id Token",
+          "type": "string",
+          "writeOnly": true
+        },
+        "transaction_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Transaction Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "transaction_id",
+        "id_token"
+      ],
+      "title": "BrokerExchangeRequest",
+      "type": "object"
+    },
+    "BrowserContext": {
+      "additionalProperties": false,
+      "description": "Trusted HTTP adapter projection; CSRF comparisons must be constant-time.",
+      "properties": {
+        "browser_binding_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Browser Binding Sha256"
+        },
+        "csrf_matches": {
+          "title": "Csrf Matches",
+          "type": "boolean"
+        },
+        "csrf_scope": {
+          "anyOf": [
+            {
+              "enum": [
+                "preauth",
+                "session"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Csrf Scope"
+        },
+        "has_bearer": {
+          "title": "Has Bearer",
+          "type": "boolean"
+        },
+        "has_session_cookie": {
+          "title": "Has Session Cookie",
+          "type": "boolean"
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 9,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^https://[!-~]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Origin"
+        },
+        "target_origin": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Target Origin",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_origin",
+        "origin",
+        "has_session_cookie",
+        "has_bearer",
+        "csrf_scope",
+        "csrf_matches",
+        "browser_binding_sha256"
+      ],
+      "title": "BrowserContext",
+      "type": "object"
+    },
+    "CSRFResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "scope": {
+          "enum": [
+            "preauth",
+            "session"
+          ],
+          "title": "Scope",
+          "type": "string"
+        },
+        "token": {
+          "format": "password",
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Token",
+          "type": "string",
+          "writeOnly": true
+        }
+      },
+      "required": [
+        "scope",
+        "token"
+      ],
+      "title": "CSRFResponse",
+      "type": "object"
+    },
+    "DeploymentSessionPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "absolute_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Absolute Seconds",
+          "type": "integer"
+        },
+        "app_origins": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 9,
+            "not": {
+              "pattern": "[^!-~]"
+            },
+            "pattern": "^https://[!-~]+$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "App Origins",
+          "type": "array"
+        },
+        "clock_skew_seconds": {
+          "maximum": 300,
+          "minimum": 0,
+          "title": "Clock Skew Seconds",
+          "type": "integer"
+        },
+        "idle_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Idle Seconds",
+          "type": "integer"
+        },
+        "login_ttl_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Login Ttl Seconds",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "providers": {
+          "items": {
+            "$ref": "#/$defs/ProviderPolicy"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Providers",
+          "type": "array"
+        },
+        "recent_auth_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Recent Auth Seconds",
+          "type": "integer"
+        },
+        "return_uris": {
+          "items": {
+            "maxLength": 2048,
+            "minLength": 9,
+            "not": {
+              "pattern": "[^!-~]"
+            },
+            "pattern": "^https://[!-~]+$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Return Uris",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "strange-physics.session-policy.v1",
+          "default": "strange-physics.session-policy.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "transaction_retention_seconds": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Transaction Retention Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "policy_id",
+        "app_origins",
+        "return_uris",
+        "providers",
+        "idle_seconds",
+        "absolute_seconds",
+        "recent_auth_seconds",
+        "login_ttl_seconds",
+        "clock_skew_seconds",
+        "transaction_retention_seconds"
+      ],
+      "title": "DeploymentSessionPolicy",
+      "type": "object"
+    },
+    "LoginOption": {
+      "additionalProperties": false,
+      "properties": {
+        "flow": {
+          "enum": [
+            "managed_broker",
+            "oidc_code"
+          ],
+          "title": "Flow",
+          "type": "string"
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider_id",
+        "flow"
+      ],
+      "title": "LoginOption",
+      "type": "object"
+    },
+    "LoginOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "providers": {
+          "items": {
+            "$ref": "#/$defs/LoginOption"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Providers",
+          "type": "array"
+        }
+      },
+      "required": [
+        "providers"
+      ],
+      "title": "LoginOptions",
+      "type": "object"
+    },
+    "LoginStartRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        },
+        "return_uri": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Return Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider_id",
+        "return_uri"
+      ],
+      "title": "LoginStartRequest",
+      "type": "object"
+    },
+    "LoginStartResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "authorization_url": {
+          "anyOf": [
+            {
+              "format": "password",
+              "maxLength": 16384,
+              "minLength": 1,
+              "type": "string",
+              "writeOnly": true
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Authorization Url"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "flow": {
+          "enum": [
+            "managed_broker",
+            "oidc_code"
+          ],
+          "title": "Flow",
+          "type": "string"
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        },
+        "transaction_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Transaction Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "transaction_id",
+        "provider_id",
+        "flow",
+        "expires_at",
+        "authorization_url"
+      ],
+      "title": "LoginStartResponse",
+      "type": "object"
+    },
+    "LoginStatusResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "expired": {
+          "title": "Expired",
+          "type": "boolean"
+        },
+        "next_action": {
+          "enum": [
+            "verify_once",
+            "reconcile_or_restart",
+            "commit_same_transaction",
+            "bootstrap_or_login",
+            "fresh_login"
+          ],
+          "title": "Next Action",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "pending",
+            "verifying",
+            "verified",
+            "committed",
+            "restart_required"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "transaction_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Transaction Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "transaction_id",
+        "state",
+        "expired",
+        "next_action"
+      ],
+      "title": "LoginStatusResponse",
+      "type": "object"
+    },
+    "LoginTransaction": {
+      "additionalProperties": false,
+      "description": "Current durable snapshot; adapters own locks, unique claims and retention.",
+      "properties": {
+        "browser_binding_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Browser Binding Sha256",
+          "type": "string"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "proof": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TrustedIdentityProof"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        },
+        "return_uri": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Return Uri",
+          "type": "string"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Session Id"
+        },
+        "state": {
+          "enum": [
+            "pending",
+            "verifying",
+            "verified",
+            "committed",
+            "restart_required"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "transaction_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Transaction Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "transaction_id",
+        "policy_id",
+        "provider_id",
+        "browser_binding_sha256",
+        "return_uri",
+        "created_at",
+        "expires_at",
+        "revision",
+        "state",
+        "proof",
+        "session_id"
+      ],
+      "title": "LoginTransaction",
+      "type": "object"
+    },
+    "OIDCCallbackEvidence": {
+      "additionalProperties": false,
+      "description": "Results of actual adapter checks, not client-supplied boolean claims.",
+      "properties": {
+        "callback_uri": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Callback Uri",
+          "type": "string"
+        },
+        "method": {
+          "const": "GET",
+          "title": "Method",
+          "type": "string"
+        },
+        "nonce_matches": {
+          "title": "Nonce Matches",
+          "type": "boolean"
+        },
+        "pkce_s256_verified": {
+          "title": "Pkce S256 Verified",
+          "type": "boolean"
+        },
+        "response_mode": {
+          "const": "query",
+          "title": "Response Mode",
+          "type": "string"
+        },
+        "state_matches": {
+          "title": "State Matches",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "callback_uri",
+        "method",
+        "response_mode",
+        "state_matches",
+        "nonce_matches",
+        "pkce_s256_verified"
+      ],
+      "title": "OIDCCallbackEvidence",
+      "type": "object"
+    },
+    "OIDCCallbackRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "format": "password",
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Code",
+          "type": "string",
+          "writeOnly": true
+        },
+        "state": {
+          "format": "password",
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "State",
+          "type": "string",
+          "writeOnly": true
+        }
+      },
+      "required": [
+        "code",
+        "state"
+      ],
+      "title": "OIDCCallbackRequest",
+      "type": "object"
+    },
+    "OIDCDeniedCallbackRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "format": "password",
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "Error",
+          "type": "string",
+          "writeOnly": true
+        },
+        "state": {
+          "format": "password",
+          "maxLength": 16384,
+          "minLength": 1,
+          "title": "State",
+          "type": "string",
+          "writeOnly": true
+        }
+      },
+      "required": [
+        "error",
+        "state"
+      ],
+      "title": "OIDCDeniedCallbackRequest",
+      "type": "object"
+    },
+    "ProviderPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "audience": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Audience",
+          "type": "string"
+        },
+        "callback_method": {
+          "anyOf": [
+            {
+              "const": "GET",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Callback Method"
+        },
+        "callback_uri": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 9,
+              "not": {
+                "pattern": "[^!-~]"
+              },
+              "pattern": "^https://[!-~]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Callback Uri"
+        },
+        "flow": {
+          "enum": [
+            "managed_broker",
+            "oidc_code"
+          ],
+          "title": "Flow",
+          "type": "string"
+        },
+        "issuer": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Issuer",
+          "type": "string"
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        },
+        "response_mode": {
+          "anyOf": [
+            {
+              "const": "query",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Response Mode"
+        },
+        "tenant_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tenant Id"
+        },
+        "upstream_providers": {
+          "items": {
+            "enum": [
+              "google.com",
+              "github.com"
+            ],
+            "type": "string"
+          },
+          "title": "Upstream Providers",
+          "type": "array"
+        }
+      },
+      "required": [
+        "provider_id",
+        "flow",
+        "issuer",
+        "audience",
+        "tenant_id",
+        "callback_uri",
+        "callback_method",
+        "response_mode",
+        "upstream_providers"
+      ],
+      "title": "ProviderPolicy",
+      "type": "object"
+    },
+    "RenewalRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Generation",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expected_generation"
+      ],
+      "title": "RenewalRequest",
+      "type": "object"
+    },
+    "SessionBootstrap": {
+      "additionalProperties": false,
+      "properties": {
+        "authenticated": {
+          "title": "Authenticated",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Principal Id"
+        },
+        "session": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SessionView"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "authenticated",
+        "principal_id",
+        "session"
+      ],
+      "title": "SessionBootstrap",
+      "type": "object"
+    },
+    "SessionCredential": {
+      "additionalProperties": false,
+      "description": "Trusted hash lookup result, including narrowly retained logout-only history.",
+      "properties": {
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "generation"
+      ],
+      "title": "SessionCredential",
+      "type": "object"
+    },
+    "SessionError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_request",
+            "policy_unavailable",
+            "unauthenticated",
+            "forbidden",
+            "ambiguous_credentials",
+            "unsupported_flow",
+            "login_expired",
+            "proof_rejected",
+            "login_conflict",
+            "reconciliation_required",
+            "reauthentication_required",
+            "session_conflict"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "request_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Request Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "request_id"
+      ],
+      "title": "SessionError",
+      "type": "object"
+    },
+    "SessionRecord": {
+      "additionalProperties": false,
+      "description": "Current server session family; no opaque cookie secret is stored here.",
+      "properties": {
+        "absolute_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Absolute Expires At",
+          "type": "integer"
+        },
+        "authenticated_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authenticated At",
+          "type": "integer"
+        },
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "last_seen_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Last Seen At",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "principal_active": {
+          "title": "Principal Active",
+          "type": "boolean"
+        },
+        "principal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Principal Id",
+          "type": "string"
+        },
+        "revoked": {
+          "title": "Revoked",
+          "type": "boolean"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "policy_id",
+        "principal_id",
+        "generation",
+        "created_at",
+        "authenticated_at",
+        "last_seen_at",
+        "absolute_expires_at",
+        "revoked",
+        "principal_active"
+      ],
+      "title": "SessionRecord",
+      "type": "object"
+    },
+    "SessionView": {
+      "additionalProperties": false,
+      "properties": {
+        "absolute_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Absolute Expires At",
+          "type": "integer"
+        },
+        "authenticated_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Authenticated At",
+          "type": "integer"
+        },
+        "generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "idle_expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Idle Expires At",
+          "type": "integer"
+        },
+        "session_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Session Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "generation",
+        "authenticated_at",
+        "idle_expires_at",
+        "absolute_expires_at"
+      ],
+      "title": "SessionView",
+      "type": "object"
+    },
+    "TrustedIdentityProof": {
+      "additionalProperties": false,
+      "description": "Minimal durable verifier result; never accepted from a public request.",
+      "properties": {
+        "audience": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Audience",
+          "type": "string"
+        },
+        "auth_time": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Auth Time",
+          "type": "integer"
+        },
+        "browser_binding_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Browser Binding Sha256",
+          "type": "string"
+        },
+        "expires_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expires At",
+          "type": "integer"
+        },
+        "flow": {
+          "enum": [
+            "managed_broker",
+            "oidc_code"
+          ],
+          "title": "Flow",
+          "type": "string"
+        },
+        "issued_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Issued At",
+          "type": "integer"
+        },
+        "issuer": {
+          "maxLength": 2048,
+          "minLength": 9,
+          "not": {
+            "pattern": "[^!-~]"
+          },
+          "pattern": "^https://[!-~]+$",
+          "title": "Issuer",
+          "type": "string"
+        },
+        "proof_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Proof Sha256",
+          "type": "string"
+        },
+        "provider_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Provider Id",
+          "type": "string"
+        },
+        "subject": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        },
+        "tenant_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tenant Id"
+        },
+        "transaction_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Transaction Id",
+          "type": "string"
+        },
+        "upstream_provider": {
+          "anyOf": [
+            {
+              "enum": [
+                "google.com",
+                "github.com"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Upstream Provider"
+        },
+        "verified_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Verified At",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "transaction_id",
+        "provider_id",
+        "browser_binding_sha256",
+        "proof_sha256",
+        "flow",
+        "issuer",
+        "audience",
+        "tenant_id",
+        "upstream_provider",
+        "subject",
+        "auth_time",
+        "issued_at",
+        "expires_at",
+        "verified_at"
+      ],
+      "title": "TrustedIdentityProof",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/session.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Browser session shapes plus pure conformance checks. Internal trusted projections must never be populated from public bodies. No verifier, handler or persistence proof.",
+  "x-contract-status": "session-v1; SP-01.b remains partial",
+  "x-public-models": [
+    "LoginOption",
+    "LoginOptions",
+    "LoginStartRequest",
+    "BrokerExchangeRequest",
+    "OIDCCallbackRequest",
+    "OIDCDeniedCallbackRequest",
+    "LoginStatusResponse",
+    "LoginStartResponse",
+    "CSRFResponse",
+    "SessionView",
+    "SessionBootstrap",
+    "RenewalRequest",
+    "SessionError"
+  ]
+}

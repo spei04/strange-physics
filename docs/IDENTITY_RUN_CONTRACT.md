@@ -7,6 +7,9 @@ This bounded contract covers the eleven routes in the
 [Schema](../contracts/control.schema.json),
 [pure conformance checks](../src/strange_physics/control_contracts.py),
 and [synthetic examples](../contracts/control.examples.json) define the subset.
+The [browser-session subset](BROWSER_SESSION_CONTRACT.md) adds ID-A interfaces.
+Membership/invitation/linking (ID-B) and credential lifecycle (ID-C) remain open;
+full-contract consumers stay blocked.
 Producer/consumer acceptance is recorded separately after independent review.
 
 There is no hosted API, token issuer, SQL migration, RLS policy or deployment
@@ -19,7 +22,7 @@ operational evidence. CORE and the local SDK are unchanged.
 
 | Frozen here | Remaining dependency |
 | --- | --- |
-| Identity/current membership separation, role/scope predicates | OIDC/session verifier, cookie/CSRF flow, service credential rotation |
+| Identity/current membership separation, role/scope predicates | OIDC/session verifier and cookie/CSRF HTTP implementation; service credential rotation |
 | Run/operation projections and transitions | HTTP handlers, dispatch and recovery |
 | Scoped idempotency and checkpoint history | Durable SQL transactions and concurrency tests |
 | SQL keys, relationships, transaction and tenant isolation obligations | Migrations, RLS policies, runtime DB roles |
