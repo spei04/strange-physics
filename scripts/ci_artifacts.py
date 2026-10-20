@@ -31,6 +31,7 @@ MODULES = frozenset(
         "journal.py",
         "laws.py",
         "linking_contracts.py",
+        "prediction.py",
         "prediction_contracts.py",
         "py.typed",
         "research_contracts.py",
