@@ -1272,3 +1272,44 @@ def test_preview_history_counts_renewals_before_final_revocation() -> None:
     contradictory = PreviewMutationCommit.model_validate_json(json.dumps(data))
     with pytest.raises(ContractViolation, match="recovery_required"):
         replay_preview(first, contradictory)
+
+
+@pytest.mark.parametrize(
+    "reuse_as",
+    [
+        "latest_id",
+        "latest_parent_id",
+        "older_grandparent",
+        "grandparent_latest_id",
+        "grandparent_reference",
+    ],
+)
+def test_version_history_rejects_reuse_of_known_earlier_parent_ids(reuse_as: str) -> None:
+    first = fresh_version(1020)
+    second = append_version(first, 1030)
+    third = append_version(second, 1040)
+    fourth = append_version(third, 1050)
+    fifth = append_version(fourth, 1055)
+    sixth = append_version(fifth, 1058)
+    target, latest = second, fourth
+    if reuse_as in {"older_grandparent", "grandparent_latest_id", "grandparent_reference"}:
+        target, latest = third, sixth
+    data = latest.model_dump(mode="json")
+    if reuse_as in {"latest_id", "grandparent_latest_id"}:
+        data["version"]["view"]["version_id"] = first.version.view.version_id
+        data["result"]["version"]["version_id"] = first.version.view.version_id
+        data["result"]["head"]["version_id"] = first.version.view.version_id
+    elif reuse_as == "grandparent_reference":
+        data["parent"]["view"]["parent_version_id"] = first.version.view.version_id
+    else:
+        data["parent"]["view"]["version_id"] = first.version.view.version_id
+        data["before"]["version_id"] = first.version.view.version_id
+        data["request"]["expected_version_id"] = first.version.view.version_id
+        data["request_sha256"] = message_sha256(
+            CreateWorldVersionRequest.model_validate_json(json.dumps(data["request"]))
+        )
+        data["version"]["view"]["parent_version_id"] = first.version.view.version_id
+        data["result"]["version"]["parent_version_id"] = first.version.view.version_id
+    contradictory = WorldVersionCommit.model_validate_json(json.dumps(data))
+    with pytest.raises(ContractViolation, match="recovery_required"):
+        replay_version(target, contradictory)

@@ -108,6 +108,11 @@ def _version_history(older: WorldVersionRecord, newer: WorldVersionRecord) -> No
         or old.created_at > new.created_at
         or (distance == 0 and message_sha256(older) != message_sha256(newer))
         or (distance > 0 and old.version_id == new.version_id)
+        or (
+            distance > 0
+            and old.parent_version_id is not None
+            and old.parent_version_id in (new.version_id, new.parent_version_id)
+        )
         or (distance == 1 and new.parent_version_id != old.version_id)
         or (distance > 1 and new.parent_version_id == old.version_id)
     ):
@@ -208,6 +213,8 @@ def _version_replay(
     ):
         raise ContractViolation("recovery_required", 409)
     _history(target, current)
+    if receipt.parent is not None:
+        _history(receipt.parent, current)
     if receipt.request_sha256 != message_sha256(request):
         raise ContractViolation("idempotency_conflict", 409)
     if now >= receipt.receipt_expires_at:
