@@ -62,12 +62,12 @@ class SpringFitConfig(Message):
     )
     algorithm: Literal["paired-simpson-least-squares.v1"] = "paired-simpson-least-squares.v1"
     record_selection: Literal["all-completed-prefix.v1"] = "all-completed-prefix.v1"
-    window_samples: Literal[3] = 3
-    window_stride: Literal[2] = 2
-    coordinates: Literal[2] = 2
-    particle_count: Literal[1] = 1
-    anchor_count: Literal[1] = 1
-    connection_count: Literal[1] = 1
+    window_samples: Annotated[int, Field(ge=3, le=3)] = 3
+    window_stride: Annotated[int, Field(ge=2, le=2)] = 2
+    coordinates: Annotated[int, Field(ge=2, le=2)] = 2
+    particle_count: Annotated[int, Field(ge=1, le=1)] = 1
+    anchor_count: Annotated[int, Field(ge=1, le=1)] = 1
+    connection_count: Annotated[int, Field(ge=1, le=1)] = 1
     duration: Annotated[float, Field(ge=2.0, le=2.0)] = 2.0
     sample_interval: Annotated[float, Field(ge=0.05, le=0.05)] = 0.05
     integration_steps: tuple[
@@ -93,8 +93,8 @@ class SpringFitConfig(Message):
         "fit-declared-noise-without-accuracy-guarantee.v1"
     )
     calibrated_coefficient_max: Annotated[float, Field(ge=4.0, le=4.0)] = 4.0
-    max_records: Literal[10_000] = 10_000
-    max_scalar_rows: Literal[400_000] = 400_000
+    max_records: Annotated[int, Field(ge=10_000, le=10_000)] = 10_000
+    max_scalar_rows: Annotated[int, Field(ge=400_000, le=400_000)] = 400_000
 
 
 class SpringFitDiagnostics(Message):

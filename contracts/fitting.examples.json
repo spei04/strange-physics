@@ -761,6 +761,21 @@
       "field": "status",
       "model": "SpringFitResult",
       "value": "accurate"
+    },
+    {
+      "field": "particle_count",
+      "model": "SpringFitConfig",
+      "value": true
+    },
+    {
+      "field": "anchor_count",
+      "model": "SpringFitConfig",
+      "value": true
+    },
+    {
+      "field": "connection_count",
+      "model": "SpringFitConfig",
+      "value": true
     }
   ],
   "valid": {

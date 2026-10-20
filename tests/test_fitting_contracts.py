@@ -62,6 +62,9 @@ def test_fixed_configuration_canonical_bytes_and_digest_include_defaults() -> No
     ("field", "value"),
     [
         ("min_design_rms", 1e-5),
+        ("particle_count", True),
+        ("anchor_count", True),
+        ("connection_count", True),
         ("algorithm", "trapezoid"),
         ("duration", 1.95),
         ("sample_interval", 0.1),

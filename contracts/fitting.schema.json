@@ -75,8 +75,9 @@
           "type": "string"
         },
         "anchor_count": {
-          "const": 1,
           "default": 1,
+          "maximum": 1,
+          "minimum": 1,
           "title": "Anchor Count",
           "type": "integer"
         },
@@ -94,14 +95,16 @@
           "type": "string"
         },
         "connection_count": {
-          "const": 1,
           "default": 1,
+          "maximum": 1,
+          "minimum": 1,
           "title": "Connection Count",
           "type": "integer"
         },
         "coordinates": {
-          "const": 2,
           "default": 2,
+          "maximum": 2,
+          "minimum": 2,
           "title": "Coordinates",
           "type": "integer"
         },
@@ -175,14 +178,16 @@
           "type": "number"
         },
         "max_records": {
-          "const": 10000,
           "default": 10000,
+          "maximum": 10000,
+          "minimum": 10000,
           "title": "Max Records",
           "type": "integer"
         },
         "max_scalar_rows": {
-          "const": 400000,
           "default": 400000,
+          "maximum": 400000,
+          "minimum": 400000,
           "title": "Max Scalar Rows",
           "type": "integer"
         },
@@ -220,8 +225,9 @@
           "type": "string"
         },
         "particle_count": {
-          "const": 1,
           "default": 1,
+          "maximum": 1,
+          "minimum": 1,
           "title": "Particle Count",
           "type": "integer"
         },
@@ -245,14 +251,16 @@
           "type": "string"
         },
         "window_samples": {
-          "const": 3,
           "default": 3,
+          "maximum": 3,
+          "minimum": 3,
           "title": "Window Samples",
           "type": "integer"
         },
         "window_stride": {
-          "const": 2,
           "default": 2,
+          "maximum": 2,
+          "minimum": 2,
           "title": "Window Stride",
           "type": "integer"
         }
