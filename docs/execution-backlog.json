@@ -11523,7 +11523,8 @@
           "SP-07.d",
           "SP-18.d",
           "RA_PILOT",
-          "RA-07.b"
+          "RA-07.b",
+          "RA-04.a"
         ],
         "contracts": [
           "STUDY",
@@ -11626,7 +11627,8 @@
           "RA-07.b",
           "RA-09",
           "SP-07.d",
-          "SP-18.d"
+          "SP-18.d",
+          "RA-04.a"
         ],
         "status": "pending",
         "objective": "Approve exact admitted feasibility matrix, provider/compute quote and stop limits; revise dependencies/counts explicitly if excluding profiles.",
@@ -11700,7 +11702,7 @@
       "status": "independently_reviewed",
       "reviewer": "Engineer Research",
       "reviewed_commit": "45e4cdec262884d2e5e25bc1543a728d2c97b640",
-      "validation": "18 tasks,4 gates,60 fixed extension edges and6 conditional profile edges; all possible edges checked for missing IDs/cycles. Early ancestry excludes provider/hosted/profile predecessors. Exact final readback pending.",
+      "validation": "18 tasks,4 gates,62 fixed extension edges and6 conditional profile edges; no missing IDs/cycles. Classical PySR control is a required fixed producer; paper-inspired profiles are conditional. Exact final readback pending.",
       "source_cutoff": "2026-10-19"
     },
     "dependency_policy": "Fixed deps always apply. conditional_deps are materialized from the frozen admitted_profile_ids before approval/start; validate IDs, acyclicity and completion on that exact resolved graph. No elapsed date or omitted profile task implies approval."
