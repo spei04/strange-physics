@@ -42,7 +42,7 @@ jobs:
       - name: Install locked dependencies, then build the project offline
         run: |
           uv sync --locked --all-groups --no-install-project
-          uv sync --locked --all-groups --no-build-isolation --offline
+          uv sync --locked --all-groups --no-editable --no-build-isolation --offline
       - run: uv run --no-sync ruff check .
       - run: uv run --no-sync ruff format --check .
       - run: uv run --no-sync mypy src tests examples

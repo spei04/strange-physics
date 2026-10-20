@@ -26,7 +26,8 @@ candidate job is not a substitute for this check. New required jobs must be
 added to both its `needs` list and the tested aggregate predicate.
 
 Dependencies install only in bootstrap steps from `uv.lock` with uv 0.11.21.
-The project builds offline against the locked Hatchling backend. Check steps
+The project installs as a regular wheel offline against the locked Hatchling
+backend; editable-build helpers are not required. Check steps
 use `uv run --no-sync`; they cannot silently resolve a new environment.
 The vulnerability job exports pinned, hashed requirements from the same lock,
 then disables pip-audit dependency resolution. Scientific smoke tests run the
