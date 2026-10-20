@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | ID-B/B1 workspace creation and membership contracts (#63); next exclusive writer | B2 invitations and B3 explicit linking follow in separate reviewed PRs |
-| Research | ID-A/#57 complete; next independent B1 interface/authority review | Full SP-01.b remains open; no hosted auth implementation claimed |
-| Quality | ID-A security review complete; next B1 security review, then ID-C/#64 after ID-B | Credential authoring waits for accepted membership/linking producers |
-| Project lead | Integrate reviewed PRs, update evidence and manage exclusive writer handoffs | Current short log here; no repo-settings races or paid-resource approval inferred |
+| Platform | ID-B/B1 complete; ID-B/B2 invitations (#63) next | B3 explicit linking follows as a separate reviewed PR |
+| Research | B1 independent review complete; next B2 authority/replay review | Full SP-01.b remains open; no hosted implementation claimed |
+| Quality | B1 security review complete; next B2 security review, then ID-C/#64 after ID-B | Credential authoring waits for accepted membership/linking producers |
+| Project lead | Integrate reviewed PRs, update evidence and manage exclusive writer handoffs | Short assignment log here; deployment/capacity gates remain open |
 
 ## Assignments
 
@@ -56,6 +56,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-20 00:42 | Project lead | ID-A integration and assignment checkpoint | Reviewed/merge tree cd1f0ff matches; PR CI39348959056 and main CI39349126536 passed; parent #52 remains open |
 | Next handoff | Platform | ID-B/B1 — workspace creation, membership, last-owner and quarantine contracts | Approved bounded plan; #63; Research/Quality review before B2 invitations and B3 linking |
 | Queued after ID-B | Quality | ID-C/#64 — service/run credential lifecycle | Prepared threat model; dependencies not yet accepted |
+| 2026-10-20 00:57 | Platform | ID-B/B1 — private workspace and human membership contracts | PR #67 merged 1ec45aa; 474 tests, 61 focused; writer released |
+| 2026-10-20 00:57 | Research + Quality | B1 — independent source/security/HTTP review | Accepted b9c4754 after owner-status, pending security-fence and human-owner boundary repairs |
+| 2026-10-20 00:57 | Project lead | B1 integration and next assignment | Merge/review tree 0e9c0a4 matches; PR CI39350544354 passed; #63 and #52 remain open |
+| Next handoff | Platform | ID-B/B2 — invitations and safe redemption/recovery | Bounded plan preparation; Research/Quality review before B3 linking |
 
 ## Review evidence and management checkpoint
 
@@ -65,6 +69,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 - SCI delta: SP-01.a complete via [PR #51](https://github.com/spei04/strange-physics/pull/51), merge cc24aef tree equals reviewed 6e72415; all four head checks and [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39343441273) pass. 147 tests and independent schema checks passed after three repairs. No fitter, hosted service or benchmark result is claimed.
 - Control delta: part 1 integrated via [PR #53](https://github.com/spei04/strange-physics/pull/53), merge d6204aa matching reviewed f6cead9. Four head checks and [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39344813113) passed after four review fixes at a9fa8cb. 252 total tests, Ruff, strict mypy, 67 external schema/header cases and 47 reference resolutions pass. Full SP-01.b remains incomplete: ID-A sessions are now integrated; membership/invitation/linking and credential lifecycle contracts still need reviewed PRs. Their consumers remain blocked; four-day reference effort needs re-estimation.
 - Session delta: [PR #65](https://github.com/spei04/strange-physics/pull/65) merged cc576da9f7ce43f7bc497289a3e02efa9c74f9d0 with tree cd1f0ff73adb1ca41cbf87a5d4d39802d16d3357 matching independently accepted 34d26d9343c63747e520351d0a99f154596248f0. 413 tests, Ruff, strict mypy and 207 independent schema cases passed; required PR CI39348959056 and protected-main CI39349126536 succeeded. Session policy, one-use proof, bootstrap, renewal/logout and safe errors are contracts only; actual verifier/HTTP/SQL behavior remains later work. ID-B is three PRs: B1 workspace/membership, B2 invitations, B3 explicit identity linking.
+- Membership delta: [PR #67](https://github.com/spei04/strange-physics/pull/67) merged 1ec45aabb02b3d4fff98de91fc09bffb0e9c7daf with tree 0e9c0a40c187b417550f5ef601de8e073cca4561 matching independently accepted b9c4754af1ffa5dc2ca18a0d44ddbfa72cc57d5a. 474 full tests (61 focused), Ruff/format/strict mypy and 135 independent offline structural cases/67 reference checks passed. PR CI39350544354 passed the pinned external schema validator and all required checks; protected-main CI39350659100 also succeeded. Full contracts remain partial: B2 invitations, B3 linking, then ID-C credentials. Trusted producer obligations cover owner eligibility, pending security-event fences, actual SQL serialization and recovery; those are not deployed implementation claims. Available cloud storage was about 140 MiB, so the capacity gate remains closed.
 - Cloud audit: current shared project/billing accessible; target projects/IAM/quota and credit eligibility/expiry unknown. Deployment NO-GO, Platform owns remediation; product/billing owner supplies private credit evidence. Private raw records remain outside the checkout; no account IDs published.
 - Shared storage: free space fell to 57.7 MiB and was about 143 MiB at this checkpoint. At ID-A integration, available space was about 111 MiB. Only ~18 MB is project-owned disposable cache. Other projects, active consumers and migration archives are excluded from cleanup; the >=20 GiB capacity gate remains closed.
 - Exact pending action: existing balanced boot disk 200→300 GiB (~+$10/month) with a regional recovery snapshot (up to roughly +$10/month while retained), before credits/tax. No reboot, detach or formatting; verify snapshot READY, exact disk/partition layout, running consumers and >=20 GiB free. Snapshot retention review after seven days; effective recycle retention remains to be verified. Official [pricing](https://cloud.google.com/compute/disks-image-pricing) and [resize procedure](https://docs.cloud.google.com/compute/docs/disks/resize-persistent-disk).
