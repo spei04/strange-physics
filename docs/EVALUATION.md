@@ -15,7 +15,7 @@ may enter fit/predict inputs or the public protocol/report.
 The versioned protocol contains 1–24 ordered probe IDs and their exact public
 PredictionRequests and recomputed hashes. Each request stays inside the accepted
 single-particle, one-anchor, zero-rest linear spring counterfactual domain:
-k in [0,4], mass in [0.5,2], anchor norm <=0.5, initial position norm <=3,
+private true k in [0,4], mass in [0.5,2], anchor norm <=0.5, initial position norm <=3,
 initial velocity norm <=2, impulse norm <=1, horizon <=2 seconds. SCI grid
 validation and its 2–2,001 frame/work bounds remain unchanged. Counterfactual
 IDs/topology must agree within each request/response; they need not equal the
@@ -24,7 +24,9 @@ source world's identity or mass.
 The source world must itself be a supported one-particle stationary spring
 world, with zero cubic coefficient and zero position/velocity observation noise.
 Its coefficient supplies evaluator truth; the fitted coefficient never supplies
-labels. The evaluator does not import the fitter or predictor implementation.
+labels. A finite nonnegative learned coefficient above4 is not a protocol failure:
+the predictor may return failed/unsupported output, which remains an unscorable
+prediction outcome. The true-k bound never filters learned models. The evaluator does not import the fitter or predictor implementation.
 
 SDK integration separately verifies the actual private journal and exact public
 purchased prefix. It freezes protocol and normalization before outcomes and
@@ -109,3 +111,28 @@ counts; actual report hashing/timing; independent reference cases and per-probe
 I1 checks. Run full tests, lint/format, strict types, external schemas, configured
 security gate, offline package allowlist and installed-wheel checks as applicable.
 Independent source review plus exact integrated-head PR/main CI remain gates.
+
+
+## Early contract checkpoint
+
+The additive definitions are in evaluation_contracts.py and
+contracts/evaluation.schema.json. SpringEvaluationProtocol embeds ordered
+SpringEvaluationProbe values. ProbePrediction binds an actual request hash to
+a response, explicit failed marker or invalid marker; an omitted entry means
+missing. SpringPredictionSubmissions is the retained collection whose entries
+tuple is passed to the planned callable. It has a structural ceiling of48
+entries, allowing bounded duplicate/foreign associations to reach explicit
+protocol failure; valid evaluation accepts no more than24 submissions.
+
+SpringEvaluationResult is private: its complete SpringReferenceArtifact and
+source-world hash must not be exported with public reports. ProbeAssessment
+values retain ordered statuses and non-primary per-probe MSE. Diagnostics retain
+prediction and metric not-assessed counts separately. report_sha256 binds the
+actual canonical SCI report including measured timing. The actual-input binder
+recomputes model/protocol/submission/reference identities and verifies exact
+reference grids; it does not prove numeric authenticity or journal origin.
+
+The structural JSON boundary rejects invalid types, unbounded containers and
+nonpositive scale. Semantic association/domain/arithmetic checks produce the
+planned typed scorer outcomes. Only normalized typed inputs belong in the
+scorer. The examples contain invented values and timing, not measured results.
