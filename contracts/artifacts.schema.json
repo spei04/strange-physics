@@ -1,0 +1,847 @@
+{
+  "$defs": {
+    "ArtifactPolicy": {
+      "additionalProperties": false,
+      "description": "Required versioned bounds. Values are deployment policy, not production defaults.",
+      "properties": {
+        "allowed_media_types": {
+          "items": {
+            "maxLength": 128,
+            "minLength": 3,
+            "not": {
+              "pattern": "[^a-z0-9!#$&^_.+/-]"
+            },
+            "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]*/[a-z0-9][a-z0-9!#$&^_.+-]*$",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Allowed Media Types",
+          "type": "array"
+        },
+        "max_artifact_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Artifact Bytes",
+          "type": "integer"
+        },
+        "max_artifacts": {
+          "maximum": 128,
+          "minimum": 0,
+          "title": "Max Artifacts",
+          "type": "integer"
+        },
+        "max_envelope_bytes": {
+          "maximum": 2147483647,
+          "minimum": 1,
+          "title": "Max Envelope Bytes",
+          "type": "integer"
+        },
+        "max_state_depth": {
+          "maximum": 64,
+          "minimum": 1,
+          "title": "Max State Depth",
+          "type": "integer"
+        },
+        "max_state_nodes": {
+          "maximum": 1000000,
+          "minimum": 1,
+          "title": "Max State Nodes",
+          "type": "integer"
+        },
+        "max_total_artifact_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Max Total Artifact Bytes",
+          "type": "integer"
+        },
+        "policy_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Policy Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_id",
+        "max_envelope_bytes",
+        "max_state_depth",
+        "max_state_nodes",
+        "max_artifacts",
+        "max_artifact_bytes",
+        "max_total_artifact_bytes",
+        "allowed_media_types"
+      ],
+      "title": "ArtifactPolicy",
+      "type": "object"
+    },
+    "ArtifactRef": {
+      "additionalProperties": false,
+      "description": "Public immutable object-version identity; neither location nor access authority.",
+      "properties": {
+        "artifact_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "generation": {
+          "maxLength": 20,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^0-9]"
+          },
+          "pattern": "^[1-9][0-9]{0,19}$",
+          "title": "Generation",
+          "type": "string"
+        },
+        "media_type": {
+          "maxLength": 128,
+          "minLength": 3,
+          "not": {
+            "pattern": "[^a-z0-9!#$&^_.+/-]"
+          },
+          "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]*/[a-z0-9][a-z0-9!#$&^_.+-]*$",
+          "title": "Media Type",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "generation",
+        "sha256",
+        "size_bytes",
+        "media_type"
+      ],
+      "title": "ArtifactRef",
+      "type": "object"
+    },
+    "Checkpoint": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.checkpoint.v1",
+          "default": "strange-physics.checkpoint.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "state": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "State",
+          "type": "object"
+        },
+        "through_index": {
+          "minimum": -1,
+          "title": "Through Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "agent_id",
+        "through_index",
+        "state"
+      ],
+      "title": "Checkpoint",
+      "type": "object"
+    },
+    "CheckpointArtifacts": {
+      "additionalProperties": false,
+      "description": "Current verified ref list for exactly one normalized full request and policy.",
+      "properties": {
+        "checked_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Checked At",
+          "type": "integer"
+        },
+        "objects": {
+          "items": {
+            "$ref": "#/$defs/VerifiedArtifact"
+          },
+          "maxItems": 128,
+          "title": "Objects",
+          "type": "array"
+        },
+        "policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "request_sha256",
+        "policy_sha256",
+        "checked_at",
+        "objects"
+      ],
+      "title": "CheckpointArtifacts",
+      "type": "object"
+    },
+    "CheckpointBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Config Sha256",
+          "type": "string"
+        },
+        "agent_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "agent_package_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Agent Package Sha256",
+          "type": "string"
+        },
+        "checkpoint_protocol": {
+          "const": "strange-physics.checkpoint.v1",
+          "default": "strange-physics.checkpoint.v1",
+          "title": "Checkpoint Protocol",
+          "type": "string"
+        },
+        "runtime_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Image Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_id",
+        "agent_package_sha256",
+        "agent_config_sha256",
+        "runtime_image_sha256"
+      ],
+      "title": "CheckpointBinding",
+      "type": "object"
+    },
+    "CheckpointCommitPlan": {
+      "additionalProperties": false,
+      "description": "Pure all-or-nothing proposal; success is not proof of a storage or SQL commit.",
+      "properties": {
+        "expected_checkpoint_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Expected Checkpoint Revision",
+          "type": "integer"
+        },
+        "head": {
+          "$ref": "#/$defs/CheckpointHead"
+        },
+        "outbox": {
+          "$ref": "#/$defs/CheckpointOutbox"
+        },
+        "record": {
+          "$ref": "#/$defs/CheckpointRecord"
+        }
+      },
+      "required": [
+        "expected_checkpoint_revision",
+        "record",
+        "head",
+        "outbox"
+      ],
+      "title": "CheckpointCommitPlan",
+      "type": "object"
+    },
+    "CheckpointHead": {
+      "additionalProperties": false,
+      "description": "Latest immutable checkpoint pointer, changed only by an atomic checkpoint commit.",
+      "properties": {
+        "checkpoint_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Checkpoint Revision",
+          "type": "integer"
+        },
+        "index": {
+          "maximum": 9999,
+          "minimum": -1,
+          "title": "Index",
+          "type": "integer"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "index",
+        "request_sha256",
+        "checkpoint_revision"
+      ],
+      "title": "CheckpointHead",
+      "type": "object"
+    },
+    "CheckpointLookup": {
+      "additionalProperties": false,
+      "description": "Bounded current natural-key lookup plus latest pointer, under the same run lock.\n\nA missing record/outbox projection is representable so recovery can fail explicitly.\nProducers establish completeness, absence and currency; parsing proves none of them.",
+      "properties": {
+        "head": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CheckpointHead"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index": {
+          "maximum": 9999,
+          "minimum": -1,
+          "title": "Index",
+          "type": "integer"
+        },
+        "outbox": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CheckpointOutbox"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CheckpointRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "index",
+        "revision",
+        "head",
+        "record",
+        "outbox"
+      ],
+      "title": "CheckpointLookup",
+      "type": "object"
+    },
+    "CheckpointOutbox": {
+      "additionalProperties": false,
+      "description": "Retained dispatch identity; delivery state cannot replace this committed projection.",
+      "properties": {
+        "checkpoint_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Checkpoint Revision",
+          "type": "integer"
+        },
+        "event_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "index": {
+          "maximum": 9999,
+          "minimum": -1,
+          "title": "Index",
+          "type": "integer"
+        },
+        "record_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Record Sha256",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "workspace_id",
+        "run_id",
+        "index",
+        "request_sha256",
+        "checkpoint_revision",
+        "record_sha256"
+      ],
+      "title": "CheckpointOutbox",
+      "type": "object"
+    },
+    "CheckpointRecord": {
+      "additionalProperties": false,
+      "description": "Immutable committed history; its entire verified snapshot is retained privately.",
+      "properties": {
+        "artifacts": {
+          "$ref": "#/$defs/CheckpointArtifacts"
+        },
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "binding": {
+          "$ref": "#/$defs/CheckpointBinding"
+        },
+        "checkpoint_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Checkpoint Revision",
+          "type": "integer"
+        },
+        "committed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Committed At",
+          "type": "integer"
+        },
+        "index": {
+          "maximum": 9999,
+          "minimum": -1,
+          "title": "Index",
+          "type": "integer"
+        },
+        "lease_epoch": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Lease Epoch",
+          "type": "integer"
+        },
+        "request": {
+          "$ref": "#/$defs/CheckpointRequest"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "run_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Run Revision",
+          "type": "integer"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "index",
+        "request",
+        "request_sha256",
+        "binding",
+        "artifacts",
+        "attempt_id",
+        "lease_epoch",
+        "run_revision",
+        "checkpoint_revision",
+        "committed_at"
+      ],
+      "title": "CheckpointRecord",
+      "type": "object"
+    },
+    "CheckpointReplay": {
+      "additionalProperties": false,
+      "description": "Authorized metadata/body replay; does not move the latest pointer or charge resources.",
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/CheckpointRequest"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "request",
+        "request_sha256"
+      ],
+      "title": "CheckpointReplay",
+      "type": "object"
+    },
+    "CheckpointRequest": {
+      "additionalProperties": false,
+      "description": "Existing public body with the ART v1 reference definition; CORE is unchanged.",
+      "properties": {
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/ArtifactRef"
+          },
+          "maxItems": 128,
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "checkpoint": {
+          "$ref": "#/$defs/Checkpoint"
+        },
+        "runtime_image_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Runtime Image Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "checkpoint",
+        "runtime_image_sha256",
+        "artifacts"
+      ],
+      "title": "CheckpointRequest",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "ObjectVerification": {
+      "additionalProperties": false,
+      "description": "Trusted complete stored-byte readback, not object user metadata or a client claim.\n\nThe producer verifies the entire raw byte stream at this exact generation,\nwith transport checksum validation where supported. This message does not do I/O.",
+      "properties": {
+        "completeness": {
+          "const": "complete",
+          "title": "Completeness",
+          "type": "string"
+        },
+        "generation": {
+          "maxLength": 20,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^0-9]"
+          },
+          "pattern": "^[1-9][0-9]{0,19}$",
+          "title": "Generation",
+          "type": "string"
+        },
+        "locator": {
+          "$ref": "#/$defs/StorageLocator"
+        },
+        "media_type": {
+          "maxLength": 128,
+          "minLength": 3,
+          "not": {
+            "pattern": "[^a-z0-9!#$&^_.+/-]"
+          },
+          "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]*/[a-z0-9][a-z0-9!#$&^_.+-]*$",
+          "title": "Media Type",
+          "type": "string"
+        },
+        "observed_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Observed At",
+          "type": "integer"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        },
+        "verification_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verification Id",
+          "type": "string"
+        },
+        "verifier_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Verifier Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "verification_id",
+        "verifier_id",
+        "locator",
+        "generation",
+        "sha256",
+        "size_bytes",
+        "media_type",
+        "observed_at",
+        "completeness"
+      ],
+      "title": "ObjectVerification",
+      "type": "object"
+    },
+    "RunArtifactRecord": {
+      "additionalProperties": false,
+      "description": "Current tenant/run catalog row; producer establishes currency and namespace ownership.",
+      "properties": {
+        "created_at": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Created At",
+          "type": "integer"
+        },
+        "locator": {
+          "$ref": "#/$defs/StorageLocator"
+        },
+        "ref": {
+          "$ref": "#/$defs/ArtifactRef"
+        },
+        "revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "run_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "uploading",
+            "available",
+            "tombstoned",
+            "deleted"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "agent-visible",
+            "workspace-private",
+            "evaluator-only",
+            "public"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        },
+        "workspace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Workspace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workspace_id",
+        "run_id",
+        "ref",
+        "locator",
+        "visibility",
+        "state",
+        "revision",
+        "created_at"
+      ],
+      "title": "RunArtifactRecord",
+      "type": "object"
+    },
+    "StorageLocator": {
+      "additionalProperties": false,
+      "description": "Private configured namespace and server-assigned key; no client URL or credentials.",
+      "properties": {
+        "namespace_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Namespace Id",
+          "type": "string"
+        },
+        "object_key": {
+          "maxLength": 512,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^A-Za-z0-9_./-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_./-]*$",
+          "title": "Object Key",
+          "type": "string"
+        },
+        "provider": {
+          "const": "gcs",
+          "title": "Provider",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider",
+        "namespace_id",
+        "object_key"
+      ],
+      "title": "StorageLocator",
+      "type": "object"
+    },
+    "VerifiedArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "record": {
+          "$ref": "#/$defs/RunArtifactRecord"
+        },
+        "verification": {
+          "$ref": "#/$defs/ObjectVerification"
+        }
+      },
+      "required": [
+        "record",
+        "verification"
+      ],
+      "title": "VerifiedArtifact",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/artifacts.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Bounded artifact and checkpoint messages. Internal storage, authority and commit evidence are producer obligations, never public inputs or proof of live enforcement.",
+  "x-contract-status": "ART1 API review; no runtime acceptance or SP-01.c freeze",
+  "x-public-models": [
+    "ArtifactRef",
+    "CheckpointRequest"
+  ]
+}

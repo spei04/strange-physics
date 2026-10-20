@@ -227,6 +227,19 @@ def main() -> None:
                 group == "runtime_negative",
             )
 
+    artifacts = json.loads((ROOT / "artifacts.examples.json").read_text())
+    for name, fixture in artifacts["valid"].items():
+        check(f"artifacts.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in artifacts[group]:
+            value = copy.deepcopy(artifacts["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"artifacts.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     for fixture in sessions["workspace_session_failures"]:
         check("control.schema.json#/$defs/Error", fixture["output"])
 

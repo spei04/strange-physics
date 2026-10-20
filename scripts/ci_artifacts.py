@@ -22,6 +22,7 @@ from pathlib import Path, PurePosixPath
 MODULES = frozenset(
     {
         "__init__.py",
+        "artifact_contracts.py",
         "cli.py",
         "contracts.py",
         "control_contracts.py",
