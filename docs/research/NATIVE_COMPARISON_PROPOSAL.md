@@ -127,4 +127,4 @@ Use the existing machine, at most8 CPU-core-hours and1GiB new artifacts, with ze
 
 ## Current assignment
 
-Quality independently accepted this as a planning proposal at ad89f8d: source compatibility, resolved acyclic dependencies, closure counts and effort totals agree. The active graphs and gates are unchanged. WEB1 runtime is independently reviewed; Research released verified source and the lead integrates. Platform reviews integration consistency; Quality has prepared SP-01.e/#98, with no source authoring before exact WEB1 acceptance. No native implementation task or experiment has started. RA_EXEC remains pending.
+Quality independently accepted this as a planning proposal at ad89f8d: source compatibility, resolved acyclic dependencies, closure counts and effort totals agree. The active graphs and gates are unchanged. WEB1 is integrated through PR #97 with exact PR/main/candidate acceptance. Quality owns SP-01.e/VAL1; Research and Platform review, and lead owns integration and progress. No native implementation task or experiment has started. RA_EXEC remains pending.

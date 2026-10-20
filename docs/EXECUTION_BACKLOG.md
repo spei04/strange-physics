@@ -564,7 +564,7 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Security and reliability:** Resync reauthorizes caller/run; no blind truth in active feed.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Frontend engineer; base reference lane FE. Required review: Frontend, backend, Backend, SDK, frontend, Platform, research. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; in progress, issue #94. WORLD1 is complete through PR #95 with exact PR/main checks. WEB1 remains before full SP-01.d; existing estimates, prerequisites and gates are unchanged.
+- **Milestone / state:** R0; complete, issue #94. WORLD1 PR #95 and WEB1 PR #97 passed independent review, exact PR/main checks and private package verification. Hosted producers remain later work.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-01-e"></a>
@@ -580,7 +580,7 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Security and reliability:** Synthetic data only; draft routes excluded from freeze.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Quality engineer; base reference lane QE. Required review: Backend, SDK, frontend, Research, QE, Frontend, backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; backlog approved; not started; prerequisites and slice checkpoints still apply.
+- **Milestone / state:** R0; in progress, issue #98. All five actual prerequisites are complete. Quality owns VAL1 manifest/fixtures before generator implementation; CLIENT1 and MOCK1 follow as separately reviewed units.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="epic-sp-02"></a>
@@ -3373,11 +3373,11 @@ No implementation was started by this planning review. No new checkout, dependen
 
 SP-01.b is complete through the independently reviewed control, ID-A, ID-B/B1–B3 and ID-C/C1–C2 units plus final composition. PR #88/main 92320173ff0d3278c65cfc251983d57fab9960b1 matches accepted b8d3e5ee96b3b07da53eccbabddebc5a73223ba3 and tree 515e27ebbb594a15ce439b24a14463ed7a4cf9a7; PR CI39367180231 and all protected-main CI39367439199 jobs passed. Integrated 1,692 tests, Ruff/format92, strict mypy57,613 schema checks, configured security checks and offline package validation passed. The earlier 3–6-day remaining identity estimate is historical and no longer an outstanding assignment. Agent elapsed time is not human effort evidence. Full-contract consumers may use this bounded freeze once their other actual prerequisites pass; no live enforcement or release claim follows.
 
-SP-01.c/#89 is complete through three sequential reviewed units: ART1 immutable artifact/checkpoint identity, EXEC1 package/build/worker authority, and COMP1 native-model provenance and recovery. Exact PR/main checks passed. SP-01.d/#94 follows in WORLD1 and WEB1 PRs after the reviewed writer handoff. CORE/SCI bytes and the integrated local I1 workflow stay unchanged. These pure contracts do not establish live producers or deployment.
+SP-01.c/#89 is complete through three sequential reviewed units: ART1 immutable artifact/checkpoint identity, EXEC1 package/build/worker authority, and COMP1 native-model provenance and recovery. Exact PR/main checks passed. SP-01.d/#94 is complete through WORLD1 PR #95 and WEB1 PR #97; Quality now owns SP-01.e/#98 VAL1. CORE/SCI bytes and the integrated local I1 workflow stay unchanged. These pure contracts do not establish live producers or deployment.
 
 The coordinated [CI-01 request](https://github.com/spei04/strange-physics/issues/54) adds bounded repository CI/CD maintenance. It does not waive the cloud storage/provisioning gates or complete SP-27.a. Repository-settings coordination owns branch protection; candidate delivery requires protected main and successful required checks. Publication/deployment remain separately gated.
 
-Execution checkpoint 2026-10-20: SP-01.b/c and bounded I1 are complete. Research is assigned SP-01.d/#94 after reviewed handoff; Platform/Quality review and lead integrates. SP-01.e preparation remains read-only. SP-02.b capacity is complete after the approved recovery snapshot and expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
+Execution checkpoint 2026-10-20: SP-01.b/c/d and bounded I1 are complete. Quality owns SP-01.e/#98 VAL1; Research and Platform review, and lead integrates. SP-02.b capacity is complete after the approved recovery snapshot and expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
 
 
 Scientific execution checkpoint 2026-10-20: Research's read-only dependency review
@@ -3385,7 +3385,7 @@ confirms SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b → SP-06.a →
 with the additional approved joins and accepted predecessors recorded in
 [EXECUTION_LOG.md](EXECUTION_LOG.md#scientific-acceptance-checkpoint--i1-complete).
 SP-06.a/#83 and SP-04.e/#87 are integrated; bounded I1 is complete through PR #90.
-SP-01.b/c are integrated; Research receives SP-01.d/#94 WORLD1 after the reviewed handoff. The six scientific tasks retain
+SP-01.b/c/d are integrated; Quality owns SP-01.e/#98 VAL1 after accepted WEB1 integration. The six scientific tasks retain
 19 reference engineering days plus 4.75 reserve, not a subagent schedule promise.
 No unfinished identity contract or whole-R0 gate is a prerequisite for this local
 slice. Enterprise work and its actual consumer gates remain unchanged. I1 has
@@ -3470,3 +3470,7 @@ Planning PR #96 is integrated as ee4831a with reviewed tree3192574; all four app
 2026-10-20 — WEB1 runtime85c0a98 is independently accepted after captured-run/final-event and exact replay-request binding repairs. Annotation source00800555 changes only WEB status metadata and documentation; final source checks remain active. Quality has prepared SP-01.e/#98 as VAL1 public fixtures/drift checks, CLIENT1 pinned TypeScript compatibility and MOCK1 deterministic streams. Its first manifest/fixture checkpoint and source authoring wait for exact WEB1 PR/main acceptance and the identity writer handoff; existing task dependencies and estimates remain unchanged.
 
 2026-10-20 — Final WEB1 source f2d1068 passes3,104 tests,321 WEB cases,1,431 external schemas, Ruff/format136, strict mypy95, exact configured Bandit and offline package/installed-callable checks. Final author b5f69f0 adds evidence documentation only. Runtime85c0a98 is independently accepted by lead, Platform and Quality; exact PR #97/main and private candidate verification remain before SP-01.d completion. Quality is assigned SP-01.e/#98 next, beginning with VAL1 manifest/fixtures after writer release and exact integration.
+
+2026-10-20 — SP-01.d is complete through WORLD1 PR #95 and WEB1 PR #97/main15714e6ac4b6b300f0170e5aa22722987decd786, matching reviewed73d943b8bfb96be6a898a511af3053e4e5cca568/tree0a10921751ced4f6bf3120035ab102630067b60d. All four applicable PR CI39402376299 and all five protected-main CI39402868552 jobs passed. WEB1 passed 3,104 full tests, 321 focused cases, 1,431 external schema cases, configured lint/type/security checks and offline package/installed-callable checks. Independent reviews accepted the repaired snapshot, event and exact-request joins. Candidate artifact12255421593 was checksum, provenance, lock and packaged-source verified and retained privately. These are pure contracts and predicates; live HTTP/database/storage producers remain later tasks.
+
+Quality owns SP-01.e/#98 VAL1 in the reused identity checkout at accepted WEB1 main15714e6. The first immutable checkpoint contains the public-root/audience manifest, synthetic fixtures and raw/canonical byte goldens. Research reviews scientific identity and fixture semantics; Platform reviews public/private boundaries, references and drift. Generator and CI integration follow checkpoint acceptance; CLIENT1 and MOCK1 remain separate. Lead owns primary integration and progress. No additional checkout or dependency installation; the native proposal and RA_EXEC remain pending.
