@@ -1,8 +1,8 @@
 # Package and worker execution contract
 
-Status: EXEC1 API accepted; pure runtime predicates are under independent
-review. Real package processing, hosted producers and the full SP-01.c freeze
-remain pending.
+Status: EXEC1 API and pure runtime independently reviewed; local checks pass.
+Integration, matching hosted CI, real package processing, hosted producers and
+the full SP-01.c freeze remain pending.
 [ART1](ARTIFACT_CONTRACT.md), [C2](RUN_CREDENTIAL_CONTRACT.md), CORE and SCI
 retain their accepted boundaries. This document defines typed inputs and pure
 proposal shapes; constructing a trusted record does not verify its provenance.
@@ -283,8 +283,11 @@ provenance. A revoked or expired presented worker credential fails before
 broker replay. Current run progress may advance, but immutable original
 ownership, space, total budget, package/config/runtime identities and deadline
 remain pinned. Current policy may be stricter than original admission.
-The fixed acyclic lifecycle admits only reachable revision ranges; exact
-no-op replay does not increase a revision. Retained termination completion
+The fixed acyclic lifecycle validates joint state/revision/instance ranges
+and receipt-to-current transition distances; exact no-op replay does not
+increase a revision. A stopped revision-five history necessarily passed
+through active confirmation before its first fence; earlier stopped revisions
+may discover an instance during termination reconciliation. Retained termination completion
 cannot predate that termination's acceptance.
 
 A requested restore has an explicit transient `RestoreCandidate`: actual
@@ -315,3 +318,36 @@ a client-supplied prefix scalar nor full trajectory materialization on every
 restore is an acceptable substitute. SP-12.a owns cumulative resource
 reservations; SP-11 owns authorization/RLS. This slice does not implement
 that future storage projection or claim scalable storage enforcement.
+
+## Reviewed runtime validation
+
+Runtime source `fe3b0088d4bca0623459f9024eceb42036e8d491` passed
+independent source and behavioral review. Its local Python 3.12 checks passed:
+
+- 2,281 full-suite tests; the focused EXEC/ART/control set has 615 cases,
+  including 190 runtime cases and 137 EXEC API cases.
+- Repository Ruff lint and formatting (112 files), and the exact
+  `mypy src tests examples` check (74 files).
+- 722 external JSON Schema fixture/reference checks. The runtime addition
+  changes no public schema or CORE/SCI/C2 wire shape.
+- The configured `bandit -r src scripts -ll` gate, with no medium or high
+  severity findings.
+- Offline pinned-tool wheel/source-archive build and reviewed archive
+  allowlist. A separate isolated wheel-only import smoke exercised package
+  and current-control predicates using existing pinned runtime dependencies;
+  it is not an installed-wheel or dependency-audit claim.
+
+Independent review additionally checked current runtime-policy denial,
+old-launch termination, restore/provenance joins and mutation-sensitive
+guards. A separately constructed lifecycle graph checked 84 combinations
+of state, revision and instance presence, 65 receipt histories and six
+chronology boundaries. The repaired closure rejects impossible joint
+histories and receipts that cannot reach the retained state, while preserving
+legal original/later receipt replay and late instance discovery during stop
+reconciliation.
+
+These are local pure-contract checks. Integration and matching hosted CI,
+including the installed-wheel and dependency audit jobs, remain required.
+They do not establish live token verification, SQL atomicity, safe extraction,
+sandbox isolation, resource accounting, provider-process control or recovery
+drill evidence. The full SP-01.c freeze still requires COMP1.
