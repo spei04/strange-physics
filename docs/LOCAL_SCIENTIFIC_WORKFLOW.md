@@ -212,4 +212,38 @@ constructs a synthetic mistaken learned coefficient with consistent provenance
 to test all-24 failure accounting. A separate synthetic wrong model tests a
 fully scored miss. Neither is claimed as an actual fitter estimate.
 
-Installed-wheel execution evidence and measured per-probe extrema follow below.
+Installed-wheel execution evidence and measured per-probe extrema:
+
+Installed-wheel acceptance at source `1bec36474e8896129e26355f2714f468960d59c3`
+used Python 3.12.3 and the pinned offline build. Wheel and source archive contents
+matched the reviewed package allowlist; the wheel was installed into a temporary
+owned directory and imported there under isolated Python, outside the checkout.
+Temporary package/install files were removed after the checks.
+
+| Fixed development case | Purchased records | Predicted/scored probes | Estimated k | Worst per-probe position RMSE |
+| --- | ---: | ---: | ---: | ---: |
+| Preregistered seed-7 CLI sequence | 4 | 24 / 24 | 0.6750572721112501 | 3.154199886178306e-8 |
+| SDK true k=1, mass=1 fixture | 1 | 24 / 24 | 0.9999999651839258 | 1.0098004529061669e-7 |
+
+Every probe passed the predeclared 0.001 RMSE bound. Each RMSE is the square
+root of the independent scorer's mean squared x/y position error across that
+probe's 41 times; the maximum is taken over all 24 probes. It is not the
+square root of a pooled mean used to conceal a failing probe. The SDK estimate
+also passed the predeclared 1% coefficient criterion.
+
+The installed SDK fixture uses position (1,0.25), velocity (0.25,-0.5), mass 1,
+no impulse, a static anchor at the origin and a stationary noiseless linear
+spring. The separate automated SDK fixture also covers a purchased impulse
+and an interspersed failed record. Neither uses evaluator labels for fitting,
+probe selection or prediction.
+
+Full runs, reference labels, all per-probe values, environment/build records
+and the exact command results are retained only in an owner-private evidence
+directory outside the checkout. Its index identifies source, task owner,
+purpose and a 2026-11-19 retention review. No private journal or labels are
+committed. The public values above concern synthetic development fixtures only.
+
+Independent review accepted the runtime and documented boundaries. Exact-head
+hosted CI and protected-main integration remain required before the project
+lead marks the delivery gate complete. These results establish the bounded
+local scientific path, not discovery across changing laws or production readiness.
