@@ -109,6 +109,39 @@ def main() -> None:
                         for item in items:
                             check(reference, item, group == "valid")
 
+    invitations = json.loads((ROOT / "invitation.examples.json").read_text())
+    for name, fixture in invitations["valid"].items():
+        check(f"invitation.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in invitations[group]:
+            value = copy.deepcopy(invitations["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"invitation.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+    invitation_api = documents[ROOT / "invitation.openapi.json"]
+    for path, routes in invitation_api["paths"].items():
+        for method, operation in routes.items():
+            escaped = path.replace("~", "~0").replace("/", "~1")
+            for index, parameter in enumerate(operation["parameters"]):
+                values = (
+                    control["idempotency_keys"]
+                    if parameter["name"] == "Idempotency-Key"
+                    else sessions["path_identifiers"]
+                    if parameter["in"] == "path"
+                    else None
+                )
+                if values is not None:
+                    reference = (
+                        f"invitation.openapi.json#/paths/{escaped}/{method}"
+                        f"/parameters/{index}/schema"
+                    )
+                    for group, items in values.items():
+                        for item in items:
+                            check(reference, item, group == "valid")
+
     for fixture in sessions["workspace_session_failures"]:
         check("control.schema.json#/$defs/Error", fixture["output"])
 

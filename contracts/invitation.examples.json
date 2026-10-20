@@ -1,0 +1,306 @@
+{
+  "notice": "Synthetic fixtures only. All token strings are public test values, not usable invitations or credentials.",
+  "runtime_negative": [
+    {
+      "field": "receipt_retention_seconds",
+      "model": "InvitationPolicy",
+      "value": 899
+    },
+    {
+      "field": "resolved_at",
+      "model": "InvitationRecord",
+      "value": 1021
+    },
+    {
+      "field": "state",
+      "model": "InvitationRecord",
+      "value": "accepted"
+    },
+    {
+      "field": "workspace_id",
+      "model": "InvitationPage",
+      "value": "foreign"
+    },
+    {
+      "field": "target_invitation_id",
+      "model": "InvitationReceipt",
+      "value": "invite-1"
+    },
+    {
+      "field": "expires_at",
+      "model": "VerifiedEmailAssertion",
+      "value": 1010
+    },
+    {
+      "field": "recipient_email",
+      "model": "CreateInvitationRequest",
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@example.test"
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "inviter_principal_id",
+      "model": "CreateInvitationRequest",
+      "value": "attacker"
+    },
+    {
+      "field": "recipient_email",
+      "model": "CreateInvitationRequest",
+      "value": "recipient@example.test\n"
+    },
+    {
+      "field": "role",
+      "model": "CreateInvitationRequest",
+      "value": "admin"
+    },
+    {
+      "field": "principal_id",
+      "model": "RedeemInvitationRequest",
+      "value": "attacker"
+    },
+    {
+      "field": "token",
+      "model": "RedeemInvitationRequest",
+      "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB"
+    },
+    {
+      "field": "token",
+      "model": "RedeemInvitationRequest",
+      "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+    },
+    {
+      "field": "create_attempt_limit",
+      "model": "InvitationPolicy",
+      "value": 0
+    },
+    {
+      "field": "redeem_attempt_limit",
+      "model": "InvitationPolicy",
+      "value": 0
+    },
+    {
+      "field": "key",
+      "model": "InvitationReceipt",
+      "value": "bad\n"
+    }
+  ],
+  "valid": {
+    "CreateInvitationRequest": {
+      "expected_workspace_revision": 2,
+      "recipient_email": "Recipient+lab@example.test",
+      "role": "researcher"
+    },
+    "CurrentRecipientIdentity": {
+      "identity_active": true,
+      "issuer": "https://securetoken.google.com/example-project",
+      "principal": {
+        "active": true,
+        "kind": "human",
+        "principal_id": "recipient-1"
+      },
+      "provider_id": "managed",
+      "subject": "recipient-subject",
+      "tenant_id": null
+    },
+    "InvitationIssued": {
+      "invitation": {
+        "accepted_principal_id": null,
+        "created_at": 1020,
+        "expires_at": 1620,
+        "invitation_id": "invite-1",
+        "inviter_principal_id": "principal-1",
+        "recipient_email": "Recipient+lab@example.test",
+        "resolved_at": null,
+        "revision": 0,
+        "role": "researcher",
+        "state": "pending",
+        "workspace_id": "ws-1"
+      },
+      "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "InvitationPage": {
+      "items": [
+        {
+          "accepted_principal_id": null,
+          "created_at": 1020,
+          "expires_at": 1620,
+          "invitation_id": "invite-1",
+          "inviter_principal_id": "principal-1",
+          "recipient_email": "Recipient+lab@example.test",
+          "resolved_at": null,
+          "revision": 0,
+          "role": "researcher",
+          "state": "pending",
+          "workspace_id": "ws-1"
+        }
+      ],
+      "next_cursor": null,
+      "workspace_id": "ws-1"
+    },
+    "InvitationPolicy": {
+      "attempt_window_seconds": 60,
+      "create_attempt_limit": 10,
+      "email_assertion_max_age_seconds": 120,
+      "max_pending_per_workspace": 20,
+      "policy_id": "invite-policy-1",
+      "receipt_retention_seconds": 900,
+      "redeem_attempt_limit": 20,
+      "retry_window_seconds": 300,
+      "token_lifetime_seconds": 600
+    },
+    "InvitationReceipt": {
+      "key": "issue-1",
+      "operation": "issue",
+      "outcome_invitation_id": "invite-1",
+      "principal_id": "principal-1",
+      "request_sha256": "b649ae4926a6782c4bc3471f2929820f309040eb05181656f96dac1aed5ef626",
+      "target_invitation_id": null,
+      "workspace_id": "ws-1"
+    },
+    "InvitationRecord": {
+      "accepted_principal_id": null,
+      "created_at": 1020,
+      "expires_at": 1620,
+      "invitation_id": "invite-1",
+      "inviter_membership_revision": 4,
+      "inviter_principal_id": "principal-1",
+      "policy_id": "invite-policy-1",
+      "recipient_email": "Recipient+lab@example.test",
+      "resolved_at": null,
+      "revision": 0,
+      "role": "researcher",
+      "state": "pending",
+      "token_sha256": "3406561051968c6f6765d4221cea72674170ebaa81c5663e255ec138700ac749",
+      "workspace_id": "ws-1"
+    },
+    "InvitationView": {
+      "accepted_principal_id": null,
+      "created_at": 1020,
+      "expires_at": 1620,
+      "invitation_id": "invite-1",
+      "inviter_principal_id": "principal-1",
+      "recipient_email": "Recipient+lab@example.test",
+      "resolved_at": null,
+      "revision": 0,
+      "role": "researcher",
+      "state": "pending",
+      "workspace_id": "ws-1"
+    },
+    "RedeemInvitationRequest": {
+      "token": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "RedemptionContext": {
+      "actor": {
+        "context": {
+          "browser_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "csrf_matches": true,
+          "csrf_scope": "session",
+          "has_bearer": false,
+          "has_session_cookie": true,
+          "origin": "https://app.example",
+          "target_origin": "https://app.example"
+        },
+        "credential": {
+          "generation": 0,
+          "session_id": "recipient-session"
+        },
+        "session": {
+          "absolute_expires_at": 4610,
+          "authenticated_at": 990,
+          "created_at": 1010,
+          "generation": 0,
+          "last_seen_at": 1010,
+          "policy_id": "synthetic-policy-1",
+          "principal_active": true,
+          "principal_id": "recipient-1",
+          "revoked": false,
+          "session_id": "recipient-session"
+        }
+      },
+      "email_assertion": {
+        "assertion_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "audience": "example-project",
+        "email": "Recipient+lab@example.test",
+        "email_verified": true,
+        "expires_at": 2000,
+        "issued_at": 1010,
+        "issuer": "https://securetoken.google.com/example-project",
+        "provider_id": "managed",
+        "session_generation": 0,
+        "session_id": "recipient-session",
+        "subject": "recipient-subject",
+        "tenant_id": null,
+        "upstream_provider": "google.com",
+        "verified_at": 1011
+      },
+      "inviter_membership": {
+        "active": true,
+        "principal_id": "principal-1",
+        "revision": 4,
+        "role": "owner",
+        "workspace_id": "ws-1"
+      },
+      "inviter_principal": {
+        "active": true,
+        "kind": "human",
+        "principal_id": "principal-1"
+      },
+      "recipient_identity": {
+        "identity_active": true,
+        "issuer": "https://securetoken.google.com/example-project",
+        "principal": {
+          "active": true,
+          "kind": "human",
+          "principal_id": "recipient-1"
+        },
+        "provider_id": "managed",
+        "subject": "recipient-subject",
+        "tenant_id": null
+      },
+      "recipient_membership": null,
+      "workspace": {
+        "active_owner_ids": [
+          "principal-1"
+        ],
+        "disabled_owner_ids": [],
+        "workspace": {
+          "display_name": "Research lab",
+          "revision": 2,
+          "state": "active",
+          "visibility": "private",
+          "workspace_id": "ws-1"
+        }
+      }
+    },
+    "RedemptionResult": {
+      "invitation_id": "invite-1",
+      "membership": {
+        "active": true,
+        "principal_id": "recipient-1",
+        "revision": 0,
+        "role": "researcher",
+        "workspace_id": "ws-1"
+      },
+      "workspace_id": "ws-1"
+    },
+    "RevokeInvitationRequest": {
+      "expected_invitation_revision": 0
+    },
+    "VerifiedEmailAssertion": {
+      "assertion_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "audience": "example-project",
+      "email": "Recipient+lab@example.test",
+      "email_verified": true,
+      "expires_at": 2000,
+      "issued_at": 1010,
+      "issuer": "https://securetoken.google.com/example-project",
+      "provider_id": "managed",
+      "session_generation": 0,
+      "session_id": "recipient-session",
+      "subject": "recipient-subject",
+      "tenant_id": null,
+      "upstream_provider": "google.com",
+      "verified_at": 1011
+    }
+  }
+}
