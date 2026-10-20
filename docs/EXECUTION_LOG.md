@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | SP-02.b complete; SP-03.a review accepted; B3 identity linking (#63) queued | No infrastructure mutation pending; independent scientific reviews continue |
-| Research | SP-03.b domain calibration (#75), in progress | Exclusive source writer; Quality/Platform independently review |
-| Quality | SP-03.a independently accepted; SP-03.b review next | ID-C/#64 still depends on B3; independent SP-06.a scorer follows SP-04.b |
-| Project lead | SP-03.a integrated; coordinate SP-03.b acceptance | Main and PR checks passed; existing checkout reused with sequential writer handoff |
+| Platform | ID-B/B3 identity linking (#63), in progress | Exclusive identity cloud checkout; Quality/lead review before ID-C |
+| Research | SP-03.b calibration accepted locally; SP-04.a fitter (#77) preparation next | Primary cloud checkout released for integration; authoring follows accepted dependency and lead handoff |
+| Quality | SP-03.b independent acceptance; B3 review next | ID-C/#64 still depends on B3; independent SP-06.a scorer follows SP-04.b |
+| Project lead | Integrate reviewed SP-03.b; coordinate fitter and B3 | Exact-head checks before merge; two independently owned cloud checkouts, no shared mutable dependencies |
 
 ## Assignments
 
@@ -76,6 +76,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | Next after SP-03.a integration | Research | SP-03.b/#75 — first-spring domain, sampling bias and error bounds | Read-only preparation; authoring waits for dependency acceptance and lead handoff |
 | 2026-10-20 02:09 | Project lead | SP-03.a integration and SP-03.b writer handoff | PR #76 merged 8510243; accepted tree e81fa2f matches reviewed 2c73c3c; PR/main CI passed; existing checkout reused |
 | 2026-10-20 02:09 | Research | SP-03.b/#75 — calibration implementation | In progress; predeclared domain, quadrature/solver/prediction separation, zero/weak excitation and per-probe acceptance |
+| 2026-10-20 02:13 | Platform | ID-B/B3/#63 — explicit identity linking | Active in one separate cloud worktree; primary checkout remains with Research; bounded plan accepted |
+| 2026-10-20 02:20 | Quality | SP-03.b — independent reproduction and numerical failure review | Reproduced fixed matrices; found derived-arithmetic and propagation overflow paths; Research repaired explicit JSON-safe failure accounting |
+| 2026-10-20 02:25 | Research | SP-03.b/#75 — noiseless domain calibration and noise sensitivity | 43e0589 accepted; 817 full tests, 204 focused; Ruff/format and strict mypy passed; primary writer released |
+| 2026-10-20 02:25 | Project lead | SP-03.b integration; SP-04.a/#77 preparation assigned | Quality accepted immutable source; exact-head CI still required; production fitter authoring follows integration |
 
 ## Review evidence and management checkpoint
 
@@ -94,6 +98,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 - Shared storage: cloud free space measured 101,232,640 bytes (~96.5 MiB), then 103,305,216 bytes (~98.5 MiB), on 2026-10-20; checkout mutations stopped below the 100 MiB no-write floor. Mac read-back was 323 MiB after a transient no-space warning. Only ~18 MB is project-owned disposable cloud cache; other projects and migration archives are excluded. This historical stop was resolved by the approved SP-02.b recovery below; no unrelated cleanup occurred.
 - Capacity recovery: the product owner approved the concrete 200→300 GiB balanced boot-disk expansion and recovery snapshot on 2026-10-20. Platform completed the globally scoped STANDARD snapshot, stored in us-central1, before expanding the same attached disk and its root partition/ext4 filesystem online. Snapshot completion was 01:54:35 UTC; resize and filesystem growth completed by 01:56:22 UTC. No reboot, stop, detach, formatting, cleanup, dependency install or IAM change occurred. Platform measured 104,103,600,128 bytes free; Quality independently measured 104,113,758,208 bytes (~96.96 GiB), above the 20 GiB gate. The filesystem totals 310,911,414,272 bytes. Platform and Quality fully rehashed the protected archive, pinned uv and all 3,414 venv entries; source, manifest/runtime fingerprints, directory metadata, recorded long-lived consumers, boot identity and service state were preserved. Private evidence and its hash index remain outside the checkout with owner-only 0700/0600 permissions. Snapshot review is 2026-10-27, with no automatic deletion; the three-day recycle period begins only after a future deletion. This is a crash-consistent snapshot, not a restore rehearsal or application-health proof. Ordinary diagnostics are reviewed 2026-11-19; unique recovery records remain until superseded. Official [pricing](https://cloud.google.com/compute/disks-image-pricing) and [resize procedure](https://docs.cloud.google.com/compute/docs/disks/resize-persistent-disk).
 - CI/CD complete for this package: PR #56 merged 256b409 with a matching reviewed tree. Main run 39347053265 passed all checks and delivered artifact 12231636153; independent in-memory bundle/checksum/source review passed, and the PR produced zero artifacts. DELIVERY_RECORD.md preserves exact hashes and policy read-back. This is unpublished candidate delivery, not deployment or production readiness. One-account GitHub approval limitation remains explicit.
+- Calibration delta: SP-03.b source 43e05897587ba3b7e1a4266c2d40af7cbaa1b5b6 passed independent Quality and lead review. Preregistration 5e524a1 and proof clarification f55d38f preceded measurements. All 63 primary and seven mixed-mass noiseless prefixes meet the joint criteria; maximum per-probe RMSE 8.46960e-6. Weak excitation retains 34 unsupported / 48 cases. Noise retains all 64 prefixes: six negative estimates, 13 joint passes, 406 computed probes over the bound and 144 failed probes. Derived arithmetic/propagation failures remain JSON-safe and counted. 817 full tests and 204 focused cases, Ruff/format and strict mypy passed; exact-head hosted CI remains an integration gate. SPRING_DOMAIN.md documents reproduction, analytic bounds and finite-matrix limitations. This is test-only calibration, not a production fitter/predictor/scorer or I1 exit.
 - Budget: the approved expansion adds an estimated ~$10/month and the snapshot up to roughly ~$10/month while retained, before credits/tax; actual billing is not yet measured. Only this capacity action was approved. Staging, provider trials, official sweeps and releases retain their concrete approval gates. Existing VM billing is outside this incremental estimate.
 - Tracking: SP-00.a [#44](https://github.com/spei04/strange-physics/issues/44), SP-00.b [#45](https://github.com/spei04/strange-physics/issues/45), SP-02.a [#46](https://github.com/spei04/strange-physics/issues/46), SP-02.b [#72](https://github.com/spei04/strange-physics/issues/72), SP-03.a [#73](https://github.com/spei04/strange-physics/issues/73).
 
@@ -101,8 +106,9 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 Research owns the local spring proof; Quality independently authors its development
 scorer. SP-02.b is accepted and SP-03.a fixtures have passed independent review.
-SP-03.a is integrated and Research now authors SP-03.b in the reused checkout. Platform retains queued B3 linking and Quality retains ID-C after
-accepted ID-B; neither enterprise stream is removed.
+SP-03.a is integrated and SP-03.b calibration is independently accepted locally.
+Research prepares SP-04.a/#77 while the lead completes integration. Platform authors
+B3 linking in a separate cloud checkout; Quality retains ID-C after accepted ID-B.
 
 The approved dependency path is SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b →
 SP-06.a → SP-04.e/I1. SP-03.a also requires completed SP-00.b; SP-03.b requires
@@ -119,16 +125,18 @@ not the predictor or simulator under validation. Retain source/environment,
 purchased indices, model/configuration/protocol/report hashes, unseen-input
 manifest, analytic derivation, counts, errors, timings and CLI round-trip evidence.
 
-SP-03.b must ratify coefficient and trajectory bounds before acceptance; existing
-provisional targets are <=1% coefficient error and <=0.001 position RMSE over two
-seconds. SCI reports retain MSE and normalized MSE; derive sqrt(position_mse) for
+SP-03.b ratifies the bounded noiseless finite matrix with coefficient error
+<=max(1e-8, 0.01*k_true) and <=0.001 coordinate position RMSE for every probe over
+two seconds. The absolute floor handles zero/near-zero stiffness; see SPRING_DOMAIN.md
+for exact-sample bounds, finite-grid evidence and the retained noisy failures.
+SCI reports retain MSE and normalized MSE; derive sqrt(position_mse) for
 the RMSE acceptance check and document averaging dimensions and normalization.
 Insufficient excitation, mass/order mismatch, tampering, divergence and missing
 outputs require explicit failures. Any failed probe makes primary MSE fields null
 and the report unscorable; never average only surviving probes. A correctly
 reported negative result is valid evidence, not permission to relax tolerances.
 
-The accepted simulation/journal/random-investigation CLI and 613 passing local tests
+The accepted simulation/journal/random-investigation CLI and 817 passing local tests
 do not yet supply a fitter, predictor, independent scorer, generalization result
 or recovery result. I1 is a local development proof, not the full held-out
 benchmark, hosted execution or a product release.
@@ -136,14 +144,16 @@ benchmark, hosted execution or a product release.
 Unfinished SP-01.b/c/d/e, B3, ID-C, SP-08 identity implementation, staging and whole
 R0 exit are not prerequisites in this local path. They remain prerequisites for
 their hosted/later consumers (for example SP-06.b requires SP-01.c). Use the leaf
-DAG; do not turn their schedule order into a new scientific dependency. With one
-checkout, parallel work means independent preparation/review and sequential
-writer handoffs. Scorer implementation waits for SP-04.b. The concrete capacity
+DAG; do not turn their schedule order into a new scientific dependency. Two cloud
+checkouts now permit Research and Platform to author independently; each checkout
+has one writer and its own locked dependency installation. Reuse them sequentially
+at handoff and retain independent review. Scorer implementation waits for SP-04.b.
+The concrete capacity
 action is approved and complete; it grants no additional staging or release authority.
 
 ## Current blockers and rules
 
-- Capacity stop resolved: the preserved clean c773946 checkout was fetched and fast-forwarded to reviewed main 89a44ed after independent SP-02.b acceptance. Dependency manifests are unchanged. Research received the SP-03.a writer slot at 01:59 UTC and released it after accepted source 66016cf. After PR #76 and matching main CI passed, Research received SP-03.b ownership; Platform retains queued B3. The sole authoritative cloud checkout remains in use and must not be archived or removed. No additional checkout or local project copy was created. Writers remain sequential unless separate safe checkouts are available; maintain the >=20 GiB readiness gate separately from the 100 MiB emergency stop floor.
+- Capacity stop resolved: independent SP-02.b acceptance preserved source and dependencies; PR #74/main f197687 records recovery, and PR #76/main 8510243 records accepted SP-03.a. One additional ordinary cloud worktree was necessary for independent B3 authoring while Research owned the primary checkout. Its own locked copy-mode environment occupies about 179 MiB; 103,889,854,464 bytes remained free at creation. Managed creation cannot target this remote host from the local chat, so the remote worktree is unmanaged and indexed privately. Both checkouts remain active and must be reused, not archived or removed. No local project copy or shared mutable dependency links. Maintain >=20 GiB readiness separately from the 100 MiB emergency stop floor.
 - Final identity review must reconcile issuer + verified tenant/null + subject, global purpose-bound proof ownership, composed human/service/run authority and current authorization before every streamed delivery batch. The <=30-second check applies only to idle connections. B3/ID-C remain implementation assignments, not completed interfaces.
 - Cloud filesystem had 215 MiB free at execution start; accepted SP-02.b recovery now permits scoped development. Continue preserving migration archives and other active projects.
 - Baseline integration passed both review scopes and required checks at 7117060. Specific contract freezes remain prerequisites; SP-01.c additionally waits for SP-01.b DB acceptance.
