@@ -10,7 +10,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | WEB1 body/history runtime and full-CI test-import repair | Guard/cursor/snapshot/event runtime accepted at ac70f69; next unit needs independent review |
+| Research | WEB1 body/history review repairs | Guard/cursor/snapshot/event runtime accepted; material checkpoint96f4b57 requires supplied capture repairs |
 | Platform | WEB1 state, provenance and budget composition review | Immutable source checkpoints; native prerequisite proposal review is complete |
 | Quality | WEB1 current authority, recovery and raw-byte safety review | Independent reviewer; SP-01.e remains preparation-only |
 | Project lead | WEB1 primary integration and progress; native proposal scope decision | Exclusive primary owner; PR #96 integrated, RA_EXEC remains pending |
@@ -435,3 +435,5 @@ Planning PR #96 is integrated as ee4831a with reviewed tree3192574; all four app
 2026-10-20 — Partial WEB1 runtimeac70f69 is independently accepted for current viewer authority, cursor recovery, historical snapshots and event batches. All reported chronology, recent-head consistency and error-ordering repairs pass;83 replay and179 API cases pass. Platform verifies the final head guards; Quality authority/outcome and lead chronology evidence remain bound to their reviewed sources. Research now completes actual-byte body/history runtime, Platform reviews provenance/budgets, Quality authorization/recovery and lead primary integration. Full WEB1, SP-01.d and SP-01.e remain pending; this is not hosted enforcement.
 
 2026-10-20 09:13 UTC — Draft PR #97 partial integration e5a6162 failed full CI39398415065 on both Python versions: tests/test_run_credentials.py was discovered under two module names. Security passed; this does not invalidate scoped behavioral review, but integration remains unaccepted. Research owns a test-import convention repair and full mypy src tests examples before the body/history checkpoint. No check settings or acceptance criteria are weakened.
+
+2026-10-20 09:18 UTC — Research committed body/history checkpoint96f4b57 and repaired the full-CI test import convention;312 focused cases and full mypy95 pass. Platform owns history/provenance/budget review, Quality current authority/parser review, and lead large-record delivery review. Lead passed44 cases using a matching-run 1,779,612-byte scientific record,28 default or218 stricter slices, and late revocation for browser/service callers. Platform found two single-replay-body capture joins missing: a historical RunView can exceed its snapshot revision, and an interior event can reuse the captured root last-event identity after the live head advances. Research owns repairs; full material acceptance remains open.

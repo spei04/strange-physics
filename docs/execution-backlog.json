@@ -11899,8 +11899,25 @@
           "status": "failed_full_mypy_duplicate_test_module",
           "security": "passed",
           "repair_owner": "Research",
-          "next_gate": "Full-repository strict typing and complete body/history review before integration acceptance."
+          "next_gate": "Full-repository strict typing and complete body/history review before integration acceptance.",
+          "index_sha256": "6811f77214ee0afd2a65051cd601075c4377d307747d4c756f8c9bacad442298"
         }
+      },
+      "web1_material_review": {
+        "source": "96f4b5779a0d5116b06562b440d6e5303250f11a",
+        "tree": "65b33b537d56dc5a6c7ea7017a3fc4a42d60e3ca",
+        "status": "independent_review_repairs_required",
+        "focused": 312,
+        "mypy_files": 95,
+        "author_index_sha256": "5c2bab84b436abe507e9c55e8544834dd29afafa0ab959253b313f2e8219854c",
+        "lead_cases": 44,
+        "lead_index_sha256": "4a5660670ff162e6223056ecfe629575654452a74f29d3d432cf181015453197",
+        "open_findings": [
+          "Single replay body must compare supplied historical RunViews with captured snapshot, not just later current run.",
+          "Single replay body must compare every supplied event identity against captured root final identity, including interior aliases."
+        ],
+        "boundary": "Full material review and exact integration remain pending. Large synthetic shape is not engine output or hosted/load evidence; suites overlap.",
+        "review_date": "2026-11-19"
       }
     },
     "contract_tooling_preparation": {
