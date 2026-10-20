@@ -1,0 +1,456 @@
+{
+  "description": "Invented synthetic interface vectors, not measured evaluation output. Private-world labels in this file are made-up examples only.",
+  "model": {
+    "fit_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+    "fit_record_indices": [
+      0
+    ],
+    "fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+    "linear": 0.0,
+    "observation_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "schema_version": "strange-physics.linear-spring-model.v1",
+    "through_index": 0
+  },
+  "runtime_negative": [
+    {
+      "field": "status",
+      "model": "ProbePrediction",
+      "value": "failed"
+    },
+    {
+      "field": "times",
+      "model": "ReferenceProbe",
+      "value": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "field": "valid_prediction_count",
+      "model": "SpringEvaluationDiagnostics",
+      "value": 0
+    },
+    {
+      "field": "report_sha256",
+      "model": "SpringEvaluationResult",
+      "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "normalization_scale",
+      "model": "SpringEvaluationProtocol",
+      "value": 0.0
+    },
+    {
+      "field": "status",
+      "model": "ProbePrediction",
+      "value": "success"
+    },
+    {
+      "field": "requested_probe_count",
+      "model": "SpringEvaluationDiagnostics",
+      "value": true
+    }
+  ],
+  "valid": {
+    "ProbeAssessment": {
+      "metric_role": "non-primary-diagnostic",
+      "position_mse": 0.0,
+      "prediction_status": "valid",
+      "probe_id": "probe-1",
+      "probe_index": 0,
+      "request_sha256": "0cbe7922282595e8625286e88f31debb97bc83d86f43780eb619dda85166f226"
+    },
+    "ProbePrediction": {
+      "probe_id": "probe-1",
+      "request_sha256": "0cbe7922282595e8625286e88f31debb97bc83d86f43780eb619dda85166f226",
+      "response": {
+        "model_sha256": "11bc2ebfbc47b7652accccbb8333622dad9621e9ab8652d789ae3e48ed26317c",
+        "schema_version": "strange-physics.prediction-response.v1",
+        "trajectory": {
+          "frames": [
+            {
+              "positions": [
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "time": 0.0,
+              "velocities": [
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            },
+            {
+              "positions": [
+                [
+                  0.0,
+                  0.0
+                ]
+              ],
+              "time": 1.0,
+              "velocities": [
+                [
+                  0.0,
+                  0.0
+                ]
+              ]
+            }
+          ]
+        }
+      },
+      "status": "response"
+    },
+    "ReferenceProbe": {
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "probe_id": "probe-1",
+      "request_sha256": "0cbe7922282595e8625286e88f31debb97bc83d86f43780eb619dda85166f226",
+      "times": [
+        0.0,
+        1.0
+      ]
+    },
+    "SpringEvaluationDiagnostics": {
+      "actual_model_sha256": "11bc2ebfbc47b7652accccbb8333622dad9621e9ab8652d789ae3e48ed26317c",
+      "computed_metric_count": 1,
+      "evaluation_runtime_ms": 7,
+      "failed_prediction_count": 0,
+      "metric_not_assessed_count": 0,
+      "prediction_not_assessed_count": 0,
+      "protocol_sha256": "9fa8bca9a9737c29879e224e3392e91a74508b9f5e049e480ae3b47860114c62",
+      "reference_completed_probe_count": 1,
+      "reference_failed_probe_index": null,
+      "requested_probe_count": 1,
+      "submissions_sha256": "56c163650ac9b032ea3f7f30de729ebc3be8bec1e98e15b08f487e7b0b995559",
+      "submitted_entry_count": 1,
+      "valid_prediction_count": 1
+    },
+    "SpringEvaluationProbe": {
+      "probe_id": "probe-1",
+      "request": {
+        "experiment": {
+          "impulse": null,
+          "particles": [
+            {
+              "id": "p",
+              "mass": 1.0,
+              "position": [
+                0.0,
+                0.0
+              ],
+              "velocity": [
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "schema_version": "strange-physics.experiment.v1"
+        },
+        "integration_dt": 0.01,
+        "model_sha256": "11bc2ebfbc47b7652accccbb8333622dad9621e9ab8652d789ae3e48ed26317c",
+        "schema_version": "strange-physics.prediction-request.v1",
+        "structure": {
+          "anchors": [
+            {
+              "id": "a",
+              "position": [
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "connections": [
+            {
+              "a": "p",
+              "b": "a"
+            }
+          ],
+          "particle_ids": [
+            "p"
+          ]
+        },
+        "times": [
+          0.0,
+          1.0
+        ]
+      },
+      "request_sha256": "0cbe7922282595e8625286e88f31debb97bc83d86f43780eb619dda85166f226"
+    },
+    "SpringEvaluationProtocol": {
+      "averaging": "equal-xy-time-within-probe-then-equal-probes.v1",
+      "domain": "single-spring-counterfactual-k0-4-t2.v1",
+      "failure_policy": "unscorable-on-any-failure.v1",
+      "model_sha256": "11bc2ebfbc47b7652accccbb8333622dad9621e9ab8652d789ae3e48ed26317c",
+      "normalization_scale": 1.0,
+      "probes": [
+        {
+          "probe_id": "probe-1",
+          "request": {
+            "experiment": {
+              "impulse": null,
+              "particles": [
+                {
+                  "id": "p",
+                  "mass": 1.0,
+                  "position": [
+                    0.0,
+                    0.0
+                  ],
+                  "velocity": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "schema_version": "strange-physics.experiment.v1"
+            },
+            "integration_dt": 0.01,
+            "model_sha256": "11bc2ebfbc47b7652accccbb8333622dad9621e9ab8652d789ae3e48ed26317c",
+            "schema_version": "strange-physics.prediction-request.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            },
+            "times": [
+              0.0,
+              1.0
+            ]
+          },
+          "request_sha256": "0cbe7922282595e8625286e88f31debb97bc83d86f43780eb619dda85166f226"
+        }
+      ],
+      "reference_profile": "decimal80-taylor128-tail1e-60.v1",
+      "schema_version": "strange-physics.spring-evaluation-protocol.v1",
+      "split": "development",
+      "timing": "validation-reference-and-metrics-monotonic-ms.v1"
+    },
+    "SpringEvaluationResult": {
+      "diagnostics": {
+        "actual_model_sha256": "11bc2ebfbc47b7652accccbb8333622dad9621e9ab8652d789ae3e48ed26317c",
+        "computed_metric_count": 1,
+        "evaluation_runtime_ms": 7,
+        "failed_prediction_count": 0,
+        "metric_not_assessed_count": 0,
+        "prediction_not_assessed_count": 0,
+        "protocol_sha256": "9fa8bca9a9737c29879e224e3392e91a74508b9f5e049e480ae3b47860114c62",
+        "reference_completed_probe_count": 1,
+        "reference_failed_probe_index": null,
+        "requested_probe_count": 1,
+        "submissions_sha256": "56c163650ac9b032ea3f7f30de729ebc3be8bec1e98e15b08f487e7b0b995559",
+        "submitted_entry_count": 1,
+        "valid_prediction_count": 1
+      },
+      "probes": [
+        {
+          "metric_role": "non-primary-diagnostic",
+          "position_mse": 0.0,
+          "prediction_status": "valid",
+          "probe_id": "probe-1",
+          "probe_index": 0,
+          "request_sha256": "0cbe7922282595e8625286e88f31debb97bc83d86f43780eb619dda85166f226"
+        }
+      ],
+      "reason": null,
+      "reference": {
+        "probes": [
+          {
+            "positions": [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            "probe_id": "probe-1",
+            "request_sha256": "0cbe7922282595e8625286e88f31debb97bc83d86f43780eb619dda85166f226",
+            "times": [
+              0.0,
+              1.0
+            ]
+          }
+        ],
+        "protocol_sha256": "9fa8bca9a9737c29879e224e3392e91a74508b9f5e049e480ae3b47860114c62",
+        "reference_profile": "decimal80-taylor128-tail1e-60.v1",
+        "schema_version": "strange-physics.spring-reference-artifact.v1",
+        "source_world_sha256": "f31ded50729e5807f060f8c10f795c54e0d12c8bd631d20d6a5e7b85c908f8a7"
+      },
+      "reference_sha256": "d6a8531ee788415981c10c081080c7e676e8236933cd4e50ad81756ad935a6e8",
+      "report": {
+        "evaluation_runtime_ms": 7,
+        "failed_prediction_count": 0,
+        "failure_policy": "unscorable-on-any-failure.v1",
+        "model_sha256": "11bc2ebfbc47b7652accccbb8333622dad9621e9ab8652d789ae3e48ed26317c",
+        "normalization_scale": 1.0,
+        "normalized_position_mse": 0.0,
+        "position_mse": 0.0,
+        "probe_count": 1,
+        "protocol_sha256": "9fa8bca9a9737c29879e224e3392e91a74508b9f5e049e480ae3b47860114c62",
+        "schema_version": "strange-physics.evaluation-report.v1",
+        "split": "development",
+        "status": "scored",
+        "valid_prediction_count": 1
+      },
+      "report_sha256": "b88334a7568ef043dcb030d22afe5eec8c18f450c027755fd3fc8eb90fec71d1",
+      "schema_version": "strange-physics.spring-evaluation-result.v1",
+      "status": "scored"
+    },
+    "SpringPredictionSubmissions": {
+      "entries": [
+        {
+          "probe_id": "probe-1",
+          "request_sha256": "0cbe7922282595e8625286e88f31debb97bc83d86f43780eb619dda85166f226",
+          "response": {
+            "model_sha256": "11bc2ebfbc47b7652accccbb8333622dad9621e9ab8652d789ae3e48ed26317c",
+            "schema_version": "strange-physics.prediction-response.v1",
+            "trajectory": {
+              "frames": [
+                {
+                  "positions": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.0,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.0,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                }
+              ]
+            }
+          },
+          "status": "response"
+        }
+      ],
+      "schema_version": "strange-physics.spring-prediction-submissions.v1"
+    },
+    "SpringReferenceArtifact": {
+      "probes": [
+        {
+          "positions": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "probe_id": "probe-1",
+          "request_sha256": "0cbe7922282595e8625286e88f31debb97bc83d86f43780eb619dda85166f226",
+          "times": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "protocol_sha256": "9fa8bca9a9737c29879e224e3392e91a74508b9f5e049e480ae3b47860114c62",
+      "reference_profile": "decimal80-taylor128-tail1e-60.v1",
+      "schema_version": "strange-physics.spring-reference-artifact.v1",
+      "source_world_sha256": "f31ded50729e5807f060f8c10f795c54e0d12c8bd631d20d6a5e7b85c908f8a7"
+    }
+  },
+  "world": {
+    "change_after": null,
+    "changed_law": null,
+    "initial_law": {
+      "kind": "spring",
+      "parameters": {
+        "cubic": 0.0,
+        "linear": 0.6750572799628003
+      }
+    },
+    "noise_seed": 7,
+    "schema_version": "strange-physics.world.v1",
+    "space": {
+      "budget": 4,
+      "calibration_experiments": 4,
+      "limits": {
+        "impulse_norm": 1.0,
+        "max_mass": 2.0,
+        "min_mass": 0.5,
+        "position_norm": 2.0,
+        "velocity_norm": 2.0
+      },
+      "sampling": {
+        "dt": 0.01,
+        "duration": 2.0,
+        "position_noise": 0.0,
+        "sample_interval": 0.05,
+        "velocity_noise": 0.0
+      },
+      "schema_version": "strange-physics.space.v1",
+      "structure": {
+        "anchors": [
+          {
+            "id": "anchor",
+            "position": [
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "connections": [
+          {
+            "a": "particle-0",
+            "b": "anchor"
+          }
+        ],
+        "particle_ids": [
+          "particle-0"
+        ]
+      }
+    }
+  }
+}

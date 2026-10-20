@@ -4,7 +4,8 @@ Status: first local SCI subset accepted and integrated for SP-01.a in PR #51,
 merge cc24aef592f3157b67024e3cab41159489c77ffa. Independent review and matching
 Python 3.12/3.14 CI passed; the execution log records the evidence. The calibrated
 scientific domain, local fitter and local predictor are documented separately.
-Independent evaluation remains a separate implementation task.
+The [independent development evaluator](EVALUATION.md) is an additive API with
+separate numerical evidence and integration gates.
 
 The authoritative messages are in
 [src/strange_physics/research_contracts.py](../src/strange_physics/research_contracts.py),
@@ -33,8 +34,10 @@ byte identity, not authorship or scientific validity.
    `validate_prediction_model(model, request)` before running the [local predictor](PREDICTION.md).
 4. Parse `PredictionResponse`, then call
    `validate_prediction_response(request, response)` before accepting predictions.
-5. A future development evaluator produces `EvaluationReport`. Its validator
-   checks counts, failure semantics and normalization arithmetic.
+5. The [independent development evaluator](EVALUATION.md) produces
+   `EvaluationReport` when prediction accounting permits a report. Its validator
+   checks counts, failure semantics and normalization arithmetic; outer evaluator
+   failures retain explicit unassessed counts without fabricating a report.
 
 These messages validate interfaces; the numerical fitter is a separate API.
 The model asserts a shared, nonnegative, zero-rest-length linear spring
@@ -175,4 +178,5 @@ review evidence or the later numerical and production readiness gates.
 The local production fitting API and its fixed configuration, explicit failure
 results and evidence limits are documented in [FITTING.md](FITTING.md).
 The [local analytic predictor](PREDICTION.md) propagates supported requests;
-independent scoring and SDK/CLI integration remain separate gates.
+the [independent scorer](EVALUATION.md) evaluates its outputs against private
+analytic labels. SDK/CLI integration remains a separate gate.
