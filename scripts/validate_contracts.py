@@ -91,6 +91,19 @@ def main() -> None:
                 group == "runtime_negative",
             )
 
+    evaluation = json.loads((ROOT / "evaluation.examples.json").read_text())
+    for name, fixture in evaluation["valid"].items():
+        check(f"evaluation.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in evaluation[group]:
+            value = copy.deepcopy(evaluation["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"evaluation.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     sessions = json.loads((ROOT / "session.examples.json").read_text())
     for name, fixture in sessions["valid"].items():
         check(f"session.schema.json#/$defs/{name}", fixture)

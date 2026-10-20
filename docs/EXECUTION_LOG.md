@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | ID-C/C2 run credentials and product authority | Exclusive identity writer after C1 PR/main acceptance; early interface and independent review required |
-| Research | SP-04.e/I1 SDK/CLI preparation and scorer review | Read-only preparation; SDK/CLI source waits accepted scorer |
-| Quality | SP-06.a/#83 independent development scorer | Exclusive primary writer after accepted predictor; publish protocol/API for review before implementation |
-| Project lead | Review scoring and coordinate C2 acceptance | Quality owns primary, Platform owns identity; reconcile immutable sources and exact-head checks before each merge |
+| Platform | SP-01.c artifact/worker contract preparation | C2 released at33caa917; read-only preparation, freeze/source handoff waits parent integration |
+| Research | SP-04.e/#87 local scientific SDK/CLI | Exclusive primary writer after accepted scorer and planning integration; preregistration and API review precede runtime |
+| Quality | Early SDK API and C2 integration review | C2 runtime67d1128/docs33caa917 and parent composition accepted; exact integration checks remain |
+| Project lead | Coordinate SDK and C2 integration | Research owns primary; lead owns released identity for C2 integration; exact-head review/CI before each integration |
 
 ## Assignments
 
@@ -102,6 +102,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-20 03:13 | Project lead + Platform | C1 integration with accepted prediction | 251694f has exact reviewed source blobs and complete package allowlist; 1,434 tests, Ruff/format, mypy48 and 555 schemas pass; hosted checks remain |
 | 2026-10-20 03:19 | Project lead | C1 integrated; identity writer handoff | PR #84 and protected main passed with matching reviewed tree; same checkout reused for C2 |
 | 2026-10-20 03:19 | Platform | ID-C/C2 run credentials and product-authority composition | Accepted bounded plan; immutable run ownership, required composed admission, lease/generation fencing and safe coordinator replay; no public mint route |
+| 2026-10-20 03:35 | Quality | SP-06.a independent scoring | Released clean17be197; runtime82fc914 passed1,417 tests,97 focused cases, schemas/static/security/package checks; Research accepted97 cases+7 boundary checks+7 mutants |
+| 2026-10-20 03:35 | Project lead + Quality | Scorer integration | Merged C1/handoff09e39e88 into scorer at464c73a; exact80 source/test/contract blobs and26-module archive union independently verified; PR/main checks next |
+| 2026-10-20 03:35 | Research | C2 early contract review |72 cases passed; operation/credential-state binding finding assigned to Platform for repair before runtime acceptance |
+| 2026-10-20 03:35 | Project lead + Research | Research methods planning amendment | Lead drafts paper/task comparison and canonical plan update; Research independently reviews. Current I1 and C2 continue; new runtime and paid work remain gated |
 
 ## Review evidence and management checkpoint
 
@@ -196,3 +200,27 @@ action is approved and complete; it grants no additional staging or release auth
 - Partner/assessor/human operations availability is unconfirmed. No outreach or contractual commitment is implied.
 - No priced staging, provider trial, official sweep or production release is approved yet.
 - A completed assignment includes source identity, tests, reviewer outcome and limitations. Review findings become bounded repair assignments before acceptance.
+
+## Independent scorer acceptance
+
+Source17be197a1499c7619718b4e5141aa34a6523e519 retains runtime82fc9145b576fcb01e58815989bc2c1ebd1087a0. The independent Decimal reference uses fixed precision/context, a proven bounded series and exact request identities; it shares no predictor or simulator math. Complete-manifest validation preserves missing, invalid and failed outputs without survivor averaging. All168 direct-model probes passed; maximum component difference2.6645352591003757e-15 and per-probe MSE4.249608827306303e-31 are finite synthetic evidence, not fitted SDK/CLI I1. Final public/private boundary and timing-bearing report bytes are documented in EVALUATION.md.
+
+Private evidence stays outside disposable checkouts at /home/serenapei/.local/state/strange-physics-evidence/evaluation/2026-10-20. Sealed index82fc9145b576-index.json SHA2561c8d43550c8b618039a6b82236f879e1d13dafd388fcd84bea44969aca991c20 identifies source, task and checks. Owner-readable only; review2026-11-19, same-VM storage is not an off-device backup. Do not mutate this record; add integration evidence separately.
+
+## Research amendment review checkpoint
+
+2026-10-20 — Lead saved research/2026-10-19-METHOD_DECISIONS.md and linked it from the roadmap, benchmark and backlog. Research challenged shared-posterior wording, mixed adapter scope, missing symbolic execution responsibility and feasibility-versus-population inference; the18-task revision addresses those findings. The first offline result is independent of provider profiles/hosted deployment. Current scorer/I1 and C2 work continues. These are proposed runtime tasks, not executed methods or approved paid experiments. Exact-commit review and CI are recorded at integration.
+
+2026-10-20 03:42 UTC — SP-06.a integrated through PR #85: reviewed3556088ebf39fdaa250e16bb4a04008f79d726e2 and main c20e3b5d1baa23f906c20b33af6da4d759920345 have identical treecad9249f89f083df26637de4dfeff0d13086b58d. PR CI39365261896 and main CI39365449219 passed all applicable jobs, including protected-main candidate. Integrated1,531 tests, Ruff/format86, strict mypy52,571 schema cases, configured Bandit gate and offline archive allowlist passed. SP-04.e awaits exclusive primary handoff after the planning amendment; Platform continues C2 and Quality reviews952f95c.
+
+Research independently accepted amendment45e4cde:18 tasks,4 extension gates and66 fixed edges, preserving the168/369/10 baseline. Review repaired model/history confounding, PR size, symbolic runtime responsibility and feasibility-versus-population sizing. The early offline checkpoint explicitly uses the supported stationary noiseless linear-spring source domain and real model identities. New runtime/paid work remains unapproved. [PR #86](https://github.com/spei04/strange-physics/pull/86) contains the reviewable plan.
+
+The optional pilot resolves RA-10/11/12 prerequisites from frozen admitted_profile_ids in both prose and JSON. Excluded profiles require reasons and recounted matrices; all potentially admitted dependencies are cycle-checked, and actual readiness requires the frozen completed closure.
+
+Final planning review found and repaired a missing classical PySR prerequisite when the ACES profile is excluded. RA-04.a is now mandatory for RA_PILOT and RA-13.a. The final graph has62 fixed and6 conditional extension edges; this change follows the earlier45e4cde review and requires final readback.
+
+2026-10-20 — Research amendment PR #86 integrated as e239eb2c704cd315aadd6064cdb521d1a6d9bbdc, tree558d68eda38aa513aa5ae59255190fef7a9f890d equals acceptedc48517b6fc57468375989670ce341f9d0a96489a. PR CI39365953740 and all protected-main CI39366138629 jobs passed. Scientific/dependency review accepted all18 records,62 fixed+6 conditional edges and conditional-profile readiness. The original168-task/369-edge/ten-gate graph remains unchanged; scorer completion is a progress update. New research runtime and paid work remain gated.
+
+Research is assigned SP-04.e/#87 in the reused primary checkout: preregister24 fixed probes, publish the artifact API, then wire the SDK/CLI workflow. Quality reviews after final C2 composition; lead coordinates. Root owns no source writer after handoff. Both existing cloud checkouts stay in use with independent dependencies; no new checkout was created.
+
+Platform released C2 at33caa917 after accepted runtime67d1128 and final parent composition review. Lead takes identity integration; Platform prepares SP-01.c read-only. Final artifact/worker freeze and source handoff wait accepted SP-01.b integration. Quality reviews the SDK API and integrated C2 source.
