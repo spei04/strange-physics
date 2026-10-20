@@ -345,9 +345,7 @@
         "summary": "run: commit complete checkpoint",
         "x-control-status": "v1-semantics; producer/consumer approval required",
         "x-implementation-status": "not-implemented",
-        "x-pending-contracts": [
-          "ART"
-        ],
+        "x-pending-contracts": [],
         "x-required-permission": "run: commit complete checkpoint",
         "x-required-scope": "checkpoints:write"
       }
@@ -800,10 +798,7 @@
         "summary": "run: submit immutable predictor",
         "x-control-status": "v1-semantics; producer/consumer approval required",
         "x-implementation-status": "not-implemented",
-        "x-pending-contracts": [
-          "ART",
-          "EXEC"
-        ],
+        "x-pending-contracts": [],
         "x-required-permission": "run: submit immutable predictor",
         "x-required-scope": "models:write"
       }
