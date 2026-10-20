@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | SP-01.c artifact/worker contract preparation | C2 released at33caa917; read-only preparation, freeze/source handoff waits parent integration |
+| Platform | SP-01.c/#89 artifact/package/worker contracts | ART1 first, then EXEC1 and COMP1; exclusive identity writer after accepted SP-01.b integration |
 | Research | SP-04.e/#87 local scientific SDK/CLI | Exclusive primary writer after accepted scorer and planning integration; preregistration and API review precede runtime |
-| Quality | Early SDK API and C2 integration review | C2 runtime67d1128/docs33caa917 and parent composition accepted; exact integration checks remain |
-| Project lead | Coordinate SDK and C2 integration | Research owns primary; lead owns released identity for C2 integration; exact-head review/CI before each integration |
+| Quality | SDK runtime and SP-01.c independent review | Early SDK API accepted22 cases +15 boundaries; immutable source review before integration |
+| Project lead | Coordinate SDK and artifact contracts | Research owns primary, Platform owns identity after handoff; lead integrates only released source after exact review/CI |
 
 ## Assignments
 
@@ -144,10 +144,9 @@ Research owns the local spring proof; Quality independently authors its developm
 scorer. SP-02.b is accepted and SP-03.a fixtures have passed independent review.
 SP-03.a and SP-03.b are integrated, including exact-head PR/main checks.
 SP-04.a/#77 is integrated with matching reviewed tree and PR/main CI.
-SP-04.b/#81 is integrated with passing PR/main CI. Quality owns the primary
-checkout for independent SP-06.a/#83 scoring. Research prepares SP-04.e read-only.
-C1 is integrated with passing PR/main CI. Platform owns the identity checkout
-for C2. ID-C and final identity composition remain unfinished.
+SP-04.b/#81 and SP-06.a/#83 are integrated with passing PR/main CI. Research owns
+SP-04.e/#87 SDK/CLI in primary. SP-01.b/C2 and final composition are integrated;
+Platform owns SP-01.c/#89 in identity after the recorded handoff.
 
 The approved dependency path is SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b →
 SP-06.a → SP-04.e/I1. SP-03.a also requires completed SP-00.b; SP-03.b requires
@@ -176,26 +175,26 @@ and the report unscorable; never average only surviving probes. A correctly
 reported negative result is valid evidence, not permission to relax tolerances.
 
 Simulation, purchased journals, calibration, fitting and bounded prediction are
-integrated. Independent scoring, the SDK/CLI I1 exit and recovery evaluation
+integrated, as is independent scoring. The SDK/CLI I1 exit and recovery evaluation
 remain unfinished. I1 is a local development proof, not the full held-out
 benchmark, hosted execution or a product release.
 
-Unfinished SP-01.b/c/d/e, ID-C, SP-08 identity implementation, staging and whole
+Unfinished SP-01.c/d/e, SP-08 identity implementation, staging and whole
 R0 exit are not prerequisites in this local path. They remain prerequisites for
 their hosted/later consumers (for example SP-06.b requires SP-01.c). Use the leaf
 DAG; do not turn their schedule order into a new scientific dependency. Two cloud
 checkouts support independent scientific and identity work; each checkout
 has one writer and its own locked dependency installation. Reuse them sequentially
-at handoff and retain independent review. Scorer implementation waits for SP-04.b.
+at handoff and retain independent review. Scorer implementation is integrated after SP-04.b.
 The concrete capacity
 action is approved and complete; it grants no additional staging or release authority.
 
 ## Current blockers and rules
 
 - Capacity stop resolved: independent SP-02.b acceptance preserved source and dependencies; PR #74/main f197687 records recovery, and PR #76/main 8510243 records accepted SP-03.a. One additional ordinary cloud worktree was necessary for independent B3 authoring while Research owned the primary checkout. Its own locked copy-mode environment occupies about 179 MiB; 103,889,854,464 bytes remained free at creation. Managed creation cannot target this remote host from the local chat, so the remote worktree is unmanaged and indexed privately. Both checkouts remain active and must be reused, not archived or removed. No local project copy or shared mutable dependency links. Maintain >=20 GiB readiness separately from the 100 MiB emergency stop floor.
-- Final identity review must reconcile issuer + verified tenant/null + subject, global purpose-bound proof ownership, composed human/service/run authority and current authorization before every streamed delivery batch. The <=30-second check applies only to idle connections. B3 is integrated; ID-C and final composition remain unfinished.
+- Final SP-01.b review is accepted for issuer/tenant/subject identity, purpose-bound proof ownership, composed current authority and per-payload stream checks. The <=30-second interval applies only to idle connections. Live producer implementation and operational evidence remain later tasks.
 - Cloud filesystem had 215 MiB free at execution start; accepted SP-02.b recovery now permits scoped development. Continue preserving migration archives and other active projects.
-- Baseline integration passed both review scopes and required checks at 7117060. Specific contract freezes remain prerequisites; SP-01.c additionally waits for SP-01.b DB acceptance.
+- Baseline and SP-01.b contract integration are accepted. SP-01.c now has its actual SP-00.b/SP-01.b prerequisites; later consumers still wait for their remaining freezes.
 - Root coordinates every checkout write; independent writers get separate cloud checkouts. No local project copies.
 - Partner/assessor/human operations availability is unconfirmed. No outreach or contractual commitment is implied.
 - No priced staging, provider trial, official sweep or production release is approved yet.
@@ -236,3 +235,9 @@ Lead merged the accepted scientific/planning/SDK-handoff source into C2 at cb14e
 Private C2 evidence stays outside checkouts at /home/serenapei/.local/state/strange-physics-evidence/c2. Index SHA256 85a05d494101dc0cf70bf3b38f94008b8a68ca29cfe06a00eaf2f2147112065e; final handoff SHA256 008c263e10e799e8aff669cbea0ad28e76b98b4b6698560b77dbebe013a1f83c. Owner-readable only; review 2026-11-19, no automatic deletion. Same-VM evidence is not an off-device backup.
 
 Integrated source cb14e348 passed 1,692 tests, Ruff/format (92 files), strict mypy (57 files), 613 external schema checks, the configured Bandit threshold, and offline package/allowlist validation. Exact-head hosted PR and protected-main candidate checks remain required.
+
+## C2 integration and artifact-contract handoff
+
+2026-10-20 04:04 UTC — PR #88/main 92320173ff0d3278c65cfc251983d57fab9960b1 matches accepted b8d3e5ee96b3b07da53eccbabddebc5a73223ba3 and tree 515e27ebbb594a15ce439b24a14463ed7a4cf9a7; PR CI39367180231 and all protected-main CI39367439199 jobs passed. Integrated 1,692 tests, Ruff/format92, strict mypy57,613 schema checks, configured security checks and offline package validation passed. ID-C/#64 and SP-01.b/#52 are complete for bounded contract obligations. No HTTP/verifier/signing/SQL implementation or production readiness is claimed.
+
+Platform is assigned SP-01.c/#89 in the reused identity checkout: ART1 artifact/checkpoint admission, EXEC1 quarantine/worker envelopes, then COMP1 predictor and DB/recovery composition. Current object verification and authority are mandatory; generation/locator and raw/canonical hashes stay distinct. Reuse current C2 credential fencing for broker intents and require explicit versioned resource policy. Research continues SP-04.e/#87 in primary, Quality reviews both, and lead coordinates integration. Neither active checkout is disposable; no additional checkout or dependency copy was created. Baseline estimates, graph, research-runtime/paid/release gates remain unchanged.

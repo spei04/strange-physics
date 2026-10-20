@@ -173,21 +173,21 @@
       "name": "HTTP operations and error envelopes",
       "owner": "Backend + SDK + frontend",
       "freeze": "SP-01.b",
-      "source": "[openapi.json](../contracts/draft/openapi.json), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending)",
-      "obligations": "OpenAPI 3.1, scoped operation polling, Idempotency-Key on applicable mutations, immutable checkpoint PUT, explicit 401/403/404/409/422/429/503 semantics, version policy. Current draft has 11 operations, not complete product API."
+      "source": "[openapi.json](../contracts/draft/openapi.json), [accepted control and identity contract set](IDENTITY_RUN_CONTRACT.md) (SP-01.b bounded freeze complete; live producers remain later tasks)",
+      "obligations": "OpenAPI 3.1, scoped operation polling, Idempotency-Key on applicable mutations, immutable checkpoint PUT, explicit 401/403/404/409/422/429/503 semantics, version policy. The accepted bounded control/identity route set is not the complete product API; later groups retain their own freeze tasks."
     },
     "ID": {
       "name": "Identity, membership and credential authority",
       "owner": "Backend + security",
       "freeze": "SP-01.b",
-      "source": "[roadmap sections 5\u20136 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending)",
+      "source": "[roadmap sections 5\u20136 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze), [accepted control and identity contract set](IDENTITY_RUN_CONTRACT.md) (SP-01.b bounded freeze complete; live producers remain later tasks)",
       "obligations": "Issuer/subject identity, explicit workspace roles/invitations, scoped machine and run credentials, revocation and secure browser session semantics. Enterprise federation refined by SP-34.a; SCIM frozen by SP-35.a before those consumers."
     },
     "DB": {
       "name": "Transactional relational invariants",
       "owner": "Backend",
       "freeze": "SP-01.b",
-      "source": "[roadmap data model](ROADMAP.md#6-data-model-ownership-and-lifecycle), [first control subset](IDENTITY_RUN_CONTRACT.md) (partial; full SP-01.b freeze pending)",
+      "source": "[roadmap data model](ROADMAP.md#6-data-model-ownership-and-lifecycle), [accepted control and identity contract set](IDENTITY_RUN_CONTRACT.md) (SP-01.b bounded freeze complete; live producers remain later tasks)",
       "obligations": "Composite tenant ownership, unique operation/ordinal, atomic debit/result/outbox, revision/epoch checks, immutable terminal state, safe migration/runtime-role separation."
     },
     "ART": {
@@ -1314,7 +1314,7 @@
         "BE2"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze identity, run and sql contracts.",
-      "status": "in_progress",
+      "status": "complete",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1323,9 +1323,9 @@
         "frontend",
         "security"
       ],
-      "execution_owner": "Project lead integrates accepted C2 and records final parent gate; Platform prepares SP-01.c read-only.",
+      "execution_owner": "Project lead integrated all independently reviewed subsets and final composition.",
       "issue": "https://github.com/spei04/strange-physics/issues/52",
-      "evidence": "All earlier subsets integrated. C2 source33caa917/runtime67d1128 independently accepted by Research/Quality/lead; parent composition audit passed749 conformance cases,597 schema checks and45 routes/112 refs. Exact-head PR/main integration remains; consumers stay gated."
+      "evidence": "PR #88/main 92320173ff0d3278c65cfc251983d57fab9960b1 equals reviewed b8d3e5ee96b3b07da53eccbabddebc5a73223ba3 tree 515e27ebbb594a15ce439b24a14463ed7a4cf9a7; PR CI39367180231 and all main CI39367439199 jobs passed. Integrated1692 tests; independent749-case parent composition,597 schema checks,45 routes/112 refs. Bounded contracts only; live producers remain later work."
     },
     {
       "id": "SP-01.c",
@@ -1355,7 +1355,7 @@
         "PL2"
       ],
       "objective": "Give producers and consumers stable, testable interfaces before parallel implementation. This PR delivers freeze artifacts, packages and worker interfaces.",
-      "status": "approved_unstarted",
+      "status": "in_progress",
       "priority": "P0 for its release gate",
       "dod": "Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.",
       "requiredReviewers": [
@@ -1364,7 +1364,10 @@
         "research",
         "security",
         "Backend"
-      ]
+      ],
+      "execution_owner": "Engineer Platform exclusively authors identity checkout; Quality/Research/lead review.",
+      "issue": "https://github.com/spei04/strange-physics/issues/89",
+      "execution_plan": "ART1 artifact/checkpoint admission and recovery; EXEC1 package quarantine and worker/broker authority; COMP1 predictor/DB composition. Accepted SP-01.b integration precedes source. Three review units preserve the baseline task/effort/gates."
     },
     {
       "id": "SP-01.d",
@@ -10565,7 +10568,7 @@
     "schedule_repair": "2026-10-19: technical lead accepted SP-01.b before SP-01.c freeze. One added edge (369 total); both reference schedules regenerated without changing effort, capacity, approval gates or current execution staffing.",
     "reviewed_scientific_head": "6e724152e5c947db1662bd65cea36412a8498b22",
     "integrated_scientific_subset": "cc24aef592f3157b67024e3cab41159489c77ffa",
-    "contract_scope_note": "All control, ID-A, ID-B and C1 subsets are integrated. C2 and final SP-01.b composition are independently accepted at33caa917; exact-head PR/main integration remains before parent freeze and consumer handoff.",
+    "contract_scope_note": "SP-01.b control, ID-A, ID-B and ID-C subsets and final composition are accepted and integrated. This freezes bounded interface and database obligations; it does not implement HTTP authentication, signing, durable SQL/RLS/locking, stream producers or deployment.",
     "integrated_control_subset": "d6204aaab82e1b100532f40bae00e224d9334c65",
     "identity_remaining_units": [
       {
@@ -10623,7 +10626,7 @@
       {
         "id": "SP-01.b/ID-C",
         "title": "Service and run credential lifecycle",
-        "status": "in_progress",
+        "status": "complete",
         "depends_on": [
           "SP-01.b/ID-B"
         ],
@@ -10662,11 +10665,11 @@
           {
             "id": "C2",
             "title": "Run credentials and product-authority composition",
-            "status": "in_progress",
+            "status": "complete",
             "depends_on": [
               "C1"
             ],
-            "owner": "Engineer Platform completed authoring; Research and Quality accepted; lead owns integration.",
+            "owner": "Engineer Platform; Research/Quality/lead accepted. Project lead integrated.",
             "human_effort_days": [
               2,
               4
@@ -10676,13 +10679,19 @@
             "source": "33caa9178ccf6547f9f70762afd45c0fb0fe088e",
             "runtime_source": "67d1128d262d9fcf7cca4884eb472a73041d7606",
             "integrated_source": "cb14e3486915087081978aacb2176848fca9ca46",
-            "review_status": "source_and_final_composition_accepted_pending_hosted_integration",
+            "review_status": "accepted_and_integrated",
             "author_full_tests": 1595,
             "focused_tests": 222,
-            "author_schema_checks": 597
+            "author_schema_checks": 597,
+            "pull_request": 88,
+            "merge": "92320173ff0d3278c65cfc251983d57fab9960b1",
+            "reviewed_head": "b8d3e5ee96b3b07da53eccbabddebc5a73223ba3",
+            "tree": "515e27ebbb594a15ce439b24a14463ed7a4cf9a7",
+            "pr_ci": 39367180231,
+            "main_ci": 39367439199
           }
         ],
-        "execution_plan": "Lead accepted two dependent reviewable increments. New trusted principal authority generation and durable grant incarnation prevent disable/re-enable and remove/regrant resurrection; existing public session/B1 shapes remain unchanged. Creator and leaf key are audit metadata, not enduring run authority. ID-C and SP-01.b stay open until both and final composition review. C1 uses the reused identity checkout after B3 mainCI acceptance. Recovery preserves the original scopes/expiry, changes only key identity/verifier/generation and immediately revokes the target; exact retries return metadata only after current authority checks.",
+        "execution_plan": "C1 and C2 are independently reviewed and integrated with accepted final SP-01.b composition. Producer enforcement and live verification remain later tasks.",
         "shared_final_review_days": [
           1,
           2
@@ -10804,7 +10813,7 @@
       "status": "SP-04.e_in_progress",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "Research authors SP-04.e in primary after all scorer and planning PR/main checks; Platform C2 remains independently active in identity.",
+      "next_authoring_task": "Research continues SP-04.e SDK/CLI in primary; Platform independently authors SP-01.c in identity.",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10826,7 +10835,7 @@
       "forecast_boundary": "Reference human effort only; not a subagent delivery forecast. Dependencies, gates and schedules unchanged.",
       "identity_boundary": "SP-01.b/c/d/e, B3, ID-C, SP-08, staging and whole R0 exit are not prerequisites for the local slice; their hosted/later consumer gates remain.",
       "acceptance": "Purchased-prefix-only fit, unseen-condition predictions, independent analytic development score and SDK/CLI evidence; any failed probe unscorable, primary MSE null; derive RMSE from position_mse.",
-      "evidence_gap": "Fitting and prediction are integrated; independent scoring, SDK/CLI reproduction and actual I1 acceptance remain.",
+      "evidence_gap": "Fitting, prediction and independent scoring are integrated; purchased-prefix SDK/CLI reproduction and actual I1 acceptance remain.",
       "capacity_approval": "Concrete disk expansion and snapshot approved and independently accepted 2026-10-20; other paid/release gates unchanged."
     },
     "capacity_recovery": {
@@ -10896,8 +10905,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Quality owns primary SP-06.a scoring. Research prepares SDK/CLI and reviews scoring read-only.",
-      "identity": "Platform owns ID-C/C2 in the reused identity checkout after C1 PR/main acceptance. Quality owns primary scoring; no extra checkout.",
+      "scientific": "Research exclusively authors SP-04.e SDK/CLI in primary; Quality and lead independently review.",
+      "identity": "Platform authors SP-01.c in the reused identity checkout after SP-01.b PR/main acceptance and reviewed lead handoff.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11077,7 +11086,7 @@
       "source": "33caa9178ccf6547f9f70762afd45c0fb0fe088e",
       "runtime_source": "67d1128d262d9fcf7cca4884eb472a73041d7606",
       "integrated_source": "cb14e3486915087081978aacb2176848fca9ca46",
-      "status": "reviewed_pending_hosted_integration",
+      "status": "complete",
       "author": "Engineer Platform",
       "reviewers": [
         "Engineer Research",
@@ -11100,10 +11109,16 @@
       "integrated_mypy_files": 57,
       "integrated_schema_checks": 613,
       "integrated_security": "Configured Bandit medium/high threshold passed; low findings retained.",
-      "integrated_package": "Pinned offline wheel/sdist and exact29-module archive allowlist passed."
+      "integrated_package": "Pinned offline wheel/sdist and exact29-module archive allowlist passed.",
+      "pull_request": 88,
+      "merge": "92320173ff0d3278c65cfc251983d57fab9960b1",
+      "reviewed_head": "b8d3e5ee96b3b07da53eccbabddebc5a73223ba3",
+      "tree": "515e27ebbb594a15ce439b24a14463ed7a4cf9a7",
+      "pr_ci": 39367180231,
+      "main_ci": 39367439199
     },
     "identity_composition_review": {
-      "status": "accepted_pending_C2_integration",
+      "status": "accepted_and_integrated",
       "reviewer": "Engineer Quality",
       "source": "33caa9178ccf6547f9f70762afd45c0fb0fe088e",
       "runtime_source": "67d1128d262d9fcf7cca4884eb472a73041d7606",
@@ -11112,7 +11127,57 @@
       "public_routes": 45,
       "schema_references": 112,
       "scope": "Interface/semantic/SQL obligations only. Namespace tuple/null uniqueness, purpose-bound proof ownership, durable run ancestry, replay, per-payload stream checks and non-resurrecting browser-family producers align.",
-      "gate": "Parent SP-01.b closes only after C2 exact-head PR/main acceptance."
+      "gate": "SP-01.b bounded contract freeze complete after C2 exact-head PR/main acceptance; live producer enforcement remains later work.",
+      "integration": {
+        "pull_request": 88,
+        "merge": "92320173ff0d3278c65cfc251983d57fab9960b1",
+        "reviewed_head": "b8d3e5ee96b3b07da53eccbabddebc5a73223ba3",
+        "tree": "515e27ebbb594a15ce439b24a14463ed7a4cf9a7",
+        "pr_ci": 39367180231,
+        "main_ci": 39367439199
+      }
+    },
+    "artifact_worker_contracts": {
+      "issue": 89,
+      "owner": "Engineer Platform",
+      "reviewers": [
+        "Engineer Quality",
+        "Engineer Research",
+        "Project lead"
+      ],
+      "status": "in_progress",
+      "pr_units": [
+        {
+          "id": "ART1",
+          "title": "Artifact identity and complete checkpoint admission/recovery",
+          "status": "in_progress"
+        },
+        {
+          "id": "EXEC1",
+          "title": "Quarantined package/build and launch/broker envelopes",
+          "status": "approved_unstarted",
+          "depends_on": [
+            "ART1"
+          ]
+        },
+        {
+          "id": "COMP1",
+          "title": "Predictor identity and DB/recovery composition",
+          "status": "approved_unstarted",
+          "depends_on": [
+            "ART1",
+            "EXEC1"
+          ]
+        }
+      ],
+      "decisions": [
+        "Public immutable generation is a bounded decimal string; locator/visibility/deletion and verification evidence are trusted server projections.",
+        "Complete checkpoint boundary requires bound actual-object evidence and current authority; externally supplied artifacts_verified boolean is removed. CORE checkpoint bytes remain unchanged.",
+        "Broker authority uses actual current C2 credential ID/generation/pointer and lease; no speculative independent counter.",
+        "Explicit required versioned resource policies; no guessed production defaults or isolation claims.",
+        "Raw object byte hashes and canonical message/model hashes remain distinct. Full custom predictor protocol remains SP-19.a."
+      ],
+      "scope_boundary": "Three review units under the unchanged SP-01.c task, dependencies, four delivery plus one reserve days. No provisioning, live adapters/SQL, build execution or isolation proof."
     }
   },
   "research_amendment": {
