@@ -189,3 +189,32 @@ retained operation statuses. They also compare frozen model/receipt definitions.
 The API checkpoint does not yet verify runtime parsing, authorization ordering,
 actual canonical prefix hashing, current approval renewal or storage behavior;
 those require the separately reviewed runtime implementation.
+
+## Runtime review checkpoint
+
+`model_submissions.admit_model_submission` and `commit_model_submission` are
+pure complete-boundary proposal functions. Both first invoke the existing
+current worker broker authorization, then validate the independently current
+native runtime/artifact/engine projections and status-specific retained closure.
+`NativeModelEnvironment` is trusted producer input, not a client request.
+
+Admission creates a pending operation or returns the exact retained operation.
+Its completed replay validates the immutable completed closure and current
+approval/catalog/readback; it does not refit or reinterpret historical bytes.
+Completion additionally consumes actual bounded model and full-ledger bytes,
+derives the exact SCI prefix and checks its hash and selected fitting rows.
+A completion retry verifies the same historical model/prefix against the current
+complete ledger, allowing later observations without rewriting the original
+commit provenance. Failed/cancelled operations remain explicit terminal outcomes.
+
+The raw byte caps precede decoding; a lexical depth/node guard precedes strict
+JSON decoding, which rejects duplicate keys and nonfinite values. Canonical SCI
+encoding uses the existing sorted/compact ASCII-escaped JSON semantics with an
+incrementally checked byte limit. This avoids accumulating an unbounded encoded
+prefix string; the already bounded typed input still occupies memory. These
+reference bounds do not establish scalable database reads or hosted throughput.
+
+The first runtime checkpoint has 25 focused runtime cases plus the 94 accepted
+contract cases passing, with targeted Ruff and strict mypy checks. Independent
+runtime review and broader boundary/whole-repository verification remain open.
+No database/object adapter, predictor execution or deployed approval is supplied.
