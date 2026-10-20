@@ -12010,6 +12010,19 @@
           "accepted_ancestors": 12,
           "proposed_native_path_tasks": 8,
           "pending_gates": 1
+        },
+        "review": {
+          "source": "ad89f8d26264fff5ca96ea8c200decb1ff0582e2",
+          "reviewer": "Engineer Quality",
+          "status": "accepted_as_planning_proposal_only",
+          "checks": [
+            "Actual predictor and workflow producer/provenance seam verified.",
+            "All proposed dependencies resolve; graph acyclic; 23 tasks and69 fixed plus6 conditional edges.",
+            "RA-07.b closure21:12 accepted,8 proposed research tasks, pendingRA_EXEC.",
+            "Effort12\u201319 new,19\u201329 unfinished,23.75\u201336.25 with25% reserve.",
+            "Baseline tasks/gates/forecast and active research amendment unchanged."
+          ],
+          "activation": "Dependency amendment, RA_EXEC and bounded comparison run scope still require explicit decision."
         }
       },
       "proposal_document": "docs/research/NATIVE_COMPARISON_PROPOSAL.md"

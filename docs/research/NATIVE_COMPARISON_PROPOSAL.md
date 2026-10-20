@@ -127,4 +127,4 @@ Use the existing machine, at most8 CPU-core-hours and1GiB new artifacts, with ze
 
 ## Current assignment
 
-This proposal is prepared for independent review. Research continues WEB1; Platform and Quality return to its immutable API review when available. No native implementation task or experiment has started. RA_EXEC remains pending.
+Quality independently accepted this as a planning proposal at ad89f8d: source compatibility, resolved acyclic dependencies, closure counts and effort totals agree. The active graphs and gates are unchanged. Research continues WEB1; Platform and Quality return to its immutable API review when available. No native implementation task or experiment has started. RA_EXEC remains pending.
