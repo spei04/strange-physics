@@ -1365,10 +1365,10 @@
         "security",
         "Backend"
       ],
-      "execution_owner": "Platform author; lead integrates ART1; Quality/Research/lead independently review. EXEC1/COMP1 remain.",
+      "execution_owner": "Project lead integrates reviewed EXEC1; Quality reviews integration. Research queued for COMP1 after exact PR/main CI; Platform reviews its build/runtime boundary.",
       "issue": "https://github.com/spei04/strange-physics/issues/89",
       "execution_plan": "ART1 artifact/checkpoint admission and recovery; EXEC1 package quarantine and worker/broker authority; COMP1 predictor/DB composition. Accepted SP-01.b integration precedes source. Three review units preserve the baseline task/effort/gates.",
-      "evidence": "ART1 runtime29a968b and author7a90e96 accepted by three reviewers. Combined5ad0ef3 passed1954 tests,669schemas,static/security/package checks; exact-head hosted gates remain. Full SP-01.c is not complete."
+      "evidence": "ART1 complete via PR91/main95bdd85 matching reviewed8c282eb/treecb539fa2; PRCI39370833204 and all five mainCI39370975462 jobs passed. EXEC1 API/runtime independently accepted atfe3b008 and doc-onlyc66b6a0:2281 tests/722schemas/static/security/package checks passed. Final PR92/main CI and COMP1 remain before full SP-01.c freeze."
     },
     {
       "id": "SP-01.d",
@@ -2621,7 +2621,9 @@
         "SDK",
         "Backend",
         "frontend"
-      ]
+      ],
+      "execution_constraint": "Persist immutable observation body identity/hash with authoritative tenant/run/operation/ordinal/status metadata. Production prefix checks use indexed, byte-capped metadata reads under a consistent run revision; they must not materialize complete trajectory history.",
+      "execution_constraint_tests": "Verify complete contiguous rows, unique operation IDs, scientific-failure inclusion, incomplete-operation stopping, body-commit/hash joins, concurrent append and bounded rows/bytes read."
     },
     {
       "id": "SP-10.a",
@@ -2888,7 +2890,9 @@
         "Platform",
         "QE",
         "security"
-      ]
+      ],
+      "execution_constraint": "Enforce cumulative scientific/output/artifact allowances across attempts and before decoding/materializing data. Per-launch ceilings and a maximum experiment count do not establish a bounded run footprint.",
+      "execution_constraint_tests": "Verify replacement cannot reset allowances, unknown amounts remain reserved, and configured input/output byte limits reject before oversized allocation without silent truncation."
     },
     {
       "id": "SP-12.b",
@@ -3085,7 +3089,9 @@
         "Backend",
         "Research",
         "QE"
-      ]
+      ],
+      "execution_constraint": "Consume a reviewed internal transactional ledger closure, with exact body/hash and checkpoint/model joins. Native model prefix binding requires producer-verified canonical bundle identities or a bounded streaming hasher proven byte-equivalent to SCI; until available, reject over-limit input before allocation.",
+      "execution_constraint_tests": "Exercise missing/duplicate/gapped metadata, append races and exact canonical digest equivalence including scientific failures; verify reference commits and prefix evidence share a snapshot."
     },
     {
       "id": "SP-13.d",
@@ -3545,7 +3551,9 @@
         "research",
         "Research",
         "SDK"
-      ]
+      ],
+      "execution_constraint": "Restore through a reviewed internal compact ledger projection with explicit page/row/byte limits and the exact checkpoint target/latest closure. No client-supplied prefix scalar or full-trajectory materialization per restore. Payload delivery separately rechecks current read authority.",
+      "execution_constraint_tests": "Measure bounded bytes/rows under maximum supported history and concurrent append/recovery; reject missing body commits, gaps and stale snapshots while preserving initial -1 and committed scientific-failure semantics."
     },
     {
       "id": "SP-16.c",
@@ -10554,7 +10562,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Project lead integrates ART1; Platform prepares EXEC1 and Research prepares SCI-facing COMP1 read-only.",
+      "BE1": "Lead integrates reviewed EXEC1; Research queued for COMP1 after exact PR/main CI, with Platform/Quality independent review.",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10815,7 +10823,7 @@
       "status": "complete",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "Platform receives EXEC1 after ART1 integration; Research prepares SCI-facing COMP1 and retains completed SP-01.d read-only design; Quality reviews upcoming contracts and prepares SP-01.e.",
+      "next_authoring_task": "Platform assigned EXEC1 API contracts after ART1 accepted integration. Research reviews provenance and retains COMP1/SP-01.d plans; Quality reviews security/interfaces and retains SP-01.e preparation.",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10909,8 +10917,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Project lead exclusively integrates ART1 in primary with accepted SDK/I1 records.",
-      "identity": "Clean released ART1 checkout reserved for Platform EXEC1 after exact ART1 main acceptance and reviewed handoff; no active writer meanwhile.",
+      "scientific": "Project lead owns primary progress/integration; Quality and Research independently review immutable source.",
+      "identity": "Platform released clean after EXEC1 review; reserved for sequential Research COMP1 authoring after exact PR/main acceptance and explicit handoff. No checkout/dependency copy created.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -11143,7 +11151,7 @@
     },
     "artifact_worker_contracts": {
       "issue": 89,
-      "owner": "Engineer Platform",
+      "owner": "Project lead coordinates integration; Research queued for COMP1, Platform/Quality review.",
       "reviewers": [
         "Engineer Quality",
         "Engineer Research",
@@ -11154,16 +11162,24 @@
         {
           "id": "ART1",
           "title": "Artifact identity and complete checkpoint admission/recovery",
-          "status": "reviewed_pending_hosted_integration"
+          "status": "complete",
+          "pull_request": "https://github.com/spei04/strange-physics/pull/91",
+          "merge_commit": "95bdd85e6163147b6b1e29e6f59648a02e8c3d59"
         },
         {
           "id": "EXEC1",
           "title": "Quarantined package/build and launch/broker envelopes",
-          "status": "approved_unstarted",
+          "status": "in_progress",
           "depends_on": [
             "ART1"
           ],
-          "preparation": "Read-only API/lifecycle challenge; source after ART1 main acceptance and exclusive handoff."
+          "preparation": "API and runtime independently accepted; final PR/main CI pending.",
+          "phase": "Accepted pure predicates; lead integrates, Research queued for COMP1 after exact CI acceptance.",
+          "api_source": "57f2f303a5fec4b65b1df022b4239a64f537f6bc",
+          "api_tree": "ecd3facfcd1f3e5086ef3fca9c30a4c29f8a0b3a",
+          "runtime_source": "fe3b0088d4bca0623459f9024eceb42036e8d491",
+          "author_source": "c66b6a0d6bc82a81195797c742353718bc155136",
+          "pull_request": "https://github.com/spei04/strange-physics/pull/92"
         },
         {
           "id": "COMP1",
@@ -11186,7 +11202,7 @@
       "scope_boundary": "Three review units under the unchanged SP-01.c task, dependencies, four delivery plus one reserve days. No provisioning, live adapters/SQL, build execution or isolation proof.",
       "review_checkpoint": {
         "source": "29a968be3e4e7d5d593c0f3a0ea27d9c01918a07",
-        "status": "accepted_pending_hosted_integration",
+        "status": "complete",
         "findings": [
           "Add bounded latest-record/latest-outbox witnesses to reject a dangling head before fresh or replay writes.",
           "Retained available catalog rows must equal their original snapshot; the frozen lifecycle has no available-to-available revision jump."
@@ -11225,7 +11241,92 @@
         "integration_check_index_sha256": "7e01c7781eeb81fdffa2f9cc76c82da5a675354f1d5d5d0766985604a1dcbcbc",
         "package_acceptance_index_sha256": "087440a4e57ff138f4d3786111c1e17fe1101f29b8ff7fe17f33785a28a8a2d3",
         "harness_corrections": "Lead independent config fixture corrected to existing agent_config_sha256; lead package invocation corrected to exact CI --no-create-gitignore. Initial diagnostics retained; no source, assertions or allowlist weakened.",
-        "boundary": "Pure contracts/predicates only; full SP-01.c freeze and live storage/SQL/authority/build/isolation producers remain later gates."
+        "boundary": "Pure contracts/predicates only; full SP-01.c freeze and live storage/SQL/authority/build/isolation producers remain later gates.",
+        "reviewed_head": "8c282eb2072e59c43290ea10991e09adc990d5b6",
+        "merge_commit": "95bdd85e6163147b6b1e29e6f59648a02e8c3d59",
+        "tree": "cb539fa21f89ffc5562a66f2c1fa42cb5acdec07",
+        "pull_request": "https://github.com/spei04/strange-physics/pull/91",
+        "pr_ci": 39370833204,
+        "main_ci": 39370975462,
+        "integration_index_sha256": "d3b93df0c795b5b9b680dbd68b3a55e2c6bccae346f77c5d57a9bb5473f57b53",
+        "status": "complete"
+      },
+      "exec1_decisions": [
+        "Separate package-owned artifact projection; no fake run identity.",
+        "Versioned archive/build/worker resource policies with actual original admission, total budget and deadline; current counters may advance.",
+        "Submitted-agent and built-in analytic runtime approval provenance are distinct; WorkerLaunch accepts submitted-agent only.",
+        "Explicit current workers:launch and workers:terminate internal purposes; no new public/service/run scopes.",
+        "Broker operations use closed existing-permission mapping and current C2 authority, runtime approval, launch lifecycle and isolation policy before every operation/commit/payload.",
+        "Exact older-launch termination remains authorized after owner/lease/policy invalidation; fence unknown dispatch first and never report unknown processes stopped or affect a newer launch.",
+        "Manifest/profile syntax checks are not import/conformance proof; no actual extraction/build/controller/sandbox or new predictor execution."
+      ],
+      "exec1_api_evidence": {
+        "source": "57f2f303a5fec4b65b1df022b4239a64f537f6bc",
+        "tree": "ecd3facfcd1f3e5086ef3fca9c30a4c29f8a0b3a",
+        "status": "accepted_for_runtime_authoring",
+        "initial_source": "3777b197ee924319a7492614192b52f88ab99577",
+        "focused_tests": 137,
+        "external_schema_checks": 722,
+        "lead_additional_cases": 15,
+        "quality_additional_cases": 10,
+        "research_additional_cases": 19,
+        "quality_guard_mutations_detected": 5,
+        "research_completion_guard_mutation_detected": 1,
+        "lead_index_sha256": "29302b78c4e8ebe153f32822b543c17b93192a6b5e6413f4454adc38cec8582e",
+        "research_index_sha256": "b1d0ac57d1706e707462238f4c061168bf0d8b4933f9b9f563b28c77fc6555f4",
+        "repairs": [
+          "Historical approval/launch/fence/completion chronology.",
+          "Explicit normal-completion and budget-exhaustion reasons.",
+          "Required scoped launch lookup and named atomic uniqueness/conflict reread.",
+          "Aggregate configuration key/string bound before canonical serialization."
+        ],
+        "scope": "API shapes and intrinsic consistency only; runtime authority, actual producers, final integration and full SP-01.c remain pending.",
+        "quality_index_sha256": "42768dde06d64f91bbd2f754df32f5535ad74f338b719555ccc2c460006bf9ff"
+      },
+      "production_ledger_scaling": {
+        "status": "required_before_hosted_producer_acceptance",
+        "source": "57f2f303a5fec4b65b1df022b4239a64f537f6bc",
+        "single_operation_canonical_bytes": 1757976,
+        "extrapolated_10000_operation_canonical_bytes": 17579767781,
+        "measurement_boundary": "One schema-valid maximum-shape Operation allocated and measured; full-run size extrapolated. Not a simulation, RSS benchmark, load test or upper bound on Python memory.",
+        "owners": [
+          "SP-09.d",
+          "SP-12.a",
+          "SP-13.c",
+          "SP-16.b"
+        ],
+        "authorization_owner": "SP-11",
+        "evidence_index_sha256": "8701a2d838c8c6d0f8f8b4aa58d64dd870d4949a656ce5c356af84356d600c5b",
+        "ownership_addendum_sha256": "5f343528c4b32ed5a5ffd6e049b0fba89749b82d7d7d5bbbeae8f8a67a4c1746",
+        "constraint": "The pure full-Operation prefix validator is a bounded conformance reference, not proof of scalable DB reads. Production requires reviewed internal compact metadata closure with actual durable body/hash joins and bounded snapshot reads; no client prefix assertion. COMP1 must preserve exact SCI canonical prefix identity without unchecked materialization.",
+        "forecast_boundary": "Refines existing producer acceptance; no task/dependency/gate/estimate change. Human estimates remain provisional."
+      },
+      "exec1_runtime_evidence": {
+        "source": "fe3b0088d4bca0623459f9024eceb42036e8d491",
+        "tree": "f1a0b88e2d3fad2232536be8a6a45faf66a7304c",
+        "initial": "77da80b06f6f07173d6950d5ff64f65969f4ee6f",
+        "focused": 615,
+        "lead_tests": 202,
+        "lead_extra": 12,
+        "research_extra": 12,
+        "quality_state_cases": 84,
+        "quality_receipt_cases": 65,
+        "quality_time_cases": 6,
+        "quality_repair_mutants": 3,
+        "quality_prior_other_mutants": 4,
+        "research_mutants": 3,
+        "lead_index": "a5d52b8bd1ea77fa9d4112ce5b1d6146d603b37c722a7a61272540815c2218c1",
+        "quality_index": "8aa1f6f8de57c3d64439aad62775a4c7235e182a48ad11ffd083a94df3ef684b",
+        "research_index": "ccf4e744a227b907e08a72a196fbcaa0a8b9980099a8ac127682d05b7f602bd2",
+        "status": "source_accepted_final_ci_pending",
+        "author_source": "c66b6a0d6bc82a81195797c742353718bc155136",
+        "author_index": "05f71a072fd3721cefc339d70997e7e7cf1007e0b1f9d605a84fc87530bf4f18",
+        "integrated_source": "5f643665000a08cad1eedc0f011910ec70c0ad34",
+        "union_index_sha256": "b9a113994ad13220b82327df820090f75858fdc312958a7c06ef1a36d2dea307",
+        "full_tests": 2281,
+        "format_files": 112,
+        "mypy_files": 74,
+        "external_schema_checks": 722
       }
     },
     "spring_workflow_evidence": {

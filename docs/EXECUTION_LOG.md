@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | SP-01.c/#89 EXEC1 package/worker preparation | ART1 source released and accepted; next identity writer handoff follows ART1 main acceptance and API review |
-| Research | SCI-facing COMP1 identity/recovery preparation; SP-01.d design ready | Read-only; COMP1 implementation waits ART1/EXEC1 and SP-01.d source/freeze waits full SP-01.c |
-| Quality | ART1 integration/progress review; EXEC1 design challenge | Source and additive merge accepted; SP-01.e tooling remains read-only until prerequisites pass |
-| Project lead | Integrate accepted ART1 with SDK/I1 records | Exclusive primary writer; identity reserved for Platform reuse; exact reviewed-source PR/main gates before handoff |
+| Platform | EXEC1 source released; next COMP1 build/runtime review | Reused identity checkout reserved for Research handoff after CI |
+| Research | COMP1 native-model identity/recovery authoring next | EXEC1 accepted; source waits exact PR/main acceptance |
+| Quality | Final EXEC1 integration/CI review | Retains prerequisite-gated SP-01.e tooling preparation |
+| Project lead | Integrate EXEC1 and assign COMP1 | Exclusive primary progress owner; exact reviewed-source and CI gates |
 
 ## Assignments
 
@@ -266,3 +266,46 @@ Author checks passed1,875 full tests,654 schemas,lint/format97,mypy61,configured
 Private author index SHA256 bf086518d0c379b2b3adb1092f36fc7839f6ae79bef73ad19e64fd430d76e7a8, lead review2707577d945868af47a97a19236537bbdac11ef6fb0701b9115049cc245764cd and corrected package acceptance087440a4e57ff138f4d3786111c1e17fe1101f29b8ff7fe17f33785a28a8a2d3 remain outside checkouts, owner-readable, review2026-11-19. Earlier diagnostics are retained with their source identities; same-VM storage is not an off-device backup.
 
 Assignments: lead integrates ART1 in primary; Platform prepares EXEC1 package/worker contracts read-only; Research prepares SCI-facing COMP1 predictor identity/recovery composition and retains completed SP-01.d design preparation; Quality reviews integration and challenges EXEC1. Identity is released and reserved for the next sequential Platform task, with independent dependencies. No checkout or dependency copy was created. SP-01.c remains open through EXEC1/COMP1; RA, paid, staging and release gates remain unchanged.
+
+## ART1 integration complete; EXEC1 API assignment
+
+2026-10-20 04:44 UTC — PR #91/main95bdd85e6163147b6b1e29e6f59648a02e8c3d59 matches reviewed8c282eb2072e59c43290ea10991e09adc990d5b6 and treecb539fa21f89ffc5562a66f2c1fa42cb5acdec07; PR CI39370833204 and all five protected-main CI39370975462 jobs passed. ART1 is complete for its pure contract/predicate scope; SP-01.c remains open through EXEC1 and COMP1. Combined1,954 tests,669 schemas,static/security checks and exact36-entry packages are accepted. Private integration index SHA256 d3b93df0c795b5b9b680dbd68b3a55e2c6bccae346f77c5d57a9bb5473f57b53 remains owner-readable outside checkouts, review2026-11-19; same-VM storage is not an off-device backup.
+
+Platform is assigned EXEC1 API contracts/fixtures in the existing identity checkout after this record’s independent review and explicit writer handoff. Design review accepted separate package ownership, original immutable admission/resource ceilings, distinct submitted-agent/built-in provenance, current internal launch/termination purposes and closed C2 broker permissions. Broker authority rechecks current approval/isolation and irreversible launch fencing; exact older-launch termination survives owner/lease/policy loss and cannot affect a replacement. No unknown-start outcome is reported stopped. An early immutable API checkpoint precedes runtime predicates. Research reviews provenance/SCI and preserves completed COMP1/SP-01.d preparation; Quality reviews authorization/lifecycle and preserves SP-01.e tooling preparation. Lead owns primary progress and integration. Both existing checkouts are reused, dependency manifests unchanged; no source/outputs move to the Mac.
+
+## EXEC1 API review assignments
+
+2026-10-20 04:57 UTC — Platform published early API checkpoint3777b197ee924319a7492614192b52f88ab99577, treec6a7997954eecc14f3300c50dba1392c9bb43b96, with41 named models,116 passing focused cases and720 external schema cases. Full repository checks and independent acceptance remain pending. Canonical detached-manifest package identity, separate source/build hashes, original admission ceilings, distinct analytic/submitted-agent approvals and per-launch irreversible fencing are explicit. This is not runtime admission or isolation enforcement.
+
+Quality is assigned authorization, lifecycle, recovery and public-schema review; Research is assigned package/SCI provenance, configuration and recovery compatibility review. Lead independently checks cross-record invariants and maintains primary progress. Platform retains the identity writer for bounded review repairs and holds runtime predicates until API acceptance. Review also accounts for normal worker completion, alongside cancellation and unknown launch outcomes. Existing checkouts and independent environments are reused; COMP1, SP-01.d and SP-01.e preparation remains preserved.
+
+## EXEC1 API accepted; runtime assignment
+
+2026-10-20 05:05 UTC — Lead, Quality and Research accepted API57f2f303a5fec4b65b1df022b4239a64f537f6bc/treeecd3facfcd1f3e5086ef3fca9c30a4c29f8a0b3a. All137 focused cases and722 external schema cases pass. Lead added15 independent cases, Quality10 and Research19. Quality detected five guard removals; Research independently detected the completion-fence guard removal, an overlapping finding rather than an additional distinct defect. Review repaired launch-before-approval/expiry and termination-before-launch chronology, retained completion fence timing, explicit normal-completion reasons, scoped lookup/atomic unique-attempt obligations and aggregate configuration bounds before serialization.
+
+Platform is reassigned to bounded EXEC1 runtime predicates in the same identity checkout, with current authority/approval/isolation before fresh, replay, broker and dispatch outcomes; exact older-launch termination remains independent of lost work eligibility. Original ceilings/deadline persist across attempts; cumulative resource settlement remains a named later producer obligation. Research and Quality independently review the next immutable runtime source; lead owns primary progress and integration. COMP1/SP-01.d/SP-01.e preparation stays preserved. No additional checkout, dependency copy, cloud provisioning or provider calls.
+
+Private lead API index SHA25629302b78c4e8ebe153f32822b543c17b93192a6b5e6413f4454adc38cec8582e and Research indexb1d0ac57d1706e707462238f4c061168bf0d8b4933f9b9f563b28c77fc6555f4 are outside checkouts, owner-only, review2026-11-19. Initial diagnostics remain linked to their original source. Full repository tests at3777b19 are earlier evidence, not a full-suite result for the repaired API or future runtime. Exact runtime checks and integration are still required; same-VM evidence is not an off-device backup.
+
+Quality API evidence is sealed at index SHA25642768dde06d64f91bbd2f754df32f5535ad74f338b719555ccc2c460006bf9ff for57f2f303, owner-only outside checkouts. Its observed-result record is labeled as such and preserves the exact executed reviewer script; it is not represented as a raw test log.
+
+## Draft CI and production ledger constraint
+
+2026-10-20 05:18 UTC — Draft PR #92 contains accepted API57f2f303 plus reviewed progress atc49e53ebf7ff531eca9a99ba0fc652a8b8084ad5/treea2e8bf47b82f104bc2270032f5715365020da324. All eight API/source files and four progress files match their accepted parents. API CI39373158621 passed both Python versions, security and CI gate; protected-main candidate correctly skipped. Runtime authoring/review is unfinished, so the PR stays draft and this is not final EXEC1 acceptance. Private API-integration index SHA2562c590d736215dd01822bb0a3135779697f28808826104d259ebe8c36ed16c10b is owner-only outside checkouts.
+
+Research completed an independent read-only scaling assignment: one schema-valid8-particle/2,001-frame Operation measured1,757,976 canonical bytes;10,000 distinct-index operations extrapolate to17,579,767,781 bytes (about16.37GiB). Only one object was allocated. This is neither physical simulation evidence nor a load/RSS test. The result requires bounded authoritative ledger metadata/body-hash reads in SP-09.d/SP-13.c/SP-16.b, and cumulative resource enforcement in SP-12.a. SP-11 owns authorization, correcting earlier shorthand references. COMP1 needs actual canonical prefix binding with an explicit byte bound or proven equivalent streaming producer.
+
+The four existing producer tasks now carry concrete constraints/tests; task IDs, dependencies, gates and estimates are unchanged. The current pure full-Operation prefix validator is a conformance reference, not a scalable storage implementation. Research evidence index SHA2568701a2d838c8c6d0f8f8b4aa58d64dd870d4949a656ce5c356af84356d600c5b and ownership addendum5f343528c4b32ed5a5ffd6e049b0fba89749b82d7d7d5bbbeae8f8a67a4c1746 remain owner-only outside checkouts with30-day review; same-VM storage is not an off-device backup. Platform continues runtime source, Research and Quality review the next immutable checkpoint, and lead maintains integration.
+## EXEC1 runtime review assignments
+
+2026-10-20 05:23 UTC — Platform published immutable runtime77da80b06f6f07173d6950d5ff64f65969f4ee6f/treed38d9dda73d8300610e8c6048c2a52c2989477a3 and retains the identity writer for review repairs. Quality is assigned current authority, lifecycle and termination/recovery challenges; Research is assigned scientific provenance, committed-prefix and restore compatibility. Lead reviews independently and integrates only after accepted source and matching checks. Author reports2,253 tests,722 external schema cases, Ruff/format112, full mypy74 and configured Bandit checks passed, with offline wheel/sdist allowlist validation. These author results are subject to peer and final integration verification.
+
+Quality caught four scaling requirement bullet pairs located after the next task's HTML anchor; lead moved them within their owning sections. JSON ownership, task graph and estimates were already correct. No additional checkout or environment was created; both existing cloud checkouts remain in use. The draft PR still contains API-only evidence until reviewed runtime integration.
+
+## EXEC1 runtime accepted; integration assignment
+
+EXEC1 runtime fe3b0088d4bca0623459f9024eceb42036e8d491 and doc-only author c66b6a0d6bc82a81195797c742353718bc155136 are independently accepted. All2,281 tests,615 focused cases,722 schemas,Ruff/format112,full mypy74,configured Bandit and offline archive checks passed. Three related lifecycle/history defects were repaired; Quality independently checked84 state/instance combinations,65 receipt histories and6 chronology cases. Research and lead each passed12 additional cases. Pure predicates remain distinct from live producers. Final PR #92 and protected-main checks are pending; COMP1 and full SP-01.c remain open.
+
+Platform released the existing identity checkout clean after Quality accepted the final documentation. Lead owns primary integration; Quality checks the source/progress union, and Research takes COMP1 only after exact PR/main acceptance. Original CORE/SCI/C2 contracts and dependency pins remain unchanged. The current closure checks establish neither live transactional storage nor sandbox/provider enforcement; no deployment or paid gate is advanced.
+
+Private evidence remains outside checkouts, owner-only, with review2026-11-19: author index SHA25605f71a072fd3721cefc339d70997e7e7cf1007e0b1f9d605a84fc87530bf4f18, Quality 8aa1f6f8de57c3d64439aad62775a4c7235e182a48ad11ffd083a94df3ef684b, Research ccf4e744a227b907e08a72a196fbcaa0a8b9980099a8ac127682d05b7f602bd2, lead a5d52b8bd1ea77fa9d4112ce5b1d6146d603b37c722a7a61272540815c2218c1. Initial diagnostics remain linked to their original source; the initial wheel-smoke strict-JSON fixture correction and review error-code expectation correction did not weaken source assertions. Same-VM evidence is not an off-device backup.

@@ -546,7 +546,7 @@ Parent: [#3](https://github.com/spei04/strange-physics/issues/3). This issue clo
 - **Security and reliability:** No trusted pickle; bounded inputs and scoped identities.
 - **Effort and confidence:** 4 delivery engineer-days; medium confidence; +1.00 days reserved for uncertainty. Tests/documentation included; elapsed duration also depends on 70% capacity and prerequisites.
 - **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, security, Backend. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
-- **Milestone / state:** R0; in progress, issue #89. ART1 runtime29a968b/author7a90e96 is independently accepted; combined5ad0ef3 passed1,954 tests and669 schemas plus static/security/package checks. Exact-head PR/main gates remain before ART1 integration. Platform prepares EXEC1 package/worker envelopes; Research prepares SCI-facing COMP1 predictor/DB composition. Existing four delivery plus one reserve days, dependencies and all gates are unchanged.
+- **Milestone / state:** R0; in progress, issue #89. ART1 is complete via PR #91/main95bdd85, matching reviewed8c282eb/treecb539fa2 with passing PR CI39370833204 and all five main CI39370975462 jobs. Combined1,954 tests/669 schemas/static/security/package checks passed. EXEC1 API/runtime are independently accepted atfe3b008/doc-onlyc66b6a0;2,281 tests/722 schemas/static/security/package checks pass. Final PR #92/main CI and COMP1 remain. Existing four delivery plus one reserve days, dependencies and all gates are unchanged.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
 <a id="sp-01-d"></a>
@@ -1138,6 +1138,9 @@ Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue c
 - **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
+- **Execution constraint (ledger scaling):** Persist immutable observation body identity/hash with authoritative tenant/run/operation/ordinal/status metadata. Production prefix checks use indexed, byte-capped metadata reads under a consistent run revision; they must not materialize complete trajectory history.
+- **Additional production evidence:** Verify complete contiguous rows, unique operation IDs, scientific-failure inclusion, incomplete-operation stopping, body-commit/hash joins, concurrent append and bounded rows/bytes read.
+
 <a id="epic-sp-10"></a>
 ## SP-10 — Add outbox, fencing and reconciliation
 
@@ -1265,6 +1268,9 @@ Parent: [#14](https://github.com/spei04/strange-physics/issues/14). This issue c
 - **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
+- **Execution constraint (ledger scaling):** Enforce cumulative scientific/output/artifact allowances across attempts and before decoding/materializing data. Per-launch ceilings and a maximum experiment count do not establish a bounded run footprint.
+- **Additional production evidence:** Verify replacement cannot reset allowances, unknown amounts remain reserved, and configured input/output byte limits reject before oversized allocation without silent truncation.
+
 <a id="sp-12-b"></a>
 ### SP-12.b — Implement fair bounded admission
 
@@ -1349,6 +1355,9 @@ Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue c
 - **Responsible role:** Platform/SRE engineer; base reference lane PL2. Required review: Platform, backend, research, Backend, Research, QE. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
 - **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+- **Execution constraint (ledger scaling):** Consume a reviewed internal transactional ledger closure, with exact body/hash and checkpoint/model joins. Native model prefix binding requires producer-verified canonical bundle identities or a bounded streaming hasher proven byte-equivalent to SCI; until available, reject over-limit input before allocation.
+- **Additional production evidence:** Exercise missing/duplicate/gapped metadata, append races and exact canonical digest equivalence including scientific failures; verify reference commits and prefix evidence share a snapshot.
 
 <a id="sp-13-d"></a>
 ### SP-13.d — Collect abandoned uploads without deleting live state
@@ -1556,6 +1565,9 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 - **Responsible role:** Platform/SRE engineer; base reference lane PL1. Required review: Platform, security, backend, research, Research, SDK. Actual assignment: see EXECUTION_LOG.md; reference lane is not a simultaneous human-staffing claim.
 - **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
+
+- **Execution constraint (ledger scaling):** Restore through a reviewed internal compact ledger projection with explicit page/row/byte limits and the exact checkpoint target/latest closure. No client-supplied prefix scalar or full-trajectory materialization per restore. Payload delivery separately rechecks current read authority.
+- **Additional production evidence:** Measure bounded bytes/rows under maximum supported history and concurrent append/recovery; reject missing body commits, gaps and stale snapshots while preserving initial -1 and committed scientific-failure semantics.
 
 <a id="sp-16-c"></a>
 ### SP-16.c — Cancel, expire and reconcile remote work
@@ -3361,11 +3373,11 @@ No implementation was started by this planning review. No new checkout, dependen
 
 SP-01.b is complete through the independently reviewed control, ID-A, ID-B/B1–B3 and ID-C/C1–C2 units plus final composition. PR #88/main 92320173ff0d3278c65cfc251983d57fab9960b1 matches accepted b8d3e5ee96b3b07da53eccbabddebc5a73223ba3 and tree 515e27ebbb594a15ce439b24a14463ed7a4cf9a7; PR CI39367180231 and all protected-main CI39367439199 jobs passed. Integrated 1,692 tests, Ruff/format92, strict mypy57,613 schema checks, configured security checks and offline package validation passed. The earlier 3–6-day remaining identity estimate is historical and no longer an outstanding assignment. Agent elapsed time is not human effort evidence. Full-contract consumers may use this bounded freeze once their other actual prerequisites pass; no live enforcement or release claim follows.
 
-SP-01.c/#89 is assigned to Platform in three sequential review units: ART1 immutable object identity and mandatory bound checkpoint evidence; EXEC1 quarantined package/build and current launch/broker authority; COMP1 predictor identities and explicit object/DB recovery fixtures. Public generation and internal locator remain separate. Broker authority reuses the C2 current credential tuple. Resource limits are explicit versioned policy inputs. CORE/SCI bytes stay unchanged; the local workflow/CLI is integrated through PR #90. No provisioning, build execution or sandbox proof. This decomposition changes no baseline estimate, dependency or approval gate.
+SP-01.c/#89 has three sequential review units; lead integrates reviewed EXEC1 and Research takes COMP1 after exact CI acceptance: ART1 immutable object identity and mandatory bound checkpoint evidence; EXEC1 quarantined package/build and current launch/broker authority; COMP1 predictor identities and explicit object/DB recovery fixtures. Public generation and internal locator remain separate. Broker authority reuses the C2 current credential tuple. Resource limits are explicit versioned policy inputs. CORE/SCI bytes stay unchanged; the local workflow/CLI is integrated through PR #90. No provisioning, build execution or sandbox proof. This decomposition changes no baseline estimate, dependency or approval gate.
 
 The coordinated [CI-01 request](https://github.com/spei04/strange-physics/issues/54) adds bounded repository CI/CD maintenance. It does not waive the cloud storage/provisioning gates or complete SP-27.a. Repository-settings coordination owns branch protection; candidate delivery requires protected main and successful required checks. Publication/deployment remain separately gated.
 
-Execution checkpoint 2026-10-20: SP-01.b and ID-C are complete; Platform now owns SP-01.c/#89, SP-04.e/#87 and bounded I1 are complete through PR #90; Research prepares SP-01.d read-only, and Quality reviews ART1 and prepares SP-01.e tooling read-only. Earlier source/PR/check identities remain in EXECUTION_LOG.md and the machine ledger. SP-02.b capacity is complete after the approved recovery snapshot and 200→300 GiB expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
+Execution checkpoint 2026-10-20: SP-01.b and ID-C are complete; lead integrates EXEC1 under SP-01.c/#89 and Research is queued for COMP1, SP-04.e/#87 and bounded I1 are complete through PR #90; Research prepares SP-01.d read-only, and Quality reviews EXEC1 and retains SP-01.e tooling preparation read-only. Earlier source/PR/check identities remain in EXECUTION_LOG.md and the machine ledger. SP-02.b capacity is complete after the approved recovery snapshot and 200→300 GiB expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
 
 
 Scientific execution checkpoint 2026-10-20: Research's read-only dependency review
@@ -3373,7 +3385,7 @@ confirms SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b → SP-06.a →
 with the additional approved joins and accepted predecessors recorded in
 [EXECUTION_LOG.md](EXECUTION_LOG.md#scientific-acceptance-checkpoint--i1-complete).
 SP-06.a/#83 and SP-04.e/#87 are integrated; bounded I1 is complete through PR #90.
-SP-01.b is integrated; Platform owns SP-01.c/#89 in the identity checkout. The six scientific tasks retain
+SP-01.b is integrated; lead integrates EXEC1 and Research is queued for COMP1 in the reused identity checkout. The six scientific tasks retain
 19 reference engineering days plus 4.75 reserve, not a subagent schedule promise.
 No unfinished identity contract or whole-R0 gate is a prerequisite for this local
 slice. Enterprise work and its actual consumer gates remain unchanged. I1 has
@@ -3388,3 +3400,11 @@ reviewed tree and passing PR/main CI, including 1,006 tests. SP-04.b/#81 is inte
 thresholds or manifests were relaxed.
 
 ART1 integration checkpoint: lead owns primary integration of accepted7a90e96 with accepted SDK/I1 progress8cf6fea at5ad0ef3. Both schema-validator additions and the exact36-entry package allowlist survived independent union review. Platform released identity clean for sequential reuse after main acceptance; no new checkout. EXEC1 and COMP1 remain separate dependent review units, and full SP-01.c freeze remains open.
+
+Historical ART1 completion and EXEC1 API assignment (superseded by the current board): PR #91/main95bdd85e6163147b6b1e29e6f59648a02e8c3d59 matches reviewed8c282eb2072e59c43290ea10991e09adc990d5b6 and treecb539fa21f89ffc5562a66f2c1fa42cb5acdec07; PR CI39370833204 and all five protected-main CI39370975462 jobs passed. Platform receives the reused identity checkout for EXEC1 API contracts/fixtures after this record’s review and explicit handoff; independent API review precedes predicates. Research reviews runtime provenance and SCI boundaries; Quality reviews authorization/lifecycle. Lead maintains primary progress and integration. Full SP-01.c freeze, live enforcement and paid/release gates remain open.
+
+Historical EXEC1 runtime assignment (superseded by accepted runtime and integration preparation below): the API at57f2f303a5fec4b65b1df022b4239a64f537f6bc is accepted by lead, Quality and Research after chronology, lookup-uniqueness, normal-completion and aggregate-configuration repairs. Platform retains exclusive identity source ownership for bounded current-authority/replay/broker/termination predicates. Independent runtime review and exact PR/main checks remain; COMP1 and the full SP-01.c freeze are not complete. The four delivery plus one reserve days and all baseline dependency/gate records remain unchanged.
+
+Production ledger measurement: one schema-valid maximum-shape Operation at57f2f303 serialized to1,757,976 bytes; a10,000-operation history extrapolates to17,579,767,781 bytes (about16.37GiB). No giant history was allocated. Count limits and pure conformance predicates do not prove bounded database reads. Exact existing producer owners and acceptance evidence are added above at SP-09.d, SP-12.a, SP-13.c and SP-16.b; SP-11 retains authorization. COMP1 must preserve actual canonical prefix identity with an explicit byte bound or verified streaming producer. Baseline task graph and estimates remain unchanged.
+
+EXEC1 integration preparation: EXEC1 runtime fe3b0088d4bca0623459f9024eceb42036e8d491 and doc-only author c66b6a0d6bc82a81195797c742353718bc155136 are independently accepted. All2,281 tests,615 focused cases,722 schemas,Ruff/format112,full mypy74,configured Bandit and offline archive checks passed. Three related lifecycle/history defects were repaired; Quality independently checked84 state/instance combinations,65 receipt histories and6 chronology cases. Research and lead each passed12 additional cases. Pure predicates remain distinct from live producers. Final PR #92 and protected-main checks are pending; COMP1 and full SP-01.c remain open.
