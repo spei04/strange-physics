@@ -81,6 +81,14 @@ def main() -> None:
                     check(reference, value)
                 for value in bad:
                     check(reference, value, False)
+            retry_reference = (
+                f"web.openapi.json#/paths/{escaped}/{method}"
+                "/responses/429/headers/Retry-After/schema"
+            )
+            for value in ["0", "1", "9999999999"]:
+                check(retry_reference, value)
+            for value in ["1\n", "0\n", "1\r\n", "-1", "+1", "01", "1e2", "١"]:
+                check(retry_reference, value, False)
             if "410" in operation["responses"]:
                 check("web.schema.json#/$defs/ResyncRequired", web["valid"]["ResyncRequired"])
 

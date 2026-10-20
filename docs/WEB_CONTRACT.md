@@ -179,8 +179,14 @@ range/count and first/last event identities. Actual `ReplayChunk` repeats its
 namespace/range and contains consecutive uniquely identified events.
 
 `HistoryPageBinding` validates the supplied root/page/immediate-predecessor
-hash and range joins, available boundary identity consistency, and totals when
-the complete chunk set is present. It does not prove missing earlier pages.
+hash and range joins, including the root identity of any supplied page 0.
+Known root/predecessor/current/next page IDs must denote the same ordinal; the
+known final event participates in supplied event-identity checks. Prefix/suffix
+page, chunk and event offsets must be feasible for nonempty bounded missing
+material. Total raw bytes must lie between known bytes plus one byte per missing
+chunk and known bytes plus the maximum size per missing chunk, becoming exact
+when all chunks are supplied. These are necessary feasibility checks, not proof
+that the missing objects exist or contain valid typed chunks. It does not prove missing earlier pages.
 The later reader must walk from the exact root in order; enforce aggregate
 limits/deadline; reject repeated pages, missing/overlapping/reordered ranges,
 wrong hashes/generations, duplicate conflicting events and total mismatches;
@@ -222,8 +228,9 @@ validation precedes first delivery, and a client must withhold completion until
 all declared bytes/integrity checks are satisfied.
 
 Python canonical serialization is the existing SCI profile, including default
-fields, escaped Unicode, typed float spelling and signed zero. Ordinary browser
-JSON.parse/JSON.stringify is not equivalent and loses −0. Raw byte SHA can be
+fields, escaped Unicode, typed float spelling and signed zero. An ordinary browser
+JSON.parse → JSON.stringify roundtrip is not equivalent: parsing preserves −0,
+but stringification loses its sign. Raw byte SHA can be
 verified over the exact received bytes; semantic identity requires preserved
 canonical event/record bytes or a separately conformance-tested lossless typed
 codec. This Python fixture codec does not establish browser implementation proof
@@ -255,3 +262,17 @@ external contract validator. Synthetic examples are not storage/authentication,
 scientific I1, load, recovery-drill or hosted readiness evidence. Runtime
 predicates remain held until the immutable API checkpoint is accepted by the
 lead, Platform and Quality.
+
+## Initial API validation evidence
+
+The initial immutable API checkpoint `3b01cfca44d61127927ca396ae54a04f06a0026d`
+passed 2,928 repository tests, including 145 WEB1 cases and an overlapping
+371-case WEB/control/session selection; Ruff/format (130 files), strict mypy
+(89 source files), 1,373 external schema checks and the configured Bandit threshold.
+This evidence belongs to that exact source. Independent review then identified
+bounded supplied-page/manifest feasibility joins and response-schema constraints;
+the replacement preserves the public fields and adds regression cases. The
+410 schema now enforces cursor_expired/nonretryable/no-operation, and all WEB1
+Retry-After schemas reject non-ASCII-digit framing characters explicitly.
+Replacement checks and independent review are recorded separately; neither API
+checkpoint establishes runtime authorization or hosted readiness.

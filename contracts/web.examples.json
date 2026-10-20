@@ -191,6 +191,39 @@
       "field": "page_count",
       "model": "HistoryManifest",
       "value": 10001
+    },
+    {
+      "field": "error",
+      "model": "ResyncRequired",
+      "value": {
+        "code": "unauthenticated",
+        "message": "Resume from the captured snapshot.",
+        "operation_id": null,
+        "request_id": "request-web",
+        "retryable": false
+      }
+    },
+    {
+      "field": "error",
+      "model": "ResyncRequired",
+      "value": {
+        "code": "cursor_expired",
+        "message": "Resume from the captured snapshot.",
+        "operation_id": null,
+        "request_id": "request-web",
+        "retryable": true
+      }
+    },
+    {
+      "field": "error",
+      "model": "ResyncRequired",
+      "value": {
+        "code": "cursor_expired",
+        "message": "Resume from the captured snapshot.",
+        "operation_id": "private-op",
+        "request_id": "request-web",
+        "retryable": false
+      }
     }
   ],
   "sse": [

@@ -572,3 +572,168 @@ def test_resync_does_not_claim_mutation_or_blind_retry(point: str) -> None:
         value["error"]["operation_id"] = "private-operation"
     with pytest.raises(ValidationError):
         parse("ResyncRequired", value)
+
+
+def page_chain(
+    counts: tuple[int, ...] = (1, 1, 1, 1),
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    namespace = w.StreamNamespace.model_validate_json(json.dumps(fixture("StreamNamespace")))
+    chunks: list[dict[str, Any]] = []
+    for index in range(sum(counts)):
+        event_data = copy.deepcopy(FIXTURES["events"][2])
+        event_data.update(event_id=f"chain-event-{index}", sequence=index)
+        event_data["payload"]["checkpoint_id"] = f"chain-checkpoint-{index}"
+        event = w.RunEvent.model_validate_json(json.dumps(event_data))
+        chunk = w.ReplayChunk(
+            namespace=namespace, first_sequence=index, last_sequence=index, events=(event,)
+        )
+        raw = canonical_json(chunk.model_dump(mode="json")).encode()
+        descriptor = fixture("ReplayChunkRef")
+        identity = w.EventIdentity.from_event(event).model_dump(mode="json")
+        descriptor.update(
+            first_sequence=index,
+            last_sequence=index,
+            event_count=1,
+            first_event=identity,
+            last_event=copy.deepcopy(identity),
+            chunk_sha256=message_sha256(chunk),
+        )
+        descriptor["artifact"].update(
+            artifact_id=f"chain-chunk-{index}",
+            sha256=hashlib.sha256(raw).hexdigest(),
+            size_bytes=len(raw),
+        )
+        chunks.append(descriptor)
+    pages: list[dict[str, Any]] = []
+    offset = 0
+    for index, count in enumerate(counts):
+        pages.append(
+            fixture("HistoryPage")
+            | {
+                "page_id": f"chain-page-{index}",
+                "through_sequence": len(chunks) - 1,
+                "page_index": index,
+                "first_chunk_index": offset,
+                "chunks": chunks[offset : offset + count],
+                "next_page": None,
+            }
+        )
+        offset += count
+    for index in reversed(range(len(pages) - 1)):
+        next_page = w.HistoryPage.model_validate_json(json.dumps(pages[index + 1]))
+        pages[index]["next_page"] = {
+            "page_id": next_page.page_id,
+            "page_sha256": message_sha256(next_page),
+        }
+    first = w.HistoryPage.model_validate_json(json.dumps(pages[0]))
+    root = fixture("HistoryManifest") | {
+        "through_sequence": len(chunks) - 1,
+        "last_event": chunks[-1]["last_event"],
+        "page_count": len(pages),
+        "chunk_count": len(chunks),
+        "total_chunk_bytes": sum(c["artifact"]["size_bytes"] for c in chunks),
+        "first_page": {"page_id": first.page_id, "page_sha256": message_sha256(first)},
+    }
+    return root, pages
+
+
+@pytest.mark.parametrize("counts", [(1,), (1, 1), (1, 2, 1), (2, 1, 2, 1, 1)])
+def test_all_available_links_in_valid_bounded_chains(counts: tuple[int, ...]) -> None:
+    root, pages = page_chain(counts)
+    for index, page in enumerate(pages):
+        parse(
+            "HistoryPageBinding",
+            {"manifest": root, "page": page, "previous": None if index == 0 else pages[index - 1]},
+        )
+
+
+@pytest.mark.parametrize("point", ["id", "hash"])
+def test_supplied_first_predecessor_must_match_root(point: str) -> None:
+    root, pages = page_chain()
+    if point == "id":
+        pages[0]["page_id"] = "substituted-first"
+    else:
+        root["first_page"]["page_sha256"] = "0" * 64
+    with pytest.raises(ValidationError):
+        parse("HistoryPageBinding", {"manifest": root, "page": pages[1], "previous": pages[0]})
+
+
+@pytest.mark.parametrize("point", ["current_root", "previous_root", "next_root", "next_previous"])
+def test_known_page_id_ordinal_reuse(point: str) -> None:
+    root, pages = page_chain((1, 1, 1, 1, 1))
+    index = 3 if point in {"current_root", "previous_root"} else 2
+    page, previous = pages[index], pages[index - 1]
+    if point == "current_root":
+        page["page_id"] = root["first_page"]["page_id"]
+    elif point == "previous_root":
+        previous["page_id"] = root["first_page"]["page_id"]
+    elif point == "next_root":
+        page["next_page"]["page_id"] = root["first_page"]["page_id"]
+    else:
+        page["next_page"]["page_id"] = previous["page_id"]
+    actual = w.HistoryPage.model_validate_json(json.dumps(page))
+    previous["next_page"] = {"page_id": actual.page_id, "page_sha256": message_sha256(actual)}
+    with pytest.raises(ValidationError):
+        parse("HistoryPageBinding", {"manifest": root, "page": page, "previous": previous})
+
+
+def test_known_final_event_cannot_reuse_earlier_supplied_identity() -> None:
+    root, pages = page_chain()
+    root["last_event"]["event_id"] = pages[0]["chunks"][0]["first_event"]["event_id"]
+    with pytest.raises(ValidationError):
+        parse("HistoryPageBinding", {"manifest": root, "page": pages[1], "previous": pages[0]})
+
+
+@pytest.mark.parametrize("offset", [-1, 0, 1])
+@pytest.mark.parametrize("boundary", ["minimum", "maximum"])
+def test_remaining_raw_bytes_must_be_feasible(boundary: str, offset: int) -> None:
+    root, pages = page_chain()
+    known = sum(c["artifact"]["size_bytes"] for page in pages[:2] for c in page["chunks"])
+    missing = 2
+    root["total_chunk_bytes"] = (
+        known + (missing if boundary == "minimum" else missing * w.CHUNK_BYTES) + offset
+    )
+    value = {"manifest": root, "page": pages[1], "previous": pages[0]}
+    bad = (boundary == "minimum" and offset < 0) or (boundary == "maximum" and offset > 0)
+    if bad:
+        with pytest.raises(ValidationError):
+            parse("HistoryPageBinding", value)
+    else:
+        parse("HistoryPageBinding", value)
+
+
+@pytest.mark.parametrize("point", ["prior_pages", "prior_events", "remaining_pages"])
+def test_missing_chunk_and_event_offsets_must_be_feasible(point: str) -> None:
+    root, pages = page_chain((1, 3, 1, 1))
+    if point == "remaining_pages":
+        root["page_count"] = 5
+        with pytest.raises(ValidationError):
+            parse("HistoryPageBinding", {"manifest": root, "page": pages[1], "previous": pages[0]})
+        return
+    value = pages[3]
+    value["first_chunk_index"] = 2 if point == "prior_pages" else 6
+    with pytest.raises(ValidationError):
+        parse("HistoryPage", value)
+
+
+@pytest.mark.parametrize(
+    "token", ["0", "1", "9999999999", "1\n", "0\n", "1\r\n", "-1", "+1", "01", "1e2", "١"]
+)
+def test_retry_after_external_schema_is_canonical_ascii(token: str) -> None:
+    api = json.loads((ROOT / "contracts/web.openapi.json").read_text())
+    for methods in api["paths"].values():
+        schema = methods["get"]["responses"]["429"]["headers"]["Retry-After"]["schema"]
+        assert schema["not"] == {"pattern": "[^0-9]"}
+    # The dependency-free test checks the same lexical wire profile. The external
+    # validator separately executes JSON Schema against each positive and negative.
+    import re
+
+    good = token in {"0", "1", "9999999999"}
+    schema = next(iter(api["paths"].values()))["get"]["responses"]["429"]["headers"]["Retry-After"][
+        "schema"
+    ]
+    accepted = (
+        re.fullmatch(schema["pattern"], token) is not None
+        and re.search(schema["not"]["pattern"], token) is None
+    )
+    assert accepted == good

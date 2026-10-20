@@ -330,7 +330,10 @@ class HistoryPage(Message):
                 right.first_sequence != left.last_sequence + 1
                 for left, right in zip(self.chunks, self.chunks[1:], strict=False)
             )
-            or (self.page_index == 0) != (self.first_chunk_index == 0)
+            or not self.page_index <= self.first_chunk_index <= self.page_index * 128
+            or not self.first_chunk_index
+            <= self.chunks[0].first_sequence
+            <= self.first_chunk_index * 256
             or (self.page_index == 0 and self.chunks[0].first_sequence != 0)
             or (self.next_page is not None and self.next_page.page_id == self.page_id)
             or (self.next_page is None and self.chunks[-1].last_sequence != self.through_sequence)
@@ -430,19 +433,52 @@ class HistoryPageBinding(Message):
             or previous.chunks[-1].last_sequence + 1 != page.chunks[0].first_sequence
         ):
             raise ValueError("Later page must bind its actual preceding hash link and coverage")
+        known_pages = (page,) if previous is None else (previous, page)
+        assert root.first_page is not None  # Nonempty manifest is required by the checks above.
+        page_ordinals: dict[str, int] = {root.first_page.page_id: 0}
+        for known_page in known_pages:
+            if (
+                known_page.page_id in page_ordinals
+                and page_ordinals[known_page.page_id] != known_page.page_index
+            ):
+                raise ValueError("Known page ID cannot be reused at a different ordinal")
+            page_ordinals[known_page.page_id] = known_page.page_index
+            if known_page.page_index == 0 and root.first_page != HistoryPageRef(
+                page_id=known_page.page_id, page_sha256=message_sha256(known_page)
+            ):
+                raise ValueError("Every supplied first page must bind the immutable root")
+            remaining_pages = root.page_count - known_page.page_index - 1
+            remaining_chunks = (
+                root.chunk_count - known_page.first_chunk_index - len(known_page.chunks)
+            )
+            remaining_events = root.through_sequence - known_page.chunks[-1].last_sequence
+            if not (
+                remaining_pages <= remaining_chunks <= remaining_pages * 128
+                and remaining_chunks <= remaining_events <= remaining_chunks * 256
+            ):
+                raise ValueError("Missing pages and chunks must admit complete nonempty coverage")
+        if page.next_page is not None:
+            next_id, next_index = page.next_page.page_id, page.page_index + 1
+            if next_id in page_ordinals and page_ordinals[next_id] != next_index:
+                raise ValueError("Next page cannot reuse a known earlier page identity")
         supplied = page.chunks if previous is None else previous.chunks + page.chunks
         if len(
             {(chunk.artifact.artifact_id, chunk.artifact.generation) for chunk in supplied}
         ) != len(supplied):
             raise ValueError("Supplied pages cannot repeat an immutable chunk object")
+        assert root.last_event is not None
         _identity_pairs(
             tuple(
                 identity for chunk in supplied for identity in (chunk.first_event, chunk.last_event)
             )
+            + (root.last_event,)
         )
         known_bytes = sum(chunk.artifact.size_bytes for chunk in supplied)
-        if known_bytes > root.total_chunk_bytes or (
-            len(supplied) == root.chunk_count and known_bytes != root.total_chunk_bytes
+        missing_chunks = root.chunk_count - len(supplied)
+        if (
+            not known_bytes + missing_chunks
+            <= root.total_chunk_bytes
+            <= known_bytes + missing_chunks * CHUNK_BYTES
         ):
             raise ValueError("Manifest byte total must agree with all supplied chunk evidence")
         if page.next_page is None and (
@@ -566,7 +602,18 @@ class ExperimentRecordBinding(Message):
 
 
 class ResyncRequired(Message):
-    error: Error
+    error: Annotated[
+        Error,
+        Field(
+            json_schema_extra={
+                "properties": {
+                    "code": {"const": "cursor_expired"},
+                    "retryable": {"const": False},
+                    "operation_id": {"type": "null"},
+                }
+            }
+        ),
+    ]
     namespace: StreamNamespace
     snapshot_route: Literal["getRunSnapshot"] = "getRunSnapshot"
     history_route: Literal["getRunHistoryPage"] = "getRunHistoryPage"

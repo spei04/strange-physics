@@ -1628,8 +1628,13 @@
             "description": "Quota or admission limit",
             "headers": {
               "Retry-After": {
-                "description": "Delay or retry time; does not override a depleted budget.",
+                "description": "Nonnegative delay in seconds. Recheck current authority before retry.",
                 "schema": {
+                  "maxLength": 10,
+                  "not": {
+                    "pattern": "[^0-9]"
+                  },
+                  "pattern": "^(0|[1-9][0-9]{0,9})$",
                   "type": "string"
                 }
               }

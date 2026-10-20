@@ -1299,7 +1299,18 @@
       "additionalProperties": false,
       "properties": {
         "error": {
-          "$ref": "#/$defs/Error"
+          "$ref": "#/$defs/Error",
+          "properties": {
+            "code": {
+              "const": "cursor_expired"
+            },
+            "operation_id": {
+              "type": "null"
+            },
+            "retryable": {
+              "const": false
+            }
+          }
         },
         "history_route": {
           "const": "getRunHistoryPage",
