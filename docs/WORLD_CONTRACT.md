@@ -1,10 +1,10 @@
 # WORLD1: immutable worlds and explicit preview grants
 
-This is the typed API review checkpoint for SP-01.d/WORLD1, issue #94.
-The modules define bounded messages, pure lossless codecs and intrinsic
-cross-message joins. They do not implement authorization, persistence, HTTP,
-catalog resolution or a browser client. Runtime predicates follow independent
-API review. WEB1 stream/replay contracts remain a separate unit.
+This is the reviewed pure-contract and predicate unit for SP-01.d/WORLD1,
+issue #94. It defines bounded messages, lossless codecs, current-authorization
+checks, version/grant proposals and exact retained-recovery joins. Hosted
+authority producers, persistence, HTTP, catalog resolution and browser clients
+remain unimplemented. WEB1 stream/replay contracts remain a separate unit.
 
 ## Boundaries and identities
 
@@ -49,7 +49,7 @@ values; it must not silently insert parameter defaults or alter change timing.
 
 ## Current browser capability policy
 
-The future complete WORLD1 guard is separately named and browser-only. It uses
+The complete WORLD1 guard is separately named and browser-only. It uses
 the accepted C2 human/session/workspace validation seam without adding a world
 flag to `authorize_product`, using `runs:create` as a write proxy or widening
 service/run credentials.
@@ -67,7 +67,7 @@ actor/session, principal generation, membership incarnation/revision and
 workspace state. Disabled-owner and quarantine conditions remain effective.
 Owner-only management and every current identity/role check precede freshness
 advice. Ordinary world creation/versioning does not add a recent-authentication
-requirement. Shared identity helpers, if extracted, remain explicitly incomplete;
+requirement. The shared identity helpers remain explicitly incomplete;
 the existing product guard must still perform its existing permission/scope
 checks.
 
@@ -239,15 +239,15 @@ batch; a reference is not read permission. WORLD1 does not implement SSE,
 archive delivery, network parser or browser retry loops.
 
 
-## API checkpoint validation
+## Historical API checkpoint validation
 
 The initial typed checkpoint 42cde25 passed 130 focused cases and 820 external
 schema checks. Independent review identified canonical signed-zero joins,
 historical chronology, opaque-ID page uniqueness and explicit expired-key
 evidence that needed tightening. The revised checkpoint includes the browser
 OpenAPI contract, original-policy receipt expiration proposals and regressions.
-It still contains no authorization or persistence runtime predicates. Full
-repository, runtime-boundary and hosted integration checks remain separate gates.
+That API-only checkpoint contained no authorization or persistence runtime
+predicates. Its evidence is distinct from the later runtime checks below.
 
 The 913f386 typed API passed 175 focused cases, 1,188 external JSON Schema
 checks (including route input/status projection references), full Ruff checks
@@ -262,20 +262,20 @@ route contract. These later changes are validated separately at their exact
 checkpoint; the earlier full-run identity is preserved.
 
 The compatibility/503 replacement passes 177 focused cases, 1,201 external
-schema checks, full Ruff and strict mypy81. The current review checkpoint still
-has no runtime authorization/persistence predicates.
+schema checks, full Ruff and strict mypy81. That API review checkpoint contained
+no runtime authorization/persistence predicates.
 
 The exact fd6bac2 API source passed all 2,600 tests, including 177 WORLD1 cases,
 full Ruff/format checks, strict mypy81 and 1,201 external schema checks. The
 owner-readable verification index and logs remain outside the checkout, bound
-to that source/tree. This final prose clarification changes no model, schema,
-predicate, test or permission. Runtime predicates and hosted validation are
-still separate gates.
+to that source/tree. The subsequent 52ba4ee retention clarification changed no model, schema,
+predicate, test or permission. Runtime predicates and hosted validation were
+separate later gates.
 
-## Runtime checkpoint: shared boundary only
+## Historical shared-boundary checkpoint: 83d304c
 
-The first runtime unit adds the complete browser-world capability guard and
-extracts incomplete current-human/workspace checks already used by C2. Existing
+The first runtime unit added the complete browser-world capability guard and
+extracted incomplete current-human/workspace checks already used by C2. Existing
 product permission branches, cookie/session duplicate bindings and service/run
 scope ceilings remain mandatory. Ordinary world writes require Origin/CSRF;
 owner preview mutations additionally require recent authentication only after
@@ -289,14 +289,14 @@ starts plus its configured byte bounds. These utilities are incomplete and
 must only process private material after a complete current-authority guard.
 Canonical encoding preserves signed zero and the existing ASCII escaping.
 
-This checkpoint does not yet implement world/version or preview persistence
+That checkpoint did not yet implement world/version or preview persistence
 proposals, disclosure, run selection or their recovery paths. No HTTP, database,
 browser serializer or production readiness is claimed.
 
 ## Runtime predicates and trust boundary
 
-The current source adds `world_versions.py` and `world_previews.py`; this
-implementation checkpoint awaits independent review and final integration.
+The reviewed runtime is in `world_versions.py` and `world_previews.py`.
+Its exact-source evidence and remaining hosted integration gates are recorded below.
 These are pure proposals and projections, with no HTTP routes, SQL, locks,
 session verifier, cleanup worker, streaming client or browser implementation.
 
@@ -362,7 +362,7 @@ idempotency namespace IDs are never recycled. A conflict requires scoped
 readback and closure validation, not a second allocation.
 
 Version recovery binds the retained target, current head and current immutable
-commit, including adjacent parent identity and monotonic version/time history.
+commit, including all supplied predecessor identities and monotonic version/time history.
 Grant recovery binds the exact current grant/latest commit and historical
 receipt, with immutable target/recipient/issuer and monotonic revision/time/expiry.
 These bounded witnesses rely on authoritative immutable records previously
@@ -391,3 +391,65 @@ lossless JavaScript serializer. Browser consumers must preserve string uint64
 seeds and signed zero. Ordinary `JSON.stringify` can lose signed zero and is
 not the frozen Python/SCI canonical byte profile. WEB1/SP-01.e consumer
 conformance remains separate; no new hash dialect is introduced.
+
+## Reviewed runtime evidence
+
+The final runtime source is
+`926773379afa3e30d9bcf454a44e0041598a26b8`
+(tree `e560aec4f8d5b236a9ba29a6bda29bc7a24bf5c1`). It passed
+2,768 repository tests, including 345 WORLD1 API/authority/runtime cases.
+The broader focused compatibility selection passed 542 cases, including
+existing C2 and COMP1 consumers. These selections overlap and are not additional
+independent test totals. Full Ruff/format checks (127 files), strict mypy
+(87 source/test/example files), 1,201 external schema fixtures and the configured
+Bandit threshold passed.
+
+Independent lead, Platform and Quality review accepted that exact runtime.
+Their checks covered current authority before poisoned private inputs,
+historical metadata replay, canonical signed-zero/uint64 identity, current policy
+changes, browser/service run selection, supplied version ancestry, and grant
+lifecycle reachability. Targeted guard mutations were detected. These are
+bounded contract/proposal checks, not deployed authentication or recovery drills.
+
+Review found that comparing a historical receipt only with the latest state
+missed contradictions in already-retained predecessors. The repaired version
+checks compare every supplied relevant version-record pair, including the
+historical receipt's parent and the current head's parent. They bind known
+opaque IDs to their implied ordinals, require exact canonical identity at equal
+ordinals, enforce adjacent parent links and retain nondecreasing creation times.
+They reject reuse of an earlier own or parent ID at another known ordinal.
+No additional history is fetched.
+
+Grant history compares the historical outcome with both the current transition's
+predecessor and outcome. Equal revisions require exact canonical record/commit
+identity. A later state cannot follow revocation. For revision distance `d`,
+a still-live outcome requires at least `d` seconds of expiry growth because
+each intervening renewal strictly increases an integer expiry; a final revoke
+requires at least `d - 1`. Equal transition timestamps remain valid, and a sole
+revocation can preserve expiry. These checks reject contradictions in supplied
+bounded witnesses without claiming to authenticate all unprovided history.
+
+Offline wheel/sdist construction and the package allowlist passed at the same
+runtime source. A temporary wheel-only target installation, using the existing
+pinned dependency environment, successfully created a world, issued a preview
+grant and disclosed the definition to its exact current recipient. The safe
+creation result omitted the definition, and the uint64-max seed round-tripped.
+The temporary installation was removed. This proves the packaged callable path,
+not HTTP/database enforcement or a deployed browser client.
+
+Owner-readable evidence remains outside the checkout under
+`/home/serenapei/.local/state/strange-physics-reviews/world1-author/`.
+The `92677337-full/index.json` SHA-256 is
+`b4c2bbd0ab8321fa6b38c621727fc082c0009a818bb7ad74bcfaf57ed3bd6420`;
+the `92677337-package/index.json` SHA-256 is
+`db236fd5614de6720a903452bc44c4405f4a1708d86a73145cb02658e6ea3fba`.
+They bind exact source/tree, commands, logs and retained archive hashes.
+Directories are 0700 and files 0600, with a diagnostic review date of 2026-11-19.
+Earlier checkpoints and diagnostic failures remain separately identified;
+they are not substituted for the final result.
+
+The subsequent author handoff changes documentation and contract-status
+annotations only; runtime predicates and validation semantics remain those of
+the reviewed source above. Hosted exact-head CI and integration are lead-owned
+gates. WORLD1 does not finish SP-01.d: WEB1 stream/snapshot/replay contracts and
+the later hosted producers remain outstanding.
