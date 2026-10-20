@@ -576,7 +576,7 @@ def validate_experiment_admission(run: RunView, operations: tuple[Operation, ...
         raise ContractViolation("budget_exhausted", 429)
 
 
-def validate_checkpoint_write(
+def validate_checkpoint_metadata(
     checkpoint: Checkpoint,
     *,
     path_index: int,
@@ -586,9 +586,8 @@ def validate_checkpoint_write(
     stored_request_sha256: str | None,
     latest_index: int | None,
     committed_prefix: int,
-    artifacts_verified: bool,
 ) -> Literal["created", "replayed"]:
-    """Run after authorization and external ART validation, under the same SQL lock.
+    """Incomplete metadata primitive; use artifact_checkpoints for hosted admission.
 
     Stored digest is looked up by (workspace, run, path index), never by index alone.
     Binding comes from the authorized attempt; full digest is computed, not trusted.
@@ -612,8 +611,6 @@ def validate_checkpoint_write(
         raise ContractViolation("invalid_request", 422)
     if binding != expected_binding or checkpoint.agent_id != binding.agent_id:
         raise ContractViolation("incompatible_state", 409)
-    if not artifacts_verified:
-        raise ContractViolation("invalid_request", 422)
     if checkpoint.through_index > committed_prefix:
         raise ContractViolation("incompatible_state", 409)
     if stored_request_sha256 is not None:

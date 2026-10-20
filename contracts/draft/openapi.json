@@ -2,36 +2,7 @@
   "components": {
     "schemas": {
       "CheckpointRequest": {
-        "additionalProperties": false,
-        "description": "Draft ART envelope; frozen semantics require full normalized payload hashing, path/body index equality, pinned agent/package/config/runtime binding, and index no later than the contiguous committed observation prefix (including failed physics records). Canonical core checkpoint JSON is at most 256 KiB. Equal historical payload replays without moving latest; changed payload conflicts. External current tenant/lease authority and verified durable artifacts remain mandatory.",
-        "properties": {
-          "artifacts": {
-            "items": {
-              "$ref": "research.schema.json#/$defs/ArtifactRef"
-            },
-            "maxItems": 128,
-            "minItems": 0,
-            "type": "array"
-          },
-          "checkpoint": {
-            "$ref": "../core.schema.json#/$defs/Checkpoint"
-          },
-          "runtime_image_sha256": {
-            "maxLength": 64,
-            "minLength": 64,
-            "pattern": "^[a-f0-9]{64}$",
-            "type": "string"
-          }
-        },
-        "required": [
-          "checkpoint",
-          "runtime_image_sha256",
-          "artifacts"
-        ],
-        "type": "object",
-        "x-pending-contracts": [
-          "ART"
-        ]
+        "$ref": "../artifacts.schema.json#/$defs/CheckpointRequest"
       },
       "CreateRunRequest": {
         "$ref": "../control.schema.json#/$defs/CreateRunRequest"
