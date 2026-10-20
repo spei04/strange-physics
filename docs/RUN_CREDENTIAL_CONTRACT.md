@@ -173,3 +173,21 @@ If delivery is lost, a separately authorized replacement uses the current CAS an
 fences the previous generation. Durable uniqueness, outbox processing, current
 reads, signing, transport, stop/settlement behavior and race/recovery drills remain
 obligations for later hosted implementations.
+
+## Local validation record
+
+The reviewed runtime checkpoint is
+67d1128d262d9fcf7cca4884eb472a73041d7606. On Python 3.12 it passed 1,595
+repository tests, including 222 focused run-credential/composition/workspace
+cases; repository Ruff lint/format, strict mypy, 597 external schema fixture
+checks, and the configured Bandit threshold passed. Offline wheel/sdist archives
+matched the explicit source allowlist. A wheel-origin smoke exercised replacement,
+complete product authorization and metadata-only replay outside the checkout.
+
+Independent review covered malformed atomic operation state, exact replay targets,
+current ownership/generation/incarnation, actual verified claims, role/ceiling/CSRF,
+lease/deadline fences and missing/partial evidence. Focused guard mutations were
+detected; this is bounded conformance evidence, not proof of a real verifier,
+transactional database, distributed race or recovery implementation. Existing
+public contract bytes and dependency manifests remain unchanged. Hosted
+integration checks and final C-ID producer/consumer acceptance remain separate gates.
