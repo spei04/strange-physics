@@ -50,8 +50,9 @@ hashing are local work proportional to the supplied data. The 400,000 scalar
 row limit bounds numerical fitting work; it is not a hosted request-size or
 hostile-code security boundary.
 
-Prediction, independent evaluation, uncertainty estimates and the full I1
-scientific checkpoint remain separate work. No evaluator labels, private world
+The [local analytic predictor](PREDICTION.md) is a separate API. Independent
+evaluation, uncertainty estimates and the full I1 scientific checkpoint remain
+separate work. No evaluator labels, private world
 parameters, journal state or future records enter this fitter.
 
 ## Calling the fitter

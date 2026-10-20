@@ -170,3 +170,104 @@ allowlist checks. Preserve the frozen SCI files and dependency manifests.
 No hosted service, external provider, training GPU, deployment or paid action
 is part of this task. Exact-head independent review and hosted integration checks
 remain acceptance gates. Record measured results separately from this plan.
+
+## Implemented local API
+
+`predict_linear_spring(model, request, config)` implements the profile above in
+[src/strange_physics/prediction.py](../src/strange_physics/prediction.py). The fixed
+configuration, result and diagnostics are separate from the frozen SCI messages.
+Their [schema](../contracts/prediction.schema.json) and
+[synthetic examples](../contracts/prediction.examples.json) describe interface
+behavior; the examples are not measured predictor output.
+
+```python
+from pathlib import Path
+
+from strange_physics.prediction import predict_linear_spring
+from strange_physics.prediction_contracts import SpringPredictionConfig
+from strange_physics.research_contracts import LinearSpringModel, PredictionRequest
+
+model = LinearSpringModel.model_validate_json(Path("linear-spring-model.json").read_text())
+request = PredictionRequest.model_validate_json(Path("prediction-request.json").read_text())
+result = predict_linear_spring(model, request, SpringPredictionConfig())
+Path("prediction-result.json").write_text(result.model_dump_json(indent=2) + "\n")
+```
+
+The configuration digest is
+`cd8ed299842b6c45f640f005232a657dbbc4890e309fbd9bb608e037bd6c237f`.
+It binds the domain, analytic algorithm, runtime compatibility, exact-time policy,
+reference-grid limits, output guards and no-partial-response policy. Fixed integer
+fields reject booleans. A different runtime/domain policy requires a reviewed
+version decision; this v1 profile does not expose arbitrary tuning knobs.
+
+A positive subnormal coefficient can have k/m round to zero in binary64. The
+implementation follows the finite continuous limit without changing the model
+artifact. Frame zero returns the original position exactly; when no impulse is
+present, it also retains the original velocity tuple, including negative zero.
+An impulse is applied once as requested. The direct component-error fixtures
+include tiny coefficients and the ballistic limit.
+
+The standalone predictor sees no source observation noise metadata. Its success
+therefore asserts complete bounded propagation under the supplied model, never
+that the model accurately describes an unknown world or was learned without noise.
+Fitting accuracy diagnostics remain separate; prediction does not erase them or
+convert them into an accuracy guarantee.
+
+The runtime allocates at most 2,001 frames for one particle and performs constant
+work per frame. A frame-level arithmetic failure discards the response even if
+earlier frames were computed, while diagnostics retain their count and the failed
+index. Runtime/model compatibility and input hashes are not a sandbox, signature,
+proof of purchase or proof that the coefficient was actually fitted.
+
+## Reproduction
+
+```sh
+.venv/bin/pytest tests/test_prediction.py tests/test_prediction_contracts.py
+.venv/bin/python scripts/validate_contracts.py
+.venv/bin/pytest -p no:cacheprovider
+.venv/bin/ruff check .
+.venv/bin/ruff format --check .
+.venv/bin/mypy src tests examples
+```
+
+Direct oracle tests check every position/velocity component. The development
+fit-to-predict test checks each of the 24 probes for every fitted model, with MSE
+averaged over 41 times and two coordinates and RMSE as its square root. This
+test-local calculation does not implement the independent SCI development scorer.
+SP-06.a still owns that evaluator; SP-04.e still owns SDK/CLI reproduction and I1.
+
+## Recorded local evidence
+
+Measured on 2026-10-20, Linux x86_64 with Python 3.12.3. Preregistration:
+`9f30fa2da84687892d2d2ce2501f321229b177fb`. Production/test source:
+`205b3fc9106ef5290a81037e1da978a0236080e3`. The matrix, Decimal oracle policy,
+1e-12 component tolerance and 0.001 per-probe RMSE criterion were unchanged.
+
+| Direct prediction cohort | Requests | Maximum position component error | Maximum velocity component error | Failed |
+| --- | ---: | ---: | ---: | ---: |
+| Core coefficient/mass/probe matrix | 168 | 2.66454e-15 | 5.32907e-15 | 0 |
+| Near-zero/subnormal matrix | 18 | 1.77636e-15 | 0 | 0 |
+| Irregular grid, 7 frames | 1 | 1.33227e-15 | 3.55271e-15 | 0 |
+| Shortest grid, 2 frames | 1 | 0 | 4.44089e-16 | 0 |
+| Dense grid, 2,001 frames | 1 | 3.21965e-15 | 6.21725e-15 | 0 |
+| Nonuniform dense grid, 1,002 frames | 1 | 3.16414e-15 | 6.21725e-15 | 0 |
+| Exact tolerated timestamp, 3 frames | 1 | 1.33227e-15 | 3.55271e-15 | 0 |
+
+All 70 production fits (63 primary and seven mixed-mass prefixes) generated all
+24 unseen predictions: 1,680 probe outcomes, zero failures. The worst per-probe
+position RMSE was 8.4695975e-6, at true k=4, purchase mass 0.5, default step 0.01
+and the axial-aligned mass-0.5 unseen probe. This is development evidence from
+synthetic public observations with independently computed labels, not an official
+report. It reproduces the calibrated coefficient-to-trajectory result while
+using the actual production fitter and predictor.
+
+A self-review found that adding a synthetic +0.0 when no impulse exists changes
+the sign of an initial -0.0 velocity. The source now retains that original tuple,
+with a regression test. No physical matrix, coefficient, threshold or tolerance
+was changed to obtain a passing result.
+
+The focused suite has 314 cases and the complete local suite passed 1,320 tests.
+Repository-wide Ruff lint/format, strict mypy (43 files), 506 external JSON Schema
+fixture checks and the configured Bandit threshold passed. These checks validate
+the bounded local implementation, not hosted execution or production operations.
+Independent review and exact integrated-head hosted CI remain acceptance gates.
