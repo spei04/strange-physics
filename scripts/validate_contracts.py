@@ -48,6 +48,21 @@ def main() -> None:
             raise ValueError(f"Unexpected schema result for {reference}: {errors[:1]}")
         count += 1
 
+    world = json.loads((ROOT / "world.examples.json").read_text())
+    for name, fixture in world["valid"].items():
+        check(f"world.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in world[group]:
+            value = copy.deepcopy(world["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"world.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+    for name in ["renewal_commit", "revocation_commit"]:
+        check("world.schema.json#/$defs/PreviewMutationCommit", world[name])
+
     registration = json.loads((ROOT / "model-registration.examples.json").read_text())
     for name, fixture in registration["valid"].items():
         check(f"model-registration.schema.json#/$defs/{name}", fixture)

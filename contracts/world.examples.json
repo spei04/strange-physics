@@ -1,0 +1,3223 @@
+{
+  "core_definition": {
+    "change_after": null,
+    "changed_law": null,
+    "initial_law": {
+      "kind": "spring",
+      "parameters": {
+        "linear": 0.5
+      }
+    },
+    "noise_seed": 18446744073709551615,
+    "schema_version": "strange-physics.world.v1",
+    "space": {
+      "budget": 6,
+      "calibration_experiments": 2,
+      "limits": {
+        "impulse_norm": 1.0,
+        "max_mass": 2.0,
+        "min_mass": 0.5,
+        "position_norm": 2.0,
+        "velocity_norm": 2.0
+      },
+      "sampling": {
+        "dt": 0.01,
+        "duration": 0.1,
+        "position_noise": 0.0,
+        "sample_interval": 0.05,
+        "velocity_noise": 0.0
+      },
+      "schema_version": "strange-physics.space.v1",
+      "structure": {
+        "anchors": [
+          {
+            "id": "a",
+            "position": [
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "connections": [
+          {
+            "a": "p",
+            "b": "a"
+          }
+        ],
+        "particle_ids": [
+          "p"
+        ]
+      }
+    }
+  },
+  "renewal_commit": {
+    "actor": {
+      "grant_incarnation": 0,
+      "membership_revision": 0,
+      "principal_generation": 0,
+      "principal_id": "principal-1",
+      "workspace_id": "workspace-1"
+    },
+    "after": {
+      "created_at": 1000,
+      "decision_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "expires_at": 1210,
+      "grant_id": "preview-1",
+      "issuance_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "issued_by": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "recipient": {
+        "grant_incarnation": 4,
+        "principal_generation": 3,
+        "principal_id": "recipient-1",
+        "workspace_id": "workspace-1"
+      },
+      "revision": 2,
+      "revoked_at": null,
+      "updated_at": 1010,
+      "updated_by": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "version_id": "world-version-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "before": {
+      "created_at": 1000,
+      "decision_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "expires_at": 1100,
+      "grant_id": "preview-1",
+      "issuance_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "issued_by": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "recipient": {
+        "grant_incarnation": 4,
+        "principal_generation": 3,
+        "principal_id": "recipient-1",
+        "workspace_id": "workspace-1"
+      },
+      "revision": 1,
+      "revoked_at": null,
+      "updated_at": 1000,
+      "updated_by": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "version_id": "world-version-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "committed_at": 1010,
+    "policy": {
+      "max_definition_bytes": 65536,
+      "max_metadata_bytes": 4194304,
+      "max_page_bytes": 1048576,
+      "max_page_items": 128,
+      "policy_id": "synthetic-world-policy",
+      "preview_reader_roles": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "preview_ttl_seconds": 900,
+      "receipt_retention_seconds": 3600
+    },
+    "receipt_id": "grant-receipt-2",
+    "recipient_at_commit": {
+      "grant": {
+        "incarnation": 4,
+        "membership": {
+          "active": true,
+          "principal_id": "recipient-1",
+          "revision": 2,
+          "role": "viewer",
+          "workspace_id": "workspace-1"
+        }
+      },
+      "principal": {
+        "active": true,
+        "generation": 3,
+        "kind": "human",
+        "principal_id": "recipient-1"
+      }
+    },
+    "request": {
+      "expected_revision": 1,
+      "grant_id": "preview-1",
+      "operation": "renew_preview",
+      "ttl_seconds": 200
+    },
+    "request_sha256": "0d3e4f2778e23076b3d4f1939124ff6af577707136833510225ab0a7f00150d7",
+    "result": {
+      "created_at": 1000,
+      "expires_at": 1210,
+      "grant_id": "preview-1",
+      "recipient_principal_id": "recipient-1",
+      "revision": 2,
+      "revoked_at": null,
+      "updated_at": 1010,
+      "version_id": "world-version-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "scope": {
+      "key": "synthetic-renew",
+      "operation": "renew_preview",
+      "principal_id": "principal-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "version": {
+      "author": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "classification": "customer_authored",
+      "definition": {
+        "change_after": null,
+        "changed_law": null,
+        "initial_law": {
+          "kind": "spring",
+          "parameters": {
+            "linear": 0.5
+          }
+        },
+        "noise_seed": 18446744073709551615,
+        "schema_version": "strange-physics.world.v1",
+        "space": {
+          "budget": 6,
+          "calibration_experiments": 2,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 0.1,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        }
+      },
+      "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+      "view": {
+        "created_at": 900,
+        "parent_version_id": null,
+        "space": {
+          "budget": 6,
+          "calibration_experiments": 2,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 0.1,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        },
+        "title": "Synthetic world",
+        "version_id": "world-version-1",
+        "version_number": 1,
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      }
+    }
+  },
+  "revocation_commit": {
+    "actor": {
+      "grant_incarnation": 0,
+      "membership_revision": 0,
+      "principal_generation": 0,
+      "principal_id": "principal-1",
+      "workspace_id": "workspace-1"
+    },
+    "after": {
+      "created_at": 1000,
+      "decision_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "expires_at": 1210,
+      "grant_id": "preview-1",
+      "issuance_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "issued_by": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "recipient": {
+        "grant_incarnation": 4,
+        "principal_generation": 3,
+        "principal_id": "recipient-1",
+        "workspace_id": "workspace-1"
+      },
+      "revision": 3,
+      "revoked_at": 1020,
+      "updated_at": 1020,
+      "updated_by": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "version_id": "world-version-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "before": {
+      "created_at": 1000,
+      "decision_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "expires_at": 1210,
+      "grant_id": "preview-1",
+      "issuance_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "issued_by": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "recipient": {
+        "grant_incarnation": 4,
+        "principal_generation": 3,
+        "principal_id": "recipient-1",
+        "workspace_id": "workspace-1"
+      },
+      "revision": 2,
+      "revoked_at": null,
+      "updated_at": 1010,
+      "updated_by": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "version_id": "world-version-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "committed_at": 1020,
+    "policy": {
+      "max_definition_bytes": 65536,
+      "max_metadata_bytes": 4194304,
+      "max_page_bytes": 1048576,
+      "max_page_items": 128,
+      "policy_id": "synthetic-world-policy",
+      "preview_reader_roles": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "preview_ttl_seconds": 900,
+      "receipt_retention_seconds": 3600
+    },
+    "receipt_id": "grant-receipt-3",
+    "recipient_at_commit": null,
+    "request": {
+      "expected_revision": 2,
+      "grant_id": "preview-1",
+      "operation": "revoke_preview"
+    },
+    "request_sha256": "0ddb462fd2ffe0346470cea901ff1f9588314fc1ed84adb6a86135559766f331",
+    "result": {
+      "created_at": 1000,
+      "expires_at": 1210,
+      "grant_id": "preview-1",
+      "recipient_principal_id": "recipient-1",
+      "revision": 3,
+      "revoked_at": 1020,
+      "updated_at": 1020,
+      "version_id": "world-version-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "scope": {
+      "key": "synthetic-revoke",
+      "operation": "revoke_preview",
+      "principal_id": "principal-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "version": {
+      "author": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "classification": "customer_authored",
+      "definition": {
+        "change_after": null,
+        "changed_law": null,
+        "initial_law": {
+          "kind": "spring",
+          "parameters": {
+            "linear": 0.5
+          }
+        },
+        "noise_seed": 18446744073709551615,
+        "schema_version": "strange-physics.world.v1",
+        "space": {
+          "budget": 6,
+          "calibration_experiments": 2,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 0.1,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        }
+      },
+      "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+      "view": {
+        "created_at": 900,
+        "parent_version_id": null,
+        "space": {
+          "budget": 6,
+          "calibration_experiments": 2,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 0.1,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        },
+        "title": "Synthetic world",
+        "version_id": "world-version-1",
+        "version_number": 1,
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      }
+    }
+  },
+  "runtime_negative": [
+    {
+      "field": "definition_sha256",
+      "model": "WorldVersionRecord",
+      "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "field": "expected_head_revision",
+      "model": "CreateWorldVersionRequest",
+      "value": 1
+    },
+    {
+      "field": "request_sha256",
+      "model": "WorldVersionCommit",
+      "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "field": "request_sha256",
+      "model": "PreviewMutationCommit",
+      "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "field": "selected_at",
+      "model": "WorldRunSelection",
+      "value": 1001
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": "18446744073709551616"
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": "00"
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": "01"
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": "+1"
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": "-0"
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": "1e3"
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": " 1"
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": "1 "
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": "1\n"
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": "\u0661"
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": true
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": 1
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": 1.0
+    },
+    {
+      "field": "noise_seed",
+      "model": "BrowserWorldDefinition",
+      "value": null
+    },
+    {
+      "field": "parameters",
+      "model": "BrowserSpringLaw",
+      "value": {
+        "linear": 5
+      }
+    },
+    {
+      "field": "parameters",
+      "model": "BrowserSpringLaw",
+      "value": {
+        "linear": null
+      }
+    },
+    {
+      "field": "parameters",
+      "model": "BrowserSpringLaw",
+      "value": {
+        "unknown": 1
+      }
+    },
+    {
+      "field": "parameters",
+      "model": "BrowserRadialLaw",
+      "value": {
+        "softening": 0
+      }
+    },
+    {
+      "field": "parameters",
+      "model": "BrowserVelocityLaw",
+      "value": {
+        "transverse": 4
+      }
+    },
+    {
+      "field": "expected_head_revision",
+      "model": "CreateWorldVersionRequest",
+      "value": true
+    },
+    {
+      "field": "revision",
+      "model": "PreviewGrantRecord",
+      "value": true
+    }
+  ],
+  "valid": {
+    "BrowserRadialLaw": {
+      "kind": "radial",
+      "parameters": {
+        "strength": -0.1
+      }
+    },
+    "BrowserSpringLaw": {
+      "kind": "spring",
+      "parameters": {}
+    },
+    "BrowserVelocityLaw": {
+      "kind": "velocity",
+      "parameters": {
+        "transverse": 0.0
+      }
+    },
+    "BrowserWorldDefinition": {
+      "change_after": null,
+      "changed_law": null,
+      "initial_law": {
+        "kind": "spring",
+        "parameters": {
+          "linear": 0.5
+        }
+      },
+      "noise_seed": "18446744073709551615",
+      "schema_version": "strange-physics.browser-world.v1",
+      "space": {
+        "budget": 6,
+        "calibration_experiments": 2,
+        "limits": {
+          "impulse_norm": 1.0,
+          "max_mass": 2.0,
+          "min_mass": 0.5,
+          "position_norm": 2.0,
+          "velocity_norm": 2.0
+        },
+        "sampling": {
+          "dt": 0.01,
+          "duration": 0.1,
+          "position_noise": 0.0,
+          "sample_interval": 0.05,
+          "velocity_noise": 0.0
+        },
+        "schema_version": "strange-physics.space.v1",
+        "structure": {
+          "anchors": [
+            {
+              "id": "a",
+              "position": [
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "connections": [
+            {
+              "a": "p",
+              "b": "a"
+            }
+          ],
+          "particle_ids": [
+            "p"
+          ]
+        }
+      }
+    },
+    "CreateWorldVersionRequest": {
+      "definition": {
+        "change_after": null,
+        "changed_law": null,
+        "initial_law": {
+          "kind": "spring",
+          "parameters": {
+            "linear": 0.5
+          }
+        },
+        "noise_seed": "18446744073709551615",
+        "schema_version": "strange-physics.browser-world.v1",
+        "space": {
+          "budget": 6,
+          "calibration_experiments": 2,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 0.1,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        }
+      },
+      "expected_head_revision": 0,
+      "expected_version_id": null,
+      "title": "Synthetic world"
+    },
+    "GrantedWorldDefinition": {
+      "definition": {
+        "change_after": null,
+        "changed_law": null,
+        "initial_law": {
+          "kind": "spring",
+          "parameters": {
+            "linear": 0.5
+          }
+        },
+        "noise_seed": "18446744073709551615",
+        "schema_version": "strange-physics.browser-world.v1",
+        "space": {
+          "budget": 6,
+          "calibration_experiments": 2,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 0.1,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        }
+      },
+      "grant_id": "preview-1",
+      "version": {
+        "created_at": 900,
+        "parent_version_id": null,
+        "space": {
+          "budget": 6,
+          "calibration_experiments": 2,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 0.1,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        },
+        "title": "Synthetic world",
+        "version_id": "world-version-1",
+        "version_number": 1,
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      }
+    },
+    "IssuePreviewRequest": {
+      "operation": "issue_preview",
+      "recipient_principal_id": "recipient-1",
+      "ttl_seconds": 100,
+      "version_id": "world-version-1"
+    },
+    "PreviewGrantLookup": {
+      "grant": {
+        "created_at": 1000,
+        "decision_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+        "expires_at": 1210,
+        "grant_id": "preview-1",
+        "issuance_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+        "issued_by": {
+          "grant_incarnation": 0,
+          "membership_revision": 0,
+          "principal_generation": 0,
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1"
+        },
+        "recipient": {
+          "grant_incarnation": 4,
+          "principal_generation": 3,
+          "principal_id": "recipient-1",
+          "workspace_id": "workspace-1"
+        },
+        "revision": 3,
+        "revoked_at": 1020,
+        "updated_at": 1020,
+        "updated_by": {
+          "grant_incarnation": 0,
+          "membership_revision": 0,
+          "principal_generation": 0,
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1"
+        },
+        "version_id": "world-version-1",
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      },
+      "latest_commit": {
+        "actor": {
+          "grant_incarnation": 0,
+          "membership_revision": 0,
+          "principal_generation": 0,
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1"
+        },
+        "after": {
+          "created_at": 1000,
+          "decision_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+          "expires_at": 1210,
+          "grant_id": "preview-1",
+          "issuance_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+          "issued_by": {
+            "grant_incarnation": 0,
+            "membership_revision": 0,
+            "principal_generation": 0,
+            "principal_id": "principal-1",
+            "workspace_id": "workspace-1"
+          },
+          "recipient": {
+            "grant_incarnation": 4,
+            "principal_generation": 3,
+            "principal_id": "recipient-1",
+            "workspace_id": "workspace-1"
+          },
+          "revision": 3,
+          "revoked_at": 1020,
+          "updated_at": 1020,
+          "updated_by": {
+            "grant_incarnation": 0,
+            "membership_revision": 0,
+            "principal_generation": 0,
+            "principal_id": "principal-1",
+            "workspace_id": "workspace-1"
+          },
+          "version_id": "world-version-1",
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        },
+        "before": {
+          "created_at": 1000,
+          "decision_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+          "expires_at": 1210,
+          "grant_id": "preview-1",
+          "issuance_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+          "issued_by": {
+            "grant_incarnation": 0,
+            "membership_revision": 0,
+            "principal_generation": 0,
+            "principal_id": "principal-1",
+            "workspace_id": "workspace-1"
+          },
+          "recipient": {
+            "grant_incarnation": 4,
+            "principal_generation": 3,
+            "principal_id": "recipient-1",
+            "workspace_id": "workspace-1"
+          },
+          "revision": 2,
+          "revoked_at": null,
+          "updated_at": 1010,
+          "updated_by": {
+            "grant_incarnation": 0,
+            "membership_revision": 0,
+            "principal_generation": 0,
+            "principal_id": "principal-1",
+            "workspace_id": "workspace-1"
+          },
+          "version_id": "world-version-1",
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        },
+        "committed_at": 1020,
+        "policy": {
+          "max_definition_bytes": 65536,
+          "max_metadata_bytes": 4194304,
+          "max_page_bytes": 1048576,
+          "max_page_items": 128,
+          "policy_id": "synthetic-world-policy",
+          "preview_reader_roles": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "preview_ttl_seconds": 900,
+          "receipt_retention_seconds": 3600
+        },
+        "receipt_id": "grant-receipt-3",
+        "recipient_at_commit": null,
+        "request": {
+          "expected_revision": 2,
+          "grant_id": "preview-1",
+          "operation": "revoke_preview"
+        },
+        "request_sha256": "0ddb462fd2ffe0346470cea901ff1f9588314fc1ed84adb6a86135559766f331",
+        "result": {
+          "created_at": 1000,
+          "expires_at": 1210,
+          "grant_id": "preview-1",
+          "recipient_principal_id": "recipient-1",
+          "revision": 3,
+          "revoked_at": 1020,
+          "updated_at": 1020,
+          "version_id": "world-version-1",
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        },
+        "scope": {
+          "key": "synthetic-revoke",
+          "operation": "revoke_preview",
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        },
+        "version": {
+          "author": {
+            "grant_incarnation": 0,
+            "membership_revision": 0,
+            "principal_generation": 0,
+            "principal_id": "principal-1",
+            "workspace_id": "workspace-1"
+          },
+          "classification": "customer_authored",
+          "definition": {
+            "change_after": null,
+            "changed_law": null,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.5
+              }
+            },
+            "noise_seed": 18446744073709551615,
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            }
+          },
+          "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+          "view": {
+            "created_at": 900,
+            "parent_version_id": null,
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            },
+            "title": "Synthetic world",
+            "version_id": "world-version-1",
+            "version_number": 1,
+            "workspace_id": "workspace-1",
+            "world_id": "world-1"
+          }
+        }
+      },
+      "receipt": {
+        "actor": {
+          "grant_incarnation": 0,
+          "membership_revision": 0,
+          "principal_generation": 0,
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1"
+        },
+        "after": {
+          "created_at": 1000,
+          "decision_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+          "expires_at": 1100,
+          "grant_id": "preview-1",
+          "issuance_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+          "issued_by": {
+            "grant_incarnation": 0,
+            "membership_revision": 0,
+            "principal_generation": 0,
+            "principal_id": "principal-1",
+            "workspace_id": "workspace-1"
+          },
+          "recipient": {
+            "grant_incarnation": 4,
+            "principal_generation": 3,
+            "principal_id": "recipient-1",
+            "workspace_id": "workspace-1"
+          },
+          "revision": 1,
+          "revoked_at": null,
+          "updated_at": 1000,
+          "updated_by": {
+            "grant_incarnation": 0,
+            "membership_revision": 0,
+            "principal_generation": 0,
+            "principal_id": "principal-1",
+            "workspace_id": "workspace-1"
+          },
+          "version_id": "world-version-1",
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        },
+        "before": null,
+        "committed_at": 1000,
+        "policy": {
+          "max_definition_bytes": 65536,
+          "max_metadata_bytes": 4194304,
+          "max_page_bytes": 1048576,
+          "max_page_items": 128,
+          "policy_id": "synthetic-world-policy",
+          "preview_reader_roles": [
+            "owner",
+            "researcher",
+            "viewer"
+          ],
+          "preview_ttl_seconds": 900,
+          "receipt_retention_seconds": 3600
+        },
+        "receipt_id": "grant-receipt-1",
+        "recipient_at_commit": {
+          "grant": {
+            "incarnation": 4,
+            "membership": {
+              "active": true,
+              "principal_id": "recipient-1",
+              "revision": 2,
+              "role": "viewer",
+              "workspace_id": "workspace-1"
+            }
+          },
+          "principal": {
+            "active": true,
+            "generation": 3,
+            "kind": "human",
+            "principal_id": "recipient-1"
+          }
+        },
+        "request": {
+          "operation": "issue_preview",
+          "recipient_principal_id": "recipient-1",
+          "ttl_seconds": 100,
+          "version_id": "world-version-1"
+        },
+        "request_sha256": "3f09f826025eaa3e61318caa6b35cfa4df81ee11e54de45628acf1da2cdd5233",
+        "result": {
+          "created_at": 1000,
+          "expires_at": 1100,
+          "grant_id": "preview-1",
+          "recipient_principal_id": "recipient-1",
+          "revision": 1,
+          "revoked_at": null,
+          "updated_at": 1000,
+          "version_id": "world-version-1",
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        },
+        "scope": {
+          "key": "synthetic-preview",
+          "operation": "issue_preview",
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        },
+        "version": {
+          "author": {
+            "grant_incarnation": 0,
+            "membership_revision": 0,
+            "principal_generation": 0,
+            "principal_id": "principal-1",
+            "workspace_id": "workspace-1"
+          },
+          "classification": "customer_authored",
+          "definition": {
+            "change_after": null,
+            "changed_law": null,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.5
+              }
+            },
+            "noise_seed": 18446744073709551615,
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            }
+          },
+          "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+          "view": {
+            "created_at": 900,
+            "parent_version_id": null,
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            },
+            "title": "Synthetic world",
+            "version_id": "world-version-1",
+            "version_number": 1,
+            "workspace_id": "workspace-1",
+            "world_id": "world-1"
+          }
+        }
+      },
+      "scope": {
+        "key": "synthetic-preview",
+        "operation": "issue_preview",
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      }
+    },
+    "PreviewGrantPage": {
+      "items": [
+        {
+          "created_at": 1000,
+          "expires_at": 1100,
+          "grant_id": "preview-1",
+          "recipient_principal_id": "recipient-1",
+          "revision": 1,
+          "revoked_at": null,
+          "updated_at": 1000,
+          "version_id": "world-version-1",
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        }
+      ],
+      "next_cursor": null
+    },
+    "PreviewGrantRecord": {
+      "created_at": 1000,
+      "decision_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "expires_at": 1100,
+      "grant_id": "preview-1",
+      "issuance_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "issued_by": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "recipient": {
+        "grant_incarnation": 4,
+        "principal_generation": 3,
+        "principal_id": "recipient-1",
+        "workspace_id": "workspace-1"
+      },
+      "revision": 1,
+      "revoked_at": null,
+      "updated_at": 1000,
+      "updated_by": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "version_id": "world-version-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "PreviewGrantView": {
+      "created_at": 1000,
+      "expires_at": 1100,
+      "grant_id": "preview-1",
+      "recipient_principal_id": "recipient-1",
+      "revision": 1,
+      "revoked_at": null,
+      "updated_at": 1000,
+      "version_id": "world-version-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "PreviewMutationCommit": {
+      "actor": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "after": {
+        "created_at": 1000,
+        "decision_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+        "expires_at": 1100,
+        "grant_id": "preview-1",
+        "issuance_policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+        "issued_by": {
+          "grant_incarnation": 0,
+          "membership_revision": 0,
+          "principal_generation": 0,
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1"
+        },
+        "recipient": {
+          "grant_incarnation": 4,
+          "principal_generation": 3,
+          "principal_id": "recipient-1",
+          "workspace_id": "workspace-1"
+        },
+        "revision": 1,
+        "revoked_at": null,
+        "updated_at": 1000,
+        "updated_by": {
+          "grant_incarnation": 0,
+          "membership_revision": 0,
+          "principal_generation": 0,
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1"
+        },
+        "version_id": "world-version-1",
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      },
+      "before": null,
+      "committed_at": 1000,
+      "policy": {
+        "max_definition_bytes": 65536,
+        "max_metadata_bytes": 4194304,
+        "max_page_bytes": 1048576,
+        "max_page_items": 128,
+        "policy_id": "synthetic-world-policy",
+        "preview_reader_roles": [
+          "owner",
+          "researcher",
+          "viewer"
+        ],
+        "preview_ttl_seconds": 900,
+        "receipt_retention_seconds": 3600
+      },
+      "receipt_id": "grant-receipt-1",
+      "recipient_at_commit": {
+        "grant": {
+          "incarnation": 4,
+          "membership": {
+            "active": true,
+            "principal_id": "recipient-1",
+            "revision": 2,
+            "role": "viewer",
+            "workspace_id": "workspace-1"
+          }
+        },
+        "principal": {
+          "active": true,
+          "generation": 3,
+          "kind": "human",
+          "principal_id": "recipient-1"
+        }
+      },
+      "request": {
+        "operation": "issue_preview",
+        "recipient_principal_id": "recipient-1",
+        "ttl_seconds": 100,
+        "version_id": "world-version-1"
+      },
+      "request_sha256": "3f09f826025eaa3e61318caa6b35cfa4df81ee11e54de45628acf1da2cdd5233",
+      "result": {
+        "created_at": 1000,
+        "expires_at": 1100,
+        "grant_id": "preview-1",
+        "recipient_principal_id": "recipient-1",
+        "revision": 1,
+        "revoked_at": null,
+        "updated_at": 1000,
+        "version_id": "world-version-1",
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      },
+      "scope": {
+        "key": "synthetic-preview",
+        "operation": "issue_preview",
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      },
+      "version": {
+        "author": {
+          "grant_incarnation": 0,
+          "membership_revision": 0,
+          "principal_generation": 0,
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1"
+        },
+        "classification": "customer_authored",
+        "definition": {
+          "change_after": null,
+          "changed_law": null,
+          "initial_law": {
+            "kind": "spring",
+            "parameters": {
+              "linear": 0.5
+            }
+          },
+          "noise_seed": 18446744073709551615,
+          "schema_version": "strange-physics.world.v1",
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          }
+        },
+        "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+        "view": {
+          "created_at": 900,
+          "parent_version_id": null,
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          },
+          "title": "Synthetic world",
+          "version_id": "world-version-1",
+          "version_number": 1,
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        }
+      }
+    },
+    "PreviewRecipient": {
+      "grant_incarnation": 4,
+      "principal_generation": 3,
+      "principal_id": "recipient-1",
+      "workspace_id": "workspace-1"
+    },
+    "RenewPreviewRequest": {
+      "expected_revision": 1,
+      "grant_id": "preview-1",
+      "operation": "renew_preview",
+      "ttl_seconds": 200
+    },
+    "RevokePreviewRequest": {
+      "expected_revision": 2,
+      "grant_id": "preview-1",
+      "operation": "revoke_preview"
+    },
+    "WorldActorAncestry": {
+      "grant_incarnation": 0,
+      "membership_revision": 0,
+      "principal_generation": 0,
+      "principal_id": "principal-1",
+      "workspace_id": "workspace-1"
+    },
+    "WorldBrowserAuthority": {
+      "identity": {
+        "actor": {
+          "context": {
+            "browser_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "csrf_matches": true,
+            "csrf_scope": "session",
+            "has_bearer": false,
+            "has_session_cookie": true,
+            "origin": "https://app.example",
+            "target_origin": "https://app.example"
+          },
+          "credential": {
+            "generation": 0,
+            "session_id": "session-1"
+          },
+          "session": {
+            "absolute_expires_at": 4610,
+            "authenticated_at": 990,
+            "created_at": 1010,
+            "generation": 0,
+            "last_seen_at": 1010,
+            "policy_id": "synthetic-policy-1",
+            "principal_active": true,
+            "principal_id": "principal-1",
+            "revoked": false,
+            "session_id": "session-1"
+          }
+        },
+        "kind": "user",
+        "owner": {
+          "grant": {
+            "incarnation": 0,
+            "membership": {
+              "active": true,
+              "principal_id": "principal-1",
+              "revision": 0,
+              "role": "owner",
+              "workspace_id": "workspace-1"
+            }
+          },
+          "principal": {
+            "active": true,
+            "generation": 0,
+            "kind": "human",
+            "principal_id": "principal-1"
+          }
+        },
+        "policy": {
+          "absolute_seconds": 3600,
+          "app_origins": [
+            "https://app.example"
+          ],
+          "clock_skew_seconds": 5,
+          "idle_seconds": 300,
+          "login_ttl_seconds": 180,
+          "policy_id": "synthetic-policy-1",
+          "providers": [
+            {
+              "audience": "example-project",
+              "callback_method": null,
+              "callback_uri": null,
+              "flow": "managed_broker",
+              "issuer": "https://securetoken.google.com/example-project",
+              "provider_id": "managed",
+              "response_mode": null,
+              "tenant_id": null,
+              "upstream_providers": [
+                "google.com",
+                "github.com"
+              ]
+            },
+            {
+              "audience": "example-client",
+              "callback_method": "GET",
+              "callback_uri": "https://app.example/v1/auth/oidc/callback",
+              "flow": "oidc_code",
+              "issuer": "https://idp.example",
+              "provider_id": "oidc",
+              "response_mode": "query",
+              "tenant_id": null,
+              "upstream_providers": []
+            }
+          ],
+          "recent_auth_seconds": 120,
+          "return_uris": [
+            "https://app.example/workspace"
+          ],
+          "schema_version": "strange-physics.session-policy.v1",
+          "transaction_retention_seconds": 3600
+        },
+        "session_principal_generation": 0
+      },
+      "workspace": {
+        "active_owner_ids": [
+          "principal-1"
+        ],
+        "disabled_owner_ids": [],
+        "workspace": {
+          "display_name": "Synthetic",
+          "revision": 1,
+          "state": "active",
+          "visibility": "private",
+          "workspace_id": "workspace-1"
+        }
+      }
+    },
+    "WorldCatalogEligibility": {
+      "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+      "eligible_for_new_runs": true,
+      "observed_at": 1000,
+      "revision": 1,
+      "space_sha256": "3fa943a87fba379f8f5b81cdb2ada8ab9c1b23333ba1b29d674890c30e9cc84c",
+      "version_id": "world-version-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "WorldHead": {
+      "changed_at": 900,
+      "revision": 1,
+      "version_id": "world-version-1",
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    },
+    "WorldMutationScope": {
+      "key": "synthetic-world",
+      "operation": "create_version",
+      "principal_id": "principal-1",
+      "workspace_id": "workspace-1",
+      "world_id": null
+    },
+    "WorldPage": {
+      "items": [
+        {
+          "created_at": 900,
+          "parent_version_id": null,
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          },
+          "title": "Synthetic world",
+          "version_id": "world-version-1",
+          "version_number": 1,
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        }
+      ],
+      "next_cursor": null
+    },
+    "WorldPolicy": {
+      "max_definition_bytes": 65536,
+      "max_metadata_bytes": 4194304,
+      "max_page_bytes": 1048576,
+      "max_page_items": 128,
+      "policy_id": "synthetic-world-policy",
+      "preview_reader_roles": [
+        "owner",
+        "researcher",
+        "viewer"
+      ],
+      "preview_ttl_seconds": 900,
+      "receipt_retention_seconds": 3600
+    },
+    "WorldRunSelection": {
+      "admission": {
+        "admission_id": "admission-1",
+        "admitted_run": {
+          "budget_remaining": 6,
+          "experiments_accepted": 0,
+          "revision": 0,
+          "run_id": "run-1",
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          },
+          "status": "queued",
+          "workspace_id": "workspace-1"
+        },
+        "agent_configuration": {
+          "seed": 1
+        },
+        "checkpoint_binding": {
+          "agent_config_sha256": "fbe47f6d82b435a89f6e6fca65ad16138195de06c5fc3ffb66826a76e64e479f",
+          "agent_id": "synthetic-agent-seed1",
+          "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+          "checkpoint_protocol": "strange-physics.checkpoint.v1",
+          "runtime_image_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        "ownership": {
+          "created_at": 1000,
+          "created_by_credential_id": "session-1",
+          "grant_incarnation": 0,
+          "principal_generation": 0,
+          "principal_id": "principal-1",
+          "principal_kind": "human",
+          "run_deadline": 2000,
+          "run_id": "run-1",
+          "scopes": [
+            "checkpoints:write",
+            "experiments:read",
+            "experiments:write",
+            "models:write"
+          ],
+          "workspace_id": "workspace-1"
+        },
+        "request": {
+          "agent_package_sha256": "d1d08e644c59191babc648b660a9271a54ae4ddceb09f7a49c596275aae330ce",
+          "experiment_budget": 6,
+          "limits": {
+            "max_artifact_bytes": 1000000,
+            "max_cpu_seconds": 1000,
+            "max_input_tokens": 0,
+            "max_model_calls": 0,
+            "max_output_tokens": 0,
+            "max_provider_cost_microusd": 0,
+            "max_wall_seconds": 1000
+          },
+          "track": "agent_discovery",
+          "world_version_id": "world-version-1"
+        },
+        "stored_request": {
+          "operation": {
+            "accepted_experiment_index": null,
+            "error": null,
+            "kind": "run_creation",
+            "operation_id": "creation-operation",
+            "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+            "result": {
+              "kind": "run_creation",
+              "value": {
+                "budget_remaining": 6,
+                "experiments_accepted": 0,
+                "revision": 0,
+                "run_id": "run-1",
+                "space": {
+                  "budget": 6,
+                  "calibration_experiments": 2,
+                  "limits": {
+                    "impulse_norm": 1.0,
+                    "max_mass": 2.0,
+                    "min_mass": 0.5,
+                    "position_norm": 2.0,
+                    "velocity_norm": 2.0
+                  },
+                  "sampling": {
+                    "dt": 0.01,
+                    "duration": 0.1,
+                    "position_noise": 0.0,
+                    "sample_interval": 0.05,
+                    "velocity_noise": 0.0
+                  },
+                  "schema_version": "strange-physics.space.v1",
+                  "structure": {
+                    "anchors": [
+                      {
+                        "id": "a",
+                        "position": [
+                          0.0,
+                          0.0
+                        ]
+                      }
+                    ],
+                    "connections": [
+                      {
+                        "a": "p",
+                        "b": "a"
+                      }
+                    ],
+                    "particle_ids": [
+                      "p"
+                    ]
+                  }
+                },
+                "status": "queued",
+                "workspace_id": "workspace-1"
+              }
+            },
+            "run_id": "run-1",
+            "status": "completed",
+            "workspace_id": "workspace-1"
+          },
+          "request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+          "scope": {
+            "key": "create-run",
+            "kind": "run_creation",
+            "principal_id": "principal-1",
+            "resource_id": "workspace-1",
+            "workspace_id": "workspace-1"
+          }
+        }
+      },
+      "catalog": {
+        "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+        "eligible_for_new_runs": true,
+        "observed_at": 1000,
+        "revision": 1,
+        "space_sha256": "3fa943a87fba379f8f5b81cdb2ada8ab9c1b23333ba1b29d674890c30e9cc84c",
+        "version_id": "world-version-1",
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      },
+      "creation_request_sha256": "844a620c94e9aa0910740b03660c9c38a0629df22d1cfdf481832fd7aa8338ee",
+      "selected_at": 1000,
+      "selection_id": "selection-1",
+      "version": {
+        "author": {
+          "grant_incarnation": 0,
+          "membership_revision": 0,
+          "principal_generation": 0,
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1"
+        },
+        "classification": "customer_authored",
+        "definition": {
+          "change_after": null,
+          "changed_law": null,
+          "initial_law": {
+            "kind": "spring",
+            "parameters": {
+              "linear": 0.5
+            }
+          },
+          "noise_seed": 18446744073709551615,
+          "schema_version": "strange-physics.world.v1",
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          }
+        },
+        "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+        "view": {
+          "created_at": 900,
+          "parent_version_id": null,
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          },
+          "title": "Synthetic world",
+          "version_id": "world-version-1",
+          "version_number": 1,
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        }
+      }
+    },
+    "WorldVersionCommit": {
+      "before": null,
+      "committed_at": 900,
+      "parent": null,
+      "policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+      "receipt_id": "world-receipt-1",
+      "request": {
+        "definition": {
+          "change_after": null,
+          "changed_law": null,
+          "initial_law": {
+            "kind": "spring",
+            "parameters": {
+              "linear": 0.5
+            }
+          },
+          "noise_seed": "18446744073709551615",
+          "schema_version": "strange-physics.browser-world.v1",
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          }
+        },
+        "expected_head_revision": 0,
+        "expected_version_id": null,
+        "title": "Synthetic world"
+      },
+      "request_sha256": "26b20d3f0a2334b88ecdf3e328126ef750688041e34edde2bcce4a605284cf24",
+      "result": {
+        "head": {
+          "changed_at": 900,
+          "revision": 1,
+          "version_id": "world-version-1",
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        },
+        "version": {
+          "created_at": 900,
+          "parent_version_id": null,
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          },
+          "title": "Synthetic world",
+          "version_id": "world-version-1",
+          "version_number": 1,
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        }
+      },
+      "scope": {
+        "key": "synthetic-world",
+        "operation": "create_version",
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1",
+        "world_id": null
+      },
+      "version": {
+        "author": {
+          "grant_incarnation": 0,
+          "membership_revision": 0,
+          "principal_generation": 0,
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1"
+        },
+        "classification": "customer_authored",
+        "definition": {
+          "change_after": null,
+          "changed_law": null,
+          "initial_law": {
+            "kind": "spring",
+            "parameters": {
+              "linear": 0.5
+            }
+          },
+          "noise_seed": 18446744073709551615,
+          "schema_version": "strange-physics.world.v1",
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          }
+        },
+        "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+        "view": {
+          "created_at": 900,
+          "parent_version_id": null,
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          },
+          "title": "Synthetic world",
+          "version_id": "world-version-1",
+          "version_number": 1,
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        }
+      }
+    },
+    "WorldVersionLookup": {
+      "current_commit": {
+        "before": null,
+        "committed_at": 900,
+        "parent": null,
+        "policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+        "receipt_id": "world-receipt-1",
+        "request": {
+          "definition": {
+            "change_after": null,
+            "changed_law": null,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.5
+              }
+            },
+            "noise_seed": "18446744073709551615",
+            "schema_version": "strange-physics.browser-world.v1",
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            }
+          },
+          "expected_head_revision": 0,
+          "expected_version_id": null,
+          "title": "Synthetic world"
+        },
+        "request_sha256": "26b20d3f0a2334b88ecdf3e328126ef750688041e34edde2bcce4a605284cf24",
+        "result": {
+          "head": {
+            "changed_at": 900,
+            "revision": 1,
+            "version_id": "world-version-1",
+            "workspace_id": "workspace-1",
+            "world_id": "world-1"
+          },
+          "version": {
+            "created_at": 900,
+            "parent_version_id": null,
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            },
+            "title": "Synthetic world",
+            "version_id": "world-version-1",
+            "version_number": 1,
+            "workspace_id": "workspace-1",
+            "world_id": "world-1"
+          }
+        },
+        "scope": {
+          "key": "synthetic-world",
+          "operation": "create_version",
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1",
+          "world_id": null
+        },
+        "version": {
+          "author": {
+            "grant_incarnation": 0,
+            "membership_revision": 0,
+            "principal_generation": 0,
+            "principal_id": "principal-1",
+            "workspace_id": "workspace-1"
+          },
+          "classification": "customer_authored",
+          "definition": {
+            "change_after": null,
+            "changed_law": null,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.5
+              }
+            },
+            "noise_seed": 18446744073709551615,
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            }
+          },
+          "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+          "view": {
+            "created_at": 900,
+            "parent_version_id": null,
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            },
+            "title": "Synthetic world",
+            "version_id": "world-version-1",
+            "version_number": 1,
+            "workspace_id": "workspace-1",
+            "world_id": "world-1"
+          }
+        }
+      },
+      "current_head": {
+        "changed_at": 900,
+        "revision": 1,
+        "version_id": "world-version-1",
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      },
+      "receipt": {
+        "before": null,
+        "committed_at": 900,
+        "parent": null,
+        "policy_sha256": "45d37cd1e93183777ca6e334fe0a7daed99a4c9b8f6d418370d8c096fea4131b",
+        "receipt_id": "world-receipt-1",
+        "request": {
+          "definition": {
+            "change_after": null,
+            "changed_law": null,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.5
+              }
+            },
+            "noise_seed": "18446744073709551615",
+            "schema_version": "strange-physics.browser-world.v1",
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            }
+          },
+          "expected_head_revision": 0,
+          "expected_version_id": null,
+          "title": "Synthetic world"
+        },
+        "request_sha256": "26b20d3f0a2334b88ecdf3e328126ef750688041e34edde2bcce4a605284cf24",
+        "result": {
+          "head": {
+            "changed_at": 900,
+            "revision": 1,
+            "version_id": "world-version-1",
+            "workspace_id": "workspace-1",
+            "world_id": "world-1"
+          },
+          "version": {
+            "created_at": 900,
+            "parent_version_id": null,
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            },
+            "title": "Synthetic world",
+            "version_id": "world-version-1",
+            "version_number": 1,
+            "workspace_id": "workspace-1",
+            "world_id": "world-1"
+          }
+        },
+        "scope": {
+          "key": "synthetic-world",
+          "operation": "create_version",
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1",
+          "world_id": null
+        },
+        "version": {
+          "author": {
+            "grant_incarnation": 0,
+            "membership_revision": 0,
+            "principal_generation": 0,
+            "principal_id": "principal-1",
+            "workspace_id": "workspace-1"
+          },
+          "classification": "customer_authored",
+          "definition": {
+            "change_after": null,
+            "changed_law": null,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.5
+              }
+            },
+            "noise_seed": 18446744073709551615,
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            }
+          },
+          "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+          "view": {
+            "created_at": 900,
+            "parent_version_id": null,
+            "space": {
+              "budget": 6,
+              "calibration_experiments": 2,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 0.1,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "a",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "p",
+                    "b": "a"
+                  }
+                ],
+                "particle_ids": [
+                  "p"
+                ]
+              }
+            },
+            "title": "Synthetic world",
+            "version_id": "world-version-1",
+            "version_number": 1,
+            "workspace_id": "workspace-1",
+            "world_id": "world-1"
+          }
+        }
+      },
+      "scope": {
+        "key": "synthetic-world",
+        "operation": "create_version",
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1",
+        "world_id": null
+      },
+      "target": {
+        "author": {
+          "grant_incarnation": 0,
+          "membership_revision": 0,
+          "principal_generation": 0,
+          "principal_id": "principal-1",
+          "workspace_id": "workspace-1"
+        },
+        "classification": "customer_authored",
+        "definition": {
+          "change_after": null,
+          "changed_law": null,
+          "initial_law": {
+            "kind": "spring",
+            "parameters": {
+              "linear": 0.5
+            }
+          },
+          "noise_seed": 18446744073709551615,
+          "schema_version": "strange-physics.world.v1",
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          }
+        },
+        "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+        "view": {
+          "created_at": 900,
+          "parent_version_id": null,
+          "space": {
+            "budget": 6,
+            "calibration_experiments": 2,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 0.1,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "a",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "p",
+                  "b": "a"
+                }
+              ],
+              "particle_ids": [
+                "p"
+              ]
+            }
+          },
+          "title": "Synthetic world",
+          "version_id": "world-version-1",
+          "version_number": 1,
+          "workspace_id": "workspace-1",
+          "world_id": "world-1"
+        }
+      }
+    },
+    "WorldVersionRecord": {
+      "author": {
+        "grant_incarnation": 0,
+        "membership_revision": 0,
+        "principal_generation": 0,
+        "principal_id": "principal-1",
+        "workspace_id": "workspace-1"
+      },
+      "classification": "customer_authored",
+      "definition": {
+        "change_after": null,
+        "changed_law": null,
+        "initial_law": {
+          "kind": "spring",
+          "parameters": {
+            "linear": 0.5
+          }
+        },
+        "noise_seed": 18446744073709551615,
+        "schema_version": "strange-physics.world.v1",
+        "space": {
+          "budget": 6,
+          "calibration_experiments": 2,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 0.1,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        }
+      },
+      "definition_sha256": "6ec332cc1350f3cca96e282b5bf8bbb4b897fa67a875d3691a37b6ad98fc9811",
+      "view": {
+        "created_at": 900,
+        "parent_version_id": null,
+        "space": {
+          "budget": 6,
+          "calibration_experiments": 2,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 0.1,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        },
+        "title": "Synthetic world",
+        "version_id": "world-version-1",
+        "version_number": 1,
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      }
+    },
+    "WorldVersionResult": {
+      "head": {
+        "changed_at": 900,
+        "revision": 1,
+        "version_id": "world-version-1",
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      },
+      "version": {
+        "created_at": 900,
+        "parent_version_id": null,
+        "space": {
+          "budget": 6,
+          "calibration_experiments": 2,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 0.1,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        },
+        "title": "Synthetic world",
+        "version_id": "world-version-1",
+        "version_number": 1,
+        "workspace_id": "workspace-1",
+        "world_id": "world-1"
+      }
+    },
+    "WorldVersionView": {
+      "created_at": 900,
+      "parent_version_id": null,
+      "space": {
+        "budget": 6,
+        "calibration_experiments": 2,
+        "limits": {
+          "impulse_norm": 1.0,
+          "max_mass": 2.0,
+          "min_mass": 0.5,
+          "position_norm": 2.0,
+          "velocity_norm": 2.0
+        },
+        "sampling": {
+          "dt": 0.01,
+          "duration": 0.1,
+          "position_noise": 0.0,
+          "sample_interval": 0.05,
+          "velocity_noise": 0.0
+        },
+        "schema_version": "strange-physics.space.v1",
+        "structure": {
+          "anchors": [
+            {
+              "id": "a",
+              "position": [
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "connections": [
+            {
+              "a": "p",
+              "b": "a"
+            }
+          ],
+          "particle_ids": [
+            "p"
+          ]
+        }
+      },
+      "title": "Synthetic world",
+      "version_id": "world-version-1",
+      "version_number": 1,
+      "workspace_id": "workspace-1",
+      "world_id": "world-1"
+    }
+  }
+}
