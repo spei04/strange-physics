@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | Independent SP-04.a production fitter review | B3 integrated; no checkout writer or infrastructure mutation |
-| Research | SP-04.a production spring fitter (#77), in progress | Exclusive primary cloud checkout; Quality/Platform/lead review |
-| Quality | ID-C/C1 service/key lifecycle (#64), plus independent SP-04.a review | Exclusive identity checkout; C2 waits accepted C1; independent SP-06.a scorer follows SP-04.b |
-| Project lead | B3 integrated; coordinate fitter and credential acceptance | Research owns primary and Quality owns identity; independent review and exact-head checks before each merge |
+| Platform | SP-04.b design challenge and C1 interface review | SP-04.a independently accepted; read-only review |
+| Research | SP-04.b predictor preparation | Fitter source accepted; authoring waits for fitter integration and writer handoff |
+| Quality | ID-C/C1 service/key lifecycle (#64) | Exclusive identity checkout; C2 waits accepted C1; independent SP-06.a scorer follows SP-04.b |
+| Project lead | Integrate SP-04.a and coordinate credential acceptance | Exclusive primary writer; exact-head PR/main checks before predictor handoff |
 
 ## Assignments
 
@@ -88,6 +88,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | 2026-10-20 02:39 | Project lead | B3 integration and C1 writer handoff | PR #79/main24c8796 matches reviewedc716ede/treeaedc6064; PR/main CI passed; same identity checkout reused |
 | 2026-10-20 02:39 | Quality | ID-C/C1/#64 — service principal and key lifecycle | Accepted bounded route/model plan; no actual verifier/HTTP/SQL; C2 waits C1 and full parent freeze remains open |
 
+| 2026-10-20 02:42 | Research | SP-04.a/#77 production fitter | c43cd801 independently accepted by Quality/Platform; 905 author tests and static/schema/package checks; primary writer released |
+| 2026-10-20 02:42 | Project lead | SP-04.a integrated-source verification | Accepted B3/main and reviewed assignment progress reconciled; 1,006 tests and lint/format/type/schema checks passed; hosted CI next |
+| 2026-10-20 02:43 | Research + Platform | SP-04.b bounded predictor design | Research prepares API/runtime/oracle plan; Platform challenges it; no implementation before accepted fitter integration |
+
 ## Review evidence and management checkpoint
 
 - Outcome: an enterprise research product that measures discovery and adaptation. Next evidence-producing milestone is the approved noiseless spring path: purchased observations → fit → unseen-condition predictions → independently scored report.
@@ -110,6 +114,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 - Linking delta: ID-B/B3 source051d8f708a5f5cc1a9182448466eb6dbdeb10f55 passed Research, Quality and lead review. Platform passed 714 full branch tests, 222 focused session/link tests, Ruff/format (62 files), strict mypy (34), 478 external schema checks, configured Bandit severity gate and offline wheel/sdist allowlist validation. Research independently ran 100 linking cases; Quality ran all222 and confirmed repaired guard-mutation coverage. Fixes bind audit replay, expose public commit revision, reject invalid primary authority before freshness advice, prevent cross-provider login/link callback collisions and define safe429 responses. Shared trusted proof purpose/owner is an explicit internal producer amendment; public login HTTP is unchanged. Root integrated accepted scientific progress before exact-head checks. No real verifier, broker, HTTP, SQL or recovery enforcement is claimed; ID-C and final parent freeze remain open.
 - Calibration integration: [PR #78](https://github.com/spei04/strange-physics/pull/78) merged as db18278821d72d3ba02336e45827d441af0a00b6; tree08efb97564ff99f7056551a04b93b27b5460f3eb matches independently accepted7b27bad5a6d947580d231b337df8836558a62131. PR CI39358928012 and protected-main CI39359050024 passed all applicable jobs, including the main candidate build. SP-03.b is complete for its bounded calibration scope; SP-04.a is now assigned.
 - Calibration delta: SP-03.b source 43e05897587ba3b7e1a4266c2d40af7cbaa1b5b6 passed independent Quality and lead review. Preregistration 5e524a1 and proof clarification f55d38f preceded measurements. All 63 primary and seven mixed-mass noiseless prefixes meet the joint criteria; maximum per-probe RMSE 8.46960e-6. Weak excitation retains 34 unsupported / 48 cases. Noise retains all 64 prefixes: six negative estimates, 13 joint passes, 406 computed probes over the bound and 144 failed probes. Derived arithmetic/propagation failures remain JSON-safe and counted. 817 full tests and 204 focused cases, Ruff/format and strict mypy passed; exact-head hosted CI remains an integration gate. SPRING_DOMAIN.md documents reproduction, analytic bounds and finite-matrix limitations. This is test-only calibration, not a production fitter/predictor/scorer or I1 exit.
+- Fitter delta: source c43cd8011efdb6fe2dc27ce251803eba4fe36597 independently accepted by Quality and Platform. Each reran all 88 focused cases; Quality detected five and Platform ten deliberate source defects. The fixed config binds the actual digest, consumes every eligible paired-Simpson window using public masses, retains failed-record provenance and zero rows, and reports finite/negative/weak failures explicitly. Author checks passed 905 tests, external schema validation and offline package allowlist. Reconciliation with B3 passed 1,006 tests, Ruff/format (69 files), strict mypy (39 files) and external schema validation. No frozen SCI bytes or dependency manifest changed. Exact-head hosted checks remain before merge; fitting success makes no accuracy, prediction, score or I1 claim.
 - Budget: the approved expansion adds an estimated ~$10/month and the snapshot up to roughly ~$10/month while retained, before credits/tax; actual billing is not yet measured. Only this capacity action was approved. Staging, provider trials, official sweeps and releases retain their concrete approval gates. Existing VM billing is outside this incremental estimate.
 - Tracking: SP-00.a [#44](https://github.com/spei04/strange-physics/issues/44), SP-00.b [#45](https://github.com/spei04/strange-physics/issues/45), SP-02.a [#46](https://github.com/spei04/strange-physics/issues/46), SP-02.b [#72](https://github.com/spei04/strange-physics/issues/72), SP-03.a [#73](https://github.com/spei04/strange-physics/issues/73).
 
@@ -118,8 +123,8 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 Research owns the local spring proof; Quality independently authors its development
 scorer. SP-02.b is accepted and SP-03.a fixtures have passed independent review.
 SP-03.a and SP-03.b are integrated, including exact-head PR/main checks.
-Research now authors SP-04.a/#77 in the reused primary checkout. B3 linking is
-integrated. Quality owns the reused identity checkout for C1 service/key lifecycle;
+SP-04.a/#77 source is independently accepted; the lead owns primary integration
+and Research prepares SP-04.b read-only. B3 linking is integrated. Quality owns the reused identity checkout for C1 service/key lifecycle;
 C2 run credentials and product-authority composition follow accepted C1.
 
 The approved dependency path is SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b →

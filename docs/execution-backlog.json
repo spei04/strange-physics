@@ -1750,8 +1750,9 @@
         "SDK"
       ],
       "issue": "https://github.com/spei04/strange-physics/issues/77",
-      "execution_owner": "Engineer Research; exclusive primary cloud checkout after accepted SP-03.b/02.b; Quality/Platform/lead review.",
-      "execution_plan": "Versioned explicit actual-config digest, all-completed paired-Simpson windows and public masses; frozen LinearSpringModel plus separate JSON-safe diagnostics. Fitted is numerical success, not ground-truth acceptance. Nonzero noise and coefficients outside calibrated range remain explicit; no clipping or private inputs."
+      "execution_owner": "Engineer Research authored; Quality and Platform independently accepted; project lead owns primary integration.",
+      "execution_plan": "Versioned explicit actual-config digest, all-completed paired-Simpson windows and public masses; frozen LinearSpringModel plus separate JSON-safe diagnostics. Fitted is numerical success, not ground-truth acceptance. Nonzero noise and coefficients outside calibrated range remain explicit; no clipping or private inputs.",
+      "execution_evidence": "Source c43cd801 independently accepted; 905 author tests and 1006 integrated tests, static/schema checks pass. Required exact-head hosted checks pending; not yet completed."
     },
     {
       "id": "SP-04.b",
@@ -10763,10 +10764,10 @@
     "scientific_checkpoint": {
       "id": "I1",
       "exit_task": "SP-04.e",
-      "status": "SP-04.a_in_progress",
+      "status": "SP-04.a_reviewed_integration_pending",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "SP-04.a",
+      "next_authoring_task": "SP-04.b after accepted SP-04.a integration",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10788,7 +10789,7 @@
       "forecast_boundary": "Reference human effort only; not a subagent delivery forecast. Dependencies, gates and schedules unchanged.",
       "identity_boundary": "SP-01.b/c/d/e, B3, ID-C, SP-08, staging and whole R0 exit are not prerequisites for the local slice; their hosted/later consumer gates remain.",
       "acceptance": "Purchased-prefix-only fit, unseen-condition predictions, independent analytic development score and SDK/CLI evidence; any failed probe unscorable, primary MSE null; derive RMSE from position_mse.",
-      "evidence_gap": "817 passing local tests include bounded noiseless calibration, but no production fitter, predictor, independent scorer, generalization or recovery result.",
+      "evidence_gap": "Production fitter source is independently accepted and passes 1006 integrated tests; exact-head PR/main acceptance remains. Predictor, independent scorer and I1 evidence remain separate.",
       "capacity_approval": "Concrete disk expansion and snapshot approved and independently accepted 2026-10-20; other paid/release gates unchanged."
     },
     "capacity_recovery": {
@@ -10858,7 +10859,7 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research authors in the primary cloud checkout; lead takes exclusive ownership for integration handoffs.",
+      "scientific": "Project lead owns primary for fitter integration; Research prepares predictor read-only and receives writer ownership after accepted dependency integration.",
       "identity": "Engineer Quality owns the reused identity checkout for C1 after accepted B3 integration. C2 requires accepted C1; no extra checkout.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
@@ -10924,6 +10925,26 @@
       "integrated_mypy_files": 35,
       "integrated_formatted_files": 64
     },
-    "stream_contract_clarification": "Current authoritative session/credential, grant and workspace checks before every payload batch; applicable run lease also checked. The <=30-second interval applies only to idle connections, not cached payload authorization. SP-11.c/23.b/35.c prose aligned; graph/effort/gates unchanged."
+    "stream_contract_clarification": "Current authoritative session/credential, grant and workspace checks before every payload batch; applicable run lease also checked. The <=30-second interval applies only to idle connections, not cached payload authorization. SP-11.c/23.b/35.c prose aligned; graph/effort/gates unchanged.",
+    "spring_fitter_evidence": {
+      "source": "c43cd8011efdb6fe2dc27ce251803eba4fe36597",
+      "status": "reviewed_integration_pending",
+      "author": "Engineer Research",
+      "independent_reviewers": [
+        "Engineer Quality",
+        "Engineer Platform"
+      ],
+      "author_full_tests": 905,
+      "integrated_full_tests": 1006,
+      "focused_tests": 88,
+      "quality_mutations_detected": 5,
+      "platform_mutations_detected": 10,
+      "integrated_formatted_files": 69,
+      "integrated_mypy_files": 39,
+      "external_schema_checks": 492,
+      "config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+      "record": "docs/FITTING.md",
+      "boundary": "Public-prefix numerical fitter only; no prediction, ground-truth accuracy, scorer, I1 or release claim. Frozen SCI bytes and dependency manifests unchanged."
+    }
   }
 }
