@@ -15,7 +15,7 @@ from strange_physics import worker_contracts as w
 from strange_physics.contracts import Message, ObservationBundle
 from strange_physics.control_contracts import ContractViolation, VerifiedCredential
 from strange_physics.package_contracts import PackagePolicy
-from strange_physics.research_contracts import message_sha256
+from strange_physics.research_contracts import LinearSpringModel, message_sha256
 from strange_physics.run_credential_contracts import RunProductAuthority
 from strange_physics.worker_execution import WorkerEnvironment
 from strange_physics.workspace_contracts import WorkspaceAuthority, WorkspaceView
@@ -346,3 +346,214 @@ def test_missing_native_policy_fails_after_worker_authority() -> None:
     data["native"] = replace(data["native"], policy=None)
     with denied("policy_unavailable", 503):
         s.admit_model_submission(**data)
+
+
+def accept(data: dict[str, Any]) -> dict[str, Any]:
+    plan = s.admit_model_submission(**data)
+    assert isinstance(plan, m.ModelAdmissionPlan)
+    data["lookup"] = changed(data["lookup"], stored=plan.stored, admission=plan.admission)
+    return data
+
+
+def set_model_bytes(data: dict[str, Any], raw: bytes) -> None:
+    native = data["native"]
+    ref = changed(
+        native.artifact.record.ref, sha256=hashlib.sha256(raw).hexdigest(), size_bytes=len(raw)
+    )
+    artifact = changed(
+        native.artifact,
+        record=changed(native.artifact.record, ref=ref),
+        verification=changed(
+            native.artifact.verification, sha256=ref.sha256, size_bytes=ref.size_bytes
+        ),
+    )
+    model = LinearSpringModel.model_validate_json(raw)
+    data["request"] = changed(
+        data["request"], model_artifact=ref, model_sha256=message_sha256(model)
+    )
+    data["native"] = replace(native, artifact=artifact)
+
+
+@pytest.mark.parametrize("new_row", [False, True])
+def test_current_native_approval_renewal_preserves_completed_provenance(new_row: bool) -> None:
+    data = committed()
+    original = data["lookup"]
+    native = data["native"]
+    old = native.approval
+    scan = changed(old.scan, scan_id="renewed-scan", observed_at=1204, valid_until=1900)
+    approval = changed(
+        old.approval,
+        approval_id="renewed-approval" if new_row else old.approval.approval_id,
+        revision=1 if new_row else old.approval.revision + 1,
+        scan_sha256=message_sha256(scan),
+        decided_at=1204,
+    )
+    data["native"] = replace(native, approval=changed(old, scan=scan, approval=approval))
+    replay = s.admit_model_submission(**data)
+    assert isinstance(replay, m.ModelSubmissionReplay)
+    assert replay.operation == original.stored.operation
+    assert data["lookup"] == original
+    assert isinstance(
+        s.commit_model_submission(**(commit_args(data) | {"now": 1205})), m.ModelSubmissionReplay
+    )
+
+
+@pytest.mark.parametrize("fault", ["lower_revision", "changed_equal_revision", "different_source"])
+def test_replay_rejects_native_approval_rollback_or_changed_build(fault: str) -> None:
+    data = committed()
+    native = data["native"]
+    old = native.approval
+    if fault == "different_source":
+        source = changed(old.build.source, commit="a" * 40)
+        build = changed(
+            old.build,
+            source=source,
+            build=changed(old.build.build, source_sha256=message_sha256(source)),
+        )
+        scan = changed(old.scan, build_sha256=message_sha256(build))
+        approval = changed(
+            old.approval, build_sha256=message_sha256(build), scan_sha256=message_sha256(scan)
+        )
+        revised = changed(old, build=build, scan=scan, approval=approval)
+        code = "incompatible_state"
+    else:
+        revision = old.approval.revision - 1 if fault == "lower_revision" else old.approval.revision
+        revised = changed(old, approval=changed(old.approval, revision=revision, decided_at=1204))
+        code = "recovery_required"
+    data["native"] = replace(native, approval=revised)
+    with denied(code, 409):
+        s.admit_model_submission(**data)
+    if fault == "different_source":
+        # A fresh independently approved source is valid; only retained identity is immutable.
+        data["lookup"] = m.ModelRegistrationLookup(
+            scope=data["scope"], stored=None, admission=None, record=None, outbox=None
+        )
+        assert isinstance(s.admit_model_submission(**data), m.ModelAdmissionPlan)
+
+
+def test_raw_formatting_changes_object_identity_but_preserves_canonical_model() -> None:
+    data = args()
+    model = json.loads(DATA["model_bytes_utf8"])
+    raw = json.dumps(model, sort_keys=True, separators=(",", ":")).encode()
+    original = data["request"]
+    set_model_bytes(data, raw)
+    assert data["request"].model_sha256 == original.model_sha256
+    assert data["request"].model_artifact.sha256 != original.model_artifact.sha256
+    result = s.commit_model_submission(**(commit_args(accept(data)) | {"model_bytes": raw}))
+    assert isinstance(result, m.ModelCommitPlan)
+    assert result.record.model.linear == 5
+
+
+@pytest.mark.parametrize(
+    "fault", ["count", "gap", "duplicate_id", "pending", "revision", "sampling", "action"]
+)
+def test_actual_full_ledger_and_public_space_are_required(fault: str) -> None:
+    data = commit_args(pending())
+    ledger = json.loads(data["ledger_bytes"])
+    if fault == "count":
+        ledger["operations"].pop()
+    elif fault == "gap":
+        ledger["operations"][1]["accepted_experiment_index"] = 2
+        ledger["operations"][1]["result"]["value"]["index"] = 2
+    elif fault == "duplicate_id":
+        ledger["operations"][1]["operation_id"] = "op-0"
+        ledger["operations"][1]["result"]["value"]["operation_id"] = "op-0"
+    elif fault == "pending":
+        ledger["operations"][1]["status"] = "pending"
+        ledger["operations"][1]["result"] = None
+    elif fault == "revision":
+        ledger["run_revision"] -= 1
+    elif fault == "sampling":
+        ledger["operations"][0]["result"]["value"]["trajectory"]["frames"].pop()
+    else:
+        ledger["operations"][0]["result"]["value"]["experiment"]["particles"][0]["position"][0] = (
+            3.0
+        )
+    with pytest.raises(ContractViolation):
+        s.commit_model_submission(**(data | {"ledger_bytes": json.dumps(ledger).encode()}))
+
+
+def test_failed_scientific_record_cannot_be_selected_as_fit_row() -> None:
+    data = args()
+    model = json.loads(DATA["model_bytes_utf8"])
+    model["fit_record_indices"] = [0, 1]
+    raw = json.dumps(model).encode()
+    set_model_bytes(data, raw)
+    with denied("invalid_request", 422):
+        s.commit_model_submission(**(commit_args(accept(data)) | {"model_bytes": raw}))
+
+
+@pytest.mark.parametrize("tail_status", ["completed", "pending"])
+def test_current_append_preserves_exact_historical_prefix(tail_status: str) -> None:
+    data = committed()
+    current = data["worker_environment"].current
+    run = changed(current.run, revision=5, experiments_accepted=3, budget_remaining=3)
+    current = changed(current, run=run)
+    data["worker_environment"] = replace(data["worker_environment"], current=current)
+    data["authority"] = changed(data["authority"], current=current)
+    ledger = json.loads(DATA["ledger_bytes_utf8"])
+    ledger["run_revision"] = 5
+    tail = copy.deepcopy(ledger["operations"][0])
+    tail["operation_id"] = "op-2"
+    tail["accepted_experiment_index"] = 2
+    tail["status"] = tail_status
+    if tail_status == "pending":
+        tail["result"] = None
+    else:
+        tail["result"]["value"]["operation_id"] = "op-2"
+        tail["result"]["value"]["index"] = 2
+    ledger["operations"].append(tail)
+    result = s.commit_model_submission(
+        **(commit_args(data) | {"now": 1205, "ledger_bytes": json.dumps(ledger).encode()})
+    )
+    assert isinstance(result, m.ModelSubmissionReplay)
+    assert result.operation == data["lookup"].stored.operation
+
+
+def test_same_attempt_key_rotation_uses_current_authority_not_original_audit_key() -> None:
+    data = committed()
+    current = data["worker_environment"].current
+    old = current.credentials.records[0]
+    claims = changed(
+        old.claims, credential_id="rotated-key", generation=2, issued_at=1204, expires_at=1450
+    )
+    records = (changed(old, claims=claims), changed(old, revoked_at=1204))
+    keys = changed(
+        current.credentials,
+        revision=2,
+        last_generation=2,
+        current_credential_id=claims.credential_id,
+        records=records,
+    )
+    current = changed(current, credentials=keys)
+    data["worker_environment"] = replace(data["worker_environment"], current=current)
+    data["authority"] = changed(data["authority"], current=current, verified_claims=claims)
+    data["credential"] = changed(
+        data["credential"], credential_id=claims.credential_id, expires_at=claims.expires_at
+    )
+    assert data["worker_lookup"].record.original_credential_id == "worker-key-1"
+    assert isinstance(s.admit_model_submission(**data), m.ModelSubmissionReplay)
+    assert isinstance(
+        s.commit_model_submission(**(commit_args(data) | {"now": 1205})), m.ModelSubmissionReplay
+    )
+
+
+def test_canonical_prefix_cap_is_separate_and_no_truncation_is_permitted() -> None:
+    data = pending()
+    native = data["native"]
+    data["native"] = replace(native, policy=changed(native.policy, max_canonical_prefix_bytes=1315))
+    with denied("invalid_request", 422):
+        s.commit_model_submission(**commit_args(data))
+    data["native"] = replace(native, policy=changed(native.policy, max_canonical_prefix_bytes=1316))
+    assert isinstance(s.commit_model_submission(**commit_args(data)), m.ModelCommitPlan)
+
+
+def test_json_node_guard_runs_before_decoding(monkeypatch: pytest.MonkeyPatch) -> None:
+    policy = changed(value(m.ModelRegistrationPolicy), max_json_nodes=2)
+
+    def unexpected(*args: Any, **kwargs: Any) -> Any:
+        pytest.fail("JSON decoder reached after lexical node cap")
+
+    monkeypatch.setattr(json, "loads", unexpected)
+    with denied("invalid_request", 422):
+        s._parse(b'{"a": 1, "b": 2}', m.ModelLedgerSnapshot, policy)
