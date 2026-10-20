@@ -96,6 +96,8 @@ def _head(
     )
     if head != commit.result.head or commit.committed_at > now:
         raise ContractViolation("recovery_required", 409)
+    if commit.parent is not None:
+        _version_history(commit.parent, commit.version)
     return commit
 
 

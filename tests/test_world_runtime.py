@@ -1313,3 +1313,42 @@ def test_version_history_rejects_reuse_of_known_earlier_parent_ids(reuse_as: str
     contradictory = WorldVersionCommit.model_validate_json(json.dumps(data))
     with pytest.raises(ContractViolation, match="recovery_required"):
         replay_version(target, contradictory)
+
+
+@pytest.mark.parametrize("version_number", [1, 2, 3])
+def test_safe_head_read_checks_normal_current_predecessor(version_number: int) -> None:
+    history = [fresh_version(1020)]
+    for i in range(2):
+        history.append(append_version(history[-1], 1030 + i * 10))
+    latest = history[version_number - 1]
+    assert (
+        read_world_head(
+            auth(1060),
+            example(WorldPolicy),
+            latest.result.head,
+            latest,
+            workspace_id="workspace-1",
+            world_id="world-1",
+            now=1060,
+        )
+        == latest.result.head
+    )
+
+
+def test_safe_head_read_rejects_id_reused_from_its_retained_grandparent() -> None:
+    first = fresh_version(1020)
+    second = append_version(first, 1030)
+    third = append_version(second, 1040)
+    data = third.model_dump(mode="json")
+    data["parent"]["view"]["parent_version_id"] = third.version.view.version_id
+    contradictory = WorldVersionCommit.model_validate_json(json.dumps(data))
+    with pytest.raises(ContractViolation, match="recovery_required"):
+        read_world_head(
+            auth(1060),
+            example(WorldPolicy),
+            contradictory.result.head,
+            contradictory,
+            workspace_id="workspace-1",
+            world_id="world-1",
+            now=1060,
+        )
