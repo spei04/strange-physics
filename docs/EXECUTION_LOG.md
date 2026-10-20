@@ -10,7 +10,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Platform | SP-01.c/#89 EXEC1 runtime admission, replay, broker and termination predicates | API57f2f303 accepted; exclusive identity writer, immutable runtime review next |
+| Platform | SP-01.c/#89 EXEC1 runtime admission, replay, broker and termination predicates | API accepted; runtime77da80b published, full checks passed, peer review active |
 | Research | EXEC1 provenance/SCI review; COMP1 and SP-01.d design ready | Read-only reviewer; COMP1 source waits EXEC1 and SP-01.d source/freeze waits full SP-01.c |
 | Quality | EXEC1 runtime security/lifecycle review and progress verification | API accepted; SP-01.e tooling preparation remains prerequisite-gated |
 | Project lead | Coordinate EXEC1 runtime review and integration | Exclusive primary progress owner; Platform owns identity source authoring |
@@ -296,3 +296,8 @@ Quality API evidence is sealed at index SHA25642768dde06d64f91bbd2f754df32f5535a
 Research completed an independent read-only scaling assignment: one schema-valid8-particle/2,001-frame Operation measured1,757,976 canonical bytes;10,000 distinct-index operations extrapolate to17,579,767,781 bytes (about16.37GiB). Only one object was allocated. This is neither physical simulation evidence nor a load/RSS test. The result requires bounded authoritative ledger metadata/body-hash reads in SP-09.d/SP-13.c/SP-16.b, and cumulative resource enforcement in SP-12.a. SP-11 owns authorization, correcting earlier shorthand references. COMP1 needs actual canonical prefix binding with an explicit byte bound or proven equivalent streaming producer.
 
 The four existing producer tasks now carry concrete constraints/tests; task IDs, dependencies, gates and estimates are unchanged. The current pure full-Operation prefix validator is a conformance reference, not a scalable storage implementation. Research evidence index SHA2568701a2d838c8c6d0f8f8b4aa58d64dd870d4949a656ce5c356af84356d600c5b and ownership addendum5f343528c4b32ed5a5ffd6e049b0fba89749b82d7d7d5bbbeae8f8a67a4c1746 remain owner-only outside checkouts with30-day review; same-VM storage is not an off-device backup. Platform continues runtime source, Research and Quality review the next immutable checkpoint, and lead maintains integration.
+## EXEC1 runtime review assignments
+
+2026-10-20 05:23 UTC — Platform published immutable runtime77da80b06f6f07173d6950d5ff64f65969f4ee6f/treed38d9dda73d8300610e8c6048c2a52c2989477a3 and retains the identity writer for review repairs. Quality is assigned current authority, lifecycle and termination/recovery challenges; Research is assigned scientific provenance, committed-prefix and restore compatibility. Lead reviews independently and integrates only after accepted source and matching checks. Author reports2,253 tests,722 external schema cases, Ruff/format112, full mypy74 and configured Bandit checks passed, with offline wheel/sdist allowlist validation. These author results are subject to peer and final integration verification.
+
+Quality caught four scaling requirement bullet pairs located after the next task's HTML anchor; lead moved them within their owning sections. JSON ownership, task graph and estimates were already correct. No additional checkout or environment was created; both existing cloud checkouts remain in use. The draft PR still contains API-only evidence until reviewed runtime integration.

@@ -1138,10 +1138,10 @@ Parent: [#11](https://github.com/spei04/strange-physics/issues/11). This issue c
 - **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
-<a id="epic-sp-10"></a>
 - **Execution constraint (ledger scaling):** Persist immutable observation body identity/hash with authoritative tenant/run/operation/ordinal/status metadata. Production prefix checks use indexed, byte-capped metadata reads under a consistent run revision; they must not materialize complete trajectory history.
 - **Additional production evidence:** Verify complete contiguous rows, unique operation IDs, scientific-failure inclusion, incomplete-operation stopping, body-commit/hash joins, concurrent append and bounded rows/bytes read.
 
+<a id="epic-sp-10"></a>
 ## SP-10 — Add outbox, fencing and reconciliation
 
 Parent: [#12](https://github.com/spei04/strange-physics/issues/12). This issue closes only when its leaf tasks and applicable gate evidence pass.
@@ -1268,10 +1268,10 @@ Parent: [#14](https://github.com/spei04/strange-physics/issues/14). This issue c
 - **Milestone / state:** R2; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
-<a id="sp-12-b"></a>
 - **Execution constraint (ledger scaling):** Enforce cumulative scientific/output/artifact allowances across attempts and before decoding/materializing data. Per-launch ceilings and a maximum experiment count do not establish a bounded run footprint.
 - **Additional production evidence:** Verify replacement cannot reset allowances, unknown amounts remain reserved, and configured input/output byte limits reject before oversized allocation without silent truncation.
 
+<a id="sp-12-b"></a>
 ### SP-12.b — Implement fair bounded admission
 
 - **Objective:** Bound resource consumption and account for usage fairly across tenants. This PR delivers implement fair bounded admission.
@@ -1356,10 +1356,10 @@ Parent: [#15](https://github.com/spei04/strange-physics/issues/15). This issue c
 - **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
-<a id="sp-13-d"></a>
 - **Execution constraint (ledger scaling):** Consume a reviewed internal transactional ledger closure, with exact body/hash and checkpoint/model joins. Native model prefix binding requires producer-verified canonical bundle identities or a bounded streaming hasher proven byte-equivalent to SCI; until available, reject over-limit input before allocation.
 - **Additional production evidence:** Exercise missing/duplicate/gapped metadata, append races and exact canonical digest equivalence including scientific failures; verify reference commits and prefix evidence share a snapshot.
 
+<a id="sp-13-d"></a>
 ### SP-13.d — Collect abandoned uploads without deleting live state
 
 - **Objective:** Preserve durable, verifiable artifacts and complete checkpoints. This PR delivers collect abandoned uploads without deleting live state.
@@ -1566,10 +1566,10 @@ Parent: [#18](https://github.com/spei04/strange-physics/issues/18). This issue c
 - **Milestone / state:** R3; backlog approved; not started; prerequisites and slice checkpoints still apply.
 - **Definition of done:** Acceptance and automated tests above pass at the reviewed source/config revision; required producer/consumer and security/research review recorded; safe telemetry and operational/schema documentation updated where applicable; evidence and progress updated in this backlog and ROADMAP.md. Real deployment/partner/drill claims require real evidence; no skipped failure test counted as pass.
 
-<a id="sp-16-c"></a>
 - **Execution constraint (ledger scaling):** Restore through a reviewed internal compact ledger projection with explicit page/row/byte limits and the exact checkpoint target/latest closure. No client-supplied prefix scalar or full-trajectory materialization per restore. Payload delivery separately rechecks current read authority.
 - **Additional production evidence:** Measure bounded bytes/rows under maximum supported history and concurrent append/recovery; reject missing body commits, gaps and stale snapshots while preserving initial -1 and committed scientific-failure semantics.
 
+<a id="sp-16-c"></a>
 ### SP-16.c — Cancel, expire and reconcile remote work
 
 - **Objective:** Deliver recoverable, observable remote investigations with bounded cancellation. This PR delivers cancel, expire and reconcile remote work.
