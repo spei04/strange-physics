@@ -25,7 +25,7 @@ cancelled, skipped, missing and unknown results fail. A skipped optional
 candidate job is not a substitute for this check. New required jobs must be
 added to both its `needs` list and the tested aggregate predicate.
 
-Dependencies install only in bootstrap steps from `uv.lock` with uv 0.11.21.
+Dependencies install only in bootstrap steps from `uv.lock` with uv 0.13.4.
 The project installs as a regular wheel offline against the locked Hatchling
 backend; editable-build helpers are not required. Check steps
 use `uv run --no-sync`; they cannot silently resolve a new environment.
@@ -145,3 +145,9 @@ and [pip-audit](https://github.com/pypa/pip-audit).
 ## Verified rollout
 
 The first protected-main delivery is verified at 256b409 in run 39347053265. [DELIVERY_RECORD.md](DELIVERY_RECORD.md) records exact source, artifact/checksums, policy read-back and the single-account review limitation. This is evidence of package delivery only.
+
+## Certificate trust update (2026-10-21)
+
+The current build tool is uv 0.13.4 and the CI dependency lock uses certifi 2026.10.19, following the [Python security announcement](https://discuss.python.org/t/information-for-python-users-regarding-emudhra-emsign-ca-certificate-security-incident/109576). The old certifi 2026.10.18 already removed the affected roots; 2026.10.19 restores unaffected roots and satisfies the advisory database. Updating certifi alone does not update uv’s bundled certificate store.
+
+Use the pinned uv release with verified release checksums; the cloud installation is `~/.local/share/experiments-tools/uv-0.13.4/bin/uv`. Existing historical delivery and source-admission records retain their original tool and lock identities. Bootstrap and auditing use uv and `pip-audit --disable-pip`; they do not invoke the host or virtual-environment pip. This project update makes no assertion about unrelated host tools or other projects.
