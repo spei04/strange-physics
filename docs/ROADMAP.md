@@ -1102,9 +1102,9 @@ The requested artifact paths are represented by useful sections in this single f
 
 **Approval scope:** execution backlog D01–D06 and initial R0/spring scope approved on 2026-10-19. Current execution uses a lead and up to three engineer subagents; the nine-human-team schedule remains conditional. No arbitrary paid benchmark sweep, compliance claim or unlimited infrastructure spend is implied. Cloud provisioning remains tied to concrete priced configuration, verified account permissions and applicable release/approval controls.
 
-**Next executable outcome:** Quality's SP-01.e/#98 VAL1 manifest/fixture checkpoint, reviewed before generator implementation. SP-01.d is complete. The 36-episode research path retains its separate dependency decision and RA_EXEC gate.
+**Next executable outcome:** Research's RA-01/#102 source/license/recipe admission checkpoint. The native comparison scope and bounded run are approved, with source/interface/calibration/manifest/CI gates still required. VAL1 manifest1014592 is accepted and preserved in draftPR101; its generator is deferred.
 
-Research methods planning amendment: PR #86/main e239eb2c704cd315aadd6064cdb521d1a6d9bbdc matches reviewedc48517b/tree558d68ed; PR CI39365953740 and all main CI39366138629 jobs passed. The18-task extension is a reviewed plan only; RA_EXEC and paid/sizing/official gates remain pending.
+Historical research planning acceptance (2026-10-20): PR #86/main e239eb2c704cd315aadd6064cdb521d1a6d9bbdc matches reviewedc48517b/tree558d68ed; PR CI39365953740 and all main CI39366138629 jobs passed. At that publication the18-task extension was planning-only. Scoped native RA_EXEC is now accepted under the2026-10-21 decision; paid/sizing/official gates remain pending.
 
 Identity integration acceptance: PR #88/main 92320173ff0d3278c65cfc251983d57fab9960b1 matches accepted b8d3e5ee96b3b07da53eccbabddebc5a73223ba3 and tree 515e27ebbb594a15ce439b24a14463ed7a4cf9a7; PR CI39367180231 and all protected-main CI39367439199 jobs passed. Integrated 1,692 tests, Ruff/format92, strict mypy57,613 schema checks, configured security checks and offline package validation passed. SP-01.c began after this parent gate; local SDK/CLI I1 is now complete through PR #90.
 

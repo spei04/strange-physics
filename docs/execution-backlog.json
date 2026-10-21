@@ -10569,7 +10569,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Project lead integrates contracts; Quality owns VAL1 and Research/Platform review.",
+      "BE1": "Project lead integrates approved contract work; VAL1 generator is deferred while Research authors RA-01 and Quality/Platform review.",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10830,7 +10830,7 @@
       "status": "complete",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "Bounded I1 and SP-01.d complete. Quality authors SP-01.e/VAL1; Research and Platform review. Native comparison awaits its separate scope/RA_EXEC decision.",
+      "next_authoring_task": "Bounded I1 and SP-01.d complete. Owner approved the native comparison2026-10-21; Research owns RA-01 first, Quality prepares RA-02, Platform reviews. VAL1 generator deferred with accepted checkpoint/draftPR101 preserved.",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10925,7 +10925,7 @@
     },
     "checkout_ownership": {
       "scientific": "Project lead owns primary progress/integration; reviewers use immutable source.",
-      "identity": "Quality owns SP-01.e/VAL1 after accepted WEB1 main15714e6 and Research's clean release. Same independent pinned environment; no new checkout or installation.",
+      "identity": "Research owns RA-01 in feat/research-source-admission from4d173700 after Quality released clean1014592. Prior VAL1 draftPR101 is preserved; no additional checkout/install. Private owner index records verified handoff.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12036,7 +12036,7 @@
         }
       ],
       "first_checkpoint": "Manifest/fixtures1014592 independently accepted; generator implementation may follow as the next scoped assignment.",
-      "writer_handoff": "Quality owns identity after exact WEB1 PR/main/candidate acceptance and clean Research release.",
+      "writer_handoff": "Historical Quality VAL1 handoff is complete; Quality released clean1014592 on2026-10-21. Research now owns identity for RA-01; draftPR101 and accepted VAL1 evidence are preserved.",
       "starting_commit": "15714e6ac4b6b300f0170e5aa22722987decd786",
       "branch": "feat/contract-tooling-validation",
       "started_at": "2026-10-20T09:48:03.950454+00:00",
@@ -12328,9 +12328,10 @@
           "proposed_fixed_edges": 69,
           "conditional_edges": 6,
           "native_closure": 20,
-          "accepted_ancestors": 12,
+          "accepted_ancestors": 13,
           "proposed_native_path_tasks": 7,
-          "pending_gates": 1
+          "pending_gates": 0,
+          "stage": "activated_native_scope_2026_10_21"
         },
         "previous_revision": {
           "source": "1ac8875d5641b834a3361621b1ce03ad07c3f2e6",
@@ -12431,7 +12432,21 @@
           },
           "pull_request": 100
         },
-        "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21"
+        "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
+        "historical_preapproval_counts": {
+          "original_tasks": 18,
+          "proposed_tasks": 23,
+          "original_task_edges": 53,
+          "proposed_task_edges": 60,
+          "fixed_gate_edges": 9,
+          "original_fixed_edges": 62,
+          "proposed_fixed_edges": 69,
+          "conditional_edges": 6,
+          "native_closure": 20,
+          "accepted_ancestors": 12,
+          "proposed_native_path_tasks": 7,
+          "pending_gates": 1
+        }
       },
       "proposal_document": "docs/research/NATIVE_COMPARISON_PROPOSAL.md",
       "historical_original_closure": {
@@ -12563,7 +12578,8 @@
         "owner": "Research + Platform",
         "status": "in_progress",
         "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code.",
-        "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21"
+        "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
+        "issue": "https://github.com/spei04/strange-physics/issues/102"
       },
       {
         "id": "RA-02",
@@ -13357,7 +13373,7 @@
         "status": "accepted_as_planning_proposal_only",
         "decision": "Grid-only first comparison; RA-N03 depends on RA-N02.a and later RA-N02.b depends on accepted RA-N03. All five native tasks and broader work retained.",
         "schedule": "Allocate RA-N02.b after the first result; RA-N03 and RA-N04 may proceed after RA-N02.a. This scheduling recommendation grants no implementation or experiment permission.",
-        "activation": "Owner approval recorded2026-10-21; reviewed native dependencies and scoped RA_EXEC are active. Bounded comparison is authorized only after its prerequisite scientific and implementation gates.",
+        "activation": "Active dependency graph and RA_EXEC unchanged; explicit scope, implementation gate and bounded-run decisions still required.",
         "reviewed_source": "0ecf4f4c3843aaed499bb1991cae1d39834aa613",
         "reviewed_tree": "db6a51208253c77519a7faade35c653793dffaf2",
         "saved_delta_reviewers": [
