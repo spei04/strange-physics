@@ -1,10 +1,10 @@
 # Native spring comparison execution plan
 
-Status: **owner-approved for scoped implementation and the bounded comparison on2026-10-21**. Accepted plan source33ddfbf74837dde29e0f1db3b1b4263e7031ddc2, PR #100. The reviewed native dependency amendment and scoped RA_EXEC are active; scientific/implementation entry gates and all caps remain. See [approval record](APPROVALS.md#native-comparison--2026-10-21).
+Status: **owner-approved for scoped implementation and the bounded comparison on2026-10-21**. Accepted plan source33ddfbf74837dde29e0f1db3b1b4263e7031ddc2, PR #100. The reviewed native dependency amendment and scoped RA_EXEC are active; scientific/implementation entry gates and all caps remain. See [approval record](APPROVALS.md#native-comparison-2026-10-21).
 
 ## Approved decision
 
-The owner approved five native PR tasks and replacing only the RA-06/RA-07 prerequisites of RA-07.b with RA-N03/RA-N04. Keep RA-01 and RA-02 in full, preserve all broader tasks, and use an additive native prediction/scoring profile instead of weakening existing contracts. RA_EXEC is accepted for the eight enumerated units in the approval record, including the bounded local comparison below after its prerequisite gates. Provider, paid, official-study and release gates remain separate.
+The owner approved five native PR tasks and the replacement of only the RA-06/RA-07 prerequisites of RA-07.b with RA-N03/RA-N04. Keep RA-01 and RA-02 in full, preserve all broader tasks, and use an additive native prediction/scoring profile instead of weakening existing contracts. RA_EXEC is accepted for the eight enumerated units in the approval record, including the bounded local comparison below after its prerequisite gates. Provider, paid, official-study and release gates remain separate.
 
 This path uses the grid reference as the common online inference engine for three selectors. The reviewed sequencing recommendation places the first comparison after grid calibration and moves the required Laplace diagnostic and its approximation-versus-grid audit to a later unit. This preserves the full programme while separating the first grid-only result from completion of the grid-plus-Laplace programme. The proposed action bank has128 actions; the proposed discrepancy sensitivity set is half/base/double, all strictly positive. Exact nodes, priors, likelihood, numerical scales and tolerances must be preregistered and independently accepted before measurements; they are not guessed here.
 

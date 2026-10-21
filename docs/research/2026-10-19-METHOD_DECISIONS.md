@@ -2,10 +2,10 @@
 
 **2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](APPROVALS.md) govern execution. Research owns RA-01 first; VAL1 generator work is deferred with draftPR101 preserved. No comparison result exists yet.
 
-**Status:** independently reviewed research execution proposal; planning work is authorized. Runtime tasks, paid pilots and official studies retain the gates below. No new method was implemented or reproduced by this review.
+**Status:** reviewed research plan with scoped native execution approved2026-10-21. Eight enumerated units and the bounded comparison are authorized after their prerequisite gates; all other runtime, paid and official scopes retain separate authorization. No method is claimed reproduced by this approval.
 **Owner:** project lead. **Review cutoff:** 2026-10-19 UTC. **Saved:** 2026-10-20 UTC.
 **Canonical links:** [roadmap](../ROADMAP.md), [benchmark](../BENCHMARK.md), [execution backlog](../EXECUTION_BACKLOG.md), [machine-readable ledger](../execution-backlog.json).
-**Baseline preserved:** 168 approved tasks, 369 dependencies and ten gates. This extension has 18 separate proposed PR tasks. It does not silently rebaseline that graph or its conditional nine-person GA forecast.
+**Baseline preserved:** 168 approved tasks, 369 dependencies and ten gates. The research ledger retains18 broader tasks plus five native tasks; scoped approval covers eight enumerated units. It does not silently rebaseline that graph or its conditional nine-person GA forecast.
 
 ## Decision
 
@@ -65,7 +65,7 @@ RA-07.b follows I1, the classical linear fitter, calibrated model beliefs and ac
 
 All six source worlds must be stationary, one-particle, fixed-anchor, zero-cubic and zero-observation-noise, inside the current scorer bounds for mass, impulse, duration and stiffness. Freeze a separately justified positive numerical-discrepancy scale and its analytic sensitivity checks before online runs. These approximate model-belief weights must not be represented as calibrated observation-noise probabilities. Use only supported native LinearSpringModel candidates with real hashes; primary prediction is the declared MAP candidate. The current scorer cannot accept a richer DAG or mixture under a dummy linear identity. Richer profiles need a separately reviewed SP-19/20 model-to-prediction/evaluation binding. New symbolic adapters are not prerequisites for this result.
 
-Proposed limits are **8 CPU-core-hours** and **1 GiB new artifacts** on the existing machine. No provider calls, network use or provisioning. Stop and retain incomplete cells at either cap. This reduced-budget development result is not an official40-slot score, population claim or adaptation result. RA_EXEC still gates implementation; this branch has no SP-18/20 or RA-09–12 prerequisite.
+Approved comparison limits are **8 CPU-core-hours** and **1 GiB new artifacts** on the existing machine. No provider calls, network use or provisioning. Stop and retain incomplete cells at either cap. This reduced-budget development result is not an official40-slot score, population claim or adaptation result. Scoped RA_EXEC is satisfied for the enumerated native units; scientific/interface/calibration/accounting gates still precede the run. This branch has no SP-18/20 or RA-09–12 prerequisite.
 
 ### A1 — isolate acquisition under model uncertainty
 
@@ -97,7 +97,7 @@ Only purchased observations enter fitting, hypothesis memory, selection or chang
 
 Prediction error is primary. Symbolic recovery is a secondary, explicitly equivalence-aware diagnostic; an LLM judge with the true expression cannot be the primary quality metric. Retain unidentifiable worlds, invalid hypotheses, solver failures, provider failures, timeouts and missing outputs under predeclared rules.
 
-The first belief engine uses a grid reference plus exactly one Laplace approximation. BIC is a separately labeled diagnostic. SMC stays deferred until a measured failure justifies a new scoped task. The later [native sequencing proposal](NATIVE_COMPARISON_PROPOSAL.md) preserves that full programme while recommending a grid-only first selector comparison: accepted finite-grid calibration precedes the first result; Laplace implementation and its transferred approximation-versus-grid calibration, predictive, ranking and boundary audit follow on frozen disjoint development fixtures. Laplace validity or speedup requires that later acceptance, and cannot be inferred from the first result. This is a planning recommendation only; the active RA graph, RA_EXEC and bounded-run approval remain unchanged.
+The first belief engine uses a grid reference plus exactly one Laplace approximation. BIC is a separately labeled diagnostic. SMC stays deferred until a measured failure justifies a new scoped task. The approved [native sequence](NATIVE_COMPARISON_PROPOSAL.md) preserves that full programme while recommending a grid-only first selector comparison: accepted finite-grid calibration precedes the first result; Laplace implementation and its transferred approximation-versus-grid calibration, predictive, ranking and boundary audit follow on frozen disjoint development fixtures. Laplace validity or speedup requires that later acceptance, and cannot be inferred from the first result. The owner approved this sequence on2026-10-21; the native graph and scoped RA_EXEC are active, and the bounded run remains conditional on accepted scientific and implementation gates.
 
 No new real-world dataset or private corpus is required for the first extension. External NewtonBench or paper-domain checks need a distinct dataset/license/contamination manifest. Public examples used in prompts or development cannot be described as unseen.
 
@@ -133,35 +133,35 @@ RA-13.b first adds independent development worlds within each retained stratum u
 
 ## Execution extension and gates
 
-The task records below are a separate proposed queue. Existing task IDs and dependencies are unchanged. Every task has a single reviewable deliverable; adapters are split by method. Effort is human engineering effort, not elapsed subagent time.
+The task records below retain the broader queue. The five native records are maintained in the linked native execution plan and machine-readable ledger. RA-07.b now uses RA-N03/RA-N04 instead of RA-06/RA-07; all other existing dependencies are preserved. Every task has a single reviewable deliverable; adapters are split by method. Effort is human engineering effort, not elapsed subagent time.
 
-- **RA_EXEC:** owner accepts the scoped extension and staffing after review of this artifact; implementation gate, currently pending. All 18 task records inherit it transitively.
+- **RA_EXEC:** satisfied2026-10-21 only for RA-01, RA-02, RA-N01, RA-N02.a, RA-N03, RA-N04, RA-07.b and later RA-N02.b. Other tasks that inherit this gate are not implicitly authorized; their explicit pending status and later approvals remain.
 - **RA_PILOT:** after RA-02, RA-04.a (mandatory classical PySR control), RA-07.b, admitted profile/adaptation dependencies, SP-07.d and SP-18.d, owner approves the exact feasibility matrix, quote and stop limits. The three profile prerequisites are conditional on the frozen admitted_profile_ids: MDA-inspired requires RA-10, ACES-inspired RA-11, and AutoSciLab-inspired RA-12. Resolve their completed dependency closure and recompute counts before approval. Existing paid-provider gates remain.
 - **RA_SIZING:** after RA-13.a, owner approves an independent-world sample/stopping rule and quoted runtime/cost cap for RA-13.b. Feasibility alone cannot pass this gate.
 - **RA_OFFICIAL:** after RA-14, independent scientific/security review and existing OFFICIAL_SWEEP approval. It cannot waive pilot, deployment, release or calendar gates.
 
-Base effort is **48–78 engineer-days**, plus a **25% planning reserve (12–19.5 days)**, total **60–97.5 days**. Estimates are medium/low confidence until source reproduction and inference timing exist. This increment is not included in the baseline GA W52–67 reference. A separate forecast is required before adding it to a release promise.
+The original18-task scope was48–78 engineer-days. Including the five retained native units, the23-task ledger totals **61–99 engineer-days**, plus25% reserve, **76.25–123.75 days**. This includes unapproved broader work; the approved first-result path remains17–26 days (21.25–32.5 reserved), and later Laplace3–5 (3.75–6.25 reserved). Estimates are medium/low confidence until source reproduction and inference timing exist. This increment is not included in the baseline GA W52–67 reference. A separate forecast is required before adding it to a release promise.
 
-After prerequisites are available, RS1 can deliver representation/belief/proposal/adaptation work while RS2 handles classical adapters/acquisition/profiles, with Quality calibrating/reviewing and Platform checking isolation/runtime dependencies. In the current lead-plus-three execution mode these specialties rotate; active credential and I1 work keeps its current owners. Do not pretend nine human lanes are staffed.
+After prerequisites are available, RS1 can deliver representation/belief/proposal/adaptation work while RS2 handles classical adapters/acquisition/profiles, with Quality calibrating/reviewing and Platform checking isolation/runtime dependencies. In the current lead-plus-three execution mode these specialties rotate; Research currently owns RA-01, Quality prepares RA-02 and reviews, and Platform reviews provenance/interfaces. Do not pretend nine human lanes are staffed.
 
-The early branch is RA_EXEC → RA-01 → RA-03 → RA-03.b → RA-05 → RA-06 → RA-07 → RA-07.b, joined by RA-02 and I1. Baseline scientific predecessors still apply; provider profiles and hosted deployment do not.
+The active early branch is scoped RA_EXEC → RA-01 → RA-N01/RA-02 → RA-N02.a → RA-N03/RA-N04 → RA-07.b, joined by accepted SP-04.e where specified. Later RA-N02.b consumes accepted RA-N03 fixtures after the first result. The linked native plan owns exact entry/exit gates. Broader symbolic/calibration work remains required for its own later scope.
 
 The larger branch forks after representation: RA-04.a/b builds classical adapters, RA-05/06 builds beliefs, and RA-08 builds proposals after its provider-interface prerequisites. RA-09 joins beliefs, acquisition and proposals. Admitted RA-10/11/12 profiles join those producers and accepted SP-20.d isolation; excluded profiles are removed only through the frozen conditional dependency mapping. Then RA_PILOT → RA-13.a → RA_SIZING → RA-13.b → RA-14. Baseline scientific/provider/isolation predecessors can dominate availability. RA-08 may proceed alongside belief work; assignment alone never satisfies a prerequisite.
 
-### Milestone exit gates
+### Retained broader milestone proposal
 
 | Increment | Exit evidence | Scheduling rule |
 | --- | --- | --- |
 | E0: source and interfaces | RA-01/02/03/03.b reviewed; missing licenses isolated; exact contracts and budgets resolve | After RA_EXEC and every named baseline predecessor |
 | E1: classical and uncertainty foundation | RA-04.a/b/05/06 pass tractable tests and predictive calibration or record rejected arms | After E0; parallelize only available work |
-| E1a: first offline result | RA-07.b manifest, analytic rankings, complete paired descriptive results and measured CPU | No provider profile or hosted deployment dependency |
+| E1a: first offline result (superseded native path) | RA-07.b now follows the native plan's source/interface/grid/calibration/acquisition gates | Approved native graph; E0/E1 broader work does not block it |
 | E2: selectors, proposals and adaptation | RA-07/08/09 pass information-boundary and equivalence tests | Depends on actual predecessor acceptance, not calendar week |
 | E3: composed profiles | Each admitted RA-10/11/12 profile independently reviewed with explicit paper departures | Full-system isolation SP-20.d must already pass |
 | E4: development evidence | RA-13.a complete or stopped transparently; exact costs and failures retained | RA_PILOT and existing provider gates required |
 | E4b: replicated-world sizing | RA-13.b world-level uncertainty and prospective study-size evidence | Separate RA_SIZING quote/approval |
 | E5: study decision | RA-14 frozen manifest, reviewed estimate and capacity/release reforecast | Official sweep remains separately gated |
 
-The first two weeks below are conditional on RA_EXEC, I1 and all task-specific baseline prerequisites. If a prerequisite is missing, continue approved baseline work; do not start the dependent task early.
+The table below is the retained broader-programme allocation, not the active native-path schedule. Broader task authorization, I1 and every task-specific prerequisite must be satisfied before assignment. Native execution follows its separately approved dependency gates and provisional effort; no calendar start is inferred from this historical ten-day table.
 
 | Day | Research lane 1 | Research lane 2 / Platform | Quality / lead checkpoint |
 | --- | --- | --- | --- |
@@ -312,7 +312,7 @@ Later scheduling is milestone-level until measured throughput exists. The ten-da
 - **Owner:** Quality + Research; primary lane QE.
 - **Scope:** Run analytic common-prefix rankings and six frozen stationary spring development worlds, two policy seeds and three fixed-pool selectors:36 episodes,12 purchased slots including4 common calibrations,432 maximum slots. Use supported native LinearSpringModel candidates and the existing classical fitter/predictor/scorer; primary prediction is the declared MAP candidate, not an unrepresented mixture. Freeze pool, priors, likelihood, six world/noise identities, action menus and disjoint probes. Each arm uses only its own prefix. All six source worlds are stationary, one-particle, fixed-anchor, zero-cubic and zero-observation-noise, within the scorer mass/impulse/time/stiffness bounds. Freeze a separately justified positive numerical-discrepancy scale and test sensitivity before online runs; approximate model-belief weights are not calibrated observation-noise probabilities.
 - **Out of scope:** Richer DAG scoring, new symbolic adapters, provider calls, hosted deployment, population superiority, adaptation claims, official scores or new machines.
-- **Prerequisites:** RA-06, RA-07, SP-04.e.
+- **Prerequisites:** RA-N03, RA-N04, SP-04.e.
 - **Required contracts:** STUDY, BELIEF, ACQUISITION, COST (definitions above).
 - **Acceptance:** Within8 CPU-core-hours and1GiB new artifacts on the existing machine, independent scoring and world-paired descriptive results reproduce or a cap-limited incomplete result is recorded. Aggregate policy seeds within each world. Use actual native model/request hashes; no dummy linear identity or cross-arm data. No provider/network invocation.
 - **Automated tests:** Analytic ranking equivalence, independent scoring, arm-history separation, absent-provider/network spy, cap/interrupt/replay and failure accounting.

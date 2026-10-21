@@ -16,11 +16,11 @@ No broad implementation, new infrastructure, paid sweep, or compliance certifica
 
 ## Research methods amendment (2026-10-19 cutoff)
 
-The [dated method decision record](research/2026-10-19-METHOD_DECISIONS.md) adds18 proposed PR tasks, explicit sources/license checks and separate comparisons for shared-model selection, richer symbolic models and law-change recovery. Existing random/classical controls remain; I1 and the artifact/worker contract assignments continue after accepted C2 integration. New runtime remains behind RA_EXEC; provider, sizing, official-study and release gates remain separate.
+The [dated method decision record](research/2026-10-19-METHOD_DECISIONS.md) retains18 broader research tasks and the [native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) adds five scoped tasks. The owner approved eight enumerated native-path units on2026-10-21, including RA-01/02/07.b; other research tasks retain their authorization limits. Source/license, shared-model selection, calibration and complete accounting remain required. Provider, sizing, official-study and release gates remain separate.
 
 The first new result is a local fixed-pool linear-model comparison after its scientific prerequisites:36 development episodes,432 purchased slots maximum,8 CPU-core-hours,1GiB new artifacts and zero provider calls. It does not wait for hosted deployment or all paper-inspired profiles. The optional later feasibility pilot has at most162 episodes; replicated-world sizing requires a separate approval and evidence before confirmatory freeze.
 
-The18-task extension totals48–78 human engineering days plus25% reserve (60–97.5 days). It is recorded separately in execution-backlog.json; the approved168-task/369-edge/ten-gate graph and its conditional W52–67 GA reference remain unchanged. Added scope is not included in that forecast. The dated record owns detailed task contracts, exclusions, tests, effort, dependencies and exit gates.
+The retained23-task research ledger totals61–99 human engineering days plus25% reserve (76.25–123.75 days); this arithmetic envelope includes unapproved broader work. The approved first-result path is17–26 days (21.25–32.5 reserved), followed by later Laplace3–5 (3.75–6.25 reserved). The approved168-task/369-edge/ten-gate baseline and conditional W52–67 GA reference are unchanged. These estimates are not elapsed schedules or additional spending authorization.
 
 ## 0. Progress, evidence, and how to maintain this file
 

@@ -1,6 +1,6 @@
 # Research execution approvals
 
-## Native comparison — 2026-10-21
+## Native comparison 2026-10-21
 
 The product owner explicitly approved the reviewed first native comparison: **“I approve physics world comparison plan.”** The lead verified the original owner message in the portfolio conversation. This decision accepts [PR #100](https://github.com/spei04/strange-physics/pull/100), source33ddfbf74837dde29e0f1db3b1b4263e7031ddc2, tree7ea7bc4873fbd7107438c6b1b54bc12ba764c349. Private decision evidence is retained outside checkouts.
 
