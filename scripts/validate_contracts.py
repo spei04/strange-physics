@@ -48,6 +48,19 @@ def main() -> None:
             raise ValueError(f"Unexpected schema result for {reference}: {errors[:1]}")
         count += 1
 
+    study = json.loads((ROOT / "study.examples.json").read_text())
+    for name, fixture in study["valid"].items():
+        check(f"study.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in study[group]:
+            value = copy.deepcopy(study["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"study.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     web = json.loads((ROOT / "web.examples.json").read_text())
     for name, fixture in web["valid"].items():
         check(f"web.schema.json#/$defs/{name}", fixture)
