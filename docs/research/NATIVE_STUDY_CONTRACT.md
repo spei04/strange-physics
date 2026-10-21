@@ -18,7 +18,7 @@ history; it does not erase prior work or start another allowance.
 
 The initial examples are explicitly synthetic. Actual source, lock,
 configuration, grid, priors, likelihood, discrepancy, menu, calibration,
-failure/termination policies and scorer protocol are frozen only after
+failure/termination policies and model-independent scoring policy are frozen only after
 RA-N01, RA-N02.a, RA-N03 and RA-N04 acceptance. A StudyGate is retained trusted
 acceptance evidence, not a bearer permission. The run producer must verify the
 actual accepted identities and existing scoped approval before starting work.
@@ -27,14 +27,24 @@ Shape validation cannot authenticate arbitrary supplied gate claims.
 The 36 cells form the complete ordered world/seed/selector Cartesian product.
 Each arm has a distinct journal and cell identity. World IDs are opaque;
 neither hidden definitions nor their low-entropy hashes belong in selector
-inputs. All roots in study.schema.json are owner-only accounting records.
+inputs. The required NativeWorldCatalog is a separate evaluator-only artifact
+containing the actual six-world mapping. Its private definitions and catalog hash
+never enter a selector projection. Actual freeze checks its ordered IDs and the
+stationary one-particle, fixed-anchor, zero-cubic, zero-observation-noise domain.
+Its declared action space stays within the accepted purchased bounds: mass
+0.5–2, position radius at most2, velocity radius at most2, impulse radius at most1
+and duration at most2 seconds. Narrower lawful spaces are allowed.
+Catalog generation and retention count in the same cumulative artifact budget. All roots in study.schema.json are owner-only accounting records.
 A model/report hash in these records is not permission to disclose evaluator
 material. N01 receives its actual public prefix and operation-local inputs,
 not the full ledger or evaluator records.
 
 Candidate-production and prediction configurations have distinct required artifact
 identities. The actual candidate configuration binds the model's fit_config_sha256;
-it does not substitute for predictor configuration or scorer protocol. The manifest
+it does not substitute for predictor configuration or scoring policy.
+The common scoring policy contains no eventual selected-model or instantiated
+request/protocol digest. Each cell later retains its actual model-bound protocol
+separately; an unstarted/interrupted cell does not invent one. The manifest
 also pins the actual Journal engine fingerprint.
 
 StudyArtifact identifies exact canonical producer bytes. Raw-byte equality
@@ -69,8 +79,9 @@ preparation/reference/sensitivity, scoring, retries, failures, accounting
 overhead and newly created retained or deleted artifacts. Unknown cost
 evidence never means zero: reserved capacity remains held until measured
 reconciliation. The schema accepts measured overrun so evidence can be
-retained honestly; complete transitions will block further work after a cap
-is reached. Later diagnostic work cannot open a replacement budget.
+retained honestly; complete transitions block further reservations beyond a cap. Aggregate totals
+use bounded Python integers large enough to retain multiple measured overruns;
+they must not be coerced through a lossy JavaScript Number. Later diagnostic work cannot open a replacement budget.
 
 Persistence and real process measurement are producer duties. Pure functions
 cannot make a caller stop CPU consumption or prevent a second untracked
@@ -78,14 +89,77 @@ ledger. The single study namespace, append-only records, original plan,
 atomic compare-and-swap persistence and reconciliation must be enforced by
 the future local runner. No hosted storage or scheduler is implemented here.
 
-## Current checkpoint
+## Complete accounting boundaries in this increment
 
-This first checkpoint supplies strict typed shapes, canonical hash-chain
-structure, synthetic fixtures and structural/semantic tests. Complete
-reservation/update/replay/cap transitions, actual Journal reconciliation,
-actual-material bindings and derived summaries follow in the same RA-02
-unit. Parsing this checkpoint alone is not complete ledger admission.
+append_study_attempt validates the full bounded ledger before proposing a
+reservation or measurement append. A required expected_revision is the current
+record count. Exact event-ID/canonical-payload replay returns the original ledger
+without work or charge, including after the ledger has advanced; a conflicting
+event fails. Fresh appends require current revision and an unused attempt ID.
+The caller must atomically persist the proposed ledger using that same CAS.
+New appends preserve record and byte headroom for one bounded final measurement
+record per unresolved envelope; capacity exhaustion stops further work before
+those final accounting records would become impossible to retain.
 
-The final summary must include every frozen cell, including unstarted,
-failed, interrupted and cap-limited cells. Missing metrics remain missing;
-no successful-only aggregation or scientific score is invented.
+Unresolved attempts charge at least their original reserved CPU/artifact
+capacity and any higher measured amount. Null updates never erase prior known
+measurements. Final measurements cannot regress. Repeated computation has a
+fresh attempt and charges again; an unresolved predecessor remains held.
+Known completed local facts are immutable. Finalized attempts cannot be reopened.
+The supervising producer must prevent overlapping measurement envelopes and
+must include any future ledger/freeze/reconciliation overhead in measured work.
+
+Purchase intents are charged before calling Journal.reserve. Their ordinals
+are contiguous, unique per cell and bounded at 12. The first four are explicitly
+calibration reservations. An exact operation retry retains its slot and must
+name the preceding attempt; changed action/ordinal/scope conflicts fail.
+The purchased_slots summary is the number of charged reservation intents,
+including an interrupted intent that has not yet appeared in the Journal.
+Such uncertainty is never a refund.
+
+freeze_native_study attaches the one actual manifest without resetting the
+plan, historical records, costs or unresolved holds. It verifies supplied source
+identity, actual lock bytes, engine fingerprint and every exact canonical artifact
+byte string, plus the private world catalog. These materials have an aggregate
+8 MiB bound. Source checkout identity, accepted gate evidence and kind-specific
+numerical policy validation are trusted producer obligations; generic canonical
+JSON is not proof of a valid prior, selector, prediction policy or experiment.
+The frozen scoring-policy artifact is model-independent. Its N01 typed composition
+and actual per-cell protocol/report binding remain the next RA-02 unit.
+
+read_study_ledger enforces the strict 8 MiB / depth 32 / one-million-node input limits, duplicate-key
+and nonfinite rejection, exact canonical chain, and every retained transition.
+A chain authenticates neither arbitrary imported records nor real measurements.
+It cannot re-prove scientific payloads that were accepted by a future publisher.
+Only reservation/update and unfinished-cell publication are exposed in this
+increment; no complete/scored-cell publisher exists yet.
+
+summarize_study derives all 36 frozen cells, including unstarted, failed,
+interrupted and cap-limited cells. seal_unfinished_cell records a bounded stop
+without inventing a model, protocol or report. It seals new cell work while
+allowing already reserved unknown costs to reconcile. Missing metrics remain
+missing; no successful-only aggregation or scientific score is invented.
+
+## Actual Journal reconciliation
+
+reconcile_study_journal first validates the full ledger and then reads the actual
+owner-private, quiescent rollback-mode SQLite Journal. It rejects sidecars,
+symlinks, public permissions, incompatible tables/schema, byte/row limits and
+changed bytes. This is read-only and does not repair or resume a Journal.
+A producer must stop its writer before taking this snapshot; this adapter does
+not provide a hostile-process snapshot or an atomic transaction with the ledger.
+
+It binds actual run ID, engine, exact canonical private world, all operation IDs,
+ordinals and action identities. Pending, completed and physically failed rows
+all count. Completed rows beyond a pending hole are still validated, but the
+exposed ObservationBundle stops at the first pending row and retains failed
+records in that contiguous prefix. Every actual reservation must match a charged
+ledger intent. Missing Journal rows remain explicit held intents; extra or
+changed rows fail. The returned snapshot is owner-only and contains no private
+definition/law/seed or definition hash.
+
+The adapter and ledger do not authorize a scientific run. RA-02 remains partial
+until the final N01 scoring-policy/model/protocol/report composition and its
+independent review are complete. Actual source/config/world values remain
+synthetic in checked-in examples. All real reference/calibration/sensitivity and
+comparison work remains subject to preregistration and the approved entry gates.

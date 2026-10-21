@@ -6,19 +6,23 @@ is attached to the same ledger; it never creates a second allowance.
 
 from __future__ import annotations
 
+import math
 from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 from pydantic.json_schema import JsonSchemaValue, models_json_schema
 
 from strange_physics.contracts import Identifier, Message
+from strange_physics.laws import SpringParameters
 from strange_physics.research_contracts import CANONICAL_PROFILE, Digest, message_sha256
+from strange_physics.worlds import WorldDefinition
 
 MAX_CPU_NS = 8 * 60 * 60 * 1_000_000_000
 MAX_ARTIFACT_BYTES = 1024**3
 MAX_LEDGER_RECORDS = 8192
 MAX_STUDY_JSON_BYTES = 8 * 1024**2
 SafeCount = Annotated[int, Field(ge=0, le=2**53 - 1)]
+AggregateCount = Annotated[int, Field(ge=0, le=MAX_LEDGER_RECORDS * (2**53 - 1))]
 Commit = Annotated[str, Field(pattern=r"^[0-9a-f]{40}$", min_length=40, max_length=40)]
 Selector = Literal["random", "uniform_disagreement", "posterior_disagreement"]
 SELECTORS: tuple[Selector, ...] = (
@@ -27,6 +31,7 @@ SELECTORS: tuple[Selector, ...] = (
     "posterior_disagreement",
 )
 ArtifactKind = Literal[
+    "world_catalog",
     "candidate_config",
     "prediction_config",
     "pool",
@@ -35,7 +40,7 @@ ArtifactKind = Literal[
     "prior",
     "likelihood",
     "discrepancy",
-    "scorer_protocol",
+    "scoring_policy",
     "termination_policy",
     "failure_policy",
     "selector_random",
@@ -43,6 +48,7 @@ ArtifactKind = Literal[
     "selector_posterior_disagreement",
 ]
 ARTIFACT_KINDS = (
+    "world_catalog",
     "candidate_config",
     "prediction_config",
     "pool",
@@ -51,7 +57,7 @@ ARTIFACT_KINDS = (
     "prior",
     "likelihood",
     "discrepancy",
-    "scorer_protocol",
+    "scoring_policy",
     "termination_policy",
     "failure_policy",
     "selector_random",
@@ -89,6 +95,61 @@ class NativeAccountingPlan(Message):
         MAX_ARTIFACT_BYTES
     )
     cost_policy: Literal["all-work-no-reset.v1"] = "all-work-no-reset.v1"
+
+
+class NativeWorldEntry(Message):
+    """Evaluator-only definition. The opaque ID alone may reach selectors."""
+
+    world_id: Identifier
+    definition: WorldDefinition
+
+    @model_validator(mode="after")
+    def native_world(self) -> Self:
+        world = self.definition
+        structure = world.space.structure
+        sampling = world.space.sampling
+        limits = world.space.limits
+        if (
+            world.changed_law is not None
+            or world.change_after is not None
+            or world.initial_law.kind != "spring"
+            or len(structure.particle_ids) != 1
+            or len(structure.anchors) != 1
+            or len(structure.connections) != 1
+            or {structure.connections[0].a, structure.connections[0].b}
+            != {structure.particle_ids[0], structure.anchors[0].id}
+            or math.hypot(*structure.anchors[0].position) > 0.5
+            or sampling.position_noise != 0
+            or sampling.velocity_noise != 0
+            or sampling.duration > 2
+            or limits.min_mass < 0.5
+            or limits.max_mass > 2
+            or limits.position_norm > 2
+            or limits.velocity_norm > 2
+            or limits.impulse_norm > 1
+            or world.space.budget != 12
+            or world.space.calibration_experiments != 4
+        ):
+            raise ValueError("World is outside the fixed native study domain")
+        parameters = SpringParameters.model_validate(world.initial_law.parameters)
+        if parameters.cubic != 0:
+            raise ValueError("Native study worlds require zero cubic force")
+        return self
+
+
+class NativeWorldCatalog(Message):
+    """Private actual world-to-ID mapping; never a selector input or capability."""
+
+    schema_version: Literal["strange-physics.native-world-catalog.v1"] = (
+        "strange-physics.native-world-catalog.v1"
+    )
+    worlds: Annotated[tuple[NativeWorldEntry, ...], Field(min_length=6, max_length=6)]
+
+    @model_validator(mode="after")
+    def unique_mapping(self) -> Self:
+        if len({entry.world_id for entry in self.worlds}) != 6:
+            raise ValueError("World catalog identities must be unique")
+        return self
 
 
 class StudyArtifact(Message):
@@ -131,7 +192,7 @@ class NativeStudyManifest(Message):
         tuple[Annotated[int, Field(ge=0, le=2**32 - 1)], ...],
         Field(min_length=2, max_length=2),
     ]
-    artifacts: Annotated[tuple[StudyArtifact, ...], Field(min_length=14, max_length=14)]
+    artifacts: Annotated[tuple[StudyArtifact, ...], Field(min_length=15, max_length=15)]
     gates: Annotated[tuple[StudyGate, ...], Field(min_length=4, max_length=4)]
     cells: Annotated[tuple[NativeStudyCell, ...], Field(min_length=36, max_length=36)]
     failure_policy: Literal["retain-every-cell-and-attempt.v1"] = "retain-every-cell-and-attempt.v1"
@@ -278,7 +339,8 @@ class StudyCellOutcome(Message):
     observation_sha256: Digest | None
     model_sha256: Digest | None
     report_sha256: Digest | None
-    protocol_sha256: Digest
+    scoring_policy_sha256: Digest
+    protocol_sha256: Digest | None
     selector_config_sha256: Digest
 
     @model_validator(mode="after")
@@ -288,12 +350,15 @@ class StudyCellOutcome(Message):
                 self.observation_sha256,
                 self.model_sha256,
                 self.report_sha256,
+                self.protocol_sha256,
             ):
                 raise ValueError("Complete cell needs a scored actual model/prefix/report")
         elif self.reason == "scored":
             raise ValueError("A scored completion must be explicit")
         if self.report_sha256 is not None and (
-            self.model_sha256 is None or self.observation_sha256 is None
+            self.model_sha256 is None
+            or self.observation_sha256 is None
+            or self.protocol_sha256 is None
         ):
             raise ValueError("Retained report requires its actual model and prefix")
         return self
@@ -336,9 +401,9 @@ class NativeStudyLedger(Message):
 class NativeBudgetView(Message):
     purchased_slots: SafeCount
     remaining_slots: SafeCount
-    charged_cpu_ns: SafeCount
+    charged_cpu_ns: AggregateCount
     remaining_cpu_ns: SafeCount
-    charged_artifact_bytes: SafeCount
+    charged_artifact_bytes: AggregateCount
     remaining_artifact_bytes: SafeCount
     unresolved_attempts: SafeCount
     over_limit: bool
@@ -364,6 +429,7 @@ class NativeStudySummary(Message):
 def study_json_schema() -> JsonSchemaValue:
     roots: list[type[Message]] = [
         NativeAccountingPlan,
+        NativeWorldCatalog,
         NativeStudyManifest,
         NativeWorkFacts,
         NativeStudyLedger,
@@ -374,7 +440,9 @@ def study_json_schema() -> JsonSchemaValue:
         title="Native study interfaces and cumulative cost accounting v1",
     )
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
-    schema["x-contract-status"] = "typed interface; complete ledger transitions pending"
+    schema["x-contract-status"] = (
+        "native accounting and journal contracts; scoring composition pending"
+    )
     schema["x-canonical-profile"] = CANONICAL_PROFILE
     schema["x-owner-only-roots"] = [model.__name__ for model in roots]
     schema["description"] = (

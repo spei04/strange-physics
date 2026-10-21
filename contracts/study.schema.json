@@ -1,5 +1,180 @@
 {
   "$defs": {
+    "Anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "Anchor",
+      "type": "object"
+    },
+    "Connection": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "A",
+          "type": "string"
+        },
+        "b": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "B",
+          "type": "string"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "title": "Connection",
+      "type": "object"
+    },
+    "ExperimentSpace": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "strange-physics.space.v1",
+          "default": "strange-physics.space.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "structure": {
+          "$ref": "#/$defs/Structure"
+        },
+        "sampling": {
+          "$ref": "#/$defs/Sampling"
+        },
+        "limits": {
+          "$ref": "#/$defs/Limits",
+          "default": {
+            "position_norm": 2.0,
+            "velocity_norm": 2.0,
+            "impulse_norm": 1.0,
+            "min_mass": 0.5,
+            "max_mass": 2.0
+          }
+        },
+        "budget": {
+          "default": 40,
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Budget",
+          "type": "integer"
+        },
+        "calibration_experiments": {
+          "default": 4,
+          "minimum": 0,
+          "title": "Calibration Experiments",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "structure",
+        "sampling"
+      ],
+      "title": "ExperimentSpace",
+      "type": "object"
+    },
+    "LawSpec": {
+      "additionalProperties": false,
+      "description": "Private configuration: never include this in an observation message.",
+      "properties": {
+        "kind": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Kind",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Parameters",
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "parameters"
+      ],
+      "title": "LawSpec",
+      "type": "object"
+    },
+    "Limits": {
+      "additionalProperties": false,
+      "properties": {
+        "position_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Position Norm",
+          "type": "number"
+        },
+        "velocity_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Velocity Norm",
+          "type": "number"
+        },
+        "impulse_norm": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Impulse Norm",
+          "type": "number"
+        },
+        "min_mass": {
+          "default": 0.5,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Min Mass",
+          "type": "number"
+        },
+        "max_mass": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Max Mass",
+          "type": "number"
+        }
+      },
+      "title": "Limits",
+      "type": "object"
+    },
     "NativeAccountingPlan": {
       "additionalProperties": false,
       "properties": {
@@ -89,7 +264,7 @@
           "type": "integer"
         },
         "charged_cpu_ns": {
-          "maximum": 9007199254740991,
+          "maximum": 73786976294838198272,
           "minimum": 0,
           "title": "Charged Cpu Ns",
           "type": "integer"
@@ -101,7 +276,7 @@
           "type": "integer"
         },
         "charged_artifact_bytes": {
-          "maximum": 9007199254740991,
+          "maximum": 73786976294838198272,
           "minimum": 0,
           "title": "Charged Artifact Bytes",
           "type": "integer"
@@ -352,8 +527,8 @@
           "items": {
             "$ref": "#/$defs/StudyArtifact"
           },
-          "maxItems": 14,
-          "minItems": 14,
+          "maxItems": 15,
+          "minItems": 15,
           "title": "Artifacts",
           "type": "array"
         },
@@ -621,12 +796,145 @@
       "title": "NativeWorkFacts",
       "type": "object"
     },
+    "NativeWorldCatalog": {
+      "additionalProperties": false,
+      "description": "Private actual world-to-ID mapping; never a selector input or capability.",
+      "properties": {
+        "schema_version": {
+          "const": "strange-physics.native-world-catalog.v1",
+          "default": "strange-physics.native-world-catalog.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "worlds": {
+          "items": {
+            "$ref": "#/$defs/NativeWorldEntry"
+          },
+          "maxItems": 6,
+          "minItems": 6,
+          "title": "Worlds",
+          "type": "array"
+        }
+      },
+      "required": [
+        "worlds"
+      ],
+      "title": "NativeWorldCatalog",
+      "type": "object"
+    },
+    "NativeWorldEntry": {
+      "additionalProperties": false,
+      "description": "Evaluator-only definition. The opaque ID alone may reach selectors.",
+      "properties": {
+        "world_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Id",
+          "type": "string"
+        },
+        "definition": {
+          "$ref": "#/$defs/WorldDefinition"
+        }
+      },
+      "required": [
+        "world_id",
+        "definition"
+      ],
+      "title": "NativeWorldEntry",
+      "type": "object"
+    },
+    "Sampling": {
+      "additionalProperties": false,
+      "properties": {
+        "duration": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Duration",
+          "type": "number"
+        },
+        "dt": {
+          "default": 0.01,
+          "maximum": 0.05,
+          "minimum": 0.0001,
+          "title": "Dt",
+          "type": "number"
+        },
+        "sample_interval": {
+          "default": 0.05,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Sample Interval",
+          "type": "number"
+        },
+        "position_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Position Noise",
+          "type": "number"
+        },
+        "velocity_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Velocity Noise",
+          "type": "number"
+        }
+      },
+      "title": "Sampling",
+      "type": "object"
+    },
+    "Structure": {
+      "additionalProperties": false,
+      "properties": {
+        "particle_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particle Ids",
+          "type": "array"
+        },
+        "anchors": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Anchor"
+          },
+          "maxItems": 8,
+          "title": "Anchors",
+          "type": "array"
+        },
+        "connections": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Connection"
+          },
+          "maxItems": 120,
+          "title": "Connections",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_ids"
+      ],
+      "title": "Structure",
+      "type": "object"
+    },
     "StudyArtifact": {
       "additionalProperties": false,
       "description": "Exact retained producer bytes; no implied semantic validation or public audience.",
       "properties": {
         "kind": {
           "enum": [
+            "world_catalog",
             "candidate_config",
             "prediction_config",
             "pool",
@@ -635,7 +943,7 @@
             "prior",
             "likelihood",
             "discrepancy",
-            "scorer_protocol",
+            "scoring_policy",
             "termination_policy",
             "failure_policy",
             "selector_random",
@@ -979,12 +1287,26 @@
           ],
           "title": "Report Sha256"
         },
-        "protocol_sha256": {
+        "scoring_policy_sha256": {
           "maxLength": 64,
           "minLength": 64,
           "pattern": "^[0-9a-f]{64}$",
-          "title": "Protocol Sha256",
+          "title": "Scoring Policy Sha256",
           "type": "string"
+        },
+        "protocol_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Protocol Sha256"
         },
         "selector_config_sha256": {
           "maxLength": 64,
@@ -1002,6 +1324,7 @@
         "observation_sha256",
         "model_sha256",
         "report_sha256",
+        "scoring_policy_sha256",
         "protocol_sha256",
         "selector_config_sha256"
       ],
@@ -1161,14 +1484,69 @@
       ],
       "title": "StudyPurchase",
       "type": "object"
+    },
+    "WorldDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "strange-physics.world.v1",
+          "default": "strange-physics.world.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "space": {
+          "$ref": "#/$defs/ExperimentSpace"
+        },
+        "noise_seed": {
+          "exclusiveMaximum": 18446744073709551616,
+          "minimum": 0,
+          "title": "Noise Seed",
+          "type": "integer"
+        },
+        "initial_law": {
+          "$ref": "#/$defs/LawSpec"
+        },
+        "changed_law": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LawSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "change_after": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Change After"
+        }
+      },
+      "required": [
+        "space",
+        "noise_seed",
+        "initial_law"
+      ],
+      "title": "WorldDefinition",
+      "type": "object"
     }
   },
   "title": "Native study interfaces and cumulative cost accounting v1",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "x-contract-status": "typed interface; complete ledger transitions pending",
+  "x-contract-status": "native accounting and journal contracts; scoring composition pending",
   "x-canonical-profile": "strange-physics.python-json.v1",
   "x-owner-only-roots": [
     "NativeAccountingPlan",
+    "NativeWorldCatalog",
     "NativeStudyManifest",
     "NativeWorkFacts",
     "NativeStudyLedger",

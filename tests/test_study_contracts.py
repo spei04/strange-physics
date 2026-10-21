@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EXAMPLES = json.loads((ROOT / "contracts/study.examples.json").read_text())
 MODELS: dict[str, type[Message]] = {
     "NativeAccountingPlan": c.NativeAccountingPlan,
+    "NativeWorldCatalog": c.NativeWorldCatalog,
     "NativeStudyManifest": c.NativeStudyManifest,
     "NativeWorkFacts": c.NativeWorkFacts,
     "NativeStudyLedger": c.NativeStudyLedger,
@@ -189,3 +190,93 @@ def test_candidate_prediction_and_engine_are_separate() -> None:
     assert manifest.engine_fingerprint == "e" * 64
     facts = c.NativeWorkFacts.model_validate_json(json.dumps(EXAMPLES["valid"]["NativeWorkFacts"]))
     assert facts.schema_version == "strange-physics.native-work-facts.v1"
+
+
+@pytest.mark.parametrize(
+    "mutation", ["changed", "noise", "budget", "calibration", "cubic", "kind", "anchor", "ids"]
+)
+def test_private_world_catalog_domain(mutation: str) -> None:
+    value = copy.deepcopy(EXAMPLES["valid"]["NativeWorldCatalog"])
+    entry = value["worlds"][0]
+    world = entry["definition"]
+    if mutation == "changed":
+        world["changed_law"] = world["initial_law"]
+        world["change_after"] = 4
+    elif mutation == "noise":
+        world["space"]["sampling"]["position_noise"] = 0.001
+    elif mutation == "budget":
+        world["space"]["budget"] = 40
+    elif mutation == "calibration":
+        world["space"]["calibration_experiments"] = 3
+    elif mutation == "cubic":
+        world["initial_law"]["parameters"]["cubic"] = 0.1
+    elif mutation == "kind":
+        world["initial_law"]["kind"] = "radial"
+    elif mutation == "anchor":
+        world["space"]["structure"]["anchors"][0]["position"] = [0.6, 0.0]
+    else:
+        entry["world_id"] = value["worlds"][1]["world_id"]
+    with pytest.raises(ValidationError):
+        c.NativeWorldCatalog.model_validate_json(json.dumps(value))
+
+
+def test_model_independent_policy_and_uninstantiated_protocol() -> None:
+    manifest = c.NativeStudyManifest.model_validate_json(
+        json.dumps(EXAMPLES["valid"]["NativeStudyManifest"])
+    )
+    assert manifest.artifact("scoring_policy").sha256
+    result = c.StudyCellOutcome(
+        cell_id=manifest.cells[0].cell_id,
+        status="incomplete",
+        reason="interrupted",
+        journal_id=manifest.cells[0].journal_id,
+        observation_sha256=None,
+        model_sha256=None,
+        report_sha256=None,
+        scoring_policy_sha256=manifest.artifact("scoring_policy").sha256,
+        protocol_sha256=None,
+        selector_config_sha256=manifest.artifact("selector_random").sha256,
+    )
+    assert result.protocol_sha256 is None
+    data = result.model_dump(mode="json") | {
+        "status": "complete",
+        "reason": "scored",
+        "observation_sha256": "a" * 64,
+        "model_sha256": "b" * 64,
+        "report_sha256": "c" * 64,
+    }
+    with pytest.raises(ValidationError):
+        c.StudyCellOutcome.model_validate_json(json.dumps(data))
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("min_mass", 0.49),
+        ("max_mass", 2.01),
+        ("position_norm", 2.01),
+        ("velocity_norm", 2.01),
+        ("impulse_norm", 1.01),
+        ("duration", 2.05),
+    ],
+)
+def test_private_world_catalog_public_space_within_native_domain(field: str, value: float) -> None:
+    data = copy.deepcopy(EXAMPLES["valid"]["NativeWorldCatalog"])
+    space = data["worlds"][0]["definition"]["space"]
+    space["sampling" if field == "duration" else "limits"][field] = value
+    with pytest.raises(ValidationError):
+        c.NativeWorldCatalog.model_validate_json(json.dumps(data))
+
+
+def test_narrower_lawful_world_space_remains_valid() -> None:
+    data = copy.deepcopy(EXAMPLES["valid"]["NativeWorldCatalog"])
+    limits = data["worlds"][0]["definition"]["space"]["limits"]
+    limits.update(
+        min_mass=1.0, max_mass=1.0, position_norm=1.0, velocity_norm=1.0, impulse_norm=0.5
+    )
+    assert (
+        c.NativeWorldCatalog.model_validate_json(json.dumps(data))
+        .worlds[0]
+        .definition.space.limits.min_mass
+        == 1.0
+    )

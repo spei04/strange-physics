@@ -32,6 +32,12 @@
       ],
       "artifacts": [
         {
+          "kind": "world_catalog",
+          "sha256": "7f923295950fb6eb6474385628663a8f7876a6bd9e51a729c6735887a6bf8e40",
+          "byte_count": 4079,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
           "kind": "candidate_config",
           "sha256": "5555547ffd93220dc0accf30342c69c26fd403551b1946220653719802128b88",
           "byte_count": 64,
@@ -80,9 +86,9 @@
           "encoding": "strange-physics.python-json.v1"
         },
         {
-          "kind": "scorer_protocol",
-          "sha256": "d0829f385df67df502e97326d9aba5a5aa77e2f6ccc8741b03890b8d34942ff2",
-          "byte_count": 63,
+          "kind": "scoring_policy",
+          "sha256": "b81f9a4104e191c8b2222cc96dc76a15640544421c457b1911230f847ca7f905",
+          "byte_count": 62,
           "encoding": "strange-physics.python-json.v1"
         },
         {
@@ -556,6 +562,12 @@
               ],
               "artifacts": [
                 {
+                  "kind": "world_catalog",
+                  "sha256": "7f923295950fb6eb6474385628663a8f7876a6bd9e51a729c6735887a6bf8e40",
+                  "byte_count": 4079,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
                   "kind": "candidate_config",
                   "sha256": "5555547ffd93220dc0accf30342c69c26fd403551b1946220653719802128b88",
                   "byte_count": 64,
@@ -604,9 +616,9 @@
                   "encoding": "strange-physics.python-json.v1"
                 },
                 {
-                  "kind": "scorer_protocol",
-                  "sha256": "d0829f385df67df502e97326d9aba5a5aa77e2f6ccc8741b03890b8d34942ff2",
-                  "byte_count": 63,
+                  "kind": "scoring_policy",
+                  "sha256": "b81f9a4104e191c8b2222cc96dc76a15640544421c457b1911230f847ca7f905",
+                  "byte_count": 62,
                   "encoding": "strange-physics.python-json.v1"
                 },
                 {
@@ -998,8 +1010,8 @@
     "NativeStudySummary": {
       "study_id": "synthetic-native-study",
       "accounting_plan_sha256": "fe59cf33d357d1e244316c543edb446835905fd39327335b0ebeac03bdb41001",
-      "ledger_sha256": "bfba5a387fb19636a33aa22917c88b8834b50c1252b6b75032a45bd25232dc44",
-      "manifest_sha256": "22245a22c577ea3a716fa169c103c9b08cc9b7226feaad39554134e5a6cc41bd",
+      "ledger_sha256": "8c2fc71ba8902e47de2948b6d4097cfee759ec54565c6e0bf30ab2420dc15384",
+      "manifest_sha256": "88b26125a533a9aa9a75ab89981bd5175f95cf118cb7dc4c3b47e5bc25cdd6b0",
       "budget": {
         "purchased_slots": 0,
         "remaining_slots": 432,
@@ -1262,6 +1274,341 @@
           "purchased_slots": 0,
           "unresolved_attempts": 0,
           "outcome": null
+        }
+      ]
+    },
+    "NativeWorldCatalog": {
+      "schema_version": "strange-physics.native-world-catalog.v1",
+      "worlds": [
+        {
+          "world_id": "opaque-world-0",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 1,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.6070929748201541,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-1",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 2,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.45696728054958985,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-2",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 3,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.3513895002861746,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-3",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 4,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.8658336633434207,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-4",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 5,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.7830017542472282,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-5",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 6,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.622898610883166,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
         }
       ]
     }
@@ -1680,6 +2027,341 @@
     }
   ],
   "artifact_payloads": {
+    "world_catalog": {
+      "schema_version": "strange-physics.native-world-catalog.v1",
+      "worlds": [
+        {
+          "world_id": "opaque-world-0",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 1,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.6070929748201541,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-1",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 2,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.45696728054958985,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-2",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 3,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.3513895002861746,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-3",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 4,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.8658336633434207,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-4",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 5,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.7830017542472282,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-5",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 6,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.622898610883166,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        }
+      ]
+    },
     "candidate_config": {
       "purpose": "synthetic_validation",
       "artifact": "candidate_config"
@@ -1712,9 +2394,9 @@
       "purpose": "synthetic_validation",
       "artifact": "discrepancy"
     },
-    "scorer_protocol": {
+    "scoring_policy": {
       "purpose": "synthetic_validation",
-      "artifact": "scorer_protocol"
+      "artifact": "scoring_policy"
     },
     "termination_policy": {
       "purpose": "synthetic_validation",
