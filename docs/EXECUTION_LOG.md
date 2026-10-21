@@ -469,3 +469,15 @@ Private integration index SHA256 5eac34c152c87a13a663a3ebad284a806eb8061932c226b
 Quality released identity cleanly at1014592 with no process or checkout consumers; draftPR101 and private evidence remain preserved. Its generator is deferred for the approved scientific path, not completed or discarded. Lead verified primary clean33ddfbf and101,903,802,368 cloud bytes free before reuse. No additional checkout, dependency installation or paid scope is needed. No measured comparison has started.
 
 RA-01 is tracked in [issue #102](https://github.com/spei04/strange-physics/issues/102). Verified writer handoff starts at4d173700 in feat/research-source-admission; all three dependency pins match primary,5,263 dependency files are independently owned, no checkout-cwd process remains, and101,902,274,560 bytes are free. Research now authors the source manifest/validation/audit unit; Quality and Platform independently review.
+
+## 2026-10-21 — Native source admission accepted; next assignments
+
+RA-01 merged as e7ba8d4 in PR #107 after independent Research-author/Quality/Platform review, 3,180 tests, 76 focused cases, 258 additional checks, seven guard mutations and required PR/main CI39642384756/39642854605. Candidate12364279388 passed checksum, exact source/lock/run provenance and package checks; wheel/sdist match the accepted runtime candidate. Private final evidence index SHA2562765d90934f0fd28668695e622bfa0b271c30511d4933cdd059b4d4573c48b20. This admits self-authored implementation; no external reproduction or comparison has run.
+
+The original approval CI exposed a certificate-trust advisory. PR #104 updates only CI certifi and the current uv tool pin; required checks and protected-main candidate passed. Approval PR #103 then passed exact PR/main checks with its reviewed plan documents unchanged. Old source/runtime evidence keeps its historical identities.
+
+- Quality → RA-02/#105: study interfaces, synthetic fixtures and complete attempt/cost accounting, in identity.
+- Platform → RA-N01/#106: additive native candidate, prediction and independent-scoring adapter, in primary.
+- Research → independent scientific/interface review of both; lead → handoff, progress and integration after a checkout is released.
+
+Dependency review: RA-01 and SP-04.e are accepted for both assignments; neither new task waits on the other's implementation. Shared operation facts and ledger IDs are agreed without an import cycle. N01 binds a selected real candidate; N02.a later proves MAP. RA-02's actual study-value freeze waits for the numerical/acquisition gates. Preserve the finite-grid-first sequence and cumulative36 episodes/432 slots/eight CPU-core-hours/1GiB cap. Reuse the two independent cloud environments; no extra checkout, provider or provisioning.
