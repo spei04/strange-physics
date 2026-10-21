@@ -1,0 +1,660 @@
+{
+  "$defs": {
+    "Dependencies": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "existing_locked_runtime",
+            "unlocked_external",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "runtime": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Runtime",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "not": {
+              "pattern": "[^a-z0-9-]"
+            },
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "transitive_review": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Transitive Review",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "runtime",
+        "evidence_ids",
+        "transitive_review"
+      ],
+      "title": "Dependencies",
+      "type": "object"
+    },
+    "FileEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^a-z0-9-]"
+          },
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "repository_id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^a-z0-9-]"
+          },
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "title": "Repository Id",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 300,
+          "minLength": 1,
+          "not": {
+            "pattern": "[\\x00-\\x1f\\x7f-\\x9f]"
+          },
+          "pattern": "^[^\\x00-\\x1f\\x7f-\\x9f]+$",
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "bytes": {
+          "maximum": 4194304,
+          "minimum": 1,
+          "title": "Bytes",
+          "type": "integer"
+        },
+        "purpose": {
+          "enum": [
+            "license",
+            "notice",
+            "dependencies",
+            "recipe",
+            "leakage",
+            "provenance"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "repository_id",
+        "path",
+        "sha256",
+        "bytes",
+        "purpose"
+      ],
+      "title": "FileEvidence",
+      "type": "object"
+    },
+    "LicenseReview": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "grant_verified",
+            "missing_grant",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "expression": {
+          "anyOf": [
+            {
+              "maxLength": 4000,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expression"
+        },
+        "evidence_ids": {
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "not": {
+              "pattern": "[^a-z0-9-]"
+            },
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "obligations": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Obligations",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "expression",
+        "evidence_ids",
+        "obligations"
+      ],
+      "title": "LicenseReview",
+      "type": "object"
+    },
+    "Method": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^a-z0-9-]"
+          },
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "papers": {
+          "items": {
+            "$ref": "#/$defs/Paper"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Papers",
+          "type": "array"
+        },
+        "repository_ids": {
+          "items": {
+            "maxLength": 80,
+            "minLength": 1,
+            "not": {
+              "pattern": "[^a-z0-9-]"
+            },
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Repository Ids",
+          "type": "array"
+        },
+        "license": {
+          "$ref": "#/$defs/LicenseReview"
+        },
+        "dependencies": {
+          "$ref": "#/$defs/Dependencies"
+        },
+        "recipe": {
+          "$ref": "#/$defs/Recipe"
+        },
+        "reproduction_status": {
+          "enum": [
+            "self_authored_baseline",
+            "not_reproduced"
+          ],
+          "title": "Reproduction Status",
+          "type": "string"
+        },
+        "review_date": {
+          "format": "date",
+          "title": "Review Date",
+          "type": "string"
+        },
+        "admission": {
+          "enum": [
+            "native_implementation",
+            "deferred",
+            "no_go"
+          ],
+          "title": "Admission",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "artifact_availability": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Artifact Availability",
+          "type": "string"
+        },
+        "leakage_boundary": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Leakage Boundary",
+          "type": "string"
+        },
+        "inspiration_only": {
+          "title": "Inspiration Only",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "papers",
+        "repository_ids",
+        "license",
+        "dependencies",
+        "recipe",
+        "reproduction_status",
+        "review_date",
+        "admission",
+        "rationale",
+        "artifact_availability",
+        "leakage_boundary",
+        "inspiration_only"
+      ],
+      "title": "Method",
+      "type": "object"
+    },
+    "Paper": {
+      "additionalProperties": false,
+      "description": "Publication identity is independent of the code's commit or release.",
+      "properties": {
+        "title": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "maxLength": 1000,
+          "not": {
+            "pattern": "[^A-Za-z0-9./_#?=%+:-]"
+          },
+          "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*(?::[0-9]{1,5})?(?:[/?#][A-Za-z0-9./_#?=%+:-]*)?$",
+          "title": "Url",
+          "type": "string"
+        },
+        "version": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        },
+        "first_published": {
+          "format": "date",
+          "title": "First Published",
+          "type": "string"
+        },
+        "version_published": {
+          "format": "date",
+          "title": "Version Published",
+          "type": "string"
+        },
+        "sections": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Sections",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "url",
+        "version",
+        "first_published",
+        "version_published",
+        "sections"
+      ],
+      "title": "Paper",
+      "type": "object"
+    },
+    "Recipe": {
+      "additionalProperties": false,
+      "description": "Human-reviewed instructions, never an execution capability.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "existing_native_validation",
+            "upstream_unexecuted",
+            "unavailable"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "commands": {
+          "items": {
+            "items": {
+              "maxLength": 4000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "maxItems": 12,
+          "title": "Commands",
+          "type": "array"
+        },
+        "working_directory": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Working Directory",
+          "type": "string"
+        },
+        "prerequisites": {
+          "items": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Prerequisites",
+          "type": "array"
+        },
+        "inputs": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Inputs",
+          "type": "string"
+        },
+        "expected_artifacts": {
+          "items": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "title": "Expected Artifacts",
+          "type": "array"
+        },
+        "executed_in_ra01": {
+          "const": false,
+          "title": "Executed In Ra01",
+          "type": "boolean"
+        },
+        "limitations": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Limitations",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "commands",
+        "working_directory",
+        "prerequisites",
+        "inputs",
+        "expected_artifacts",
+        "executed_in_ra01",
+        "limitations"
+      ],
+      "title": "Recipe",
+      "type": "object"
+    },
+    "Repository": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 80,
+          "minLength": 1,
+          "not": {
+            "pattern": "[^a-z0-9-]"
+          },
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "url": {
+          "maxLength": 1000,
+          "not": {
+            "pattern": "[^A-Za-z0-9./_#?=%+:-]"
+          },
+          "pattern": "^https://[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*(?::[0-9]{1,5})?(?:[/?#][A-Za-z0-9./_#?=%+:-]*)?$",
+          "title": "Url",
+          "type": "string"
+        },
+        "availability": {
+          "enum": [
+            "available",
+            "unavailable"
+          ],
+          "title": "Availability",
+          "type": "string"
+        },
+        "commit": {
+          "anyOf": [
+            {
+              "maxLength": 40,
+              "minLength": 40,
+              "pattern": "^[0-9a-f]{40}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commit"
+        },
+        "tree": {
+          "anyOf": [
+            {
+              "maxLength": 40,
+              "minLength": 40,
+              "pattern": "^[0-9a-f]{40}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Tree"
+        },
+        "committed_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Committed On"
+        },
+        "observed_default_head": {
+          "anyOf": [
+            {
+              "maxLength": 40,
+              "minLength": 40,
+              "pattern": "^[0-9a-f]{40}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed Default Head"
+        },
+        "evidence": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Evidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "availability",
+        "commit",
+        "tree",
+        "committed_on",
+        "observed_default_head",
+        "evidence"
+      ],
+      "title": "Repository",
+      "type": "object"
+    },
+    "RuntimeNotice": {
+      "additionalProperties": false,
+      "properties": {
+        "package": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Package",
+          "type": "string"
+        },
+        "version": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "bytes": {
+          "maximum": 1048576,
+          "minimum": 1,
+          "title": "Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "package",
+        "version",
+        "path",
+        "sha256",
+        "bytes"
+      ],
+      "title": "RuntimeNotice",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "strange-physics.source-admission.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "audited_on": {
+      "format": "date",
+      "title": "Audited On",
+      "type": "string"
+    },
+    "review_due": {
+      "format": "date",
+      "title": "Review Due",
+      "type": "string"
+    },
+    "scope": {
+      "const": "RA-01 source admission only; no comparison execution or reproduction",
+      "title": "Scope",
+      "type": "string"
+    },
+    "repositories": {
+      "items": {
+        "$ref": "#/$defs/Repository"
+      },
+      "maxItems": 24,
+      "minItems": 1,
+      "title": "Repositories",
+      "type": "array"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/FileEvidence"
+      },
+      "maxItems": 128,
+      "minItems": 1,
+      "title": "Evidence",
+      "type": "array"
+    },
+    "runtime_notices": {
+      "items": {
+        "$ref": "#/$defs/RuntimeNotice"
+      },
+      "maxItems": 64,
+      "minItems": 1,
+      "title": "Runtime Notices",
+      "type": "array"
+    },
+    "methods": {
+      "items": {
+        "$ref": "#/$defs/Method"
+      },
+      "maxItems": 24,
+      "minItems": 1,
+      "title": "Methods",
+      "type": "array"
+    },
+    "future_native_run_recipe": {
+      "const": "unresolved_until_producer_and_manifest_gates",
+      "title": "Future Native Run Recipe",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "audited_on",
+    "review_due",
+    "scope",
+    "repositories",
+    "evidence",
+    "runtime_notices",
+    "methods",
+    "future_native_run_recipe"
+  ],
+  "title": "SourceAdmission",
+  "type": "object",
+  "$id": "https://strange-physics.invalid/research/source-admission.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "RA-01 shapes; cross-field admission joins require the validator."
+}
