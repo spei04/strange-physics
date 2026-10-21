@@ -1,5 +1,7 @@
 # Research methods amendment — 2026-10-19
 
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](APPROVALS.md) govern execution. Research owns RA-01 first; VAL1 generator work is deferred with draftPR101 preserved. No comparison result exists yet.
+
 **Status:** independently reviewed research execution proposal; planning work is authorized. Runtime tasks, paid pilots and official studies retain the gates below. No new method was implemented or reproduced by this review.
 **Owner:** project lead. **Review cutoff:** 2026-10-19 UTC. **Saved:** 2026-10-20 UTC.
 **Canonical links:** [roadmap](../ROADMAP.md), [benchmark](../BENCHMARK.md), [execution backlog](../EXECUTION_BACKLOG.md), [machine-readable ledger](../execution-backlog.json).

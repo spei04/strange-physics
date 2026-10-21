@@ -1,7 +1,9 @@
 # Strange Physics — enterprise product blueprint and living roadmap
 
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. Research owns RA-01 first; VAL1 generator work is deferred with draftPR101 preserved. No comparison result exists yet.
+
 **Document owner:** product owner and engineering lead
-**Last verified:** 2026-10-20
+**Last verified:** 2026-10-21
 **Repository:** [spei04/strange-physics](https://github.com/spei04/strange-physics)
 **Status:** Execution backlog approved on 2026-10-19; baseline integration is verified, cloud preflight is complete with a deployment NO-GO, and workspace headroom is restored after the approved snapshot and online disk expansion. [Assignment log](EXECUTION_LOG.md) records engineer ownership and reassignment.
 **Implementation baseline:** original core 428b5a698b6f5654a9b91f547c9d4e7c196d3aa9; [PR #1](https://github.com/spei04/strange-physics/pull/1) merged to main as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f on 2026-10-19, with tree identity verified against reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70.
@@ -66,7 +68,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 
 The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. The primary checkout and one separate identity checkout are retained for independently active writers. Existing migration archives and other experiments are not disposable build caches.
 
-Current execution roster: Quality owns SP-01.e/#98 VAL1 in the reused identity checkout at accepted WEB1 main15714e6. The first immutable checkpoint contains the public-root/audience manifest, synthetic fixtures and raw/canonical byte goldens. Research reviews scientific identity and fixture semantics; Platform reviews public/private boundaries, references and drift. Generator and CI integration follow checkpoint acceptance; CLIENT1 and MOCK1 remain separate. Lead owns primary integration and progress. No additional checkout or dependency installation; the native proposal and RA_EXEC remain pending.
+Current execution roster: Research owns RA-01 source/license/reproduction audit; Quality prepares RA-02 and reviews source admission; Platform reviews approval/dependency/provenance boundaries; lead owns primary approval/integration. VAL1 manifest1014592 is preserved in draftPR101 with its generator deferred. Reuse the two existing cloud checkouts. Scoped native implementation and the bounded comparison are approved; every scientific and CI prerequisite remains required.
 
 ### 0.3 Update procedure for every implementation change
 
