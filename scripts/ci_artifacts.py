@@ -214,7 +214,7 @@ def write_provenance(
         "repository": os.environ["GITHUB_REPOSITORY"],
         "workflow_run_id": os.environ["GITHUB_RUN_ID"],
         "workflow_run_attempt": os.environ["GITHUB_RUN_ATTEMPT"],
-        "uv_version": "0.11.21",
+        "uv_version": "0.13.4",
         "python_version": sys.version,
         "uv_lock_sha256": sha256(source_root / "uv.lock"),
         "runtime_requirements_sha256": sha256(runtime_requirements),
