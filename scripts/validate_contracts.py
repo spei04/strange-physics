@@ -48,6 +48,19 @@ def main() -> None:
             raise ValueError(f"Unexpected schema result for {reference}: {errors[:1]}")
         count += 1
 
+    native = json.loads((ROOT / "native-spring.examples.json").read_text())
+    for name, fixture in native["valid"].items():
+        check(f"native-spring.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in native[group]:
+            value = copy.deepcopy(native["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"native-spring.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     web = json.loads((ROOT / "web.examples.json").read_text())
     for name, fixture in web["valid"].items():
         check(f"web.schema.json#/$defs/{name}", fixture)
