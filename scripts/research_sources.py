@@ -19,9 +19,35 @@ MANIFEST = ROOT / "docs/research/source-admission.json"
 SCHEMA = ROOT / "docs/research/source-admission.schema.json"
 Sha = Annotated[str, Field(pattern=r"^[0-9a-f]{64}$", min_length=64, max_length=64)]
 Commit = Annotated[str, Field(pattern=r"^[0-9a-f]{40}$", min_length=40, max_length=40)]
-Key = Annotated[str, Field(pattern=r"^[a-z][a-z0-9-]*$", min_length=1, max_length=80)]
+Key = Annotated[
+    str,
+    Field(
+        pattern=r"^[a-z][a-z0-9-]*$",
+        min_length=1,
+        max_length=80,
+        json_schema_extra={"not": {"pattern": "[^a-z0-9-]"}},
+    ),
+]
 Text = Annotated[str, Field(min_length=1, max_length=4000)]
-Url = Annotated[str, Field(pattern=r"^https://[A-Za-z0-9./_#?=%+:-]+$", max_length=1000)]
+_HOST_LABEL = r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?"
+Url = Annotated[
+    str,
+    Field(
+        pattern=rf"^https://{_HOST_LABEL}(?:\.{_HOST_LABEL})*"
+        r"(?::[0-9]{1,5})?(?:[/?#][A-Za-z0-9./_#?=%+:-]*)?$",
+        max_length=1000,
+        json_schema_extra={"not": {"pattern": "[^A-Za-z0-9./_#?=%+:-]"}},
+    ),
+]
+RepositoryPath = Annotated[
+    str,
+    Field(
+        min_length=1,
+        max_length=300,
+        pattern=r"^[^\x00-\x1f\x7f-\x9f]+$",
+        json_schema_extra={"not": {"pattern": r"[\x00-\x1f\x7f-\x9f]"}},
+    ),
+]
 MAX_BYTES = 512 * 1024
 
 
@@ -66,7 +92,7 @@ class Repository(Message):
 class FileEvidence(Message):
     id: Key
     repository_id: Key
-    path: Annotated[str, Field(min_length=1, max_length=300)]
+    path: RepositoryPath
     sha256: Sha
     bytes: Annotated[int, Field(ge=1, le=4 * 1024 * 1024)]
     purpose: Literal["license", "notice", "dependencies", "recipe", "leakage", "provenance"]
@@ -164,6 +190,8 @@ class Method(Message):
             ):
                 raise ValueError("Native admission requires own locked, licensed baseline")
         else:
+            if self.recipe.kind == "existing_native_validation":
+                raise ValueError("External methods cannot claim the own-native validation recipe")
             if self.dependencies.status == "existing_locked_runtime":
                 raise ValueError("External code is not part of the existing runtime")
             if not self.inspiration_only:
@@ -292,7 +320,7 @@ def audit_summary(manifest: SourceAdmission, method_id: str | None = None) -> di
     return {
         "audited_on": manifest.audited_on.isoformat(),
         "scope": manifest.scope,
-        "manifest_sha256": hashlib.sha256(
+        "canonical_manifest_sha256": hashlib.sha256(
             json.dumps(
                 manifest.model_dump(mode="json"),
                 sort_keys=True,

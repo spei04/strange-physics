@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import importlib
 import json
 import socket
@@ -65,6 +66,22 @@ def test_complete_offline_audit_and_schema() -> None:
         audit_summary(value, "absent")
 
 
+def test_canonical_manifest_identity_is_distinct_from_raw_file_bytes() -> None:
+    value = load_manifest()
+    canonical = json.dumps(
+        value.model_dump(mode="json"),
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    ).encode()
+    digest = hashlib.sha256(canonical).hexdigest()
+    assert audit_summary(value)["canonical_manifest_sha256"] == digest
+    reformatted = SourceAdmission.model_validate_json(json.dumps(document(), indent=4))
+    assert audit_summary(reformatted)["canonical_manifest_sha256"] == digest
+    assert digest != hashlib.sha256(MANIFEST.read_bytes()).hexdigest()
+    assert "manifest_sha256" not in audit_summary(value)
+
+
 @pytest.mark.parametrize(
     ("path", "replacement"),
     [
@@ -78,6 +95,7 @@ def test_complete_offline_audit_and_schema() -> None:
         (("methods", 0, "recipe", "commands"), [[]]),
         (("methods", 0, "recipe", "executed_in_ra01"), True),
         (("methods", 0, "recipe", "kind"), "upstream_unexecuted"),
+        (("methods", 1, "recipe", "kind"), "existing_native_validation"),
         (("methods", 0, "reproduction_status"), "not_reproduced"),
         (("methods", 0, "inspiration_only"), True),
         (("methods", 1, "admission"), "native_implementation"),
@@ -237,3 +255,50 @@ def test_audit_never_runs_commands_or_network(monkeypatch: pytest.MonkeyPatch) -
     manifest = load_manifest()
     for method in manifest.methods:
         assert audit_summary(manifest, method.id)["external_code_executed"] is False
+
+
+@pytest.mark.parametrize(
+    ("root", "field", "invalid"),
+    [
+        ("Repository", "url", "https:///"),
+        ("Repository", "url", "https://"),
+        ("Repository", "url", "https://-github.com/source"),
+        ("Repository", "url", "https://github..com/source"),
+        ("Repository", "url", "https://github.com/source\n"),
+        ("Repository", "id", "native\n"),
+        ("FileEvidence", "path", "LICENSE\x00"),
+        ("FileEvidence", "path", "LICENSE\n"),
+        ("FileEvidence", "path", "LICENSE\x85"),
+    ],
+)
+def test_source_lexical_runtime_schema_parity(root: str, field: str, invalid: str) -> None:
+    manifest = document()
+    section = "repositories" if root == "Repository" else "evidence"
+    item = manifest[section][0]
+    item[field] = invalid
+    with pytest.raises(ValidationError):
+        parse(manifest)
+    defs = schema()["$defs"]
+    assert isinstance(defs, dict)
+    Draft202012Validator(defs[root]).check_schema(defs[root])
+    assert not Draft202012Validator(defs[root]).is_valid(item)
+
+
+def test_duplicate_key_on_otherwise_valid_manifest(tmp_path: Path) -> None:
+    raw = json.dumps(document()).encode()
+    duplicate = b'{"schema_version":"strange-physics.source-admission.v1",' + raw[1:]
+    assert SourceAdmission.model_validate_json(duplicate) == load_manifest()
+    path = tmp_path / "duplicate.json"
+    path.write_bytes(duplicate)
+    with pytest.raises(ContractViolation, match="invalid_request"):
+        load_manifest(path)
+
+
+def test_actual_raw_byte_limit_equality_and_one_over(tmp_path: Path) -> None:
+    raw = MANIFEST.read_bytes()
+    path = tmp_path / "at-limit.json"
+    path.write_bytes(raw + b" " * (MAX_BYTES - len(raw)))
+    assert load_manifest(path) == load_manifest()
+    path.write_bytes(path.read_bytes() + b" ")
+    with pytest.raises(ValueError, match="bounded"):
+        load_manifest(path)

@@ -40,9 +40,17 @@ a URL, imports an external source, or resolves dependencies. Its fixed 512 KiB,
 depth-16 and 50,000-node envelope rejects excess before typed decoding;
 the shared strict loader rejects duplicate keys, invalid UTF-8 and nonfinite
 numbers. JSON Schema checks shapes; cross-record joins require the validator.
+The output `canonical_manifest_sha256` hashes the complete validated model
+serialized as JSON with sorted keys, compact separators, finite numbers and
+ASCII escaping. It is a typed canonical identity, distinct from the SHA-256 of
+the inspected manifest file bytes. Permitted whitespace changes do not change it.
 Validation does not prove that a supplied license exists or a claimed hash
 came from its publisher: the dated primary-source review and retained raw
-evidence supply that trust boundary.
+evidence supply that trust boundary. The exact historical uv.lock identity and
+complete observed Linux runtime notice coverage were independently reviewed against the
+retained files; metadata shape and reference checks do not attest an environment
+or prove that coherently edited claims remain true. RA-02 and the final run
+manifest must bind the actual post-integration source and lock before execution.
 
 Every file evidence entry joins a repository and its exact commit. Its raw
 SHA-256 and byte count identify the inspected file. Append
@@ -57,7 +65,7 @@ failures; public records contain no credentials or private run data.
 | --- | --- | --- |
 | Self-authored spring | Existing I1 at 33ddfbf, MIT; exact uv.lock and runtime notices | Implementation GO only; future run recipe unresolved |
 | NewtonBench | 912a4ba, MIT source and benchmark modules | Deferred; provider runner/adapter not admitted |
-| MDA solver | Advertised official repository returned 404 | No-go reuse/reproduction; paper inspiration only |
+| MDA solver | Checked candidate location returned 404; no official solver revision verified | No-go reuse/reproduction; paper inspiration only |
 | LLM-AutoSciLab | New 467fa184 MIT grant, third-party notices; truth-conditioned loop unchanged | Deferred; licensing does not repair leakage |
 | LLM-ACES | 34ceeb9 README MIT claim, no license grant | No-go reuse pending actual grant |
 | PySR + SymbolicRegression.jl | 72a9ab9 +83ca176, Apache-2.0 | Deferred; full Python/Julia lock/notices and adapter required |
