@@ -32,9 +32,13 @@ containing the actual six-world mapping. Its private definitions and catalog has
 never enter a selector projection. Actual freeze checks its ordered IDs and the
 stationary one-particle, fixed-anchor, zero-cubic, zero-observation-noise domain.
 Its declared action space stays within the accepted purchased bounds: mass
-0.5–2, position radius at most2, velocity radius at most2, impulse radius at most1
-and duration at most2 seconds. Narrower lawful spaces are allowed.
-Catalog generation and retention count in the same cumulative artifact budget. All roots in study.schema.json are owner-only accounting records.
+0.5–2, position radius at most 2, velocity radius at most 2, impulse radius at most 1
+and duration at most 2 seconds. Narrower lawful spaces are allowed. These are
+admission limits for this first study, not changes to frozen CORE/SCI. Prediction
+probes keep their separate accepted counterfactual domain; purchased-action
+validation does not apply to those probes.
+Catalog generation and retention count in the same cumulative artifact budget.
+All roots in study.schema.json are owner-only accounting records.
 A model/report hash in these records is not permission to disclose evaluator
 material. N01 receives its actual public prefix and operation-local inputs,
 not the full ledger or evaluator records.
@@ -155,8 +159,11 @@ all count. Completed rows beyond a pending hole are still validated, but the
 exposed ObservationBundle stops at the first pending row and retains failed
 records in that contiguous prefix. Every actual reservation must match a charged
 ledger intent. Missing Journal rows remain explicit held intents; extra or
-changed rows fail. The returned snapshot is owner-only and contains no private
-definition/law/seed or definition hash.
+changed rows fail. A contiguous returned prefix does not establish that all
+purchases have resolved. The later N01 publisher must separately inspect the
+pending and missing-intent lists before claiming a complete purchased state.
+The returned snapshot is owner-only and contains no private definition/law/seed
+or definition hash.
 
 The adapter and ledger do not authorize a scientific run. RA-02 remains partial
 until the final N01 scoring-policy/model/protocol/report composition and its
