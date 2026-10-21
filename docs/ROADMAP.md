@@ -1,7 +1,9 @@
 # Strange Physics — enterprise product blueprint and living roadmap
 
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. Research owns RA-01 first; VAL1 generator work is deferred with draftPR101 preserved. No comparison result exists yet.
+
 **Document owner:** product owner and engineering lead
-**Last verified:** 2026-10-20
+**Last verified:** 2026-10-21
 **Repository:** [spei04/strange-physics](https://github.com/spei04/strange-physics)
 **Status:** Execution backlog approved on 2026-10-19; baseline integration is verified, cloud preflight is complete with a deployment NO-GO, and workspace headroom is restored after the approved snapshot and online disk expansion. [Assignment log](EXECUTION_LOG.md) records engineer ownership and reassignment.
 **Implementation baseline:** original core 428b5a698b6f5654a9b91f547c9d4e7c196d3aa9; [PR #1](https://github.com/spei04/strange-physics/pull/1) merged to main as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f on 2026-10-19, with tree identity verified against reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70.
@@ -14,11 +16,11 @@ No broad implementation, new infrastructure, paid sweep, or compliance certifica
 
 ## Research methods amendment (2026-10-19 cutoff)
 
-The [dated method decision record](research/2026-10-19-METHOD_DECISIONS.md) adds18 proposed PR tasks, explicit sources/license checks and separate comparisons for shared-model selection, richer symbolic models and law-change recovery. Existing random/classical controls remain; I1 and the artifact/worker contract assignments continue after accepted C2 integration. New runtime remains behind RA_EXEC; provider, sizing, official-study and release gates remain separate.
+The [dated method decision record](research/2026-10-19-METHOD_DECISIONS.md) retains18 broader research tasks and the [native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) adds five scoped tasks. The owner approved eight enumerated native-path units on2026-10-21, including RA-01/02/07.b; other research tasks retain their authorization limits. Source/license, shared-model selection, calibration and complete accounting remain required. Provider, sizing, official-study and release gates remain separate.
 
 The first new result is a local fixed-pool linear-model comparison after its scientific prerequisites:36 development episodes,432 purchased slots maximum,8 CPU-core-hours,1GiB new artifacts and zero provider calls. It does not wait for hosted deployment or all paper-inspired profiles. The optional later feasibility pilot has at most162 episodes; replicated-world sizing requires a separate approval and evidence before confirmatory freeze.
 
-The18-task extension totals48–78 human engineering days plus25% reserve (60–97.5 days). It is recorded separately in execution-backlog.json; the approved168-task/369-edge/ten-gate graph and its conditional W52–67 GA reference remain unchanged. Added scope is not included in that forecast. The dated record owns detailed task contracts, exclusions, tests, effort, dependencies and exit gates.
+The retained23-task research ledger totals61–99 human engineering days plus25% reserve (76.25–123.75 days); this arithmetic envelope includes unapproved broader work. The approved first-result path is17–26 days (21.25–32.5 reserved), followed by later Laplace3–5 (3.75–6.25 reserved). The approved168-task/369-edge/ten-gate baseline and conditional W52–67 GA reference are unchanged. These estimates are not elapsed schedules or additional spending authorization.
 
 ## 0. Progress, evidence, and how to maintain this file
 
@@ -50,7 +52,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 | Workspace/membership contract subset | Verified and integrated; identity parent complete | PR #67/main 1ec45aa matches reviewed b9c4754 and passed CI. Subsequent credentials/composition are integrated; hosted handlers and SQL concurrency/recovery remain later tasks |
 | Invitation contract subset | Verified and integrated; identity parent complete | PR #69/main 89e6117 matches reviewed 8267865 and all PR/main checks passed. Tenant-bound recipient evidence, issuing-grant revision and metadata-only retries remain contractual; live provider/HTTP/SQL/throttling remains later work |
 | Explicit linking contract subset | Integrated; ID-B complete | PR #79/main24c8796 and its PR/main checks passed; subsequent C1/C2 and final SP-01.b composition are now integrated |
-| Identity, artifact and viewer contract freeze | SP-01.b/c/d complete | WORLD1 PR #95 and WEB1 PR #97 accepted. Quality owns SP-01.e validation tooling; hosted enforcement remains later work |
+| Identity, artifact and viewer contract freeze | SP-01.b/c/d complete | WORLD1 PR #95 and WEB1 PR #97 accepted. VAL1 manifest accepted in draftPR101; generator deferred while Research authors RA-01; hosted enforcement remains later work |
 | Scientific checkpoint — I1 | Complete for bounded local spring workflow | PR #90/main d931158 accepted with matching reviewed tree and PR/main CI. Installed-wheel CLI and SDK each score24/24 fixed probes, worst RMSE3.1542e-8 and1.0098e-7 respectively; every probe is below0.001 |
 | Researcher journeys | Design reviewed; product acceptance pending | WORKSPACE_JOURNEYS.md and inventory: seven journeys, 28 scenarios, three passing consistency tests; no UI/accessibility claim |
 | Priced staging configuration | Proposed; not authorized | STAGING_PROPOSAL.md: low-traffic $450–550/month; proposed seven-day $250 envelope. Target facts, exact IaC and authorization remain open |
@@ -66,7 +68,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 
 The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. The primary checkout and one separate identity checkout are retained for independently active writers. Existing migration archives and other experiments are not disposable build caches.
 
-Current execution roster: Quality owns SP-01.e/#98 VAL1 in the reused identity checkout at accepted WEB1 main15714e6. The first immutable checkpoint contains the public-root/audience manifest, synthetic fixtures and raw/canonical byte goldens. Research reviews scientific identity and fixture semantics; Platform reviews public/private boundaries, references and drift. Generator and CI integration follow checkpoint acceptance; CLIENT1 and MOCK1 remain separate. Lead owns primary integration and progress. No additional checkout or dependency installation; the native proposal and RA_EXEC remain pending.
+Current execution roster: Research owns RA-01 source/license/reproduction audit; Quality prepares RA-02 and reviews source admission; Platform reviews approval/dependency/provenance boundaries; lead owns primary approval/integration. VAL1 manifest1014592 is preserved in draftPR101 with its generator deferred. Reuse the two existing cloud checkouts. Scoped native implementation and the bounded comparison are approved; every scientific and CI prerequisite remains required.
 
 ### 0.3 Update procedure for every implementation change
 
@@ -89,7 +91,7 @@ The staged workflow and execution backlog were approved on 2026-10-19. Begin the
 | --- | --- | --- |
 | 1 — Plan and challenge | Inspect actual code, compare options, expose assumptions, challenge risks; product owner reviews assumptions before implementation approval | Blueprint and challenge review accepted; unmeasured targets and external commitments remain provisional |
 | 2 — Turn the plan into engineering work | Assignable PR tasks, exact dependencies/contracts/tests, capacity model and exit gates | 168 leaf tasks/42 epics; 369 prerequisites checked in both schedule scenarios; first ten days planned; execution approval recorded; subset freezes remain pending |
-| 3 — Implement one vertical slice at a time | Start only an approved slice; require tests, review, telemetry and updated documentation; then assess its evidence before selecting the next | In progress: bounded spring I1 and SP-01.a/b/c/d are accepted; Quality owns SP-01.e/VAL1 |
+| 3 — Implement one vertical slice at a time | Start only an approved slice; require tests, review, telemetry and updated documentation; then assess its evidence before selecting the next | In progress: bounded spring I1 and SP-01.a/b/c/d are accepted; Research owns approved RA-01, VAL1 generator deferred |
 | 4 — Validate actual production readiness | Audit shipped implementation against REQ01–REQ16 using real test/load/security/deploy/restore evidence; block unsupported claims | Not started; R6–R8 own these gates |
 
 The roadmap owns product/architecture/overall progress; EXECUTION_BACKLOG.md owns assignable task details and schedules, backed by execution-backlog.json. GitHub issues hold epic rollups; The local SCI subset, full control/identity contract set and ART/EXEC/COMP1 contracts are accepted through SP-01.a/b/c. WORLD1 and WEB1 are integrated; the SP-01.d freeze is accepted. Creating an issue, schema or milestone never marks its implementation complete. Issue blockers describe completion/integration prerequisites; mock work may start after its explicitly approved interface boundary.
@@ -1100,9 +1102,9 @@ The requested artifact paths are represented by useful sections in this single f
 
 **Approval scope:** execution backlog D01–D06 and initial R0/spring scope approved on 2026-10-19. Current execution uses a lead and up to three engineer subagents; the nine-human-team schedule remains conditional. No arbitrary paid benchmark sweep, compliance claim or unlimited infrastructure spend is implied. Cloud provisioning remains tied to concrete priced configuration, verified account permissions and applicable release/approval controls.
 
-**Next executable outcome:** Quality's SP-01.e/#98 VAL1 manifest/fixture checkpoint, reviewed before generator implementation. SP-01.d is complete. The 36-episode research path retains its separate dependency decision and RA_EXEC gate.
+**Next executable outcome:** Research's RA-01/#102 source/license/recipe admission checkpoint. The native comparison scope and bounded run are approved, with source/interface/calibration/manifest/CI gates still required. VAL1 manifest1014592 is accepted and preserved in draftPR101; its generator is deferred.
 
-Research methods planning amendment: PR #86/main e239eb2c704cd315aadd6064cdb521d1a6d9bbdc matches reviewedc48517b/tree558d68ed; PR CI39365953740 and all main CI39366138629 jobs passed. The18-task extension is a reviewed plan only; RA_EXEC and paid/sizing/official gates remain pending.
+Historical research planning acceptance (2026-10-20): PR #86/main e239eb2c704cd315aadd6064cdb521d1a6d9bbdc matches reviewedc48517b/tree558d68ed; PR CI39365953740 and all main CI39366138629 jobs passed. At that publication the18-task extension was planning-only. Scoped native RA_EXEC is now accepted under the2026-10-21 decision; paid/sizing/official gates remain pending.
 
 Identity integration acceptance: PR #88/main 92320173ff0d3278c65cfc251983d57fab9960b1 matches accepted b8d3e5ee96b3b07da53eccbabddebc5a73223ba3 and tree 515e27ebbb594a15ce439b24a14463ed7a4cf9a7; PR CI39367180231 and all protected-main CI39367439199 jobs passed. Integrated 1,692 tests, Ruff/format92, strict mypy57,613 schema checks, configured security checks and offline package validation passed. SP-01.c began after this parent gate; local SDK/CLI I1 is now complete through PR #90.
 

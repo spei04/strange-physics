@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | SP-01.e/VAL1 scientific fixture review | Raw versus typed identity, numeric boundaries and incomplete science; read-only |
-| Platform | SP-01.e/VAL1 contract/tooling review | Approved roots, audiences, reference closure and drift; read-only |
-| Quality | SP-01.e/#98 VAL1 generator next; manifest/fixtures1014592 accepted | Exclusive identity writer; no generator started at this checkpoint |
-| Project lead | Reviewed proposal PR #100, VAL1 draft PR #101 and dependency gates | Active research graph and RA_EXEC unchanged; no experiments authorized |
+| Research | RA-01 source, license and recipe audit | Identity writer after verified Quality release; no external code execution |
+| Quality | RA-02 read-only manifest/accounting preparation; RA-01 review | Source authoring follows accepted RA-01 |
+| Platform | Native activation, source provenance and later N01 interface review | Independent read-only review |
+| Project lead | Approval record, primary integration and task assignment | Scoped RA_EXEC accepted; runtime entry gates/caps enforced |
 
 ## Assignments
 
@@ -461,3 +461,11 @@ Private integration index SHA256 5eac34c152c87a13a663a3ebad284a806eb8061932c226b
 2026-10-20 — The reviewed [native sequencing recommendation](research/NATIVE_COMPARISON_PROPOSAL.md) keeps finite-grid calibration before the first comparison and moves Laplace implementation plus its approximation-versus-grid audit to later RA-N02.b. Proposed first-result effort is 17–26 engineer-days (21.25–32.5 with reserve); later Laplace is 3–5 (3.75–6.25 with reserve), low confidence. Full programme scope, active dependencies, RA_EXEC, run caps and GA forecast remain unchanged. This is saved planning only. Research and Quality reviewed the sequencing recommendation; Research supplied the later audit-inclusive estimate. The saved delta requires independent graph/source review. No native implementation, measured experiment or new spending is authorized.
 
 2026-10-20 — VAL1 manifest/fixtures 10145929997fc959fe31ba0398cdf8dac62e4934 (tree a7daa18e4506d268d334b05f14949da0ec0f8838), published in draft PR #101, are independently accepted after the six review corrections. All 87 focused tests, 1,431 external schema cases and configured static/type/security checks pass; Research adds 150 independent checks, and Platform verifies 96-root closure and repair-sensitive boundaries. Quality retains identity for the next generator assignment. Generation/drift CI, CLIENT1 and MOCK1 remain pending; SP-01.e stays in progress. Planning PR #100 is separately reviewed at 0ecf4f4; active research dependencies and RA_EXEC are unchanged.
+
+## Native comparison approved and assigned
+
+2026-10-21 — Lead verified the owner's actual statement, “I approve physics world comparison plan,” against reviewed PR #100/source33ddfbf. Scoped RA_EXEC and the bounded run are approved for the eight named units; the native dependency amendment is active. Preserve36 episodes,432 slots,8 CPU-core-hours,1GiB and zero runtime network/provider calls. All reference/calibration/sensitivity/scoring/retry/failure costs remain counted; no later diagnostic budget reset. Research starts RA-01, Quality prepares RA-02 and reviews, Platform reviews provenance/activation, and lead integrates.
+
+Quality released identity cleanly at1014592 with no process or checkout consumers; draftPR101 and private evidence remain preserved. Its generator is deferred for the approved scientific path, not completed or discarded. Lead verified primary clean33ddfbf and101,903,802,368 cloud bytes free before reuse. No additional checkout, dependency installation or paid scope is needed. No measured comparison has started.
+
+RA-01 is tracked in [issue #102](https://github.com/spei04/strange-physics/issues/102). Verified writer handoff starts at4d173700 in feat/research-source-admission; all three dependency pins match primary,5,263 dependency files are independently owned, no checkout-cwd process remains, and101,902,274,560 bytes are free. Research now authors the source manifest/validation/audit unit; Quality and Platform independently review.

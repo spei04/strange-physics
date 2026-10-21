@@ -1,5 +1,7 @@
 # Benchmark protocol — draft, not yet frozen
 
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. Research owns RA-01 first; VAL1 generator work is deferred with draftPR101 preserved. No comparison result exists yet.
+
 Execution planning: [ROADMAP.md](ROADMAP.md) and [EXECUTION_BACKLOG.md](EXECUTION_BACKLOG.md) own the approved delivery scope, prerequisite sequence and remaining approval gates. Accepted decisions and implemented behavior described here remain in force. Initial execution was approved on 2026-10-19; concrete paid and release actions retain their separate gates.
 
 This document specifies intended evaluation. The local simulator, random investigator,
@@ -11,11 +13,11 @@ and commit before collecting evaluation runs.
 
 ## Research methods amendment (2026-10-19 cutoff)
 
-The [dated method decision record](research/2026-10-19-METHOD_DECISIONS.md) adds18 proposed PR tasks, explicit sources/license checks and separate comparisons for shared-model selection, richer symbolic models and law-change recovery. Existing random/classical controls and the current I1/C2 assignments continue. New runtime remains behind RA_EXEC; provider, sizing, official-study and release gates remain separate.
+The [dated method decision record](research/2026-10-19-METHOD_DECISIONS.md) retains18 broader research tasks and the [native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) adds five scoped tasks. The owner approved eight enumerated native-path units on2026-10-21, including RA-01/02/07.b; other research tasks retain their authorization limits. Source/license, shared-model selection, calibration and complete accounting remain required. Provider, sizing, official-study and release gates remain separate.
 
 The first new result is a local fixed-pool linear-model comparison after its scientific prerequisites:36 development episodes,432 purchased slots maximum,8 CPU-core-hours,1GiB new artifacts and zero provider calls. It does not wait for hosted deployment or all paper-inspired profiles. The optional later feasibility pilot has at most162 episodes; replicated-world sizing requires a separate approval and evidence before confirmatory freeze.
 
-The18-task extension totals48–78 human engineering days plus25% reserve (60–97.5 days). It is recorded separately in execution-backlog.json; the approved168-task/369-edge/ten-gate graph and its conditional W52–67 GA reference remain unchanged. Added scope is not included in that forecast. The dated record owns detailed task contracts, exclusions, tests, effort, dependencies and exit gates.
+The retained23-task research ledger totals61–99 human engineering days plus25% reserve (76.25–123.75 days); this arithmetic envelope includes unapproved broader work. The approved first-result path is17–26 days (21.25–32.5 reserved), followed by later Laplace3–5 (3.75–6.25 reserved). The approved168-task/369-edge/ten-gate baseline and conditional W52–67 GA reference are unchanged. These estimates are not elapsed schedules or additional spending authorization.
 
 The amendment separates A0 simple shared-fitter controls, A1 fixed-pool posterior/selector comparisons, B richer structure/full-system comparisons and C adaptation. Common-prefix rankings share exact snapshots; online arms use only their own purchased histories. Evaluator labels/scores never enter proposal memory or model selection. Native linear-model scoring is required for the early offline checkpoint; richer models need reviewed SP-19/20 evaluator binding. The existing40-slot scientific draft below is preserved; the12-slot offline fixture is a separately labeled development study.
 
