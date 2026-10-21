@@ -27,7 +27,8 @@ SELECTORS: tuple[Selector, ...] = (
     "posterior_disagreement",
 )
 ArtifactKind = Literal[
-    "native_profile",
+    "candidate_config",
+    "prediction_config",
     "pool",
     "menu",
     "calibration",
@@ -42,7 +43,8 @@ ArtifactKind = Literal[
     "selector_posterior_disagreement",
 ]
 ARTIFACT_KINDS = (
-    "native_profile",
+    "candidate_config",
+    "prediction_config",
     "pool",
     "menu",
     "calibration",
@@ -123,12 +125,13 @@ class NativeStudyManifest(Message):
     accounting_plan_sha256: Digest
     source_commit: Commit
     uv_lock_sha256: Digest
+    engine_fingerprint: Digest
     world_ids: Annotated[tuple[Identifier, ...], Field(min_length=6, max_length=6)]
     policy_seeds: Annotated[
         tuple[Annotated[int, Field(ge=0, le=2**32 - 1)], ...],
         Field(min_length=2, max_length=2),
     ]
-    artifacts: Annotated[tuple[StudyArtifact, ...], Field(min_length=13, max_length=13)]
+    artifacts: Annotated[tuple[StudyArtifact, ...], Field(min_length=14, max_length=14)]
     gates: Annotated[tuple[StudyGate, ...], Field(min_length=4, max_length=4)]
     cells: Annotated[tuple[NativeStudyCell, ...], Field(min_length=36, max_length=36)]
     failure_policy: Literal["retain-every-cell-and-attempt.v1"] = "retain-every-cell-and-attempt.v1"
@@ -164,6 +167,9 @@ class NativeStudyManifest(Message):
 class NativeWorkFacts(Message):
     """Operation-local counts, not measured hardware work or proof of authenticity."""
 
+    schema_version: Literal["strange-physics.native-work-facts.v1"] = (
+        "strange-physics.native-work-facts.v1"
+    )
     attempt_id: Identifier
     operation: OperationKind
     producer_version: Annotated[str, Field(min_length=1, max_length=128)]
@@ -190,6 +196,8 @@ class NativeWorkFacts(Message):
             raise ValueError("Completed local work cannot omit requested units")
         if self.outcome == "rejected" and (self.completed_count or self.failed_count):
             raise ValueError("Preflight rejection leaves all requested work unassessed")
+        if self.outcome == "failed" and self.failed_count == 0:
+            raise ValueError("Failed local work needs an explicitly failed unit")
         return self
 
 

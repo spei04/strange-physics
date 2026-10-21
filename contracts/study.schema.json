@@ -317,6 +317,13 @@
           "title": "Uv Lock Sha256",
           "type": "string"
         },
+        "engine_fingerprint": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Engine Fingerprint",
+          "type": "string"
+        },
         "world_ids": {
           "items": {
             "not": {
@@ -345,8 +352,8 @@
           "items": {
             "$ref": "#/$defs/StudyArtifact"
           },
-          "maxItems": 13,
-          "minItems": 13,
+          "maxItems": 14,
+          "minItems": 14,
           "title": "Artifacts",
           "type": "array"
         },
@@ -385,6 +392,7 @@
         "accounting_plan_sha256",
         "source_commit",
         "uv_lock_sha256",
+        "engine_fingerprint",
         "world_ids",
         "policy_seeds",
         "artifacts",
@@ -460,6 +468,12 @@
       "additionalProperties": false,
       "description": "Operation-local counts, not measured hardware work or proof of authenticity.",
       "properties": {
+        "schema_version": {
+          "const": "strange-physics.native-work-facts.v1",
+          "default": "strange-physics.native-work-facts.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
         "attempt_id": {
           "not": {
             "pattern": "[^A-Za-z0-9_-]"
@@ -613,7 +627,8 @@
       "properties": {
         "kind": {
           "enum": [
-            "native_profile",
+            "candidate_config",
+            "prediction_config",
             "pool",
             "menu",
             "calibration",

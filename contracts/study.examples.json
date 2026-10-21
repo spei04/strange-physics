@@ -17,6 +17,7 @@
       "accounting_plan_sha256": "fe59cf33d357d1e244316c543edb446835905fd39327335b0ebeac03bdb41001",
       "source_commit": "0000000000000000000000000000000000000000",
       "uv_lock_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "engine_fingerprint": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "world_ids": [
         "opaque-world-0",
         "opaque-world-1",
@@ -31,9 +32,15 @@
       ],
       "artifacts": [
         {
-          "kind": "native_profile",
-          "sha256": "46d00580e0f57de3fb502d2581016425835c470ee6fd0d421b877b2bb2fbf076",
-          "byte_count": 62,
+          "kind": "candidate_config",
+          "sha256": "5555547ffd93220dc0accf30342c69c26fd403551b1946220653719802128b88",
+          "byte_count": 64,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "prediction_config",
+          "sha256": "77247522b6ea48126961d0124d7bcf78e436207c3358fc8579bb135adcec7a08",
+          "byte_count": 65,
           "encoding": "strange-physics.python-json.v1"
         },
         {
@@ -461,6 +468,7 @@
       "primary_output": "one-selected-native-candidate.v1"
     },
     "NativeWorkFacts": {
+      "schema_version": "strange-physics.native-work-facts.v1",
       "attempt_id": "attempt-reference",
       "operation": "reference",
       "producer_version": "synthetic.reference.v1",
@@ -533,6 +541,7 @@
               "accounting_plan_sha256": "fe59cf33d357d1e244316c543edb446835905fd39327335b0ebeac03bdb41001",
               "source_commit": "0000000000000000000000000000000000000000",
               "uv_lock_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "engine_fingerprint": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
               "world_ids": [
                 "opaque-world-0",
                 "opaque-world-1",
@@ -547,9 +556,15 @@
               ],
               "artifacts": [
                 {
-                  "kind": "native_profile",
-                  "sha256": "46d00580e0f57de3fb502d2581016425835c470ee6fd0d421b877b2bb2fbf076",
-                  "byte_count": 62,
+                  "kind": "candidate_config",
+                  "sha256": "5555547ffd93220dc0accf30342c69c26fd403551b1946220653719802128b88",
+                  "byte_count": 64,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "prediction_config",
+                  "sha256": "77247522b6ea48126961d0124d7bcf78e436207c3358fc8579bb135adcec7a08",
+                  "byte_count": 65,
                   "encoding": "strange-physics.python-json.v1"
                 },
                 {
@@ -983,8 +998,8 @@
     "NativeStudySummary": {
       "study_id": "synthetic-native-study",
       "accounting_plan_sha256": "fe59cf33d357d1e244316c543edb446835905fd39327335b0ebeac03bdb41001",
-      "ledger_sha256": "1f14f3e4fa5d5affe2c3fd65b6ade99c9530545360698074fc2e4f4b792c4057",
-      "manifest_sha256": "ff2b1acc4079a42b951e99824d4bd8fedfb69f1be8eecbb0c4d902640c53e87b",
+      "ledger_sha256": "bfba5a387fb19636a33aa22917c88b8834b50c1252b6b75032a45bd25232dc44",
+      "manifest_sha256": "22245a22c577ea3a716fa169c103c9b08cc9b7226feaad39554134e5a6cc41bd",
       "budget": {
         "purchased_slots": 0,
         "remaining_slots": 432,
@@ -1665,9 +1680,13 @@
     }
   ],
   "artifact_payloads": {
-    "native_profile": {
+    "candidate_config": {
       "purpose": "synthetic_validation",
-      "artifact": "native_profile"
+      "artifact": "candidate_config"
+    },
+    "prediction_config": {
+      "purpose": "synthetic_validation",
+      "artifact": "prediction_config"
     },
     "pool": {
       "purpose": "synthetic_validation",

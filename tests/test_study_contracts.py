@@ -100,6 +100,8 @@ def test_chain_tampering(field: str) -> None:
 def test_unknown_cost_never_final(state: str, field: str) -> None:
     facts = copy.deepcopy(EXAMPLES["valid"]["NativeWorkFacts"])
     facts["outcome"] = state
+    if state == "failed":
+        facts.update(completed_count=3, failed_count=1)
     if state == "rejected":
         facts.update(completed_count=0, not_assessed_count=facts["requested_count"])
     value = {
@@ -155,3 +157,35 @@ def test_work_requires_positive_cpu_reservation(value: int | bool) -> None:
     reservation["cpu_reservation_ns"] = value
     with pytest.raises(ValidationError):
         c.StudyAttemptReservation.model_validate_json(json.dumps(reservation))
+
+
+@pytest.mark.parametrize(
+    "completed, failed, unassessed, valid", [(4, 0, 0, False), (0, 0, 4, False), (2, 1, 1, True)]
+)
+def test_failed_local_work_requires_failed_unit(
+    completed: int, failed: int, unassessed: int, valid: bool
+) -> None:
+    value = EXAMPLES["valid"]["NativeWorkFacts"] | dict(
+        outcome="failed",
+        completed_count=completed,
+        failed_count=failed,
+        not_assessed_count=unassessed,
+    )
+    if valid:
+        assert parse("NativeWorkFacts", value).model_dump()["failed_count"] == 1
+    else:
+        with pytest.raises(ValidationError):
+            parse("NativeWorkFacts", value)
+
+
+def test_candidate_prediction_and_engine_are_separate() -> None:
+    manifest = c.NativeStudyManifest.model_validate_json(
+        json.dumps(EXAMPLES["valid"]["NativeStudyManifest"])
+    )
+    assert (
+        manifest.artifact("candidate_config").sha256
+        != manifest.artifact("prediction_config").sha256
+    )
+    assert manifest.engine_fingerprint == "e" * 64
+    facts = c.NativeWorkFacts.model_validate_json(json.dumps(EXAMPLES["valid"]["NativeWorkFacts"]))
+    assert facts.schema_version == "strange-physics.native-work-facts.v1"

@@ -32,6 +32,11 @@ A model/report hash in these records is not permission to disclose evaluator
 material. N01 receives its actual public prefix and operation-local inputs,
 not the full ledger or evaluator records.
 
+Candidate-production and prediction configurations have distinct required artifact
+identities. The actual candidate configuration binds the model's fit_config_sha256;
+it does not substitute for predictor configuration or scorer protocol. The manifest
+also pins the actual Journal engine fingerprint.
+
 StudyArtifact identifies exact canonical producer bytes. Raw-byte equality
 is distinct from typed scientific equivalence. Consumers must validate the
 appropriate artifact type and cross-message joins, not trust a digest string.
