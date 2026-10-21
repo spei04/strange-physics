@@ -77,9 +77,11 @@ revised 2026-09-27. Appendix A.9/equation 59 describe a noise-whitened weighted
 model-disagreement surrogate, not exact mutual information. All three native
 selectors must share the same finite-grid candidate representation and
 inference engine. A renamed equivalent disagreement score is not an
-independent advance. The advertised [solver](https://github.com/murphyk/MDA)
-returned 404 on the audit date; no reason for absence is inferred. Separate
-benchmark repositories do not establish full solver availability.
+independent advance. The previously recorded
+[candidate solver location](https://github.com/murphyk/MDA) returned 404 on the
+audit date. The paper links the two benchmark repositories; an official
+full-solver link/revision was not verified. No reason for the 404 or universal
+absence claim is inferred. Benchmarks do not establish full solver availability.
 
 [AutoSciLab v1](https://arxiv.org/abs/2605.24043v1),2026-05-21, combines LLM
 hypotheses, experiment selection and refinement. The official
