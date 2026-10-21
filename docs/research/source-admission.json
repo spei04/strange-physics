@@ -1,0 +1,1212 @@
+{
+  "schema_version": "strange-physics.source-admission.v1",
+  "audited_on": "2026-10-21",
+  "review_due": "2026-11-20",
+  "scope": "RA-01 source admission only; no comparison execution or reproduction",
+  "repositories": [
+    {
+      "id": "strange-physics",
+      "url": "https://github.com/spei04/strange-physics",
+      "availability": "available",
+      "commit": "33ddfbf74837dde29e0f1db3b1b4263e7031ddc2",
+      "tree": "7ea7bc4873fbd7107438c6b1b54bc12ba764c349",
+      "committed_on": "2026-10-20",
+      "observed_default_head": "33ddfbf74837dde29e0f1db3b1b4263e7031ddc2",
+      "evidence": "Published PR100 planning/base identity. RA_EXEC activation is separate; this baseline is not a completed native comparison."
+    },
+    {
+      "id": "newtonbench",
+      "url": "https://github.com/HKUST-KnowComp/NewtonBench",
+      "availability": "available",
+      "commit": "912a4ba5f4356ddd06acc16e44460ca30be4abc2",
+      "tree": "88b68ea14e1ee6bc17a237642ab9eccde52faa48",
+      "committed_on": "2026-02-27",
+      "observed_default_head": "912a4ba5f4356ddd06acc16e44460ca30be4abc2",
+      "evidence": "GitHub repository API and complete recursive Git tree inspected 2026-10-21. Pinned default head; release tags and dependency ranges do not replace this identity."
+    },
+    {
+      "id": "pysr",
+      "url": "https://github.com/astroautomata/PySR",
+      "availability": "available",
+      "commit": "72a9ab982e72eb1c80a063b8fcc4b551daf9660e",
+      "tree": "2d1fff59a925ce73e2250c0eb1b43b2a8fcf2095",
+      "committed_on": "2026-10-19",
+      "observed_default_head": "72a9ab982e72eb1c80a063b8fcc4b551daf9660e",
+      "evidence": "GitHub repository API and complete recursive Git tree inspected 2026-10-21. Pinned default head; release tags and dependency ranges do not replace this identity."
+    },
+    {
+      "id": "symbolicregression",
+      "url": "https://github.com/astroautomata/SymbolicRegression.jl",
+      "availability": "available",
+      "commit": "83ca176f2274eb3bf815bf63ec7c91c51f1967e4",
+      "tree": "9bc2ef3074b554f74e7ae86784f70f239399cc5e",
+      "committed_on": "2026-10-17",
+      "observed_default_head": "83ca176f2274eb3bf815bf63ec7c91c51f1967e4",
+      "evidence": "GitHub repository API and complete recursive Git tree inspected 2026-10-21. Pinned default head; release tags and dependency ranges do not replace this identity."
+    },
+    {
+      "id": "pysindy",
+      "url": "https://github.com/dynamicslab/pysindy",
+      "availability": "available",
+      "commit": "c4421fcec275c8f4cc5c1e93bebb961b212067ae",
+      "tree": "af9f7a8e57cb6fd6a9745a74d3deefbbbb45f243",
+      "committed_on": "2026-03-24",
+      "observed_default_head": "c4421fcec275c8f4cc5c1e93bebb961b212067ae",
+      "evidence": "GitHub repository API and complete recursive Git tree inspected 2026-10-21. Pinned default head; release tags and dependency ranges do not replace this identity."
+    },
+    {
+      "id": "autoscilab",
+      "url": "https://github.com/scientific-discovery/LLM-AutoSciLab",
+      "availability": "available",
+      "commit": "467fa184ba537d26b2228ee3f3a8c052d9bfca58",
+      "tree": "c21c3c84c6d18fc0c5d20893cdc86bd192a75897",
+      "committed_on": "2026-10-20",
+      "observed_default_head": "467fa184ba537d26b2228ee3f3a8c052d9bfca58",
+      "evidence": "GitHub repository API and complete recursive Git tree inspected 2026-10-21. Pinned default head; release tags and dependency ranges do not replace this identity."
+    },
+    {
+      "id": "aces",
+      "url": "https://github.com/scientific-discovery/LLM-ACES",
+      "availability": "available",
+      "commit": "34ceeb99f57fb679763ed3ec3fb27b5115d03a18",
+      "tree": "57f2ffdfbd74af1c69da2d37db802286030bf9ee",
+      "committed_on": "2026-10-16",
+      "observed_default_head": "34ceeb99f57fb679763ed3ec3fb27b5115d03a18",
+      "evidence": "GitHub repository API and complete recursive Git tree inspected 2026-10-21. Pinned default head; release tags and dependency ranges do not replace this identity."
+    },
+    {
+      "id": "neuronbench",
+      "url": "https://github.com/murphyk/neuronbench",
+      "availability": "available",
+      "commit": "c354622458c460b419cab821d482c879f0578377",
+      "tree": "4b0fba903168abcdd85db9336a37944670a990c9",
+      "committed_on": "2026-08-12",
+      "observed_default_head": "c354622458c460b419cab821d482c879f0578377",
+      "evidence": "GitHub repository API and complete recursive Git tree inspected 2026-10-21. Pinned default head; release tags and dependency ranges do not replace this identity."
+    },
+    {
+      "id": "glucosebench",
+      "url": "https://github.com/murphyk/glucosebench",
+      "availability": "available",
+      "commit": "6bb0ff6f44513e1e816ac3f0827531a366e8d7a0",
+      "tree": "5fcef0344a0e91c99b61228a97fa81526591068b",
+      "committed_on": "2026-09-27",
+      "observed_default_head": "6bb0ff6f44513e1e816ac3f0827531a366e8d7a0",
+      "evidence": "GitHub repository API and complete recursive Git tree inspected 2026-10-21. Pinned default head; release tags and dependency ranges do not replace this identity."
+    },
+    {
+      "id": "zsindy",
+      "url": "https://github.com/josephbakarji/zsindy",
+      "availability": "available",
+      "commit": "c31039d826039e62fdf4cbcf71b8423bb1282a54",
+      "tree": "cebdec7ffb61c66e4d60b74e27d2df009a493a9b",
+      "committed_on": "2024-03-09",
+      "observed_default_head": "c31039d826039e62fdf4cbcf71b8423bb1282a54",
+      "evidence": "GitHub repository API and complete recursive Git tree inspected 2026-10-21. Pinned default head; release tags and dependency ranges do not replace this identity."
+    },
+    {
+      "id": "mda",
+      "url": "https://github.com/murphyk/MDA",
+      "availability": "unavailable",
+      "commit": null,
+      "tree": null,
+      "committed_on": null,
+      "observed_default_head": null,
+      "evidence": "Previously recorded candidate solver location returned HTTP404 via GitHub API on 2026-10-21. An official full-solver link/revision was not verified. Paper v5 explicitly links separate NeuronBench/GlucoseBench repositories, not a demonstrated complete solver."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "autoscilab-license",
+      "repository_id": "autoscilab",
+      "path": "LICENSE",
+      "sha256": "995d18e2d943826aa387aea2f6681fd7c0ad35a1d94efb38d7d5bec1a73c10ec",
+      "bytes": 1079,
+      "purpose": "license"
+    },
+    {
+      "id": "autoscilab-thirdparty",
+      "repository_id": "autoscilab",
+      "path": "THIRD_PARTY_LICENSES.md",
+      "sha256": "3c64f48c2f532e63ebd435a6d29545587d4b56225dd91f59a7244606ca660824",
+      "bytes": 1022,
+      "purpose": "notice"
+    },
+    {
+      "id": "autoscilab-req",
+      "repository_id": "autoscilab",
+      "path": "requirements.txt",
+      "sha256": "bbca49c395160debfb91735a6241fb52d3bff289c9a6afa532b6462c003d55f3",
+      "bytes": 190,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "aces-req",
+      "repository_id": "aces",
+      "path": "requirements.txt",
+      "sha256": "60ba54a942645b5339d440c463abc4c8d1a0b34435bce5025ef7450b34f63e90",
+      "bytes": 1637,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "aces-env",
+      "repository_id": "aces",
+      "path": "environment.yml",
+      "sha256": "16a7769644426bd257ea3fe326f069dbaf33a828256705e081184bcf47b703ce",
+      "bytes": 3121,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "pysindy-license",
+      "repository_id": "pysindy",
+      "path": "LICENSE",
+      "sha256": "abfa7f391ee1d5b6f51d473de5928e75ffae6e3cdbd21c19db78c98437efcbdd",
+      "bytes": 1239,
+      "purpose": "license"
+    },
+    {
+      "id": "pysindy-project",
+      "repository_id": "pysindy",
+      "path": "pyproject.toml",
+      "sha256": "2c00b706bb9fdf1ad3366b1dcaa32108fcc2133a5ff3555513879ffe910b6500",
+      "bytes": 2271,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "pysr-project",
+      "repository_id": "pysr",
+      "path": "pyproject.toml",
+      "sha256": "fc2c4771fafe16e7d8f9913538e839eecc72e015b709e33ec4da750870305d72",
+      "bytes": 1270,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "symbolic-project",
+      "repository_id": "symbolicregression",
+      "path": "Project.toml",
+      "sha256": "61088154ef346b9daca788c4bb1123ca4b5852a207ecc0fc75a1bf2b4e5ebca5",
+      "bytes": 3373,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "newton-req",
+      "repository_id": "newtonbench",
+      "path": "requirements.txt",
+      "sha256": "1c675fd2f6b4a88dba7cf5592e8cb73a4b54865aadc9331a78f2bdf576d65f12",
+      "bytes": 178,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "neuron-project",
+      "repository_id": "neuronbench",
+      "path": "pyproject.toml",
+      "sha256": "40ec53f1ba4b6eebd2601bc021502ecd49a99dc389d84a5d921c99b5e7d96b21",
+      "bytes": 1142,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "glucose-project",
+      "repository_id": "glucosebench",
+      "path": "pyproject.toml",
+      "sha256": "d0a95debae275834649de9947980fcdd7c0576878efd329bc2a187bccdaab2ce",
+      "bytes": 904,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "glucose-req",
+      "repository_id": "glucosebench",
+      "path": "requirements-repro.txt",
+      "sha256": "191a4f7fd374b4a01db783ab2f6970030a9adccbf2ae2075bdaee2b82cc7cc2a",
+      "bytes": 108,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "zsindy-req",
+      "repository_id": "zsindy",
+      "path": "requirements.txt",
+      "sha256": "5289dbab7b6d96698a6a2e636a844f7c725dcd3f30a0850d21e100d3245bdce8",
+      "bytes": 93,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "newton-license",
+      "repository_id": "newtonbench",
+      "path": "LICENSE",
+      "sha256": "47158d3a1eb6cbebe82fab657c11d4959c453f4d803b103a132b4627b63719f0",
+      "bytes": 1071,
+      "purpose": "license"
+    },
+    {
+      "id": "newton-readme",
+      "repository_id": "newtonbench",
+      "path": "README.md",
+      "sha256": "1f00832820ab364cc0e759ab8f8f854212440bf1cb847db08a2c90fe950a565c",
+      "bytes": 12156,
+      "purpose": "recipe"
+    },
+    {
+      "id": "pysr-license",
+      "repository_id": "pysr",
+      "path": "LICENSE",
+      "sha256": "56423973a619185f498f8bbc22dc7026e6d40ad202a49bb8721ec09c355f27a0",
+      "bytes": 11343,
+      "purpose": "license"
+    },
+    {
+      "id": "pysr-readme",
+      "repository_id": "pysr",
+      "path": "README.md",
+      "sha256": "43fbdfe03115f0839ffa64099d1a1e729f6b29c4e45fa6bb8288da64b6a99aea",
+      "bytes": 32428,
+      "purpose": "recipe"
+    },
+    {
+      "id": "pysr-julia",
+      "repository_id": "pysr",
+      "path": "pysr/juliapkg.json",
+      "sha256": "7551dcde357abb41cd85e03c5ed74602528c5d707d3a18de1a6f64d55b4bf96c",
+      "bytes": 407,
+      "purpose": "dependencies"
+    },
+    {
+      "id": "symbolic-license",
+      "repository_id": "symbolicregression",
+      "path": "LICENSE",
+      "sha256": "56423973a619185f498f8bbc22dc7026e6d40ad202a49bb8721ec09c355f27a0",
+      "bytes": 11343,
+      "purpose": "license"
+    },
+    {
+      "id": "pysindy-readme",
+      "repository_id": "pysindy",
+      "path": "README.rst",
+      "sha256": "1dd26a42b52b417ea136d8bfe57b68f5d84e973cfd4ffd47c0434b59e77b47a6",
+      "bytes": 5263,
+      "purpose": "recipe"
+    },
+    {
+      "id": "autoscilab-readme",
+      "repository_id": "autoscilab",
+      "path": "README.md",
+      "sha256": "27173942bb279eab2584e887cba9dc48bc41fed7afb5502b7030b604c986b25d",
+      "bytes": 4838,
+      "purpose": "recipe"
+    },
+    {
+      "id": "autoscilab-discovery",
+      "repository_id": "autoscilab",
+      "path": "autoscilab/loop/discovery.py",
+      "sha256": "3b388bdab3e49621ee5180e00e5f73bbb815a21292e2625cd09c2df33d0b447e",
+      "bytes": 151936,
+      "purpose": "leakage"
+    },
+    {
+      "id": "autoscilab-memory",
+      "repository_id": "autoscilab",
+      "path": "autoscilab/llm/memory.py",
+      "sha256": "a0b69df53749a33e1094a1368e6906a75e5b36c3ece4fdd99d6e3d95c6ac4e1d",
+      "bytes": 20642,
+      "purpose": "leakage"
+    },
+    {
+      "id": "aces-readme",
+      "repository_id": "aces",
+      "path": "README.md",
+      "sha256": "b7fc3ebd363da229ca56506614d348c9af9ed03bc149db1f1523ffda778e0a09",
+      "bytes": 5841,
+      "purpose": "recipe"
+    },
+    {
+      "id": "neuron-license",
+      "repository_id": "neuronbench",
+      "path": "LICENSE",
+      "sha256": "f32b8c05d04d1d121dd510d183cd982a25f3c0656b874672cf65adbf53ae85f7",
+      "bytes": 1071,
+      "purpose": "license"
+    },
+    {
+      "id": "neuron-readme",
+      "repository_id": "neuronbench",
+      "path": "README.md",
+      "sha256": "7d09954735aa4d0df02e0b1997755893b8d2e032245de0ba6f822dc4f48ac4b7",
+      "bytes": 12264,
+      "purpose": "recipe"
+    },
+    {
+      "id": "glucose-license",
+      "repository_id": "glucosebench",
+      "path": "LICENSE",
+      "sha256": "f32b8c05d04d1d121dd510d183cd982a25f3c0656b874672cf65adbf53ae85f7",
+      "bytes": 1071,
+      "purpose": "license"
+    },
+    {
+      "id": "glucose-readme",
+      "repository_id": "glucosebench",
+      "path": "README.md",
+      "sha256": "4add51858951d38a5b3e9c9abfa539887335a57244b7cd6b720364de01e8a1d4",
+      "bytes": 9917,
+      "purpose": "recipe"
+    },
+    {
+      "id": "zsindy-readme",
+      "repository_id": "zsindy",
+      "path": "README.md",
+      "sha256": "4f9bb73777d24cced8404dc155f23ccaa6084291c25e6fad9b6906dd55961f63",
+      "bytes": 2842,
+      "purpose": "recipe"
+    },
+    {
+      "id": "glucose-vendor-license",
+      "repository_id": "glucosebench",
+      "path": "src/glucosebench/_vendor/simglucose/LICENSE",
+      "sha256": "ddfd0daee4b3569977580f2d4fc52ffc953c88db7b97f81abecfe2c003e10c75",
+      "bytes": 1052,
+      "purpose": "license"
+    },
+    {
+      "id": "glucose-notice",
+      "repository_id": "glucosebench",
+      "path": "NOTICE.md",
+      "sha256": "1dc632ed4cdf5fb7c1e30f73bbf5b38d566127462bbbb41efdb4dc6200311ab2",
+      "bytes": 1134,
+      "purpose": "notice"
+    },
+    {
+      "id": "glucose-provenance",
+      "repository_id": "glucosebench",
+      "path": "src/glucosebench/_vendor/simglucose/PROVENANCE.json",
+      "sha256": "05f2487eb90ca4e4e93206d694ca1bbd25b821b58873588db899c455596ee1ab",
+      "bytes": 2599,
+      "purpose": "provenance"
+    },
+    {
+      "id": "pysindy-sbr",
+      "repository_id": "pysindy",
+      "path": "pysindy/optimizers/sbr.py",
+      "sha256": "452a2288728623989b45980acaa37cc52b4e189e672cf3eb68d87d93bcd3fdf8",
+      "bytes": 8025,
+      "purpose": "leakage"
+    },
+    {
+      "id": "native-license",
+      "repository_id": "strange-physics",
+      "path": "LICENSE",
+      "sha256": "a1a9d94147f77896df47fe643153fc7edeb1e326a62b74ead862d57fa4517dcd",
+      "bytes": 1063,
+      "purpose": "license"
+    },
+    {
+      "id": "native-lock",
+      "repository_id": "strange-physics",
+      "path": "uv.lock",
+      "sha256": "b83593cf033d0459848ceb699b1067706566ac09e23d864733698a5077b04b85",
+      "bytes": 250735,
+      "purpose": "dependencies"
+    }
+  ],
+  "runtime_notices": [
+    {
+      "package": "annotated-types",
+      "version": "0.8.0",
+      "path": "annotated_types-0.8.0.dist-info/licenses/LICENSE",
+      "sha256": "fe1049884b1a0d9342901e88e07f32925d24b3121d9972b6a6805fb9824b095d",
+      "bytes": 1083
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/LICENSE.txt",
+      "sha256": "4860083caa0de2ac3292ca98bd074bd8f45d8b32624e37b1e70a240bff61e488",
+      "bytes": 46794
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+      "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec",
+      "bytes": 1018
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+      "sha256": "3f2c1ffa76383a55ae0aac01c9737cd70050dff63e1f026694fbe9d662573c98",
+      "bytes": 690
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+      "sha256": "e340270d4f64384569a91d546acb5b094d69ce47f0c015db77abb74dc6f815af",
+      "bytes": 20785
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+      "sha256": "f7b14309e5f54e5022b26448eefd419988ada2aec01d3c1162d84a0ea8f21f2c",
+      "bytes": 1414
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+      "sha256": "211e7d737d6179a08f791ebb0a99897ce7cd2457410c542876d125576edfe910",
+      "bytes": 1514
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+      "sha256": "c17011467b4fe6e20fbfbeda4df09e58c2bca5480a063e55735a4000a379aad9",
+      "bytes": 1543
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+      "sha256": "a85ca13fdf90160b64a0698215868c13b74d835ad0a4e2ba44713b8c5058a056",
+      "bytes": 1498
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+      "sha256": "a14cc25e10d40a3aa705b7de2fb764a6535d8ee9b2db4e1724900585457dfd55",
+      "bytes": 2266
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE",
+      "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6",
+      "bytes": 1593
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md",
+      "sha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f",
+      "bytes": 3511
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+      "sha256": "469778be8f33d54e1bcaab28c281cc472916d2d273f835e55bc487d30503face",
+      "bytes": 2745
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+      "sha256": "0e111337b25494a773106695f0e799f642b8567aaacca4f116a74a8177179156",
+      "bytes": 2926
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+      "sha256": "e7d4f4fb20358f314210a892ae17351e04993813646f697ec387385ca2a36918",
+      "bytes": 1154
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+      "sha256": "6f5828a57223d4cc7f8ea505a2623e7b978b242752c1515e355f46ba2cec1800",
+      "bytes": 1509
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+      "sha256": "9d4098846018319cd68e228ee6220361787f73bccbf00237a85e4fc9621b998f",
+      "bytes": 1226
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.3",
+      "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+      "sha256": "268b0ca06759d31ea3ca68dd35f20e877916e927b1c2a835e4592a3c4354b1f9",
+      "bytes": 332
+    },
+    {
+      "package": "pydantic",
+      "version": "2.13.5",
+      "path": "pydantic-2.13.5.dist-info/licenses/LICENSE",
+      "sha256": "a9e186f3ca16b5eef84318e7a701721351a00cb7b8ae3a4394b67b49e3529ef3",
+      "bytes": 1129
+    },
+    {
+      "package": "pydantic_core",
+      "version": "2.46.5",
+      "path": "pydantic_core-2.46.5.dist-info/licenses/LICENSE",
+      "sha256": "2afdd30d54b4d62b6f488a6bcc1546e84ec5061f13f4209c03d012348783795a",
+      "bytes": 1080
+    },
+    {
+      "package": "typing_extensions",
+      "version": "4.16.0",
+      "path": "typing_extensions-4.16.0.dist-info/licenses/LICENSE",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "bytes": 13936
+    },
+    {
+      "package": "typing-inspection",
+      "version": "0.4.4",
+      "path": "typing_inspection-0.4.4.dist-info/licenses/LICENSE",
+      "sha256": "804b59b25f2c31bd278f9202a19ae49a3945aa2664387e2d0a128c7cacc61ec3",
+      "bytes": 1090
+    }
+  ],
+  "methods": [
+    {
+      "id": "native-linear-spring",
+      "title": "Self-authored native linear-spring comparison foundation",
+      "papers": [
+        {
+          "title": "Approved first native comparison proposal and accepted I1 base",
+          "url": "https://github.com/spei04/strange-physics/blob/33ddfbf74837dde29e0f1db3b1b4263e7031ddc2/docs/research/NATIVE_COMPARISON_PROPOSAL.md",
+          "version": "33ddfbf74837dde29e0f1db3b1b4263e7031ddc2",
+          "first_published": "2026-10-20",
+          "version_published": "2026-10-20",
+          "sections": "Self-authored native path; no claim of external paper reproduction or already implemented new producers."
+        }
+      ],
+      "repository_ids": [
+        "strange-physics"
+      ],
+      "license": {
+        "status": "grant_verified",
+        "expression": "MIT",
+        "evidence_ids": [
+          "native-license"
+        ],
+        "obligations": "Retain complete copyright/license notices for any copied/distributed material; dependency and data terms remain separate. No external solver/model weights copied; existing runtime notices retained separately."
+      },
+      "dependencies": {
+        "status": "existing_locked_runtime",
+        "runtime": "CPython 3.12.3; uv 0.11.21; existing Linux environment; numpy 2.5.3, pydantic 2.13.5, pydantic-core 2.46.5, annotated-types 0.8.0, typing-extensions 4.16.0, typing-inspection 0.4.4. Exact full resolution/artifact hashes in uv.lock.",
+        "evidence_ids": [
+          "native-lock"
+        ],
+        "transitive_review": "22 actual distributed notice/license files of the six transitive runtime distributions indexed below. NumPy bundles multiple notices (including numerical libraries/runtime exceptions); do not reduce the whole wheel to one SPDX label. Development/CI tools remain pinned in the same lock; no redistribution or new installation."
+      },
+      "recipe": {
+        "kind": "existing_native_validation",
+        "commands": [
+          [
+            ".venv/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "no:cacheprovider",
+            "tests/test_fitting.py",
+            "tests/test_prediction.py",
+            "tests/test_evaluation.py",
+            "tests/test_scientific_workflow.py"
+          ]
+        ],
+        "working_directory": "Existing strange-physics checkout; baseline files at 33ddfbf, with unchanged locked runtime.",
+        "prerequisites": [
+          "Use approved project source base and unchanged uv.lock in the existing owned environment.",
+          "This is existing baseline validation, not the 36-episode recipe; new native producers and final manifest must be reviewed first."
+        ],
+        "inputs": "Existing repository synthetic regression fixtures only; no private journals or external datasets.",
+        "expected_artifacts": [
+          "Pytest exit status and complete log; no study scores or external reproduction artifact."
+        ],
+        "executed_in_ra01": false,
+        "limitations": "Existing tests are a runnable baseline check. Future native run command/config hashes are unresolved until RA-N01/N02.a/N03/N04 and final manifest/cost/failure gates."
+      },
+      "reproduction_status": "self_authored_baseline",
+      "review_date": "2026-10-21",
+      "admission": "native_implementation",
+      "rationale": "GO for source admission and self-authored implementation only. Execution of the not-yet-built comparison still waits all approved producer and frozen-manifest gates; missing external code is not a dependency.",
+      "artifact_availability": "Accepted I1 source/tests exist. New grid producer, calibration, selector and run artifacts do not yet exist.",
+      "leakage_boundary": "Fitter/predictor/acquisition receive only public purchased data and own predictions. Evaluator labels and truth stay separate; actual candidate models bind each arm's own prefix. All selectors share the same finite-grid engine. Positive discrepancy/prior sensitivity, failure accounting, independent scores and later Laplace remain required.",
+      "inspiration_only": false
+    },
+    {
+      "id": "newtonbench",
+      "title": "NewtonBench benchmark",
+      "papers": [
+        {
+          "title": "NewtonBench",
+          "url": "https://arxiv.org/abs/2510.07172v3",
+          "version": "v3",
+          "first_published": "2025-10-08",
+          "version_published": "2026-02-24",
+          "sections": "Interactive benchmark and metaphysical shifts:324 tasks/12 domains."
+        }
+      ],
+      "repository_ids": [
+        "newtonbench"
+      ],
+      "license": {
+        "status": "grant_verified",
+        "expression": "MIT",
+        "evidence_ids": [
+          "newton-license"
+        ],
+        "obligations": "Retain complete copyright/license notices for any copied/distributed material; dependency and data terms remain separate. "
+      },
+      "dependencies": {
+        "status": "unlocked_external",
+        "runtime": "README Python 3.10; lower-bound requirements inclnumpy/scipy/sympy/openai; no full lock.",
+        "evidence_ids": [
+          "newton-req"
+        ],
+        "transitive_review": "Manifest read, not installed/resolved. A complete platform-specific transitive lock, artifact hashes and license/notice review are required before execution or redistribution. "
+      },
+      "recipe": {
+        "kind": "upstream_unexecuted",
+        "commands": [
+          [
+            "python",
+            "quick_start.py"
+          ],
+          [
+            "python",
+            "result_analysis/summarize_results.py"
+          ]
+        ],
+        "working_directory": "Separate immutable upstream checkout at the listed commit; never the privileged project environment.",
+        "prerequisites": [
+          "Future isolated environment resolved from exact source; retain MIT notice.",
+          "Default quick start requires separately authorized provider credentials/budget; not admitted to this offline comparison."
+        ],
+        "inputs": "Bundled benchmark modules and configured provider, not our purchased observation interface.",
+        "expected_artifacts": [
+          "Benchmark evaluation_results and summary CSVs as described upstream."
+        ],
+        "executed_in_ra01": false,
+        "limitations": "Instructions inspected only. Provider result availability and exact replay are not verified; paper results are author claims."
+      },
+      "reproduction_status": "not_reproduced",
+      "review_date": "2026-10-21",
+      "admission": "deferred",
+      "rationale": "Licensed benchmark candidate; external/provider execution outside native admission.",
+      "artifact_availability": "95-file source tree and release tags exist; no release assets. Bundled benchmark modules; no fresh outputs reproduced.",
+      "leakage_boundary": "Simulator/truth and LLM/code-interpreter benchmark runner must be separated before reuse. Metaphysical task shifts are not evidence for hidden within-run law-change adaptation.",
+      "inspiration_only": true
+    },
+    {
+      "id": "mda",
+      "title": "MDA solver",
+      "papers": [
+        {
+          "title": "Model Discovery Agent",
+          "url": "https://arxiv.org/abs/2608.09696v5",
+          "version": "v5",
+          "first_published": "2026-08-10",
+          "version_published": "2026-09-27",
+          "sections": "A.3/A.6/BIC/SMC, A.9 eq59 surrogate; benchmark appendices C/D."
+        }
+      ],
+      "repository_ids": [
+        "mda"
+      ],
+      "license": {
+        "status": "unavailable",
+        "expression": null,
+        "evidence_ids": [],
+        "obligations": "No verified official full-solver source/license; paper access does not license missing code."
+      },
+      "dependencies": {
+        "status": "unavailable",
+        "runtime": "Full solver environment and lock unavailable.",
+        "evidence_ids": [],
+        "transitive_review": "Cannot verify absent solver dependencies."
+      },
+      "recipe": {
+        "kind": "unavailable",
+        "commands": [],
+        "working_directory": "Separate immutable upstream checkout at the listed commit; never the privileged project environment.",
+        "prerequisites": [
+          "Obtain an official licensed full solver revision and exact environment without bypassing access restrictions."
+        ],
+        "inputs": "Unavailable solver package.",
+        "expected_artifacts": [
+          "No executable solver/output recipe can honestly be supplied."
+        ],
+        "executed_in_ra01": false,
+        "limitations": "NO executable reproduction recipe; benchmark repositories are not substitutes."
+      },
+      "reproduction_status": "not_reproduced",
+      "review_date": "2026-10-21",
+      "admission": "no_go",
+      "rationale": "No-go for solver reuse/reproduction. Paper-only inspiration is permitted with attribution; native grid/disagreement is independently implemented.",
+      "artifact_availability": "Candidate repository returned404. Official paper links separate NeuronBench/GlucoseBench benchmarks. No official full-solver commit/license was verified; no universal claim of absence.",
+      "leakage_boundary": "A.9 noise-whitened weighted disagreement is a Gaussian/moment surrogate, not exact MI. Same candidate representation/posterior must be held fixed in selector comparisons; no claimed new EIG advance.",
+      "inspiration_only": true
+    },
+    {
+      "id": "autoscilab",
+      "title": "LLM-AutoSciLab",
+      "papers": [
+        {
+          "title": "LLM-AutoSciLab",
+          "url": "https://arxiv.org/abs/2605.24043v1",
+          "version": "v1",
+          "first_published": "2026-05-21",
+          "version_published": "2026-05-21",
+          "sections": "Method; Appendix C metric/LLM judge and E.1 ground-truth quality feedback."
+        }
+      ],
+      "repository_ids": [
+        "autoscilab"
+      ],
+      "license": {
+        "status": "grant_verified",
+        "expression": "MIT",
+        "evidence_ids": [
+          "autoscilab-license",
+          "autoscilab-thirdparty"
+        ],
+        "obligations": "Retain complete copyright/license notices for any copied/distributed material; dependency and data terms remain separate. 2026-10-20 added grant. Third-party notice names NewtonBench MIT, PySR Apache-2.0, NOTEARS Apache-2.0, GENIE3/GIES GPL-2.0-or-later, Qwen Apache-2.0; these are scoped notices, not verified blanket compatibility."
+      },
+      "dependencies": {
+        "status": "unlocked_external",
+        "runtime": "Python 3.11+; requirements lower bounds, no lock; default hostedGPT4o-mini and optional local/hosted ensembles.",
+        "evidence_ids": [
+          "autoscilab-req"
+        ],
+        "transitive_review": "Manifest read, not installed/resolved. A complete platform-specific transitive lock, artifact hashes and license/notice review are required before execution or redistribution. Model weights/provider terms are separate and unverified for execution."
+      },
+      "recipe": {
+        "kind": "upstream_unexecuted",
+        "commands": [
+          [
+            "python",
+            "scripts/run_all_benchmarks.py",
+            "--benchmark",
+            "all",
+            "--workers",
+            "1",
+            "--limit",
+            "1"
+          ]
+        ],
+        "working_directory": "Separate immutable upstream checkout at the listed commit; never the privileged project environment.",
+        "prerequisites": [
+          "Future separately scoped isolated environment, complete transitive licenses/lock and provider/model approval.",
+          "A purchased-only adapter must remove truth score feedback/final selection and be described as an adaptation, not faithful reproduction."
+        ],
+        "inputs": "Bundled Newton/Chem/GRN configs and model endpoints.",
+        "expected_artifacts": [
+          "results/paper_release_runs as documented upstream; not produced here."
+        ],
+        "executed_in_ra01": false,
+        "limitations": "Runnable upstream command is documented, not authorized/executed; changing leakage paths changes the method."
+      },
+      "reproduction_status": "not_reproduced",
+      "review_date": "2026-10-21",
+      "admission": "deferred",
+      "rationale": "New root MIT grant verified; unchanged truth-conditioned loop prevents admission as our sealed-evaluator method.",
+      "artifact_availability": "Minimal code/config/vendor release present; no GitHub release assets or downloaded weights.351aae\u2192467fa184 changes onlyLICENSE, THIRD_PARTY_LICENSES, README.",
+      "leakage_boundary": "Pinned discovery.py1928/1971/2182 calls evaluate_law for intermediate/final candidates; memory.py384/401 exposes GT_RMSLE. Optional flags do not prove all truth paths are sealed. Keep private scores unavailable to acquisition/final model selection.",
+      "inspiration_only": true
+    },
+    {
+      "id": "aces",
+      "title": "LLM-ACES",
+      "papers": [
+        {
+          "title": "LLM-ACES",
+          "url": "https://arxiv.org/abs/2606.25039v1",
+          "version": "v1",
+          "first_published": "2026-06-23",
+          "version_published": "2026-06-23",
+          "sections": "Method; section3.1 one run per system and held-out initial conditions."
+        }
+      ],
+      "repository_ids": [
+        "aces"
+      ],
+      "license": {
+        "status": "missing_grant",
+        "expression": null,
+        "evidence_ids": [],
+        "obligations": "README MIT badge/link does not replace a repository license grant. Complete pinned tree lacks LICENSE/COPYING; reuse no-go pending explicit grant."
+      },
+      "dependencies": {
+        "status": "unlocked_external",
+        "runtime": "Python 3.11.15 environment; torch 2.4.1/CUDA 12, PySR 1.5.10, juliacall 0.9.26, PySINDy 2.1.0, numpy 1.26.4. Version pins lack wheel hashes and a complete Julia/model lock.",
+        "evidence_ids": [
+          "aces-req",
+          "aces-env"
+        ],
+        "transitive_review": "Manifest read, not installed/resolved. A complete platform-specific transitive lock, artifact hashes and license/notice review are required before execution or redistribution. "
+      },
+      "recipe": {
+        "kind": "upstream_unexecuted",
+        "commands": [
+          [
+            "python",
+            "generate_ode.py"
+          ],
+          [
+            "python",
+            "llm-aces/active_llm_aces.py",
+            "--data_path",
+            "data/ode/duffing-equation/duffing-equation.npz",
+            "--use_api",
+            "true",
+            "--api_model",
+            "gpt-4o-mini",
+            "--n_iterations",
+            "10",
+            "--n_virtual",
+            "10"
+          ]
+        ],
+        "working_directory": "Separate immutable upstream checkout at the listed commit; never the privileged project environment.",
+        "prerequisites": [
+          "Explicit code/data license grant.",
+          "Separate isolation/dependency/model/provider budget approval; fix README placeholdercloneURL using recorded official repository."
+        ],
+        "inputs": "Bundled equation definitions generate train/generalization/OOD arrays; model endpoint required.",
+        "expected_artifacts": [
+          "NPZ files, logs/*.jsonl and outputs/best-equation JSON per upstream README."
+        ],
+        "executed_in_ra01": false,
+        "limitations": "Commands are unexecuted instructions only. Main paper reports one run/system, not uncertainty from repeated runs. No license inferred from pip metadata."
+      },
+      "reproduction_status": "not_reproduced",
+      "review_date": "2026-10-21",
+      "admission": "no_go",
+      "rationale": "No-go external code reuse until grant verified; operator priors and disagreement are attributed ideas only.",
+      "artifact_availability": "31-file source and dependency/environment files; no license or release assets. Weights not supplied/verified.",
+      "leakage_boundary": "Dynamical ODE/held-out IC method is closer to trajectories, but derivative/oracle access differs from purchased noisy positions. No within-run unannounced change protocol established by this audit.",
+      "inspiration_only": true
+    },
+    {
+      "id": "pysr",
+      "title": "PySR and SymbolicRegression.jl",
+      "papers": [
+        {
+          "title": "Interpretable Machine Learning for Science with PySR and SymbolicRegression.jl",
+          "url": "https://arxiv.org/abs/2305.01582v3",
+          "version": "v3",
+          "first_published": "2023-05-02",
+          "version_published": "2023-05-05",
+          "sections": "Evolutionary symbolic regression; separate from probabilistic calibration."
+        }
+      ],
+      "repository_ids": [
+        "pysr",
+        "symbolicregression"
+      ],
+      "license": {
+        "status": "grant_verified",
+        "expression": "Apache-2.0",
+        "evidence_ids": [
+          "pysr-license",
+          "symbolic-license"
+        ],
+        "obligations": "Retain complete copyright/license notices for any copied/distributed material; dependency and data terms remain separate. Preserve license/attribution, applicable NOTICE and modification notices; separately audit Julia dependencies."
+      },
+      "dependencies": {
+        "status": "unlocked_external",
+        "runtime": "PySR 2.7.2, SymbolicRegression.jl 2.7.2; Python>=3.10. juliapkg requestsJulia'=1.10.0,1.10.3' and SymbolicRegression~2.7.2; ProjectJulia compat1.10. Not a complete resolved Julia manifest.",
+        "evidence_ids": [
+          "pysr-project",
+          "pysr-julia",
+          "symbolic-project"
+        ],
+        "transitive_review": "Manifest read, not installed/resolved. A complete platform-specific transitive lock, artifact hashes and license/notice review are required before execution or redistribution. "
+      },
+      "recipe": {
+        "kind": "upstream_unexecuted",
+        "commands": [
+          [
+            "python",
+            "-c",
+            "import numpy as np; from pysr import PySRRegressor; X=np.arange(20,dtype=float).reshape(-1,1); y=2*X[:,0]+1; m=PySRRegressor(niterations=5,binary_operators=['+','*'],unary_operators=[]); m.fit(X,y); print(m.equations_)"
+          ]
+        ],
+        "working_directory": "Separate immutable upstream checkout at the listed commit; never the privileged project environment.",
+        "prerequisites": [
+          "Future isolated pinned Python+Julia artifacts/lock with no runtime network bootstrap.",
+          "Deterministic resources/seeds/operator/feature policy and adapter admitted before comparison."
+        ],
+        "inputs": "Self-authored simple regression smoke data; no private world coefficients provided to a study selector.",
+        "expected_artifacts": [
+          "Equation table and upstream model files; expected smoke output is not a guaranteed paper-reproduction result."
+        ],
+        "executed_in_ra01": false,
+        "limitations": "PySR API smoke recipe adapted fromREADME; not run and not a trajectory/Bayesian calibration result."
+      },
+      "reproduction_status": "not_reproduced",
+      "review_date": "2026-10-21",
+      "admission": "deferred",
+      "rationale": "Source grants verified; resolver/runtime bootstrap, full transitives and SCI adapter remain gated. Not required for first native comparison.",
+      "artifact_availability": "Exact source/releasev2.7.2 exists; no release assets. Python and Julia package identities are separate.",
+      "leakage_boundary": "Training targets/features must derive only from purchased observations. Operators/dimensions/hidden truth cannot be leaked via adapter configuration. Evolutionary fits are not calibrated posterior evidence.",
+      "inspiration_only": true
+    },
+    {
+      "id": "pysindy",
+      "title": "PySINDy weak-form and sparse Bayesian reference",
+      "papers": [
+        {
+          "title": "PySINDy: A Python package for sparse identification",
+          "url": "https://joss.theoj.org/papers/10.21105/joss.02104",
+          "version": "JOSS5(49),2104",
+          "first_published": "2020-05-18",
+          "version_published": "2020-05-18",
+          "sections": "Software paper; current weak-form/SBR behavior requires pinned implementation review."
+        },
+        {
+          "title": "Sparsifying Priors for Bayesian Uncertainty Quantification in Model Discovery",
+          "url": "https://arxiv.org/abs/2107.02107v1",
+          "version": "v1",
+          "first_published": "2021-07-05",
+          "version_published": "2021-07-05",
+          "sections": "UQ-SINDy MCMC priors; current PySINDy SBR explicitly differs by derivative-space error model."
+        }
+      ],
+      "repository_ids": [
+        "pysindy"
+      ],
+      "license": {
+        "status": "grant_verified",
+        "expression": "MIT",
+        "evidence_ids": [
+          "pysindy-license"
+        ],
+        "obligations": "Retain complete copyright/license notices for any copied/distributed material; dependency and data terms remain separate. Actual LICENSE includes sparsereg and PySINDy copyright notices; GitHub NOASSERTION metadata does not negate the file."
+      },
+      "dependencies": {
+        "status": "unlocked_external",
+        "runtime": "Python>=3.11, numpy>=2, scipy/sklearn/derivative ranges; weak-form can use core. SBR addsjax/numpyro; MIOSR/Gurobi is optional and not admitted.",
+        "evidence_ids": [
+          "pysindy-project"
+        ],
+        "transitive_review": "Manifest read, not installed/resolved. A complete platform-specific transitive lock, artifact hashes and license/notice review are required before execution or redistribution. "
+      },
+      "recipe": {
+        "kind": "upstream_unexecuted",
+        "commands": [
+          [
+            "python",
+            "-c",
+            "import numpy as np; import pysindy as ps; t=np.linspace(0,1,101); x=np.exp(-t)[:,None]; m=ps.SINDy(); m.fit(x,t=t); print(m.equations())"
+          ]
+        ],
+        "working_directory": "Separate immutable upstream checkout at the listed commit; never the privileged project environment.",
+        "prerequisites": [
+          "Future isolated complete lock/licenses for the selected extra; no blanket all-extras installation.",
+          "Separate weak-form/SBR exact fixture, discretization/error model and output audit before method reproduction."
+        ],
+        "inputs": "Basic public synthetic exponential smoke; full weak/SBR reproduction protocol remains separately scoped.",
+        "expected_artifacts": [
+          "Printed equation from basic API smoke; weak-form/SBR posterior artifacts not claimed."
+        ],
+        "executed_in_ra01": false,
+        "limitations": "Basic SINDy smoke is executable instruction, not a recipe claiming weak/SBR paper reproduction. sbr.py explicitly uses derivative residuals rather than state likelihood and NUTS posterior means."
+      },
+      "reproduction_status": "not_reproduced",
+      "review_date": "2026-10-21",
+      "admission": "deferred",
+      "rationale": "Verified MIT source is a later reference option; no external execution or uncertainty-calibration claim.",
+      "artifact_availability": "Core/weak/SBR source and examples available. Unlocked optional Bayesian stack uninstalled; no results reproduced.",
+      "leakage_boundary": "Weak integrals can avoid derivative amplification; finite quadrature/boundaries remain measurable error. SBR implementation differs from cited state-space UQ-SINDy, so do not relabel it faithful reproduction.",
+      "inspiration_only": true
+    },
+    {
+      "id": "zsindy",
+      "title": "ZSINDy Bayesian sparse discovery",
+      "papers": [
+        {
+          "title": "Statistical mechanics of dynamical system identification",
+          "url": "https://doi.org/10.1103/4d98-tdlp",
+          "version": "PhysRevResearch7,033181",
+          "first_published": "2025-08-21",
+          "version_published": "2025-08-21",
+          "sections": "Sparse equation discovery and closed-form conditional posterior; not nonlinear arbitrary-model evidence."
+        }
+      ],
+      "repository_ids": [
+        "zsindy"
+      ],
+      "license": {
+        "status": "missing_grant",
+        "expression": null,
+        "evidence_ids": [],
+        "obligations": "No LICENSE/COPYING in complete pinned11-file tree; paperCC-BY does not license code. Do not infer grant from README'open-source'."
+      },
+      "dependencies": {
+        "status": "unlocked_external",
+        "runtime": "Mixed pins/ranges:PySINDy 1.7.5, scipy 1.11.3 plus unboundednumpy; no resolved lock/runtime.",
+        "evidence_ids": [
+          "zsindy-req"
+        ],
+        "transitive_review": "Manifest read, not installed/resolved. A complete platform-specific transitive lock, artifact hashes and license/notice review are required before execution or redistribution. "
+      },
+      "recipe": {
+        "kind": "upstream_unexecuted",
+        "commands": [
+          [
+            "python",
+            "-c",
+            "from zsindy.ml_module import ZSindy; print(ZSindy)"
+          ]
+        ],
+        "working_directory": "Separate immutable upstream checkout at the listed commit; never the privileged project environment.",
+        "prerequisites": [
+          "Verify explicit code license and full package/source/lock identity before reuse.",
+          "Replace this import-only preflight with a separately frozen science recipe if later admitted."
+        ],
+        "inputs": "Pinned repository source only; no fetched restricted data.",
+        "expected_artifacts": [
+          "Import/class identity stdout only; no coefficient/posterior reproduction."
+        ],
+        "executed_in_ra01": false,
+        "limitations": "README provides Lorenz examples but unseeded noise and unresolved environment prevent an exact scientific replay recipe. No execution allowed by this record."
+      },
+      "reproduction_status": "not_reproduced",
+      "review_date": "2026-10-21",
+      "admission": "no_go",
+      "rationale": "No-go reuse pending grant; mathematical paper may inform self-authored analysis with attribution.",
+      "artifact_availability": "2024 code pin predates2025 journal paper;11 files, no license/release assets/full run provenance.",
+      "leakage_boundary": "Conditional closed-form Bayesian linear-library results do not establish general nonlinear mechanistic evidence or selector superiority.",
+      "inspiration_only": true
+    },
+    {
+      "id": "neuronbench",
+      "title": "NeuronBench benchmark, not MDA solver",
+      "papers": [
+        {
+          "title": "Model Discovery Agent",
+          "url": "https://arxiv.org/abs/2608.09696v5",
+          "version": "v5",
+          "first_published": "2026-08-10",
+          "version_published": "2026-09-27",
+          "sections": "A.3/A.6/BIC/SMC, A.9 eq59 surrogate; benchmark appendices C/D."
+        }
+      ],
+      "repository_ids": [
+        "neuronbench"
+      ],
+      "license": {
+        "status": "grant_verified",
+        "expression": "MIT",
+        "evidence_ids": [
+          "neuron-license"
+        ],
+        "obligations": "Retain complete copyright/license notices for any copied/distributed material; dependency and data terms remain separate. "
+      },
+      "dependencies": {
+        "status": "unlocked_external",
+        "runtime": "Python>=3.11, numpy/scipy unpinned; optionalopenai>=1 client forOpenRouterbaseline.",
+        "evidence_ids": [
+          "neuron-project"
+        ],
+        "transitive_review": "Manifest read, not installed/resolved. A complete platform-specific transitive lock, artifact hashes and license/notice review are required before execution or redistribution. "
+      },
+      "recipe": {
+        "kind": "upstream_unexecuted",
+        "commands": [
+          [
+            "python",
+            "-m",
+            "pytest",
+            "-q"
+          ]
+        ],
+        "working_directory": "Separate immutable upstream checkout at the listed commit; never the privileged project environment.",
+        "prerequisites": [
+          "Future isolated exact dependency lock and selected simulator/seed profile.",
+          "Only tests/benchmark reproduction after separate admission; providerbaseline stays excluded."
+        ],
+        "inputs": "Bundled deterministic/stochasticworlds and repository tests.",
+        "expected_artifacts": [
+          "Test report; benchmark metrics only if a separate solver/protocol is later frozen."
+        ],
+        "executed_in_ra01": false,
+        "limitations": "Does not reproduce MDA. README discriminator helper and truth methods must never enter learner capability."
+      },
+      "reproduction_status": "not_reproduced",
+      "review_date": "2026-10-21",
+      "admission": "deferred",
+      "rationale": "MIT benchmark source verified; not full solver and not required for native study.",
+      "artifact_availability": "16 files include benchmark, demo and referenceLLM baseline; no publishedrelease assets; PyPI command marked'once released'.",
+      "leakage_boundary": "Expose only problem/run purchased observations; do not copy README world.discriminator() into a selector. Hiddenmechanism and scoredtestwindows are evaluator-owned.",
+      "inspiration_only": true
+    },
+    {
+      "id": "glucosebench",
+      "title": "GlucoseBench benchmark and persistence example",
+      "papers": [
+        {
+          "title": "Model Discovery Agent",
+          "url": "https://arxiv.org/abs/2608.09696v5",
+          "version": "v5",
+          "first_published": "2026-08-10",
+          "version_published": "2026-09-27",
+          "sections": "A.3/A.6/BIC/SMC, A.9 eq59 surrogate; benchmark appendices C/D."
+        }
+      ],
+      "repository_ids": [
+        "glucosebench"
+      ],
+      "license": {
+        "status": "grant_verified",
+        "expression": "MIT",
+        "evidence_ids": [
+          "glucose-license",
+          "glucose-vendor-license",
+          "glucose-notice"
+        ],
+        "obligations": "Retain complete copyright/license notices for any copied/distributed material; dependency and data terms remain separate. Vendored simglucoseMIT notice retained; PROVENANCE records upstream 2e897f10 and per-file hashes. Data originated in that vendored simulator; no clinical/rawpatient data download."
+      },
+      "dependencies": {
+        "status": "unlocked_external",
+        "runtime": "Paper CPUconstraints Python 3.11, numpy 1.26.4, scipy 1.14.1, pandas 2.2.3; pyproject permits broader ranges; not a full wheel-hashed test/tool lock.",
+        "evidence_ids": [
+          "glucose-project",
+          "glucose-req"
+        ],
+        "transitive_review": "Manifest read, not installed/resolved. A complete platform-specific transitive lock, artifact hashes and license/notice review are required before execution or redistribution. "
+      },
+      "recipe": {
+        "kind": "upstream_unexecuted",
+        "commands": [
+          [
+            "python",
+            "examples/persistence.py"
+          ],
+          [
+            "python",
+            "-m",
+            "pytest",
+            "-q"
+          ]
+        ],
+        "working_directory": "Separate immutable upstream checkout at the listed commit; never the privileged project environment.",
+        "prerequisites": [
+          "Future isolated exact constraints/lock and retained third-party notices.",
+          "Freeze acquisitions before held-out evaluation; no source reuse in current native study."
+        ],
+        "inputs": "Bundled 30 virtual patient rows, fixed train/test protocol JSON and persistence example.",
+        "expected_artifacts": [
+          "Persistence JSON/evaluation and test report; these are baseline artifacts, not MDA outputs."
+        ],
+        "executed_in_ra01": false,
+        "limitations": "README says18 six-hour episodes forone profile. Not executed; no simulator/calibration/clinicalvalidity claim."
+      },
+      "reproduction_status": "not_reproduced",
+      "review_date": "2026-10-21",
+      "admission": "deferred",
+      "rationale": "Licensed benchmark/persistence source available, no MDA solver; distinct normalizedmetric/protocol fromnative spring.",
+      "artifact_availability": "38 files includevendoredsimulator, NOTICE/PROVENANCE, protocolJSON; no release assets. No private clinicaldata/weights downloaded.",
+      "leakage_boundary": "Only learner run observations beforefreeze; evaluatorprivatelabels after. Within-patient forecasting does not establish unseen-patient generalization or our law-change adaptation.",
+      "inspiration_only": true
+    }
+  ],
+  "future_native_run_recipe": "unresolved_until_producer_and_manifest_gates"
+}
