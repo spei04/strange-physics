@@ -1,0 +1,969 @@
+{
+  "canonical_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+  "runtime_negative": [
+    {
+      "field": "coefficients",
+      "model": "NativeSpringPool",
+      "value": [
+        0.0,
+        -0.0
+      ]
+    },
+    {
+      "field": "completed_count",
+      "model": "NativeWorkFacts",
+      "value": 2
+    },
+    {
+      "field": "model_sha256",
+      "model": "SelectedNativeCandidate",
+      "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "coefficients",
+      "model": "NativeSpringPool",
+      "value": []
+    },
+    {
+      "field": "max_records",
+      "model": "NativeCandidateConfig",
+      "value": true
+    },
+    {
+      "field": "requested_candidate_count",
+      "model": "NativeCandidateOutcome",
+      "value": 1026
+    }
+  ],
+  "scope": "Synthetic shape/provenance fixtures only; no scientific run.",
+  "valid": {
+    "NativeCandidateConfig": {
+      "algorithm": "enumerate-declared-pool.v1",
+      "failure_policy": "no-partial-candidate-set.v1",
+      "max_candidates": 1025,
+      "max_input_bytes": 8388608,
+      "max_json_depth": 32,
+      "max_json_nodes": 1000000,
+      "max_records": 12,
+      "max_result_bytes": 4194304,
+      "producer_version": "strange-physics.linear-spring.native-candidates.v1",
+      "record_selection": "all-completed-prefix.v1",
+      "schema_version": "strange-physics.native-candidate-config.v1"
+    },
+    "NativeCandidateInput": {
+      "config": {
+        "algorithm": "enumerate-declared-pool.v1",
+        "failure_policy": "no-partial-candidate-set.v1",
+        "max_candidates": 1025,
+        "max_input_bytes": 8388608,
+        "max_json_depth": 32,
+        "max_json_nodes": 1000000,
+        "max_records": 12,
+        "max_result_bytes": 4194304,
+        "producer_version": "strange-physics.linear-spring.native-candidates.v1",
+        "record_selection": "all-completed-prefix.v1",
+        "schema_version": "strange-physics.native-candidate-config.v1"
+      },
+      "observations": {
+        "engine_fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+        "engine_version": "synthetic-interface-only",
+        "records": [
+          {
+            "error": null,
+            "experiment": {
+              "impulse": null,
+              "particles": [
+                {
+                  "id": "p",
+                  "mass": 1.0,
+                  "position": [
+                    1.0,
+                    0.0
+                  ],
+                  "velocity": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "schema_version": "strange-physics.experiment.v1"
+            },
+            "index": 0,
+            "operation_id": "complete",
+            "status": "completed",
+            "trajectory": {
+              "frames": [
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.0,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.05,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.1,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.15000000000000002,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.2,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.25,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.30000000000000004,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.35000000000000003,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.4,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.45,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.5,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.55,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.6000000000000001,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.65,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.7000000000000001,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.75,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.8,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.8500000000000001,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.9,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.9500000000000001,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.0,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.05,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.1,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.1500000000000001,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.2000000000000002,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.25,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.3,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.35,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.4000000000000001,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.4500000000000002,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.5,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.55,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.6,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.6500000000000001,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.7000000000000002,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.75,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.8,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.85,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.9000000000000001,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 1.9500000000000002,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 2.0,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "error": "simulation_failed",
+            "experiment": {
+              "impulse": null,
+              "particles": [
+                {
+                  "id": "p",
+                  "mass": 1.0,
+                  "position": [
+                    1.0,
+                    0.0
+                  ],
+                  "velocity": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "schema_version": "strange-physics.experiment.v1"
+            },
+            "index": 1,
+            "operation_id": "failed",
+            "status": "failed",
+            "trajectory": null
+          }
+        ],
+        "run_id": "synthetic-fitting-interface",
+        "schema_version": "strange-physics.observations.v1",
+        "space": {
+          "budget": 2,
+          "calibration_experiments": 0,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 2.0,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p",
+                "b": "a"
+              }
+            ],
+            "particle_ids": [
+              "p"
+            ]
+          }
+        }
+      },
+      "pool": {
+        "coefficients": [
+          -0.0,
+          1.0,
+          4.0
+        ],
+        "model_assumption": "stationary-shared-zero-rest-linear-spring.v1",
+        "schema_version": "strange-physics.native-spring-pool.v1"
+      },
+      "schema_version": "strange-physics.native-candidate-input.v1"
+    },
+    "NativeCandidateOutcome": {
+      "completed_record_indices": [
+        0
+      ],
+      "failed_candidate_index": null,
+      "failed_record_count": 1,
+      "inference_claim": "none",
+      "models": [
+        {
+          "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+          "fit_record_indices": [
+            0
+          ],
+          "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+          "linear": -0.0,
+          "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+          "schema_version": "strange-physics.linear-spring-model.v1",
+          "through_index": 1
+        },
+        {
+          "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+          "fit_record_indices": [
+            0
+          ],
+          "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+          "linear": 1.0,
+          "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+          "schema_version": "strange-physics.linear-spring-model.v1",
+          "through_index": 1
+        },
+        {
+          "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+          "fit_record_indices": [
+            0
+          ],
+          "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+          "linear": 4.0,
+          "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+          "schema_version": "strange-physics.linear-spring-model.v1",
+          "through_index": 1
+        }
+      ],
+      "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+      "pool_sha256": "401c8d15470ffc2ce74edb04a71ac210d07762a11122138b23ebcc55ae4796d8",
+      "produced_candidate_count": 3,
+      "producer_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+      "producer_version": "strange-physics.linear-spring.native-candidates.v1",
+      "reason": null,
+      "requested_candidate_count": 3,
+      "schema_version": "strange-physics.native-candidate-outcome.v1",
+      "status": "produced",
+      "through_index": 1
+    },
+    "NativeCandidateResult": {
+      "facts": {
+        "attempt_id": "attempt-1",
+        "completed_count": 3,
+        "config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+        "failed_count": 0,
+        "input_sha256": "4e10bb0c58ed7b7ea665cefd7c7ea551d1a3fcc7309ff8ed89765fd9866a58ea",
+        "model_sha256": null,
+        "not_assessed_count": 0,
+        "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+        "operation": "candidate_production",
+        "outcome": "completed",
+        "output_sha256": "3d65bb2d7fa4a21719348b6c748ff456d027880403a13af4b2df7f2d1fee8e3c",
+        "producer_version": "strange-physics.linear-spring.native-candidates.v1",
+        "requested_count": 3,
+        "schema_version": "strange-physics.native-work-facts.v1",
+        "unit": "candidate"
+      },
+      "payload": {
+        "completed_record_indices": [
+          0
+        ],
+        "failed_candidate_index": null,
+        "failed_record_count": 1,
+        "inference_claim": "none",
+        "models": [
+          {
+            "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+            "fit_record_indices": [
+              0
+            ],
+            "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+            "linear": -0.0,
+            "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+            "schema_version": "strange-physics.linear-spring-model.v1",
+            "through_index": 1
+          },
+          {
+            "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+            "fit_record_indices": [
+              0
+            ],
+            "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+            "linear": 1.0,
+            "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+            "schema_version": "strange-physics.linear-spring-model.v1",
+            "through_index": 1
+          },
+          {
+            "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+            "fit_record_indices": [
+              0
+            ],
+            "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+            "linear": 4.0,
+            "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+            "schema_version": "strange-physics.linear-spring-model.v1",
+            "through_index": 1
+          }
+        ],
+        "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+        "pool_sha256": "401c8d15470ffc2ce74edb04a71ac210d07762a11122138b23ebcc55ae4796d8",
+        "produced_candidate_count": 3,
+        "producer_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+        "producer_version": "strange-physics.linear-spring.native-candidates.v1",
+        "reason": null,
+        "requested_candidate_count": 3,
+        "schema_version": "strange-physics.native-candidate-outcome.v1",
+        "status": "produced",
+        "through_index": 1
+      },
+      "schema_version": "strange-physics.native-candidate-result.v1"
+    },
+    "NativeSpringPool": {
+      "coefficients": [
+        -0.0,
+        1.0,
+        4.0
+      ],
+      "model_assumption": "stationary-shared-zero-rest-linear-spring.v1",
+      "schema_version": "strange-physics.native-spring-pool.v1"
+    },
+    "NativeWorkFacts": {
+      "attempt_id": "attempt-1",
+      "completed_count": 3,
+      "config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+      "failed_count": 0,
+      "input_sha256": "4e10bb0c58ed7b7ea665cefd7c7ea551d1a3fcc7309ff8ed89765fd9866a58ea",
+      "model_sha256": null,
+      "not_assessed_count": 0,
+      "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+      "operation": "candidate_production",
+      "outcome": "completed",
+      "output_sha256": "3d65bb2d7fa4a21719348b6c748ff456d027880403a13af4b2df7f2d1fee8e3c",
+      "producer_version": "strange-physics.linear-spring.native-candidates.v1",
+      "requested_count": 3,
+      "schema_version": "strange-physics.native-work-facts.v1",
+      "unit": "candidate"
+    },
+    "SelectedNativeCandidate": {
+      "candidate_index": 0,
+      "candidate_result_sha256": "4c8e1a01177eadd9727727b3ff02bbf9571ce7c4933a889d50427885f8791c76",
+      "model": {
+        "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+        "fit_record_indices": [
+          0
+        ],
+        "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+        "linear": -0.0,
+        "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+        "schema_version": "strange-physics.linear-spring-model.v1",
+        "through_index": 1
+      },
+      "model_sha256": "550f1c97988dd56b294158b8a13a80d1293de0aa69aecc798f9809550e38b2ff",
+      "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+      "pool_sha256": "401c8d15470ffc2ce74edb04a71ac210d07762a11122138b23ebcc55ae4796d8",
+      "producer_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+      "schema_version": "strange-physics.selected-native-candidate.v1",
+      "selection_claim": "selected-candidate-only"
+    }
+  }
+}
