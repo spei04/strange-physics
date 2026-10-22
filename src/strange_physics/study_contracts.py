@@ -302,6 +302,8 @@ class StudyAttemptReservation(Message):
             raise ValueError("Purchase attempts retain the exact reservation identity")
         if self.purchase is not None and self.cell_id is None:
             raise ValueError("Purchased slots require a comparison cell")
+        if self.operation == "classical_diagnostic" and self.cell_id is None:
+            raise ValueError("Classical diagnostics require their frozen comparison cell")
         if self.retry_of == self.attempt_id:
             raise ValueError("A repeated computation needs a fresh attempt identity")
         return self

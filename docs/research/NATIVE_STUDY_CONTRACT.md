@@ -210,7 +210,8 @@ producer authenticity and process measurements remain separate responsibilities.
 
 Existing fifteen-role manifests retain exactly their original canonical bytes.
 An optional sixteenth, final `classical_diagnostic_config` role is accepted;
-a `classical_diagnostic` attempt requires its actual frozen hash. This is a study
+a `classical_diagnostic` attempt requires its actual frozen hash and a declared
+comparison cell. This new operation cannot use a generic pre-freeze phase. This is a study
 accounting mapping only, without an import of diagnostic types or a fabricated
 diagnostic outcome. Comparison preparation accepts the frozen menu or scoring
 policy. Native evaluation reconciliation specifically requires the scoring policy

@@ -775,3 +775,25 @@ def test_unavailable_preparation_does_not_invent_probe_attempts(
     with pytest.raises(ledger.StudyLedgerError, match="native_preparation_unavailable"):
         bind(material, path, scoring_input_raw=raw(actual), scoring_result_raw=raw(result))
     assert ledger.summarize_study(material.history).budget == before
+
+
+@pytest.mark.parametrize("phase", ["reference", "calibration", "sensitivity", "accounting"])
+def test_classical_operation_cannot_bypass_frozen_cell_with_generic_phase(phase: str) -> None:
+    with pytest.raises(ValueError, match="Classical diagnostics"):
+        reserve("classical", phase=phase, operation="classical_diagnostic")
+    # Existing generic preparation accounting still starts before final freeze.
+    history = append(empty(), reserve("ordinary", phase=phase, operation="preparation"))
+    assert ledger.summarize_study(history).budget.unresolved_attempts == 1
+
+
+def test_classical_comparison_cannot_start_before_actual_manifest_freeze() -> None:
+    manifest = materials()[0]
+    reservation = reserve(
+        "classical",
+        phase="comparison",
+        cell_id=manifest.cells[0].cell_id,
+        operation="classical_diagnostic",
+        config_sha256="f" * 64,
+    )
+    with pytest.raises(ledger.StudyLedgerError, match="unknown_cell"):
+        append(empty(), reservation)
