@@ -1399,6 +1399,7 @@
           "discriminator": {
             "mapping": {
               "cell_outcome": "#/$defs/StudyCellOutcome",
+              "cell_publication": "#/$defs/StudyPublicationEvent",
               "freeze": "#/$defs/StudyManifestFreeze",
               "reserve": "#/$defs/StudyAttemptReservation",
               "update": "#/$defs/StudyAttemptUpdate"
@@ -1417,6 +1418,9 @@
             },
             {
               "$ref": "#/$defs/StudyCellOutcome"
+            },
+            {
+              "$ref": "#/$defs/StudyPublicationEvent"
             }
           ],
           "title": "Event"
@@ -1448,6 +1452,62 @@
         "manifest"
       ],
       "title": "StudyManifestFreeze",
+      "type": "object"
+    },
+    "StudyPublicationEvent": {
+      "additionalProperties": false,
+      "description": "Compact private evidence reference; actual material validation is separate.",
+      "properties": {
+        "kind": {
+          "const": "cell_publication",
+          "default": "cell_publication",
+          "title": "Kind",
+          "type": "string"
+        },
+        "outcome": {
+          "$ref": "#/$defs/StudyCellOutcome"
+        },
+        "evidence": {
+          "$ref": "#/$defs/StudyPublicationReference"
+        }
+      },
+      "required": [
+        "outcome",
+        "evidence"
+      ],
+      "title": "StudyPublicationEvent",
+      "type": "object"
+    },
+    "StudyPublicationReference": {
+      "additionalProperties": false,
+      "properties": {
+        "raw_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Raw Sha256",
+          "type": "string"
+        },
+        "canonical_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Canonical Sha256",
+          "type": "string"
+        },
+        "byte_count": {
+          "maximum": 33554432,
+          "minimum": 1,
+          "title": "Byte Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "raw_sha256",
+        "canonical_sha256",
+        "byte_count"
+      ],
+      "title": "StudyPublicationReference",
       "type": "object"
     },
     "StudyPurchase": {

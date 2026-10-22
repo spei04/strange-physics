@@ -33,6 +33,7 @@ from strange_physics.study_contracts import (
     StudyEvent,
     StudyLedgerRecord,
     StudyManifestFreeze,
+    StudyPublicationEvent,
     StudyPurchase,
 )
 
@@ -280,6 +281,8 @@ def _scan(ledger: NativeStudyLedger) -> _State:
             _update(state, value)
         elif isinstance(value, StudyManifestFreeze):
             _freeze(state, value)
+        elif isinstance(value, StudyPublicationEvent):
+            _outcome(state, value.outcome)
         else:
             _outcome(state, value)
         if (
@@ -530,3 +533,16 @@ def seal_unfinished_cell(
         selector_config_sha256=manifest.artifact(SELECTOR_ARTIFACTS[cell.selector]).sha256,
     )
     return _append(ledger, event_id, outcome, expected_revision)
+
+
+def append_study_publication(
+    ledger: NativeStudyLedger,
+    *,
+    event_id: str,
+    event: StudyPublicationEvent,
+    expected_revision: int,
+) -> NativeStudyLedger:
+    """Low-level private CAS proposal; the actual-material adapter supplies evidence."""
+    if not isinstance(event, StudyPublicationEvent):
+        raise StudyLedgerError("invalid_publication_event")
+    return _append(ledger, event_id, event, expected_revision)
