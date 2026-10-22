@@ -12617,7 +12617,7 @@
           "candidate": 12402495332,
           "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
           "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
-          "scope": "Candidate API, native prediction, pure scoring and comparable classical diagnostic delivered. Exact Journal union and private publication source composition remain pending.",
+          "scope": "Candidate API, native prediction, pure scoring and comparable classical diagnostic delivered. Journal union delivery and private publication source composition remain pending.",
           "prediction_runtime": {
             "status": "delivered",
             "source": "c3988d9356e47965dea33746c9fac3268099912a",
@@ -13555,7 +13555,7 @@
           "candidate": 12402495332,
           "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
           "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
-          "scope": "Candidate API, native prediction, pure scoring and comparable classical diagnostic delivered. Exact Journal union and private publication source composition remain pending.",
+          "scope": "Candidate API, native prediction, pure scoring and comparable classical diagnostic delivered. Journal union delivery and private publication source composition remain pending.",
           "prediction_runtime": {
             "status": "delivered",
             "source": "c3988d9356e47965dea33746c9fac3268099912a",
