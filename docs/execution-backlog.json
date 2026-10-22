@@ -12588,14 +12588,14 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "accounting_delivered_candidate_prediction_source_reviewed",
+      "status": "prediction_delivered_pure_scoring_source_reviewed",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Progress and N01 scoring/accounting interface review; scored-cell source waits for accepted scoring interface.",
-        "Platform": "Candidate/prediction source released; scoring-interface preparation and exact package verification; next writer requires explicit handoff.",
-        "Research": "Independent N01 scoring-interface and scientific-boundary review.",
-        "Project lead": "Primary runtime integration, required hosted gates and next checkout handoff."
+        "Quality": "Read-only actual-Journal composition/scored-cell publisher design and progress review; identity writer handoff follows accepted scoring delivery.",
+        "Platform": "Pure scoring source released; same-prefix classical diagnostic preparation and exact package verification; primary writer handoff follows delivery.",
+        "Research": "Independent Journal/publication and classical-diagnostic scientific review.",
+        "Project lead": "Primary scoring integration, exact PR/main/package gates and next checkout handoffs."
       },
       "handoff": "Explicit writer handoff and lock/environment revalidation precede code changes. Reuse the two existing independent cloud checkouts; no additional checkout or shared dependency installation.",
       "interface_decisions": [
@@ -12604,10 +12604,10 @@
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "N01 actual Journal/prefix/selected-candidate/prediction/protocol/evaluator composition and disjoint-probe/failure checks, then RA-02 scored-cell publication with resolved purchases and complete accounting. Both parents remain in progress. RA-N02.a grid/reference acceptance precedes RA-N03 calibration and RA-N04 selectors; actual manifest freeze and RA-07.b comparison retain all gates.",
+      "next_units": "Accept pure scoring delivery, then actual-Journal composition and scored-cell publication with reconciled full purchases/measured terminal attempts, plus an honest same-prefix classical diagnostic. Resolve preparation-menu versus scoring_policy mapping explicitly. Both parents remain in progress. Finite-grid reference follows their acceptance, then calibration/selectors, actual manifest freeze and comparison.",
       "partial_checkpoints": {
         "RA-N01": {
-          "status": "candidate_api_delivered_prediction_runtime_reviewed_parent_in_progress",
+          "status": "candidate_prediction_delivered_pure_scoring_reviewed_parent_in_progress",
           "source": "5cbf85d0c5d90899c68d788973dbb637b6474603",
           "tree": "903d1eed6e7720c99b648a3c353c91914aa5de3e",
           "pull_request": 109,
@@ -12617,9 +12617,9 @@
           "candidate": 12402495332,
           "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
           "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
-          "scope": "Initial candidate API delivered by PR #109; later candidate/prediction runtime is recorded separately; scoring remains unfinished.",
+          "scope": "Candidate API and prediction runtime delivered; pure scoring source reviewed separately. Actual-Journal composition, same-prefix classical diagnostic and full parent completion remain pending.",
           "prediction_runtime": {
-            "status": "independent_source_review_accepted",
+            "status": "delivered",
             "source": "c3988d9356e47965dea33746c9fac3268099912a",
             "tree": "e7ffeed92554479c68be6946578ef0ce7e1e9b0b",
             "final_author": "75f8dccd724f6308861961968468e6f846cde3f5",
@@ -12638,8 +12638,45 @@
             "quality_index_sha256": "ea80e3de7ea4ad46c0ff45437f6382d9f7ce0b40ed6ba946a2e8022dbe300262",
             "research_index_sha256": "a2fc4d86134c2e42cf221ef52d98bf24c26bca9745e4143fd24f518e56a2baf6",
             "final_docs_index_sha256": "977a5cb5c02a30a683439a6fbb86adebdf8542f187a4136ea338c3be0c93f5e7",
-            "delivery_record": "Issue #106 and exact PR/main CI plus private candidate index; required before writer handoff.",
-            "scope": "Actual candidate construction and separate native analytic prediction only. Scoring, posterior/MAP, calibration and comparison are not accepted by runtime fixture tests."
+            "delivery_record": "Accepted PR #111/main c0e4c86 with exact source/lock/provenance/checksums/60-file package verification; issue #106 records delivery.",
+            "scope": "Actual candidate construction and separate native analytic prediction only. Scoring, posterior/MAP, calibration and comparison are not accepted by runtime fixture tests.",
+            "pull_request": 111,
+            "reviewed_head": "c21e0ee52e644450f31c2cbf8a397993223e9fb8",
+            "reviewed_tree": "93575508ea1bb1f5cbec77264443080ac53e5392",
+            "merge": "c0e4c86ee63b92eaff31f39fe111691a26cc4b08",
+            "pr_ci": 39750341047,
+            "main_ci": 39750648032,
+            "candidate": 12413204172,
+            "candidate_zip_sha256": "9dfa49dd686f662d5b2516ccfc776900a8b711160acbc54b00a85a6e74cf82bb",
+            "main_acceptance_index_sha256": "dc7c4ad8144e14688a57bf9e452de1468b7e83516be23fba7eeafa3401cd49a0"
+          },
+          "pure_scoring": {
+            "status": "independent_source_review_accepted_delivery_pending",
+            "source": "da3d529ac462051d80be00762f6dcc8d57c767f2",
+            "tree": "edf035810d9585a89665e74f3e57b66a69219dc7",
+            "final_author": "e21dfdc876bf9d2316316ae644aa165282d4edc2",
+            "final_author_tree": "5370a39384035437599241d70204d089604bbaa9",
+            "full_tests": 3801,
+            "focused_tests": 470,
+            "new_scoring_tests": 87,
+            "schema_cases": 1487,
+            "format_files": 160,
+            "mypy_files": 112,
+            "archive_files": 62,
+            "quality_authored_cases": 223,
+            "quality_independent_executions": 49,
+            "quality_distinct_variants": 48,
+            "quality_mutants": 6,
+            "research_independent_cases": 129,
+            "research_mutants": 5,
+            "scoring_policy_sha256": "e14ffaef239ec38a020f8e0a27712fa27d32c7d36bd638486af7afca780e64ce",
+            "author_index_sha256": "2e8d0b659eb0690a395da5a957d288efe3b9a999467b273a3c88731dee0d31c0",
+            "quality_index_sha256": "68b180704f425b7c07294440031f9f62dba92e4e8ad14ef8557d2dbfba473af1",
+            "research_index_sha256": "2da0036b70533f4c9e02a3172fb6d9d59b79364d20223f0ebeacc5ed701b4db7",
+            "final_docs_index_sha256": "908ff2daf00c166f7bbfde7b3d819e729ffd2771c1494ec2c5ba8e329a6a7e21",
+            "release_index_sha256": "783c0ead121adf0f0792d4bc98737d48031e8d95ce1fa5a5ce0e25faa5ee4b0f",
+            "delivery_record": "Exact PR/main/candidate verification pending at this source checkpoint; issue #106 records acceptance when verified.",
+            "scope": "Pure actual supplied-material scoring/preparation only. Actual Journal provenance, measured durable publication, same-prefix diagnostic, posterior/MAP, calibration and comparison remain incomplete."
           }
         },
         "RA-02": {
@@ -12693,7 +12730,14 @@
         "candidate": 12402737173,
         "candidate_zip_sha256": "ba00041ca2f422b88a70e5b36daf7290f8386141d999cef08c7773b7bd22a97a",
         "main_acceptance_index_sha256": "723fbd7a06020bbc8a68bf1f1b9338a25e59ef05922117db18a688e5b0f6ad11"
-      }
+      },
+      "measurement_persistence_obligations": [
+        "Capture actual CPU, wall time and new artifact bytes around every real cost-bearing operation; pure local work counts are not those measurements.",
+        "Preserve unresolved usage, failed work and retry reservations; no missing/invalid transport entry proves no work or authorizes a refund.",
+        "Persist ledger revisions safely and recover without duplicate settlement or a budget reset; pure update/CAS proposals do not implement durable producers.",
+        "Bind each actual result/facts and retained report timing/hash to its matching measured terminal attempt; per-probe input hashes require distinct attempts or a separately reviewed measured aggregate envelope.",
+        "Continue the same cumulative ledger through reference, calibration, sensitivity, ranking, comparison and later diagnostics; no pre-freeze or later reset."
+      ]
     },
     "certificate_trust_update": {
       "pull_request": 104,
@@ -13333,7 +13377,7 @@
         "role": "PL1",
         "issue": "https://github.com/spei04/strange-physics/issues/106",
         "checkpoint": {
-          "status": "candidate_api_delivered_prediction_runtime_reviewed_parent_in_progress",
+          "status": "candidate_prediction_delivered_pure_scoring_reviewed_parent_in_progress",
           "source": "5cbf85d0c5d90899c68d788973dbb637b6474603",
           "tree": "903d1eed6e7720c99b648a3c353c91914aa5de3e",
           "pull_request": 109,
@@ -13343,9 +13387,9 @@
           "candidate": 12402495332,
           "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
           "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
-          "scope": "Initial candidate API delivered by PR #109; later candidate/prediction runtime is recorded separately; scoring remains unfinished.",
+          "scope": "Candidate API and prediction runtime delivered; pure scoring source reviewed separately. Actual-Journal composition, same-prefix classical diagnostic and full parent completion remain pending.",
           "prediction_runtime": {
-            "status": "independent_source_review_accepted",
+            "status": "delivered",
             "source": "c3988d9356e47965dea33746c9fac3268099912a",
             "tree": "e7ffeed92554479c68be6946578ef0ce7e1e9b0b",
             "final_author": "75f8dccd724f6308861961968468e6f846cde3f5",
@@ -13364,8 +13408,45 @@
             "quality_index_sha256": "ea80e3de7ea4ad46c0ff45437f6382d9f7ce0b40ed6ba946a2e8022dbe300262",
             "research_index_sha256": "a2fc4d86134c2e42cf221ef52d98bf24c26bca9745e4143fd24f518e56a2baf6",
             "final_docs_index_sha256": "977a5cb5c02a30a683439a6fbb86adebdf8542f187a4136ea338c3be0c93f5e7",
-            "delivery_record": "Issue #106 and exact PR/main CI plus private candidate index; required before writer handoff.",
-            "scope": "Actual candidate construction and separate native analytic prediction only. Scoring, posterior/MAP, calibration and comparison are not accepted by runtime fixture tests."
+            "delivery_record": "Accepted PR #111/main c0e4c86 with exact source/lock/provenance/checksums/60-file package verification; issue #106 records delivery.",
+            "scope": "Actual candidate construction and separate native analytic prediction only. Scoring, posterior/MAP, calibration and comparison are not accepted by runtime fixture tests.",
+            "pull_request": 111,
+            "reviewed_head": "c21e0ee52e644450f31c2cbf8a397993223e9fb8",
+            "reviewed_tree": "93575508ea1bb1f5cbec77264443080ac53e5392",
+            "merge": "c0e4c86ee63b92eaff31f39fe111691a26cc4b08",
+            "pr_ci": 39750341047,
+            "main_ci": 39750648032,
+            "candidate": 12413204172,
+            "candidate_zip_sha256": "9dfa49dd686f662d5b2516ccfc776900a8b711160acbc54b00a85a6e74cf82bb",
+            "main_acceptance_index_sha256": "dc7c4ad8144e14688a57bf9e452de1468b7e83516be23fba7eeafa3401cd49a0"
+          },
+          "pure_scoring": {
+            "status": "independent_source_review_accepted_delivery_pending",
+            "source": "da3d529ac462051d80be00762f6dcc8d57c767f2",
+            "tree": "edf035810d9585a89665e74f3e57b66a69219dc7",
+            "final_author": "e21dfdc876bf9d2316316ae644aa165282d4edc2",
+            "final_author_tree": "5370a39384035437599241d70204d089604bbaa9",
+            "full_tests": 3801,
+            "focused_tests": 470,
+            "new_scoring_tests": 87,
+            "schema_cases": 1487,
+            "format_files": 160,
+            "mypy_files": 112,
+            "archive_files": 62,
+            "quality_authored_cases": 223,
+            "quality_independent_executions": 49,
+            "quality_distinct_variants": 48,
+            "quality_mutants": 6,
+            "research_independent_cases": 129,
+            "research_mutants": 5,
+            "scoring_policy_sha256": "e14ffaef239ec38a020f8e0a27712fa27d32c7d36bd638486af7afca780e64ce",
+            "author_index_sha256": "2e8d0b659eb0690a395da5a957d288efe3b9a999467b273a3c88731dee0d31c0",
+            "quality_index_sha256": "68b180704f425b7c07294440031f9f62dba92e4e8ad14ef8557d2dbfba473af1",
+            "research_index_sha256": "2da0036b70533f4c9e02a3172fb6d9d59b79364d20223f0ebeacc5ed701b4db7",
+            "final_docs_index_sha256": "908ff2daf00c166f7bbfde7b3d819e729ffd2771c1494ec2c5ba8e329a6a7e21",
+            "release_index_sha256": "783c0ead121adf0f0792d4bc98737d48031e8d95ce1fa5a5ce0e25faa5ee4b0f",
+            "delivery_record": "Exact PR/main/candidate verification pending at this source checkpoint; issue #106 records acceptance when verified.",
+            "scope": "Pure actual supplied-material scoring/preparation only. Actual Journal provenance, measured durable publication, same-prefix diagnostic, posterior/MAP, calibration and comparison remain incomplete."
           }
         }
       },

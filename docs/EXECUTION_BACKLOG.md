@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts are integrated through PR #109; RA-02 accounting and Journal reconciliation are integrated through PR #110/main f9f450b with verified CI and package evidence. Native candidate production and prediction at c3988d9 have passed independent review and local validation. Both #105 and #106 remain in progress: N01 scoring/provenance adaptation and RA-02 scored-cell publication are next. Lead owns delivery; Platform prepares the scoring interface, with Quality and Research reviewing. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts are integrated through PR #109; RA-02 accounting and Journal reconciliation are integrated through PR #110/main f9f450b with verified CI and package evidence. Native candidate production and prediction are delivered through PR #111/main c0e4c86, with all five CI jobs and candidate 12413204172 verified. Pure scoring runtime da3d529 and final author checkpoint e21dfdc have passed local checks and independent Quality/Research review; exact PR/main/package delivery remains pending at this checkpoint. Both #105 and #106 remain in progress. Lead owns scoring delivery; Quality prepares actual-Journal composition and scored-cell publication, Platform prepares the same-prefix classical diagnostic, and Research reviews their scientific boundaries. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
 
 **Status:** Approved by the product owner on 2026-10-19. Initial execution is in progress; concrete paid/release gates remain pending. See [assignment log](EXECUTION_LOG.md).
 **Owner:** technical lead and product owner. **Audited:** 2026-10-19. **Source baseline:** 28a4c19e8f9c92b83d886be6b96667d834784f9e.
@@ -3500,3 +3500,39 @@ selectors follow that gate. Actual study freeze and RA-07.b comparison still wai
 for all prerequisites. See the [assignment log](EXECUTION_LOG.md). Graph, efforts,
 forecast and cumulative 36 episodes/432 slots/8 CPU-core-hours/1 GiB/no-reset limits
 are unchanged. Runtime fixture tests are not calibration or a research comparison.
+
+## 2026-10-22 — Pure scoring checkpoint and remaining composition
+
+Candidate production and prediction are delivered by PR #111/main c0e4c86:
+PR CI 39750341047, all five main CI 39750648032 jobs and candidate 12413204172
+are accepted. Pure scoring runtime da3d529, released at e21dfdc, passed 3,801
+tests, 1,487 schema checks, configured static/type/security/package checks and
+independent Quality/Research review. Exact scoring PR/main/package verification
+is still required for delivery; issue #106 records acceptance when verified.
+Full source and evidence identities are in execution-backlog.json.
+
+Quality next owns the actual-Journal adapter and scored-cell publisher; Platform
+owns the honestly labelled same-prefix classical diagnostic; Research reviews
+both. Source work starts only after scoring delivery and explicit reuse of the
+two existing checkouts. The publisher must reconcile the actual Journal itself,
+require all 12 purchased rows with no pending or missing charged intents, and
+bind the full prefix, selected candidate, policy, protocol, predictions, report
+and measured ledger attempts. The preparation operation currently binds menu;
+the new preparation facts bind scoring_policy. Resolve that mapping explicitly
+without relabelling a digest. The classical diagnostic uses the actual same
+prefix and the existing fitter/config, with failures retained and no substitution
+for the primary native candidate.
+
+Before any measured run, the runner must capture actual CPU, wall time and new
+artifact bytes for every cost-bearing operation, preserve unknown usage and
+retry reservations, persist ledger revisions safely, and recover without a
+budget reset or duplicate settlement. Pure facts and update proposals do not
+prove those producers. These remain explicit measurement/persistence obligations,
+alongside actual-Journal publication and diagnostic acceptance.
+
+Both parent tasks remain in progress. Their completion precedes finite-grid
+reference acceptance; calibration and selectors precede actual manifest freeze
+and comparison. The cumulative 36 episodes, 432 slots, 8 CPU-core-hours and
+1 GiB limits include reference, calibration, sensitivity, ranking, scoring,
+retries, failures and later diagnostics. No comparison has run; component tests
+are not calibration or research results. Graph, effort and forecast are unchanged.
