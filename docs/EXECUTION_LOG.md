@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | RA-01 source, license and recipe audit | Identity writer after verified Quality release; no external code execution |
-| Quality | RA-02 read-only manifest/accounting preparation; RA-01 review | Source authoring follows accepted RA-01 |
-| Platform | Native activation, source provenance and later N01 interface review | Independent read-only review |
-| Project lead | Approval record, primary integration and task assignment | Scoped RA_EXEC accepted; runtime entry gates/caps enforced |
+| Research | Independent scientific/interface and composition review | Accepted partial source; reviews the progress handoff |
+| Quality | Accepted RA-02 accounting checkpoint; combined integration and release | Scored-cell composition waits for N01 scoring interface; no comparison |
+| Platform | Independent composition review; next N01 candidate/predictor/scoring unit | Candidate API accepted; next source writer awaits explicit lead handoff |
+| Project lead | Primary/GitHub integration, evidence and next handoff | Both parent tasks remain in progress; runtime entry gates/caps enforced |
 
 ## Assignments
 
@@ -109,7 +109,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 ## Review evidence and management checkpoint
 
-- Outcome: an enterprise research product that measures discovery and adaptation. Bounded local I1 and SP-01.b/c are accepted. SP-01.d/#94 is complete; the current contract task is SP-01.e/#98, beginning with VAL1.
+- Outcome: an enterprise research product that measures discovery and adaptation. Bounded local I1 and SP-01.b/c/d are accepted. VAL1's accepted manifest is preserved and generator deferred. Current native checkpoints are partial RA-02 accounting and RA-N01 candidate contracts; the comparison remains unrun.
 - Historical evidence: the following delta bullets record their own source/checkpoint state. Earlier remaining-work statements are historical; the current assignment board and latest acceptance sections govern current work.
 - Baseline delta: research and recovery reviews at 2d78e35; 55 tests, lint/format and strict mypy pass; same-head CI covers Python 3.12/3.14, packaging and eight-particle CLI smoke. Two factual documentation corrections committed as 9833e6f and peer reviewed. PR #1 merged as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f; git diff verified its tree matches reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70. All four GitHub CI checks at that head passed on Python 3.12/3.14. [Merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060. SP-00.b is complete; this is not a product release.
 - Forecast repair: adding the DB-to-artifact freeze edge changes R0 to W6–7 and first spring integration to W11–13; R1 reserve becomes W26. GA remains W52–67. These remain nine-human-team reference estimates; actual engineer assignments are separate.
@@ -481,3 +481,15 @@ The original approval CI exposed a certificate-trust advisory. PR #104 updates o
 - Research → independent scientific/interface review of both; lead → handoff, progress and integration after a checkout is released.
 
 Dependency review: RA-01 and SP-04.e are accepted for both assignments; neither new task waits on the other's implementation. Shared operation facts and ledger IDs are agreed without an import cycle. N01 binds a selected real candidate; N02.a later proves MAP. RA-02's actual study-value freeze waits for the numerical/acquisition gates. Preserve the finite-grid-first sequence and cumulative36 episodes/432 slots/eight CPU-core-hours/1GiB cap. Reuse the two independent cloud environments; no extra checkout, provider or provisioning.
+
+## 2026-10-22 — Native candidate/accounting composition checkpoint
+
+N01 candidate contracts 5cbf85d0c5d90899c68d788973dbb637b6474603 are integrated by PR #109/main ffadefd8c869758e91950646e1d088ca81053f40 with matching tree 903d1eed6e7720c99b648a3c353c91914aa5de3e. All four PR CI 39723544786 and five main CI 39723769739 jobs passed. Platform verified candidate 12402495332 checksums/provenance/lock, the exact 54-file source allowlist and wheel/sdist equality to author artifacts. Private acceptance index SHA-256 1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271. This accepts the candidate API only; candidate production, native prediction and scoring remain next work.
+
+RA-02 runtime 78b3be9510c71c4c5a60a7e69080c3989f3cb27b and final documentation c3502f7f1f318ca01ef24bb80172d21cb5004e57 are independently accepted. Author evidence is 3,331 full / 151 focused tests; Research adds 58 independent checks and two detected mutants, Platform 35 checks and eight mutants. This unit supplies cumulative accounting, private catalog/material freeze, unfinished-cell summaries and actual Journal reservation reconciliation. There is no complete/scored-cell publisher. Its N01 policy/model/protocol/report composition remains pending.
+
+Combined 06fa07af17dc8f2bcd580efd7cc72ab29deefe28/tree 08ae812847d5840d7d967961f52dc250320ec788 preserves all seven N01 and eleven RA-02 file sets, with only their two shared registration files combined additively; five accepted PR108 documents were initially preserved exactly. Research and Platform independently verified the union and direct operation-facts/ledger seam. The configured local checks pass 3,413 full tests, Ruff/format 151 files, strict mypy 104 files, 1,465 schema cases, `bandit -r src scripts -ll`, offline wheel/sdist allowlists and installed-wheel pure ledger/synthetic Journal/native-facts callables. Private integrated index SHA-256 44712658c6486c7cfdc902042c095533141ca570b334d019d76f07d847d6152a. These are local Python 3.12 checks; combined exact-head hosted CI remains pending.
+
+Ancestry-only commit 79fce988a720c73c7a73df79839b75859108a8dc includes accepted main ffadefd8. The duplicate validator-registration conflict was retained as a diagnostic and resolved by the lead's instruction to keep the exact tested blob. The entire write-tree and committed tree equal08ae812847d5840d7d967961f52dc250320ec788; no runtime retest is inferred from this ancestry-only commit.
+
+Quality handles this integration/release in identity; lead owns primary/GitHub integration, with Research and Platform independently reviewing. Next N01 candidate production/predictor/scoring authoring awaits an explicit handoff after integration. RA-02 scored-cell composition waits on that interface. Both #105 and #106 remain in progress, so the first-result closure stays 14 accepted and six unfinished nodes. Baseline tasks/dependencies/efforts, research graph, GA forecast and approved 36 episodes/432 slots / eight CPU-core-hours / 1 GiB / no-reset limits are unchanged. No scientific comparison, provider call or provisioning has run.
