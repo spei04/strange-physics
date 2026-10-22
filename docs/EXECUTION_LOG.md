@@ -10,15 +10,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | Independent scientific/interface and composition review | Accepted partial source; reviews the progress handoff |
-| Quality | Accepted RA-02 accounting checkpoint; combined integration and release | Scored-cell composition waits for N01 scoring interface; no comparison |
-| Platform | Independent composition review; next N01 candidate/predictor/scoring unit | Candidate API accepted; next source writer awaits explicit lead handoff |
-| Project lead | Primary/GitHub integration, evidence and next handoff | Both parent tasks remain in progress; runtime entry gates/caps enforced |
+| Research | N01 scoring-interface review | Candidate/prediction scientific review accepted; scoring proof obligations next |
+| Quality | Progress and scoring/accounting interface review | Runtime review accepted; scored-cell source waits for accepted N01 scoring interface |
+| Platform | Prepare N01 scoring interface; verify delivered package | Runtime source released to lead; next source writer requires explicit handoff |
+| Project lead | Primary integration, delivery evidence and next assignment | RA-02 accounting delivered; both parent tasks remain in progress |
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-22 | Platform | RA-N01/#106 — actual candidate production and native prediction from accepted f9f450b | Primary writer started; Quality contracts/accounting review and Research scientific review; N01 scoring and RA-02 scored-cell composition remain pending |
 | 2026-10-19 23:22 | Quality | SP-00.b — journal, session, SDK recovery review and existing checks at 2d78e35 | Review passed: 55 tests, Ruff and strict mypy; matching CI includes Python 3.12/3.14 build and CLI smoke |
 | 2026-10-19 23:22 | Platform | SP-02.a — cloud preflight; read-only disk inventory to prepare SP-02.b | Audit complete with deployment NO-GO; credit/target-project gaps retained |
 | 2026-10-19 23:24 | Research | SP-00.b — independent physics, observations and scientific-boundary review at 2d78e35 | Review passed: 26 physics/contract tests and small analytic checks; not SP-03 domain ratification |
@@ -487,12 +488,26 @@ Dependency review: RA-01 and SP-04.e are accepted for both assignments; neither 
 | Engineer | Task | Result / next handoff |
 | --- | --- | --- |
 | Platform | N01 candidate contracts | PR #109/main accepted; candidate production, prediction and scoring await the next explicit writer handoff |
-| Quality | RA-02 accounting and Journal reconciliation | Source accepted; combined local checks pass 3,413 tests; clean integration handoff next |
+| Quality | RA-02 accounting and Journal reconciliation | Integrated by PR #110 with verified PR/main/package evidence |
 | Research + Platform | Independent source and interface review | Accepted exact source union and operation-facts/ledger compatibility |
-| Project lead | GitHub integration and assignments | N01 checkpoint accepted; combined RA-02 PR/main checks remain pending |
+| Project lead | GitHub integration and assignments | PRs #109/#110 accepted; actual runtime handoff is recorded below |
 
 Both #105 and #106 remain in progress. RA-02 scored-cell composition waits for the
 N01 scoring interface. Full source/check/evidence identities are retained in
 execution-backlog.json and private indices. The 14 accepted/six unfinished closure,
 graph, efforts, forecast and cumulative 36-episode/432-slot/8-CPU-core-hour/1-GiB
 limits are unchanged. No scientific comparison, provider call or provisioning ran.
+
+## 2026-10-22 — Candidate production and prediction checkpoint
+
+| Engineer | Work | Result / next gate |
+| --- | --- | --- |
+| Platform | Actual candidate production and native prediction | c3988d9 implemented; source released at 75f8dcc; scoring interface next |
+| Quality | Contracts, parsing and accounting review | Accepted 49 independent cases and six guard mutations; scored-cell composition waits on N01 |
+| Research | Scientific and numerical review | Accepted 100 independent cases and six guard mutations; fixture checks do not establish calibration |
+| Project lead | Runtime delivery and progress reconciliation | 3,714 tests / 1,473 schema cases; RA-02 delivery corrected to accepted PR #110 |
+
+Remaining order: actual scoring/provenance adapter and disjoint-probe/failure
+checks; complete scored-cell publication and accounting; grid/reference gate;
+calibration and selectors; actual study freeze and comparison. Both #105/#106
+remain open. Existing cumulative limits and no-reset policy are unchanged.

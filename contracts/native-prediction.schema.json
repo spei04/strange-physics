@@ -1,0 +1,1099 @@
+{
+  "$defs": {
+    "Anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "Anchor",
+      "type": "object"
+    },
+    "Connection": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "A",
+          "type": "string"
+        },
+        "b": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "B",
+          "type": "string"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "title": "Connection",
+      "type": "object"
+    },
+    "Experiment": {
+      "additionalProperties": false,
+      "properties": {
+        "impulse": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Impulse"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "particles": {
+          "items": {
+            "$ref": "#/$defs/ParticleInitial"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particles",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "strange-physics.experiment.v1",
+          "default": "strange-physics.experiment.v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "particles"
+      ],
+      "title": "Experiment",
+      "type": "object"
+    },
+    "Frame": {
+      "additionalProperties": false,
+      "properties": {
+        "positions": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Positions",
+          "type": "array"
+        },
+        "time": {
+          "minimum": 0,
+          "title": "Time",
+          "type": "number"
+        },
+        "velocities": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Velocities",
+          "type": "array"
+        }
+      },
+      "required": [
+        "time",
+        "positions",
+        "velocities"
+      ],
+      "title": "Frame",
+      "type": "object"
+    },
+    "Impulse": {
+      "additionalProperties": false,
+      "properties": {
+        "particle_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Particle Id",
+          "type": "string"
+        },
+        "vector": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Vector",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_id",
+        "vector"
+      ],
+      "title": "Impulse",
+      "type": "object"
+    },
+    "LinearSpringModel": {
+      "additionalProperties": false,
+      "description": "A fitted shared linear coefficient, with explicit observation provenance.",
+      "properties": {
+        "fit_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Fit Config Sha256",
+          "type": "string"
+        },
+        "fit_record_indices": {
+          "items": {
+            "maximum": 9999,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 10000,
+          "minItems": 1,
+          "title": "Fit Record Indices",
+          "type": "array"
+        },
+        "fitter_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Fitter Version",
+          "type": "string"
+        },
+        "linear": {
+          "minimum": 0,
+          "title": "Linear",
+          "type": "number"
+        },
+        "observation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Observation Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.linear-spring-model.v1",
+          "default": "strange-physics.linear-spring-model.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "through_index": {
+          "maximum": 9999,
+          "minimum": 0,
+          "title": "Through Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "linear",
+        "through_index",
+        "fit_record_indices",
+        "observation_sha256",
+        "fitter_version",
+        "fit_config_sha256"
+      ],
+      "title": "LinearSpringModel",
+      "type": "object"
+    },
+    "NativeCandidateConfig": {
+      "additionalProperties": false,
+      "description": "Fixed producer semantics and support caps, not a chosen grid or prior.",
+      "properties": {
+        "algorithm": {
+          "const": "enumerate-declared-pool.v1",
+          "default": "enumerate-declared-pool.v1",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "failure_policy": {
+          "const": "no-partial-candidate-set.v1",
+          "default": "no-partial-candidate-set.v1",
+          "title": "Failure Policy",
+          "type": "string"
+        },
+        "max_candidates": {
+          "default": 1025,
+          "maximum": 1025,
+          "minimum": 1025,
+          "title": "Max Candidates",
+          "type": "integer"
+        },
+        "max_input_bytes": {
+          "default": 8388608,
+          "maximum": 8388608,
+          "minimum": 8388608,
+          "title": "Max Input Bytes",
+          "type": "integer"
+        },
+        "max_json_depth": {
+          "default": 32,
+          "maximum": 32,
+          "minimum": 32,
+          "title": "Max Json Depth",
+          "type": "integer"
+        },
+        "max_json_nodes": {
+          "default": 1000000,
+          "maximum": 1000000,
+          "minimum": 1000000,
+          "title": "Max Json Nodes",
+          "type": "integer"
+        },
+        "max_records": {
+          "default": 12,
+          "maximum": 12,
+          "minimum": 12,
+          "title": "Max Records",
+          "type": "integer"
+        },
+        "max_result_bytes": {
+          "default": 4194304,
+          "maximum": 4194304,
+          "minimum": 4194304,
+          "title": "Max Result Bytes",
+          "type": "integer"
+        },
+        "producer_version": {
+          "const": "strange-physics.linear-spring.native-candidates.v1",
+          "default": "strange-physics.linear-spring.native-candidates.v1",
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "record_selection": {
+          "const": "all-completed-prefix.v1",
+          "default": "all-completed-prefix.v1",
+          "title": "Record Selection",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.native-candidate-config.v1",
+          "default": "strange-physics.native-candidate-config.v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "title": "NativeCandidateConfig",
+      "type": "object"
+    },
+    "NativePredictionConfig": {
+      "additionalProperties": false,
+      "description": "Fixed counterfactual profile, distinct from purchased-action admission.",
+      "properties": {
+        "algorithm": {
+          "const": "closed-form-oscillator-sinc.v1",
+          "default": "closed-form-oscillator-sinc.v1",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "anchor_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Anchor Count",
+          "type": "integer"
+        },
+        "connection_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Connection Count",
+          "type": "integer"
+        },
+        "equation": {
+          "const": "stationary-shared-zero-rest-linear-spring.v1",
+          "default": "stationary-shared-zero-rest-linear-spring.v1",
+          "title": "Equation",
+          "type": "string"
+        },
+        "failure_policy": {
+          "const": "no-partial-response.v1",
+          "default": "no-partial-response.v1",
+          "title": "Failure Policy",
+          "type": "string"
+        },
+        "max_anchor_norm": {
+          "default": 0.5,
+          "maximum": 0.5,
+          "minimum": 0.5,
+          "title": "Max Anchor Norm",
+          "type": "number"
+        },
+        "max_coefficient": {
+          "default": 4.0,
+          "maximum": 4.0,
+          "minimum": 4.0,
+          "title": "Max Coefficient",
+          "type": "number"
+        },
+        "max_horizon": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Horizon",
+          "type": "number"
+        },
+        "max_impulse_norm": {
+          "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 1.0,
+          "title": "Max Impulse Norm",
+          "type": "number"
+        },
+        "max_initial_position_norm": {
+          "default": 3.0,
+          "maximum": 3.0,
+          "minimum": 3.0,
+          "title": "Max Initial Position Norm",
+          "type": "number"
+        },
+        "max_initial_velocity_norm": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Initial Velocity Norm",
+          "type": "number"
+        },
+        "max_input_bytes": {
+          "default": 8388608,
+          "maximum": 8388608,
+          "minimum": 8388608,
+          "title": "Max Input Bytes",
+          "type": "integer"
+        },
+        "max_integration_dt": {
+          "default": 0.05,
+          "maximum": 0.05,
+          "minimum": 0.05,
+          "title": "Max Integration Dt",
+          "type": "number"
+        },
+        "max_mass": {
+          "default": 2.0,
+          "maximum": 2.0,
+          "minimum": 2.0,
+          "title": "Max Mass",
+          "type": "number"
+        },
+        "max_output_frames": {
+          "default": 2001,
+          "maximum": 2001,
+          "minimum": 2001,
+          "title": "Max Output Frames",
+          "type": "integer"
+        },
+        "max_output_position_norm": {
+          "default": 12.0,
+          "maximum": 12.0,
+          "minimum": 12.0,
+          "title": "Max Output Position Norm",
+          "type": "number"
+        },
+        "max_output_velocity_norm": {
+          "default": 14.0,
+          "maximum": 14.0,
+          "minimum": 14.0,
+          "title": "Max Output Velocity Norm",
+          "type": "number"
+        },
+        "max_reference_steps": {
+          "default": 20000,
+          "maximum": 20000,
+          "minimum": 20000,
+          "title": "Max Reference Steps",
+          "type": "integer"
+        },
+        "max_result_bytes": {
+          "default": 4194304,
+          "maximum": 4194304,
+          "minimum": 4194304,
+          "title": "Max Result Bytes",
+          "type": "integer"
+        },
+        "min_coefficient": {
+          "default": 0.0,
+          "maximum": 0.0,
+          "minimum": 0.0,
+          "title": "Min Coefficient",
+          "type": "number"
+        },
+        "min_integration_dt": {
+          "default": 0.0001,
+          "maximum": 0.0001,
+          "minimum": 0.0001,
+          "title": "Min Integration Dt",
+          "type": "number"
+        },
+        "min_mass": {
+          "default": 0.5,
+          "maximum": 0.5,
+          "minimum": 0.5,
+          "title": "Min Mass",
+          "type": "number"
+        },
+        "particle_count": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Particle Count",
+          "type": "integer"
+        },
+        "predictor_version": {
+          "const": "strange-physics.linear-spring.native-analytic.v1",
+          "default": "strange-physics.linear-spring.native-analytic.v1",
+          "title": "Predictor Version",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.native-prediction-config.v1",
+          "default": "strange-physics.native-prediction-config.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "step_policy": {
+          "const": "alignment-replay-metadata-only.v1",
+          "default": "alignment-replay-metadata-only.v1",
+          "title": "Step Policy",
+          "type": "string"
+        },
+        "supported_candidate_config_sha256": {
+          "const": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+          "default": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+          "title": "Supported Candidate Config Sha256",
+          "type": "string"
+        },
+        "supported_producer_version": {
+          "const": "strange-physics.linear-spring.native-candidates.v1",
+          "default": "strange-physics.linear-spring.native-candidates.v1",
+          "title": "Supported Producer Version",
+          "type": "string"
+        },
+        "time_policy": {
+          "const": "exact-requested-times.v1",
+          "default": "exact-requested-times.v1",
+          "title": "Time Policy",
+          "type": "string"
+        }
+      },
+      "title": "NativePredictionConfig",
+      "type": "object"
+    },
+    "NativePredictionInput": {
+      "additionalProperties": false,
+      "description": "Actual model, producer configuration, public probe and predictor configuration.\n\nModel provenance is captured, not authenticated. Bind an actual candidate\nresult separately when production/selection provenance is required.",
+      "properties": {
+        "candidate_config": {
+          "$ref": "#/$defs/NativeCandidateConfig"
+        },
+        "config": {
+          "$ref": "#/$defs/NativePredictionConfig"
+        },
+        "model": {
+          "$ref": "#/$defs/LinearSpringModel"
+        },
+        "request": {
+          "$ref": "#/$defs/PredictionRequest"
+        },
+        "schema_version": {
+          "const": "strange-physics.native-prediction-input.v1",
+          "default": "strange-physics.native-prediction-input.v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "model",
+        "candidate_config",
+        "request",
+        "config"
+      ],
+      "title": "NativePredictionInput",
+      "type": "object"
+    },
+    "NativePredictionOutcome": {
+      "additionalProperties": false,
+      "description": "Complete SCI response or explicit failure; no partial trajectory or accuracy claim.",
+      "properties": {
+        "accuracy_claim": {
+          "const": "none",
+          "default": "none",
+          "title": "Accuracy Claim",
+          "type": "string"
+        },
+        "actual_model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Actual Model Sha256",
+          "type": "string"
+        },
+        "candidate_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Candidate Config Sha256",
+          "type": "string"
+        },
+        "computed_frame_count": {
+          "maximum": 2001,
+          "minimum": 0,
+          "title": "Computed Frame Count",
+          "type": "integer"
+        },
+        "execution_mode": {
+          "const": "analytic-no-integration.v1",
+          "default": "analytic-no-integration.v1",
+          "title": "Execution Mode",
+          "type": "string"
+        },
+        "failed_frame_index": {
+          "anyOf": [
+            {
+              "maximum": 2000,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Failed Frame Index"
+        },
+        "observation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Observation Sha256",
+          "type": "string"
+        },
+        "prediction_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Prediction Config Sha256",
+          "type": "string"
+        },
+        "predictor_version": {
+          "const": "strange-physics.linear-spring.native-analytic.v1",
+          "default": "strange-physics.linear-spring.native-analytic.v1",
+          "title": "Predictor Version",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "model_digest_mismatch",
+                "unsupported_model_version",
+                "unsupported_fitter_version",
+                "unsupported_fit_configuration",
+                "unsupported_topology",
+                "coefficient_outside_domain",
+                "anchor_outside_domain",
+                "mass_outside_domain",
+                "position_outside_domain",
+                "velocity_outside_domain",
+                "impulse_outside_domain",
+                "horizon_outside_domain",
+                "resource_limit",
+                "arithmetic_failure",
+                "nonfinite_state",
+                "output_bound"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "requested_frame_count": {
+          "maximum": 2001,
+          "minimum": 2,
+          "title": "Requested Frame Count",
+          "type": "integer"
+        },
+        "requested_model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Requested Model Sha256",
+          "type": "string"
+        },
+        "response": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PredictionResponse"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "returned_frame_count": {
+          "maximum": 2001,
+          "minimum": 0,
+          "title": "Returned Frame Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "strange-physics.native-prediction-outcome.v1",
+          "default": "strange-physics.native-prediction-outcome.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "predicted",
+            "model_mismatch",
+            "unsupported_runtime",
+            "unsupported_domain",
+            "numerical_failure"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "actual_model_sha256",
+        "requested_model_sha256",
+        "request_sha256",
+        "candidate_config_sha256",
+        "prediction_config_sha256",
+        "observation_sha256",
+        "requested_frame_count",
+        "computed_frame_count",
+        "returned_frame_count",
+        "failed_frame_index",
+        "response"
+      ],
+      "title": "NativePredictionOutcome",
+      "type": "object"
+    },
+    "NativePredictionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "facts": {
+          "$ref": "#/$defs/NativeWorkFacts"
+        },
+        "payload": {
+          "$ref": "#/$defs/NativePredictionOutcome"
+        },
+        "schema_version": {
+          "const": "strange-physics.native-prediction-result.v1",
+          "default": "strange-physics.native-prediction-result.v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "payload",
+        "facts"
+      ],
+      "title": "NativePredictionResult",
+      "type": "object"
+    },
+    "NativeWorkFacts": {
+      "additionalProperties": false,
+      "description": "Operation-local facts, not a ledger, timing measurement or proof of execution.\n\nattempt_id is an opaque ledger-issued parent-envelope correlation. Multiple\ninternal operations may share it; RA-02 owns reservation, measurement and totals.",
+      "properties": {
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "completed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Completed Count",
+          "type": "integer"
+        },
+        "config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Config Sha256",
+          "type": "string"
+        },
+        "failed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Failed Count",
+          "type": "integer"
+        },
+        "input_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Input Sha256",
+          "type": "string"
+        },
+        "model_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Model Sha256"
+        },
+        "not_assessed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Not Assessed Count",
+          "type": "integer"
+        },
+        "observation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Observation Sha256",
+          "type": "string"
+        },
+        "operation": {
+          "enum": [
+            "candidate_production",
+            "selection",
+            "prediction",
+            "preparation",
+            "scoring"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "outcome": {
+          "enum": [
+            "completed",
+            "rejected",
+            "failed"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "output_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Output Sha256",
+          "type": "string"
+        },
+        "producer_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "requested_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Requested Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "strange-physics.native-work-facts.v1",
+          "default": "strange-physics.native-work-facts.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "enum": [
+            "candidate",
+            "frame",
+            "probe",
+            "selection",
+            "preparation"
+          ],
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "attempt_id",
+        "operation",
+        "producer_version",
+        "config_sha256",
+        "input_sha256",
+        "observation_sha256",
+        "model_sha256",
+        "output_sha256",
+        "unit",
+        "requested_count",
+        "completed_count",
+        "failed_count",
+        "not_assessed_count",
+        "outcome"
+      ],
+      "title": "NativeWorkFacts",
+      "type": "object"
+    },
+    "ParticleInitial": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "mass": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "title": "Mass",
+          "type": "number"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        },
+        "velocity": {
+          "default": [
+            0.0,
+            0.0
+          ],
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Velocity",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "ParticleInitial",
+      "type": "object"
+    },
+    "PredictionRequest": {
+      "additionalProperties": false,
+      "description": "Public prediction probes may exceed purchased-action bounds.",
+      "properties": {
+        "experiment": {
+          "$ref": "#/$defs/Experiment"
+        },
+        "integration_dt": {
+          "maximum": 0.05,
+          "minimum": 0.0001,
+          "title": "Integration Dt",
+          "type": "number"
+        },
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.prediction-request.v1",
+          "default": "strange-physics.prediction-request.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "structure": {
+          "$ref": "#/$defs/Structure"
+        },
+        "times": {
+          "items": {
+            "maximum": 10,
+            "minimum": 0,
+            "type": "number"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "title": "Times",
+          "type": "array"
+        }
+      },
+      "required": [
+        "model_sha256",
+        "structure",
+        "experiment",
+        "times",
+        "integration_dt"
+      ],
+      "title": "PredictionRequest",
+      "type": "object"
+    },
+    "PredictionResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.prediction-response.v1",
+          "default": "strange-physics.prediction-response.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "trajectory": {
+          "$ref": "#/$defs/Trajectory"
+        }
+      },
+      "required": [
+        "model_sha256",
+        "trajectory"
+      ],
+      "title": "PredictionResponse",
+      "type": "object"
+    },
+    "Structure": {
+      "additionalProperties": false,
+      "properties": {
+        "anchors": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Anchor"
+          },
+          "maxItems": 8,
+          "title": "Anchors",
+          "type": "array"
+        },
+        "connections": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Connection"
+          },
+          "maxItems": 120,
+          "title": "Connections",
+          "type": "array"
+        },
+        "particle_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particle Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_ids"
+      ],
+      "title": "Structure",
+      "type": "object"
+    },
+    "Trajectory": {
+      "additionalProperties": false,
+      "properties": {
+        "frames": {
+          "items": {
+            "$ref": "#/$defs/Frame"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "title": "Frames",
+          "type": "array"
+        }
+      },
+      "required": [
+        "frames"
+      ],
+      "title": "Trajectory",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/native-prediction.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Distinct native profile using frozen SCI request/response shapes. Actual-material binders and bounded raw parsers are required; no execution authenticity, MAP or accuracy claim.",
+  "title": "Strange Physics native analytic prediction v1"
+}
