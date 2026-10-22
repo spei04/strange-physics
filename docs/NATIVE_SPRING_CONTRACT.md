@@ -1,6 +1,6 @@
 # Native spring candidate identity
 
-This partial [RA-N01](https://github.com/spei04/strange-physics/issues/106) implementation defines bounded native candidate identities, actual candidate production, a separate native analytic predictor, local work facts and a selected-candidate receipt. It does not compute a posterior, prove a MAP choice, adapt the private scoring workflow or execute the comparison. RA-N01 remains incomplete; the candidate/prediction increment has passed independent source review and local checks, with hosted integration gates still pending.
+This partial [RA-N01](https://github.com/spei04/strange-physics/issues/106) implementation defines bounded native candidate identities, actual candidate production, a separate native analytic predictor, local work facts and a selected-candidate receipt. It does not compute a posterior, prove a MAP choice, authenticate an actual Journal for scoring or execute the comparison. RA-N01 remains incomplete; the candidate/prediction increment was delivered in PR111/main c0e4c86 with exact protected-main CI and candidate verification. The additive pure scoring core is under independent review.
 
 The existing CORE/SCI messages, paired-Simpson fitter, analytic predictor v1 and scoring mathematics remain unchanged. A native model uses the existing `LinearSpringModel` envelope with honest `strange-physics.linear-spring.native-candidates.v1` producer provenance and the digest of the actual `NativeCandidateConfig`. It cannot enter the old predictor by pretending to be a paired-Simpson fit. The old predictor must continue to reject this producer. The separate native prediction profile uses the existing pure analytic kernel internally.
 
@@ -153,3 +153,9 @@ This is distinct from the candidate configuration identity. Final documentation
 does not alter tested runtime/schema/test/package bytes. Required hosted
 PR/main/candidate verification remains an integration obligation; scoring,
 the RA-02 scored-cell publisher and the measured comparison have not run.
+
+## Pure scoring increment
+
+The additive [pure scoring core](NATIVE_SCORING_CONTRACT.md) binds supplied native
+material into the unchanged evaluator. Actual Journal publication and the
+same-prefix classical diagnostic remain pending; neither parent task is complete.

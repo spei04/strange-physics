@@ -821,7 +821,8 @@
             "frame",
             "probe",
             "selection",
-            "preparation"
+            "preparation",
+            "work"
           ],
           "title": "Unit",
           "type": "string"

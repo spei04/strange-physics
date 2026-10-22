@@ -10,15 +10,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | N01 scoring-interface review | Candidate/prediction scientific review accepted; scoring proof obligations next |
-| Quality | Progress and scoring/accounting interface review | Runtime review accepted; scored-cell source waits for accepted N01 scoring interface |
-| Platform | Prepare N01 scoring interface; verify delivered package | Runtime source released to lead; next source writer requires explicit handoff |
-| Project lead | Primary integration, delivery evidence and next assignment | RA-02 accounting delivered; both parent tasks remain in progress |
+| Research | Journal/publisher and classical-diagnostic scientific review | Pure scoring accepted; next designs remain read-only until delivery and writer handoffs |
+| Quality | Actual-Journal composition and scored-cell preparation | Pure scoring accepted; identity source handoff follows exact scoring delivery |
+| Platform | Same-prefix classical diagnostic preparation and package verification | Scoring source released at e21dfdc; next source handoff follows delivery |
+| Project lead | Pure scoring integration and progress reconciliation | Primary writer; PR #111 delivered, exact scoring PR/main/package gates pending |
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-22 08:54 | Platform | RA-N01/#106 — pure native scoring core from accepted c0e4c86 | Released e21dfdc after both independent reviews; lead delivery pending; Journal publisher and same-prefix diagnostic remain open |
 | 2026-10-22 | Platform | RA-N01/#106 — actual candidate production and native prediction from accepted f9f450b | Primary writer started; Quality contracts/accounting review and Research scientific review; N01 scoring and RA-02 scored-cell composition remain pending |
 | 2026-10-19 23:22 | Quality | SP-00.b — journal, session, SDK recovery review and existing checks at 2d78e35 | Review passed: 55 tests, Ruff and strict mypy; matching CI includes Python 3.12/3.14 build and CLI smoke |
 | 2026-10-19 23:22 | Platform | SP-02.a — cloud preflight; read-only disk inventory to prepare SP-02.b | Audit complete with deployment NO-GO; credit/target-project gaps retained |
@@ -511,3 +512,31 @@ Remaining order: actual scoring/provenance adapter and disjoint-probe/failure
 checks; complete scored-cell publication and accounting; grid/reference gate;
 calibration and selectors; actual study freeze and comparison. Both #105/#106
 remain open. Existing cumulative limits and no-reset policy are unchanged.
+
+## Native candidate/prediction delivery — 2026-10-22
+
+PR111 merged as c0e4c86ee63b92eaff31f39fe111691a26cc4b08, matching reviewed
+tree93575508ea1bb1f5cbec77264443080ac53e5392. All five main CI39750648032
+jobs passed. Candidate12413204172 has exact reviewed source/package bytes and
+verified provenance/lock/checksums; Platform private index dc7c4ad8144e14688a57bf9e452de1468b7e83516be23fba7eeafa3401cd49a0
+records bounded acceptance. This delivers candidate production/native prediction,
+not complete N01 or a scientific comparison. Pure scoring begins under the
+explicit existing-checkout handoff; both N01 and RA-02 remain partial.
+
+
+## 2026-10-22 — Pure scoring review and next assignments
+
+| Engineer | Work | Result / next gate |
+| --- | --- | --- |
+| Platform | Pure supplied-material scoring | da3d529 implemented; clean release e21dfdc; 3,801 full tests and 62-file package checks passed |
+| Quality | Identity, parsing, failure and accounting review | 49 independent executions across 48 variants and six guard mutations accepted; final documentation readback accepted |
+| Research | Scientific protocol and scoring review | 129 independent cases and five guard mutations accepted; no calibration or study claim |
+| Project lead | Exact scoring delivery | Source accepted; PR/main/package verification required before the next writer handoffs |
+
+Next assignments are read-only preparation until delivery: Quality owns actual
+Journal reconciliation/composition and scored-cell publication; Platform owns the
+same-prefix classical diagnostic; Research reviews both. Reuse primary and
+identity independently, with no added checkout. Actual measurements, safe ledger
+persistence/recovery, preparation-to-policy mapping and complete result/attempt
+joins remain required before comparison. Both #105/#106 stay in progress and
+all cumulative caps remain unchanged.

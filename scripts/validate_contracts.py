@@ -74,6 +74,19 @@ def main() -> None:
                 group == "runtime_negative",
             )
 
+    native_scoring = json.loads((ROOT / "native-scoring.examples.json").read_text())
+    for name, fixture in native_scoring["valid"].items():
+        check(f"native-scoring.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in native_scoring[group]:
+            value = copy.deepcopy(native_scoring["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"native-scoring.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     study = json.loads((ROOT / "study.examples.json").read_text())
     for name, fixture in study["valid"].items():
         check(f"study.schema.json#/$defs/{name}", fixture)
