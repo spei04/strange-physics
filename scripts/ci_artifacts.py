@@ -43,6 +43,8 @@ MODULES = frozenset(
         "native_candidates.py",
         "native_prediction.py",
         "native_prediction_contracts.py",
+        "native_scoring.py",
+        "native_scoring_contracts.py",
         "package_contracts.py",
         "package_validation.py",
         "prediction.py",

@@ -112,7 +112,7 @@ class NativeWorkFacts(Message):
     observation_sha256: Digest
     model_sha256: Digest | None
     output_sha256: Digest
-    unit: Literal["candidate", "frame", "probe", "selection", "preparation"]
+    unit: Literal["candidate", "frame", "probe", "selection", "preparation", "work"]
     requested_count: LocalCount
     completed_count: LocalCount
     failed_count: LocalCount
