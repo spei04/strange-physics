@@ -1,8 +1,8 @@
 # Native spring candidate identity
 
-This is the first contract slice of [RA-N01](https://github.com/spei04/strange-physics/issues/106). It defines bounded native candidate identities, local work facts and a selected-candidate receipt. It does not produce numerical predictions, compute a posterior, prove a MAP choice, adapt the private scoring workflow or execute the comparison. RA-N01 remains incomplete until those later slices are independently reviewed.
+This partial [RA-N01](https://github.com/spei04/strange-physics/issues/106) implementation defines bounded native candidate identities, actual candidate production, a separate native analytic predictor, local work facts and a selected-candidate receipt. It does not compute a posterior, prove a MAP choice, adapt the private scoring workflow or execute the comparison. RA-N01 remains incomplete; the runtime increment is under independent review.
 
-The existing CORE/SCI messages, paired-Simpson fitter, analytic predictor v1 and scoring mathematics remain unchanged. A native model uses the existing `LinearSpringModel` envelope with honest `strange-physics.linear-spring.native-candidates.v1` producer provenance and the digest of the actual `NativeCandidateConfig`. It cannot enter the old predictor by pretending to be a paired-Simpson fit. The old predictor must continue to reject this producer. The later separate native prediction profile will use the existing pure analytic kernel internally.
+The existing CORE/SCI messages, paired-Simpson fitter, analytic predictor v1 and scoring mathematics remain unchanged. A native model uses the existing `LinearSpringModel` envelope with honest `strange-physics.linear-spring.native-candidates.v1` producer provenance and the digest of the actual `NativeCandidateConfig`. It cannot enter the old predictor by pretending to be a paired-Simpson fit. The old predictor must continue to reject this producer. The separate native prediction profile uses the existing pure analytic kernel internally.
 
 ## Identity and input boundaries
 
@@ -37,3 +37,85 @@ The checked-in examples are synthetic contract fixtures. They contain no private
 ## Initial contract checkpoint validation
 
 The initial API checkpoint passes 82 native contract cases (140 with existing fitting/prediction contract tests), all repository Ruff and format checks (144 files), strict `mypy src tests examples` (98 files), and 1,444 external schema fixture/reference checks. The configured Bandit threshold also passes. The examples and tests construct synthetic contract messages; they do not execute a scientific comparison. Full-suite and package evidence will be recorded separately against an immutable source identity.
+
+## Candidate production and native prediction increment
+
+`produce_native_candidates(actual_input, attempt_id=...)` constructs one honest
+SCI `LinearSpringModel` per declared pool node, in order. Every model binds the
+actual candidate configuration and whole committed observation bundle, including
+physical failures; its selected record indices are exactly all completed records.
+Empty/all-failed prefixes return `no_completed_records`. The runtime does not
+accept a Journal or infer completeness from a shortened prefix. The later
+publisher must first check RA-02 reconciliation's pending and missing-intent lists.
+
+The native producer supports one mobile particle, one fixed anchor and their
+single edge (either orientation), anchor norm at most0.5, actual purchased mass
+0.5–2, position/velocity norms at most2 and impulse norm at most1, with sampling
+horizon at most2. Actual actions in failed records receive the same checks.
+The public space may advertise wider limits; these are this producer's support
+bounds. CORE-valid sampling grids and declared observation noise are retained
+without imposing the paired-Simpson cadence. Enumeration does not infer a
+stationary true law, fit quality, likelihood, prior, grid weights or MAP.
+
+Preflight leaves all candidate units unassessed. A construction failure at node
+`i` reports `i` completed constructions, one failed candidate and the remaining
+suffix unassessed, returning no partial model list. The accepted configuration
+still has canonical SHA256
+`155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1`.
+The 1,025-node/12-record caps bound model construction before the final4MiB
+canonical result check. This is synthetic contract/runtime verification, not a
+chosen scientific candidate pool.
+
+`NativePredictionInput` supplies the actual model, actual
+`NativeCandidateConfig`, unchanged SCI request and distinct
+`NativePredictionConfig`. `predict_native_spring(..., attempt_id=...)` uses the
+existing pure oscillator kernel with a separate preflight and result contract.
+It does not call the old predictor under fabricated paired-Simpson provenance.
+The old predictor/configuration and frozen CORE/SCI messages remain unchanged,
+and the old predictor continues to reject native candidates.
+
+This is a local native profile; it does not widen COMP1 hosted runtime admission.
+The new profile is
+`strange-physics.linear-spring.native-analytic.v1`. It requires the actual native
+producer and supported candidate-configuration digest. Counterfactual position
+norm is at most3, separately from purchased norm2; mass/anchor/velocity/impulse/
+coefficient/horizon and output bounds match the accepted analytic kernel's
+domain. It evaluates exact requested times, up to2,001 frames and the existing
+20,000 reference-step bound. `integration_dt` is alignment/replay metadata,
+not an executed integrator step. Reversed valid edges, exact time zero,
+once-applied impulses, signed zero and zero/subnormal stiffness retain their
+meaning. No hidden truth, evaluator labels or provider input is accepted.
+
+A prediction result carries actual/requested model identities, request,
+candidate/predictor configuration and captured observation hashes, plus the
+complete response or an explicit preflight/numerical failure. The first failing
+frame terminates propagation: computed prefix count is retained, one frame is
+failed, the remainder unassessed, and no partial trajectory is returned.
+The payload hash excludes its accompanying work facts. The actual-input binder
+also checks response time/particle/model association, preserving signed-zero time identity. These joins are identity
+and shape evidence; a model's captured prefix digest alone does not authenticate
+candidate production. Use the actual candidate-result/selection binders for
+that boundary. No result proves MAP, numerical authenticity or forecast accuracy.
+
+Raw input/result parsers reject bytes over8MiB/4MiB before JSON decoding, then
+apply depth32/node1,000,000, duplicate-key and finite-number rules. Typed inputs
+have bounded model metadata and CORE structures before canonical encoding.
+A successful prediction constructs at most2,001 one-particle frames; finite
+binary64 values and bounded metadata keep this well below the final result
+ceiling. Invalid raw inputs or unexpected process failures do not fabricate a
+successful result or an input identity; the supervising ledger retains the
+unresolved measured/reserved cost. Expected construction/arithmetic failures
+use safe reason codes, not exception text.
+
+`NativeWorkFacts` stays operation-local. Candidate and frame units retain the
+same schema and count partition accepted by RA-02. Internal calls may share a
+ledger-issued parent attempt ID; the measured parent envelope is settled once,
+against its reserved operation/config/input, without double charging child
+calls or assuming unit counts measure CPU/wall/output bytes. This pure runtime
+neither reserves nor settles a study attempt. It does not reset cumulative caps.
+
+This increment leaves N01 incomplete. A model-independent scoring policy,
+actual policy-to-protocol/scorer adaptation, the RA-02 scored-cell publisher,
+posterior/MAP evidence and the scientific comparison remain later units.
+The scorer's whole-operation failure representation is not added to these
+candidate/frame contracts.

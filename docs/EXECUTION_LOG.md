@@ -10,15 +10,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | Independent scientific/interface and composition review | Accepted partial source; reviews the progress handoff |
-| Quality | Accepted RA-02 accounting checkpoint; combined integration and release | Scored-cell composition waits for N01 scoring interface; no comparison |
-| Platform | Independent composition review; next N01 candidate/predictor/scoring unit | Candidate API accepted; next source writer awaits explicit lead handoff |
-| Project lead | Primary/GitHub integration, evidence and next handoff | Both parent tasks remain in progress; runtime entry gates/caps enforced |
+| Research | Independent N01 runtime scientific review | Analytic oracle, domain and honest candidate provenance; no comparison |
+| Quality | Independent N01 runtime contracts/accounting review | RA-02 accounting accepted; scored-cell composition waits for N01 scoring interface |
+| Platform | N01 candidate production and native prediction in primary | Explicit runtime handoff from accepted f9f450b; scoring remains a later unit |
+| Project lead | Read-only coordination and subsequent integration | Platform owns primary runtime source; both parent tasks remain in progress |
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-22 | Platform | RA-N01/#106 — actual candidate production and native prediction from accepted f9f450b | Primary writer started; Quality contracts/accounting review and Research scientific review; N01 scoring and RA-02 scored-cell composition remain pending |
 | 2026-10-19 23:22 | Quality | SP-00.b — journal, session, SDK recovery review and existing checks at 2d78e35 | Review passed: 55 tests, Ruff and strict mypy; matching CI includes Python 3.12/3.14 build and CLI smoke |
 | 2026-10-19 23:22 | Platform | SP-02.a — cloud preflight; read-only disk inventory to prepare SP-02.b | Audit complete with deployment NO-GO; credit/target-project gaps retained |
 | 2026-10-19 23:24 | Research | SP-00.b — independent physics, observations and scientific-boundary review at 2d78e35 | Review passed: 26 physics/contract tests and small analytic checks; not SP-03 domain ratification |

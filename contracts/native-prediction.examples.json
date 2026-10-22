@@ -1,0 +1,351 @@
+{
+  "canonical_config_sha256": "e1807ebdd737715291dd6a9e92e07ed3a4d69291506d0d66513c6b76c64b1530",
+  "runtime_negative": [
+    {
+      "field": "returned_frame_count",
+      "model": "NativePredictionOutcome",
+      "value": 0
+    },
+    {
+      "field": "facts",
+      "model": "NativePredictionResult",
+      "value": {
+        "attempt_id": "synthetic-attempt",
+        "completed_count": 3,
+        "config_sha256": "e1807ebdd737715291dd6a9e92e07ed3a4d69291506d0d66513c6b76c64b1530",
+        "failed_count": 0,
+        "input_sha256": "8fae3c73e62f41073f2623994d87e28c896787a2443d9e8101483648243edcd7",
+        "model_sha256": "28df2a5fd51d5755cc2cb5efb7ada54fe7b21a62fe6eab9ab43ad31a55541814",
+        "not_assessed_count": 0,
+        "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+        "operation": "prediction",
+        "outcome": "completed",
+        "output_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "producer_version": "strange-physics.linear-spring.native-analytic.v1",
+        "requested_count": 3,
+        "schema_version": "strange-physics.native-work-facts.v1",
+        "unit": "frame"
+      }
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "max_output_frames",
+      "model": "NativePredictionConfig",
+      "value": true
+    },
+    {
+      "field": "requested_frame_count",
+      "model": "NativePredictionOutcome",
+      "value": 2002
+    }
+  ],
+  "scope": "Synthetic fixtures only; no scientific comparison or authentic execution attestation.",
+  "valid": {
+    "NativePredictionConfig": {
+      "algorithm": "closed-form-oscillator-sinc.v1",
+      "anchor_count": 1,
+      "connection_count": 1,
+      "equation": "stationary-shared-zero-rest-linear-spring.v1",
+      "failure_policy": "no-partial-response.v1",
+      "max_anchor_norm": 0.5,
+      "max_coefficient": 4.0,
+      "max_horizon": 2.0,
+      "max_impulse_norm": 1.0,
+      "max_initial_position_norm": 3.0,
+      "max_initial_velocity_norm": 2.0,
+      "max_input_bytes": 8388608,
+      "max_integration_dt": 0.05,
+      "max_mass": 2.0,
+      "max_output_frames": 2001,
+      "max_output_position_norm": 12.0,
+      "max_output_velocity_norm": 14.0,
+      "max_reference_steps": 20000,
+      "max_result_bytes": 4194304,
+      "min_coefficient": 0.0,
+      "min_integration_dt": 0.0001,
+      "min_mass": 0.5,
+      "particle_count": 1,
+      "predictor_version": "strange-physics.linear-spring.native-analytic.v1",
+      "schema_version": "strange-physics.native-prediction-config.v1",
+      "step_policy": "alignment-replay-metadata-only.v1",
+      "supported_candidate_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+      "supported_producer_version": "strange-physics.linear-spring.native-candidates.v1",
+      "time_policy": "exact-requested-times.v1"
+    },
+    "NativePredictionInput": {
+      "candidate_config": {
+        "algorithm": "enumerate-declared-pool.v1",
+        "failure_policy": "no-partial-candidate-set.v1",
+        "max_candidates": 1025,
+        "max_input_bytes": 8388608,
+        "max_json_depth": 32,
+        "max_json_nodes": 1000000,
+        "max_records": 12,
+        "max_result_bytes": 4194304,
+        "producer_version": "strange-physics.linear-spring.native-candidates.v1",
+        "record_selection": "all-completed-prefix.v1",
+        "schema_version": "strange-physics.native-candidate-config.v1"
+      },
+      "config": {
+        "algorithm": "closed-form-oscillator-sinc.v1",
+        "anchor_count": 1,
+        "connection_count": 1,
+        "equation": "stationary-shared-zero-rest-linear-spring.v1",
+        "failure_policy": "no-partial-response.v1",
+        "max_anchor_norm": 0.5,
+        "max_coefficient": 4.0,
+        "max_horizon": 2.0,
+        "max_impulse_norm": 1.0,
+        "max_initial_position_norm": 3.0,
+        "max_initial_velocity_norm": 2.0,
+        "max_input_bytes": 8388608,
+        "max_integration_dt": 0.05,
+        "max_mass": 2.0,
+        "max_output_frames": 2001,
+        "max_output_position_norm": 12.0,
+        "max_output_velocity_norm": 14.0,
+        "max_reference_steps": 20000,
+        "max_result_bytes": 4194304,
+        "min_coefficient": 0.0,
+        "min_integration_dt": 0.0001,
+        "min_mass": 0.5,
+        "particle_count": 1,
+        "predictor_version": "strange-physics.linear-spring.native-analytic.v1",
+        "schema_version": "strange-physics.native-prediction-config.v1",
+        "step_policy": "alignment-replay-metadata-only.v1",
+        "supported_candidate_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+        "supported_producer_version": "strange-physics.linear-spring.native-candidates.v1",
+        "time_policy": "exact-requested-times.v1"
+      },
+      "model": {
+        "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+        "fit_record_indices": [
+          0
+        ],
+        "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+        "linear": 1.0,
+        "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+        "schema_version": "strange-physics.linear-spring-model.v1",
+        "through_index": 1
+      },
+      "request": {
+        "experiment": {
+          "impulse": {
+            "particle_id": "mobile",
+            "vector": [
+              1.0,
+              0.0
+            ]
+          },
+          "particles": [
+            {
+              "id": "mobile",
+              "mass": 0.5,
+              "position": [
+                3.0,
+                0.0
+              ],
+              "velocity": [
+                2.0,
+                0.0
+              ]
+            }
+          ],
+          "schema_version": "strange-physics.experiment.v1"
+        },
+        "integration_dt": 0.01,
+        "model_sha256": "28df2a5fd51d5755cc2cb5efb7ada54fe7b21a62fe6eab9ab43ad31a55541814",
+        "schema_version": "strange-physics.prediction-request.v1",
+        "structure": {
+          "anchors": [
+            {
+              "id": "fixed",
+              "position": [
+                -0.5,
+                0.0
+              ]
+            }
+          ],
+          "connections": [
+            {
+              "a": "mobile",
+              "b": "fixed"
+            }
+          ],
+          "particle_ids": [
+            "mobile"
+          ]
+        },
+        "times": [
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "schema_version": "strange-physics.native-prediction-input.v1"
+    },
+    "NativePredictionOutcome": {
+      "accuracy_claim": "none",
+      "actual_model_sha256": "28df2a5fd51d5755cc2cb5efb7ada54fe7b21a62fe6eab9ab43ad31a55541814",
+      "candidate_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+      "computed_frame_count": 3,
+      "execution_mode": "analytic-no-integration.v1",
+      "failed_frame_index": null,
+      "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+      "prediction_config_sha256": "e1807ebdd737715291dd6a9e92e07ed3a4d69291506d0d66513c6b76c64b1530",
+      "predictor_version": "strange-physics.linear-spring.native-analytic.v1",
+      "reason": null,
+      "request_sha256": "d870ac983c9964b8e6841e16faacef4b109e04c6ecb690e6774d825e48b7d11c",
+      "requested_frame_count": 3,
+      "requested_model_sha256": "28df2a5fd51d5755cc2cb5efb7ada54fe7b21a62fe6eab9ab43ad31a55541814",
+      "response": {
+        "model_sha256": "28df2a5fd51d5755cc2cb5efb7ada54fe7b21a62fe6eab9ab43ad31a55541814",
+        "schema_version": "strange-physics.prediction-response.v1",
+        "trajectory": {
+          "frames": [
+            {
+              "positions": [
+                [
+                  3.0,
+                  0.0
+                ]
+              ],
+              "time": 0.0,
+              "velocities": [
+                [
+                  4.0,
+                  0.0
+                ]
+              ]
+            },
+            {
+              "positions": [
+                [
+                  2.8396269262252436,
+                  0.0
+                ]
+              ],
+              "time": 1.0,
+              "velocities": [
+                [
+                  -4.2654172113947615,
+                  0.0
+                ]
+              ]
+            },
+            {
+              "positions": [
+                [
+                  -2.9584124759730104,
+                  0.0
+                ]
+              ],
+              "time": 2.0,
+              "velocities": [
+                [
+                  -5.330329839321438,
+                  -0.0
+                ]
+              ]
+            }
+          ]
+        }
+      },
+      "returned_frame_count": 3,
+      "schema_version": "strange-physics.native-prediction-outcome.v1",
+      "status": "predicted"
+    },
+    "NativePredictionResult": {
+      "facts": {
+        "attempt_id": "synthetic-attempt",
+        "completed_count": 3,
+        "config_sha256": "e1807ebdd737715291dd6a9e92e07ed3a4d69291506d0d66513c6b76c64b1530",
+        "failed_count": 0,
+        "input_sha256": "8fae3c73e62f41073f2623994d87e28c896787a2443d9e8101483648243edcd7",
+        "model_sha256": "28df2a5fd51d5755cc2cb5efb7ada54fe7b21a62fe6eab9ab43ad31a55541814",
+        "not_assessed_count": 0,
+        "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+        "operation": "prediction",
+        "outcome": "completed",
+        "output_sha256": "f3709ffa15f4a73707dcace590cb0d7ecbeaf3adcb90ee2be6462c0d505eff5b",
+        "producer_version": "strange-physics.linear-spring.native-analytic.v1",
+        "requested_count": 3,
+        "schema_version": "strange-physics.native-work-facts.v1",
+        "unit": "frame"
+      },
+      "payload": {
+        "accuracy_claim": "none",
+        "actual_model_sha256": "28df2a5fd51d5755cc2cb5efb7ada54fe7b21a62fe6eab9ab43ad31a55541814",
+        "candidate_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+        "computed_frame_count": 3,
+        "execution_mode": "analytic-no-integration.v1",
+        "failed_frame_index": null,
+        "observation_sha256": "c075b9a7c0f19ae197843fdf65e0b56d72373541e5c4460f2772818550df9304",
+        "prediction_config_sha256": "e1807ebdd737715291dd6a9e92e07ed3a4d69291506d0d66513c6b76c64b1530",
+        "predictor_version": "strange-physics.linear-spring.native-analytic.v1",
+        "reason": null,
+        "request_sha256": "d870ac983c9964b8e6841e16faacef4b109e04c6ecb690e6774d825e48b7d11c",
+        "requested_frame_count": 3,
+        "requested_model_sha256": "28df2a5fd51d5755cc2cb5efb7ada54fe7b21a62fe6eab9ab43ad31a55541814",
+        "response": {
+          "model_sha256": "28df2a5fd51d5755cc2cb5efb7ada54fe7b21a62fe6eab9ab43ad31a55541814",
+          "schema_version": "strange-physics.prediction-response.v1",
+          "trajectory": {
+            "frames": [
+              {
+                "positions": [
+                  [
+                    3.0,
+                    0.0
+                  ]
+                ],
+                "time": 0.0,
+                "velocities": [
+                  [
+                    4.0,
+                    0.0
+                  ]
+                ]
+              },
+              {
+                "positions": [
+                  [
+                    2.8396269262252436,
+                    0.0
+                  ]
+                ],
+                "time": 1.0,
+                "velocities": [
+                  [
+                    -4.2654172113947615,
+                    0.0
+                  ]
+                ]
+              },
+              {
+                "positions": [
+                  [
+                    -2.9584124759730104,
+                    0.0
+                  ]
+                ],
+                "time": 2.0,
+                "velocities": [
+                  [
+                    -5.330329839321438,
+                    -0.0
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        "returned_frame_count": 3,
+        "schema_version": "strange-physics.native-prediction-outcome.v1",
+        "status": "predicted"
+      },
+      "schema_version": "strange-physics.native-prediction-result.v1"
+    }
+  }
+}
