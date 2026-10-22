@@ -57,6 +57,8 @@ MODULES = frozenset(
         "sdk.py",
         "study_contracts.py",
         "study_ledger.py",
+        "study_scoring.py",
+        "study_scoring_contracts.py",
         "study_journal.py",
         "serialization.py",
         "session.py",

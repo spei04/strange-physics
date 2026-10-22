@@ -527,7 +527,7 @@
           "items": {
             "$ref": "#/$defs/StudyArtifact"
           },
-          "maxItems": 15,
+          "maxItems": 16,
           "minItems": 15,
           "title": "Artifacts",
           "type": "array"
@@ -670,7 +670,8 @@
             "ranking",
             "reference",
             "sensitivity",
-            "accounting"
+            "accounting",
+            "classical_diagnostic"
           ],
           "title": "Operation",
           "type": "string"
@@ -948,7 +949,8 @@
             "failure_policy",
             "selector_random",
             "selector_uniform_disagreement",
-            "selector_posterior_disagreement"
+            "selector_posterior_disagreement",
+            "classical_diagnostic_config"
           ],
           "title": "Kind",
           "type": "string"
@@ -1037,7 +1039,8 @@
             "ranking",
             "reference",
             "sensitivity",
-            "accounting"
+            "accounting",
+            "classical_diagnostic"
           ],
           "title": "Operation",
           "type": "string"
