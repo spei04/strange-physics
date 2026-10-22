@@ -133,3 +133,45 @@ account for preparation inside a measured enclosing envelope. They must not be
 settled against the menu by relabelling a digest. Scoring already maps to the
 scoring_policy role. This is a remaining composition obligation, not a ledger
 amendment in this increment.
+
+## Reviewed pure-core validation
+
+The reviewed runtime is `da3d529ac462051d80be00762f6dcc8d57c767f2`
+(tree `edf035810d9585a89665e74f3e57b66a69219dc7`). Its exact full suite passed
+3,801 tests, including 87 scoring tests. The 470 focused native cases also
+passed with identical source/test blobs; the final compact schema fixture was
+rechecked separately and is included in the full suite. Ruff lint and format
+over 160 files, configured strict `mypy src tests examples` over 112 files,
+1,487 external schema checks and `bandit -r src scripts -ll` passed.
+Lock/dependency consistency and the locked all-groups hashed dependency audit
+also passed. No dependency manifest changed.
+
+Quality independently passed 223 contract/scoring cases and 49 parametrized
+boundary checks (48 distinct variants), detecting six sensitive guard mutations.
+Research passed 470 focused cases plus 129 independent checks, detecting five
+sensitive mutations. These checks include all 64 valid/missing/invalid/failed
+combinations at three probe positions, coherently rehashed protocol changes,
+all-purchase overlap equivalences, hand-computed metrics and failures after
+earlier metrics or all 24 metrics had completed. Poor valid predictions remain
+scored. Synthetic accounting checks cover each whole-invocation work outcome;
+they do not implement measured Journal publication.
+
+Offline wheel and sdist verification matched all 62 allowed package files.
+A temporary project-only wheel installation exercised actual candidate selection,
+all 24 native predictions, scoring, all-missing unscorable behavior, old-v1
+rejection and RA-02 work-facts parsing. Ten installed module files matched source.
+The temporary target was removed; existing pinned dependencies were used, so
+this is not a clean runtime-only environment claim. CORE/SCI, the old
+fitter/predictor/evaluator, workflow and RA-02 source are unchanged. The shared
+native WorkFacts/schema amendment is limited to the reviewed `work` unit.
+
+The author's private exact-source evidence index SHA256 is
+`2e8d0b659eb0690a395da5a957d288efe3b9a999467b273a3c88731dee0d31c0`.
+The actual model-independent scoring policy has canonical SHA256
+`e14ffaef239ec38a020f8e0a27712fa27d32c7d36bd638486af7afca780e64ce`.
+This policy identity is distinct from each actual model-bound protocol.
+
+These results accept only the pure scoring increment. Hosted PR/main/candidate
+verification remains an integration obligation. Actual-Journal composition,
+same-prefix classical diagnostics, posterior/MAP evidence, calibration and the
+comparison remain pending; no scientific study or budget reset occurred.
