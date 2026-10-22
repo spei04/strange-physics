@@ -10,15 +10,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | Journal/publisher and classical-diagnostic scientific review | Pure scoring accepted; next designs remain read-only until delivery and writer handoffs |
-| Quality | Actual-Journal composition and scored-cell preparation | Pure scoring accepted; identity source handoff follows exact scoring delivery |
-| Platform | Same-prefix classical diagnostic preparation and package verification | Scoring source released at e21dfdc; next source handoff follows delivery |
-| Project lead | Pure scoring integration and progress reconciliation | Primary writer; PR #111 delivered, exact scoring PR/main/package gates pending |
+| Research | Combined classical/Journal scientific review | Both independent source reviews accepted; exact union and publication boundaries next |
+| Quality | Journal checkpoint released; integration review | Identity clean at 531deb8 and released to lead; no complete-cell append |
+| Platform | Classical checkpoint released; delivery/package verification | Primary clean at c916d9d and released to lead; diagnostic remains separate |
+| Project lead | Classical delivery followed by Journal integration | Owns both released checkouts; exact source/CI/package gates and joint review required |
+
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-22 | Platform | RA-N01/#106 — comparable classical diagnostic from accepted 73d07b6 | Primary writer started; actual same-prefix fit → legacy prediction → fixed-policy evaluation; Quality/Research review; parent partial |
+| 2026-10-22 | Quality | RA-02/#105 — actual-Journal/native-score evidence-only composition | Identity writer started; no complete publication or diagnostic import; parent partial |
+| 2026-10-22 | Project lead + Platform | Pure scoring delivery PR #112 | Main 73d07b6/tree e4fd76d; all five CI39781313464 jobs and candidate12425889219 accepted; 62-module archives match author bytes |
 | 2026-10-22 08:54 | Platform | RA-N01/#106 — pure native scoring core from accepted c0e4c86 | Released e21dfdc after both independent reviews; lead delivery pending; Journal publisher and same-prefix diagnostic remain open |
 | 2026-10-22 | Platform | RA-N01/#106 — actual candidate production and native prediction from accepted f9f450b | Primary writer started; Quality contracts/accounting review and Research scientific review; N01 scoring and RA-02 scored-cell composition remain pending |
 | 2026-10-19 23:22 | Quality | SP-00.b — journal, session, SDK recovery review and existing checks at 2d78e35 | Review passed: 55 tests, Ruff and strict mypy; matching CI includes Python 3.12/3.14 build and CLI smoke |
@@ -540,3 +544,38 @@ identity independently, with no added checkout. Actual measurements, safe ledger
 persistence/recovery, preparation-to-policy mapping and complete result/attempt
 joins remain required before comparison. Both #105/#106 stay in progress and
 all cumulative caps remain unchanged.
+
+## Classical diagnostic and Journal adapter handoff — 2026-10-22
+
+The preceding scoring-delivery checkpoint is historical. PR #112 merged as
+73d07b63d28ba4e8a86cfeaf3483a339e6a92c44, tree
+e4fd76d763a29c7157e2ad2506298f1898c170b7. All four applicable PR CI39780967416
+jobs and all five main CI39781313464 jobs passed. Candidate12425889219's
+four-member ZIP, provenance, checksums, uv0.13.4/lock identity and exact 62-module
+archives were verified; package bytes match da3d529 author archives.
+Private delivery index SHA256 is
+ea00ee2bf3394d6f9d911a3907bbff17a3ed3e731635a2faf33f9ecaa99700b2.
+
+Platform now owns primary for the actual comparable classical diagnostic;
+Quality owns identity for actual-Journal/native-score evidence binding and
+explicit study operation/configuration admission. Research reviews both.
+No scientific study was run. RA-N01 and RA-02 remain partial; complete measured
+publication and later MAP/selection/calibration/final-manifest evidence remain
+required. The 36-episode, 432-slot, eight-CPU-hour and 1 GiB cumulative limits
+are unchanged, with no reset, new DAG edge or waiver.
+
+
+## 2026-10-22 — Classical and actual-Journal releases
+
+| Engineer | Released source | Accepted scope / next gate |
+| --- | --- | --- |
+| Platform | Classical 0ff9e3b; final c916d9d | 3,874 full tests, 64-file archives, Quality/Research acceptance; exact delivery pending |
+| Quality | Journal 531deb8 | 3,866 full tests, final mapping repair and both peer acceptances; exact integration pending |
+| Research | Independent source and release review | Classical 55 independent cases; Journal 59 base plus 12 repair cases; no scientific run |
+| Project lead | Both clean checkouts received | Deliver classical, then integrate/verify the exact Journal union; preserve separate primary/diagnostic outcomes |
+
+Remaining completion work includes joint native/classical publication evidence,
+actual cost measurements and safe persistence/recovery. Source acceptance uses
+explicit synthetic fixtures and does not claim future MAP/selection/calibration
+or a real final study freeze. Both parent tasks and all cumulative limits remain
+unchanged. No new checkout, dependency pins, scientific run or provider call.

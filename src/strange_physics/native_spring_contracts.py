@@ -105,7 +105,14 @@ class NativeWorkFacts(Message):
         "strange-physics.native-work-facts.v1"
     )
     attempt_id: Identifier
-    operation: Literal["candidate_production", "selection", "prediction", "preparation", "scoring"]
+    operation: Literal[
+        "candidate_production",
+        "selection",
+        "prediction",
+        "preparation",
+        "scoring",
+        "classical_diagnostic",
+    ]
     producer_version: Annotated[str, Field(min_length=1, max_length=128)]
     config_sha256: Digest
     input_sha256: Digest

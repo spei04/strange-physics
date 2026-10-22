@@ -100,6 +100,19 @@ def main() -> None:
                 group == "runtime_negative",
             )
 
+    native_classical = json.loads((ROOT / "native-classical.examples.json").read_text())
+    for name, fixture in native_classical["valid"].items():
+        check(f"native-classical.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in native_classical[group]:
+            value = copy.deepcopy(native_classical["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"native-classical.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     study = json.loads((ROOT / "study.examples.json").read_text())
     for name, fixture in study["valid"].items():
         check(f"study.schema.json#/$defs/{name}", fixture)

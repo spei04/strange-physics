@@ -1486,7 +1486,8 @@
             "selection",
             "prediction",
             "preparation",
-            "scoring"
+            "scoring",
+            "classical_diagnostic"
           ],
           "title": "Operation",
           "type": "string"
