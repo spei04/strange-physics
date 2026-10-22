@@ -10,16 +10,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | Combined classical/Journal scientific review | Both independent source reviews accepted; exact union and publication boundaries next |
-| Quality | Journal checkpoint released; integration review | Identity clean at 531deb8 and released to lead; no complete-cell append |
-| Platform | Classical checkpoint released; delivery/package verification | Primary clean at c916d9d and released to lead; diagnostic remains separate |
-| Project lead | Classical delivery followed by Journal integration | Owns both released checkouts; exact source/CI/package gates and joint review required |
-
+| Research | Next bounded private publication source review | Joint source accepted; no implementation or scientific run |
+| Quality | Journal/classical author release | Exact0e6dc0d passed3,958 tests and both peer reviews |
+| Platform | Final progress review, then package verification | Joint source accepted; normal PR/main/package gates next |
+| Project lead | Final progress records and Journal delivery | Explicit release, docs review and exact PR/main/package checks |
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-22 20:55 | Quality | RA-02/#105 — exact Journal/classical integration | Identity writer; preserve reviewed components and add permanent joint regression coverage |
+| 2026-10-22 20:55 | Research | RA-02/#105 — independent joint scientific review | Immutable combined source required; no comparison/publication claim |
+| 2026-10-22 21:04 | Platform | RA-N01/#106 delivery accepted; reassigned joint boundary review | Main95f1735/package12458927169 accepted; primary released |
+| 2026-10-22 21:04 | Project lead | Integration records and next delivery | Owns primary progress docs; Journal delivery follows explicit source/reviewer releases |
 | 2026-10-22 | Platform | RA-N01/#106 — comparable classical diagnostic from accepted 73d07b6 | Primary writer started; actual same-prefix fit → legacy prediction → fixed-policy evaluation; Quality/Research review; parent partial |
 | 2026-10-22 | Quality | RA-02/#105 — actual-Journal/native-score evidence-only composition | Identity writer started; no complete publication or diagnostic import; parent partial |
 | 2026-10-22 | Project lead + Platform | Pure scoring delivery PR #112 | Main 73d07b6/tree e4fd76d; all five CI39781313464 jobs and candidate12425889219 accepted; 62-module archives match author bytes |
@@ -579,3 +582,69 @@ actual cost measurements and safe persistence/recovery. Source acceptance uses
 explicit synthetic fixtures and does not claim future MAP/selection/calibration
 or a real final study freeze. Both parent tasks and all cumulative limits remain
 unchanged. No new checkout, dependency pins, scientific run or provider call.
+
+
+## 2026-10-22 — Classical delivery and Journal integration
+
+PR #113 is accepted at main95f1735d94f3b34b3f5748e705f0805c81eb08e3,
+tree dd5dd677897799880b15ebbcf63daf9ae823f340, identical to reviewed head
+e1682fc8bd2c2637d39f073798039577d6d88e5a. All four applicable PR checks
+passed in run39816999899 and all five protected-main jobs passed in
+run39853486062. Candidate12458927169 passed bounded ZIP, source/lock/uv
+provenance, checksum and exact64-file archive checks. Both archives match
+the accepted author builds byte-for-byte. ZIP SHA256:
+09e6ed7e3f1fd327854f0d60716b08e05799e6ce23e3ecc831fea372e5ce7221.
+Private acceptance index SHA256:
+afcf47ae49a80dbdf36972fe6e87d47b3da58d70da894df5c715f48d5ecb89c9.
+Lead rehashed all eight indexed evidence files; runtime-requirements identity
+matches the prior accepted lock/toolchain, without independently regenerated
+export bytes. This is an unpublished CI package candidate.
+
+Quality now owns the existing identity checkout for the exact Journal/classical
+source union and permanent joint regression tests. Platform and Research review
+the immutable combined source independently. Lead owns progress records in
+primary, then Journal PR/main/package delivery after explicit writer/reviewer
+releases. No new checkout is needed. The joint fixtures bind actual Journal
+purchases, the same native/classical prefix and frozen-cell accounting; they
+preserve the native primary result across diagnostic failures and retain
+interrupted costs. They do not implement a complete-cell publisher.
+
+Both parent issues remain in progress. Private publication composition, actual
+cost measurement, durable persistence/recovery, inference/MAP, selection and
+calibration remain required before the comparison. No comparison has run;
+no cumulative cap, dependency, estimate or release forecast changed.
+
+
+## 2026-10-22 — Reviewed Journal/classical integration checkpoint
+
+Exact source0e6dc0d1d9ce9549e50022b13716944837a3501d, tree
+88d073ddf97be48e6dae026f75eb59843ea8b8cf, combines Journal531deb8 with
+accepted classical main95f1735. The union preserves235 parent component blobs;
+only the two additive registrations, inherited native-study-scoring operation
+enum and new19-case joint test file differ. All3,958 tests,1,503 schema cases,
+Ruff/format168files, strict mypy119files, configured Bandit, pinned dependency
+audit and offline66-file archive checks passed. A temporary installed wheel
+ran actual synthetic Journal/native/classical/failure/interruption paths and
+was removed. Platform accepted157 authored plus17 independent cases and two
+guard mutations; Research accepted19 joint plus16 independent cases and one
+guard mutation. Lead verified all37 author,15 Platform and11 Research indexed
+artifacts. Author/Platform/Research index SHA256 values respectively:
+14530c723db3d27d386c1d5bcb52fb58d3058b10b2774c837ee09fe3a87ae50c,
+d157c6f70481a2421b0db561fedffe33d3d47e1fd58dbaf73cea2fa272205789,
+b5d3e8c40d3cd02add6c5aac064335f072e29b2077193688ad5b3bf5ce25e2cf.
+
+Lead owns final progress review and normal PR/main/package delivery after
+explicit writer release. Research reviews the next bounded private publication
+source slice; implementation waits for this delivery and an explicit checkout
+handoff. The accepted runtime reads actual Journal/native-score evidence and
+maps diagnostic work into the frozen ledger. The joint tests compose those
+interfaces; no combined diagnostic publisher or complete-cell API is added.
+Native primary results remain separate across diagnostic scored, unscorable,
+failed and unresolved outcomes. Real measurements, durable persistence/recovery,
+genuine inference/MAP, selection and calibration remain open. Both parent
+issues stay in progress, and no scientific run or budget reset has occurred.
+
+Quality released clean0e6dc0d to lead with no active consumers. Release index
+SHA256:88a54a57a2a028b5ca1f9cb58db8a3992ff15a63c4bc2ed63814e2febe9d1dc4.
+The two existing checkouts remain needed for delivery and the next authorized
+source slice; no additional checkout or shared dependency installation was made.
