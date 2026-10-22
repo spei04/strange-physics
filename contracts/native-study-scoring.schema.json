@@ -1,0 +1,1729 @@
+{
+  "$defs": {
+    "EvaluationReport": {
+      "additionalProperties": false,
+      "description": "Development diagnostic: any failed prediction makes primary errors unscorable.",
+      "properties": {
+        "evaluation_runtime_ms": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Evaluation Runtime Ms",
+          "type": "integer"
+        },
+        "failed_prediction_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Failed Prediction Count",
+          "type": "integer"
+        },
+        "failure_policy": {
+          "const": "unscorable-on-any-failure.v1",
+          "default": "unscorable-on-any-failure.v1",
+          "title": "Failure Policy",
+          "type": "string"
+        },
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "normalization_scale": {
+          "exclusiveMinimum": 0,
+          "title": "Normalization Scale",
+          "type": "number"
+        },
+        "normalized_position_mse": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Normalized Position Mse"
+        },
+        "position_mse": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Position Mse"
+        },
+        "probe_count": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "title": "Probe Count",
+          "type": "integer"
+        },
+        "protocol_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Protocol Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.evaluation-report.v1",
+          "default": "strange-physics.evaluation-report.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "split": {
+          "const": "development",
+          "default": "development",
+          "title": "Split",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "unscorable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "valid_prediction_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Valid Prediction Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "status",
+        "model_sha256",
+        "protocol_sha256",
+        "probe_count",
+        "valid_prediction_count",
+        "failed_prediction_count",
+        "position_mse",
+        "normalized_position_mse",
+        "normalization_scale",
+        "evaluation_runtime_ms"
+      ],
+      "title": "EvaluationReport",
+      "type": "object"
+    },
+    "Frame": {
+      "additionalProperties": false,
+      "properties": {
+        "positions": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Positions",
+          "type": "array"
+        },
+        "time": {
+          "minimum": 0,
+          "title": "Time",
+          "type": "number"
+        },
+        "velocities": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Velocities",
+          "type": "array"
+        }
+      },
+      "required": [
+        "time",
+        "positions",
+        "velocities"
+      ],
+      "title": "Frame",
+      "type": "object"
+    },
+    "NativeBudgetView": {
+      "additionalProperties": false,
+      "properties": {
+        "charged_artifact_bytes": {
+          "maximum": 73786976294838198272,
+          "minimum": 0,
+          "title": "Charged Artifact Bytes",
+          "type": "integer"
+        },
+        "charged_cpu_ns": {
+          "maximum": 73786976294838198272,
+          "minimum": 0,
+          "title": "Charged Cpu Ns",
+          "type": "integer"
+        },
+        "over_limit": {
+          "title": "Over Limit",
+          "type": "boolean"
+        },
+        "purchased_slots": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Purchased Slots",
+          "type": "integer"
+        },
+        "remaining_artifact_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Remaining Artifact Bytes",
+          "type": "integer"
+        },
+        "remaining_cpu_ns": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Remaining Cpu Ns",
+          "type": "integer"
+        },
+        "remaining_slots": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Remaining Slots",
+          "type": "integer"
+        },
+        "unresolved_attempts": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Unresolved Attempts",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "purchased_slots",
+        "remaining_slots",
+        "charged_cpu_ns",
+        "remaining_cpu_ns",
+        "charged_artifact_bytes",
+        "remaining_artifact_bytes",
+        "unresolved_attempts",
+        "over_limit"
+      ],
+      "title": "NativeBudgetView",
+      "type": "object"
+    },
+    "NativeScoreOutcome": {
+      "additionalProperties": false,
+      "description": "Evaluator-private result, including private reference labels and digests.\n\nNo eligibility or fixture accuracy threshold is applied. A poor valid score\nremains scored. Only explicit protocol/report projections can be exported\nafter the study's selection/history freeze; none is online selector feedback.",
+      "properties": {
+        "evaluation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SpringEvaluationResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "input_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Input Sha256",
+          "type": "string"
+        },
+        "model_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Model Sha256"
+        },
+        "observation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Observation Sha256",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "predictions_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Predictions Sha256",
+          "type": "string"
+        },
+        "preparation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Preparation Sha256",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "preparation_rejected",
+                "preparation_mismatch",
+                "prediction_mismatch",
+                "attempt_reuse",
+                "world_space_mismatch"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason"
+        },
+        "schema_version": {
+          "const": "strange-physics.native-score-outcome.v1",
+          "default": "strange-physics.native-score-outcome.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "evaluated",
+            "rejected"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "submissions": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SpringPredictionSubmissions"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "input_sha256",
+        "policy_sha256",
+        "observation_sha256",
+        "model_sha256",
+        "preparation_sha256",
+        "predictions_sha256",
+        "submissions",
+        "evaluation"
+      ],
+      "title": "NativeScoreOutcome",
+      "type": "object"
+    },
+    "NativeScoreResult": {
+      "additionalProperties": false,
+      "description": "Private work facts count one invocation, separate from evaluator probe diagnostics.",
+      "properties": {
+        "facts": {
+          "$ref": "#/$defs/strange_physics__native_spring_contracts__NativeWorkFacts"
+        },
+        "payload": {
+          "$ref": "#/$defs/NativeScoreOutcome"
+        }
+      },
+      "required": [
+        "payload",
+        "facts"
+      ],
+      "title": "NativeScoreResult",
+      "type": "object"
+    },
+    "PredictionResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Model Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.prediction-response.v1",
+          "default": "strange-physics.prediction-response.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "trajectory": {
+          "$ref": "#/$defs/Trajectory"
+        }
+      },
+      "required": [
+        "model_sha256",
+        "trajectory"
+      ],
+      "title": "PredictionResponse",
+      "type": "object"
+    },
+    "ProbeAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "metric_role": {
+          "const": "non-primary-diagnostic",
+          "default": "non-primary-diagnostic",
+          "title": "Metric Role",
+          "type": "string"
+        },
+        "position_mse": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Position Mse"
+        },
+        "prediction_status": {
+          "enum": [
+            "not_assessed",
+            "valid",
+            "missing",
+            "failed",
+            "invalid"
+          ],
+          "title": "Prediction Status",
+          "type": "string"
+        },
+        "probe_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Probe Id",
+          "type": "string"
+        },
+        "probe_index": {
+          "maximum": 23,
+          "minimum": 0,
+          "title": "Probe Index",
+          "type": "integer"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "probe_index",
+        "probe_id",
+        "request_sha256",
+        "prediction_status",
+        "position_mse"
+      ],
+      "title": "ProbeAssessment",
+      "type": "object"
+    },
+    "ProbePrediction": {
+      "additionalProperties": false,
+      "description": "A transport adapter may mark unparseable output invalid without raw error text.",
+      "properties": {
+        "probe_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Probe Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "response": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PredictionResponse"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "response",
+            "failed",
+            "invalid"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "probe_id",
+        "request_sha256",
+        "status",
+        "response"
+      ],
+      "title": "ProbePrediction",
+      "type": "object"
+    },
+    "ReferenceProbe": {
+      "additionalProperties": false,
+      "properties": {
+        "positions": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "title": "Positions",
+          "type": "array"
+        },
+        "probe_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Probe Id",
+          "type": "string"
+        },
+        "request_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "times": {
+          "items": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "title": "Times",
+          "type": "array"
+        }
+      },
+      "required": [
+        "probe_id",
+        "request_sha256",
+        "times",
+        "positions"
+      ],
+      "title": "ReferenceProbe",
+      "type": "object"
+    },
+    "SpringEvaluationDiagnostics": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_model_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Actual Model Sha256",
+          "type": "string"
+        },
+        "computed_metric_count": {
+          "maximum": 24,
+          "minimum": 0,
+          "title": "Computed Metric Count",
+          "type": "integer"
+        },
+        "evaluation_runtime_ms": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Evaluation Runtime Ms",
+          "type": "integer"
+        },
+        "failed_prediction_count": {
+          "maximum": 24,
+          "minimum": 0,
+          "title": "Failed Prediction Count",
+          "type": "integer"
+        },
+        "metric_not_assessed_count": {
+          "maximum": 24,
+          "minimum": 0,
+          "title": "Metric Not Assessed Count",
+          "type": "integer"
+        },
+        "prediction_not_assessed_count": {
+          "maximum": 24,
+          "minimum": 0,
+          "title": "Prediction Not Assessed Count",
+          "type": "integer"
+        },
+        "protocol_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Protocol Sha256",
+          "type": "string"
+        },
+        "reference_completed_probe_count": {
+          "maximum": 24,
+          "minimum": 0,
+          "title": "Reference Completed Probe Count",
+          "type": "integer"
+        },
+        "reference_failed_probe_index": {
+          "anyOf": [
+            {
+              "maximum": 23,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reference Failed Probe Index"
+        },
+        "requested_probe_count": {
+          "maximum": 24,
+          "minimum": 1,
+          "title": "Requested Probe Count",
+          "type": "integer"
+        },
+        "submissions_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Submissions Sha256",
+          "type": "string"
+        },
+        "submitted_entry_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Submitted Entry Count",
+          "type": "integer"
+        },
+        "valid_prediction_count": {
+          "maximum": 24,
+          "minimum": 0,
+          "title": "Valid Prediction Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "actual_model_sha256",
+        "protocol_sha256",
+        "submissions_sha256",
+        "requested_probe_count",
+        "submitted_entry_count",
+        "valid_prediction_count",
+        "failed_prediction_count",
+        "prediction_not_assessed_count",
+        "computed_metric_count",
+        "metric_not_assessed_count",
+        "reference_completed_probe_count",
+        "reference_failed_probe_index",
+        "evaluation_runtime_ms"
+      ],
+      "title": "SpringEvaluationDiagnostics",
+      "type": "object"
+    },
+    "SpringEvaluationResult": {
+      "additionalProperties": false,
+      "description": "Private evaluator artifact; export only explicit report/protocol projections.",
+      "properties": {
+        "diagnostics": {
+          "$ref": "#/$defs/SpringEvaluationDiagnostics"
+        },
+        "probes": {
+          "items": {
+            "$ref": "#/$defs/ProbeAssessment"
+          },
+          "maxItems": 24,
+          "minItems": 1,
+          "title": "Probes",
+          "type": "array"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "prediction_failure",
+                "model_digest_mismatch",
+                "duplicate_probe",
+                "request_digest_mismatch",
+                "request_model_mismatch",
+                "unsupported_probe",
+                "submission_limit",
+                "duplicate_submission",
+                "foreign_submission",
+                "submission_request_mismatch",
+                "invalid_normalization_scale",
+                "unsupported_world",
+                "reference_failure",
+                "metric_failure",
+                "normalization_failure"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason"
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SpringReferenceArtifact"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reference_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reference Sha256"
+        },
+        "report": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EvaluationReport"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "report_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Report Sha256"
+        },
+        "schema_version": {
+          "const": "strange-physics.spring-evaluation-result.v1",
+          "default": "strange-physics.spring-evaluation-result.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "unscorable",
+            "protocol_failure",
+            "evaluator_failure",
+            "arithmetic_failure"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "report",
+        "report_sha256",
+        "diagnostics",
+        "probes",
+        "reference",
+        "reference_sha256"
+      ],
+      "title": "SpringEvaluationResult",
+      "type": "object"
+    },
+    "SpringPredictionSubmissions": {
+      "additionalProperties": false,
+      "description": "Versioned retained submission collection; order is part of its input hash.",
+      "properties": {
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/ProbePrediction"
+          },
+          "maxItems": 48,
+          "title": "Entries",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "strange-physics.spring-prediction-submissions.v1",
+          "default": "strange-physics.spring-prediction-submissions.v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entries"
+      ],
+      "title": "SpringPredictionSubmissions",
+      "type": "object"
+    },
+    "SpringReferenceArtifact": {
+      "additionalProperties": false,
+      "description": "Evaluator-only labels and provenance; a private-world hash is not confidentiality.",
+      "properties": {
+        "probes": {
+          "items": {
+            "$ref": "#/$defs/ReferenceProbe"
+          },
+          "maxItems": 24,
+          "minItems": 1,
+          "title": "Probes",
+          "type": "array"
+        },
+        "protocol_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Protocol Sha256",
+          "type": "string"
+        },
+        "reference_profile": {
+          "const": "decimal80-taylor128-tail1e-60.v1",
+          "default": "decimal80-taylor128-tail1e-60.v1",
+          "title": "Reference Profile",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.spring-reference-artifact.v1",
+          "default": "strange-physics.spring-reference-artifact.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_world_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source World Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_world_sha256",
+        "protocol_sha256",
+        "probes"
+      ],
+      "title": "SpringReferenceArtifact",
+      "type": "object"
+    },
+    "StudyAttemptReservation": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_reservation_bytes": {
+          "maximum": 1073741824,
+          "minimum": 0,
+          "title": "Artifact Reservation Bytes",
+          "type": "integer"
+        },
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "cell_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Cell Id"
+        },
+        "config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Config Sha256",
+          "type": "string"
+        },
+        "cpu_reservation_ns": {
+          "maximum": 28800000000000,
+          "minimum": 1,
+          "title": "Cpu Reservation Ns",
+          "type": "integer"
+        },
+        "input_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Input Sha256",
+          "type": "string"
+        },
+        "kind": {
+          "const": "reserve",
+          "default": "reserve",
+          "title": "Kind",
+          "type": "string"
+        },
+        "operation": {
+          "enum": [
+            "candidate_production",
+            "selection",
+            "prediction",
+            "preparation",
+            "scoring",
+            "purchase",
+            "forward",
+            "likelihood",
+            "ranking",
+            "reference",
+            "sensitivity",
+            "accounting",
+            "classical_diagnostic"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "reference",
+            "calibration",
+            "sensitivity",
+            "comparison",
+            "accounting"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "purchase": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StudyPurchase"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retry_of": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Retry Of"
+        }
+      },
+      "required": [
+        "attempt_id",
+        "phase",
+        "cell_id",
+        "operation",
+        "config_sha256",
+        "input_sha256",
+        "retry_of",
+        "cpu_reservation_ns",
+        "artifact_reservation_bytes",
+        "purchase"
+      ],
+      "title": "StudyAttemptReservation",
+      "type": "object"
+    },
+    "StudyAttemptUpdate": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_bytes": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Artifact Bytes"
+        },
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "cpu_ns": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Cpu Ns"
+        },
+        "facts": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/strange_physics__study_contracts__NativeWorkFacts"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "kind": {
+          "const": "update",
+          "default": "update",
+          "title": "Kind",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "running",
+            "unknown",
+            "completed",
+            "failed",
+            "rejected"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "wall_ns": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Wall Ns"
+        }
+      },
+      "required": [
+        "attempt_id",
+        "state",
+        "cpu_ns",
+        "wall_ns",
+        "artifact_bytes",
+        "facts"
+      ],
+      "title": "StudyAttemptUpdate",
+      "type": "object"
+    },
+    "StudyMaterialIdentity": {
+      "additionalProperties": false,
+      "description": "Actual received bytes and independently canonicalized typed message.",
+      "properties": {
+        "byte_count": {
+          "maximum": 16777216,
+          "minimum": 1,
+          "title": "Byte Count",
+          "type": "integer"
+        },
+        "canonical_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Canonical Sha256",
+          "type": "string"
+        },
+        "raw_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Raw Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "raw_sha256",
+        "canonical_sha256",
+        "byte_count"
+      ],
+      "title": "StudyMaterialIdentity",
+      "type": "object"
+    },
+    "StudyNativeAttemptEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "known_artifact_bytes": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Known Artifact Bytes"
+        },
+        "known_cpu_ns": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Known Cpu Ns"
+        },
+        "known_wall_ns": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Known Wall Ns"
+        },
+        "latest_update": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StudyAttemptUpdate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "probe_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Probe Id"
+        },
+        "reservation": {
+          "$ref": "#/$defs/StudyAttemptReservation"
+        },
+        "role": {
+          "enum": [
+            "candidate",
+            "preparation",
+            "prediction",
+            "scoring"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "reserved",
+            "running",
+            "unknown",
+            "completed",
+            "failed",
+            "rejected"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "probe_id",
+        "reservation",
+        "state",
+        "latest_update",
+        "known_cpu_ns",
+        "known_wall_ns",
+        "known_artifact_bytes"
+      ],
+      "title": "StudyNativeAttemptEvidence",
+      "type": "object"
+    },
+    "StudyNativeScoreEvidence": {
+      "additionalProperties": false,
+      "description": "Private bound material and accounting snapshot, never a complete cell receipt.",
+      "properties": {
+        "accounting_plan_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Accounting Plan Sha256",
+          "type": "string"
+        },
+        "attempts": {
+          "items": {
+            "$ref": "#/$defs/StudyNativeAttemptEvidence"
+          },
+          "maxItems": 27,
+          "minItems": 27,
+          "title": "Attempts",
+          "type": "array"
+        },
+        "budget": {
+          "$ref": "#/$defs/NativeBudgetView"
+        },
+        "cell_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Cell Id",
+          "type": "string"
+        },
+        "failed_purchase_operation_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 12,
+          "title": "Failed Purchase Operation Ids",
+          "type": "array"
+        },
+        "journal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Journal Id",
+          "type": "string"
+        },
+        "journal_raw_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Journal Raw Sha256",
+          "type": "string"
+        },
+        "ledger_identity": {
+          "$ref": "#/$defs/StudyMaterialIdentity"
+        },
+        "ledger_revision": {
+          "maximum": 8192,
+          "minimum": 1,
+          "title": "Ledger Revision",
+          "type": "integer"
+        },
+        "manifest_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Manifest Sha256",
+          "type": "string"
+        },
+        "observation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Observation Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "strange-physics.study-native-score-evidence.v1",
+          "default": "strange-physics.study-native-score-evidence.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "score": {
+          "$ref": "#/$defs/NativeScoreResult"
+        },
+        "scoring_input_identity": {
+          "$ref": "#/$defs/StudyMaterialIdentity"
+        },
+        "scoring_result_identity": {
+          "$ref": "#/$defs/StudyMaterialIdentity"
+        },
+        "unresolved_cell_attempt_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 8192,
+          "title": "Unresolved Cell Attempt Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "ledger_identity",
+        "ledger_revision",
+        "accounting_plan_sha256",
+        "manifest_sha256",
+        "cell_id",
+        "journal_id",
+        "journal_raw_sha256",
+        "observation_sha256",
+        "scoring_input_identity",
+        "scoring_result_identity",
+        "score",
+        "attempts",
+        "failed_purchase_operation_ids",
+        "unresolved_cell_attempt_ids",
+        "budget"
+      ],
+      "title": "StudyNativeScoreEvidence",
+      "type": "object"
+    },
+    "StudyPurchase": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration": {
+          "title": "Calibration",
+          "type": "boolean"
+        },
+        "experiment_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Experiment Sha256",
+          "type": "string"
+        },
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "ordinal": {
+          "maximum": 11,
+          "minimum": 0,
+          "title": "Ordinal",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "operation_id",
+        "ordinal",
+        "experiment_sha256",
+        "calibration"
+      ],
+      "title": "StudyPurchase",
+      "type": "object"
+    },
+    "Trajectory": {
+      "additionalProperties": false,
+      "properties": {
+        "frames": {
+          "items": {
+            "$ref": "#/$defs/Frame"
+          },
+          "maxItems": 2001,
+          "minItems": 2,
+          "title": "Frames",
+          "type": "array"
+        }
+      },
+      "required": [
+        "frames"
+      ],
+      "title": "Trajectory",
+      "type": "object"
+    },
+    "strange_physics__native_spring_contracts__NativeWorkFacts": {
+      "additionalProperties": false,
+      "description": "Operation-local facts, not a ledger, timing measurement or proof of execution.\n\nattempt_id is an opaque ledger-issued parent-envelope correlation. Multiple\ninternal operations may share it; RA-02 owns reservation, measurement and totals.",
+      "properties": {
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "completed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Completed Count",
+          "type": "integer"
+        },
+        "config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Config Sha256",
+          "type": "string"
+        },
+        "failed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Failed Count",
+          "type": "integer"
+        },
+        "input_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Input Sha256",
+          "type": "string"
+        },
+        "model_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Model Sha256"
+        },
+        "not_assessed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Not Assessed Count",
+          "type": "integer"
+        },
+        "observation_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Observation Sha256",
+          "type": "string"
+        },
+        "operation": {
+          "enum": [
+            "candidate_production",
+            "selection",
+            "prediction",
+            "preparation",
+            "scoring",
+            "classical_diagnostic"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "outcome": {
+          "enum": [
+            "completed",
+            "rejected",
+            "failed"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "output_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Output Sha256",
+          "type": "string"
+        },
+        "producer_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "requested_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Requested Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "strange-physics.native-work-facts.v1",
+          "default": "strange-physics.native-work-facts.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "enum": [
+            "candidate",
+            "frame",
+            "probe",
+            "selection",
+            "preparation",
+            "work"
+          ],
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "attempt_id",
+        "operation",
+        "producer_version",
+        "config_sha256",
+        "input_sha256",
+        "observation_sha256",
+        "model_sha256",
+        "output_sha256",
+        "unit",
+        "requested_count",
+        "completed_count",
+        "failed_count",
+        "not_assessed_count",
+        "outcome"
+      ],
+      "title": "NativeWorkFacts",
+      "type": "object"
+    },
+    "strange_physics__study_contracts__NativeWorkFacts": {
+      "additionalProperties": false,
+      "description": "Operation-local counts, not measured hardware work or proof of authenticity.",
+      "properties": {
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "completed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Completed Count",
+          "type": "integer"
+        },
+        "config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Config Sha256",
+          "type": "string"
+        },
+        "failed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Failed Count",
+          "type": "integer"
+        },
+        "input_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Input Sha256",
+          "type": "string"
+        },
+        "model_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Model Sha256"
+        },
+        "not_assessed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Not Assessed Count",
+          "type": "integer"
+        },
+        "observation_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observation Sha256"
+        },
+        "operation": {
+          "enum": [
+            "candidate_production",
+            "selection",
+            "prediction",
+            "preparation",
+            "scoring",
+            "purchase",
+            "forward",
+            "likelihood",
+            "ranking",
+            "reference",
+            "sensitivity",
+            "accounting",
+            "classical_diagnostic"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "outcome": {
+          "enum": [
+            "completed",
+            "rejected",
+            "failed"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "output_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Output Sha256",
+          "type": "string"
+        },
+        "producer_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "requested_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Requested Count",
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "strange-physics.native-work-facts.v1",
+          "default": "strange-physics.native-work-facts.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "unit": {
+          "enum": [
+            "candidate",
+            "frame",
+            "probe",
+            "selection",
+            "preparation",
+            "record",
+            "work"
+          ],
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "attempt_id",
+        "operation",
+        "producer_version",
+        "config_sha256",
+        "input_sha256",
+        "observation_sha256",
+        "model_sha256",
+        "output_sha256",
+        "unit",
+        "requested_count",
+        "completed_count",
+        "failed_count",
+        "not_assessed_count",
+        "outcome"
+      ],
+      "title": "NativeWorkFacts",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/native-study-scoring.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Evaluator-private material and cost evidence, including truth-derived hashes. Not execution authority, numerical authenticity, MAP proof or complete-cell publication.",
+  "title": "Private actual-Journal native-score evidence",
+  "x-owner-only-roots": [
+    "StudyMaterialIdentity",
+    "StudyNativeAttemptEvidence",
+    "StudyNativeScoreEvidence"
+  ]
+}

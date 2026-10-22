@@ -170,3 +170,67 @@ until the final N01 scoring-policy/model/protocol/report composition and its
 independent review are complete. Actual source/config/world values remain
 synthetic in checked-in examples. All real reference/calibration/sensitivity and
 comparison work remains subject to preregistration and the approved entry gates.
+
+## Actual Journal and native score reconciliation
+
+The read-only `reconcile_native_study_score` boundary consumes bounded raw ledger,
+scoring input and retained scoring result bytes, a real owner-only Journal path,
+and the actual frozen catalog, pool, candidate configuration, prediction
+configuration and model-independent scoring policy bytes. It replays the complete
+ledger, reconciles the actual Journal, and requires twelve charged purchase intents
+and twelve committed rows with no pending or missing reservation. Physical failed
+records remain in the complete prefix. A shorter contiguous prefix is insufficient.
+
+It reconstructs the candidate input from that exact prefix and frozen artifacts,
+selects the private world from the catalog's cell association, and binds the actual
+candidate result, selected receipt, preparation, ordered prediction inputs/results,
+protocol and retained evaluator result. Each present result must match its own
+actual terminal measured attempt, including full work facts. Candidate, preparation,
+twenty-four prediction and scorer attempts have distinct identities. Missing or
+invalid prediction transport retains its actual attempt state and accumulated
+measurements, including unresolved reservations; it never implies zero cost.
+Unrelated unresolved cell attempts and the global cumulative budget remain visible.
+
+The evaluator's actual result is retained whole, including unscorable reports,
+reference/metric failure diagnostics, no-report outcomes and its existing measured
+runtime. Binding does not rerun numerical evaluation, fabricate timings or establish
+numerical execution authenticity. Unavailable selection/preparation has no actual
+probe inputs to bind and fails this score-specific boundary explicitly; its charged
+attempts and unfinished-cell sealing remain available through the ledger interface.
+The Journal's raw identity is checked again across the complete binding operation.
+
+The new three schema roots are evaluator/owner-only. Their raw and typed canonical
+identities, private result and truth-derived hashes must not be exported to the
+online selector. A parsed evidence object alone does not authenticate its producer,
+read the Journal, authorize work, establish MAP selection, or publish a complete cell.
+The complete boundary performs those supplied-material joins it documents; durable
+producer authenticity and process measurements remain separate responsibilities.
+
+### Compatible accounting mappings
+
+Existing fifteen-role manifests retain exactly their original canonical bytes.
+An optional sixteenth, final `classical_diagnostic_config` role is accepted;
+a `classical_diagnostic` attempt requires its actual frozen hash and a declared
+comparison cell. This new operation cannot use a generic pre-freeze phase. This is a study
+accounting mapping only, without an import of diagnostic types or a fabricated
+diagnostic outcome. Comparison preparation accepts the frozen menu or scoring
+policy. Native evaluation reconciliation specifically requires the scoring policy
+and actual native preparation binder, so a ledger-valid menu preparation cannot
+impersonate evaluation preparation. Native prediction configuration is unchanged.
+
+### Remaining producer and publication work
+
+This unit returns private evidence and does not append a complete-cell event.
+Synthetic interface tests do not assert a real selection, actual future source
+gates or a measured comparison. Joint native/classical source composition can be
+reviewed before later selector implementation; actual comparison publication still
+requires genuine grid/argmax/tie and selection-before-feedback evidence, calibration,
+sensitivity, the actual final manifest, and the later runner's measured persistence.
+
+The supervisor must measure all child/thread/process CPU, wall time and every new
+artifact byte, including failures, retries and removed temporary output; reserve
+before work; enforce remaining caps and record overruns; hold unknown work; and
+avoid settling informational child facts twice. Quiescent Journal ownership,
+durable ledger compare-and-swap, fsync/crash recovery and atomic publication remain
+producer duties. Reconciliation itself and private catalog/evidence storage consume
+the same cumulative budget. There is no new study, spending permission or reset.

@@ -17,7 +17,6 @@ from strange_physics.contracts import Message
 from strange_physics.research_contracts import message_sha256
 from strange_physics.serialization import canonical_json
 from strange_physics.study_contracts import (
-    ARTIFACT_KINDS,
     MAX_LEDGER_RECORDS,
     MAX_STUDY_JSON_BYTES,
     ArtifactKind,
@@ -125,7 +124,18 @@ def _comparison_config(state: _State, value: StudyAttemptReservation) -> None:
     elif value.operation == "purchase" and value.purchase is not None:
         kind = "calibration" if value.purchase.calibration else "menu"
     elif value.operation == "preparation":
-        kind = "menu"
+        # Menu preparation and actual evaluation preparation have distinct inputs.
+        # The complete scoring adapter additionally requires the latter producer.
+        if value.config_sha256 not in {
+            state.manifest.artifact("menu").sha256,
+            state.manifest.artifact("scoring_policy").sha256,
+        }:
+            raise StudyLedgerError("configuration_mismatch")
+        return
+    elif value.operation == "classical_diagnostic":
+        if not any(a.kind == "classical_diagnostic_config" for a in state.manifest.artifacts):
+            raise StudyLedgerError("diagnostic_configuration_missing")
+        kind = "classical_diagnostic_config"
     else:
         raise StudyLedgerError("invalid_comparison_operation")
     if value.config_sha256 != state.manifest.artifact(kind).sha256:
@@ -368,7 +378,7 @@ def freeze_native_study(
     ):
         raise StudyLedgerError("runtime_identity_mismatch")
     if (
-        set(artifacts) != set(ARTIFACT_KINDS)
+        set(artifacts) != {ref.kind for ref in manifest.artifacts}
         or sum(len(raw) for raw in artifacts.values()) > MAX_STUDY_JSON_BYTES
     ):
         raise StudyLedgerError("artifact_set_mismatch")
@@ -445,6 +455,39 @@ def study_manifest(ledger: NativeStudyLedger) -> NativeStudyManifest:
     if state.manifest is None:
         raise StudyLedgerError("manifest_missing")
     return state.manifest
+
+
+@dataclass(frozen=True)
+class StudyAttemptSnapshot:
+    """Validated retained facts and accumulated measurements, not execution proof."""
+
+    reservation: StudyAttemptReservation
+    state: Literal["reserved", "running", "unknown", "completed", "failed", "rejected"]
+    latest_update: StudyAttemptUpdate | None
+    cpu_ns: int | None
+    wall_ns: int | None
+    artifact_bytes: int | None
+
+
+def study_cell_attempts(
+    ledger: NativeStudyLedger, cell_id: str
+) -> tuple[StudyAttemptSnapshot, ...]:
+    """Project the complete validated cell history, including unresolved retries."""
+    state = _scan(ledger)
+    _cell(state, cell_id)
+    # Derive the finite state from its typed latest update rather than a cast.
+    return tuple(
+        StudyAttemptSnapshot(
+            attempt.reservation,
+            "reserved" if attempt.update is None else attempt.update.state,
+            attempt.update,
+            attempt.cpu_ns,
+            attempt.wall_ns,
+            attempt.artifact_bytes,
+        )
+        for attempt in state.attempts.values()
+        if attempt.reservation.cell_id == cell_id
+    )
 
 
 def study_purchase_intents(ledger: NativeStudyLedger, cell_id: str) -> tuple[StudyPurchase, ...]:

@@ -46,6 +46,7 @@ ArtifactKind = Literal[
     "selector_random",
     "selector_uniform_disagreement",
     "selector_posterior_disagreement",
+    "classical_diagnostic_config",
 ]
 ARTIFACT_KINDS = (
     "world_catalog",
@@ -77,6 +78,7 @@ OperationKind = Literal[
     "reference",
     "sensitivity",
     "accounting",
+    "classical_diagnostic",
 ]
 Phase = Literal["reference", "calibration", "sensitivity", "comparison", "accounting"]
 
@@ -192,7 +194,7 @@ class NativeStudyManifest(Message):
         tuple[Annotated[int, Field(ge=0, le=2**32 - 1)], ...],
         Field(min_length=2, max_length=2),
     ]
-    artifacts: Annotated[tuple[StudyArtifact, ...], Field(min_length=15, max_length=15)]
+    artifacts: Annotated[tuple[StudyArtifact, ...], Field(min_length=15, max_length=16)]
     gates: Annotated[tuple[StudyGate, ...], Field(min_length=4, max_length=4)]
     cells: Annotated[tuple[NativeStudyCell, ...], Field(min_length=36, max_length=36)]
     failure_policy: Literal["retain-every-cell-and-attempt.v1"] = "retain-every-cell-and-attempt.v1"
@@ -202,8 +204,12 @@ class NativeStudyManifest(Message):
     def complete_matrix(self) -> Self:
         if len(set(self.world_ids)) != 6 or len(set(self.policy_seeds)) != 2:
             raise ValueError("World IDs and policy seeds must be unique")
-        if tuple(a.kind for a in self.artifacts) != ARTIFACT_KINDS:
-            raise ValueError("Every required artifact must occur once in declared order")
+        kinds = tuple(a.kind for a in self.artifacts)
+        if kinds not in (
+            ARTIFACT_KINDS,
+            (*ARTIFACT_KINDS, "classical_diagnostic_config"),
+        ):
+            raise ValueError("Required artifacts and optional diagnostic must occur once in order")
         if tuple(g.unit for g in self.gates) != ("RA-N01", "RA-N02.a", "RA-N03", "RA-N04"):
             raise ValueError("Every numerical/acquisition gate must be retained")
         expected = tuple(
@@ -296,6 +302,8 @@ class StudyAttemptReservation(Message):
             raise ValueError("Purchase attempts retain the exact reservation identity")
         if self.purchase is not None and self.cell_id is None:
             raise ValueError("Purchased slots require a comparison cell")
+        if self.operation == "classical_diagnostic" and self.cell_id is None:
+            raise ValueError("Classical diagnostics require their frozen comparison cell")
         if self.retry_of == self.attempt_id:
             raise ValueError("A repeated computation needs a fresh attempt identity")
         return self
