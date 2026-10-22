@@ -107,3 +107,46 @@ durable storage, concurrent ledger serialization or hosted isolation.
 The new schema exposes the configuration root separately and marks input,
 outcome and result roots evaluator-private. It introduces no HTTP route, client
 grant, scientific hash dialect or frozen CORE/SCI/legacy runtime amendment.
+
+## Exact source validation — 2026-10-22
+
+Runtime source `0ff9e3b3e161db3e4c1e6a21f0277eb95c2713c9`, tree
+`62e20bfcfa5005e49f7bf62ce860037f7c4e2708`, passed 3,874 full tests,
+Ruff/format checks over 164 files, configured strict `mypy src tests examples`
+over 115 source files, 1,495 external schema checks and configured
+`bandit -r src scripts -ll`. Locked offline consistency, installed dependency
+consistency and strict hash-pinned all-group dependency audit also passed.
+
+The focused native run passed 543 cases, including 73 new classical cases.
+Its production source matches this checkpoint; the final typed free-metadata
+bound fixture was subsequently refined and passed separately. The exact full
+suite includes that final fixture. Initial test-harness corrections are retained
+privately and are not presented as product failures or accepted-source evidence.
+
+Offline wheel/sdist builds passed the exact 64-package-file allowlists.
+A temporary project-only wheel installation executed actual scored,
+unscorable coefficient-above-four and fitter-failure paths, validated their
+results, and matched all 64 package files to source. The temporary installation
+was removed. This used the existing pinned dependencies; it is not a separate
+clean runtime-only environment or hosted-CI claim. Actual configuration SHA256:
+`2a24df7a1f598eecee6dae8aa9919e626025723c4aec66f5fe06bc8e28713873`.
+
+Quality independently accepted 73 authored plus 30 additional checks and four
+sensitive guard mutations. Research accepted 73 authored plus 55 independent
+behavioral checks and one canonical-prefix guard mutation, covering actual
+old-runtime parity, all 24 comparable probes, poor/unscorable results and staged
+failures. Both reviews found no remaining blocker in this supplied-material
+diagnostic scope. Frozen CORE/SCI, legacy fitter/predictor/evaluator, study source
+and dependency pins remain byte-identical to the accepted base.
+
+Owner-readable evidence is stored outside the checkout with review date
+2026-11-21. Author index SHA256:
+`f753168565a377fe499bb316462b4f3c1f27e7e2c484baeb170b449561e93eae`;
+Quality index:
+`120586d1b57b219790f887d0f20078468d9703f12acc232852872d424ffc2a6a`;
+Research index:
+`1a0ce08a843061a50d6862c486565645e6edc9a2b5d9d09d3aa15c3f40917d08`.
+Exact integration/hosted gates, the separate actual-Journal composition and
+durable measured publication remain required. No study, posterior/MAP inference,
+calibration, provider call or new spending occurred; cumulative limits remain
+unchanged.
