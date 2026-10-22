@@ -10,10 +10,11 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | Independent classical-diagnostic and Journal adapter scientific review | Read-only; immutable checkpoints and source/interface boundaries required |
-| Quality | Actual-Journal/native-score evidence-only adapter | Exclusive identity writer; no complete-cell append; both parents remain partial |
-| Platform | Comparable same-prefix classical diagnostic | Exclusive primary writer from accepted 73d07b6; unchanged fit/predict/evaluator, one measured outer envelope |
-| Project lead | Integration coordination and next publication boundary | PR #112/main/package accepted; both active writers own separate existing checkouts |
+| Research | Combined classical/Journal scientific review | Both independent source reviews accepted; exact union and publication boundaries next |
+| Quality | Journal checkpoint released; integration review | Identity clean at 531deb8 and released to lead; no complete-cell append |
+| Platform | Classical checkpoint released; delivery/package verification | Primary clean at c916d9d and released to lead; diagnostic remains separate |
+| Project lead | Classical delivery followed by Journal integration | Owns both released checkouts; exact source/CI/package gates and joint review required |
+
 
 ## Assignments
 
@@ -562,3 +563,19 @@ No scientific study was run. RA-N01 and RA-02 remain partial; complete measured
 publication and later MAP/selection/calibration/final-manifest evidence remain
 required. The 36-episode, 432-slot, eight-CPU-hour and 1 GiB cumulative limits
 are unchanged, with no reset, new DAG edge or waiver.
+
+
+## 2026-10-22 — Classical and actual-Journal releases
+
+| Engineer | Released source | Accepted scope / next gate |
+| --- | --- | --- |
+| Platform | Classical 0ff9e3b; final c916d9d | 3,874 full tests, 64-file archives, Quality/Research acceptance; exact delivery pending |
+| Quality | Journal 531deb8 | 3,866 full tests, final mapping repair and both peer acceptances; exact integration pending |
+| Research | Independent source and release review | Classical 55 independent cases; Journal 59 base plus 12 repair cases; no scientific run |
+| Project lead | Both clean checkouts received | Deliver classical, then integrate/verify the exact Journal union; preserve separate primary/diagnostic outcomes |
+
+Remaining completion work includes joint native/classical publication evidence,
+actual cost measurements and safe persistence/recovery. Source acceptance uses
+explicit synthetic fixtures and does not claim future MAP/selection/calibration
+or a real final study freeze. Both parent tasks and all cumulative limits remain
+unchanged. No new checkout, dependency pins, scientific run or provider call.

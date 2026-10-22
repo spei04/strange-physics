@@ -12588,14 +12588,14 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "prediction_delivered_pure_scoring_source_reviewed",
+      "status": "scoring_delivered_classical_and_journal_source_reviewed",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Read-only actual-Journal composition/scored-cell publisher design and progress review; identity writer handoff follows accepted scoring delivery.",
-        "Platform": "Pure scoring source released; same-prefix classical diagnostic preparation and exact package verification; primary writer handoff follows delivery.",
-        "Research": "Independent Journal/publication and classical-diagnostic scientific review.",
-        "Project lead": "Primary scoring integration, exact PR/main/package gates and next checkout handoffs."
+        "Quality": "Actual-Journal checkpoint531deb8 released; progress and joint integration review.",
+        "Platform": "Classical checkpointc916d9d released; exact package verification and joint integration review.",
+        "Research": "Independent combined classical/Journal scientific and publication-boundary review.",
+        "Project lead": "Classical delivery in primary, followed by Journal source union/delivery in reused identity; explicit next writer handoffs."
       },
       "handoff": "Explicit writer handoff and lock/environment revalidation precede code changes. Reuse the two existing independent cloud checkouts; no additional checkout or shared dependency installation.",
       "interface_decisions": [
@@ -12604,10 +12604,10 @@
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Accept pure scoring delivery, then actual-Journal composition and scored-cell publication with reconciled full purchases/measured terminal attempts, plus an honest same-prefix classical diagnostic. Resolve preparation-menu versus scoring_policy mapping explicitly. Both parents remain in progress. Finite-grid reference follows their acceptance, then calibration/selectors, actual manifest freeze and comparison.",
+      "next_units": "Deliver accepted classical c916d9d, then integrate Journal531deb8 with the exact shared registration/schema union and independent joint checks. Complete private native/classical publication composition remains before parent source/interface acceptance. Actual measured publication still requires genuine later inference/selection/calibration/frozenmanifest and measurement/persistence producers. Both parents remain in progress; no graph edge changes.",
       "partial_checkpoints": {
         "RA-N01": {
-          "status": "candidate_prediction_delivered_pure_scoring_reviewed_parent_in_progress",
+          "status": "candidate_prediction_scoring_delivered_classical_reviewed_parent_in_progress",
           "source": "5cbf85d0c5d90899c68d788973dbb637b6474603",
           "tree": "903d1eed6e7720c99b648a3c353c91914aa5de3e",
           "pull_request": 109,
@@ -12617,7 +12617,7 @@
           "candidate": 12402495332,
           "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
           "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
-          "scope": "Candidate API and prediction runtime delivered; pure scoring source reviewed separately. Actual-Journal composition, same-prefix classical diagnostic and full parent completion remain pending.",
+          "scope": "Candidate API, native prediction and pure scoring delivered. Comparable classical source independently accepted; exact delivery and joint Journal/publication source joins remain pending.",
           "prediction_runtime": {
             "status": "delivered",
             "source": "c3988d9356e47965dea33746c9fac3268099912a",
@@ -12651,7 +12651,7 @@
             "main_acceptance_index_sha256": "dc7c4ad8144e14688a57bf9e452de1468b7e83516be23fba7eeafa3401cd49a0"
           },
           "pure_scoring": {
-            "status": "independent_source_review_accepted_delivery_pending",
+            "status": "delivered",
             "source": "da3d529ac462051d80be00762f6dcc8d57c767f2",
             "tree": "edf035810d9585a89665e74f3e57b66a69219dc7",
             "final_author": "e21dfdc876bf9d2316316ae644aa165282d4edc2",
@@ -12675,12 +12675,47 @@
             "research_index_sha256": "2da0036b70533f4c9e02a3172fb6d9d59b79364d20223f0ebeacc5ed701b4db7",
             "final_docs_index_sha256": "908ff2daf00c166f7bbfde7b3d819e729ffd2771c1494ec2c5ba8e329a6a7e21",
             "release_index_sha256": "783c0ead121adf0f0792d4bc98737d48031e8d95ce1fa5a5ce0e25faa5ee4b0f",
-            "delivery_record": "Exact PR/main/candidate verification pending at this source checkpoint; issue #106 records acceptance when verified.",
-            "scope": "Pure actual supplied-material scoring/preparation only. Actual Journal provenance, measured durable publication, same-prefix diagnostic, posterior/MAP, calibration and comparison remain incomplete."
+            "delivery_record": "Accepted PR #112/main73d07b6 with exact source/lock/provenance/checksums/62-file package verification; issue #106 records delivery.",
+            "scope": "Pure actual supplied-material scoring/preparation only. Actual Journal provenance, measured durable publication, same-prefix diagnostic, posterior/MAP, calibration and comparison remain incomplete.",
+            "pull_request": 112,
+            "reviewed_head": "2d362201d1fd9df3c87b3d0c969cb289d1eb6cf1",
+            "reviewed_tree": "e4fd76d763a29c7157e2ad2506298f1898c170b7",
+            "merge": "73d07b63d28ba4e8a86cfeaf3483a339e6a92c44",
+            "pr_ci": 39780967416,
+            "main_ci": 39781313464,
+            "candidate": 12425889219,
+            "candidate_zip_sha256": "d8d570f04796c69ff00e4ddeea37fbaf01eae69da1b5fc2e1694daaf9d150c83",
+            "main_acceptance_index_sha256": "ea00ee2bf3394d6f9d911a3907bbff17a3ed3e731635a2faf33f9ecaa99700b2"
+          },
+          "classical_diagnostic": {
+            "status": "independent_source_review_accepted_delivery_pending",
+            "source": "0ff9e3b3e161db3e4c1e6a21f0277eb95c2713c9",
+            "tree": "62e20bfcfa5005e49f7bf62ce860037f7c4e2708",
+            "final_author": "c916d9dc13251cfc862fb2df47ebfc6ec9ba0488",
+            "final_author_tree": "ed1dc100edf1ed5c5af2dea8d2eca80ab74109e9",
+            "full_tests": 3874,
+            "focused_same_production_cases": 543,
+            "new_classical_tests": 73,
+            "schema_cases": 1495,
+            "format_files": 164,
+            "mypy_files": 115,
+            "archive_files": 64,
+            "quality_independent_cases": 30,
+            "quality_mutants": 4,
+            "research_independent_cases": 55,
+            "research_mutants": 1,
+            "config_sha256": "2a24df7a1f598eecee6dae8aa9919e626025723c4aec66f5fe06bc8e28713873",
+            "author_index_sha256": "f753168565a377fe499bb316462b4f3c1f27e7e2c484baeb170b449561e93eae",
+            "quality_index_sha256": "120586d1b57b219790f887d0f20078468d9703f12acc232852872d424ffc2a6a",
+            "research_index_sha256": "1a0ce08a843061a50d6862c486565645e6edc9a2b5d9d09d3aa15c3f40917d08",
+            "final_docs_index_sha256": "008a589b4042bb7dac0f8bfc672c6f2c24f40083c4f73f5148e09daa4d3830d3",
+            "release_index_sha256": "2aab7b4e1c006220676f9a99edec017b864a956148d0776d500db5d4a182e0ce",
+            "delivery_record": "Exact PR/main/package delivery pending at source checkpoint; issue #106 records acceptance when verified.",
+            "scope": "Supplied-material diagnostic using actual unchanged classical fitter/predictor/evaluator; separate from primary native result. No actual Journal authentication, measurement/persistence producer, MAP or comparison claim."
           }
         },
         "RA-02": {
-          "status": "accounting_unit_delivered_parent_in_progress",
+          "status": "accounting_delivered_journal_scoring_source_reviewed_parent_in_progress",
           "runtime_source": "78b3be9510c71c4c5a60a7e69080c3989f3cb27b",
           "final_author": "c3502f7f1f318ca01ef24bb80172d21cb5004e57",
           "author_full_tests": 3331,
@@ -12699,7 +12734,27 @@
           "main_ci": 39724819090,
           "candidate": 12402737173,
           "candidate_zip_sha256": "ba00041ca2f422b88a70e5b36daf7290f8386141d999cef08c7773b7bd22a97a",
-          "main_acceptance_index_sha256": "723fbd7a06020bbc8a68bf1f1b9338a25e59ef05922117db18a688e5b0f6ad11"
+          "main_acceptance_index_sha256": "723fbd7a06020bbc8a68bf1f1b9338a25e59ef05922117db18a688e5b0f6ad11",
+          "native_score_reconciliation": {
+            "status": "independent_source_review_accepted_integration_pending",
+            "source": "531deb86a881b4bbd4ac80dfc1f477ffee5a2c96",
+            "tree": "94e2ccb4bc23d27fccbe11149f11ddc3e18c4b84",
+            "full_tests": 3866,
+            "schema_cases": 1495,
+            "format_files": 163,
+            "mypy_files": 115,
+            "archive_files": 64,
+            "platform_base_independent_cases": 22,
+            "research_base_independent_cases": 59,
+            "platform_repair_independent_cases": 16,
+            "research_repair_independent_cases": 12,
+            "author_index_sha256": "7703aa7900388d5ff3ca8f02de97782457193cb8740dcc85f33ccdd71dba6a51",
+            "release_index_sha256": "df13d089325e3909eb43d186b23f36eb1b3c9a55c8698b33f56c2a924a4d981d",
+            "platform_repair_index_sha256": "b1052735e6295a4afab7458d4585b778c85a5fd749c928d75cc0894633d3f655",
+            "research_repair_index_sha256": "040ab8d7611e9c751f1018b08cf3431c03de2932a78141502d42a7d611caf1bf",
+            "delivery_record": "Exact classical source union, joint review and PR/main/package delivery remain pending; issue #105 records acceptance when verified.",
+            "scope": "Actual Journal/full-ledger/native-score identity and attempt reconciliation with twelve resolved rows, explicit private failure evidence and compatible study mappings. No complete-cell append, classical import, measured producer or scientific result."
+          }
         }
       },
       "combined_integration": {
@@ -12846,7 +12901,7 @@
         "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
         "issue": "https://github.com/spei04/strange-physics/issues/105",
         "checkpoint": {
-          "status": "accounting_unit_delivered_parent_in_progress",
+          "status": "accounting_delivered_journal_scoring_source_reviewed_parent_in_progress",
           "runtime_source": "78b3be9510c71c4c5a60a7e69080c3989f3cb27b",
           "final_author": "c3502f7f1f318ca01ef24bb80172d21cb5004e57",
           "author_full_tests": 3331,
@@ -12865,7 +12920,27 @@
           "main_ci": 39724819090,
           "candidate": 12402737173,
           "candidate_zip_sha256": "ba00041ca2f422b88a70e5b36daf7290f8386141d999cef08c7773b7bd22a97a",
-          "main_acceptance_index_sha256": "723fbd7a06020bbc8a68bf1f1b9338a25e59ef05922117db18a688e5b0f6ad11"
+          "main_acceptance_index_sha256": "723fbd7a06020bbc8a68bf1f1b9338a25e59ef05922117db18a688e5b0f6ad11",
+          "native_score_reconciliation": {
+            "status": "independent_source_review_accepted_integration_pending",
+            "source": "531deb86a881b4bbd4ac80dfc1f477ffee5a2c96",
+            "tree": "94e2ccb4bc23d27fccbe11149f11ddc3e18c4b84",
+            "full_tests": 3866,
+            "schema_cases": 1495,
+            "format_files": 163,
+            "mypy_files": 115,
+            "archive_files": 64,
+            "platform_base_independent_cases": 22,
+            "research_base_independent_cases": 59,
+            "platform_repair_independent_cases": 16,
+            "research_repair_independent_cases": 12,
+            "author_index_sha256": "7703aa7900388d5ff3ca8f02de97782457193cb8740dcc85f33ccdd71dba6a51",
+            "release_index_sha256": "df13d089325e3909eb43d186b23f36eb1b3c9a55c8698b33f56c2a924a4d981d",
+            "platform_repair_index_sha256": "b1052735e6295a4afab7458d4585b778c85a5fd749c928d75cc0894633d3f655",
+            "research_repair_index_sha256": "040ab8d7611e9c751f1018b08cf3431c03de2932a78141502d42a7d611caf1bf",
+            "delivery_record": "Exact classical source union, joint review and PR/main/package delivery remain pending; issue #105 records acceptance when verified.",
+            "scope": "Actual Journal/full-ledger/native-score identity and attempt reconciliation with twelve resolved rows, explicit private failure evidence and compatible study mappings. No complete-cell append, classical import, measured producer or scientific result."
+          }
         }
       },
       {
@@ -13377,7 +13452,7 @@
         "role": "PL1",
         "issue": "https://github.com/spei04/strange-physics/issues/106",
         "checkpoint": {
-          "status": "candidate_prediction_delivered_pure_scoring_reviewed_parent_in_progress",
+          "status": "candidate_prediction_scoring_delivered_classical_reviewed_parent_in_progress",
           "source": "5cbf85d0c5d90899c68d788973dbb637b6474603",
           "tree": "903d1eed6e7720c99b648a3c353c91914aa5de3e",
           "pull_request": 109,
@@ -13387,7 +13462,7 @@
           "candidate": 12402495332,
           "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
           "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
-          "scope": "Candidate API and prediction runtime delivered; pure scoring source reviewed separately. Actual-Journal composition, same-prefix classical diagnostic and full parent completion remain pending.",
+          "scope": "Candidate API, native prediction and pure scoring delivered. Comparable classical source independently accepted; exact delivery and joint Journal/publication source joins remain pending.",
           "prediction_runtime": {
             "status": "delivered",
             "source": "c3988d9356e47965dea33746c9fac3268099912a",
@@ -13421,7 +13496,7 @@
             "main_acceptance_index_sha256": "dc7c4ad8144e14688a57bf9e452de1468b7e83516be23fba7eeafa3401cd49a0"
           },
           "pure_scoring": {
-            "status": "independent_source_review_accepted_delivery_pending",
+            "status": "delivered",
             "source": "da3d529ac462051d80be00762f6dcc8d57c767f2",
             "tree": "edf035810d9585a89665e74f3e57b66a69219dc7",
             "final_author": "e21dfdc876bf9d2316316ae644aa165282d4edc2",
@@ -13445,8 +13520,43 @@
             "research_index_sha256": "2da0036b70533f4c9e02a3172fb6d9d59b79364d20223f0ebeacc5ed701b4db7",
             "final_docs_index_sha256": "908ff2daf00c166f7bbfde7b3d819e729ffd2771c1494ec2c5ba8e329a6a7e21",
             "release_index_sha256": "783c0ead121adf0f0792d4bc98737d48031e8d95ce1fa5a5ce0e25faa5ee4b0f",
-            "delivery_record": "Exact PR/main/candidate verification pending at this source checkpoint; issue #106 records acceptance when verified.",
-            "scope": "Pure actual supplied-material scoring/preparation only. Actual Journal provenance, measured durable publication, same-prefix diagnostic, posterior/MAP, calibration and comparison remain incomplete."
+            "delivery_record": "Accepted PR #112/main73d07b6 with exact source/lock/provenance/checksums/62-file package verification; issue #106 records delivery.",
+            "scope": "Pure actual supplied-material scoring/preparation only. Actual Journal provenance, measured durable publication, same-prefix diagnostic, posterior/MAP, calibration and comparison remain incomplete.",
+            "pull_request": 112,
+            "reviewed_head": "2d362201d1fd9df3c87b3d0c969cb289d1eb6cf1",
+            "reviewed_tree": "e4fd76d763a29c7157e2ad2506298f1898c170b7",
+            "merge": "73d07b63d28ba4e8a86cfeaf3483a339e6a92c44",
+            "pr_ci": 39780967416,
+            "main_ci": 39781313464,
+            "candidate": 12425889219,
+            "candidate_zip_sha256": "d8d570f04796c69ff00e4ddeea37fbaf01eae69da1b5fc2e1694daaf9d150c83",
+            "main_acceptance_index_sha256": "ea00ee2bf3394d6f9d911a3907bbff17a3ed3e731635a2faf33f9ecaa99700b2"
+          },
+          "classical_diagnostic": {
+            "status": "independent_source_review_accepted_delivery_pending",
+            "source": "0ff9e3b3e161db3e4c1e6a21f0277eb95c2713c9",
+            "tree": "62e20bfcfa5005e49f7bf62ce860037f7c4e2708",
+            "final_author": "c916d9dc13251cfc862fb2df47ebfc6ec9ba0488",
+            "final_author_tree": "ed1dc100edf1ed5c5af2dea8d2eca80ab74109e9",
+            "full_tests": 3874,
+            "focused_same_production_cases": 543,
+            "new_classical_tests": 73,
+            "schema_cases": 1495,
+            "format_files": 164,
+            "mypy_files": 115,
+            "archive_files": 64,
+            "quality_independent_cases": 30,
+            "quality_mutants": 4,
+            "research_independent_cases": 55,
+            "research_mutants": 1,
+            "config_sha256": "2a24df7a1f598eecee6dae8aa9919e626025723c4aec66f5fe06bc8e28713873",
+            "author_index_sha256": "f753168565a377fe499bb316462b4f3c1f27e7e2c484baeb170b449561e93eae",
+            "quality_index_sha256": "120586d1b57b219790f887d0f20078468d9703f12acc232852872d424ffc2a6a",
+            "research_index_sha256": "1a0ce08a843061a50d6862c486565645e6edc9a2b5d9d09d3aa15c3f40917d08",
+            "final_docs_index_sha256": "008a589b4042bb7dac0f8bfc672c6f2c24f40083c4f73f5148e09daa4d3830d3",
+            "release_index_sha256": "2aab7b4e1c006220676f9a99edec017b864a956148d0776d500db5d4a182e0ce",
+            "delivery_record": "Exact PR/main/package delivery pending at source checkpoint; issue #106 records acceptance when verified.",
+            "scope": "Supplied-material diagnostic using actual unchanged classical fitter/predictor/evaluator; separate from primary native result. No actual Journal authentication, measurement/persistence producer, MAP or comparison claim."
           }
         }
       },
