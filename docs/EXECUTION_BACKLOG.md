@@ -3486,7 +3486,8 @@ Quality owns SP-01.e/#98 VAL1 in the reused identity checkout at accepted WEB1 m
 N01 candidate contracts and RA-02 accounting are integrated through PRs #109/#110.
 PR #110/main f9f450b passed required CI and exact package verification. Native
 candidate production and prediction at c3988d9 pass 3,714 tests and independent
-Quality/Research review; delivery evidence is retained with issue #106 and CI.
+Quality/Research review. At this source-review checkpoint, runtime delivery awaits
+exact PR/main/candidate verification; issue #106 records delivery evidence as accepted.
 Full source identities and scoped evidence are in execution-backlog.json.
 
 Both #105 and #106 remain in progress. N01 must still bind the actual Journal,

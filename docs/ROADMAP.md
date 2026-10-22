@@ -43,7 +43,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 | Three force families, 2D, 1–8 particles, public contracts, SDK and CLI | Verified and integrated | Baseline commit above; src/strange_physics and numerical/contract tests |
 | Local transactional reservations, checkpoints, replay after interruption | Verified locally | journal.py, session.py, sdk.py; failure and concurrency tests; not distributed durability |
 | External custom agent and law example | Verified locally | examples/custom_extension.py and tests/test_extensions.py; not outside-team adoption |
-| Current code and delivery checks | RA-02 accounting delivered; candidate/prediction runtime reviewed | PR #110/mainf9f450b and candidate12402737173 are verified. Native runtimec3988d9 passes 3,714 tests, 1,473 schema cases and independent reviews; required delivery evidence is retained with issue #106 and CI. Scoring and both parent tasks remain unfinished |
+| Current code and delivery checks | RA-02 accounting delivered; candidate/prediction runtime reviewed | PR #110/mainf9f450b and candidate12402737173 are verified. Native runtimec3988d9 passes 3,714 tests, 1,473 schema cases and independent reviews; exact PR/main/candidate verification is required for delivery, with acceptance recorded in issue #106. Scoring and both parent tasks remain unfinished |
 | Existing GitHub CI | Verified at reviewed integration head | All four Python 3.12/3.14 PR and push checks passed at 5cb1895; 55 tests, Ruff, strict mypy, package build and CLI smoke. Merge tree matches this reviewed head; [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060 |
 | Baseline integration to main | Verified | PR #1 merged as 7117060; Quality/Research peer reviews passed and git diff confirms tree identity with 5cb1895. This is not a product release |
 | Stage 2 execution backlog | Approved 2026-10-19 | 168 PR tasks across 42 epic issues; 369 task/gate prerequisites; scope, exclusions, contracts, tests, confidence and done criteria; dependency/resource audit passed |
@@ -1195,7 +1195,8 @@ Quality owns SP-01.e/#98 VAL1 in the reused identity checkout at accepted WEB1 m
 N01 candidate contracts and RA-02 accounting are integrated through PRs #109/#110.
 PR #110/main f9f450b passed required CI and exact package verification. Native
 candidate production and prediction at c3988d9 pass 3,714 tests and independent
-Quality/Research review; delivery evidence is retained with issue #106 and CI.
+Quality/Research review. At this source-review checkpoint, runtime delivery awaits
+exact PR/main/candidate verification; issue #106 records delivery evidence as accepted.
 Full source identities and scoped evidence are in execution-backlog.json.
 
 Both #105 and #106 remain in progress. N01 must still bind the actual Journal,
