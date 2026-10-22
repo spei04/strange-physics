@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts are integrated through PR #109; RA-02 accounting and Journal reconciliation are integrated through PR #110/main f9f450b with verified CI and package evidence. Native candidate production and prediction are delivered through PR #111/main c0e4c86, with all five CI jobs and candidate 12413204172 verified. Pure scoring runtime da3d529 and final author checkpoint e21dfdc have passed local checks and independent Quality/Research review; exact PR/main/package delivery remains pending at this checkpoint. Both #105 and #106 remain in progress. Lead owns scoring delivery; Quality prepares actual-Journal composition and scored-cell publication, Platform prepares the same-prefix classical diagnostic, and Research reviews their scientific boundaries. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts are integrated through PR #109; RA-02 accounting and Journal reconciliation are integrated through PR #110/main f9f450b with verified CI and package evidence. Native candidate production and prediction are delivered through PR #111/main c0e4c86, with all five CI jobs and candidate 12413204172 verified. Pure scoring is delivered through PR #112/main 73d07b6, with all five CI jobs and candidate 12425889219 verified. Classical diagnostic runtime 0ff9e3b/final author c916d9d and actual-Journal adapter 531deb8 have passed local checks and independent reviews; their exact integration and PR/main/package gates remain pending at this checkpoint. Both #105 and #106 remain in progress. Lead owns classical delivery followed by verified source integration of the Journal adapter; existing engineers review the combined boundaries. Both checkouts are released to lead. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
 
 **Status:** Approved by the product owner on 2026-10-19. Initial execution is in progress; concrete paid/release gates remain pending. See [assignment log](EXECUTION_LOG.md).
 **Owner:** technical lead and product owner. **Audited:** 2026-10-19. **Source baseline:** 28a4c19e8f9c92b83d886be6b96667d834784f9e.
@@ -3536,3 +3536,31 @@ and comparison. The cumulative 36 episodes, 432 slots, 8 CPU-core-hours and
 1 GiB limits include reference, calibration, sensitivity, ranking, scoring,
 retries, failures and later diagnostics. No comparison has run; component tests
 are not calibration or research results. Graph, effort and forecast are unchanged.
+
+## 2026-10-22 — Classical and actual-Journal source checkpoints
+
+Pure scoring is delivered through PR #112/main 73d07b6, PR CI 39780967416,
+all five main CI 39781313464 jobs and verified candidate 12425889219.
+Classical runtime 0ff9e3b/final author c916d9d passed 3,874 tests and both
+independent reviews. Journal adapter 531deb8 passed 3,866 tests and its final
+comparison-scope repair was independently accepted. The latter reads the actual
+Journal and full ledger, requires 12 charged/committed rows with no pending or
+missing purchase intents, and binds native material, score and 27 attempt/facts
+envelopes. It returns private evidence, not a complete-cell publication.
+
+Lead integrates the released classical checkpoint first, then the Journal
+checkpoint with the exact shared registration/schema union and joint checks.
+Exact PR/main/package delivery remains required for each. Source identities,
+review indices and counts are recorded in execution-backlog.json; issues #105
+and #106 record delivery acceptance when verified. Both parent tasks remain
+in progress and both existing checkouts are retained for sequential reuse.
+
+The classical result stays separate from the native primary result. A real
+terminal diagnostic failure does not invalidate a valid primary score; missing
+or unknown diagnostic work keeps complete publication incomplete. Source/interface
+verification uses explicit synthetic fixtures and actual fixture Journals.
+Actual comparison publication still requires real posterior/MAP and selection
+ordering, calibration, a frozen manifest, measured costs, durable persistence
+and recovery. These later producers are not fabricated upstream dependencies.
+No scientific comparison has run, and the graph, estimates and cumulative
+36-episode/432-slot/8-CPU-core-hour/1-GiB no-reset limits are unchanged.

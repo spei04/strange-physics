@@ -1,0 +1,4091 @@
+{
+  "description": "Synthetic offline diagnostic contracts; actual unchanged fitter yields insufficient excitation. Numerical success and staged failures are exercised separately in tests. Private roots are evaluator-only; no Journal authentication or study execution.",
+  "runtime_negative": [
+    {
+      "field": "prediction_not_assessed_count",
+      "model": "ClassicalDiagnosticOutcome",
+      "value": 23
+    },
+    {
+      "field": "observation_sha256",
+      "model": "ClassicalDiagnosticOutcome",
+      "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "role",
+      "model": "ClassicalDiagnosticConfig",
+      "value": "primary"
+    },
+    {
+      "field": "prediction_not_assessed_count",
+      "model": "ClassicalDiagnosticOutcome",
+      "value": 25
+    }
+  ],
+  "valid": {
+    "ClassicalDiagnosticConfig": {
+      "feedback_policy": "no-primary-substitution-or-selector-feedback.v1",
+      "fit_config": {
+        "algorithm": "paired-simpson-least-squares.v1",
+        "anchor_count": 1,
+        "calibrated_coefficient_max": 4.0,
+        "coefficient_policy": "finite-nonnegative-no-projection.v1",
+        "connection_count": 1,
+        "coordinates": 2,
+        "duration": 2.0,
+        "fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+        "integration_steps": [
+          0.01,
+          0.005,
+          0.0025
+        ],
+        "max_anchor_norm": 0.5,
+        "max_impulse_norm": 1.0,
+        "max_mass": 2.0,
+        "max_position_norm": 2.0,
+        "max_records": 10000,
+        "max_scalar_rows": 400000,
+        "max_velocity_norm": 2.0,
+        "min_design_rms": 1e-06,
+        "min_mass": 0.5,
+        "model_assumption": "stationary-shared-zero-rest-linear-spring.v1",
+        "noise_policy": "fit-declared-noise-without-accuracy-guarantee.v1",
+        "particle_count": 1,
+        "record_selection": "all-completed-prefix.v1",
+        "sample_interval": 0.05,
+        "schema_version": "strange-physics.spring-fit-config.v1",
+        "window_samples": 3,
+        "window_stride": 2
+      },
+      "prediction_config": {
+        "algorithm": "closed-form-oscillator-sinc.v1",
+        "anchor_count": 1,
+        "connection_count": 1,
+        "coordinates": 2,
+        "equation": "stationary-shared-zero-rest-linear-spring.v1",
+        "failure_policy": "no-partial-response.v1",
+        "max_anchor_norm": 0.5,
+        "max_coefficient": 4.0,
+        "max_horizon": 2.0,
+        "max_impulse_norm": 1.0,
+        "max_initial_position_norm": 3.0,
+        "max_initial_velocity_norm": 2.0,
+        "max_integration_dt": 0.05,
+        "max_mass": 2.0,
+        "max_output_frames": 2001,
+        "max_output_position_norm": 12.0,
+        "max_output_velocity_norm": 14.0,
+        "max_reference_steps": 20000,
+        "min_coefficient": 0.0,
+        "min_integration_dt": 0.0001,
+        "min_mass": 0.5,
+        "particle_count": 1,
+        "predictor_version": "strange-physics.linear-spring.analytic.v1",
+        "schema_version": "strange-physics.spring-prediction-config.v1",
+        "step_policy": "alignment-replay-metadata-only.v1",
+        "supported_fit_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+        "supported_fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+        "supported_model_version": "strange-physics.linear-spring-model.v1",
+        "time_policy": "exact-requested-times.v1"
+      },
+      "producer_version": "strange-physics.same-prefix-classical-diagnostic.v1",
+      "role": "same-prefix-diagnostic-only.v1",
+      "schema_version": "strange-physics.classical-diagnostic-config.v1",
+      "scoring_policy": {
+        "averaging": "equal-xy-time-within-probe-then-equal-probes.v1",
+        "failure_policy": "unscorable-on-any-failure.v1",
+        "frames_per_probe": 41,
+        "max_input_bytes": 16777216,
+        "max_result_bytes": 8388608,
+        "max_world_bytes": 65536,
+        "normalization_scale": 1.0,
+        "overlap_policy": "all-purchases-exact-condition-keys-no-redraw.v1",
+        "probe_count": 24,
+        "probe_recipe": "strange-physics.i1-spring-probes.v1",
+        "reference_profile": "decimal80-taylor128-tail1e-60.v1",
+        "schema_version": "strange-physics.native-scoring-policy.v1",
+        "scorer_version": "strange-physics.native-spring-scoring.v1"
+      }
+    },
+    "ClassicalDiagnosticInput": {
+      "config": {
+        "feedback_policy": "no-primary-substitution-or-selector-feedback.v1",
+        "fit_config": {
+          "algorithm": "paired-simpson-least-squares.v1",
+          "anchor_count": 1,
+          "calibrated_coefficient_max": 4.0,
+          "coefficient_policy": "finite-nonnegative-no-projection.v1",
+          "connection_count": 1,
+          "coordinates": 2,
+          "duration": 2.0,
+          "fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+          "integration_steps": [
+            0.01,
+            0.005,
+            0.0025
+          ],
+          "max_anchor_norm": 0.5,
+          "max_impulse_norm": 1.0,
+          "max_mass": 2.0,
+          "max_position_norm": 2.0,
+          "max_records": 10000,
+          "max_scalar_rows": 400000,
+          "max_velocity_norm": 2.0,
+          "min_design_rms": 1e-06,
+          "min_mass": 0.5,
+          "model_assumption": "stationary-shared-zero-rest-linear-spring.v1",
+          "noise_policy": "fit-declared-noise-without-accuracy-guarantee.v1",
+          "particle_count": 1,
+          "record_selection": "all-completed-prefix.v1",
+          "sample_interval": 0.05,
+          "schema_version": "strange-physics.spring-fit-config.v1",
+          "window_samples": 3,
+          "window_stride": 2
+        },
+        "prediction_config": {
+          "algorithm": "closed-form-oscillator-sinc.v1",
+          "anchor_count": 1,
+          "connection_count": 1,
+          "coordinates": 2,
+          "equation": "stationary-shared-zero-rest-linear-spring.v1",
+          "failure_policy": "no-partial-response.v1",
+          "max_anchor_norm": 0.5,
+          "max_coefficient": 4.0,
+          "max_horizon": 2.0,
+          "max_impulse_norm": 1.0,
+          "max_initial_position_norm": 3.0,
+          "max_initial_velocity_norm": 2.0,
+          "max_integration_dt": 0.05,
+          "max_mass": 2.0,
+          "max_output_frames": 2001,
+          "max_output_position_norm": 12.0,
+          "max_output_velocity_norm": 14.0,
+          "max_reference_steps": 20000,
+          "min_coefficient": 0.0,
+          "min_integration_dt": 0.0001,
+          "min_mass": 0.5,
+          "particle_count": 1,
+          "predictor_version": "strange-physics.linear-spring.analytic.v1",
+          "schema_version": "strange-physics.spring-prediction-config.v1",
+          "step_policy": "alignment-replay-metadata-only.v1",
+          "supported_fit_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+          "supported_fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+          "supported_model_version": "strange-physics.linear-spring-model.v1",
+          "time_policy": "exact-requested-times.v1"
+        },
+        "producer_version": "strange-physics.same-prefix-classical-diagnostic.v1",
+        "role": "same-prefix-diagnostic-only.v1",
+        "schema_version": "strange-physics.classical-diagnostic-config.v1",
+        "scoring_policy": {
+          "averaging": "equal-xy-time-within-probe-then-equal-probes.v1",
+          "failure_policy": "unscorable-on-any-failure.v1",
+          "frames_per_probe": 41,
+          "max_input_bytes": 16777216,
+          "max_result_bytes": 8388608,
+          "max_world_bytes": 65536,
+          "normalization_scale": 1.0,
+          "overlap_policy": "all-purchases-exact-condition-keys-no-redraw.v1",
+          "probe_count": 24,
+          "probe_recipe": "strange-physics.i1-spring-probes.v1",
+          "reference_profile": "decimal80-taylor128-tail1e-60.v1",
+          "schema_version": "strange-physics.native-scoring-policy.v1",
+          "scorer_version": "strange-physics.native-spring-scoring.v1"
+        }
+      },
+      "context": {
+        "candidate_attempt_id": "produce",
+        "candidate_result": {
+          "facts": {
+            "attempt_id": "produce",
+            "completed_count": 3,
+            "config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+            "failed_count": 0,
+            "input_sha256": "c2ffc24ec912c5fc6e13bce0cd962dda4becf0e7f330837f6f88676b5f8e1d72",
+            "model_sha256": null,
+            "not_assessed_count": 0,
+            "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+            "operation": "candidate_production",
+            "outcome": "completed",
+            "output_sha256": "f8ba398b3c5ef584fccf30881d627508da5d780652b4db1e511ec09d7dc211b3",
+            "producer_version": "strange-physics.linear-spring.native-candidates.v1",
+            "requested_count": 3,
+            "schema_version": "strange-physics.native-work-facts.v1",
+            "unit": "candidate"
+          },
+          "payload": {
+            "completed_record_indices": [
+              0
+            ],
+            "failed_candidate_index": null,
+            "failed_record_count": 0,
+            "inference_claim": "none",
+            "models": [
+              {
+                "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+                "fit_record_indices": [
+                  0
+                ],
+                "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+                "linear": 0.0,
+                "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+                "schema_version": "strange-physics.linear-spring-model.v1",
+                "through_index": 0
+              },
+              {
+                "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+                "fit_record_indices": [
+                  0
+                ],
+                "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+                "linear": 1.0,
+                "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+                "schema_version": "strange-physics.linear-spring-model.v1",
+                "through_index": 0
+              },
+              {
+                "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+                "fit_record_indices": [
+                  0
+                ],
+                "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+                "linear": 4.0,
+                "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+                "schema_version": "strange-physics.linear-spring-model.v1",
+                "through_index": 0
+              }
+            ],
+            "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+            "pool_sha256": "8e130a576ee688ad8228ed31b398ccbc6b38bbf0044587ec4f9fad9a9a9990cc",
+            "produced_candidate_count": 3,
+            "producer_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+            "producer_version": "strange-physics.linear-spring.native-candidates.v1",
+            "reason": null,
+            "requested_candidate_count": 3,
+            "schema_version": "strange-physics.native-candidate-outcome.v1",
+            "status": "produced",
+            "through_index": 0
+          },
+          "schema_version": "strange-physics.native-candidate-result.v1"
+        },
+        "candidates": {
+          "config": {
+            "algorithm": "enumerate-declared-pool.v1",
+            "failure_policy": "no-partial-candidate-set.v1",
+            "max_candidates": 1025,
+            "max_input_bytes": 8388608,
+            "max_json_depth": 32,
+            "max_json_nodes": 1000000,
+            "max_records": 12,
+            "max_result_bytes": 4194304,
+            "producer_version": "strange-physics.linear-spring.native-candidates.v1",
+            "record_selection": "all-completed-prefix.v1",
+            "schema_version": "strange-physics.native-candidate-config.v1"
+          },
+          "observations": {
+            "engine_fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+            "engine_version": "independent-continuous-labels-v1",
+            "records": [
+              {
+                "error": null,
+                "experiment": {
+                  "impulse": {
+                    "particle_id": "mobile",
+                    "vector": [
+                      0.2,
+                      -0.3
+                    ]
+                  },
+                  "particles": [
+                    {
+                      "id": "mobile",
+                      "mass": 1.0,
+                      "position": [
+                        1.2,
+                        0.8
+                      ],
+                      "velocity": [
+                        -0.4,
+                        0.6
+                      ]
+                    }
+                  ],
+                  "schema_version": "strange-physics.experiment.v1"
+                },
+                "index": 0,
+                "operation_id": "purchase-0",
+                "status": "completed",
+                "trajectory": {
+                  "frames": [
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.0,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.05,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.1,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.15000000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.2,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.25,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.30000000000000004,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.35000000000000003,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.4,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.45,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.5,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.55,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.6000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.65,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.7000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.75,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.8,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.8500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.9,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.9500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.0,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.05,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.1,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.1500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.2000000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.25,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.3,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.35,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.4000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.4500000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.5,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.55,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.6,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.6500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.7000000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.75,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.8,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.85,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.9000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.9500000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 2.0,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "run_id": "synthetic-fit-test",
+            "schema_version": "strange-physics.observations.v1",
+            "space": {
+              "budget": 1,
+              "calibration_experiments": 0,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 2.0,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "fixed",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "fixed",
+                    "b": "mobile"
+                  }
+                ],
+                "particle_ids": [
+                  "mobile"
+                ]
+              }
+            }
+          },
+          "pool": {
+            "coefficients": [
+              0.0,
+              1.0,
+              4.0
+            ],
+            "model_assumption": "stationary-shared-zero-rest-linear-spring.v1",
+            "schema_version": "strange-physics.native-spring-pool.v1"
+          },
+          "schema_version": "strange-physics.native-candidate-input.v1"
+        },
+        "policy": {
+          "averaging": "equal-xy-time-within-probe-then-equal-probes.v1",
+          "failure_policy": "unscorable-on-any-failure.v1",
+          "frames_per_probe": 41,
+          "max_input_bytes": 16777216,
+          "max_result_bytes": 8388608,
+          "max_world_bytes": 65536,
+          "normalization_scale": 1.0,
+          "overlap_policy": "all-purchases-exact-condition-keys-no-redraw.v1",
+          "probe_count": 24,
+          "probe_recipe": "strange-physics.i1-spring-probes.v1",
+          "reference_profile": "decimal80-taylor128-tail1e-60.v1",
+          "schema_version": "strange-physics.native-scoring-policy.v1",
+          "scorer_version": "strange-physics.native-spring-scoring.v1"
+        },
+        "prediction_config": {
+          "algorithm": "closed-form-oscillator-sinc.v1",
+          "anchor_count": 1,
+          "connection_count": 1,
+          "equation": "stationary-shared-zero-rest-linear-spring.v1",
+          "failure_policy": "no-partial-response.v1",
+          "max_anchor_norm": 0.5,
+          "max_coefficient": 4.0,
+          "max_horizon": 2.0,
+          "max_impulse_norm": 1.0,
+          "max_initial_position_norm": 3.0,
+          "max_initial_velocity_norm": 2.0,
+          "max_input_bytes": 8388608,
+          "max_integration_dt": 0.05,
+          "max_mass": 2.0,
+          "max_output_frames": 2001,
+          "max_output_position_norm": 12.0,
+          "max_output_velocity_norm": 14.0,
+          "max_reference_steps": 20000,
+          "max_result_bytes": 4194304,
+          "min_coefficient": 0.0,
+          "min_integration_dt": 0.0001,
+          "min_mass": 0.5,
+          "particle_count": 1,
+          "predictor_version": "strange-physics.linear-spring.native-analytic.v1",
+          "schema_version": "strange-physics.native-prediction-config.v1",
+          "step_policy": "alignment-replay-metadata-only.v1",
+          "supported_candidate_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+          "supported_producer_version": "strange-physics.linear-spring.native-candidates.v1",
+          "time_policy": "exact-requested-times.v1"
+        },
+        "schema_version": "strange-physics.native-evaluation-input.v1",
+        "selected": {
+          "candidate_index": 1,
+          "candidate_result_sha256": "f95a7244f81bb008912e2b418e467fd5c86347cc23351af3276d1467cede42ac",
+          "model": {
+            "fit_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+            "fit_record_indices": [
+              0
+            ],
+            "fitter_version": "strange-physics.linear-spring.native-candidates.v1",
+            "linear": 1.0,
+            "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+            "schema_version": "strange-physics.linear-spring-model.v1",
+            "through_index": 0
+          },
+          "model_sha256": "62b59c4be81bda57f7aba52716004c8330e890a18240e03501a05d64c67f43f8",
+          "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+          "pool_sha256": "8e130a576ee688ad8228ed31b398ccbc6b38bbf0044587ec4f9fad9a9a9990cc",
+          "producer_config_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+          "schema_version": "strange-physics.selected-native-candidate.v1",
+          "selection_claim": "selected-candidate-only"
+        }
+      },
+      "schema_version": "strange-physics.classical-diagnostic-input.v1",
+      "world": {
+        "change_after": null,
+        "changed_law": null,
+        "initial_law": {
+          "kind": "spring",
+          "parameters": {
+            "linear": 0.9
+          }
+        },
+        "noise_seed": 7,
+        "schema_version": "strange-physics.world.v1",
+        "space": {
+          "budget": 1,
+          "calibration_experiments": 0,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.01,
+            "duration": 2.0,
+            "position_noise": 0.0,
+            "sample_interval": 0.05,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "fixed",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "fixed",
+                "b": "mobile"
+              }
+            ],
+            "particle_ids": [
+              "mobile"
+            ]
+          }
+        }
+      }
+    },
+    "ClassicalDiagnosticOutcome": {
+      "config_sha256": "2a24df7a1f598eecee6dae8aa9919e626025723c4aec66f5fe06bc8e28713873",
+      "context_sha256": "03463729f12b7c132497d435000176c2cd061ece48f518ad84d0ed87aa5e53a8",
+      "evaluation": null,
+      "fit": {
+        "config": {
+          "algorithm": "paired-simpson-least-squares.v1",
+          "anchor_count": 1,
+          "calibrated_coefficient_max": 4.0,
+          "coefficient_policy": "finite-nonnegative-no-projection.v1",
+          "connection_count": 1,
+          "coordinates": 2,
+          "duration": 2.0,
+          "fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+          "integration_steps": [
+            0.01,
+            0.005,
+            0.0025
+          ],
+          "max_anchor_norm": 0.5,
+          "max_impulse_norm": 1.0,
+          "max_mass": 2.0,
+          "max_position_norm": 2.0,
+          "max_records": 10000,
+          "max_scalar_rows": 400000,
+          "max_velocity_norm": 2.0,
+          "min_design_rms": 1e-06,
+          "min_mass": 0.5,
+          "model_assumption": "stationary-shared-zero-rest-linear-spring.v1",
+          "noise_policy": "fit-declared-noise-without-accuracy-guarantee.v1",
+          "particle_count": 1,
+          "record_selection": "all-completed-prefix.v1",
+          "sample_interval": 0.05,
+          "schema_version": "strange-physics.spring-fit-config.v1",
+          "window_samples": 3,
+          "window_stride": 2
+        },
+        "elapsed_ms": 1,
+        "fit_input": {
+          "fit_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+          "observations": {
+            "engine_fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+            "engine_version": "independent-continuous-labels-v1",
+            "records": [
+              {
+                "error": null,
+                "experiment": {
+                  "impulse": {
+                    "particle_id": "mobile",
+                    "vector": [
+                      0.2,
+                      -0.3
+                    ]
+                  },
+                  "particles": [
+                    {
+                      "id": "mobile",
+                      "mass": 1.0,
+                      "position": [
+                        1.2,
+                        0.8
+                      ],
+                      "velocity": [
+                        -0.4,
+                        0.6
+                      ]
+                    }
+                  ],
+                  "schema_version": "strange-physics.experiment.v1"
+                },
+                "index": 0,
+                "operation_id": "purchase-0",
+                "status": "completed",
+                "trajectory": {
+                  "frames": [
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.0,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.05,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.1,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.15000000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.2,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.25,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.30000000000000004,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.35000000000000003,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.4,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.45,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.5,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.55,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.6000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.65,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.7000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.75,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.8,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.8500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.9,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.9500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.0,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.05,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.1,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.1500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.2000000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.25,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.3,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.35,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.4000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.4500000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.5,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.55,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.6,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.6500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.7000000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.75,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.8,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.85,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.9000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.9500000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 2.0,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "run_id": "synthetic-fit-test",
+            "schema_version": "strange-physics.observations.v1",
+            "space": {
+              "budget": 1,
+              "calibration_experiments": 0,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 2.0,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "fixed",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "fixed",
+                    "b": "mobile"
+                  }
+                ],
+                "particle_ids": [
+                  "mobile"
+                ]
+              }
+            }
+          },
+          "schema_version": "strange-physics.spring-fit-input.v1",
+          "through_index": 0
+        },
+        "input_rejection": null,
+        "observations": {
+          "engine_fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+          "engine_version": "independent-continuous-labels-v1",
+          "records": [
+            {
+              "error": null,
+              "experiment": {
+                "impulse": {
+                  "particle_id": "mobile",
+                  "vector": [
+                    0.2,
+                    -0.3
+                  ]
+                },
+                "particles": [
+                  {
+                    "id": "mobile",
+                    "mass": 1.0,
+                    "position": [
+                      1.2,
+                      0.8
+                    ],
+                    "velocity": [
+                      -0.4,
+                      0.6
+                    ]
+                  }
+                ],
+                "schema_version": "strange-physics.experiment.v1"
+              },
+              "index": 0,
+              "operation_id": "purchase-0",
+              "status": "completed",
+              "trajectory": {
+                "frames": [
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.0,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.05,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.1,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.15000000000000002,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.2,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.25,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.30000000000000004,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.35000000000000003,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.4,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.45,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.5,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.55,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.6000000000000001,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.65,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.7000000000000001,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.75,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.8,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.8500000000000001,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.9,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 0.9500000000000001,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.0,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.05,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.1,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.1500000000000001,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.2000000000000002,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.25,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.3,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.35,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.4000000000000001,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.4500000000000002,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.5,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.55,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.6,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.6500000000000001,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.7000000000000002,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.75,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.8,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.85,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.9000000000000001,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 1.9500000000000002,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  },
+                  {
+                    "positions": [
+                      [
+                        -0.0,
+                        -0.0
+                      ]
+                    ],
+                    "time": 2.0,
+                    "velocities": [
+                      [
+                        0.0,
+                        0.0
+                      ]
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "run_id": "synthetic-fit-test",
+          "schema_version": "strange-physics.observations.v1",
+          "space": {
+            "budget": 1,
+            "calibration_experiments": 0,
+            "limits": {
+              "impulse_norm": 1.0,
+              "max_mass": 2.0,
+              "min_mass": 0.5,
+              "position_norm": 2.0,
+              "velocity_norm": 2.0
+            },
+            "sampling": {
+              "dt": 0.01,
+              "duration": 2.0,
+              "position_noise": 0.0,
+              "sample_interval": 0.05,
+              "velocity_noise": 0.0
+            },
+            "schema_version": "strange-physics.space.v1",
+            "structure": {
+              "anchors": [
+                {
+                  "id": "fixed",
+                  "position": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "connections": [
+                {
+                  "a": "fixed",
+                  "b": "mobile"
+                }
+              ],
+              "particle_ids": [
+                "mobile"
+              ]
+            }
+          }
+        },
+        "result": {
+          "diagnostics": {
+            "accuracy_claim": "none",
+            "actual_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+            "completed_record_count": 1,
+            "completed_record_indices": [
+              0
+            ],
+            "declared_noisy": false,
+            "design_rms": 0.0,
+            "estimated_coefficient_in_calibrated_range": null,
+            "failed_record_count": 0,
+            "fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+            "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+            "raw_coefficient": null,
+            "record_count": 1,
+            "requested_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+            "scalar_row_count": 40,
+            "schema_version": "strange-physics.spring-fit-diagnostics.v1",
+            "through_index": 0
+          },
+          "model": null,
+          "reason": "below_excitation_floor",
+          "schema_version": "strange-physics.spring-fit-result.v1",
+          "status": "insufficient_excitation"
+        },
+        "schema_version": "strange-physics.workflow-fit.v1"
+      },
+      "input_sha256": "f054f0c8a02401532924d5c840eea951559777030c7269364e15f436f43c11e6",
+      "model_sha256": null,
+      "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+      "overlap_probe_index": null,
+      "overlap_record_index": null,
+      "prediction_not_assessed_count": 24,
+      "predictions": [],
+      "protocol": null,
+      "reason": "fit_unavailable",
+      "role": "same-prefix-diagnostic-only.v1",
+      "schema_version": "strange-physics.classical-diagnostic-outcome.v1",
+      "status": "fit_failed",
+      "submissions": null
+    },
+    "ClassicalDiagnosticResult": {
+      "facts": {
+        "attempt_id": "diagnostic-fixture",
+        "completed_count": 0,
+        "config_sha256": "2a24df7a1f598eecee6dae8aa9919e626025723c4aec66f5fe06bc8e28713873",
+        "failed_count": 1,
+        "input_sha256": "f054f0c8a02401532924d5c840eea951559777030c7269364e15f436f43c11e6",
+        "model_sha256": null,
+        "not_assessed_count": 0,
+        "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+        "operation": "classical_diagnostic",
+        "outcome": "failed",
+        "output_sha256": "e905911f560854201939c01d5d245190976ba23ce330e783ee8c6cb595ac1e74",
+        "producer_version": "strange-physics.same-prefix-classical-diagnostic.v1",
+        "requested_count": 1,
+        "schema_version": "strange-physics.native-work-facts.v1",
+        "unit": "work"
+      },
+      "payload": {
+        "config_sha256": "2a24df7a1f598eecee6dae8aa9919e626025723c4aec66f5fe06bc8e28713873",
+        "context_sha256": "03463729f12b7c132497d435000176c2cd061ece48f518ad84d0ed87aa5e53a8",
+        "evaluation": null,
+        "fit": {
+          "config": {
+            "algorithm": "paired-simpson-least-squares.v1",
+            "anchor_count": 1,
+            "calibrated_coefficient_max": 4.0,
+            "coefficient_policy": "finite-nonnegative-no-projection.v1",
+            "connection_count": 1,
+            "coordinates": 2,
+            "duration": 2.0,
+            "fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+            "integration_steps": [
+              0.01,
+              0.005,
+              0.0025
+            ],
+            "max_anchor_norm": 0.5,
+            "max_impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "max_position_norm": 2.0,
+            "max_records": 10000,
+            "max_scalar_rows": 400000,
+            "max_velocity_norm": 2.0,
+            "min_design_rms": 1e-06,
+            "min_mass": 0.5,
+            "model_assumption": "stationary-shared-zero-rest-linear-spring.v1",
+            "noise_policy": "fit-declared-noise-without-accuracy-guarantee.v1",
+            "particle_count": 1,
+            "record_selection": "all-completed-prefix.v1",
+            "sample_interval": 0.05,
+            "schema_version": "strange-physics.spring-fit-config.v1",
+            "window_samples": 3,
+            "window_stride": 2
+          },
+          "elapsed_ms": 1,
+          "fit_input": {
+            "fit_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+            "observations": {
+              "engine_fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+              "engine_version": "independent-continuous-labels-v1",
+              "records": [
+                {
+                  "error": null,
+                  "experiment": {
+                    "impulse": {
+                      "particle_id": "mobile",
+                      "vector": [
+                        0.2,
+                        -0.3
+                      ]
+                    },
+                    "particles": [
+                      {
+                        "id": "mobile",
+                        "mass": 1.0,
+                        "position": [
+                          1.2,
+                          0.8
+                        ],
+                        "velocity": [
+                          -0.4,
+                          0.6
+                        ]
+                      }
+                    ],
+                    "schema_version": "strange-physics.experiment.v1"
+                  },
+                  "index": 0,
+                  "operation_id": "purchase-0",
+                  "status": "completed",
+                  "trajectory": {
+                    "frames": [
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.0,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.05,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.1,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.15000000000000002,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.2,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.25,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.30000000000000004,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.35000000000000003,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.4,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.45,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.5,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.55,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.6000000000000001,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.65,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.7000000000000001,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.75,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.8,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.8500000000000001,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.9,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 0.9500000000000001,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.0,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.05,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.1,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.1500000000000001,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.2000000000000002,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.25,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.3,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.35,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.4000000000000001,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.4500000000000002,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.5,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.55,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.6,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.6500000000000001,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.7000000000000002,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.75,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.8,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.85,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.9000000000000001,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 1.9500000000000002,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      },
+                      {
+                        "positions": [
+                          [
+                            -0.0,
+                            -0.0
+                          ]
+                        ],
+                        "time": 2.0,
+                        "velocities": [
+                          [
+                            0.0,
+                            0.0
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "run_id": "synthetic-fit-test",
+              "schema_version": "strange-physics.observations.v1",
+              "space": {
+                "budget": 1,
+                "calibration_experiments": 0,
+                "limits": {
+                  "impulse_norm": 1.0,
+                  "max_mass": 2.0,
+                  "min_mass": 0.5,
+                  "position_norm": 2.0,
+                  "velocity_norm": 2.0
+                },
+                "sampling": {
+                  "dt": 0.01,
+                  "duration": 2.0,
+                  "position_noise": 0.0,
+                  "sample_interval": 0.05,
+                  "velocity_noise": 0.0
+                },
+                "schema_version": "strange-physics.space.v1",
+                "structure": {
+                  "anchors": [
+                    {
+                      "id": "fixed",
+                      "position": [
+                        0.0,
+                        0.0
+                      ]
+                    }
+                  ],
+                  "connections": [
+                    {
+                      "a": "fixed",
+                      "b": "mobile"
+                    }
+                  ],
+                  "particle_ids": [
+                    "mobile"
+                  ]
+                }
+              }
+            },
+            "schema_version": "strange-physics.spring-fit-input.v1",
+            "through_index": 0
+          },
+          "input_rejection": null,
+          "observations": {
+            "engine_fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+            "engine_version": "independent-continuous-labels-v1",
+            "records": [
+              {
+                "error": null,
+                "experiment": {
+                  "impulse": {
+                    "particle_id": "mobile",
+                    "vector": [
+                      0.2,
+                      -0.3
+                    ]
+                  },
+                  "particles": [
+                    {
+                      "id": "mobile",
+                      "mass": 1.0,
+                      "position": [
+                        1.2,
+                        0.8
+                      ],
+                      "velocity": [
+                        -0.4,
+                        0.6
+                      ]
+                    }
+                  ],
+                  "schema_version": "strange-physics.experiment.v1"
+                },
+                "index": 0,
+                "operation_id": "purchase-0",
+                "status": "completed",
+                "trajectory": {
+                  "frames": [
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.0,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.05,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.1,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.15000000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.2,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.25,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.30000000000000004,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.35000000000000003,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.4,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.45,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.5,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.55,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.6000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.65,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.7000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.75,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.8,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.8500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.9,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 0.9500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.0,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.05,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.1,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.1500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.2000000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.25,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.3,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.35,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.4000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.4500000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.5,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.55,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.6,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.6500000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.7000000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.75,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.8,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.85,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.9000000000000001,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 1.9500000000000002,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    },
+                    {
+                      "positions": [
+                        [
+                          -0.0,
+                          -0.0
+                        ]
+                      ],
+                      "time": 2.0,
+                      "velocities": [
+                        [
+                          0.0,
+                          0.0
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "run_id": "synthetic-fit-test",
+            "schema_version": "strange-physics.observations.v1",
+            "space": {
+              "budget": 1,
+              "calibration_experiments": 0,
+              "limits": {
+                "impulse_norm": 1.0,
+                "max_mass": 2.0,
+                "min_mass": 0.5,
+                "position_norm": 2.0,
+                "velocity_norm": 2.0
+              },
+              "sampling": {
+                "dt": 0.01,
+                "duration": 2.0,
+                "position_noise": 0.0,
+                "sample_interval": 0.05,
+                "velocity_noise": 0.0
+              },
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "anchors": [
+                  {
+                    "id": "fixed",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "fixed",
+                    "b": "mobile"
+                  }
+                ],
+                "particle_ids": [
+                  "mobile"
+                ]
+              }
+            }
+          },
+          "result": {
+            "diagnostics": {
+              "accuracy_claim": "none",
+              "actual_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+              "completed_record_count": 1,
+              "completed_record_indices": [
+                0
+              ],
+              "declared_noisy": false,
+              "design_rms": 0.0,
+              "estimated_coefficient_in_calibrated_range": null,
+              "failed_record_count": 0,
+              "fitter_version": "strange-physics.linear-spring.paired-simpson.v1",
+              "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+              "raw_coefficient": null,
+              "record_count": 1,
+              "requested_config_sha256": "50d7cfb3acf86c3c6415add0766e2ce5494943a22044d25e92749f355d3a2286",
+              "scalar_row_count": 40,
+              "schema_version": "strange-physics.spring-fit-diagnostics.v1",
+              "through_index": 0
+            },
+            "model": null,
+            "reason": "below_excitation_floor",
+            "schema_version": "strange-physics.spring-fit-result.v1",
+            "status": "insufficient_excitation"
+          },
+          "schema_version": "strange-physics.workflow-fit.v1"
+        },
+        "input_sha256": "f054f0c8a02401532924d5c840eea951559777030c7269364e15f436f43c11e6",
+        "model_sha256": null,
+        "observation_sha256": "724fc457eb36fad4db300a1140d30c93738d77c27171d651256b5cd0139ca2e9",
+        "overlap_probe_index": null,
+        "overlap_record_index": null,
+        "prediction_not_assessed_count": 24,
+        "predictions": [],
+        "protocol": null,
+        "reason": "fit_unavailable",
+        "role": "same-prefix-diagnostic-only.v1",
+        "schema_version": "strange-physics.classical-diagnostic-outcome.v1",
+        "status": "fit_failed",
+        "submissions": null
+      }
+    }
+  }
+}

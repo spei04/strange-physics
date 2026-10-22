@@ -1,6 +1,6 @@
 # Strange Physics — enterprise product blueprint and living roadmap
 
-**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts are integrated through PR #109; RA-02 accounting and Journal reconciliation are integrated through PR #110/main f9f450b with verified CI and package evidence. Native candidate production and prediction are delivered through PR #111/main c0e4c86, with all five CI jobs and candidate 12413204172 verified. Pure scoring runtime da3d529 and final author checkpoint e21dfdc have passed local checks and independent Quality/Research review; exact PR/main/package delivery remains pending at this checkpoint. Both #105 and #106 remain in progress. Lead owns scoring delivery; Quality prepares actual-Journal composition and scored-cell publication, Platform prepares the same-prefix classical diagnostic, and Research reviews their scientific boundaries. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts are integrated through PR #109; RA-02 accounting and Journal reconciliation are integrated through PR #110/main f9f450b with verified CI and package evidence. Native candidate production and prediction are delivered through PR #111/main c0e4c86, with all five CI jobs and candidate 12413204172 verified. Pure scoring is delivered through PR #112/main 73d07b6, with all five CI jobs and candidate 12425889219 verified. Classical diagnostic runtime 0ff9e3b/final author c916d9d and actual-Journal adapter 531deb8 have passed local checks and independent reviews; their exact integration and PR/main/package gates remain pending at this checkpoint. Both #105 and #106 remain in progress. Lead owns classical delivery followed by verified source integration of the Journal adapter; existing engineers review the combined boundaries. Both checkouts are released to lead. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
 
 **Document owner:** product owner and engineering lead
 **Last verified:** 2026-10-22
@@ -43,7 +43,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 | Three force families, 2D, 1–8 particles, public contracts, SDK and CLI | Verified and integrated | Baseline commit above; src/strange_physics and numerical/contract tests |
 | Local transactional reservations, checkpoints, replay after interruption | Verified locally | journal.py, session.py, sdk.py; failure and concurrency tests; not distributed durability |
 | External custom agent and law example | Verified locally | examples/custom_extension.py and tests/test_extensions.py; not outside-team adoption |
-| Current code and delivery checks | Candidate/prediction delivered; pure scoring source reviewed | PR #111/main c0e4c86 and candidate 12413204172 verified. Scoring da3d529 passes 3,801 tests, 1,487 schema cases and independent reviews; its exact PR/main/package delivery remains required. Actual-Journal publisher, classical diagnostic and both parent tasks remain unfinished |
+| Current code and delivery checks | Pure scoring delivered; classical and Journal source reviewed | PR #112/main 73d07b6 and candidate 12425889219 verified. Classical 0ff9e3b passes 3,874 tests; Journal 531deb8 passes 3,866; both independently accepted. Their exact integration/PR/main/package gates and joint publication remain pending |
 | Existing GitHub CI | Verified at reviewed integration head | All four Python 3.12/3.14 PR and push checks passed at 5cb1895; 55 tests, Ruff, strict mypy, package build and CLI smoke. Merge tree matches this reviewed head; [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060 |
 | Baseline integration to main | Verified | PR #1 merged as 7117060; Quality/Research peer reviews passed and git diff confirms tree identity with 5cb1895. This is not a product release |
 | Stage 2 execution backlog | Approved 2026-10-19 | 168 PR tasks across 42 epic issues; 369 task/gate prerequisites; scope, exclusions, contracts, tests, confidence and done criteria; dependency/resource audit passed |
@@ -68,7 +68,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 
 The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. The primary checkout and one separate identity checkout are retained for independently active writers. Existing migration archives and other experiments are not disposable build caches.
 
-Current execution roster: lead owns primary integration after Platform's clean scoring release. Quality prepares actual-Journal composition and scored-cell publication; Platform prepares the same-prefix classical diagnostic; Research reviews both. New source work requires accepted scoring delivery and explicit handoffs of the two reused checkouts. RA-01 and SP-04.e are accepted; VAL1 remains preserved in draft PR #101 with its generator deferred. Measurement/persistence, inference, calibration, selectors, actual-manifest and comparison gates remain.
+Current execution roster: lead owns primary classical integration and the released identity Journal checkpoint. Platform and Quality review the exact combined source and accounting joins; Research reviews scientific boundaries. Explicit handoffs precede any new writer. Both existing checkouts remain needed; VAL1 stays preserved in draft PR #101. Complete publication, measurement/persistence, inference, calibration and actual-study gates remain.
 
 ### 0.3 Update procedure for every implementation change
 
@@ -1245,3 +1245,31 @@ and comparison. The cumulative 36 episodes, 432 slots, 8 CPU-core-hours and
 1 GiB limits include reference, calibration, sensitivity, ranking, scoring,
 retries, failures and later diagnostics. No comparison has run; component tests
 are not calibration or research results. Graph, effort and forecast are unchanged.
+
+## 2026-10-22 — Classical and actual-Journal source checkpoints
+
+Pure scoring is delivered through PR #112/main 73d07b6, PR CI 39780967416,
+all five main CI 39781313464 jobs and verified candidate 12425889219.
+Classical runtime 0ff9e3b/final author c916d9d passed 3,874 tests and both
+independent reviews. Journal adapter 531deb8 passed 3,866 tests and its final
+comparison-scope repair was independently accepted. The latter reads the actual
+Journal and full ledger, requires 12 charged/committed rows with no pending or
+missing purchase intents, and binds native material, score and 27 attempt/facts
+envelopes. It returns private evidence, not a complete-cell publication.
+
+Lead integrates the released classical checkpoint first, then the Journal
+checkpoint with the exact shared registration/schema union and joint checks.
+Exact PR/main/package delivery remains required for each. Source identities,
+review indices and counts are recorded in execution-backlog.json; issues #105
+and #106 record delivery acceptance when verified. Both parent tasks remain
+in progress and both existing checkouts are retained for sequential reuse.
+
+The classical result stays separate from the native primary result. A real
+terminal diagnostic failure does not invalidate a valid primary score; missing
+or unknown diagnostic work keeps complete publication incomplete. Source/interface
+verification uses explicit synthetic fixtures and actual fixture Journals.
+Actual comparison publication still requires real posterior/MAP and selection
+ordering, calibration, a frozen manifest, measured costs, durable persistence
+and recovery. These later producers are not fabricated upstream dependencies.
+No scientific comparison has run, and the graph, estimates and cumulative
+36-episode/432-slot/8-CPU-core-hour/1-GiB no-reset limits are unchanged.
