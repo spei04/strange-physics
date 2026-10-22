@@ -3481,14 +3481,14 @@ Quality owns SP-01.e/#98 VAL1 in the reused identity checkout at accepted WEB1 m
 
 2026-10-20 — VAL1 manifest/fixtures 10145929997fc959fe31ba0398cdf8dac62e4934 (tree a7daa18e4506d268d334b05f14949da0ec0f8838), published in draft PR #101, are independently accepted after the six review corrections. All 87 focused tests, 1,431 external schema cases and configured static/type/security checks pass; Research adds 150 independent checks, and Platform verifies 96-root closure and repair-sensitive boundaries. Quality retains identity for the next generator assignment. Generation/drift CI, CLIENT1 and MOCK1 remain pending; SP-01.e stays in progress. Planning PR #100 is separately reviewed at 0ecf4f4; active research dependencies and RA_EXEC are unchanged.
 
-## 2026-10-22 — Native candidate/accounting composition checkpoint
+## 2026-10-22 — Native candidate/accounting checkpoints
 
-N01 candidate contracts 5cbf85d0c5d90899c68d788973dbb637b6474603 are integrated by PR #109/main ffadefd8c869758e91950646e1d088ca81053f40 with matching tree 903d1eed6e7720c99b648a3c353c91914aa5de3e. All four PR CI 39723544786 and five main CI 39723769739 jobs passed. Platform verified candidate 12402495332 checksums/provenance/lock, the exact 54-file source allowlist and wheel/sdist equality to author artifacts. Private acceptance index SHA-256 1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271. This accepts the candidate API only; candidate production, native prediction and scoring remain next work.
+N01 candidate contracts are integrated through PR #109 with accepted PR/main and
+candidate checks. RA-02 accounting and Journal reconciliation are independently
+accepted; their combined local checks pass 3,413 tests. Combined GitHub integration
+remains pending. Full identities and scoped evidence are in execution-backlog.json.
 
-RA-02 runtime 78b3be9510c71c4c5a60a7e69080c3989f3cb27b and final documentation c3502f7f1f318ca01ef24bb80172d21cb5004e57 are independently accepted. Author evidence is 3,331 full / 151 focused tests; Research adds 58 independent checks and two detected mutants, Platform 35 checks and eight mutants. This unit supplies cumulative accounting, private catalog/material freeze, unfinished-cell summaries and actual Journal reservation reconciliation. There is no complete/scored-cell publisher. Its N01 policy/model/protocol/report composition remains pending.
-
-Combined 06fa07af17dc8f2bcd580efd7cc72ab29deefe28/tree 08ae812847d5840d7d967961f52dc250320ec788 preserves all seven N01 and eleven RA-02 file sets, with only their two shared registration files combined additively; five accepted PR108 documents were initially preserved exactly. Research and Platform independently verified the union and direct operation-facts/ledger seam. The configured local checks pass 3,413 full tests, Ruff/format 151 files, strict mypy 104 files, 1,465 schema cases, `bandit -r src scripts -ll`, offline wheel/sdist allowlists and installed-wheel pure ledger/synthetic Journal/native-facts callables. Private integrated index SHA-256 44712658c6486c7cfdc902042c095533141ca570b334d019d76f07d847d6152a. These are local Python 3.12 checks; combined exact-head hosted CI remains pending.
-
-Ancestry-only commit 79fce988a720c73c7a73df79839b75859108a8dc includes accepted main ffadefd8. The duplicate validator-registration conflict was retained as a diagnostic and resolved by the lead's instruction to keep the exact tested blob. The entire write-tree and committed tree equal08ae812847d5840d7d967961f52dc250320ec788; no runtime retest is inferred from this ancestry-only commit.
-
-Quality handles this integration/release in identity; lead owns primary/GitHub integration, with Research and Platform independently reviewing. Next N01 candidate production/predictor/scoring authoring awaits an explicit handoff after integration. RA-02 scored-cell composition waits on that interface. Both #105 and #106 remain in progress, so the first-result closure stays 14 accepted and six unfinished nodes. Baseline tasks/dependencies/efforts, research graph, GA forecast and approved 36 episodes/432 slots / eight CPU-core-hours / 1 GiB / no-reset limits are unchanged. No scientific comparison, provider call or provisioning has run.
+Both #105 and #106 remain in progress. Next N01 candidate production, prediction
+and scoring require an explicit writer handoff; RA-02 scored-cell composition
+waits for that interface. See the [assignment log](EXECUTION_LOG.md). The graph,
+efforts, caps and forecast are unchanged; no comparison has run.
