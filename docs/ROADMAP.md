@@ -1,9 +1,9 @@
 # Strange Physics — enterprise product blueprint and living roadmap
 
-**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107; Quality is assigned RA-02/#105 and Platform RA-N01/#106, with Research reviewing both. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts 5cbf85d are accepted through PR #109/main ffadefd8; RA-02 accounting 78b3be9 and documentation c3502f7 are independently accepted and combined locally at 06fa07a. Both #105 and #106 remain in progress: candidate production/prediction/scoring and scored-cell composition are still pending. Quality prepares the combined integration handoff; Research and Platform independently review, and lead owns primary/GitHub integration. The next N01 runtime writer requires an explicit handoff after RA-02 integration. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
 
 **Document owner:** product owner and engineering lead
-**Last verified:** 2026-10-21
+**Last verified:** 2026-10-22
 **Repository:** [spei04/strange-physics](https://github.com/spei04/strange-physics)
 **Status:** Execution backlog approved on 2026-10-19; baseline integration is verified, cloud preflight is complete with a deployment NO-GO, and workspace headroom is restored after the approved snapshot and online disk expansion. [Assignment log](EXECUTION_LOG.md) records engineer ownership and reassignment.
 **Implementation baseline:** original core 428b5a698b6f5654a9b91f547c9d4e7c196d3aa9; [PR #1](https://github.com/spei04/strange-physics/pull/1) merged to main as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f on 2026-10-19, with tree identity verified against reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70.
@@ -37,13 +37,13 @@ A checked box means its stated scope passed, not that the whole product is produ
 
 ### 0.2 Current progress ledger
 
-| Work item | Status on 2026-10-20 | Evidence / remaining gate |
+| Work item | Status at this checkpoint | Evidence / remaining gate |
 | --- | --- | --- |
 | Personal public repository and established architecture | Verified | Repository is spei04/strange-physics; accepted decisions recorded in DESIGN_DECISIONS.md |
 | Three force families, 2D, 1–8 particles, public contracts, SDK and CLI | Verified and integrated | Baseline commit above; src/strange_physics and numerical/contract tests |
 | Local transactional reservations, checkpoints, replay after interruption | Verified locally | journal.py, session.py, sdk.py; failure and concurrency tests; not distributed durability |
 | External custom agent and law example | Verified locally | examples/custom_extension.py and tests/test_extensions.py; not outside-team adoption |
-| Current code and delivery checks | SP-01.d complete | PR #97/main15714e6 matches reviewed source; PR/main CI and private package verification passed. WEB1: 3,104 tests and 1,431 schema cases. Hosted producers remain later work |
+| Current code and delivery checks | Native partial checkpoints accepted; combined integration pending | N01 API PR #109/mainffadefd8 passed all PR/main checks and candidate verification. Combined06fa07a passes 3,413 tests, 1,465 schema cases and local static/security/package checks; exact combined PR/main checks remain pending. Parents #105/#106 and hosted producers remain unfinished |
 | Existing GitHub CI | Verified at reviewed integration head | All four Python 3.12/3.14 PR and push checks passed at 5cb1895; 55 tests, Ruff, strict mypy, package build and CLI smoke. Merge tree matches this reviewed head; [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060 |
 | Baseline integration to main | Verified | PR #1 merged as 7117060; Quality/Research peer reviews passed and git diff confirms tree identity with 5cb1895. This is not a product release |
 | Stage 2 execution backlog | Approved 2026-10-19 | 168 PR tasks across 42 epic issues; 369 task/gate prerequisites; scope, exclusions, contracts, tests, confidence and done criteria; dependency/resource audit passed |
@@ -68,7 +68,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 
 The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. The primary checkout and one separate identity checkout are retained for independently active writers. Existing migration archives and other experiments are not disposable build caches.
 
-Current execution roster: Quality owns RA-02/#105 manifests and complete cost accounting; Platform owns RA-N01/#106 native prediction/scoring; Research independently reviews both. RA-01 and SP-04.e are accepted prerequisites. Lead coordinates read-only while both writers use the two existing cloud checkouts and integrates after a writer releases a checkout. VAL1 manifest1014592 remains preserved in draftPR101; its generator is deferred. Numerical, calibration, actual-manifest and comparison gates remain.
+Current execution roster: Quality prepares the accepted RA-02 accounting/N01 contract union for integration and release from identity; lead owns primary and GitHub integration. Research and Platform independently review the immutable composition. Next, Platform's N01 candidate production/prediction/scoring work requires an explicit writer handoff; Quality's scored-cell composition waits for that interface. Neither next unit is currently writing. RA-01 and SP-04.e remain accepted prerequisites. VAL1 manifest1014592 is preserved in draftPR101 with its generator deferred. Numerical, calibration, actual-manifest and comparison gates remain.
 
 ### 0.3 Update procedure for every implementation change
 
@@ -91,7 +91,7 @@ The staged workflow and execution backlog were approved on 2026-10-19. Begin the
 | --- | --- | --- |
 | 1 — Plan and challenge | Inspect actual code, compare options, expose assumptions, challenge risks; product owner reviews assumptions before implementation approval | Blueprint and challenge review accepted; unmeasured targets and external commitments remain provisional |
 | 2 — Turn the plan into engineering work | Assignable PR tasks, exact dependencies/contracts/tests, capacity model and exit gates | 168 leaf tasks/42 epics; 369 prerequisites checked in both schedule scenarios; first ten days planned; execution approval recorded; subset freezes remain pending |
-| 3 — Implement one vertical slice at a time | Start only an approved slice; require tests, review, telemetry and updated documentation; then assess its evidence before selecting the next | In progress: bounded spring I1 and SP-01.a/b/c/d are accepted; RA-01 accepted; RA-02 and RA-N01 assigned; VAL1 generator deferred |
+| 3 — Implement one vertical slice at a time | Start only an approved slice; require tests, review, telemetry and updated documentation; then assess its evidence before selecting the next | In progress: bounded spring I1 and SP-01.a/b/c/d are accepted; RA-01 accepted; partial RA-02 accounting and RA-N01 candidate contracts accepted; both parents in progress; VAL1 generator deferred |
 | 4 — Validate actual production readiness | Audit shipped implementation against REQ01–REQ16 using real test/load/security/deploy/restore evidence; block unsupported claims | Not started; R6–R8 own these gates |
 
 The roadmap owns product/architecture/overall progress; EXECUTION_BACKLOG.md owns assignable task details and schedules, backed by execution-backlog.json. GitHub issues hold epic rollups; The local SCI subset, full control/identity contract set and ART/EXEC/COMP1 contracts are accepted through SP-01.a/b/c. WORLD1 and WEB1 are integrated; the SP-01.d freeze is accepted. Creating an issue, schema or milestone never marks its implementation complete. Issue blockers describe completion/integration prerequisites; mock work may start after its explicitly approved interface boundary.
@@ -1189,3 +1189,15 @@ Quality owns SP-01.e/#98 VAL1 in the reused identity checkout at accepted WEB1 m
 2026-10-20 — The reviewed [native sequencing recommendation](research/NATIVE_COMPARISON_PROPOSAL.md) keeps finite-grid calibration before the first comparison and moves Laplace implementation plus its approximation-versus-grid audit to later RA-N02.b. Proposed first-result effort is 17–26 engineer-days (21.25–32.5 with reserve); later Laplace is 3–5 (3.75–6.25 with reserve), low confidence. Full programme scope, active dependencies, RA_EXEC, run caps and GA forecast remain unchanged. This is saved planning only.
 
 2026-10-20 — VAL1 manifest/fixtures 10145929997fc959fe31ba0398cdf8dac62e4934 (tree a7daa18e4506d268d334b05f14949da0ec0f8838), published in draft PR #101, are independently accepted after the six review corrections. All 87 focused tests, 1,431 external schema cases and configured static/type/security checks pass; Research adds 150 independent checks, and Platform verifies 96-root closure and repair-sensitive boundaries. Quality retains identity for the next generator assignment. Generation/drift CI, CLIENT1 and MOCK1 remain pending; SP-01.e stays in progress. Planning PR #100 is separately reviewed at 0ecf4f4; active research dependencies and RA_EXEC are unchanged.
+
+## 2026-10-22 — Native candidate/accounting checkpoints
+
+N01 candidate contracts are integrated through PR #109 with accepted PR/main and
+candidate checks. RA-02 accounting and Journal reconciliation are independently
+accepted; their combined local checks pass 3,413 tests. Combined GitHub integration
+remains pending. Full identities and scoped evidence are in execution-backlog.json.
+
+Both #105 and #106 remain in progress. Next N01 candidate production, prediction
+and scoring require an explicit writer handoff; RA-02 scored-cell composition
+waits for that interface. See the [assignment log](EXECUTION_LOG.md). The graph,
+efforts, caps and forecast are unchanged; no comparison has run.

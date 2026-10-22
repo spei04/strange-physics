@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107; Quality is assigned RA-02/#105 and Platform RA-N01/#106, with Research reviewing both. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts 5cbf85d are accepted through PR #109/main ffadefd8; RA-02 accounting 78b3be9 and documentation c3502f7 are independently accepted and combined locally at 06fa07a. Both #105 and #106 remain in progress: candidate production/prediction/scoring and scored-cell composition are still pending. Quality prepares the combined integration handoff; Research and Platform independently review, and lead owns primary/GitHub integration. The next N01 runtime writer requires an explicit handoff after RA-02 integration. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
 
 **Status:** Approved by the product owner on 2026-10-19. Initial execution is in progress; concrete paid/release gates remain pending. See [assignment log](EXECUTION_LOG.md).
 **Owner:** technical lead and product owner. **Audited:** 2026-10-19. **Source baseline:** 28a4c19e8f9c92b83d886be6b96667d834784f9e.
@@ -3480,3 +3480,15 @@ Quality owns SP-01.e/#98 VAL1 in the reused identity checkout at accepted WEB1 m
 2026-10-20 — The reviewed [native sequencing recommendation](research/NATIVE_COMPARISON_PROPOSAL.md) keeps finite-grid calibration before the first comparison and moves Laplace implementation plus its approximation-versus-grid audit to later RA-N02.b. Proposed first-result effort is 17–26 engineer-days (21.25–32.5 with reserve); later Laplace is 3–5 (3.75–6.25 with reserve), low confidence. Full programme scope, active dependencies, RA_EXEC, run caps and GA forecast remain unchanged. This is saved planning only.
 
 2026-10-20 — VAL1 manifest/fixtures 10145929997fc959fe31ba0398cdf8dac62e4934 (tree a7daa18e4506d268d334b05f14949da0ec0f8838), published in draft PR #101, are independently accepted after the six review corrections. All 87 focused tests, 1,431 external schema cases and configured static/type/security checks pass; Research adds 150 independent checks, and Platform verifies 96-root closure and repair-sensitive boundaries. Quality retains identity for the next generator assignment. Generation/drift CI, CLIENT1 and MOCK1 remain pending; SP-01.e stays in progress. Planning PR #100 is separately reviewed at 0ecf4f4; active research dependencies and RA_EXEC are unchanged.
+
+## 2026-10-22 — Native candidate/accounting checkpoints
+
+N01 candidate contracts are integrated through PR #109 with accepted PR/main and
+candidate checks. RA-02 accounting and Journal reconciliation are independently
+accepted; their combined local checks pass 3,413 tests. Combined GitHub integration
+remains pending. Full identities and scoped evidence are in execution-backlog.json.
+
+Both #105 and #106 remain in progress. Next N01 candidate production, prediction
+and scoring require an explicit writer handoff; RA-02 scored-cell composition
+waits for that interface. See the [assignment log](EXECUTION_LOG.md). The graph,
+efforts, caps and forecast are unchanged; no comparison has run.

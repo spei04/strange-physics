@@ -1,0 +1,1556 @@
+{
+  "$defs": {
+    "Anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "position": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "title": "Anchor",
+      "type": "object"
+    },
+    "Connection": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "A",
+          "type": "string"
+        },
+        "b": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "B",
+          "type": "string"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "title": "Connection",
+      "type": "object"
+    },
+    "ExperimentSpace": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "strange-physics.space.v1",
+          "default": "strange-physics.space.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "structure": {
+          "$ref": "#/$defs/Structure"
+        },
+        "sampling": {
+          "$ref": "#/$defs/Sampling"
+        },
+        "limits": {
+          "$ref": "#/$defs/Limits",
+          "default": {
+            "position_norm": 2.0,
+            "velocity_norm": 2.0,
+            "impulse_norm": 1.0,
+            "min_mass": 0.5,
+            "max_mass": 2.0
+          }
+        },
+        "budget": {
+          "default": 40,
+          "maximum": 10000,
+          "minimum": 1,
+          "title": "Budget",
+          "type": "integer"
+        },
+        "calibration_experiments": {
+          "default": 4,
+          "minimum": 0,
+          "title": "Calibration Experiments",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "structure",
+        "sampling"
+      ],
+      "title": "ExperimentSpace",
+      "type": "object"
+    },
+    "LawSpec": {
+      "additionalProperties": false,
+      "description": "Private configuration: never include this in an observation message.",
+      "properties": {
+        "kind": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Kind",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Parameters",
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "parameters"
+      ],
+      "title": "LawSpec",
+      "type": "object"
+    },
+    "Limits": {
+      "additionalProperties": false,
+      "properties": {
+        "position_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Position Norm",
+          "type": "number"
+        },
+        "velocity_norm": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Velocity Norm",
+          "type": "number"
+        },
+        "impulse_norm": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Impulse Norm",
+          "type": "number"
+        },
+        "min_mass": {
+          "default": 0.5,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Min Mass",
+          "type": "number"
+        },
+        "max_mass": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Max Mass",
+          "type": "number"
+        }
+      },
+      "title": "Limits",
+      "type": "object"
+    },
+    "NativeAccountingPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "strange-physics.native-accounting-plan.v1",
+          "default": "strange-physics.native-accounting-plan.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "study_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Study Id",
+          "type": "string"
+        },
+        "purpose": {
+          "enum": [
+            "synthetic_validation",
+            "native_comparison"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "approval_id": {
+          "const": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
+          "title": "Approval Id",
+          "type": "string"
+        },
+        "episode_limit": {
+          "default": 36,
+          "maximum": 36,
+          "minimum": 36,
+          "title": "Episode Limit",
+          "type": "integer"
+        },
+        "purchase_limit": {
+          "default": 432,
+          "maximum": 432,
+          "minimum": 432,
+          "title": "Purchase Limit",
+          "type": "integer"
+        },
+        "cpu_limit_ns": {
+          "default": 28800000000000,
+          "maximum": 28800000000000,
+          "minimum": 28800000000000,
+          "title": "Cpu Limit Ns",
+          "type": "integer"
+        },
+        "artifact_limit_bytes": {
+          "default": 1073741824,
+          "maximum": 1073741824,
+          "minimum": 1073741824,
+          "title": "Artifact Limit Bytes",
+          "type": "integer"
+        },
+        "cost_policy": {
+          "const": "all-work-no-reset.v1",
+          "default": "all-work-no-reset.v1",
+          "title": "Cost Policy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "study_id",
+        "purpose",
+        "approval_id"
+      ],
+      "title": "NativeAccountingPlan",
+      "type": "object"
+    },
+    "NativeBudgetView": {
+      "additionalProperties": false,
+      "properties": {
+        "purchased_slots": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Purchased Slots",
+          "type": "integer"
+        },
+        "remaining_slots": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Remaining Slots",
+          "type": "integer"
+        },
+        "charged_cpu_ns": {
+          "maximum": 73786976294838198272,
+          "minimum": 0,
+          "title": "Charged Cpu Ns",
+          "type": "integer"
+        },
+        "remaining_cpu_ns": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Remaining Cpu Ns",
+          "type": "integer"
+        },
+        "charged_artifact_bytes": {
+          "maximum": 73786976294838198272,
+          "minimum": 0,
+          "title": "Charged Artifact Bytes",
+          "type": "integer"
+        },
+        "remaining_artifact_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Remaining Artifact Bytes",
+          "type": "integer"
+        },
+        "unresolved_attempts": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Unresolved Attempts",
+          "type": "integer"
+        },
+        "over_limit": {
+          "title": "Over Limit",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "purchased_slots",
+        "remaining_slots",
+        "charged_cpu_ns",
+        "remaining_cpu_ns",
+        "charged_artifact_bytes",
+        "remaining_artifact_bytes",
+        "unresolved_attempts",
+        "over_limit"
+      ],
+      "title": "NativeBudgetView",
+      "type": "object"
+    },
+    "NativeCellSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "cell_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Cell Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "unstarted",
+            "in_progress",
+            "complete",
+            "failed",
+            "incomplete",
+            "cap_limited"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "purchased_slots": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Purchased Slots",
+          "type": "integer"
+        },
+        "unresolved_attempts": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Unresolved Attempts",
+          "type": "integer"
+        },
+        "outcome": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StudyCellOutcome"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "cell_id",
+        "status",
+        "purchased_slots",
+        "unresolved_attempts",
+        "outcome"
+      ],
+      "title": "NativeCellSummary",
+      "type": "object"
+    },
+    "NativeStudyCell": {
+      "additionalProperties": false,
+      "properties": {
+        "cell_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Cell Id",
+          "type": "string"
+        },
+        "world_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Id",
+          "type": "string"
+        },
+        "policy_seed": {
+          "maximum": 4294967295,
+          "minimum": 0,
+          "title": "Policy Seed",
+          "type": "integer"
+        },
+        "selector": {
+          "enum": [
+            "random",
+            "uniform_disagreement",
+            "posterior_disagreement"
+          ],
+          "title": "Selector",
+          "type": "string"
+        },
+        "journal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Journal Id",
+          "type": "string"
+        },
+        "purchased_slots": {
+          "default": 12,
+          "maximum": 12,
+          "minimum": 12,
+          "title": "Purchased Slots",
+          "type": "integer"
+        },
+        "calibration_slots": {
+          "default": 4,
+          "maximum": 4,
+          "minimum": 4,
+          "title": "Calibration Slots",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "cell_id",
+        "world_id",
+        "policy_seed",
+        "selector",
+        "journal_id"
+      ],
+      "title": "NativeStudyCell",
+      "type": "object"
+    },
+    "NativeStudyLedger": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "strange-physics.native-study-ledger.v1",
+          "default": "strange-physics.native-study-ledger.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "plan": {
+          "$ref": "#/$defs/NativeAccountingPlan"
+        },
+        "records": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/StudyLedgerRecord"
+          },
+          "maxItems": 8192,
+          "title": "Records",
+          "type": "array"
+        }
+      },
+      "required": [
+        "plan"
+      ],
+      "title": "NativeStudyLedger",
+      "type": "object"
+    },
+    "NativeStudyManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "strange-physics.native-study-manifest.v1",
+          "default": "strange-physics.native-study-manifest.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "accounting_plan_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Accounting Plan Sha256",
+          "type": "string"
+        },
+        "source_commit": {
+          "maxLength": 40,
+          "minLength": 40,
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Source Commit",
+          "type": "string"
+        },
+        "uv_lock_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Uv Lock Sha256",
+          "type": "string"
+        },
+        "engine_fingerprint": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Engine Fingerprint",
+          "type": "string"
+        },
+        "world_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 6,
+          "minItems": 6,
+          "title": "World Ids",
+          "type": "array"
+        },
+        "policy_seeds": {
+          "items": {
+            "maximum": 4294967295,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "title": "Policy Seeds",
+          "type": "array"
+        },
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/StudyArtifact"
+          },
+          "maxItems": 15,
+          "minItems": 15,
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "gates": {
+          "items": {
+            "$ref": "#/$defs/StudyGate"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "title": "Gates",
+          "type": "array"
+        },
+        "cells": {
+          "items": {
+            "$ref": "#/$defs/NativeStudyCell"
+          },
+          "maxItems": 36,
+          "minItems": 36,
+          "title": "Cells",
+          "type": "array"
+        },
+        "failure_policy": {
+          "const": "retain-every-cell-and-attempt.v1",
+          "default": "retain-every-cell-and-attempt.v1",
+          "title": "Failure Policy",
+          "type": "string"
+        },
+        "primary_output": {
+          "const": "one-selected-native-candidate.v1",
+          "default": "one-selected-native-candidate.v1",
+          "title": "Primary Output",
+          "type": "string"
+        }
+      },
+      "required": [
+        "accounting_plan_sha256",
+        "source_commit",
+        "uv_lock_sha256",
+        "engine_fingerprint",
+        "world_ids",
+        "policy_seeds",
+        "artifacts",
+        "gates",
+        "cells"
+      ],
+      "title": "NativeStudyManifest",
+      "type": "object"
+    },
+    "NativeStudySummary": {
+      "additionalProperties": false,
+      "properties": {
+        "study_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Study Id",
+          "type": "string"
+        },
+        "accounting_plan_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Accounting Plan Sha256",
+          "type": "string"
+        },
+        "ledger_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Ledger Sha256",
+          "type": "string"
+        },
+        "manifest_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Manifest Sha256"
+        },
+        "budget": {
+          "$ref": "#/$defs/NativeBudgetView"
+        },
+        "cells": {
+          "items": {
+            "$ref": "#/$defs/NativeCellSummary"
+          },
+          "maxItems": 36,
+          "title": "Cells",
+          "type": "array"
+        }
+      },
+      "required": [
+        "study_id",
+        "accounting_plan_sha256",
+        "ledger_sha256",
+        "manifest_sha256",
+        "budget",
+        "cells"
+      ],
+      "title": "NativeStudySummary",
+      "type": "object"
+    },
+    "NativeWorkFacts": {
+      "additionalProperties": false,
+      "description": "Operation-local counts, not measured hardware work or proof of authenticity.",
+      "properties": {
+        "schema_version": {
+          "const": "strange-physics.native-work-facts.v1",
+          "default": "strange-physics.native-work-facts.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "operation": {
+          "enum": [
+            "candidate_production",
+            "selection",
+            "prediction",
+            "preparation",
+            "scoring",
+            "purchase",
+            "forward",
+            "likelihood",
+            "ranking",
+            "reference",
+            "sensitivity",
+            "accounting"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "producer_version": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Producer Version",
+          "type": "string"
+        },
+        "config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Config Sha256",
+          "type": "string"
+        },
+        "input_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Input Sha256",
+          "type": "string"
+        },
+        "observation_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observation Sha256"
+        },
+        "model_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Model Sha256"
+        },
+        "output_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Output Sha256",
+          "type": "string"
+        },
+        "unit": {
+          "enum": [
+            "candidate",
+            "frame",
+            "probe",
+            "selection",
+            "preparation",
+            "record",
+            "work"
+          ],
+          "title": "Unit",
+          "type": "string"
+        },
+        "requested_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Requested Count",
+          "type": "integer"
+        },
+        "completed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Completed Count",
+          "type": "integer"
+        },
+        "failed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Failed Count",
+          "type": "integer"
+        },
+        "not_assessed_count": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "title": "Not Assessed Count",
+          "type": "integer"
+        },
+        "outcome": {
+          "enum": [
+            "completed",
+            "rejected",
+            "failed"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        }
+      },
+      "required": [
+        "attempt_id",
+        "operation",
+        "producer_version",
+        "config_sha256",
+        "input_sha256",
+        "observation_sha256",
+        "model_sha256",
+        "output_sha256",
+        "unit",
+        "requested_count",
+        "completed_count",
+        "failed_count",
+        "not_assessed_count",
+        "outcome"
+      ],
+      "title": "NativeWorkFacts",
+      "type": "object"
+    },
+    "NativeWorldCatalog": {
+      "additionalProperties": false,
+      "description": "Private actual world-to-ID mapping; never a selector input or capability.",
+      "properties": {
+        "schema_version": {
+          "const": "strange-physics.native-world-catalog.v1",
+          "default": "strange-physics.native-world-catalog.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "worlds": {
+          "items": {
+            "$ref": "#/$defs/NativeWorldEntry"
+          },
+          "maxItems": 6,
+          "minItems": 6,
+          "title": "Worlds",
+          "type": "array"
+        }
+      },
+      "required": [
+        "worlds"
+      ],
+      "title": "NativeWorldCatalog",
+      "type": "object"
+    },
+    "NativeWorldEntry": {
+      "additionalProperties": false,
+      "description": "Evaluator-only definition. The opaque ID alone may reach selectors.",
+      "properties": {
+        "world_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "World Id",
+          "type": "string"
+        },
+        "definition": {
+          "$ref": "#/$defs/WorldDefinition"
+        }
+      },
+      "required": [
+        "world_id",
+        "definition"
+      ],
+      "title": "NativeWorldEntry",
+      "type": "object"
+    },
+    "Sampling": {
+      "additionalProperties": false,
+      "properties": {
+        "duration": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Duration",
+          "type": "number"
+        },
+        "dt": {
+          "default": 0.01,
+          "maximum": 0.05,
+          "minimum": 0.0001,
+          "title": "Dt",
+          "type": "number"
+        },
+        "sample_interval": {
+          "default": 0.05,
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Sample Interval",
+          "type": "number"
+        },
+        "position_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Position Noise",
+          "type": "number"
+        },
+        "velocity_noise": {
+          "default": 0.0,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Velocity Noise",
+          "type": "number"
+        }
+      },
+      "title": "Sampling",
+      "type": "object"
+    },
+    "Structure": {
+      "additionalProperties": false,
+      "properties": {
+        "particle_ids": {
+          "items": {
+            "not": {
+              "pattern": "[^A-Za-z0-9_-]"
+            },
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Particle Ids",
+          "type": "array"
+        },
+        "anchors": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Anchor"
+          },
+          "maxItems": 8,
+          "title": "Anchors",
+          "type": "array"
+        },
+        "connections": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Connection"
+          },
+          "maxItems": 120,
+          "title": "Connections",
+          "type": "array"
+        }
+      },
+      "required": [
+        "particle_ids"
+      ],
+      "title": "Structure",
+      "type": "object"
+    },
+    "StudyArtifact": {
+      "additionalProperties": false,
+      "description": "Exact retained producer bytes; no implied semantic validation or public audience.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "world_catalog",
+            "candidate_config",
+            "prediction_config",
+            "pool",
+            "menu",
+            "calibration",
+            "prior",
+            "likelihood",
+            "discrepancy",
+            "scoring_policy",
+            "termination_policy",
+            "failure_policy",
+            "selector_random",
+            "selector_uniform_disagreement",
+            "selector_posterior_disagreement"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "byte_count": {
+          "maximum": 8388608,
+          "minimum": 1,
+          "title": "Byte Count",
+          "type": "integer"
+        },
+        "encoding": {
+          "const": "strange-physics.python-json.v1",
+          "default": "strange-physics.python-json.v1",
+          "title": "Encoding",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "sha256",
+        "byte_count"
+      ],
+      "title": "StudyArtifact",
+      "type": "object"
+    },
+    "StudyAttemptReservation": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "reserve",
+          "default": "reserve",
+          "title": "Kind",
+          "type": "string"
+        },
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "reference",
+            "calibration",
+            "sensitivity",
+            "comparison",
+            "accounting"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "cell_id": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Cell Id"
+        },
+        "operation": {
+          "enum": [
+            "candidate_production",
+            "selection",
+            "prediction",
+            "preparation",
+            "scoring",
+            "purchase",
+            "forward",
+            "likelihood",
+            "ranking",
+            "reference",
+            "sensitivity",
+            "accounting"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Config Sha256",
+          "type": "string"
+        },
+        "input_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Input Sha256",
+          "type": "string"
+        },
+        "retry_of": {
+          "anyOf": [
+            {
+              "not": {
+                "pattern": "[^A-Za-z0-9_-]"
+              },
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Retry Of"
+        },
+        "cpu_reservation_ns": {
+          "maximum": 28800000000000,
+          "minimum": 1,
+          "title": "Cpu Reservation Ns",
+          "type": "integer"
+        },
+        "artifact_reservation_bytes": {
+          "maximum": 1073741824,
+          "minimum": 0,
+          "title": "Artifact Reservation Bytes",
+          "type": "integer"
+        },
+        "purchase": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StudyPurchase"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "attempt_id",
+        "phase",
+        "cell_id",
+        "operation",
+        "config_sha256",
+        "input_sha256",
+        "retry_of",
+        "cpu_reservation_ns",
+        "artifact_reservation_bytes",
+        "purchase"
+      ],
+      "title": "StudyAttemptReservation",
+      "type": "object"
+    },
+    "StudyAttemptUpdate": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "update",
+          "default": "update",
+          "title": "Kind",
+          "type": "string"
+        },
+        "attempt_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "running",
+            "unknown",
+            "completed",
+            "failed",
+            "rejected"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "cpu_ns": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Cpu Ns"
+        },
+        "wall_ns": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Wall Ns"
+        },
+        "artifact_bytes": {
+          "anyOf": [
+            {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Artifact Bytes"
+        },
+        "facts": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NativeWorkFacts"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "attempt_id",
+        "state",
+        "cpu_ns",
+        "wall_ns",
+        "artifact_bytes",
+        "facts"
+      ],
+      "title": "StudyAttemptUpdate",
+      "type": "object"
+    },
+    "StudyCellOutcome": {
+      "additionalProperties": false,
+      "description": "Retained metadata from actual-material binding, never evaluator truth.",
+      "properties": {
+        "kind": {
+          "const": "cell_outcome",
+          "default": "cell_outcome",
+          "title": "Kind",
+          "type": "string"
+        },
+        "cell_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Cell Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "failed",
+            "incomplete",
+            "cap_limited"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "scored",
+            "unscorable",
+            "execution_failure",
+            "interrupted",
+            "resource_limit"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "journal_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Journal Id",
+          "type": "string"
+        },
+        "observation_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observation Sha256"
+        },
+        "model_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Model Sha256"
+        },
+        "report_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Report Sha256"
+        },
+        "scoring_policy_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Scoring Policy Sha256",
+          "type": "string"
+        },
+        "protocol_sha256": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Protocol Sha256"
+        },
+        "selector_config_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Selector Config Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cell_id",
+        "status",
+        "reason",
+        "journal_id",
+        "observation_sha256",
+        "model_sha256",
+        "report_sha256",
+        "scoring_policy_sha256",
+        "protocol_sha256",
+        "selector_config_sha256"
+      ],
+      "title": "StudyCellOutcome",
+      "type": "object"
+    },
+    "StudyGate": {
+      "additionalProperties": false,
+      "description": "Trusted acceptance evidence, checked by the run producer, never a capability.",
+      "properties": {
+        "unit": {
+          "enum": [
+            "RA-N01",
+            "RA-N02.a",
+            "RA-N03",
+            "RA-N04"
+          ],
+          "title": "Unit",
+          "type": "string"
+        },
+        "source_commit": {
+          "maxLength": 40,
+          "minLength": 40,
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Source Commit",
+          "type": "string"
+        },
+        "evidence_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Evidence Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "unit",
+        "source_commit",
+        "evidence_sha256"
+      ],
+      "title": "StudyGate",
+      "type": "object"
+    },
+    "StudyLedgerRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "sequence": {
+          "maximum": 8191,
+          "minimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "previous_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Previous Sha256",
+          "type": "string"
+        },
+        "event": {
+          "discriminator": {
+            "mapping": {
+              "cell_outcome": "#/$defs/StudyCellOutcome",
+              "freeze": "#/$defs/StudyManifestFreeze",
+              "reserve": "#/$defs/StudyAttemptReservation",
+              "update": "#/$defs/StudyAttemptUpdate"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/StudyAttemptReservation"
+            },
+            {
+              "$ref": "#/$defs/StudyAttemptUpdate"
+            },
+            {
+              "$ref": "#/$defs/StudyManifestFreeze"
+            },
+            {
+              "$ref": "#/$defs/StudyCellOutcome"
+            }
+          ],
+          "title": "Event"
+        }
+      },
+      "required": [
+        "event_id",
+        "sequence",
+        "previous_sha256",
+        "event"
+      ],
+      "title": "StudyLedgerRecord",
+      "type": "object"
+    },
+    "StudyManifestFreeze": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "freeze",
+          "default": "freeze",
+          "title": "Kind",
+          "type": "string"
+        },
+        "manifest": {
+          "$ref": "#/$defs/NativeStudyManifest"
+        }
+      },
+      "required": [
+        "manifest"
+      ],
+      "title": "StudyManifestFreeze",
+      "type": "object"
+    },
+    "StudyPurchase": {
+      "additionalProperties": false,
+      "properties": {
+        "operation_id": {
+          "not": {
+            "pattern": "[^A-Za-z0-9_-]"
+          },
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "title": "Operation Id",
+          "type": "string"
+        },
+        "ordinal": {
+          "maximum": 11,
+          "minimum": 0,
+          "title": "Ordinal",
+          "type": "integer"
+        },
+        "experiment_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Experiment Sha256",
+          "type": "string"
+        },
+        "calibration": {
+          "title": "Calibration",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "operation_id",
+        "ordinal",
+        "experiment_sha256",
+        "calibration"
+      ],
+      "title": "StudyPurchase",
+      "type": "object"
+    },
+    "WorldDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "strange-physics.world.v1",
+          "default": "strange-physics.world.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "space": {
+          "$ref": "#/$defs/ExperimentSpace"
+        },
+        "noise_seed": {
+          "exclusiveMaximum": 18446744073709551616,
+          "minimum": 0,
+          "title": "Noise Seed",
+          "type": "integer"
+        },
+        "initial_law": {
+          "$ref": "#/$defs/LawSpec"
+        },
+        "changed_law": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LawSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "change_after": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Change After"
+        }
+      },
+      "required": [
+        "space",
+        "noise_seed",
+        "initial_law"
+      ],
+      "title": "WorldDefinition",
+      "type": "object"
+    }
+  },
+  "title": "Native study interfaces and cumulative cost accounting v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-contract-status": "native accounting and journal contracts; scoring composition pending",
+  "x-canonical-profile": "strange-physics.python-json.v1",
+  "x-owner-only-roots": [
+    "NativeAccountingPlan",
+    "NativeWorldCatalog",
+    "NativeStudyManifest",
+    "NativeWorkFacts",
+    "NativeStudyLedger",
+    "NativeStudySummary"
+  ],
+  "description": "Native comparison only. No providers, other study tracks or execution authority. Semantic joins and actual material/measurement producer checks remain required."
+}

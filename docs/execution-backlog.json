@@ -2,7 +2,7 @@
   "schema_version": "strange-physics.execution-plan.v1",
   "status": "approved_execution_in_progress",
   "baseline_commit": "28a4c19e8f9c92b83d886be6b96667d834784f9e",
-  "updated": "2026-10-21",
+  "updated": "2026-10-22",
   "staffing": {
     "engineers": 9,
     "delivery_fraction": 0.7,
@@ -10569,7 +10569,7 @@
     "schedule_boundary": "Nine-human-engineer reference forecast is retained for comparison, not a delivery promise for this execution mode. Human operations, independent assessment and external partners remain unstaffed gates.",
     "lane_owners": {
       "TL": "Project lead",
-      "BE1": "Project lead coordinates integration on a released checkout; current writers are Quality on RA-02 and Platform on RA-N01. VAL1 generator remains deferred.",
+      "BE1": "Project lead owns primary integration; Quality prepares the reviewed native/accounting union in identity. Research and Platform review; next source units await explicit handoff. VAL1 generator remains deferred.",
       "BE2": "Project lead until delegated",
       "PL1": "Engineer Platform",
       "PL2": "Engineer Platform (sequential assignments)",
@@ -10830,7 +10830,7 @@
       "status": "complete",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "Quality owns RA-02/#105 manifest and cost contracts; Platform owns RA-N01/#106 native prediction/scoring. Both prerequisites RA-01 and SP-04.e are accepted. Research independently reviews both. The actual manifest freezes only after numerical/acquisition gates, before any comparison.",
+      "next_authoring_task": "N01 candidate production/prediction/scoring is the next proposed unit after combined integration and explicit writer handoff; RA-02 scored-cell composition waits for that interface. Both parents remain in progress, and actual study freeze/execution awaits the existing numerical/acquisition gates.",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Project lead owns primary progress/integration; reviewers use immutable source.",
-      "identity": "Research owns RA-01 in feat/research-source-admission from4d173700 after Quality released clean1014592. Prior VAL1 draftPR101 is preserved; no additional checkout/install. Private owner index records verified handoff.",
+      "scientific": "Project lead owns primary/GitHub integration; N01 author source is released. No next N01 runtime writer yet.",
+      "identity": "Quality owns feat/native-study-contracts for combined native/accounting integration and review, then releases the clean checkout to lead; no extra checkout or dependency sharing.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12080,8 +12080,8 @@
       }
     },
     "local_comparison_prerequisite_review": {
-      "status": "RA01_accepted_next_two_units_assigned",
-      "source": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
+      "status": "partial_native_accounting_checkpoints_reviewed",
+      "source": "06fa07af17dc8f2bcd580efd7cc72ab29deefe28",
       "reviewers": [
         "Research",
         "Quality"
@@ -12100,10 +12100,10 @@
       ],
       "pending_gate": null,
       "no_hosted_dependency": true,
-      "finding": "The approved 20-node first-result closure now has14 accepted nodes and six unfinished research tasks. Only RA-01 is newly complete; task dependencies, broader gates and run caps are unchanged.",
-      "next_task": "Quality owns RA-02/#105 manifest and cost contracts; Platform owns RA-N01/#106 native prediction/scoring. Both prerequisites RA-01 and SP-04.e are accepted. Research independently reviews both. The actual manifest freezes only after numerical/acquisition gates, before any comparison.",
+      "finding": "The approved first-result closure remains20 nodes:14 accepted and six unfinished research parents. Partial N01 candidate and RA-02 accounting checkpoints are accepted, but neither parent is complete; dependencies and run caps remain unchanged.",
+      "next_task": "N01 candidate production/prediction/scoring is the next proposed unit after combined integration and explicit writer handoff; RA-02 scored-cell composition waits for that interface. Both parents remain in progress, and actual study freeze/execution awaits the existing numerical/acquisition gates.",
       "graph_unchanged": false,
-      "current_assignment": "Quality: RA-02 in identity; Platform: RA-N01 in primary; Research: independent interface/scientific review; lead: read-only coordination while both writers are active, then integration on a released checkout.",
+      "current_assignment": "Quality: combined integration/release in identity; Project lead: primary/GitHub integration; Research and Platform: independent composition review. No next N01 or scored-cell source writer has been handed off.",
       "proposal": {
         "id": "NATIVE_PATH_PROPOSAL_2026_10_20",
         "status": "approved_and_activated_2026_10_21",
@@ -12588,14 +12588,14 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "RA01_accepted_RA02_N01_assigned",
+      "status": "partial_checkpoints_accepted_combined_integration_pending",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "RA-02/#105: manifests and complete cost ledger; identity checkout",
-        "Platform": "RA-N01/#106: additive native predictor and independent-scoring adapter; primary checkout",
-        "Research": "Independent interface, numerical-boundary and provenance review",
-        "Project lead": "Progress, dependency checks and integration after a writer releases its checkout"
+        "Quality": "Accepted RA-02 accounting unit and combined integration/release; scored-cell composition waits on N01.",
+        "Platform": "Read-only composition review; next N01 candidate/predictor/scoring unit requires explicit writer handoff.",
+        "Research": "Independent scientific/interface and progress-composition review.",
+        "Project lead": "Primary/GitHub integration, exact hosted gates and next explicit handoff."
       },
       "handoff": "Explicit writer handoff and lock/environment revalidation precede code changes. Reuse the two existing independent cloud checkouts; no additional checkout or shared dependency installation.",
       "interface_decisions": [
@@ -12603,7 +12603,56 @@
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
-      ]
+      ],
+      "next_units": "N01 candidate production/prediction/scoring is the next proposed unit after combined integration and explicit writer handoff; RA-02 scored-cell composition waits for that interface. Both parents remain in progress, and actual study freeze/execution awaits the existing numerical/acquisition gates.",
+      "partial_checkpoints": {
+        "RA-N01": {
+          "status": "candidate_contracts_accepted_parent_in_progress",
+          "source": "5cbf85d0c5d90899c68d788973dbb637b6474603",
+          "tree": "903d1eed6e7720c99b648a3c353c91914aa5de3e",
+          "pull_request": 109,
+          "merge": "ffadefd8c869758e91950646e1d088ca81053f40",
+          "pr_ci": 39723544786,
+          "main_ci": 39723769739,
+          "candidate": 12402495332,
+          "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
+          "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
+          "scope": "Candidate API/binders only; production/prediction/scoring remain pending."
+        },
+        "RA-02": {
+          "status": "accounting_unit_accepted_parent_in_progress",
+          "runtime_source": "78b3be9510c71c4c5a60a7e69080c3989f3cb27b",
+          "final_author": "c3502f7f1f318ca01ef24bb80172d21cb5004e57",
+          "author_full_tests": 3331,
+          "focused_tests": 151,
+          "research_extra_checks": 58,
+          "research_mutants": 2,
+          "platform_extra_checks": 35,
+          "platform_mutants": 8,
+          "author_index_sha256": "75258c03042c2e98d347ba1df05c9dcadb20a55855db1be21fe097228b46ae54",
+          "scope": "Accounting/material freeze/Journal reconciliation/unfinished-cell publication; complete scored-cell publisher pending N01."
+        }
+      },
+      "combined_integration": {
+        "source": "06fa07af17dc8f2bcd580efd7cc72ab29deefe28",
+        "tree": "08ae812847d5840d7d967961f52dc250320ec788",
+        "ancestry_head": "79fce988a720c73c7a73df79839b75859108a8dc",
+        "ancestry_tree_identical": true,
+        "n01_file_count": 7,
+        "ra02_file_count": 11,
+        "shared_registration_files": 2,
+        "full_tests": 3413,
+        "format_files": 151,
+        "mypy_files": 104,
+        "schema_cases": 1465,
+        "platform_focused_tests": 233,
+        "platform_extra_checks": 15,
+        "research_extra_checks": 59,
+        "local_checks": "Locked uv0.13.4 all-groups copy mode/pip check; configured lint/type/test/schema/Bandit; offline archives and project-only installed-wheel pure callables.",
+        "hosted_status": "pending",
+        "evidence_index_sha256": "44712658c6486c7cfdc902042c095533141ca570b334d019d76f07d847d6152a",
+        "scope": "No scientific execution or full parent completion."
+      }
     },
     "certificate_trust_update": {
       "pull_request": 104,
@@ -12707,10 +12756,23 @@
         "risk": "No provider secrets in provenance; monotonic accounting, no resume double charging or free retry.",
         "confidence": "medium",
         "owner": "Engineer Quality; Research and Platform review",
-        "status": "assigned",
+        "status": "in_progress",
         "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code.",
         "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
-        "issue": "https://github.com/spei04/strange-physics/issues/105"
+        "issue": "https://github.com/spei04/strange-physics/issues/105",
+        "checkpoint": {
+          "status": "accounting_unit_accepted_parent_in_progress",
+          "runtime_source": "78b3be9510c71c4c5a60a7e69080c3989f3cb27b",
+          "final_author": "c3502f7f1f318ca01ef24bb80172d21cb5004e57",
+          "author_full_tests": 3331,
+          "focused_tests": 151,
+          "research_extra_checks": 58,
+          "research_mutants": 2,
+          "platform_extra_checks": 35,
+          "platform_mutants": 8,
+          "author_index_sha256": "75258c03042c2e98d347ba1df05c9dcadb20a55855db1be21fe097228b46ae54",
+          "scope": "Accounting/material freeze/Journal reconciliation/unfinished-cell publication; complete scored-cell publisher pending N01."
+        }
       },
       {
         "id": "RA-03",
@@ -13216,10 +13278,23 @@
         "confidence": "medium",
         "owner": "Engineer Platform; Research and Quality review",
         "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates.",
-        "status": "assigned",
+        "status": "in_progress",
         "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
         "role": "PL1",
-        "issue": "https://github.com/spei04/strange-physics/issues/106"
+        "issue": "https://github.com/spei04/strange-physics/issues/106",
+        "checkpoint": {
+          "status": "candidate_contracts_accepted_parent_in_progress",
+          "source": "5cbf85d0c5d90899c68d788973dbb637b6474603",
+          "tree": "903d1eed6e7720c99b648a3c353c91914aa5de3e",
+          "pull_request": 109,
+          "merge": "ffadefd8c869758e91950646e1d088ca81053f40",
+          "pr_ci": 39723544786,
+          "main_ci": 39723769739,
+          "candidate": 12402495332,
+          "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
+          "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
+          "scope": "Candidate API/binders only; production/prediction/scoring remain pending."
+        }
       },
       {
         "id": "RA-N02.a",

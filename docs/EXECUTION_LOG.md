@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | RA-01 source, license and recipe audit | Identity writer after verified Quality release; no external code execution |
-| Quality | RA-02 read-only manifest/accounting preparation; RA-01 review | Source authoring follows accepted RA-01 |
-| Platform | Native activation, source provenance and later N01 interface review | Independent read-only review |
-| Project lead | Approval record, primary integration and task assignment | Scoped RA_EXEC accepted; runtime entry gates/caps enforced |
+| Research | Independent scientific/interface and composition review | Accepted partial source; reviews the progress handoff |
+| Quality | Accepted RA-02 accounting checkpoint; combined integration and release | Scored-cell composition waits for N01 scoring interface; no comparison |
+| Platform | Independent composition review; next N01 candidate/predictor/scoring unit | Candidate API accepted; next source writer awaits explicit lead handoff |
+| Project lead | Primary/GitHub integration, evidence and next handoff | Both parent tasks remain in progress; runtime entry gates/caps enforced |
 
 ## Assignments
 
@@ -109,7 +109,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 ## Review evidence and management checkpoint
 
-- Outcome: an enterprise research product that measures discovery and adaptation. Bounded local I1 and SP-01.b/c are accepted. SP-01.d/#94 is complete; the current contract task is SP-01.e/#98, beginning with VAL1.
+- Outcome: an enterprise research product that measures discovery and adaptation. Bounded local I1 and SP-01.b/c/d are accepted. VAL1's accepted manifest is preserved and generator deferred. Current native checkpoints are partial RA-02 accounting and RA-N01 candidate contracts; the comparison remains unrun.
 - Historical evidence: the following delta bullets record their own source/checkpoint state. Earlier remaining-work statements are historical; the current assignment board and latest acceptance sections govern current work.
 - Baseline delta: research and recovery reviews at 2d78e35; 55 tests, lint/format and strict mypy pass; same-head CI covers Python 3.12/3.14, packaging and eight-particle CLI smoke. Two factual documentation corrections committed as 9833e6f and peer reviewed. PR #1 merged as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f; git diff verified its tree matches reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70. All four GitHub CI checks at that head passed on Python 3.12/3.14. [Merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060. SP-00.b is complete; this is not a product release.
 - Forecast repair: adding the DB-to-artifact freeze edge changes R0 to W6–7 and first spring integration to W11–13; R1 reserve becomes W26. GA remains W52–67. These remain nine-human-team reference estimates; actual engineer assignments are separate.
@@ -481,3 +481,18 @@ The original approval CI exposed a certificate-trust advisory. PR #104 updates o
 - Research → independent scientific/interface review of both; lead → handoff, progress and integration after a checkout is released.
 
 Dependency review: RA-01 and SP-04.e are accepted for both assignments; neither new task waits on the other's implementation. Shared operation facts and ledger IDs are agreed without an import cycle. N01 binds a selected real candidate; N02.a later proves MAP. RA-02's actual study-value freeze waits for the numerical/acquisition gates. Preserve the finite-grid-first sequence and cumulative36 episodes/432 slots/eight CPU-core-hours/1GiB cap. Reuse the two independent cloud environments; no extra checkout, provider or provisioning.
+
+## 2026-10-22 — Native candidate/accounting checkpoints
+
+| Engineer | Task | Result / next handoff |
+| --- | --- | --- |
+| Platform | N01 candidate contracts | PR #109/main accepted; candidate production, prediction and scoring await the next explicit writer handoff |
+| Quality | RA-02 accounting and Journal reconciliation | Source accepted; combined local checks pass 3,413 tests; clean integration handoff next |
+| Research + Platform | Independent source and interface review | Accepted exact source union and operation-facts/ledger compatibility |
+| Project lead | GitHub integration and assignments | N01 checkpoint accepted; combined RA-02 PR/main checks remain pending |
+
+Both #105 and #106 remain in progress. RA-02 scored-cell composition waits for the
+N01 scoring interface. Full source/check/evidence identities are retained in
+execution-backlog.json and private indices. The 14 accepted/six unfinished closure,
+graph, efforts, forecast and cumulative 36-episode/432-slot/8-CPU-core-hour/1-GiB
+limits are unchanged. No scientific comparison, provider call or provisioning ran.

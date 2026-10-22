@@ -1,0 +1,2422 @@
+{
+  "scope": "Synthetic interface examples only; no actual study configuration or results",
+  "valid": {
+    "NativeAccountingPlan": {
+      "schema_version": "strange-physics.native-accounting-plan.v1",
+      "study_id": "synthetic-native-study",
+      "purpose": "synthetic_validation",
+      "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
+      "episode_limit": 36,
+      "purchase_limit": 432,
+      "cpu_limit_ns": 28800000000000,
+      "artifact_limit_bytes": 1073741824,
+      "cost_policy": "all-work-no-reset.v1"
+    },
+    "NativeStudyManifest": {
+      "schema_version": "strange-physics.native-study-manifest.v1",
+      "accounting_plan_sha256": "fe59cf33d357d1e244316c543edb446835905fd39327335b0ebeac03bdb41001",
+      "source_commit": "0000000000000000000000000000000000000000",
+      "uv_lock_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "engine_fingerprint": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "world_ids": [
+        "opaque-world-0",
+        "opaque-world-1",
+        "opaque-world-2",
+        "opaque-world-3",
+        "opaque-world-4",
+        "opaque-world-5"
+      ],
+      "policy_seeds": [
+        7,
+        19
+      ],
+      "artifacts": [
+        {
+          "kind": "world_catalog",
+          "sha256": "7f923295950fb6eb6474385628663a8f7876a6bd9e51a729c6735887a6bf8e40",
+          "byte_count": 4079,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "candidate_config",
+          "sha256": "5555547ffd93220dc0accf30342c69c26fd403551b1946220653719802128b88",
+          "byte_count": 64,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "prediction_config",
+          "sha256": "77247522b6ea48126961d0124d7bcf78e436207c3358fc8579bb135adcec7a08",
+          "byte_count": 65,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "pool",
+          "sha256": "92ffce339f5a91f6c6c320e5175648a74f46a240e32a038d716dfdb09ba7a6fa",
+          "byte_count": 52,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "menu",
+          "sha256": "ce17364bb3aed922c5760359b5e1288ab321dc9f57f712c307f3e4f28b15cc95",
+          "byte_count": 52,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "calibration",
+          "sha256": "6ba054011e48a64abe65ab23fcd950221c81ede8dbfdc2d7b1dcbbc830374d51",
+          "byte_count": 59,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "prior",
+          "sha256": "64630465228cf3d774b637c5ce65f5ad68d4beebb29064313fa01a93a96feca2",
+          "byte_count": 53,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "likelihood",
+          "sha256": "1fe79b8e44b344f44a86610b3b88624891d8a86b3428cc265d34db32c1ad267b",
+          "byte_count": 58,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "discrepancy",
+          "sha256": "f208a8c11b69798f1f16f45cd25b67c3036996dd6902216479442182583f79ce",
+          "byte_count": 59,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "scoring_policy",
+          "sha256": "b81f9a4104e191c8b2222cc96dc76a15640544421c457b1911230f847ca7f905",
+          "byte_count": 62,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "termination_policy",
+          "sha256": "ee35ff536d86e143b0b17e4dda84e1bbd683c468f5b66b690e21ed4411afc7cc",
+          "byte_count": 66,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "failure_policy",
+          "sha256": "551e92d362eb5049ed0de9c536dc60ec0cdbb68f354852fdf117ee923ef53e54",
+          "byte_count": 62,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "selector_random",
+          "sha256": "5964e5ecad8bcb35583a5618f94e743cd93dbd802c4025822860e4a89c94bb29",
+          "byte_count": 63,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "selector_uniform_disagreement",
+          "sha256": "76ccbbe00de2a20f682ba40952905eaba56e7aababb877e623becc9cf7929fb5",
+          "byte_count": 77,
+          "encoding": "strange-physics.python-json.v1"
+        },
+        {
+          "kind": "selector_posterior_disagreement",
+          "sha256": "0cb2aa06bf84bffaccb8b24a345f82d073c4a69658aa670c46e3f4731a3873fb",
+          "byte_count": 79,
+          "encoding": "strange-physics.python-json.v1"
+        }
+      ],
+      "gates": [
+        {
+          "unit": "RA-N01",
+          "source_commit": "0000000000000000000000000000000000000000",
+          "evidence_sha256": "00b04226e80dfa9c5903978280dc83f721d3b44c56f760540610d1b3ea1b2716"
+        },
+        {
+          "unit": "RA-N02.a",
+          "source_commit": "0000000000000000000000000000000000000000",
+          "evidence_sha256": "8b1f6064fd6cf80782517238c798faf88e6b6bd718b8b9985033ae0aae43942e"
+        },
+        {
+          "unit": "RA-N03",
+          "source_commit": "0000000000000000000000000000000000000000",
+          "evidence_sha256": "a9b6ed8933b1966a66348107d6bb55521610e6411f24b5c328a75ad2bd905fb7"
+        },
+        {
+          "unit": "RA-N04",
+          "source_commit": "0000000000000000000000000000000000000000",
+          "evidence_sha256": "aea9c9d9c465a8cf0938797e8194343b53f7079d1946680808a4305968b6b017"
+        }
+      ],
+      "cells": [
+        {
+          "cell_id": "cell-0-0-0",
+          "world_id": "opaque-world-0",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-0-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-0-0-1",
+          "world_id": "opaque-world-0",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-0-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-0-0-2",
+          "world_id": "opaque-world-0",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-0-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-0-1-0",
+          "world_id": "opaque-world-0",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-0-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-0-1-1",
+          "world_id": "opaque-world-0",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-0-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-0-1-2",
+          "world_id": "opaque-world-0",
+          "policy_seed": 19,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-0-1-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-0-0",
+          "world_id": "opaque-world-1",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-1-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-0-1",
+          "world_id": "opaque-world-1",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-1-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-0-2",
+          "world_id": "opaque-world-1",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-1-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-1-0",
+          "world_id": "opaque-world-1",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-1-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-1-1",
+          "world_id": "opaque-world-1",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-1-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-1-2",
+          "world_id": "opaque-world-1",
+          "policy_seed": 19,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-1-1-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-0-0",
+          "world_id": "opaque-world-2",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-2-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-0-1",
+          "world_id": "opaque-world-2",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-2-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-0-2",
+          "world_id": "opaque-world-2",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-2-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-1-0",
+          "world_id": "opaque-world-2",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-2-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-1-1",
+          "world_id": "opaque-world-2",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-2-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-1-2",
+          "world_id": "opaque-world-2",
+          "policy_seed": 19,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-2-1-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-0-0",
+          "world_id": "opaque-world-3",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-3-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-0-1",
+          "world_id": "opaque-world-3",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-3-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-0-2",
+          "world_id": "opaque-world-3",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-3-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-1-0",
+          "world_id": "opaque-world-3",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-3-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-1-1",
+          "world_id": "opaque-world-3",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-3-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-1-2",
+          "world_id": "opaque-world-3",
+          "policy_seed": 19,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-3-1-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-0-0",
+          "world_id": "opaque-world-4",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-4-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-0-1",
+          "world_id": "opaque-world-4",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-4-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-0-2",
+          "world_id": "opaque-world-4",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-4-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-1-0",
+          "world_id": "opaque-world-4",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-4-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-1-1",
+          "world_id": "opaque-world-4",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-4-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-1-2",
+          "world_id": "opaque-world-4",
+          "policy_seed": 19,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-4-1-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-5-0-0",
+          "world_id": "opaque-world-5",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-5-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-5-0-1",
+          "world_id": "opaque-world-5",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-5-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-5-0-2",
+          "world_id": "opaque-world-5",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-5-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-5-1-0",
+          "world_id": "opaque-world-5",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-5-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-5-1-1",
+          "world_id": "opaque-world-5",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-5-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-5-1-2",
+          "world_id": "opaque-world-5",
+          "policy_seed": 19,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-5-1-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        }
+      ],
+      "failure_policy": "retain-every-cell-and-attempt.v1",
+      "primary_output": "one-selected-native-candidate.v1"
+    },
+    "NativeWorkFacts": {
+      "schema_version": "strange-physics.native-work-facts.v1",
+      "attempt_id": "attempt-reference",
+      "operation": "reference",
+      "producer_version": "synthetic.reference.v1",
+      "config_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "input_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "observation_sha256": null,
+      "model_sha256": null,
+      "output_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "unit": "work",
+      "requested_count": 4,
+      "completed_count": 4,
+      "failed_count": 0,
+      "not_assessed_count": 0,
+      "outcome": "completed"
+    },
+    "NativeStudyLedger": {
+      "schema_version": "strange-physics.native-study-ledger.v1",
+      "plan": {
+        "schema_version": "strange-physics.native-accounting-plan.v1",
+        "study_id": "synthetic-native-study",
+        "purpose": "synthetic_validation",
+        "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
+        "episode_limit": 36,
+        "purchase_limit": 432,
+        "cpu_limit_ns": 28800000000000,
+        "artifact_limit_bytes": 1073741824,
+        "cost_policy": "all-work-no-reset.v1"
+      },
+      "records": [
+        {
+          "event_id": "event-0",
+          "sequence": 0,
+          "previous_sha256": "fe59cf33d357d1e244316c543edb446835905fd39327335b0ebeac03bdb41001",
+          "event": {
+            "kind": "reserve",
+            "attempt_id": "attempt-reference",
+            "phase": "reference",
+            "cell_id": null,
+            "operation": "reference",
+            "config_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "input_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+            "retry_of": null,
+            "cpu_reservation_ns": 1000,
+            "artifact_reservation_bytes": 256,
+            "purchase": null
+          }
+        },
+        {
+          "event_id": "event-1",
+          "sequence": 1,
+          "previous_sha256": "4500bbfe6b192a9f43573bf7254d3a70fcdd5188c0588a02463b3fdac79fa7d0",
+          "event": {
+            "kind": "update",
+            "attempt_id": "attempt-reference",
+            "state": "unknown",
+            "cpu_ns": null,
+            "wall_ns": null,
+            "artifact_bytes": null,
+            "facts": null
+          }
+        },
+        {
+          "event_id": "event-2",
+          "sequence": 2,
+          "previous_sha256": "42b22c2342a8e96cb8571c8afd3a2d266115707f0764cde9d85390529851b9b0",
+          "event": {
+            "kind": "freeze",
+            "manifest": {
+              "schema_version": "strange-physics.native-study-manifest.v1",
+              "accounting_plan_sha256": "fe59cf33d357d1e244316c543edb446835905fd39327335b0ebeac03bdb41001",
+              "source_commit": "0000000000000000000000000000000000000000",
+              "uv_lock_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "engine_fingerprint": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "world_ids": [
+                "opaque-world-0",
+                "opaque-world-1",
+                "opaque-world-2",
+                "opaque-world-3",
+                "opaque-world-4",
+                "opaque-world-5"
+              ],
+              "policy_seeds": [
+                7,
+                19
+              ],
+              "artifacts": [
+                {
+                  "kind": "world_catalog",
+                  "sha256": "7f923295950fb6eb6474385628663a8f7876a6bd9e51a729c6735887a6bf8e40",
+                  "byte_count": 4079,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "candidate_config",
+                  "sha256": "5555547ffd93220dc0accf30342c69c26fd403551b1946220653719802128b88",
+                  "byte_count": 64,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "prediction_config",
+                  "sha256": "77247522b6ea48126961d0124d7bcf78e436207c3358fc8579bb135adcec7a08",
+                  "byte_count": 65,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "pool",
+                  "sha256": "92ffce339f5a91f6c6c320e5175648a74f46a240e32a038d716dfdb09ba7a6fa",
+                  "byte_count": 52,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "menu",
+                  "sha256": "ce17364bb3aed922c5760359b5e1288ab321dc9f57f712c307f3e4f28b15cc95",
+                  "byte_count": 52,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "calibration",
+                  "sha256": "6ba054011e48a64abe65ab23fcd950221c81ede8dbfdc2d7b1dcbbc830374d51",
+                  "byte_count": 59,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "prior",
+                  "sha256": "64630465228cf3d774b637c5ce65f5ad68d4beebb29064313fa01a93a96feca2",
+                  "byte_count": 53,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "likelihood",
+                  "sha256": "1fe79b8e44b344f44a86610b3b88624891d8a86b3428cc265d34db32c1ad267b",
+                  "byte_count": 58,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "discrepancy",
+                  "sha256": "f208a8c11b69798f1f16f45cd25b67c3036996dd6902216479442182583f79ce",
+                  "byte_count": 59,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "scoring_policy",
+                  "sha256": "b81f9a4104e191c8b2222cc96dc76a15640544421c457b1911230f847ca7f905",
+                  "byte_count": 62,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "termination_policy",
+                  "sha256": "ee35ff536d86e143b0b17e4dda84e1bbd683c468f5b66b690e21ed4411afc7cc",
+                  "byte_count": 66,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "failure_policy",
+                  "sha256": "551e92d362eb5049ed0de9c536dc60ec0cdbb68f354852fdf117ee923ef53e54",
+                  "byte_count": 62,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "selector_random",
+                  "sha256": "5964e5ecad8bcb35583a5618f94e743cd93dbd802c4025822860e4a89c94bb29",
+                  "byte_count": 63,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "selector_uniform_disagreement",
+                  "sha256": "76ccbbe00de2a20f682ba40952905eaba56e7aababb877e623becc9cf7929fb5",
+                  "byte_count": 77,
+                  "encoding": "strange-physics.python-json.v1"
+                },
+                {
+                  "kind": "selector_posterior_disagreement",
+                  "sha256": "0cb2aa06bf84bffaccb8b24a345f82d073c4a69658aa670c46e3f4731a3873fb",
+                  "byte_count": 79,
+                  "encoding": "strange-physics.python-json.v1"
+                }
+              ],
+              "gates": [
+                {
+                  "unit": "RA-N01",
+                  "source_commit": "0000000000000000000000000000000000000000",
+                  "evidence_sha256": "00b04226e80dfa9c5903978280dc83f721d3b44c56f760540610d1b3ea1b2716"
+                },
+                {
+                  "unit": "RA-N02.a",
+                  "source_commit": "0000000000000000000000000000000000000000",
+                  "evidence_sha256": "8b1f6064fd6cf80782517238c798faf88e6b6bd718b8b9985033ae0aae43942e"
+                },
+                {
+                  "unit": "RA-N03",
+                  "source_commit": "0000000000000000000000000000000000000000",
+                  "evidence_sha256": "a9b6ed8933b1966a66348107d6bb55521610e6411f24b5c328a75ad2bd905fb7"
+                },
+                {
+                  "unit": "RA-N04",
+                  "source_commit": "0000000000000000000000000000000000000000",
+                  "evidence_sha256": "aea9c9d9c465a8cf0938797e8194343b53f7079d1946680808a4305968b6b017"
+                }
+              ],
+              "cells": [
+                {
+                  "cell_id": "cell-0-0-0",
+                  "world_id": "opaque-world-0",
+                  "policy_seed": 7,
+                  "selector": "random",
+                  "journal_id": "journal-0-0-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-0-0-1",
+                  "world_id": "opaque-world-0",
+                  "policy_seed": 7,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-0-0-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-0-0-2",
+                  "world_id": "opaque-world-0",
+                  "policy_seed": 7,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-0-0-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-0-1-0",
+                  "world_id": "opaque-world-0",
+                  "policy_seed": 19,
+                  "selector": "random",
+                  "journal_id": "journal-0-1-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-0-1-1",
+                  "world_id": "opaque-world-0",
+                  "policy_seed": 19,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-0-1-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-0-1-2",
+                  "world_id": "opaque-world-0",
+                  "policy_seed": 19,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-0-1-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-1-0-0",
+                  "world_id": "opaque-world-1",
+                  "policy_seed": 7,
+                  "selector": "random",
+                  "journal_id": "journal-1-0-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-1-0-1",
+                  "world_id": "opaque-world-1",
+                  "policy_seed": 7,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-1-0-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-1-0-2",
+                  "world_id": "opaque-world-1",
+                  "policy_seed": 7,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-1-0-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-1-1-0",
+                  "world_id": "opaque-world-1",
+                  "policy_seed": 19,
+                  "selector": "random",
+                  "journal_id": "journal-1-1-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-1-1-1",
+                  "world_id": "opaque-world-1",
+                  "policy_seed": 19,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-1-1-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-1-1-2",
+                  "world_id": "opaque-world-1",
+                  "policy_seed": 19,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-1-1-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-2-0-0",
+                  "world_id": "opaque-world-2",
+                  "policy_seed": 7,
+                  "selector": "random",
+                  "journal_id": "journal-2-0-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-2-0-1",
+                  "world_id": "opaque-world-2",
+                  "policy_seed": 7,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-2-0-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-2-0-2",
+                  "world_id": "opaque-world-2",
+                  "policy_seed": 7,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-2-0-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-2-1-0",
+                  "world_id": "opaque-world-2",
+                  "policy_seed": 19,
+                  "selector": "random",
+                  "journal_id": "journal-2-1-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-2-1-1",
+                  "world_id": "opaque-world-2",
+                  "policy_seed": 19,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-2-1-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-2-1-2",
+                  "world_id": "opaque-world-2",
+                  "policy_seed": 19,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-2-1-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-3-0-0",
+                  "world_id": "opaque-world-3",
+                  "policy_seed": 7,
+                  "selector": "random",
+                  "journal_id": "journal-3-0-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-3-0-1",
+                  "world_id": "opaque-world-3",
+                  "policy_seed": 7,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-3-0-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-3-0-2",
+                  "world_id": "opaque-world-3",
+                  "policy_seed": 7,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-3-0-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-3-1-0",
+                  "world_id": "opaque-world-3",
+                  "policy_seed": 19,
+                  "selector": "random",
+                  "journal_id": "journal-3-1-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-3-1-1",
+                  "world_id": "opaque-world-3",
+                  "policy_seed": 19,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-3-1-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-3-1-2",
+                  "world_id": "opaque-world-3",
+                  "policy_seed": 19,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-3-1-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-4-0-0",
+                  "world_id": "opaque-world-4",
+                  "policy_seed": 7,
+                  "selector": "random",
+                  "journal_id": "journal-4-0-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-4-0-1",
+                  "world_id": "opaque-world-4",
+                  "policy_seed": 7,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-4-0-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-4-0-2",
+                  "world_id": "opaque-world-4",
+                  "policy_seed": 7,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-4-0-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-4-1-0",
+                  "world_id": "opaque-world-4",
+                  "policy_seed": 19,
+                  "selector": "random",
+                  "journal_id": "journal-4-1-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-4-1-1",
+                  "world_id": "opaque-world-4",
+                  "policy_seed": 19,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-4-1-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-4-1-2",
+                  "world_id": "opaque-world-4",
+                  "policy_seed": 19,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-4-1-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-5-0-0",
+                  "world_id": "opaque-world-5",
+                  "policy_seed": 7,
+                  "selector": "random",
+                  "journal_id": "journal-5-0-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-5-0-1",
+                  "world_id": "opaque-world-5",
+                  "policy_seed": 7,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-5-0-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-5-0-2",
+                  "world_id": "opaque-world-5",
+                  "policy_seed": 7,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-5-0-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-5-1-0",
+                  "world_id": "opaque-world-5",
+                  "policy_seed": 19,
+                  "selector": "random",
+                  "journal_id": "journal-5-1-0",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-5-1-1",
+                  "world_id": "opaque-world-5",
+                  "policy_seed": 19,
+                  "selector": "uniform_disagreement",
+                  "journal_id": "journal-5-1-1",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                },
+                {
+                  "cell_id": "cell-5-1-2",
+                  "world_id": "opaque-world-5",
+                  "policy_seed": 19,
+                  "selector": "posterior_disagreement",
+                  "journal_id": "journal-5-1-2",
+                  "purchased_slots": 12,
+                  "calibration_slots": 4
+                }
+              ],
+              "failure_policy": "retain-every-cell-and-attempt.v1",
+              "primary_output": "one-selected-native-candidate.v1"
+            }
+          }
+        }
+      ]
+    },
+    "NativeStudySummary": {
+      "study_id": "synthetic-native-study",
+      "accounting_plan_sha256": "fe59cf33d357d1e244316c543edb446835905fd39327335b0ebeac03bdb41001",
+      "ledger_sha256": "8c2fc71ba8902e47de2948b6d4097cfee759ec54565c6e0bf30ab2420dc15384",
+      "manifest_sha256": "88b26125a533a9aa9a75ab89981bd5175f95cf118cb7dc4c3b47e5bc25cdd6b0",
+      "budget": {
+        "purchased_slots": 0,
+        "remaining_slots": 432,
+        "charged_cpu_ns": 1000,
+        "remaining_cpu_ns": 28799999999000,
+        "charged_artifact_bytes": 256,
+        "remaining_artifact_bytes": 1073741568,
+        "unresolved_attempts": 1,
+        "over_limit": false
+      },
+      "cells": [
+        {
+          "cell_id": "cell-0-0-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-0-0-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-0-0-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-0-1-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-0-1-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-0-1-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-1-0-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-1-0-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-1-0-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-1-1-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-1-1-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-1-1-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-2-0-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-2-0-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-2-0-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-2-1-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-2-1-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-2-1-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-3-0-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-3-0-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-3-0-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-3-1-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-3-1-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-3-1-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-4-0-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-4-0-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-4-0-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-4-1-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-4-1-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-4-1-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-5-0-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-5-0-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-5-0-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-5-1-0",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-5-1-1",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        },
+        {
+          "cell_id": "cell-5-1-2",
+          "status": "unstarted",
+          "purchased_slots": 0,
+          "unresolved_attempts": 0,
+          "outcome": null
+        }
+      ]
+    },
+    "NativeWorldCatalog": {
+      "schema_version": "strange-physics.native-world-catalog.v1",
+      "worlds": [
+        {
+          "world_id": "opaque-world-0",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 1,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.6070929748201541,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-1",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 2,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.45696728054958985,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-2",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 3,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.3513895002861746,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-3",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 4,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.8658336633434207,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-4",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 5,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.7830017542472282,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-5",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 6,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.622898610883166,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        }
+      ]
+    }
+  },
+  "schema_negative": [
+    {
+      "model": "NativeAccountingPlan",
+      "field": "episode_limit",
+      "value": true
+    },
+    {
+      "model": "NativeAccountingPlan",
+      "field": "purchase_limit",
+      "value": 433
+    },
+    {
+      "model": "NativeAccountingPlan",
+      "field": "cpu_limit_ns",
+      "value": 28800000000001
+    },
+    {
+      "model": "NativeAccountingPlan",
+      "field": "artifact_limit_bytes",
+      "value": 1073741825
+    },
+    {
+      "model": "NativeAccountingPlan",
+      "field": "purpose",
+      "value": "provider_pilot"
+    },
+    {
+      "model": "NativeStudyManifest",
+      "field": "schema_version",
+      "value": "unknown"
+    },
+    {
+      "model": "NativeStudyManifest",
+      "field": "cells",
+      "value": [
+        {
+          "cell_id": "cell-0-0-0",
+          "world_id": "opaque-world-0",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-0-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-0-0-1",
+          "world_id": "opaque-world-0",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-0-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-0-0-2",
+          "world_id": "opaque-world-0",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-0-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-0-1-0",
+          "world_id": "opaque-world-0",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-0-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-0-1-1",
+          "world_id": "opaque-world-0",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-0-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-0-1-2",
+          "world_id": "opaque-world-0",
+          "policy_seed": 19,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-0-1-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-0-0",
+          "world_id": "opaque-world-1",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-1-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-0-1",
+          "world_id": "opaque-world-1",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-1-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-0-2",
+          "world_id": "opaque-world-1",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-1-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-1-0",
+          "world_id": "opaque-world-1",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-1-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-1-1",
+          "world_id": "opaque-world-1",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-1-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-1-1-2",
+          "world_id": "opaque-world-1",
+          "policy_seed": 19,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-1-1-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-0-0",
+          "world_id": "opaque-world-2",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-2-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-0-1",
+          "world_id": "opaque-world-2",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-2-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-0-2",
+          "world_id": "opaque-world-2",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-2-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-1-0",
+          "world_id": "opaque-world-2",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-2-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-1-1",
+          "world_id": "opaque-world-2",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-2-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-2-1-2",
+          "world_id": "opaque-world-2",
+          "policy_seed": 19,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-2-1-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-0-0",
+          "world_id": "opaque-world-3",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-3-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-0-1",
+          "world_id": "opaque-world-3",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-3-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-0-2",
+          "world_id": "opaque-world-3",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-3-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-1-0",
+          "world_id": "opaque-world-3",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-3-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-1-1",
+          "world_id": "opaque-world-3",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-3-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-3-1-2",
+          "world_id": "opaque-world-3",
+          "policy_seed": 19,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-3-1-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-0-0",
+          "world_id": "opaque-world-4",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-4-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-0-1",
+          "world_id": "opaque-world-4",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-4-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-0-2",
+          "world_id": "opaque-world-4",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-4-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-1-0",
+          "world_id": "opaque-world-4",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-4-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-1-1",
+          "world_id": "opaque-world-4",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-4-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-4-1-2",
+          "world_id": "opaque-world-4",
+          "policy_seed": 19,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-4-1-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-5-0-0",
+          "world_id": "opaque-world-5",
+          "policy_seed": 7,
+          "selector": "random",
+          "journal_id": "journal-5-0-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-5-0-1",
+          "world_id": "opaque-world-5",
+          "policy_seed": 7,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-5-0-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-5-0-2",
+          "world_id": "opaque-world-5",
+          "policy_seed": 7,
+          "selector": "posterior_disagreement",
+          "journal_id": "journal-5-0-2",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-5-1-0",
+          "world_id": "opaque-world-5",
+          "policy_seed": 19,
+          "selector": "random",
+          "journal_id": "journal-5-1-0",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        },
+        {
+          "cell_id": "cell-5-1-1",
+          "world_id": "opaque-world-5",
+          "policy_seed": 19,
+          "selector": "uniform_disagreement",
+          "journal_id": "journal-5-1-1",
+          "purchased_slots": 12,
+          "calibration_slots": 4
+        }
+      ]
+    },
+    {
+      "model": "NativeStudyManifest",
+      "field": "world_ids",
+      "value": [
+        "opaque-world-0",
+        "opaque-world-1",
+        "opaque-world-2",
+        "opaque-world-3",
+        "opaque-world-4",
+        "opaque-world-5",
+        "extra"
+      ]
+    },
+    {
+      "model": "NativeWorkFacts",
+      "field": "requested_count",
+      "value": true
+    },
+    {
+      "model": "NativeWorkFacts",
+      "field": "completed_count",
+      "value": -1
+    },
+    {
+      "model": "NativeWorkFacts",
+      "field": "operation",
+      "value": "provider"
+    }
+  ],
+  "runtime_negative": [
+    {
+      "model": "NativeStudyManifest",
+      "field": "policy_seeds",
+      "value": [
+        7,
+        7
+      ]
+    },
+    {
+      "model": "NativeStudyManifest",
+      "field": "world_ids",
+      "value": [
+        "same",
+        "same",
+        "same",
+        "same",
+        "same",
+        "same"
+      ]
+    },
+    {
+      "model": "NativeWorkFacts",
+      "field": "completed_count",
+      "value": 3
+    },
+    {
+      "model": "NativeWorkFacts",
+      "field": "outcome",
+      "value": "rejected"
+    }
+  ],
+  "artifact_payloads": {
+    "world_catalog": {
+      "schema_version": "strange-physics.native-world-catalog.v1",
+      "worlds": [
+        {
+          "world_id": "opaque-world-0",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 1,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.6070929748201541,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-1",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 2,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.45696728054958985,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-2",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 3,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.3513895002861746,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-3",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 4,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.8658336633434207,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-4",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 5,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.7830017542472282,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        },
+        {
+          "world_id": "opaque-world-5",
+          "definition": {
+            "schema_version": "strange-physics.world.v1",
+            "space": {
+              "schema_version": "strange-physics.space.v1",
+              "structure": {
+                "particle_ids": [
+                  "particle-0"
+                ],
+                "anchors": [
+                  {
+                    "id": "anchor",
+                    "position": [
+                      0.0,
+                      0.0
+                    ]
+                  }
+                ],
+                "connections": [
+                  {
+                    "a": "particle-0",
+                    "b": "anchor"
+                  }
+                ]
+              },
+              "sampling": {
+                "duration": 2.0,
+                "dt": 0.01,
+                "sample_interval": 0.05,
+                "position_noise": 0.0,
+                "velocity_noise": 0.0
+              },
+              "limits": {
+                "position_norm": 2.0,
+                "velocity_norm": 2.0,
+                "impulse_norm": 1.0,
+                "min_mass": 0.5,
+                "max_mass": 2.0
+              },
+              "budget": 12,
+              "calibration_experiments": 4
+            },
+            "noise_seed": 6,
+            "initial_law": {
+              "kind": "spring",
+              "parameters": {
+                "linear": 0.622898610883166,
+                "cubic": 0.0
+              }
+            },
+            "changed_law": null,
+            "change_after": null
+          }
+        }
+      ]
+    },
+    "candidate_config": {
+      "purpose": "synthetic_validation",
+      "artifact": "candidate_config"
+    },
+    "prediction_config": {
+      "purpose": "synthetic_validation",
+      "artifact": "prediction_config"
+    },
+    "pool": {
+      "purpose": "synthetic_validation",
+      "artifact": "pool"
+    },
+    "menu": {
+      "purpose": "synthetic_validation",
+      "artifact": "menu"
+    },
+    "calibration": {
+      "purpose": "synthetic_validation",
+      "artifact": "calibration"
+    },
+    "prior": {
+      "purpose": "synthetic_validation",
+      "artifact": "prior"
+    },
+    "likelihood": {
+      "purpose": "synthetic_validation",
+      "artifact": "likelihood"
+    },
+    "discrepancy": {
+      "purpose": "synthetic_validation",
+      "artifact": "discrepancy"
+    },
+    "scoring_policy": {
+      "purpose": "synthetic_validation",
+      "artifact": "scoring_policy"
+    },
+    "termination_policy": {
+      "purpose": "synthetic_validation",
+      "artifact": "termination_policy"
+    },
+    "failure_policy": {
+      "purpose": "synthetic_validation",
+      "artifact": "failure_policy"
+    },
+    "selector_random": {
+      "purpose": "synthetic_validation",
+      "artifact": "selector_random"
+    },
+    "selector_uniform_disagreement": {
+      "purpose": "synthetic_validation",
+      "artifact": "selector_uniform_disagreement"
+    },
+    "selector_posterior_disagreement": {
+      "purpose": "synthetic_validation",
+      "artifact": "selector_posterior_disagreement"
+    }
+  }
+}
