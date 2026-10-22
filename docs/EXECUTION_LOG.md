@@ -10,10 +10,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | Independent N01 runtime scientific review | Analytic oracle, domain and honest candidate provenance; no comparison |
-| Quality | Independent N01 runtime contracts/accounting review | RA-02 accounting accepted; scored-cell composition waits for N01 scoring interface |
-| Platform | N01 candidate production and native prediction in primary | Explicit runtime handoff from accepted f9f450b; scoring remains a later unit |
-| Project lead | Read-only coordination and subsequent integration | Platform owns primary runtime source; both parent tasks remain in progress |
+| Research | N01 scoring-interface review | Candidate/prediction scientific review accepted; scoring proof obligations next |
+| Quality | Progress and scoring/accounting interface review | Runtime review accepted; scored-cell source waits for accepted N01 scoring interface |
+| Platform | Prepare N01 scoring interface; verify delivered package | Runtime source released to lead; next source writer requires explicit handoff |
+| Project lead | Primary integration, delivery evidence and next assignment | RA-02 accounting delivered; both parent tasks remain in progress |
 
 ## Assignments
 
@@ -488,12 +488,26 @@ Dependency review: RA-01 and SP-04.e are accepted for both assignments; neither 
 | Engineer | Task | Result / next handoff |
 | --- | --- | --- |
 | Platform | N01 candidate contracts | PR #109/main accepted; candidate production, prediction and scoring await the next explicit writer handoff |
-| Quality | RA-02 accounting and Journal reconciliation | Source accepted; combined local checks pass 3,413 tests; clean integration handoff next |
+| Quality | RA-02 accounting and Journal reconciliation | Integrated by PR #110 with verified PR/main/package evidence |
 | Research + Platform | Independent source and interface review | Accepted exact source union and operation-facts/ledger compatibility |
-| Project lead | GitHub integration and assignments | N01 checkpoint accepted; combined RA-02 PR/main checks remain pending |
+| Project lead | GitHub integration and assignments | PRs #109/#110 accepted; actual runtime handoff is recorded below |
 
 Both #105 and #106 remain in progress. RA-02 scored-cell composition waits for the
 N01 scoring interface. Full source/check/evidence identities are retained in
 execution-backlog.json and private indices. The 14 accepted/six unfinished closure,
 graph, efforts, forecast and cumulative 36-episode/432-slot/8-CPU-core-hour/1-GiB
 limits are unchanged. No scientific comparison, provider call or provisioning ran.
+
+## 2026-10-22 — Candidate production and prediction checkpoint
+
+| Engineer | Work | Result / next gate |
+| --- | --- | --- |
+| Platform | Actual candidate production and native prediction | c3988d9 implemented; source released at 75f8dcc; scoring interface next |
+| Quality | Contracts, parsing and accounting review | Accepted 49 independent cases and six guard mutations; scored-cell composition waits on N01 |
+| Research | Scientific and numerical review | Accepted 100 independent cases and six guard mutations; fixture checks do not establish calibration |
+| Project lead | Runtime delivery and progress reconciliation | 3,714 tests / 1,473 schema cases; RA-02 delivery corrected to accepted PR #110 |
+
+Remaining order: actual scoring/provenance adapter and disjoint-probe/failure
+checks; complete scored-cell publication and accounting; grid/reference gate;
+calibration and selectors; actual study freeze and comparison. Both #105/#106
+remain open. Existing cumulative limits and no-reset policy are unchanged.

@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts 5cbf85d are accepted through PR #109/main ffadefd8; RA-02 accounting 78b3be9 and documentation c3502f7 are independently accepted and combined locally at 06fa07a. Both #105 and #106 remain in progress: candidate production/prediction/scoring and scored-cell composition are still pending. Quality prepares the combined integration handoff; Research and Platform independently review, and lead owns primary/GitHub integration. The next N01 runtime writer requires an explicit handoff after RA-02 integration. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts are integrated through PR #109; RA-02 accounting and Journal reconciliation are integrated through PR #110/main f9f450b with verified CI and package evidence. Native candidate production and prediction at c3988d9 have passed independent review and local validation. Both #105 and #106 remain in progress: N01 scoring/provenance adaptation and RA-02 scored-cell publication are next. Lead owns delivery; Platform prepares the scoring interface, with Quality and Research reviewing. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
 
 **Status:** Approved by the product owner on 2026-10-19. Initial execution is in progress; concrete paid/release gates remain pending. See [assignment log](EXECUTION_LOG.md).
 **Owner:** technical lead and product owner. **Audited:** 2026-10-19. **Source baseline:** 28a4c19e8f9c92b83d886be6b96667d834784f9e.
@@ -3483,12 +3483,19 @@ Quality owns SP-01.e/#98 VAL1 in the reused identity checkout at accepted WEB1 m
 
 ## 2026-10-22 — Native candidate/accounting checkpoints
 
-N01 candidate contracts are integrated through PR #109 with accepted PR/main and
-candidate checks. RA-02 accounting and Journal reconciliation are independently
-accepted; their combined local checks pass 3,413 tests. Combined GitHub integration
-remains pending. Full identities and scoped evidence are in execution-backlog.json.
+N01 candidate contracts and RA-02 accounting are integrated through PRs #109/#110.
+PR #110/main f9f450b passed required CI and exact package verification. Native
+candidate production and prediction at c3988d9 pass 3,714 tests and independent
+Quality/Research review; delivery evidence is retained with issue #106 and CI.
+Full source identities and scoped evidence are in execution-backlog.json.
 
-Both #105 and #106 remain in progress. Next N01 candidate production, prediction
-and scoring require an explicit writer handoff; RA-02 scored-cell composition
-waits for that interface. See the [assignment log](EXECUTION_LOG.md). The graph,
-efforts, caps and forecast are unchanged; no comparison has run.
+Both #105 and #106 remain in progress. N01 must still bind the actual Journal,
+prefix, selected candidate, prediction and scoring protocol to the independent
+evaluator, preserve disjoint probes and distinguish missing/invalid predictions
+from evaluator failure. RA-02 must then publish scored cells with those actual
+artifacts, resolved purchases and complete cost accounting. Their acceptance
+precedes RA-N02.a grid inference/reference checks; RA-N03 calibration and RA-N04
+selectors follow that gate. Actual study freeze and RA-07.b comparison still wait
+for all prerequisites. See the [assignment log](EXECUTION_LOG.md). Graph, efforts,
+forecast and cumulative 36 episodes/432 slots/8 CPU-core-hours/1 GiB/no-reset limits
+are unchanged. Runtime fixture tests are not calibration or a research comparison.

@@ -12588,14 +12588,14 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "partial_checkpoints_accepted_combined_integration_pending",
+      "status": "accounting_delivered_candidate_prediction_source_reviewed",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Accepted RA-02 accounting unit and combined integration/release; scored-cell composition waits on N01.",
-        "Platform": "Read-only composition review; next N01 candidate/predictor/scoring unit requires explicit writer handoff.",
-        "Research": "Independent scientific/interface and progress-composition review.",
-        "Project lead": "Primary/GitHub integration, exact hosted gates and next explicit handoff."
+        "Quality": "Progress and N01 scoring/accounting interface review; scored-cell source waits for accepted scoring interface.",
+        "Platform": "Candidate/prediction source released; scoring-interface preparation and exact package verification; next writer requires explicit handoff.",
+        "Research": "Independent N01 scoring-interface and scientific-boundary review.",
+        "Project lead": "Primary runtime integration, required hosted gates and next checkout handoff."
       },
       "handoff": "Explicit writer handoff and lock/environment revalidation precede code changes. Reuse the two existing independent cloud checkouts; no additional checkout or shared dependency installation.",
       "interface_decisions": [
@@ -12604,10 +12604,10 @@
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "N01 candidate production/prediction/scoring is the next proposed unit after combined integration and explicit writer handoff; RA-02 scored-cell composition waits for that interface. Both parents remain in progress, and actual study freeze/execution awaits the existing numerical/acquisition gates.",
+      "next_units": "N01 actual Journal/prefix/selected-candidate/prediction/protocol/evaluator composition and disjoint-probe/failure checks, then RA-02 scored-cell publication with resolved purchases and complete accounting. Both parents remain in progress. RA-N02.a grid/reference acceptance precedes RA-N03 calibration and RA-N04 selectors; actual manifest freeze and RA-07.b comparison retain all gates.",
       "partial_checkpoints": {
         "RA-N01": {
-          "status": "candidate_contracts_accepted_parent_in_progress",
+          "status": "candidate_api_delivered_prediction_runtime_reviewed_parent_in_progress",
           "source": "5cbf85d0c5d90899c68d788973dbb637b6474603",
           "tree": "903d1eed6e7720c99b648a3c353c91914aa5de3e",
           "pull_request": 109,
@@ -12617,10 +12617,33 @@
           "candidate": 12402495332,
           "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
           "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
-          "scope": "Candidate API/binders only; production/prediction/scoring remain pending."
+          "scope": "Initial candidate API delivered by PR #109; later candidate/prediction runtime is recorded separately; scoring remains unfinished.",
+          "prediction_runtime": {
+            "status": "independent_source_review_accepted",
+            "source": "c3988d9356e47965dea33746c9fac3268099912a",
+            "tree": "e7ffeed92554479c68be6946578ef0ce7e1e9b0b",
+            "final_author": "75f8dccd724f6308861961968468e6f846cde3f5",
+            "final_author_tree": "5d88aace397557191f9f6ce11a609350b6e73751",
+            "full_tests": 3714,
+            "focused_tests": 383,
+            "schema_cases": 1473,
+            "format_files": 156,
+            "mypy_files": 109,
+            "archive_files": 60,
+            "quality_independent_cases": 49,
+            "quality_mutants": 6,
+            "research_independent_cases": 100,
+            "research_mutants": 6,
+            "author_index_sha256": "141bc3e2179a92921ed4e556c6f1950fba7d00b44baf01f66b5b78f9e53eb980",
+            "quality_index_sha256": "ea80e3de7ea4ad46c0ff45437f6382d9f7ce0b40ed6ba946a2e8022dbe300262",
+            "research_index_sha256": "a2fc4d86134c2e42cf221ef52d98bf24c26bca9745e4143fd24f518e56a2baf6",
+            "final_docs_index_sha256": "977a5cb5c02a30a683439a6fbb86adebdf8542f187a4136ea338c3be0c93f5e7",
+            "delivery_record": "Issue #106 and exact PR/main CI plus private candidate index; required before writer handoff.",
+            "scope": "Actual candidate construction and separate native analytic prediction only. Scoring, posterior/MAP, calibration and comparison are not accepted by runtime fixture tests."
+          }
         },
         "RA-02": {
-          "status": "accounting_unit_accepted_parent_in_progress",
+          "status": "accounting_unit_delivered_parent_in_progress",
           "runtime_source": "78b3be9510c71c4c5a60a7e69080c3989f3cb27b",
           "final_author": "c3502f7f1f318ca01ef24bb80172d21cb5004e57",
           "author_full_tests": 3331,
@@ -12630,7 +12653,16 @@
           "platform_extra_checks": 35,
           "platform_mutants": 8,
           "author_index_sha256": "75258c03042c2e98d347ba1df05c9dcadb20a55855db1be21fe097228b46ae54",
-          "scope": "Accounting/material freeze/Journal reconciliation/unfinished-cell publication; complete scored-cell publisher pending N01."
+          "scope": "Accounting/material freeze/Journal reconciliation/unfinished-cell publication; complete scored-cell publisher pending N01.",
+          "pull_request": 110,
+          "reviewed_head": "5b839d4b2582f05b2e871ab72b5257f25d4c5c05",
+          "merge": "f9f450b51b9b5c7a79a30817b6deacb070bda23e",
+          "reviewed_tree": "0fd30d7531d33b36767cd8ba8576d44e0370f686",
+          "pr_ci": 39724539753,
+          "main_ci": 39724819090,
+          "candidate": 12402737173,
+          "candidate_zip_sha256": "ba00041ca2f422b88a70e5b36daf7290f8386141d999cef08c7773b7bd22a97a",
+          "main_acceptance_index_sha256": "723fbd7a06020bbc8a68bf1f1b9338a25e59ef05922117db18a688e5b0f6ad11"
         }
       },
       "combined_integration": {
@@ -12649,9 +12681,18 @@
         "platform_extra_checks": 15,
         "research_extra_checks": 59,
         "local_checks": "Locked uv0.13.4 all-groups copy mode/pip check; configured lint/type/test/schema/Bandit; offline archives and project-only installed-wheel pure callables.",
-        "hosted_status": "pending",
+        "hosted_status": "accepted",
         "evidence_index_sha256": "44712658c6486c7cfdc902042c095533141ca570b334d019d76f07d847d6152a",
-        "scope": "No scientific execution or full parent completion."
+        "scope": "No scientific execution or full parent completion.",
+        "pull_request": 110,
+        "reviewed_head": "5b839d4b2582f05b2e871ab72b5257f25d4c5c05",
+        "merge": "f9f450b51b9b5c7a79a30817b6deacb070bda23e",
+        "reviewed_tree": "0fd30d7531d33b36767cd8ba8576d44e0370f686",
+        "pr_ci": 39724539753,
+        "main_ci": 39724819090,
+        "candidate": 12402737173,
+        "candidate_zip_sha256": "ba00041ca2f422b88a70e5b36daf7290f8386141d999cef08c7773b7bd22a97a",
+        "main_acceptance_index_sha256": "723fbd7a06020bbc8a68bf1f1b9338a25e59ef05922117db18a688e5b0f6ad11"
       }
     },
     "certificate_trust_update": {
@@ -12761,7 +12802,7 @@
         "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
         "issue": "https://github.com/spei04/strange-physics/issues/105",
         "checkpoint": {
-          "status": "accounting_unit_accepted_parent_in_progress",
+          "status": "accounting_unit_delivered_parent_in_progress",
           "runtime_source": "78b3be9510c71c4c5a60a7e69080c3989f3cb27b",
           "final_author": "c3502f7f1f318ca01ef24bb80172d21cb5004e57",
           "author_full_tests": 3331,
@@ -12771,7 +12812,16 @@
           "platform_extra_checks": 35,
           "platform_mutants": 8,
           "author_index_sha256": "75258c03042c2e98d347ba1df05c9dcadb20a55855db1be21fe097228b46ae54",
-          "scope": "Accounting/material freeze/Journal reconciliation/unfinished-cell publication; complete scored-cell publisher pending N01."
+          "scope": "Accounting/material freeze/Journal reconciliation/unfinished-cell publication; complete scored-cell publisher pending N01.",
+          "pull_request": 110,
+          "reviewed_head": "5b839d4b2582f05b2e871ab72b5257f25d4c5c05",
+          "merge": "f9f450b51b9b5c7a79a30817b6deacb070bda23e",
+          "reviewed_tree": "0fd30d7531d33b36767cd8ba8576d44e0370f686",
+          "pr_ci": 39724539753,
+          "main_ci": 39724819090,
+          "candidate": 12402737173,
+          "candidate_zip_sha256": "ba00041ca2f422b88a70e5b36daf7290f8386141d999cef08c7773b7bd22a97a",
+          "main_acceptance_index_sha256": "723fbd7a06020bbc8a68bf1f1b9338a25e59ef05922117db18a688e5b0f6ad11"
         }
       },
       {
@@ -13283,7 +13333,7 @@
         "role": "PL1",
         "issue": "https://github.com/spei04/strange-physics/issues/106",
         "checkpoint": {
-          "status": "candidate_contracts_accepted_parent_in_progress",
+          "status": "candidate_api_delivered_prediction_runtime_reviewed_parent_in_progress",
           "source": "5cbf85d0c5d90899c68d788973dbb637b6474603",
           "tree": "903d1eed6e7720c99b648a3c353c91914aa5de3e",
           "pull_request": 109,
@@ -13293,7 +13343,30 @@
           "candidate": 12402495332,
           "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
           "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
-          "scope": "Candidate API/binders only; production/prediction/scoring remain pending."
+          "scope": "Initial candidate API delivered by PR #109; later candidate/prediction runtime is recorded separately; scoring remains unfinished.",
+          "prediction_runtime": {
+            "status": "independent_source_review_accepted",
+            "source": "c3988d9356e47965dea33746c9fac3268099912a",
+            "tree": "e7ffeed92554479c68be6946578ef0ce7e1e9b0b",
+            "final_author": "75f8dccd724f6308861961968468e6f846cde3f5",
+            "final_author_tree": "5d88aace397557191f9f6ce11a609350b6e73751",
+            "full_tests": 3714,
+            "focused_tests": 383,
+            "schema_cases": 1473,
+            "format_files": 156,
+            "mypy_files": 109,
+            "archive_files": 60,
+            "quality_independent_cases": 49,
+            "quality_mutants": 6,
+            "research_independent_cases": 100,
+            "research_mutants": 6,
+            "author_index_sha256": "141bc3e2179a92921ed4e556c6f1950fba7d00b44baf01f66b5b78f9e53eb980",
+            "quality_index_sha256": "ea80e3de7ea4ad46c0ff45437f6382d9f7ce0b40ed6ba946a2e8022dbe300262",
+            "research_index_sha256": "a2fc4d86134c2e42cf221ef52d98bf24c26bca9745e4143fd24f518e56a2baf6",
+            "final_docs_index_sha256": "977a5cb5c02a30a683439a6fbb86adebdf8542f187a4136ea338c3be0c93f5e7",
+            "delivery_record": "Issue #106 and exact PR/main CI plus private candidate index; required before writer handoff.",
+            "scope": "Actual candidate construction and separate native analytic prediction only. Scoring, posterior/MAP, calibration and comparison are not accepted by runtime fixture tests."
+          }
         }
       },
       {
