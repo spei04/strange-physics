@@ -1,6 +1,8 @@
 # Strange Physics — execution backlog
 
-**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts are integrated through PR #109; RA-02 accounting and Journal reconciliation are integrated through PR #110/main f9f450b with verified CI and package evidence. Native candidate production and prediction are delivered through PR #111/main c0e4c86, with all five CI jobs and candidate 12413204172 verified. Pure scoring is delivered through PR #112/main 73d07b6, with all five CI jobs and candidate 12425889219 verified. Classical diagnostic is delivered through PR #113/main 95f1735, with all five CI jobs and candidate 12458927169 verified against the reviewed author archives. The exact actual-Journal/classical union0e6dc0d passed3,958 tests, installed66-file package checks and both independent reviews, including19 permanent joint cases. Lead owns final progress review and Journal PR/main/package delivery after explicit source release. Both #105 and #106 remain in progress; the combined private publication API and measured study producers remain pending. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts are integrated through PR #109; RA-02 accounting and Journal reconciliation are integrated through PR #110/main f9f450b with verified CI and package evidence. Native candidate production and prediction are delivered through PR #111/main c0e4c86, with all five CI jobs and candidate 12413204172 verified. Pure scoring is delivered through PR #112/main 73d07b6, with all five CI jobs and candidate 12425889219 verified. Classical diagnostic is delivered through PR #113/main 95f1735, with all five CI jobs and candidate 12458927169 verified against the reviewed author archives. The actual-Journal/classical union is delivered through PR #114/main9cb6e58:3,958 tests, both independent reviews, all five main CI jobs and candidate12459573763 accepted. The private publication composer/CAS proposal is source-accepted at cfaab7f:4,003 tests,1,512 schema cases,68-file packages and both independent reviews passed. Quality released the clean identity checkout to the lead; PR/main/candidate delivery remains pending. Platform owns delivery verification; Research and Quality prepare the next bounded parent slice. Both #105 and #106 remain in progress; early no-score publication and measured durable study producers remain pending. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
+
+**Execution location (2026-10-23):** All project checkouts, dependencies, builds, tests, datasets, media, logs, run outputs and private evidence stay in the existing studio-agent cloud workspace or hosted CI. The Mac is an SSH/control channel only; do not clone, install, build, run research, download artifacts or stage media there. Reuse the two existing cloud checkouts, preserve active writers and retained evidence, and keep cumulative budgets and review gates. No new capacity purchase or changes to other teams or the separate local computer-use project.
 
 **Status:** Approved by the product owner on 2026-10-19. Initial execution is in progress; concrete paid/release gates remain pending. See [assignment log](EXECUTION_LOG.md).
 **Owner:** technical lead and product owner. **Audited:** 2026-10-19. **Source baseline:** 28a4c19e8f9c92b83d886be6b96667d834784f9e.
@@ -3630,3 +3632,40 @@ Quality released clean0e6dc0d to lead with no active consumers. Release index
 SHA256:88a54a57a2a028b5ca1f9cb58db8a3992ff15a63c4bc2ed63814e2febe9d1dc4.
 The two existing checkouts remain needed for delivery and the next authorized
 source slice; no additional checkout or shared dependency installation was made.
+
+
+## 2026-10-22 — Journal delivery and publication assignment
+
+PR #114 delivered main9cb6e582001aa89e0f98f1cad1502d37548c29d3,
+tree2425b8d203efe206187af12e351896bd3ed737e5, identical to reviewed
+head3d3618703a260febb933cebf293a80a2e3a71e87. All four applicable PR
+checks39856189431 and all five main jobs39856905014 passed. Candidate
+12459573763 passed exact source/lock/uv/provenance/checksum/66-file archive
+checks; both archives match accepted author bytes. ZIP SHA256:
+d987839046e8f8d4ff883579fe8e67337737cc3ea0f61b2aecdbf9b33b459e82.
+Acceptance index SHA256:
+41f8abdb76f7e6af57d3fa483420d0d5432bb375a105f818472f34fb50909f24;
+lead verified all11 indexed evidence files. The package remains an unpublished
+CI candidate; this delivery is not a scientific result or hosted release.
+
+Quality received the reused identity checkout at acceptedmain9cb6e58 for one
+bounded private native/classical publication compose-and-propose source slice.
+Pinned offline copy-mode sync, installed66-file source equality and5,289 singly
+owned dependency files passed before handoff. Platform reviews event/replay/CAS,
+cost and package boundaries; Research reviews actual material/outcome joins.
+Lead owns primary progress and integration. The slice preserves existing outcome
+bytes and separates evidence, event and receipt hashes; changed diagnostic or
+raw material must conflict on replay, and unknown work cannot become complete.
+Early purchase/selection/preparation-unavailable publication, real measurement,
+durable persistence/recovery and genuine inference/selection/calibration remain
+explicit obligations. Both parent tasks remain in progress; no comparison ran,
+no budget reset and no additional checkout was created.
+
+
+### 2026-10-23 — Publication source accepted; cloud-only delivery
+
+The private native/classical compose-and-propose source is accepted at cfaab7f222f5b004b42fc08109c998b7826ec85f (tree c89318ab13338bf46629cee49f70ad16d44205b6). It binds actual retained Journal/native/classical materials to additive publication evidence, preserves the primary result when diagnostics fail, and proves original-prefix replay without rerunning numerical work. It returns a pure proposal; durable writes and actual process measurements remain pending.
+
+Quality recovered complete sealed author results:4,003 tests,1,512 schema cases, Ruff/format172, strict mypy122, configured security/dependency checks, exact68-file archives and installed-callable smoke passed. Platform accepted173 authored plus30 independent checks and2 sensitive guard mutations; Research accepted45 authored plus35 independent checks and1 sensitive mutation. These counts overlap and are not added to the full-suite count. Lead rehashed36 author,20 Platform and14 Research evidence files; clean source/environment handoff is accepted. Author index60c08f98c6a239207aa9ef11aa48d01e012771cbbaf16ecb190e754b28d22540 and release indexdbb8346e9db8ce78f4211c950b48eaa7465a1ed80689d29b534f22181d0d70d3 identify retained private evidence. PR/main/candidate delivery remains the next gate.
+
+Lead owns integration in the existing identity checkout and progress in primary. Platform owns final progress/delivery verification; Quality and Research prepare the next independently reviewable parent slice. All project execution, artifacts and evidence remain on studio-agent or hosted CI; the Mac is control only. Both parents105/106 stay in progress. Early no-score composition, real measurement, durable recovery, finite-grid inference, selection, calibration and the frozen comparison remain open. Finite-grid first, later Laplace audit and cumulative approved caps are unchanged. No actual comparison has run and no graph, effort, forecast or approval has changed.

@@ -6,19 +6,28 @@
 
 SP-00.a is complete for the amended execution mode: one project lead plus at most three concurrent engineers. Lead owns TL and unassigned BE/FE lanes; Platform covers PL1/PL2 sequentially; Research covers RS1/RS2 sequentially; Quality covers QE. Lead obtains peer review before integration. The nine-human-team schedule remains a reference and will be reforecast; these assignments do not establish human operations, external assessor availability or partner commitments. D01–D05 recommendations accepted as scope/provisional targets; D06 retains concrete paid and release approvals.
 
+**Execution location (2026-10-23):** All project checkouts, dependencies, builds, tests, datasets, media, logs, run outputs and private evidence stay in the existing studio-agent cloud workspace or hosted CI. The Mac is an SSH/control channel only; do not clone, install, build, run research, download artifacts or stage media there. Reuse the two existing cloud checkouts, preserve active writers and retained evidence, and keep cumulative budgets and review gates. No new capacity purchase or changes to other teams or the separate local computer-use project.
+
 ## Current assignment board
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | Next bounded private publication source review | Joint source accepted; no implementation or scientific run |
-| Quality | Journal/classical author release | Exact0e6dc0d passed3,958 tests and both peer reviews |
-| Platform | Final progress review, then package verification | Joint source accepted; normal PR/main/package gates next |
-| Project lead | Final progress records and Journal delivery | Explicit release, docs review and exact PR/main/package checks |
+| Research | Next bounded early no-score/measured/durable slice and prerequisite review | Publication scientific review accepted; no study |
+| Quality | Publication author release complete; next-slice preparation | Exact cfaab7f,4,003 tests and68-file package gates accepted; identity released |
+| Platform | Independent progress review and PR/main/candidate delivery verification | Publication source review accepted; cloud-only artifact acquisition |
+| Project lead | Publication integration and execution-location tracker | Owns both released cloud checkouts; exact reviewed source and normal delivery gates |
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-23 | Quality | Recover final publication author checks and release | cfaab7f accepted;4,003 tests, configured checks,68-file archives and installed smoke; no rerun needed |
+| 2026-10-23 | Platform | Revalidate source/docs reviews and prepare cloud-only delivery verification |20 publication and3 prior progress evidence children rehashed; final progress/PR/main/candidate gates next |
+| 2026-10-23 | Research | Revalidate scientific review and prepare next parent slice | Early no-score and measured/durable prerequisites remain separate; no study or new budget |
+| 2026-10-23 | Project lead | Publication integration and cloud-only execution rule | Owns released identity cfaab7f plus primary progress; no project execution/artifacts on Mac |
+| 2026-10-22 | Quality | RA-02/#105 — private native/classical publication composer | Identity writer handed off acceptedmain9cb6e58; bounded compose/propose API, existing outcomes preserved |
+| 2026-10-22 | Platform + Research | Independent publication source reviews | Event/replay/CAS/cost and scientific/material/outcome boundaries, respectively |
+| 2026-10-22 | Project lead + Platform | Journal delivery PR #114 | Main9cb6e58, all five CI39856905014 jobs and exact candidate12459573763 accepted |
 | 2026-10-22 20:55 | Quality | RA-02/#105 — exact Journal/classical integration | Identity writer; preserve reviewed components and add permanent joint regression coverage |
 | 2026-10-22 20:55 | Research | RA-02/#105 — independent joint scientific review | Immutable combined source required; no comparison/publication claim |
 | 2026-10-22 21:04 | Platform | RA-N01/#106 delivery accepted; reassigned joint boundary review | Main95f1735/package12458927169 accepted; primary released |
@@ -648,3 +657,40 @@ Quality released clean0e6dc0d to lead with no active consumers. Release index
 SHA256:88a54a57a2a028b5ca1f9cb58db8a3992ff15a63c4bc2ed63814e2febe9d1dc4.
 The two existing checkouts remain needed for delivery and the next authorized
 source slice; no additional checkout or shared dependency installation was made.
+
+
+## 2026-10-22 — Journal delivery and publication assignment
+
+PR #114 delivered main9cb6e582001aa89e0f98f1cad1502d37548c29d3,
+tree2425b8d203efe206187af12e351896bd3ed737e5, identical to reviewed
+head3d3618703a260febb933cebf293a80a2e3a71e87. All four applicable PR
+checks39856189431 and all five main jobs39856905014 passed. Candidate
+12459573763 passed exact source/lock/uv/provenance/checksum/66-file archive
+checks; both archives match accepted author bytes. ZIP SHA256:
+d987839046e8f8d4ff883579fe8e67337737cc3ea0f61b2aecdbf9b33b459e82.
+Acceptance index SHA256:
+41f8abdb76f7e6af57d3fa483420d0d5432bb375a105f818472f34fb50909f24;
+lead verified all11 indexed evidence files. The package remains an unpublished
+CI candidate; this delivery is not a scientific result or hosted release.
+
+Quality received the reused identity checkout at acceptedmain9cb6e58 for one
+bounded private native/classical publication compose-and-propose source slice.
+Pinned offline copy-mode sync, installed66-file source equality and5,289 singly
+owned dependency files passed before handoff. Platform reviews event/replay/CAS,
+cost and package boundaries; Research reviews actual material/outcome joins.
+Lead owns primary progress and integration. The slice preserves existing outcome
+bytes and separates evidence, event and receipt hashes; changed diagnostic or
+raw material must conflict on replay, and unknown work cannot become complete.
+Early purchase/selection/preparation-unavailable publication, real measurement,
+durable persistence/recovery and genuine inference/selection/calibration remain
+explicit obligations. Both parent tasks remain in progress; no comparison ran,
+no budget reset and no additional checkout was created.
+
+
+### 2026-10-23 — Publication source accepted; cloud-only delivery
+
+The private native/classical compose-and-propose source is accepted at cfaab7f222f5b004b42fc08109c998b7826ec85f (tree c89318ab13338bf46629cee49f70ad16d44205b6). It binds actual retained Journal/native/classical materials to additive publication evidence, preserves the primary result when diagnostics fail, and proves original-prefix replay without rerunning numerical work. It returns a pure proposal; durable writes and actual process measurements remain pending.
+
+Quality recovered complete sealed author results:4,003 tests,1,512 schema cases, Ruff/format172, strict mypy122, configured security/dependency checks, exact68-file archives and installed-callable smoke passed. Platform accepted173 authored plus30 independent checks and2 sensitive guard mutations; Research accepted45 authored plus35 independent checks and1 sensitive mutation. These counts overlap and are not added to the full-suite count. Lead rehashed36 author,20 Platform and14 Research evidence files; clean source/environment handoff is accepted. Author index60c08f98c6a239207aa9ef11aa48d01e012771cbbaf16ecb190e754b28d22540 and release indexdbb8346e9db8ce78f4211c950b48eaa7465a1ed80689d29b534f22181d0d70d3 identify retained private evidence. PR/main/candidate delivery remains the next gate.
+
+Lead owns integration in the existing identity checkout and progress in primary. Platform owns final progress/delivery verification; Quality and Research prepare the next independently reviewable parent slice. All project execution, artifacts and evidence remain on studio-agent or hosted CI; the Mac is control only. Both parents105/106 stay in progress. Early no-score composition, real measurement, durable recovery, finite-grid inference, selection, calibration and the frozen comparison remain open. Finite-grid first, later Laplace audit and cumulative approved caps are unchanged. No actual comparison has run and no graph, effort, forecast or approval has changed.

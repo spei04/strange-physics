@@ -21,6 +21,7 @@ MAX_CPU_NS = 8 * 60 * 60 * 1_000_000_000
 MAX_ARTIFACT_BYTES = 1024**3
 MAX_LEDGER_RECORDS = 8192
 MAX_STUDY_JSON_BYTES = 8 * 1024**2
+MAX_PUBLICATION_BYTES = 32 * 1024**2
 SafeCount = Annotated[int, Field(ge=0, le=2**53 - 1)]
 AggregateCount = Annotated[int, Field(ge=0, le=MAX_LEDGER_RECORDS * (2**53 - 1))]
 Commit = Annotated[str, Field(pattern=r"^[0-9a-f]{40}$", min_length=40, max_length=40)]
@@ -372,8 +373,26 @@ class StudyCellOutcome(Message):
         return self
 
 
+class StudyPublicationReference(Message):
+    raw_sha256: Digest
+    canonical_sha256: Digest
+    byte_count: Annotated[int, Field(ge=1, le=MAX_PUBLICATION_BYTES)]
+
+
+class StudyPublicationEvent(Message):
+    """Compact private evidence reference; actual material validation is separate."""
+
+    kind: Literal["cell_publication"] = "cell_publication"
+    outcome: StudyCellOutcome
+    evidence: StudyPublicationReference
+
+
 StudyEvent = Annotated[
-    StudyAttemptReservation | StudyAttemptUpdate | StudyManifestFreeze | StudyCellOutcome,
+    StudyAttemptReservation
+    | StudyAttemptUpdate
+    | StudyManifestFreeze
+    | StudyCellOutcome
+    | StudyPublicationEvent,
     Field(discriminator="kind"),
 ]
 
