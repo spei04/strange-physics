@@ -102,9 +102,16 @@ def _identity(request: NativePublicationRequest) -> str:
 class _Clock:
     """Disjoint parent control/work CPU budgets; settling work cannot fund cleanup."""
 
-    def __init__(self, control: int, work: int, started: int) -> None:
+    def __init__(
+        self, control: int, work: int, control_wall: int, work_wall: int, started: int
+    ) -> None:
         self.control_limit = control
         self.work_limit = work
+        self.control_wall_limit = control_wall
+        self.work_wall_limit = work_wall
+        self.control_wall_used = 0
+        self.phase_wall_started = time.monotonic_ns()
+        self.wall_deadline = self.phase_wall_started + min(control_wall, work_wall)
         self.phase = "control"
         self.phase_started = started
         self.control_used = 0
@@ -113,24 +120,30 @@ class _Clock:
         self.work_started_wall = 0
         self.exhausted = False
 
-    def _arm(self, amount: int) -> None:
-        if amount <= 0:
+    def _arm(self, amount: int, wall: int) -> None:
+        wall = min(wall, self.wall_deadline - time.monotonic_ns())
+        if amount <= 0 or wall <= 0:
             self.exhausted = True
             raise StudyLedgerError("publication_control_deadline")
         signal.setitimer(signal.ITIMER_PROF, amount / 1e9)
+        signal.setitimer(signal.ITIMER_REAL, wall / 1e9)
 
     def start(self) -> None:
-        self._arm(self.control_limit - (time.process_time_ns() - self.phase_started))
+        self._arm(
+            self.control_limit - (time.process_time_ns() - self.phase_started),
+            self.control_wall_limit - (time.monotonic_ns() - self.phase_wall_started),
+        )
 
     def work(self) -> None:
         now = time.process_time_ns()
         self.control_used = now - self.phase_started
+        self.control_wall_used = time.monotonic_ns() - self.phase_wall_started
         if self.control_used >= self.control_limit:
             raise StudyLedgerError("publication_control_deadline")
         self.phase = "work"
         self.phase_started = now
         self.work_started_wall = time.monotonic_ns()
-        self._arm(self.work_limit)
+        self._arm(self.work_limit, self.work_wall_limit)
 
     def tail(self) -> bool:
         if self.phase == "work":
@@ -140,12 +153,17 @@ class _Clock:
             self.phase = "control"
             self.phase_started = now
             self.exhausted = False
-            self._arm(self.control_limit - self.control_used)
+            self._arm(
+                self.control_limit - self.control_used,
+                self.control_wall_limit - self.control_wall_used,
+            )
         return not self.exhausted
 
 
 @contextmanager
-def _deadline(control_ns: int, work_ns: int, wall_ns: int, started: int) -> Iterator[_Clock]:
+def _deadline(
+    control_ns: int, work_ns: int, control_wall_ns: int, work_wall_ns: int, started: int
+) -> Iterator[_Clock]:
     if threading.current_thread() is not threading.main_thread() or threading.active_count() != 1:
         raise StudyLedgerError("publication_process_required")
     if any(
@@ -153,7 +171,7 @@ def _deadline(control_ns: int, work_ns: int, wall_ns: int, started: int) -> Iter
     ):
         raise StudyLedgerError("publication_timer_in_use")
     before = {sig: signal.getsignal(sig) for sig in (signal.SIGALRM, signal.SIGPROF)}
-    clock = _Clock(control_ns, work_ns, started)
+    clock = _Clock(control_ns, work_ns, control_wall_ns, work_wall_ns, started)
 
     def expired(signum: int, frame: object) -> None:
         clock.exhausted = True
@@ -162,7 +180,6 @@ def _deadline(control_ns: int, work_ns: int, wall_ns: int, started: int) -> Iter
     try:
         signal.signal(signal.SIGALRM, expired)
         signal.signal(signal.SIGPROF, expired)
-        signal.setitimer(signal.ITIMER_REAL, wall_ns / 1e9)
         clock.start()
         yield clock
     finally:
@@ -353,10 +370,14 @@ def _run_child(
     evidence: bytes | None,
     output: Path,
 ) -> tuple[_Output | None, int]:
+    child_wall = signal.getitimer(signal.ITIMER_REAL)[0]
     pid = os.fork()
     if pid == 0:
         code = 70
         try:
+            # Fork does not inherit interval timers. Bound orphaned children too.
+            signal.signal(signal.SIGALRM, signal.SIG_DFL)
+            signal.setitimer(signal.ITIMER_REAL, child_wall)
             code = _child(request, ledger_raw, snapshot, payloads, original, evidence, output)
         except BaseException:
             code = 70
@@ -365,6 +386,7 @@ def _run_child(
             # parent's store cleanup or the caller in this forked process.
             os._exit(code)
     reaped = False
+    cpu = 0
     try:
         _, status, usage = os.wait4(pid, 0)
         reaped = True
@@ -379,6 +401,15 @@ def _run_child(
             max_nodes=4_000_000,
         )
         return result, cpu
+    except Exception:
+        if not reaped:
+            os.kill(pid, signal.SIGKILL)
+            _, _, usage = os.wait4(pid, 0)
+            reaped = True
+            cpu = math.ceil((usage.ru_utime + usage.ru_stime) * 1_000_000_000)
+        # Successful reap followed by an unreadable/invalid result still has
+        # known cost. The caller retains it under the unresolved reservation.
+        return None, cpu
     finally:
         if not reaped:
             os.kill(pid, signal.SIGKILL)
@@ -458,7 +489,8 @@ def commit_native_publication(
     with _deadline(
         control.ticket_cpu_ns,
         request.cpu_reservation_ns // 2,
-        min(control.ticket_wall_ns, request.wall_limit_ns),
+        control.ticket_wall_ns,
+        request.wall_limit_ns,
         started_cpu,
     ) as clock:
         meter = Extents(root)
@@ -566,141 +598,165 @@ def commit_native_publication(
                 current = reserved
                 if meter.total > control.ticket_artifact_bytes:
                     raise StudyLedgerError("control_allowance_overrun")
-                clock.work()
-                work_extent = meter.total
-                store.limit_growth(request.artifact_reservation_bytes // 2)
-                scratch = root / f"work-{request.ticket}"
-                scratch.mkdir(mode=0o700)
-                durable_directory(root)
-                snapshot = scratch / "journal.sqlite3"
-                output_path = scratch / "output.json"
-                original = None if closure is None else closure[0]
-                original_evidence = None if closure is None else closure[2]
-                payloads = (
-                    _payloads(request) if closure is None else _stored_payloads(store, request)
-                )
-                snapshots = (
-                    journal_snapshot(Path(request.journal_path), request.journal_sha256)
-                    if closure is None
-                    else nullcontext(LockedJournal(Path(request.journal_path), None, closure[1]))
-                )
-                with snapshots as locked:
-                    journal_raw = locked.original
-                    if journal_raw is not None:
-                        meter.write(snapshot, journal_raw)
-                    result, child_cpu = _run_child(
-                        request,
-                        raw(current),
-                        snapshot,
-                        payloads,
-                        original,
-                        original_evidence,
-                        output_path,
+                try:
+                    clock.work()
+                    work_extent = meter.total
+                    store.limit_growth(request.artifact_reservation_bytes // 2)
+                    scratch = root / f"work-{request.ticket}"
+                    scratch.mkdir(mode=0o700)
+                    durable_directory(root)
+                    snapshot = scratch / "journal.sqlite3"
+                    output_path = scratch / "output.json"
+                    original = None if closure is None else closure[0]
+                    original_evidence = None if closure is None else closure[2]
+                    payloads = (
+                        _payloads(request) if closure is None else _stored_payloads(store, request)
                     )
-                    if output_path.exists():
-                        meter.total += output_path.stat().st_size
-                    if result is None:
-                        clock.tail()
-                        failed = StudyAttemptUpdate(
-                            attempt_id=request.attempt_id,
-                            state="unknown",
-                            cpu_ns=clock.work_cpu + child_cpu,
-                            wall_ns=clock.work_wall,
-                            artifact_bytes=meter.total - work_extent,
-                            facts=None,
+                    snapshots = (
+                        journal_snapshot(Path(request.journal_path), request.journal_sha256)
+                        if closure is None
+                        else nullcontext(
+                            LockedJournal(Path(request.journal_path), None, closure[1])
                         )
-                        measured_failure = _append(
-                            current, _event_id(request.attempt_id, "measure"), failed
+                    )
+                    with snapshots as locked:
+                        journal_raw = locked.original
+                        if journal_raw is not None:
+                            meter.write(snapshot, journal_raw)
+                        result, child_cpu = _run_child(
+                            request,
+                            raw(current),
+                            snapshot,
+                            payloads,
+                            original,
+                            original_evidence,
+                            output_path,
                         )
-                        with store.transaction():
-                            store.replace(current, measured_failure)
-                        raise StudyLedgerError("publication_child_failed")
-                    actual = read_study_ledger(raw(result.ledger))
-                    if result.replayed != (closure is not None):
-                        raise StudyLedgerError("publication_result_mismatch")
-                    evidence_raw, receipt_raw = result.evidence_json.encode(), raw(result.receipt)
-                    if closure is not None and (evidence_raw, receipt_raw) != (
-                        closure[2],
-                        closure[3],
-                    ):
-                        raise StudyLedgerError("closure_corrupt")
-                    if closure is None:
-                        if (
-                            result.receipt.original_revision,
-                            result.receipt.original_head_sha256,
-                            result.receipt.original_ledger_identity.raw_sha256,
-                        ) != (len(current.records), head(current), digest(raw(current))):
+                        if output_path.exists():
+                            meter.total += output_path.stat().st_size
+                        if result is None:
+                            raise StudyLedgerError("publication_child_failed")
+                        actual = read_study_ledger(raw(result.ledger))
+                        if result.replayed != (closure is not None):
                             raise StudyLedgerError("publication_result_mismatch")
-                        with store.transaction():
-                            # Pread the retained descriptor; a same-inode close
-                            # here would silently cancel SQLite's POSIX locks.
-                            locked.recheck()
-                            store.replace(current, actual)
-                            store.db.execute(
-                                "INSERT INTO closures VALUES (?,?,?,?,?,?,?,?)",
-                                (
-                                    request.event_id,
-                                    _identity(request),
-                                    raw(request),
-                                    raw(current),
-                                    journal_raw,
-                                    evidence_raw,
-                                    receipt_raw,
-                                    digest(receipt_raw),
-                                ),
-                            )
-                            store.db.executemany(
-                                "INSERT INTO materials VALUES (?,?,?,?)",
-                                [(request.event_id, n, v, digest(v)) for n, v in payloads.items()],
-                            )
-                        current = actual
-                    elif raw(actual) != raw(current):
-                        raise StudyLedgerError("publication_result_mismatch")
-                clock.tail()
-                measured = PublicationMeasurements(
-                    parent_cpu_ns=clock.work_cpu,
-                    child_cpu_ns=child_cpu,
-                    wall_ns=clock.work_wall,
-                    created_artifact_bytes=meter.total - work_extent,
-                    control_parent_cpu_ns=clock.control_used,
-                    control_created_artifact_bytes=work_extent,
-                )
-                overrun = (
-                    measured.parent_cpu_ns + child_cpu > request.cpu_reservation_ns
-                    or measured.created_artifact_bytes > request.artifact_reservation_bytes
-                )
-                facts = NativeWorkFacts(
-                    attempt_id=request.attempt_id,
-                    operation="accounting",
-                    producer_version=VERSION,
-                    config_sha256=reservation.config_sha256,
-                    input_sha256=reservation.input_sha256,
-                    observation_sha256=None,
-                    model_sha256=None,
-                    output_sha256=digest(receipt_raw),
-                    unit="record",
-                    requested_count=1,
-                    completed_count=1,
-                    failed_count=0,
-                    not_assessed_count=0,
-                    outcome="completed",
-                )
-                update = StudyAttemptUpdate(
-                    attempt_id=request.attempt_id,
-                    state="unknown" if overrun else "completed",
-                    cpu_ns=measured.parent_cpu_ns + child_cpu,
-                    wall_ns=measured.wall_ns,
-                    artifact_bytes=measured.created_artifact_bytes,
-                    facts=facts,
-                )
-                settled = _append(current, _event_id(request.attempt_id, "measure"), update)
-                with store.transaction():
-                    store.replace(current, settled)
-                if overrun:
-                    raise StudyLedgerError("publication_measurement_overrun")
-                return CommittedNativePublication(
-                    result.receipt, evidence_raw, settled, measured, result.replayed
-                )
+                        evidence_raw, receipt_raw = (
+                            result.evidence_json.encode(),
+                            raw(result.receipt),
+                        )
+                        if closure is not None and (evidence_raw, receipt_raw) != (
+                            closure[2],
+                            closure[3],
+                        ):
+                            raise StudyLedgerError("closure_corrupt")
+                        if closure is None:
+                            if (
+                                result.receipt.original_revision,
+                                result.receipt.original_head_sha256,
+                                result.receipt.original_ledger_identity.raw_sha256,
+                            ) != (len(current.records), head(current), digest(raw(current))):
+                                raise StudyLedgerError("publication_result_mismatch")
+                            with store.transaction():
+                                # Pread the retained descriptor; a same-inode close
+                                # here would silently cancel SQLite's POSIX locks.
+                                locked.recheck()
+                                store.replace(current, actual)
+                                store.db.execute(
+                                    "INSERT INTO closures VALUES (?,?,?,?,?,?,?,?)",
+                                    (
+                                        request.event_id,
+                                        _identity(request),
+                                        raw(request),
+                                        raw(current),
+                                        journal_raw,
+                                        evidence_raw,
+                                        receipt_raw,
+                                        digest(receipt_raw),
+                                    ),
+                                )
+                                store.db.executemany(
+                                    "INSERT INTO materials VALUES (?,?,?,?)",
+                                    [
+                                        (request.event_id, n, v, digest(v))
+                                        for n, v in payloads.items()
+                                    ],
+                                )
+                            current = actual
+                        elif raw(actual) != raw(current):
+                            raise StudyLedgerError("publication_result_mismatch")
+                    clock.tail()
+                    measured = PublicationMeasurements(
+                        parent_cpu_ns=clock.work_cpu,
+                        child_cpu_ns=child_cpu,
+                        wall_ns=clock.work_wall,
+                        created_artifact_bytes=meter.total - work_extent,
+                        control_parent_cpu_ns=clock.control_used,
+                        control_created_artifact_bytes=work_extent,
+                    )
+                    overrun = (
+                        measured.parent_cpu_ns + child_cpu > request.cpu_reservation_ns
+                        or measured.created_artifact_bytes > request.artifact_reservation_bytes
+                    )
+                    facts = NativeWorkFacts(
+                        attempt_id=request.attempt_id,
+                        operation="accounting",
+                        producer_version=VERSION,
+                        config_sha256=reservation.config_sha256,
+                        input_sha256=reservation.input_sha256,
+                        observation_sha256=None,
+                        model_sha256=None,
+                        output_sha256=digest(receipt_raw),
+                        unit="record",
+                        requested_count=1,
+                        completed_count=1,
+                        failed_count=0,
+                        not_assessed_count=0,
+                        outcome="completed",
+                    )
+                    update = StudyAttemptUpdate(
+                        attempt_id=request.attempt_id,
+                        state="unknown" if overrun else "completed",
+                        cpu_ns=measured.parent_cpu_ns + child_cpu,
+                        wall_ns=measured.wall_ns,
+                        artifact_bytes=measured.created_artifact_bytes,
+                        facts=facts,
+                    )
+                    settled = _append(current, _event_id(request.attempt_id, "measure"), update)
+                    with store.transaction():
+                        store.replace(current, settled)
+                    if overrun:
+                        raise StudyLedgerError("publication_measurement_overrun")
+                    return CommittedNativePublication(
+                        result.receipt, evidence_raw, settled, measured, result.replayed
+                    )
+                except Exception as error:
+                    try:
+                        if clock.tail() and clock.work_started_wall:
+                            latest = store.ledger()
+                            if not any(
+                                isinstance(row.event, StudyAttemptUpdate)
+                                and row.event.attempt_id == request.attempt_id
+                                for row in latest.records
+                            ):
+                                meter.sample()
+                                failed = StudyAttemptUpdate(
+                                    attempt_id=request.attempt_id,
+                                    state="unknown",
+                                    cpu_ns=clock.work_cpu + child_cpu,
+                                    wall_ns=clock.work_wall,
+                                    artifact_bytes=meter.total - work_extent,
+                                    facts=None,
+                                )
+                                measured_failure = _append(
+                                    latest, _event_id(request.attempt_id, "measure"), failed
+                                )
+                                with store.transaction():
+                                    store.replace(latest, measured_failure)
+                    except Exception:
+                        # Storage exhaustion or an expired control allowance may
+                        # prevent this write. The original durable hold survives.
+                        error.add_note("Known-cost recording failed; original work hold retained.")
+                    raise
+
         finally:
             # The measurement's unresolved controller hold covers cleanup, final
             # update, close and acknowledgement; it is never declared exact zero.

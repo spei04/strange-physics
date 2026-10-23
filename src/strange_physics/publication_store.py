@@ -265,6 +265,10 @@ class Store:
             regular(Path(str(self.path) + "-journal"), missing=True)
         self.db = sqlite3.connect(self.path, timeout=0, isolation_level=None)
         try:
+            if existing is None:
+                self.db.execute(f"PRAGMA page_size={PAGE}")
+            if self.db.execute("PRAGMA page_size").fetchone()[0] != PAGE:
+                raise StudyLedgerError("store_page_size")
             self.db.setlimit(sqlite3.SQLITE_LIMIT_LENGTH, 256 * 1024**2)
             self.db.setlimit(sqlite3.SQLITE_LIMIT_SQL_LENGTH, 8192)
             self.db.execute("PRAGMA trusted_schema=OFF")

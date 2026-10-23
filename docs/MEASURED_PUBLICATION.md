@@ -82,7 +82,10 @@ separately and excludes child CPU. Operation wall duration is monotonic and
 includes waiting. The fixed child has CPU/file-size/core limits; the owning
 single-threaded parent has CPU/wall deadlines. Startup/control, work and the
 remaining control tail have disjoint CPU timers; refunded work capacity cannot
-fund cleanup. Inherited child hard limits are preserved or tightened, and every
+fund cleanup. All phases share one absolute wall deadline, bounded by the smaller
+request and control wall allowance; phase changes cannot restart it. The child
+inherits the remaining wall allowance through its own timer, bounding it even
+if its parent exits. Inherited child hard limits are preserved or tightened, and every
 child setup/execution failure exits inside the fixed child boundary. This API cannot borrow another
 thread's timers.
 
@@ -90,13 +93,16 @@ The artifact metric is logical newly-created file extents, not physical disk
 allocation or write amplification. Controlled exclusive scratch writes are
 counted even after deletion. The SQLite database and retained PERSIST journal
 are measured by monotone extent growth; logical BLOB lengths are not added a
-second time. WAL, disk temporary files and VACUUM are outside the profile.
+second time. The store must use the verified 4096-byte page profile before page-count byte limits apply. WAL, disk temporary files and VACUUM are outside the profile.
 Missing/shrinking tracked extents fail rather than imply negative work.
 
 Actual known operation measurements are followed by a separate ledger update.
 The global controller hold covers startup, cleanup, final commit/measurement
 and acknowledgement tails. It remains unresolved, even when a scientific cell
-is complete. Reaped failed children retain known CPU/wall/artifact measurements under an
-unknown work hold. Crashes keep the whole work reservation; recovery consumes fresh
+is complete. Reaped failed children and parent output/validation/publication failures retain
+known CPU/wall/artifact measurements under an unknown work hold when the
+remaining control allowance and store permit. A failed measurement write adds
+a fixed diagnostic note while preserving the original error and durable hold.
+Crashes keep the whole work reservation; recovery consumes fresh
 capacity. These measurements do not retroactively meter the native numerical
 results supplied to the publisher.

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import sqlite3
 import subprocess
 import sys
@@ -17,6 +18,7 @@ from test_study_scoring import path as path
 
 from strange_physics import measured_publication as publisher
 from strange_physics import publication_store as storage
+from strange_physics.bounded_json import parse_bounded_json
 from strange_physics.measured_publication_contracts import (
     MIB,
     NativePublicationRequest,
@@ -34,6 +36,7 @@ from strange_physics.study_ledger import (
     study_manifest,
     summarize_study,
 )
+from strange_physics.workflow_io import read_bytes
 
 
 def prepare(
@@ -185,7 +188,10 @@ def test_missing_material_retains_durable_work_hold(
     with pytest.raises(FileNotFoundError):
         publisher.commit_native_publication(root, request)
     h = read_study_ledger(current(root))
-    assert len(h.records) == request.expected_revision + 1
+    assert len(h.records) == request.expected_revision + 2
+    failure = h.records[-1].event
+    assert isinstance(failure, StudyAttemptUpdate) and failure.state == "unknown"
+    assert failure.cpu_ns is not None and failure.cpu_ns > 0
     assert summarize_study(h).budget.unresolved_attempts == 2
 
 
@@ -486,3 +492,350 @@ def test_failed_reservation_cannot_borrow_unretained_work_cpu(
     h = read_study_ledger(current(root))
     assert len(h.records) == request.expected_revision
     assert summarize_study(h).budget.unresolved_attempts == 1
+
+
+@pytest.mark.parametrize(
+    "phase,published",
+    [
+        ("before_reserve", False),
+        ("after_reserve", False),
+        ("inside_publication", False),
+        ("after_publication", True),
+        ("inside_settlement", True),
+        ("after_settlement", True),
+    ],
+)
+def test_real_process_crash_preserves_atomic_state_and_charges(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    phase: str,
+    published: bool,
+) -> None:
+    from collections.abc import Iterator
+    from contextlib import contextmanager
+
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    original_replace, original_transaction = storage.Store.replace, storage.Store.transaction
+    replaces = transactions = 0
+
+    def interrupted_replace(store: storage.Store, before: Any, after: Any) -> None:
+        nonlocal replaces
+        replaces += 1
+        if phase == "before_reserve" and replaces == 1:
+            os._exit(91)
+        original_replace(store, before, after)
+        if (phase, replaces) in {("inside_publication", 2), ("inside_settlement", 3)}:
+            os._exit(91)
+
+    @contextmanager
+    def interrupted_transaction(store: storage.Store) -> Iterator[None]:
+        nonlocal transactions
+        transactions += 1
+        number = transactions
+        with original_transaction(store):
+            yield
+        if (phase, number) in {
+            ("after_reserve", 1),
+            ("after_publication", 2),
+            ("after_settlement", 3),
+        }:
+            os._exit(91)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(storage.Store, "replace", interrupted_replace)
+        patch.setattr(storage.Store, "transaction", interrupted_transaction)
+        pid = os.fork()
+        if pid == 0:
+            try:
+                publisher.commit_native_publication(root, request)
+            except BaseException:
+                os._exit(92)
+            os._exit(93)
+        _, status = os.waitpid(pid, 0)
+    assert os.WIFEXITED(status) and os.WEXITSTATUS(status) == 91
+    retry = change(request, ticket=1, attempt_id="recovery")
+    if published:
+        result = publisher.commit_native_publication(root, retry)
+        assert result.replayed
+        assert parse_study_early_evidence(result.evidence_raw).stage == "candidate_unavailable"
+    else:
+        # First recovery opens the actual crash state before an external read.
+        if phase == "before_reserve":
+            result = publisher.commit_native_publication(root, retry)
+        else:
+            with pytest.raises(StudyLedgerError, match="stale_publication_head"):
+                publisher.commit_native_publication(root, retry)
+            ledger = read_study_ledger(current(root))
+            result = publisher.commit_native_publication(
+                root,
+                change(
+                    retry,
+                    ticket=2,
+                    attempt_id="retry-after-read",
+                    expected_revision=len(ledger.records),
+                    expected_head_sha256=storage.head(ledger),
+                ),
+            )
+        assert not result.replayed
+    # The old charged work envelope never disappears after a committed reserve.
+    attempts = [
+        r.event.attempt_id
+        for r in result.ledger.records
+        if isinstance(r.event, StudyAttemptReservation)
+    ]
+    assert (request.attempt_id in attempts) == (phase != "before_reserve")
+    with sqlite3.connect(root / "publication.sqlite3") as db:
+        assert db.execute("SELECT count(*) FROM closures").fetchone()[0] == 1
+
+
+def test_sqlite_full_rolls_back_publication_but_keeps_reservation(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    original = storage.Store.limit_growth
+    calls = 0
+
+    def no_work_growth(store: storage.Store, amount: int) -> None:
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            original(store, amount)
+        else:
+            pages = store.db.execute("PRAGMA page_count").fetchone()[0]
+            store.db.execute(f"PRAGMA max_page_count={pages}")
+
+    monkeypatch.setattr(storage.Store, "limit_growth", no_work_growth)
+    with pytest.raises(sqlite3.OperationalError, match="full"):
+        publisher.commit_native_publication(root, request)
+    h = read_study_ledger(current(root))
+    assert summarize_study(h).budget.unresolved_attempts == 2
+    with sqlite3.connect(root / "publication.sqlite3") as db:
+        assert db.execute("SELECT count(*) FROM closures").fetchone()[0] == 0
+
+
+@pytest.mark.parametrize("failure", [1, 2, 3, 4])
+def test_fsync_failure_never_reuses_control_ticket(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    failure: int,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    original = os.fsync
+    count = 0
+
+    def failed_sync(fd: int) -> None:
+        nonlocal count
+        count += 1
+        if count == failure:
+            raise OSError("synthetic fsync failure")
+        original(fd)
+
+    monkeypatch.setattr(os, "fsync", failed_sync)
+    with pytest.raises(OSError, match="synthetic fsync"):
+        publisher.commit_native_publication(root, request)
+    monkeypatch.setattr(os, "fsync", original)
+    with pytest.raises(StudyLedgerError, match="ticket_consumed"):
+        publisher.commit_native_publication(root, request)
+    assert (root / "ticket-0").is_file()
+
+
+@pytest.mark.parametrize("fault", ["wait", "read", "parse", "result", "transaction"])
+def test_known_child_cost_survives_parent_failure_and_retry(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    fault: str,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    original_compose = publisher._compose
+    original_wait = os.wait4
+    original_read = read_bytes
+    original_parse = parse_bounded_json
+    original_replace = storage.Store.replace
+    waited_cpu = 0
+    calls = 0
+
+    def measured_compose(*args: Any, **kwargs: Any) -> Any:
+        start = time.process_time_ns()
+        while time.process_time_ns() - start < 20_000_000:
+            pass
+        result = original_compose(*args, **kwargs)
+        if fault == "result":
+            return result.model_copy(update={"replayed": True})
+        return result
+
+    def interrupted_wait(pid: int, flags: int) -> Any:
+        nonlocal calls, waited_cpu
+        calls += 1
+        if fault == "wait" and calls == 1:
+            # A real child has done CPU work before the parent's wait is interrupted.
+            deadline = time.monotonic() + 10
+            while not (root / "work-0" / "output.json").exists():
+                if time.monotonic() > deadline:
+                    raise AssertionError("child output unavailable")
+                time.sleep(0.001)
+            raise OSError("synthetic interrupted wait")
+        value = original_wait(pid, flags)
+        waited_cpu = int((value[2].ru_utime + value[2].ru_stime) * 1_000_000_000)
+        return value
+
+    def failed_read(p: Path, **kwargs: Any) -> bytes:
+        if fault == "read" and p.name == "output.json":
+            raise OSError("synthetic output read failure")
+        return original_read(p, **kwargs)
+
+    def failed_parse(data: bytes, model: Any, **kwargs: Any) -> Any:
+        if fault == "parse" and model is publisher._Output:
+            raise ValueError("synthetic strict output parse failure")
+        return original_parse(data, model, **kwargs)
+
+    def failed_replace(store: storage.Store, before: Any, after: Any) -> None:
+        original_replace(store, before, after)
+        if fault == "transaction" and after.records[-1].event_id == request.event_id:
+            raise sqlite3.OperationalError("synthetic publication rollback")
+
+    with monkeypatch.context() as patch:
+        patch.setattr(publisher, "_compose", measured_compose)
+        patch.setattr(os, "wait4", interrupted_wait)
+        patch.setattr(publisher, "read_bytes", failed_read)
+        patch.setattr(publisher, "parse_bounded_json", failed_parse)
+        patch.setattr(storage.Store, "replace", failed_replace)
+        with pytest.raises((StudyLedgerError, sqlite3.OperationalError)):
+            publisher.commit_native_publication(root, request)
+    assert waited_cpu >= 20_000_000
+    ledger = read_study_ledger(current(root))
+    update = ledger.records[-1].event
+    assert isinstance(update, StudyAttemptUpdate) and update.state == "unknown"
+    assert update.cpu_ns is not None and update.cpu_ns >= waited_cpu
+    assert update.wall_ns is not None and update.wall_ns > 0
+    assert update.artifact_bytes is not None and update.artifact_bytes > 0
+    assert request.event_id not in {r.event_id for r in ledger.records}
+    with sqlite3.connect(root / "publication.sqlite3") as db:
+        assert db.execute("SELECT count(*) FROM closures").fetchone()[0] == 0
+    result = publisher.commit_native_publication(
+        root,
+        change(
+            request,
+            ticket=1,
+            attempt_id="retry",
+            expected_revision=len(ledger.records),
+            expected_head_sha256=storage.head(ledger),
+        ),
+    )
+    assert not result.replayed
+    assert result.ledger.records[: len(ledger.records)] == ledger.records
+    assert summarize_study(result.ledger).budget.unresolved_attempts == 2
+
+
+def test_wall_deadline_cannot_restart_for_cleanup(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = tmp_path / "store"
+    request = change(prepare(material, path, root), wall_limit_ns=1_000_000_000)
+
+    def blocked(*args: Any, **kwargs: Any) -> Any:
+        # The wall deadline is the phenomenon under test, not synchronization.
+        time.sleep(10)
+        raise AssertionError("deadline did not stop child")
+
+    monkeypatch.setattr(publisher, "_compose", blocked)
+    began = time.monotonic()
+    with pytest.raises(StudyLedgerError):
+        publisher.commit_native_publication(root, request)
+    assert time.monotonic() - began < 3
+    ledger = read_study_ledger(current(root))
+    assert summarize_study(ledger).budget.unresolved_attempts == 2
+    assert not any(r.event_id == request.event_id for r in ledger.records)
+
+
+def test_store_page_size_is_an_explicit_byte_limit_precondition(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    result = publisher.commit_native_publication(root, request)
+    before = current(root)
+    with sqlite3.connect(root / "publication.sqlite3") as db:
+        assert db.execute("PRAGMA page_size").fetchone()[0] == 4096
+        db.execute("PRAGMA page_size=65536")
+        db.execute("VACUUM")
+        assert db.execute("PRAGMA page_size").fetchone()[0] == 65536
+    with pytest.raises(StudyLedgerError, match="store_page_size"):
+        publisher.commit_native_publication(root, change(request, ticket=1, attempt_id="retry"))
+    assert current(root) == before == raw(result.ledger)
+
+
+def test_child_wall_limit_survives_parent_death(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+) -> None:
+    root = tmp_path / "store"
+    request = change(prepare(material, path, root), wall_limit_ns=1_000_000_000)
+    request_path = root / "request.json"
+    request_path.write_bytes(raw(request))
+    request_path.chmod(0o600)
+    code = """
+import ctypes,os,signal,sys,time
+from pathlib import Path
+from strange_physics import measured_publication as publisher
+from strange_physics.measured_publication_contracts import NativePublicationRequest
+from strange_physics.publication_store import root_lock
+# This isolated test supervisor adopts the orphan for deterministic reap.
+assert ctypes.CDLL(None,use_errno=True).prctl(36,1,0,0,0)==0
+root=Path(sys.argv[1])
+request=NativePublicationRequest.model_validate_json(Path(sys.argv[2]).read_bytes())
+marker=root/'test-child-pid'
+def blocked(*args,**kwargs):
+    marker.write_text(str(os.getpid()))
+    time.sleep(10)
+    raise AssertionError('child escaped wall deadline')
+publisher._compose=blocked
+parent=os.fork()
+if parent==0:
+    try:
+        publisher.commit_native_publication(root,request)
+    finally:
+        os._exit(90)
+deadline=time.monotonic()+5
+while not marker.exists():
+    assert time.monotonic()<deadline
+    time.sleep(.001)
+child=int(marker.read_text())
+os.kill(parent,signal.SIGKILL)
+assert os.waitpid(parent,0)[0]==parent
+began=time.monotonic()
+pid,status=os.waitpid(child,0)
+assert pid==child and os.WIFSIGNALED(status) and os.WTERMSIG(status)==signal.SIGALRM
+assert time.monotonic()-began<3
+with root_lock(root):
+    pass
+print('orphan reaped and inherited lock released')
+"""
+    result = subprocess.run(
+        [sys.executable, "-c", code, str(root), str(request_path)],
+        capture_output=True,
+        text=True,
+        timeout=10,
+        check=True,
+    )
+    assert result.stdout.strip() == "orphan reaped and inherited lock released"
+    ledger = read_study_ledger(current(root))
+    assert summarize_study(ledger).budget.unresolved_attempts == 2
