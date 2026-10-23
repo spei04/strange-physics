@@ -1,0 +1,155 @@
+{
+  "description": "Compact synthetic unstarted shape; actual-stage mutation and numerical fixtures remain in tests.",
+  "valid": {
+    "StudyEarlyWitnesses": {
+      "schema_version": "strange-physics.study-early-witnesses.v1",
+      "stages": []
+    },
+    "StudyEarlyEvidence": {
+      "schema_version": "strange-physics.study-early-evidence.v1",
+      "ledger_identity": {
+        "raw_sha256": "363681ba298d9db425e64af0a6f82a90dea013d3c42c290f5506e16db3697837",
+        "canonical_sha256": "363681ba298d9db425e64af0a6f82a90dea013d3c42c290f5506e16db3697837",
+        "byte_count": 10486
+      },
+      "ledger_revision": 1,
+      "accounting_plan_sha256": "fe59cf33d357d1e244316c543edb446835905fd39327335b0ebeac03bdb41001",
+      "manifest_sha256": "f885e0f332e1ababe55639396be11a421758cae7c62473813af9b79aa5bab82a",
+      "cell_id": "cell-0-0-0",
+      "journal_id": "journal-0-0-0",
+      "journal_raw_sha256": null,
+      "current_prefix": null,
+      "reserved_slots": 0,
+      "journal_rows": [],
+      "pending_operation_ids": [],
+      "missing_reservation_ids": [],
+      "failed_operation_ids": [],
+      "materials": [
+        {
+          "kind": "world_catalog",
+          "identity": {
+            "raw_sha256": "7f923295950fb6eb6474385628663a8f7876a6bd9e51a729c6735887a6bf8e40",
+            "canonical_sha256": "7f923295950fb6eb6474385628663a8f7876a6bd9e51a729c6735887a6bf8e40",
+            "byte_count": 4079
+          }
+        },
+        {
+          "kind": "pool",
+          "identity": {
+            "raw_sha256": "c50fcd1c492451ea9a4e01ca94cfffe686f15ccddcae6d37b82f8daf451137c9",
+            "canonical_sha256": "c50fcd1c492451ea9a4e01ca94cfffe686f15ccddcae6d37b82f8daf451137c9",
+            "byte_count": 145
+          }
+        },
+        {
+          "kind": "candidate_config",
+          "identity": {
+            "raw_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+            "canonical_sha256": "155d375afb628eb79411c3d331ca0d940e2e7bef41d6c3eab17761352c3bebb1",
+            "byte_count": 405
+          }
+        },
+        {
+          "kind": "prediction_config",
+          "identity": {
+            "raw_sha256": "e1807ebdd737715291dd6a9e92e07ed3a4d69291506d0d66513c6b76c64b1530",
+            "canonical_sha256": "e1807ebdd737715291dd6a9e92e07ed3a4d69291506d0d66513c6b76c64b1530",
+            "byte_count": 1038
+          }
+        },
+        {
+          "kind": "scoring_policy",
+          "identity": {
+            "raw_sha256": "e14ffaef239ec38a020f8e0a27712fa27d32c7d36bd638486af7afca780e64ce",
+            "canonical_sha256": "e14ffaef239ec38a020f8e0a27712fa27d32c7d36bd638486af7afca780e64ce",
+            "byte_count": 549
+          }
+        }
+      ],
+      "witnesses_identity": {
+        "raw_sha256": "074304f754c39f21c0d9cfc1454f93190128b59331e13c445fef5b5c8963164b",
+        "canonical_sha256": "074304f754c39f21c0d9cfc1454f93190128b59331e13c445fef5b5c8963164b",
+        "byte_count": 73
+      },
+      "witnesses": {
+        "schema_version": "strange-physics.study-early-witnesses.v1",
+        "stages": []
+      },
+      "attempts": [],
+      "missing_result_attempt_ids": [],
+      "historical_attempt_ids": [],
+      "stage": "unstarted",
+      "budget": {
+        "purchased_slots": 0,
+        "remaining_slots": 432,
+        "charged_cpu_ns": 0,
+        "remaining_cpu_ns": 28800000000000,
+        "charged_artifact_bytes": 0,
+        "remaining_artifact_bytes": 1073741824,
+        "unresolved_attempts": 0,
+        "over_limit": false
+      },
+      "outcome": {
+        "kind": "cell_outcome",
+        "cell_id": "cell-0-0-0",
+        "status": "incomplete",
+        "reason": "interrupted",
+        "journal_id": "journal-0-0-0",
+        "observation_sha256": null,
+        "model_sha256": null,
+        "report_sha256": null,
+        "scoring_policy_sha256": "e14ffaef239ec38a020f8e0a27712fa27d32c7d36bd638486af7afca780e64ce",
+        "protocol_sha256": null,
+        "selector_config_sha256": "5964e5ecad8bcb35583a5618f94e743cd93dbd802c4025822860e4a89c94bb29"
+      }
+    }
+  },
+  "schema_negative": [
+    {
+      "model": "StudyEarlyWitnesses",
+      "field": "schema_version",
+      "value": "wrong"
+    },
+    {
+      "model": "StudyEarlyWitnesses",
+      "field": "stages",
+      "value": [
+        {
+          "kind": "score"
+        }
+      ]
+    },
+    {
+      "model": "StudyEarlyEvidence",
+      "field": "stage",
+      "value": "complete"
+    },
+    {
+      "model": "StudyEarlyEvidence",
+      "field": "reserved_slots",
+      "value": 13
+    },
+    {
+      "model": "StudyEarlyEvidence",
+      "field": "ledger_revision",
+      "value": true
+    }
+  ],
+  "runtime_negative": [
+    {
+      "model": "StudyEarlyEvidence",
+      "field": "cell_id",
+      "value": "other"
+    },
+    {
+      "model": "StudyEarlyEvidence",
+      "field": "journal_id",
+      "value": "other"
+    },
+    {
+      "model": "StudyEarlyEvidence",
+      "field": "journal_raw_sha256",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ]
+}
