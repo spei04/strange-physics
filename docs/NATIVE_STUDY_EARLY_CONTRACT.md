@@ -52,7 +52,9 @@ stage materials are required before a resolved candidate/preparation failure can
 be classified as the current cell's failure. A later produced candidate or
 different valid selected receipt cannot be hidden by an older rejection.
 Later completed generic selector work also prevents an older rejection being
-called final, but supplies no invented model receipt or MAP proof.
+called final. This compares actual terminal-update positions for both selection
+and the bound failure, not their reservation order. It supplies no invented model
+receipt or MAP proof.
 
 An actual terminal scoring attempt always requires the existing scored
 publication boundary, even when its result bytes are unavailable. Recovery must

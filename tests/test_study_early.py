@@ -841,3 +841,39 @@ def test_later_opaque_selection_cannot_make_older_rejection_final(
     assert e.stage == "selection_unavailable" and e.outcome.status == "incomplete"
     assert e.outcome.model_sha256 is None
     assert e.attempts[-1].latest_update is not None
+
+
+@pytest.mark.parametrize("order", ["before", "after", "running", "failed", "rejected"])
+def test_selection_completion_order_controls_old_failure(
+    material: Material, path: Path, order: str
+) -> None:
+    context = typed(
+        NativeEvaluationInput, material.actual.context.model_dump(mode="json") | {"selected": None}
+    )
+    result = prepare_native_evaluation(context, attempt_id="late-preparation")
+    h = history(material, {f"purchase-{i}" for i in range(12)} | {"candidate"})
+    manifest = ledger.study_manifest(h)
+    selector = manifest.cells[0].selector
+    r = reserve(
+        "early-reserved-selection",
+        phase="comparison",
+        cell_id=material.cell,
+        operation="selection",
+        config_sha256=manifest.artifact(ledger.SELECTOR_ARTIFACTS[selector]).sha256,
+    )
+    h = append(h, r)
+    if order == "before":
+        h = append(h, update(r))
+    elif order == "running":
+        h = append(h, update(r, "running"))
+    h = settled(h, result.facts, material.cell)
+    if order != "before":
+        h = append(h, update(r, order if order in {"failed", "rejected"} else "completed"))
+    w = StudyEarlyWitnesses(stages=(EarlyPreparationWitness(actual_input=context, result=result),))
+    actual = bind(material, path, h, w)
+    proposal = propose(material, path, h, w)
+    later_success = order in {"after", "running"}
+    assert actual.outcome.status == ("incomplete" if later_success else "failed")
+    assert actual.stage == ("selection_unavailable" if later_success else "preparation_rejected")
+    assert proposal.evidence == actual and proposal.receipt.event.outcome == actual.outcome
+    assert actual.outcome.model_sha256 is None

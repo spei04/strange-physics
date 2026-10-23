@@ -33,6 +33,7 @@ from strange_physics.study_contracts import (
     MAX_STUDY_JSON_BYTES,
     NativeStudyLedger,
     NativeWorldCatalog,
+    StudyAttemptUpdate,
     StudyCellOutcome,
 )
 from strange_physics.study_early_contracts import (
@@ -435,7 +436,11 @@ def reconcile_study_early_stop(
         stage = "candidate_unavailable"
         failed = bool(current_candidates)
     if failed:
-        positions = {s.reservation.attempt_id: i for i, s in enumerate(snapshots)}
+        positions = {
+            record.event.attempt_id: record.sequence
+            for record in ledger.records
+            if isinstance(record.event, StudyAttemptUpdate) and record.event.state in FINAL
+        }
         last_bound = max(
             (positions[i] for i in (*current_candidates, *current_prepared)), default=-1
         )
