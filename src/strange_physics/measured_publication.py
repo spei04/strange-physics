@@ -370,14 +370,19 @@ def _run_child(
     evidence: bytes | None,
     output: Path,
 ) -> tuple[_Output | None, int]:
-    child_wall = signal.getitimer(signal.ITIMER_REAL)[0]
+    child_deadline = time.monotonic_ns() + int(
+        signal.getitimer(signal.ITIMER_REAL)[0] * 1_000_000_000
+    )
     pid = os.fork()
     if pid == 0:
         code = 70
         try:
             # Fork does not inherit interval timers. Bound orphaned children too.
+            remaining_wall = child_deadline - time.monotonic_ns()
+            if remaining_wall <= 0:
+                os._exit(70)
             signal.signal(signal.SIGALRM, signal.SIG_DFL)
-            signal.setitimer(signal.ITIMER_REAL, child_wall)
+            signal.setitimer(signal.ITIMER_REAL, remaining_wall / 1e9)
             code = _child(request, ledger_raw, snapshot, payloads, original, evidence, output)
         except BaseException:
             code = 70
@@ -593,6 +598,7 @@ def commit_native_publication(
                 )
                 if required > request.artifact_reservation_bytes:
                     raise StudyLedgerError("publication_artifact_headroom")
+                store.limit_growth(control.ticket_artifact_bytes - meter.total)
                 with store.transaction():
                     store.replace(current, reserved)
                 current = reserved
@@ -601,7 +607,11 @@ def commit_native_publication(
                 try:
                     clock.work()
                     work_extent = meter.total
-                    store.limit_growth(request.artifact_reservation_bytes // 2)
+                    store.limit_growth(
+                        request.artifact_reservation_bytes
+                        - journal_size
+                        - request.output_limit_bytes
+                    )
                     scratch = root / f"work-{request.ticket}"
                     scratch.mkdir(mode=0o700)
                     durable_directory(root)
@@ -684,6 +694,7 @@ def commit_native_publication(
                         elif raw(actual) != raw(current):
                             raise StudyLedgerError("publication_result_mismatch")
                     clock.tail()
+                    store.limit_growth(control.ticket_artifact_bytes - work_extent)
                     measured = PublicationMeasurements(
                         parent_cpu_ns=clock.work_cpu,
                         child_cpu_ns=child_cpu,
@@ -731,6 +742,7 @@ def commit_native_publication(
                 except Exception as error:
                     try:
                         if clock.tail() and clock.work_started_wall:
+                            store.limit_growth(control.ticket_artifact_bytes - work_extent)
                             latest = store.ledger()
                             if not any(
                                 isinstance(row.event, StudyAttemptUpdate)

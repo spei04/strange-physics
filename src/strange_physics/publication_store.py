@@ -15,7 +15,6 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 
-from strange_physics.bounded_json import parse_bounded_json
 from strange_physics.contracts import Message
 from strange_physics.measured_publication_contracts import PublicationAdmission
 from strange_physics.research_contracts import message_sha256
@@ -273,10 +272,18 @@ class Store:
             self.db.setlimit(sqlite3.SQLITE_LIMIT_SQL_LENGTH, 8192)
             self.db.execute("PRAGMA trusted_schema=OFF")
             self.db.execute("PRAGMA temp_store=MEMORY")
+            self.db.execute("PRAGMA cache_spill=OFF")
             self.db.execute("PRAGMA synchronous=FULL")
-            self.db.execute("PRAGMA journal_mode=PERSIST")
+            mode = self.db.execute("PRAGMA journal_mode=PERSIST").fetchone()[0]
+            if (
+                mode != "persist"
+                or self.db.execute("PRAGMA cache_spill").fetchone()[0] != 0
+                or self.db.execute("PRAGMA auto_vacuum").fetchone()[0] != 0
+                or self.db.execute("PRAGMA temp_store").fetchone()[0] != 2
+            ):
+                raise StudyLedgerError("store_mode")
             self.db.execute("PRAGMA journal_size_limit=-1")
-            self.limit_growth(admission.control.ticket_artifact_bytes // 2)
+            self.limit_growth(admission.control.ticket_artifact_bytes - meter.total)
             if existing is None:
                 self.db.execute("BEGIN IMMEDIATE")
                 self.db.execute(f"PRAGMA application_id={STORE_ID}")
@@ -331,8 +338,21 @@ class Store:
 
     def limit_growth(self, amount: int) -> None:
         pages = self.db.execute("PRAGMA page_count").fetchone()[0]
-        limit = min(MAX_STORE_BYTES // PAGE, pages + amount // PAGE)
-        self.db.execute(f"PRAGMA max_page_count={limit}")
+        self.meter.sample()
+        journal = self.meter.high.get(Path(str(self.path) + "-journal"))
+        retained = 0 if journal is None else journal[1]
+        # No cache spill means one journal segment: each old page appears at
+        # most once, with eight record bytes. SQLite caps sectors at 64 KiB;
+        # reserve two sectors for header/padding. PERSIST reuses old extents.
+        envelope = pages * (PAGE + 8) + 2 * 65536
+        journal_growth = max(0, envelope - retained)
+        if amount < journal_growth:
+            raise StudyLedgerError("publication_sqlite_headroom")
+        limit = min(MAX_STORE_BYTES // PAGE, pages + (amount - journal_growth) // PAGE)
+        if limit < max(1, pages):
+            raise StudyLedgerError("publication_sqlite_headroom")
+        if self.db.execute(f"PRAGMA max_page_count={limit}").fetchone()[0] != limit:
+            raise StudyLedgerError("publication_sqlite_headroom")
 
     def _records(self, ledger: NativeStudyLedger, start: int) -> None:
         self.db.executemany(
@@ -389,18 +409,3 @@ class Store:
             self.db.rollback()
         self.db.close()
         self.meter.sample()
-
-
-def read_admission(root: Path) -> tuple[PublicationAdmission, bytes, NativeStudyLedger]:
-    admission = parse_bounded_json(
-        read_bytes(root / "admission.json", limit=16 * 1024),
-        PublicationAdmission,
-        max_bytes=16 * 1024,
-        max_depth=8,
-        max_nodes=128,
-    )
-    seed = read_bytes(root / "seed-ledger.json", limit=MAX_STUDY_JSON_BYTES)
-    if digest(seed) != admission.seed_ledger_sha256:
-        raise StudyLedgerError("admission_identity")
-    ledger = read_study_ledger(seed)
-    return admission, seed, ledger

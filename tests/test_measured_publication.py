@@ -605,7 +605,7 @@ def test_sqlite_full_rolls_back_publication_but_keeps_reservation(
     def no_work_growth(store: storage.Store, amount: int) -> None:
         nonlocal calls
         calls += 1
-        if calls == 1:
+        if calls <= 2:
             original(store, amount)
         else:
             pages = store.db.execute("PRAGMA page_count").fetchone()[0]
@@ -782,10 +782,12 @@ def test_store_page_size_is_an_explicit_byte_limit_precondition(
     assert current(root) == before == raw(result.ledger)
 
 
+@pytest.mark.parametrize("late", [False, True])
 def test_child_wall_limit_survives_parent_death(
     material: Material,
     path: Path,
     tmp_path: Path,
+    late: bool,
 ) -> None:
     root = tmp_path / "store"
     request = change(prepare(material, path, root), wall_limit_ns=1_000_000_000)
@@ -803,34 +805,55 @@ assert ctypes.CDLL(None,use_errno=True).prctl(36,1,0,0,0)==0
 root=Path(sys.argv[1])
 request=NativePublicationRequest.model_validate_json(Path(sys.argv[2]).read_bytes())
 marker=root/'test-child-pid'
+composed=root/'test-composed'
+late=sys.argv[3]=='late'
+real_fork=os.fork
+def paused_fork():
+    child=real_fork()
+    if child==0:
+        marker.write_text(str(os.getpid()))
+        if late:
+            os.kill(os.getpid(),signal.SIGSTOP)
+    return child
+publisher.os.fork=paused_fork
 def blocked(*args,**kwargs):
-    marker.write_text(str(os.getpid()))
+    composed.write_text('started')
     time.sleep(10)
     raise AssertionError('child escaped wall deadline')
 publisher._compose=blocked
-parent=os.fork()
+started=time.monotonic()
+parent=real_fork()
 if parent==0:
     try:
         publisher.commit_native_publication(root,request)
     finally:
         os._exit(90)
 deadline=time.monotonic()+5
-while not marker.exists():
+while not marker.exists() or (not late and not composed.exists()):
     assert time.monotonic()<deadline
     time.sleep(.001)
 child=int(marker.read_text())
 os.kill(parent,signal.SIGKILL)
 assert os.waitpid(parent,0)[0]==parent
 began=time.monotonic()
+if late:
+    # Delay scheduling past the original absolute deadline, then resume orphan.
+    time.sleep(max(0,started+1.3-time.monotonic()))
+    os.kill(child,signal.SIGCONT)
 pid,status=os.waitpid(child,0)
-assert pid==child and os.WIFSIGNALED(status) and os.WTERMSIG(status)==signal.SIGALRM
+assert pid==child
+if late:
+    assert os.WIFEXITED(status) and os.WEXITSTATUS(status)==70
+    assert not composed.exists()
+else:
+    assert os.WIFSIGNALED(status) and os.WTERMSIG(status)==signal.SIGALRM
 assert time.monotonic()-began<3
 with root_lock(root):
     pass
 print('orphan reaped and inherited lock released')
 """
     result = subprocess.run(
-        [sys.executable, "-c", code, str(root), str(request_path)],
+        [sys.executable, "-c", code, str(root), str(request_path), "late" if late else "on-time"],
         capture_output=True,
         text=True,
         timeout=10,
@@ -839,3 +862,184 @@ print('orphan reaped and inherited lock released')
     assert result.stdout.strip() == "orphan reaped and inherited lock released"
     ledger = read_study_ledger(current(root))
     assert summarize_study(ledger).budget.unresolved_attempts == 2
+
+
+@pytest.mark.parametrize("kind", ["symlink", "hardlink", "public", "fifo"])
+def test_private_material_boundary_never_publishes(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    kind: str,
+) -> None:
+    from strange_physics.workflow_io import WorkflowError
+
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    target = Path(request.files[0].path)
+    if kind in {"symlink", "hardlink"}:
+        saved = target.with_suffix(".saved")
+        target.rename(saved)
+        if kind == "symlink":
+            target.symlink_to(saved)
+        else:
+            os.link(saved, target)
+    elif kind == "public":
+        target.chmod(0o644)
+    else:
+        target.unlink()
+        os.mkfifo(target, 0o600)
+    with pytest.raises((WorkflowError, StudyLedgerError), match="unsafe"):
+        publisher.commit_native_publication(root, request)
+    ledger = read_study_ledger(current(root))
+    assert request.event_id not in {r.event_id for r in ledger.records}
+    assert summarize_study(ledger).budget.unresolved_attempts == 2
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("ticket", True),
+        ("cpu_reservation_ns", False),
+        ("wall_limit_ns", float("inf")),
+        ("output_limit_bytes", 48 * MIB + 1),
+        ("artifact_reservation_bytes", 512 * MIB + 1),
+        ("expected_revision", -1),
+        ("extra_runner", "anything"),
+    ],
+)
+def test_publication_request_strict_bounds(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    field: str,
+    value: Any,
+) -> None:
+    from pydantic import ValidationError
+
+    request = prepare(material, path, tmp_path / "store")
+    with pytest.raises(ValidationError):
+        change(request, **{field: value})
+
+
+@pytest.mark.parametrize("column", ["original", "journal", "evidence", "receipt", "request"])
+def test_corrupted_retained_snapshot_cannot_publish_fresh(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    column: str,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    publisher.commit_native_publication(root, request)
+    with sqlite3.connect(root / "publication.sqlite3") as db:
+        # Column comes only from the closed test parameter set.
+        db.execute(f"UPDATE closures SET {column}=?", (b"corrupted snapshot",))
+    with pytest.raises(ValueError):
+        publisher.commit_native_publication(root, change(request, ticket=1, attempt_id="retry"))
+    with sqlite3.connect(root / "publication.sqlite3") as db:
+        assert db.execute("SELECT count(*) FROM closures").fetchone()[0] == 1
+
+
+def test_independent_root_contender_consumes_only_its_ticket(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    code = r"""
+import sys
+from pathlib import Path
+from strange_physics.publication_store import root_lock
+with root_lock(Path(sys.argv[1])):
+    print('locked',flush=True)
+    assert sys.stdin.readline()=='release\n'
+"""
+    proc = subprocess.Popen(
+        [sys.executable, "-c", code, str(root)],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    try:
+        assert proc.stdout is not None and proc.stdout.readline().strip() == "locked"
+        with pytest.raises(StudyLedgerError, match="publication_busy"):
+            publisher.commit_native_publication(root, request)
+        assert not (root / "store-created").exists()
+        assert proc.communicate("release\n", timeout=10)[1] == ""
+        assert proc.returncode == 0
+    finally:
+        if proc.poll() is None:
+            proc.kill()
+            proc.wait()
+    result = publisher.commit_native_publication(
+        root, change(request, ticket=1, attempt_id="retry")
+    )
+    assert not result.replayed
+    assert summarize_study(result.ledger).budget.unresolved_attempts == 1
+
+
+def test_sqlite_phase_envelopes_include_control_settlement(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from collections.abc import Iterator
+    from contextlib import contextmanager
+
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    original_limit = storage.Store.limit_growth
+    original_transaction = storage.Store.transaction
+    observations: list[tuple[int, int]] = []
+    allowance = baseline = 0
+
+    def limited(store: storage.Store, amount: int) -> None:
+        nonlocal allowance, baseline
+        original_limit(store, amount)
+        allowance = amount
+        baseline = sum(size for _, size in store.meter.high.values())
+        assert store.db.execute("PRAGMA cache_spill").fetchone()[0] == 0
+
+    @contextmanager
+    def measured(store: storage.Store) -> Iterator[None]:
+        with original_transaction(store):
+            yield
+        growth = sum(size for _, size in store.meter.high.values()) - baseline
+        observations.append((allowance, growth))
+        assert 0 <= growth <= allowance
+
+    monkeypatch.setattr(storage.Store, "limit_growth", limited)
+    monkeypatch.setattr(storage.Store, "transaction", measured)
+    first = publisher.commit_native_publication(root, request)
+    replay = publisher.commit_native_publication(
+        root, change(request, ticket=1, attempt_id="retry")
+    )
+    assert replay.replayed and raw(first.receipt) == raw(replay.receipt)
+    assert len(observations) == 5  # reserve, publish, settle; replay reserve, settle
+    assert all(amount <= 64 * MIB for amount, _ in observations)
+
+
+def test_sqlite_journal_headroom_denies_before_mutation(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    result = publisher.commit_native_publication(root, request)
+    admission = PublicationAdmission.model_validate_json((root / "admission.json").read_bytes())
+    seed = (root / "seed-ledger.json").read_bytes()
+    meter = storage.Extents(root)
+    with storage.root_lock(root):
+        store = storage.Store(root, admission, seed, meter)
+        before = current(root)
+        try:
+            # Even zero DB growth may journal existing pages; it is not free.
+            with pytest.raises(StudyLedgerError, match="publication_sqlite_headroom"):
+                store.limit_growth(0)
+        finally:
+            store.close()
+    assert current(root) == before == raw(result.ledger)

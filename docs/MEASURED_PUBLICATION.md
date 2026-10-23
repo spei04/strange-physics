@@ -85,7 +85,8 @@ remaining control tail have disjoint CPU timers; refunded work capacity cannot
 fund cleanup. All phases share one absolute wall deadline, bounded by the smaller
 request and control wall allowance; phase changes cannot restart it. The child
 inherits the remaining wall allowance through its own timer, bounding it even
-if its parent exits. Inherited child hard limits are preserved or tightened, and every
+if its parent exits. It rechecks the absolute deadline after fork before
+composition; delayed scheduling cannot create a new wall allowance. Inherited child hard limits are preserved or tightened, and every
 child setup/execution failure exits inside the fixed child boundary. This API cannot borrow another
 thread's timers.
 
@@ -106,3 +107,24 @@ a fixed diagnostic note while preserving the original error and durable hold.
 Crashes keep the whole work reservation; recovery consumes fresh
 capacity. These measurements do not retroactively meter the native numerical
 results supplied to the publisher.
+
+
+SQLite byte headroom includes both files. With spill disabled, the fixed
+transaction profile journals each old page at most once, with eight record
+bytes. The preflight reserves `old_pages * (4096 + 8) + 2 * 65536` for the
+journal envelope, subtracting its retained high-water size, before assigning
+the remaining allowance to database page growth. The two sectors cover
+header/alignment at SQLite's maximum sector size. This follows the
+[rollback-journal format](https://www.sqlite.org/fileformat.html#the_rollback_journal)
+and the [SQLite pager](https://github.com/sqlite/sqlite/blob/version-3.45.1/src/pager.c):
+cache stress can create another header, so `cache_spill=OFF` is checked, along
+with the page, PERSIST, memory-temp and no-auto-vacuum profile. These bounds rely
+on the standard SQLite pager behavior; runtime upgrades require this profile's
+compatibility tests. This is not a binary-authenticity claim.
+
+The prelimit is recalculated before initialization, reservation, publication
+and success/unknown settlement. The work allowance also reserves the bounded
+snapshot and child-output extents. Settlement uses only the remaining control
+allowance, even when unused work capacity exists. Insufficient headroom denies
+the operation; a larger store may therefore require an admission with a larger
+already-retained control allowance. No allowance is increased automatically.
