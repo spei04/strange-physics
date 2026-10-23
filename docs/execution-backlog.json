@@ -12588,14 +12588,14 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "early_stop_source_accepted_delivery_pending",
+      "status": "early_stop_delivered_measured_publication_in_progress",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Early-stop001c809 released; read-only concrete measured/durable producer preparation.",
-        "Platform": "Early-stop source accepted; independent final progress/PR/main/candidate delivery verification.",
-        "Research": "Early-stop scientific review accepted; challenge concrete measured/durable producer boundaries.",
-        "Project lead": "Own released identity source and primary progress; exact reviewed early-stop delivery."
+        "Quality": "Implement measured durable early/scored publisher in reused identity from accepted main2800188.",
+        "Platform": "Independent durability/concurrency/caps/package review of immutable Quality checkpoint.",
+        "Research": "Independent measurement, scientific isolation, retained-snapshot replay and parent admission review.",
+        "Project lead": "Primary progress records, assignment log and integration; parent tasks remain in progress."
       },
       "handoff": "Explicit writer handoff and lock/environment revalidation precede code changes. Reuse the two existing independent cloud checkouts; no additional checkout or shared dependency installation.",
       "interface_decisions": [
@@ -12604,7 +12604,7 @@
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Deliver accepted early-stop001c809 through reviewed progress, exact-head PR/main CI and candidate verification. Then implement the already-approved actual measured/durable publication vertical with independent recovery/accounting review before parent source acceptance and finite-grid RA-N02.a. No study, new budget or graph change.",
+      "next_units": "Deliver one bounded measured atomic early/scored publication and crash-recovery path with real Journal-writer exclusion. Then explicitly audit and complete durable reservations and OS measurements for existing native numerical and purchased-simulation stages before parent source/delivery closure and finite-grid RA-N02.a admission. Future grid/calibration/selection outputs or the actual comparison are not prerequisites for closing those existing parent obligations. No study, budget reset or dependency-graph change.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -12617,7 +12617,7 @@
           "candidate": 12402495332,
           "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
           "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
-          "scope": "Candidate API, native prediction, pure scoring, classical diagnostic, Journal union and private scored publication delivered throughPR115/main4eea1de. Complete early no-score source001c809 is accepted pending delivery; actual measured/durable producer remains pending.",
+          "scope": "Candidate production, preparation, native prediction/scoring, classical diagnostic and actual-Journal scored/early composition delivered throughPR116/main2800188. Actual publication measurement is assigned separately; durable reservations and OS-measured wrappers for existing numerical/simulation operations remain explicit parent obligations.",
           "prediction_runtime": {
             "status": "delivered",
             "source": "c3988d9356e47965dea33746c9fac3268099912a",
@@ -12724,7 +12724,7 @@
           }
         },
         "RA-02": {
-          "status": "accounting_journal_scored_publication_delivered_parent_in_progress",
+          "status": "accounting_journal_scored_early_publication_delivered_parent_in_progress",
           "runtime_source": "78b3be9510c71c4c5a60a7e69080c3989f3cb27b",
           "final_author": "c3502f7f1f318ca01ef24bb80172d21cb5004e57",
           "author_full_tests": 3331,
@@ -12734,7 +12734,7 @@
           "platform_extra_checks": 35,
           "platform_mutants": 8,
           "author_index_sha256": "75258c03042c2e98d347ba1df05c9dcadb20a55855db1be21fe097228b46ae54",
-          "scope": "Accounting/material freeze/Journal reconciliation/unfinished-cell publication; complete scored-cell publisher pending N01.",
+          "scope": "Accounting, material freeze, Journal reconciliation and pure scored/early publication delivered. Actual measured atomic publication/recovery is assigned; explicit numerical/simulation measurement audit remains before parent closure.",
           "pull_request": 110,
           "reviewed_head": "5b839d4b2582f05b2e871ab72b5257f25d4c5c05",
           "merge": "f9f450b51b9b5c7a79a30817b6deacb070bda23e",
@@ -12845,7 +12845,7 @@
             "main_acceptance_index_sha256": "c18bada7fe54007218ba3c53cbb2a4d077c67c4e74b831c6c2467974e15a0c97"
           },
           "early_stop_composition": {
-            "status": "source_accepted_delivery_pending",
+            "status": "delivered",
             "owner": "Quality",
             "base": "4eea1ded28ca52d9f0d4efd09ad3c5cd86734dac",
             "branch": "feat/native-early-stop-publication",
@@ -12853,7 +12853,7 @@
             "research_plan_index_sha256": "0696c7e6a728dfc0d542eec7eef79f996a1fc6acef870bc8795d5fe36197a4fd",
             "quality_durable_prep_index_sha256": "201f119712165c3d08670559d67849d06ac3af7c79b6c34da5a077d39bc0b818",
             "scope": "One coherent private available-stage early-stop composer across purchases, candidate production, absent selection, preparation and partial predictions. Never hide any native score/report; preserve scored path, all charges, explicit missing/unknown work and exact replay. No numerical reruns, actual durable producer or scientific study.",
-            "next_gate": "Reviewed progress, exact-head PR/main CI and cloud-only candidate verification.",
+            "next_gate": "Delivered; measured durable publisher is a separately reviewed implementation slice.",
             "source": "001c8090a7e021263ea0718f9c686db1d9e2f8ea",
             "tree": "a3eaf665abf79cb7eb25e337625654a88b7bbbb8",
             "superseded_source": "11b8cd709619c9fabdd4d9ccf90c063fbd397552",
@@ -12878,7 +12878,38 @@
             "research_index_sha256": "b6d6890faaf8f82582b96d57a2124cd0451f6f1ddd7dbe6d432d5c4b769d1d22",
             "wheel_sha256": "7e61a4668abf9559d734b1cae92a6c3e2edf25c4ce6dd7a5c3b32b406c76ee82",
             "sdist_sha256": "208678dc399b61239324bd963ecdc6aa36713057f6ee14b8c2c46bfe4bd46efb",
-            "delivery_record": "Both peer reviews, exact author gates and clean source/environment release accepted; PR/main/candidate delivery pending. Original11b full run was stopped after a valid finding; no complete-pass claim for that superseded source."
+            "delivery_record": "PR116/main2800188 accepted: all four applicable PR jobs and all five protected-main jobs passed. Cloud-only candidate/source/provenance/checksum/70-file archive verification and equality to accepted author archives passed; lead rehashed18 private delivery files. Requirements-export digest continuity checked against same-lock/uv evidence; export bytes not independently recomputed. Original superseded11b full run remains stopped, not a full-pass claim.",
+            "pull_request": 116,
+            "reviewed_head": "ec4c5b9d623fcaf7f7e3693451ac1ad09bebd4ce",
+            "reviewed_tree": "1a0a2bb93f3c7b2423ba0882af891e12c5a389bc",
+            "merge": "2800188783217a65e35a66f5e17492c72f61af0d",
+            "pr_ci": 39958680402,
+            "main_ci": 39959551652,
+            "candidate": 12504965031,
+            "candidate_zip_sha256": "e18149df7c7003b2c96feec4fab8545853b7ce05e75d246a067f859a644bbf09",
+            "main_acceptance_index_sha256": "b93994aeda15106c98a449647d8aa8cb600d39ad84229232d76573e11e8f095d",
+            "pr_ci_index_sha256": "b50ddb20abc7fd1be06000ed78ad27bb8ed895d7383115d4ff6e4758458272e3",
+            "progress_review_index_sha256": "56f89ca075add2c6bec02a0564ed439c00616ad14fc45d16b13e98b8865ceedc"
+          },
+          "durable_publication": {
+            "status": "implementation_assigned",
+            "owner": "Quality",
+            "reviewers": [
+              "Platform",
+              "Research"
+            ],
+            "base": "2800188783217a65e35a66f5e17492c72f61af0d",
+            "branch": "feat/measured-publication",
+            "handoff_index_sha256": "474aed266e01590877364b45a995c9a53cac78a645a01828ace7411a239d8a4f",
+            "quality_plan_index_sha256": "47385ed62f92c5ccac6c7caa3146b3ae442eef1dd64db46e5f734dadb43bb88e",
+            "research_plan_index_sha256": "2abc2fc4cc9c0975d50fd256ebf1ca3b7b6e876173dbf7c15975007d94c23eb5",
+            "platform_review_prep_index_sha256": "ca8fb2b4e73d74b46e076ea9454f7e23058be94ff46e12b0cacc62bf68d78c77",
+            "research_review_prep_index_sha256": "758c50c8a5e65ecb9bfc9648726d0b52dd9512092eff250162aade607118eb51",
+            "scope": "One fixed early/scored publication producer: actual parent/child CPU, wall and artifact measurements; finite charged bootstrap/recovery/global tail; durable reservations; one private atomic SQLite closure; exact original-receipt recovery from retained original snapshots; actual present-Journal BEGIN IMMEDIATE writer exclusion and explicit cooperating absent-creator guarantee. No numeric execution, generic arbitrary runner, provider or study.",
+            "next_gate": "Immutable coherent executable checkpoint with meaningful measurement, concurrency, crash/recovery and bounded-admission evidence; independent Platform/Research review before integration.",
+            "environment": "Reused identity;70 installed/source files equal,5606 singly-owned site files, unchanged pinned lock/uv0.13.4 and pip check passed. No reinstall/new checkout.",
+            "parent_admission": "Publication measurement does not prove prior candidate/preparation/prediction/scoring/classical or purchased-simulation measurement. Audit and complete their fixed-operation durable reservations, genuine OS measurements and failure/retry/recovery binding before closing105/106 and admitting N02.a. Future grid/likelihood measurement belongs to N02.a itself.",
+            "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20"
           }
         }
       },
@@ -13005,7 +13036,7 @@
         "preservation": "Reuse existing checkouts; preserve active writers, private evidence, cumulative caps and review gates; no new capacity or unrelated project changes"
       },
       "early_stop_composition": {
-        "status": "source_accepted_delivery_pending",
+        "status": "delivered",
         "owner": "Quality",
         "base": "4eea1ded28ca52d9f0d4efd09ad3c5cd86734dac",
         "branch": "feat/native-early-stop-publication",
@@ -13013,7 +13044,7 @@
         "research_plan_index_sha256": "0696c7e6a728dfc0d542eec7eef79f996a1fc6acef870bc8795d5fe36197a4fd",
         "quality_durable_prep_index_sha256": "201f119712165c3d08670559d67849d06ac3af7c79b6c34da5a077d39bc0b818",
         "scope": "One coherent private available-stage early-stop composer across purchases, candidate production, absent selection, preparation and partial predictions. Never hide any native score/report; preserve scored path, all charges, explicit missing/unknown work and exact replay. No numerical reruns, actual durable producer or scientific study.",
-        "next_gate": "Reviewed progress, exact-head PR/main CI and cloud-only candidate verification.",
+        "next_gate": "Delivered; measured durable publisher is a separately reviewed implementation slice.",
         "source": "001c8090a7e021263ea0718f9c686db1d9e2f8ea",
         "tree": "a3eaf665abf79cb7eb25e337625654a88b7bbbb8",
         "superseded_source": "11b8cd709619c9fabdd4d9ccf90c063fbd397552",
@@ -13038,7 +13069,38 @@
         "research_index_sha256": "b6d6890faaf8f82582b96d57a2124cd0451f6f1ddd7dbe6d432d5c4b769d1d22",
         "wheel_sha256": "7e61a4668abf9559d734b1cae92a6c3e2edf25c4ce6dd7a5c3b32b406c76ee82",
         "sdist_sha256": "208678dc399b61239324bd963ecdc6aa36713057f6ee14b8c2c46bfe4bd46efb",
-        "delivery_record": "Both peer reviews, exact author gates and clean source/environment release accepted; PR/main/candidate delivery pending. Original11b full run was stopped after a valid finding; no complete-pass claim for that superseded source."
+        "delivery_record": "PR116/main2800188 accepted: all four applicable PR jobs and all five protected-main jobs passed. Cloud-only candidate/source/provenance/checksum/70-file archive verification and equality to accepted author archives passed; lead rehashed18 private delivery files. Requirements-export digest continuity checked against same-lock/uv evidence; export bytes not independently recomputed. Original superseded11b full run remains stopped, not a full-pass claim.",
+        "pull_request": 116,
+        "reviewed_head": "ec4c5b9d623fcaf7f7e3693451ac1ad09bebd4ce",
+        "reviewed_tree": "1a0a2bb93f3c7b2423ba0882af891e12c5a389bc",
+        "merge": "2800188783217a65e35a66f5e17492c72f61af0d",
+        "pr_ci": 39958680402,
+        "main_ci": 39959551652,
+        "candidate": 12504965031,
+        "candidate_zip_sha256": "e18149df7c7003b2c96feec4fab8545853b7ce05e75d246a067f859a644bbf09",
+        "main_acceptance_index_sha256": "b93994aeda15106c98a449647d8aa8cb600d39ad84229232d76573e11e8f095d",
+        "pr_ci_index_sha256": "b50ddb20abc7fd1be06000ed78ad27bb8ed895d7383115d4ff6e4758458272e3",
+        "progress_review_index_sha256": "56f89ca075add2c6bec02a0564ed439c00616ad14fc45d16b13e98b8865ceedc"
+      },
+      "durable_publication": {
+        "status": "implementation_assigned",
+        "owner": "Quality",
+        "reviewers": [
+          "Platform",
+          "Research"
+        ],
+        "base": "2800188783217a65e35a66f5e17492c72f61af0d",
+        "branch": "feat/measured-publication",
+        "handoff_index_sha256": "474aed266e01590877364b45a995c9a53cac78a645a01828ace7411a239d8a4f",
+        "quality_plan_index_sha256": "47385ed62f92c5ccac6c7caa3146b3ae442eef1dd64db46e5f734dadb43bb88e",
+        "research_plan_index_sha256": "2abc2fc4cc9c0975d50fd256ebf1ca3b7b6e876173dbf7c15975007d94c23eb5",
+        "platform_review_prep_index_sha256": "ca8fb2b4e73d74b46e076ea9454f7e23058be94ff46e12b0cacc62bf68d78c77",
+        "research_review_prep_index_sha256": "758c50c8a5e65ecb9bfc9648726d0b52dd9512092eff250162aade607118eb51",
+        "scope": "One fixed early/scored publication producer: actual parent/child CPU, wall and artifact measurements; finite charged bootstrap/recovery/global tail; durable reservations; one private atomic SQLite closure; exact original-receipt recovery from retained original snapshots; actual present-Journal BEGIN IMMEDIATE writer exclusion and explicit cooperating absent-creator guarantee. No numeric execution, generic arbitrary runner, provider or study.",
+        "next_gate": "Immutable coherent executable checkpoint with meaningful measurement, concurrency, crash/recovery and bounded-admission evidence; independent Platform/Research review before integration.",
+        "environment": "Reused identity;70 installed/source files equal,5606 singly-owned site files, unchanged pinned lock/uv0.13.4 and pip check passed. No reinstall/new checkout.",
+        "parent_admission": "Publication measurement does not prove prior candidate/preparation/prediction/scoring/classical or purchased-simulation measurement. Audit and complete their fixed-operation durable reservations, genuine OS measurements and failure/retry/recovery binding before closing105/106 and admitting N02.a. Future grid/likelihood measurement belongs to N02.a itself.",
+        "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20"
       }
     },
     "certificate_trust_update": {
@@ -13148,7 +13210,7 @@
         "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
         "issue": "https://github.com/spei04/strange-physics/issues/105",
         "checkpoint": {
-          "status": "accounting_journal_scored_publication_delivered_parent_in_progress",
+          "status": "accounting_journal_scored_early_publication_delivered_parent_in_progress",
           "runtime_source": "78b3be9510c71c4c5a60a7e69080c3989f3cb27b",
           "final_author": "c3502f7f1f318ca01ef24bb80172d21cb5004e57",
           "author_full_tests": 3331,
@@ -13158,7 +13220,7 @@
           "platform_extra_checks": 35,
           "platform_mutants": 8,
           "author_index_sha256": "75258c03042c2e98d347ba1df05c9dcadb20a55855db1be21fe097228b46ae54",
-          "scope": "Accounting/material freeze/Journal reconciliation/unfinished-cell publication; complete scored-cell publisher pending N01.",
+          "scope": "Accounting, material freeze, Journal reconciliation and pure scored/early publication delivered. Actual measured atomic publication/recovery is assigned; explicit numerical/simulation measurement audit remains before parent closure.",
           "pull_request": 110,
           "reviewed_head": "5b839d4b2582f05b2e871ab72b5257f25d4c5c05",
           "merge": "f9f450b51b9b5c7a79a30817b6deacb070bda23e",
@@ -13269,7 +13331,7 @@
             "main_acceptance_index_sha256": "c18bada7fe54007218ba3c53cbb2a4d077c67c4e74b831c6c2467974e15a0c97"
           },
           "early_stop_composition": {
-            "status": "source_accepted_delivery_pending",
+            "status": "delivered",
             "owner": "Quality",
             "base": "4eea1ded28ca52d9f0d4efd09ad3c5cd86734dac",
             "branch": "feat/native-early-stop-publication",
@@ -13277,7 +13339,7 @@
             "research_plan_index_sha256": "0696c7e6a728dfc0d542eec7eef79f996a1fc6acef870bc8795d5fe36197a4fd",
             "quality_durable_prep_index_sha256": "201f119712165c3d08670559d67849d06ac3af7c79b6c34da5a077d39bc0b818",
             "scope": "One coherent private available-stage early-stop composer across purchases, candidate production, absent selection, preparation and partial predictions. Never hide any native score/report; preserve scored path, all charges, explicit missing/unknown work and exact replay. No numerical reruns, actual durable producer or scientific study.",
-            "next_gate": "Reviewed progress, exact-head PR/main CI and cloud-only candidate verification.",
+            "next_gate": "Delivered; measured durable publisher is a separately reviewed implementation slice.",
             "source": "001c8090a7e021263ea0718f9c686db1d9e2f8ea",
             "tree": "a3eaf665abf79cb7eb25e337625654a88b7bbbb8",
             "superseded_source": "11b8cd709619c9fabdd4d9ccf90c063fbd397552",
@@ -13302,7 +13364,38 @@
             "research_index_sha256": "b6d6890faaf8f82582b96d57a2124cd0451f6f1ddd7dbe6d432d5c4b769d1d22",
             "wheel_sha256": "7e61a4668abf9559d734b1cae92a6c3e2edf25c4ce6dd7a5c3b32b406c76ee82",
             "sdist_sha256": "208678dc399b61239324bd963ecdc6aa36713057f6ee14b8c2c46bfe4bd46efb",
-            "delivery_record": "Both peer reviews, exact author gates and clean source/environment release accepted; PR/main/candidate delivery pending. Original11b full run was stopped after a valid finding; no complete-pass claim for that superseded source."
+            "delivery_record": "PR116/main2800188 accepted: all four applicable PR jobs and all five protected-main jobs passed. Cloud-only candidate/source/provenance/checksum/70-file archive verification and equality to accepted author archives passed; lead rehashed18 private delivery files. Requirements-export digest continuity checked against same-lock/uv evidence; export bytes not independently recomputed. Original superseded11b full run remains stopped, not a full-pass claim.",
+            "pull_request": 116,
+            "reviewed_head": "ec4c5b9d623fcaf7f7e3693451ac1ad09bebd4ce",
+            "reviewed_tree": "1a0a2bb93f3c7b2423ba0882af891e12c5a389bc",
+            "merge": "2800188783217a65e35a66f5e17492c72f61af0d",
+            "pr_ci": 39958680402,
+            "main_ci": 39959551652,
+            "candidate": 12504965031,
+            "candidate_zip_sha256": "e18149df7c7003b2c96feec4fab8545853b7ce05e75d246a067f859a644bbf09",
+            "main_acceptance_index_sha256": "b93994aeda15106c98a449647d8aa8cb600d39ad84229232d76573e11e8f095d",
+            "pr_ci_index_sha256": "b50ddb20abc7fd1be06000ed78ad27bb8ed895d7383115d4ff6e4758458272e3",
+            "progress_review_index_sha256": "56f89ca075add2c6bec02a0564ed439c00616ad14fc45d16b13e98b8865ceedc"
+          },
+          "durable_publication": {
+            "status": "implementation_assigned",
+            "owner": "Quality",
+            "reviewers": [
+              "Platform",
+              "Research"
+            ],
+            "base": "2800188783217a65e35a66f5e17492c72f61af0d",
+            "branch": "feat/measured-publication",
+            "handoff_index_sha256": "474aed266e01590877364b45a995c9a53cac78a645a01828ace7411a239d8a4f",
+            "quality_plan_index_sha256": "47385ed62f92c5ccac6c7caa3146b3ae442eef1dd64db46e5f734dadb43bb88e",
+            "research_plan_index_sha256": "2abc2fc4cc9c0975d50fd256ebf1ca3b7b6e876173dbf7c15975007d94c23eb5",
+            "platform_review_prep_index_sha256": "ca8fb2b4e73d74b46e076ea9454f7e23058be94ff46e12b0cacc62bf68d78c77",
+            "research_review_prep_index_sha256": "758c50c8a5e65ecb9bfc9648726d0b52dd9512092eff250162aade607118eb51",
+            "scope": "One fixed early/scored publication producer: actual parent/child CPU, wall and artifact measurements; finite charged bootstrap/recovery/global tail; durable reservations; one private atomic SQLite closure; exact original-receipt recovery from retained original snapshots; actual present-Journal BEGIN IMMEDIATE writer exclusion and explicit cooperating absent-creator guarantee. No numeric execution, generic arbitrary runner, provider or study.",
+            "next_gate": "Immutable coherent executable checkpoint with meaningful measurement, concurrency, crash/recovery and bounded-admission evidence; independent Platform/Research review before integration.",
+            "environment": "Reused identity;70 installed/source files equal,5606 singly-owned site files, unchanged pinned lock/uv0.13.4 and pip check passed. No reinstall/new checkout.",
+            "parent_admission": "Publication measurement does not prove prior candidate/preparation/prediction/scoring/classical or purchased-simulation measurement. Audit and complete their fixed-operation durable reservations, genuine OS measurements and failure/retry/recovery binding before closing105/106 and admitting N02.a. Future grid/likelihood measurement belongs to N02.a itself.",
+            "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20"
           }
         }
       },
@@ -13825,7 +13918,7 @@
           "candidate": 12402495332,
           "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
           "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
-          "scope": "Candidate API, native prediction, pure scoring, classical diagnostic, Journal union and private scored publication delivered throughPR115/main4eea1de. Complete early no-score source001c809 is accepted pending delivery; actual measured/durable producer remains pending.",
+          "scope": "Candidate production, preparation, native prediction/scoring, classical diagnostic and actual-Journal scored/early composition delivered throughPR116/main2800188. Actual publication measurement is assigned separately; durable reservations and OS-measured wrappers for existing numerical/simulation operations remain explicit parent obligations.",
           "prediction_runtime": {
             "status": "delivered",
             "source": "c3988d9356e47965dea33746c9fac3268099912a",
