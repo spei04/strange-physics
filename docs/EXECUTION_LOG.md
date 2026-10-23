@@ -12,15 +12,23 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Research | Measured/durable publication accounting and recovery review preparation | Early-stop001c809 scientific review accepted; no study |
-| Quality | Actual measured/durable publication implementation preparation | Early-stop source/environment released; no new source changes until delivery/handoff |
-| Platform | Independent progress and early-stop PR/main/candidate verification | Source001c809 accepted after completion-order repair |
-| Project lead | Early-stop integration and progress records | Owns both released cloud checkouts; exact reviewed source and delivery gates |
+| Quality | Accepted source released; bounded primary progress reconciliation, then release | Source 423ea566 and final evidence sealed; no environment consumer |
+| Platform | Candidate delivery verification | Independently accepted source 423ea566; verify exact integrated main/package evidence |
+| Research | Independent progress and dependency review | Keep source 423ea566 / prior 109daba evidence distinct; numerical/simulation wrapper audit remains before parent closure |
+| Project lead | Integration in released identity checkout | PR/main/candidate gates pending; RA-02 and RA-N01 remain in progress |
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-23 | Quality | Measured publication source 423ea566 accepted and released | 56 final focused tests, static/package/installed gates; prior 109daba full 4,143-test evidence preserved separately |
+| 2026-10-23 | Project lead | Measured publisher integration | Owns released identity; normal PR/main/candidate gates remain pending |
+| 2026-10-23 | Platform | Candidate delivery verification | Final source/capacity review accepted; verify integrated package/source/lock identity |
+| 2026-10-23 | Research | Independent progress/dependency review | Review five-document reconciliation; keep both parents and numerical/simulation wrapper obligations open |
+| 2026-10-23 | Quality | Five progress documents in primary | Docs-only reconciliation from ec3f044; release after immutable commit for Research review |
+| 2026-10-23 | Project lead + Platform | Early-stop PR #116 delivery accepted | Main2800188, all five CI39959551652 jobs, candidate12504965031 and exact70-file author packages verified;18 evidence files rehashed |
+| 2026-10-23 | Quality | Bounded measured durable publication | Reused identity feat/measured-publication from acceptedmain2800188; fixed early/scored dispatch, atomic recovery and actual Journal exclusion |
+| 2026-10-23 | Platform + Research | Independent measured publisher reviews | Durability/concurrency/caps and genuine measurements/replay/scientific isolation; await immutable checkpoint |
 | 2026-10-23 | Quality | RA-02/#105 — early-stop source release |001c809,4,088 tests and70-file package/installed checks accepted; identity released |
 | 2026-10-23 | Platform + Research | Early-stop independent review | Completion-order defect repaired;31/45 final independent cases and3 sensitive mutants each; no remaining scoped blocker |
 | 2026-10-23 | Project lead + Platform | Early-stop delivery | Progress review then PR/main/candidate gates; both parents remain in progress |
@@ -721,3 +729,22 @@ Independent review found that reservation order could conceal a selector complet
 Quality completed4,088 full tests,85 permanent early-stop cases, Ruff/format176, strict mypy125,1,522 external schema cases, configured security/hashed dependency checks, offline70-file archives and project-only installed-callable/replay/guard checks using the pinned dependencies. Lead rehashed88 author,21 Platform and20 Research evidence entries. Author index85eb6b88aecfdc0433a134bf9b4d61e547788850ea02c48e5cf1a78df4bb72af and release indexf821fa84b7a156645f605518edf026b755830b386dcd7b9f1f1fbe9552c321b6 identify the private records. The clean source and owned environment are explicitly released; no active consumers remain.
 
 Lead owns both reused cloud checkouts for progress/integration. Platform verifies progress and PR/main/candidate delivery; Quality and Research prepare the already-reviewed actual measured/durable publication vertical. Both parents remain in progress. Actual measurement, atomic persistence/crash recovery, genuine inference/selection/calibration and the comparison remain separate gates. No scientific run, new budget, graph change or Mac project storage is introduced.
+
+
+### 2026-10-23 — Early-stop delivery accepted; measured publication assigned
+
+PR #116 is accepted as main2800188783217a65e35a66f5e17492c72f61af0d with reviewed tree1a0a2bb93f3c7b2423ba0882af891e12c5a389bc. All four applicable PR jobs and all five protected-main CI39959551652 jobs passed. Candidate12504965031 was acquired and verified on studio-agent: exact70-file source allowlists, four regular ZIP members, three checksums, source/run/lock/uv provenance and equality to accepted author wheel/sdist bytes passed. ZIP SHA256 e18149df7c7003b2c96feec4fab8545853b7ce05e75d246a067f859a644bbf09 and private acceptance index b93994aeda15106c98a449647d8aa8cb600d39ad84229232d76573e11e8f095d identify the retained delivery; lead rehashed all18 indexed files. Requirements-export digest continuity was checked against same-lock/uv evidence; its bytes were not independently recomputed. No accepted early-stop runtime cases were repeated for this reconciliation.
+
+Quality owns the reused identity checkout on feat/measured-publication from acceptedmain2800188. The existing environment passed70-file installed/source equality,5,606 singly-owned site-file checks and pinned uv0.13.4/lock/pip checks without reinstall. Handoff index474aed266e01590877364b45a995c9a53cac78a645a01828ace7411a239d8a4f records the clean source and absence of active consumers. Lead owns primary progress; Platform reviews durability/concurrency/caps and Research reviews actual measurements, replay and scientific isolation. Both checkouts remain needed; no new checkout, environment or Mac project storage was created.
+
+The next slice implements one measured atomic early/scored publication and recovery path. It must retain finite charged bootstrap/recovery/global tail capacity, actual parent/child CPU and artifact costs, original-snapshot receipt replay, and real SQLite Journal writer exclusion through publication commit. It does not measure prior numerical executions. After publisher acceptance, audit and complete fixed-operation durable reservations and OS measurements for existing candidate/preparation/prediction/scoring/classical and purchased-simulation work before closing105/106 or admitting finite-grid RA-N02.a. Future inference/calibration/selection and the actual study are not prerequisites for that parent audit. Both parents stay in progress; no comparison has run, and cumulative caps, later Laplace audit, graph, effort, forecast and approvals are unchanged.
+
+### 2026-10-23 — Measured publication source accepted; integration pending
+
+The measured durable publication producer is accepted at 423ea566406ecab8dd0693c8e004a3be697631b3, tree fcd3015c2748b413a0c32a11c1ec044400dbebd9. Both independent reviewers accepted its fixed early/scored dispatch, actual parent/child CPU and wall measurements, bounded logical artifact accounting, finite retained control allowance, atomic private SQLite closure, real present-Journal writer exclusion and exact original-snapshot receipt replay. Failures and fresh recovery attempts remain charged. This producer composes retained scientific outcomes; it does not rerun or retroactively measure numerical work.
+
+Final source 423ea566 passed 56 focused tests, Ruff, 181-file formatting, strict mypy across 129 files, the configured security gate, offline wheel/sdist validation, pip check, 73-file installed/source equality, installed publication/replay with 15 numerical aliases forbidden, and the eight-particle/eight-purchase spring CLI smoke. The 5,526 dependency files remained unchanged. The earlier source 109daba56d8f780531400cbefc672a0d57e33ab2 passed 4,143 full tests, 1,522 external schema cases and the locked dependency audit; those results are source-specific and are not relabeled as final 423ea566 full-suite results. Required PR/main CI and protected-main candidate verification remain pending.
+
+Final counter review independently checked control-tail growth deduction and frozen work costs, including exhausted headroom and sensitive mutations. The injected 8,192-byte control write is a regression fault, not a claimed naturally reproduced SQLite cap escape. Author index e1abbae7776569c89017f6cb5de5df8956ebc42ca07eacfa63ef1e585385c42d, Research index dfd669ef8b8ee42755ed3934e4e1d075f33f9b13df1fecad3c62f3567a3fc497 and Platform index ae29f05b0e7bc1b03da120dc6cbd4c3a458eb79d2f1a83bd6328a42e2c0e1a46 identify retained private evidence and earlier scoped reviews. Quality released the clean identity source and owned environment; all author/reviewer consumers ended.
+
+Lead owns integration in identity; Platform verifies candidate delivery; Research independently reviews progress and dependency consistency. Quality reconciles these progress records in primary, then releases that checkout. After publisher integration, audit and complete actual fixed-operation durable reservations and OS measurements for existing candidate/preparation/prediction/scoring/classical and purchased-simulation work before closing RA-02/#105 or RA-N01/#106 and admitting finite-grid RA-N02.a. Both parents remain in progress. Future inference/calibration/selection and the actual study are separate gates, not prerequisites for auditing existing producer wrappers. No comparison, budget reset, graph, approval, effort or forecast change is introduced; all project work remains cloud-only.
