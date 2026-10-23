@@ -12,6 +12,7 @@ import os
 import sqlite3
 from collections.abc import Iterator
 from contextlib import contextmanager
+from dataclasses import dataclass
 from pathlib import Path
 
 from strange_physics.bounded_json import parse_bounded_json
@@ -137,25 +138,71 @@ def root_lock(root: Path) -> Iterator[None]:
         os.close(fd)
 
 
+def _read_descriptor(fd: int) -> bytes:
+    before = os.fstat(fd)
+    private_stat(before)
+    if before.st_nlink != 1 or before.st_size > MAX_JOURNAL_BYTES:
+        raise StudyLedgerError("journal_limit")
+    chunks = []
+    offset = 0
+    while offset <= MAX_JOURNAL_BYTES:
+        chunk = os.pread(fd, min(1024 * 1024, MAX_JOURNAL_BYTES + 1 - offset), offset)
+        if not chunk:
+            break
+        chunks.append(chunk)
+        offset += len(chunk)
+    after = os.fstat(fd)
+    if offset > MAX_JOURNAL_BYTES or (before.st_ino, before.st_size, before.st_mtime_ns) != (
+        after.st_ino,
+        after.st_size,
+        after.st_mtime_ns,
+    ):
+        raise StudyLedgerError("journal_changed")
+    return b"".join(chunks)
+
+
+@dataclass
+class LockedJournal:
+    path: Path
+    descriptor: int | None
+    original: bytes | None
+
+    def recheck(self) -> None:
+        if self.descriptor is None:
+            if self.path.exists() or self.path.is_symlink():
+                raise StudyLedgerError("journal_changed")
+            return
+        current = regular(self.path)
+        held = os.fstat(self.descriptor)
+        if current is None or (current.st_dev, current.st_ino) != (held.st_dev, held.st_ino):
+            raise StudyLedgerError("journal_changed")
+        if _read_descriptor(self.descriptor) != self.original:
+            raise StudyLedgerError("journal_changed")
+        if any(Path(str(self.path) + suffix).exists() for suffix in ("-journal", "-wal", "-shm")):
+            raise StudyLedgerError("journal_nonquiescent")
+
+
 @contextmanager
-def journal_snapshot(path: Path, expected: str | None) -> Iterator[bytes | None]:
-    """Acquire the existing Journal's real writer exclusion without changing it."""
+def journal_snapshot(path: Path, expected: str | None) -> Iterator[LockedJournal]:
+    """Keep every raw same-inode fd open until SQLite releases its POSIX locks."""
     path = safe_path(path)
     private_stat(path.parent.stat(), directory=True)
     info = regular(path, missing=True)
     db: sqlite3.Connection | None = None
+    descriptor: int | None = None
     if info is None:
         if expected is not None:
             raise StudyLedgerError("journal_identity_mismatch")
-        yield None
-        if path.exists() or path.is_symlink():
-            raise StudyLedgerError("journal_changed")
+        locked = LockedJournal(path, None, None)
+        yield locked
+        locked.recheck()
         return
     try:
         for suffix in ("-journal", "-wal", "-shm"):
             if Path(str(path) + suffix).exists() or Path(str(path) + suffix).is_symlink():
                 raise StudyLedgerError("journal_nonquiescent")
-        before = read_bytes(path, limit=MAX_JOURNAL_BYTES)
+        descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+        before = _read_descriptor(descriptor)
         if len(before) < 100 or before[:16] != b"SQLite format 3\0" or before[18:20] != b"\1\1":
             raise StudyLedgerError("journal_nonquiescent")
         db = sqlite3.connect(path.as_uri() + "?mode=rw", uri=True, timeout=0, isolation_level=None)
@@ -165,23 +212,22 @@ def journal_snapshot(path: Path, expected: str | None) -> Iterator[bytes | None]
             db.execute("BEGIN IMMEDIATE")
         except sqlite3.OperationalError:
             raise StudyLedgerError("journal_busy") from None
-        locked = read_bytes(path, limit=MAX_JOURNAL_BYTES)
-        if before != locked or digest(locked) != expected:
+        original = _read_descriptor(descriptor)
+        if before != original or digest(original) != expected:
             raise StudyLedgerError("journal_identity_mismatch")
+        locked = LockedJournal(path, descriptor, original)
+        locked.recheck()
         yield locked
-        current = regular(path)
-        assert current is not None
-        if (current.st_dev, current.st_ino) != (info.st_dev, info.st_ino):
-            raise StudyLedgerError("journal_changed")
-        if read_bytes(path, limit=MAX_JOURNAL_BYTES) != locked:
-            raise StudyLedgerError("journal_changed")
-        if any(Path(str(path) + suffix).exists() for suffix in ("-journal", "-wal", "-shm")):
-            raise StudyLedgerError("journal_nonquiescent")
+        locked.recheck()
     finally:
+        # Closing ANY same-inode fd cancels this process's POSIX locks. Raw fd
+        # cleanup must therefore follow SQLite rollback/close, never precede it.
         if db is not None:
             if db.in_transaction:
                 db.rollback()
             db.close()
+        if descriptor is not None:
+            os.close(descriptor)
 
 
 class Store:
@@ -197,7 +243,20 @@ class Store:
         for suffix in ("-wal", "-shm"):
             if Path(str(self.path) + suffix).exists():
                 raise StudyLedgerError("store_mode")
+        marker = root / "store-created"
+        marker_info = regular(marker, missing=True)
+        if existing is None and marker_info is not None:
+            raise StudyLedgerError("store_missing_after_creation")
+        if existing is not None and marker_info is None:
+            raise StudyLedgerError("store_creation_identity")
+        if (
+            marker_info is not None
+            and read_bytes(marker, limit=64) != digest(raw(admission)).encode()
+        ):
+            raise StudyLedgerError("store_creation_identity")
         if existing is None:
+            meter.write(marker, digest(raw(admission)).encode())
+            durable_directory(root)
             fd = os.open(self.path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
             os.close(fd)
         else:

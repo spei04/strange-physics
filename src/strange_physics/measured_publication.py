@@ -31,6 +31,7 @@ from strange_physics.measured_publication_contracts import (
 )
 from strange_physics.publication_store import (
     Extents,
+    LockedJournal,
     Store,
     digest,
     durable_directory,
@@ -97,9 +98,53 @@ def _identity(request: NativePublicationRequest) -> str:
     )
 
 
+class _Clock:
+    """Disjoint parent control/work CPU budgets; settling work cannot fund cleanup."""
+
+    def __init__(self, control: int, work: int, started: int) -> None:
+        self.control_limit = control
+        self.work_limit = work
+        self.phase = "control"
+        self.phase_started = started
+        self.control_used = 0
+        self.work_cpu = 0
+        self.work_wall = 0
+        self.work_started_wall = 0
+        self.exhausted = False
+
+    def _arm(self, amount: int) -> None:
+        if amount <= 0:
+            self.exhausted = True
+            raise StudyLedgerError("publication_control_deadline")
+        signal.setitimer(signal.ITIMER_PROF, amount / 1e9)
+
+    def start(self) -> None:
+        self._arm(self.control_limit - (time.process_time_ns() - self.phase_started))
+
+    def work(self) -> None:
+        now = time.process_time_ns()
+        self.control_used = now - self.phase_started
+        if self.control_used >= self.control_limit:
+            raise StudyLedgerError("publication_control_deadline")
+        self.phase = "work"
+        self.phase_started = now
+        self.work_started_wall = time.monotonic_ns()
+        self._arm(self.work_limit)
+
+    def tail(self) -> bool:
+        if self.phase == "work":
+            now = time.process_time_ns()
+            self.work_cpu = now - self.phase_started
+            self.work_wall = time.monotonic_ns() - self.work_started_wall
+            self.phase = "control"
+            self.phase_started = now
+            self.exhausted = False
+            self._arm(self.control_limit - self.control_used)
+        return not self.exhausted
+
+
 @contextmanager
-def _deadline(cpu_ns: int, wall_ns: int) -> Iterator[None]:
-    """Bound this single-threaded owning process without changing its hard limits."""
+def _deadline(control_ns: int, work_ns: int, wall_ns: int, started: int) -> Iterator[_Clock]:
     if threading.current_thread() is not threading.main_thread() or threading.active_count() != 1:
         raise StudyLedgerError("publication_process_required")
     if any(
@@ -107,16 +152,18 @@ def _deadline(cpu_ns: int, wall_ns: int) -> Iterator[None]:
     ):
         raise StudyLedgerError("publication_timer_in_use")
     before = {sig: signal.getsignal(sig) for sig in (signal.SIGALRM, signal.SIGPROF)}
+    clock = _Clock(control_ns, work_ns, started)
 
     def expired(signum: int, frame: object) -> None:
+        clock.exhausted = True
         raise StudyLedgerError("publication_deadline")
 
     try:
         signal.signal(signal.SIGALRM, expired)
         signal.signal(signal.SIGPROF, expired)
         signal.setitimer(signal.ITIMER_REAL, wall_ns / 1e9)
-        signal.setitimer(signal.ITIMER_PROF, cpu_ns / 1e9)
-        yield
+        clock.start()
+        yield clock
     finally:
         signal.setitimer(signal.ITIMER_REAL, 0)
         signal.setitimer(signal.ITIMER_PROF, 0)
@@ -258,10 +305,22 @@ def _child(
 ) -> int:
     """Exactly one fixed child, no shell/exec/plugin/numerical dispatch."""
     child_cpu_seconds = max(1, request.cpu_reservation_ns // 2 // 1_000_000_000)
-    resource.setrlimit(resource.RLIMIT_CPU, (child_cpu_seconds, child_cpu_seconds))
-    resource.setrlimit(
-        resource.RLIMIT_FSIZE, (request.output_limit_bytes, request.output_limit_bytes)
+    _, hard_cpu = resource.getrlimit(resource.RLIMIT_CPU)
+    cpu_limit = (
+        child_cpu_seconds
+        if hard_cpu == resource.RLIM_INFINITY
+        else min(child_cpu_seconds, hard_cpu)
     )
+    resource.setrlimit(resource.RLIMIT_CPU, (cpu_limit, hard_cpu))
+    signal.signal(signal.SIGXCPU, signal.SIG_DFL)
+    _, hard_file = resource.getrlimit(resource.RLIMIT_FSIZE)
+    file_limit = (
+        request.output_limit_bytes
+        if hard_file == resource.RLIM_INFINITY
+        else min(request.output_limit_bytes, hard_file)
+    )
+    resource.setrlimit(resource.RLIMIT_FSIZE, (file_limit, hard_file))
+    signal.signal(signal.SIGXFSZ, signal.SIG_DFL)
     resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
     try:
         result = raw(_compose(request, ledger_raw, snapshot, payloads, original, evidence))
@@ -295,7 +354,15 @@ def _run_child(
 ) -> tuple[_Output, int]:
     pid = os.fork()
     if pid == 0:
-        os._exit(_child(request, ledger_raw, snapshot, payloads, original, evidence, output))
+        code = 70
+        try:
+            code = _child(request, ledger_raw, snapshot, payloads, original, evidence, output)
+        except BaseException:
+            code = 70
+        finally:
+            # Resource setup/import/encoding failures must never unwind into the
+            # parent's store cleanup or the caller in this forked process.
+            os._exit(code)
     reaped = False
     try:
         _, status, usage = os.wait4(pid, 0)
@@ -337,7 +404,7 @@ def _closure(
     if row[0] != _identity(request) or digest(row[5]) != row[6]:
         raise StudyLedgerError("publication_conflict")
     saved = parse_bounded_json(
-        row[1], NativePublicationRequest, max_bytes=32 * 1024, max_depth=12, max_nodes=1000
+        row[1], NativePublicationRequest, max_bytes=128 * 1024, max_depth=12, max_nodes=1000
     )
     if _identity(saved) != row[0]:
         raise StudyLedgerError("closure_corrupt")
@@ -387,9 +454,11 @@ def commit_native_publication(
         raise StudyLedgerError("admission_identity")
     control = admission.control
     with _deadline(
-        control.ticket_cpu_ns + request.cpu_reservation_ns // 2,
+        control.ticket_cpu_ns,
+        request.cpu_reservation_ns // 2,
         min(control.ticket_wall_ns, request.wall_limit_ns),
-    ):
+        started_cpu,
+    ) as clock:
         meter = Extents(root)
         # Exclusive durable ticket consumption precedes lock/store open. Contention
         # consumes a ticket too; no caller can restart on one unknown hold forever.
@@ -400,7 +469,7 @@ def commit_native_publication(
             raise StudyLedgerError("publication_ticket_consumed") from None
         durable_directory(root)
         store: Store | None = None
-        work_cpu = work_wall = work_extent = 0
+        work_extent = 0
         reservation: StudyAttemptReservation | None = None
         child_cpu = 0
         output_path: Path | None = None
@@ -414,6 +483,11 @@ def commit_native_publication(
                 _admitted(root, admission, seed, request.ticket)
                 store = Store(root, admission, seed_raw, meter)
                 current = store.ledger()
+                if (
+                    current.plan != seed.plan
+                    or current.records[: len(seed.records)] != seed.records
+                ):
+                    raise StudyLedgerError("store_seed_prefix")
                 held: dict[str, StudyAttemptReservation] = {}
                 for record in current.records:
                     entry = record.event
@@ -452,11 +526,8 @@ def commit_native_publication(
                     or meter.total > control.ticket_artifact_bytes
                 ):
                     raise StudyLedgerError("control_allowance_overrun")
-                work_cpu, work_wall, work_extent = (
-                    time.process_time_ns(),
-                    time.monotonic_ns(),
-                    meter.total,
-                )
+                clock.work()
+                work_extent = meter.total
                 reservation = StudyAttemptReservation(
                     attempt_id=request.attempt_id,
                     phase="accounting",
@@ -501,17 +572,18 @@ def commit_native_publication(
                 output_path = scratch / "output.json"
                 original = None if closure is None else closure[0]
                 original_evidence = None if closure is None else closure[2]
+                payloads = (
+                    _payloads(request) if closure is None else _stored_payloads(store, request)
+                )
                 snapshots = (
                     journal_snapshot(Path(request.journal_path), request.journal_sha256)
                     if closure is None
-                    else nullcontext(closure[1])
+                    else nullcontext(LockedJournal(Path(request.journal_path), None, closure[1]))
                 )
-                with snapshots as journal_raw:
+                with snapshots as locked:
+                    journal_raw = locked.original
                     if journal_raw is not None:
                         meter.write(snapshot, journal_raw)
-                    payloads = (
-                        _payloads(request) if closure is None else _stored_payloads(store, request)
-                    )
                     result, child_cpu = _run_child(
                         request,
                         raw(current),
@@ -539,15 +611,9 @@ def commit_native_publication(
                         ) != (len(current.records), head(current), digest(raw(current))):
                             raise StudyLedgerError("publication_result_mismatch")
                         with store.transaction():
-                            # Actual locked live-byte recheck is BEFORE publication commit.
-                            if (
-                                journal_raw is not None
-                                and read_bytes(Path(request.journal_path), limit=MAX_JOURNAL_BYTES)
-                                != journal_raw
-                            ):
-                                raise StudyLedgerError("journal_changed")
-                            if journal_raw is None and Path(request.journal_path).exists():
-                                raise StudyLedgerError("journal_changed")
+                            # Pread the retained descriptor; a same-inode close
+                            # here would silently cancel SQLite's POSIX locks.
+                            locked.recheck()
                             store.replace(current, actual)
                             store.db.execute(
                                 "INSERT INTO closures VALUES (?,?,?,?,?,?,?,?)",
@@ -569,12 +635,13 @@ def commit_native_publication(
                         current = actual
                     elif raw(actual) != raw(current):
                         raise StudyLedgerError("publication_result_mismatch")
+                clock.tail()
                 measured = PublicationMeasurements(
-                    parent_cpu_ns=time.process_time_ns() - work_cpu,
+                    parent_cpu_ns=clock.work_cpu,
                     child_cpu_ns=child_cpu,
-                    wall_ns=time.monotonic_ns() - work_wall,
+                    wall_ns=clock.work_wall,
                     created_artifact_bytes=meter.total - work_extent,
-                    control_parent_cpu_ns=work_cpu - started_cpu,
+                    control_parent_cpu_ns=clock.control_used,
                     control_created_artifact_bytes=work_extent,
                 )
                 overrun = (
@@ -616,9 +683,10 @@ def commit_native_publication(
         finally:
             # The measurement's unresolved controller hold covers cleanup, final
             # update, close and acknowledgement; it is never declared exact zero.
-            if store is not None:
+            cleanup = clock.tail()
+            if cleanup and store is not None:
                 store.close()
-            if scratch is not None:
+            if cleanup and scratch is not None:
                 for name in ("output.json", "journal.sqlite3"):
                     p = scratch / name
                     if p.exists():

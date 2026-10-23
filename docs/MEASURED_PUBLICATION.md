@@ -36,7 +36,9 @@ known publication measurements and available study allowance are distinct.
 Neither denial nor the final measurement write is advertised as exact zero.
 
 Root, admission, seed, store and ticket tombstones must survive restart.
-Partial/corrupt stores fail closed; they never fall back to a new seed budget.
+A durable creation marker precedes first store creation. Missing stores after that
+marker, partial/corrupt stores, and current ledgers lacking the exact original
+seed prefix fail closed; they never fall back to a new seed budget.
 Absolute-root binding rejects relocation but cannot detect wholesale rollback
 of all trusted state at the same path. Owner-controlled retention, protected
 ancestors and a local filesystem honoring SQLite/fsync locks are prerequisites.
@@ -51,7 +53,11 @@ then uses the exact post-reservation ledger as its original preappend ledger.
 The store lock precedes the actual present-Journal `BEGIN IMMEDIATE` lock.
 The latter excludes existing Journal writers, not merely cooperating advisory
 lock users. It is held through byte snapshot, live recheck and publication
-commit, without Journal writes or mode conversion. Composition reads the
+commit, without Journal writes or mode conversion. One raw descriptor remains
+open until after SQLite rollback/close; raw snapshot and recheck use pread.
+Closing another descriptor for the same inode would cancel POSIX locks. All
+caller material reads therefore precede the Journal lock. Contention tests
+launch a fresh interpreter, avoiding inherited SQLite fork-local lock state. Composition reads the
 owner-private immutable copy. For original absence, only creators that also
 acquire `publication_store.root_lock(root)` are excluded; legacy or hostile
 creators are not covered by that guarantee.
@@ -70,7 +76,10 @@ not a new event or a free rerun.
 Child user+system CPU comes from wait4/rusage; parent process CPU is measured
 separately and excludes child CPU. Operation wall duration is monotonic and
 includes waiting. The fixed child has CPU/file-size/core limits; the owning
-single-threaded parent has CPU/wall deadlines. This API cannot borrow another
+single-threaded parent has CPU/wall deadlines. Startup/control, work and the
+remaining control tail have disjoint CPU timers; refunded work capacity cannot
+fund cleanup. Inherited child hard limits are preserved or tightened, and every
+child setup/execution failure exits inside the fixed child boundary. This API cannot borrow another
 thread's timers.
 
 The artifact metric is logical newly-created file extents, not physical disk

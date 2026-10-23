@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-import os
 import sqlite3
+import subprocess
+import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -34,7 +36,9 @@ from strange_physics.study_ledger import (
 )
 
 
-def prepare(material: Material, path: Path, root: Path) -> NativePublicationRequest:
+def prepare(
+    material: Material, path: Path, root: Path, *, control_ns: int = 5_000_000_000
+) -> NativePublicationRequest:
     root.mkdir(mode=0o700)
     ledger = purchases(material)
     manifest = study_manifest(ledger)
@@ -45,7 +49,7 @@ def prepare(material: Material, path: Path, root: Path) -> NativePublicationRequ
         uv_lock_sha256=manifest.uv_lock_sha256,
         attempt_id="publication-control",
         tickets=4,
-        ticket_cpu_ns=5_000_000_000,
+        ticket_cpu_ns=control_ns,
         ticket_wall_ns=30_000_000_000,
         ticket_artifact_bytes=16 * MIB,
     )
@@ -57,7 +61,7 @@ def prepare(material: Material, path: Path, root: Path) -> NativePublicationRequ
         config_sha256=message_sha256(control),
         input_sha256=message_sha256(ledger.plan),
         retry_of=None,
-        cpu_reservation_ns=21_000_000_000,
+        cpu_reservation_ns=4 * control_ns + 1_000_000_000,
         artifact_reservation_bytes=80 * MIB,
         purchase=None,
     )
@@ -247,26 +251,24 @@ def test_real_journal_writer_is_excluded(
     observed: list[bytes] = []
 
     def checked(*args: Any, **kwargs: Any) -> Any:
-        read, write = os.pipe()
-        pid = os.fork()
-        if pid == 0:
-            os.close(read)
-            from strange_physics.journal import Journal
-
-            journal = Journal(path)
-            journal._db.execute("PRAGMA busy_timeout=0")
-            try:
-                journal.record_failure("contender", "synthetic", [])
-                os.write(write, b"unexpected")
-            except sqlite3.OperationalError:
-                os.write(write, b"blocked")
-            finally:
-                journal.close()
-            os._exit(0)
-        os.close(write)
-        observed.append(os.read(read, 32))
-        os.close(read)
-        os.waitpid(pid, 0)
+        code = """
+import sqlite3,sys
+from pathlib import Path
+from strange_physics.journal import Journal
+j=Journal(Path(sys.argv[1]))
+j._db.execute("PRAGMA busy_timeout=0")
+try:
+    j.record_failure("contender","synthetic",[])
+    print("unexpected")
+except sqlite3.OperationalError:
+    print("blocked")
+finally:
+    j.close()
+"""
+        completed = subprocess.run(
+            [sys.executable, "-c", code, str(path)], capture_output=True, timeout=10, check=True
+        )
+        observed.append(completed.stdout.strip())
         return original(*args, **kwargs)
 
     monkeypatch.setattr(publisher, "_run_child", checked)
@@ -279,3 +281,108 @@ def test_real_journal_writer_is_excluded(
         journal.record_failure("after", "synthetic", [])
     finally:
         journal.close()
+
+
+def test_missing_previously_created_store_never_reseeds(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    publisher.commit_native_publication(root, request)
+    (root / "publication.sqlite3").unlink()
+    with pytest.raises(StudyLedgerError, match="store_missing_after_creation"):
+        publisher.commit_native_publication(root, change(request, ticket=1, attempt_id="retry"))
+    assert not (root / "publication.sqlite3").exists()
+
+
+def test_current_store_requires_original_seed_prefix(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    with pytest.raises(StudyLedgerError, match="stale"):
+        publisher.commit_native_publication(root, change(request, expected_revision=0))
+    seed = read_study_ledger((root / "seed-ledger.json").read_bytes())
+    shorter = type(seed)(plan=seed.plan, records=seed.records[:-1])
+    with sqlite3.connect(root / "publication.sqlite3") as db:
+        db.execute(
+            "UPDATE state SET ledger=?,revision=?,head=?",
+            (raw(shorter), len(shorter.records), storage.head(shorter)),
+        )
+        db.execute("DELETE FROM records WHERE sequence>=?", (len(shorter.records),))
+    with pytest.raises(StudyLedgerError, match="store_seed_prefix"):
+        publisher.commit_native_publication(
+            root,
+            change(
+                request,
+                ticket=1,
+                attempt_id="retry",
+                expected_revision=len(shorter.records),
+                expected_head_sha256=storage.head(shorter),
+            ),
+        )
+
+
+def test_control_tail_cannot_borrow_settled_work_budget(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root, control_ns=1_000_000_000)
+    original = storage.Store.close
+
+    def expensive_close(store: storage.Store) -> None:
+        original(store)
+        started = time.process_time_ns()
+        while time.process_time_ns() - started < 2_000_000_000:
+            pass
+
+    monkeypatch.setattr(storage.Store, "close", expensive_close)
+    with pytest.raises(StudyLedgerError, match="publication_deadline"):
+        publisher.commit_native_publication(root, request)
+    # Work may be settled, but the interrupted control tail remains held.
+    h = read_study_ledger(current(root))
+    assert summarize_study(h).budget.unresolved_attempts == 1
+    monkeypatch.setattr(storage.Store, "close", original)
+    replay = publisher.commit_native_publication(
+        root, change(request, ticket=1, attempt_id="retry")
+    )
+    assert replay.replayed
+
+
+def test_child_respects_inherited_hard_file_limit(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    request_path = root / "request.json"
+    request_path.write_bytes(raw(request))
+    request_path.chmod(0o600)
+    code = """
+import os,resource,sys
+from pathlib import Path
+from strange_physics.measured_publication import commit_native_publication
+from strange_physics.measured_publication_contracts import NativePublicationRequest
+request=NativePublicationRequest.model_validate_json(Path(sys.argv[2]).read_bytes())
+resource.setrlimit(resource.RLIMIT_FSIZE,(2*1024**2,2*1024**2))
+pid=os.getpid()
+result=commit_native_publication(Path(sys.argv[1]),request)
+assert os.getpid()==pid
+print(result.receipt.event_id)
+"""
+    completed = subprocess.run(
+        [sys.executable, "-c", code, str(root), str(request_path)],
+        capture_output=True,
+        text=True,
+        timeout=30,
+        check=True,
+    )
+    assert completed.stdout.strip() == request.event_id
