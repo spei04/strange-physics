@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import hashlib
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
 from strange_physics.bounded_json import bounded_canonical
+from strange_physics.contracts import Message
 from strange_physics.native_classical import validate_classical_diagnostic_result
 from strange_physics.native_classical_contracts import (
     ClassicalDiagnosticConfig,
@@ -46,7 +48,7 @@ from strange_physics.study_scoring import (
     _identity,
     reconcile_native_study_score,
 )
-from strange_physics.study_scoring_contracts import StudyNativeScoreEvidence
+from strange_physics.study_scoring_contracts import StudyMaterialIdentity, StudyNativeScoreEvidence
 
 MAX_PUBLICATION_INPUT_BYTES = 64 * 1024 * 1024
 
@@ -239,6 +241,45 @@ def propose_study_publication(
     resulting record/head. No result hash feeds back into its own hashed input.
     The caller must atomically persist both evidence and ledger under a real CAS.
     """
+    return StudyPublicationProposal(
+        *_propose_publication(
+            ledger_raw,
+            event_id=event_id,
+            expected_revision=expected_revision,
+            expected_head_sha256=expected_head_sha256,
+            original_ledger_raw=original_ledger_raw,
+            original_evidence_raw=original_evidence_raw,
+            parse_evidence=parse_study_publication_evidence,
+            reconcile=lambda raw: reconcile_study_publication(
+                raw,
+                journal_path,
+                cell_id=cell_id,
+                materials=materials,
+                scoring_input_raw=scoring_input_raw,
+                scoring_result_raw=scoring_result_raw,
+                diagnostic_attempt_id=diagnostic_attempt_id,
+                diagnostic_result_raw=diagnostic_result_raw,
+            ),
+            ledger_identity=lambda evidence: evidence.native.ledger_identity,
+            outcome=lambda evidence: evidence.outcome,
+        )
+    )
+
+
+def _propose_publication[E: Message](
+    ledger_raw: bytes,
+    *,
+    event_id: str,
+    expected_revision: int,
+    expected_head_sha256: str,
+    original_ledger_raw: bytes | None,
+    original_evidence_raw: bytes | None,
+    parse_evidence: Callable[[bytes], E],
+    reconcile: Callable[[bytes], E],
+    ledger_identity: Callable[[E], StudyMaterialIdentity],
+    outcome: Callable[[E], StudyCellOutcome],
+) -> tuple[NativeStudyLedger, E, bytes, StudyPublicationReceipt, bool]:
+    """Shared actual-prefix replay/CAS; each caller supplies its full material binder."""
     current = read_study_ledger(ledger_raw)
     found = next((r for r in current.records if r.event_id == event_id), None)
     if found is not None:
@@ -254,7 +295,7 @@ def propose_study_publication(
             prefix
         ):
             raise StudyLedgerError("publication_original_prefix_mismatch")
-        retained = parse_study_publication_evidence(original_evidence_raw)
+        retained = parse_evidence(original_evidence_raw)
         if _reference(original_evidence_raw, retained) != found.event.evidence:
             raise StudyLedgerError("event_conflict")
         base_raw = original_ledger_raw
@@ -267,16 +308,7 @@ def propose_study_publication(
         raise StudyLedgerError("stale_revision")
     if expected_head_sha256 != _head(original):
         raise StudyLedgerError("stale_head")
-    evidence = reconcile_study_publication(
-        base_raw,
-        journal_path,
-        cell_id=cell_id,
-        materials=materials,
-        scoring_input_raw=scoring_input_raw,
-        scoring_result_raw=scoring_result_raw,
-        diagnostic_attempt_id=diagnostic_attempt_id,
-        diagnostic_result_raw=diagnostic_result_raw,
-    )
+    evidence = reconcile(base_raw)
     evidence_raw = canonical_json(evidence.model_dump(mode="json")).encode()
     if found is not None:
         assert original_evidence_raw is not None
@@ -284,7 +316,7 @@ def propose_study_publication(
             raise StudyLedgerError("event_conflict")
         evidence_raw = original_evidence_raw
     event = StudyPublicationEvent(
-        outcome=evidence.outcome, evidence=_reference(evidence_raw, evidence)
+        outcome=outcome(evidence), evidence=_reference(evidence_raw, evidence)
     )
     proposed = append_study_publication(
         original, event_id=event_id, event=event, expected_revision=expected_revision
@@ -294,14 +326,14 @@ def propose_study_publication(
         raise StudyLedgerError("event_conflict")
     receipt = StudyPublicationReceipt(
         event_id=event_id,
-        original_ledger_identity=evidence.native.ledger_identity,
+        original_ledger_identity=ledger_identity(evidence),
         original_revision=expected_revision,
         original_head_sha256=_head(original),
         event=event,
         record_sha256=message_sha256(record),
         resulting_ledger_sha256=message_sha256(proposed),
     )
-    return StudyPublicationProposal(
+    return (
         current if found is not None else proposed,
         evidence,
         evidence_raw,
@@ -310,7 +342,7 @@ def propose_study_publication(
     )
 
 
-def _reference(raw: bytes, evidence: StudyPublicationEvidence) -> StudyPublicationReference:
+def _reference(raw: bytes, evidence: Message) -> StudyPublicationReference:
     digest, _ = bounded_canonical(evidence, MAX_PUBLICATION_BYTES)
     if not 1 <= len(raw) <= MAX_PUBLICATION_BYTES:
         raise StudyLedgerError("publication_evidence_limit")

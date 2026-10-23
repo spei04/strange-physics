@@ -87,6 +87,19 @@ def main() -> None:
                 group == "runtime_negative",
             )
 
+    early = json.loads((ROOT / "native-study-early.examples.json").read_text())
+    for name, fixture in early["valid"].items():
+        check(f"native-study-early.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in early[group]:
+            value = copy.deepcopy(early["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"native-study-early.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     study_publication = json.loads((ROOT / "native-study-publication.examples.json").read_text())
     for name, fixture in study_publication["valid"].items():
         check(f"native-study-publication.schema.json#/$defs/{name}", fixture)
