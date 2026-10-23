@@ -21,7 +21,7 @@ from typing import Annotated, TypedDict
 
 from pydantic import Field
 
-from strange_physics.bounded_json import parse_bounded_json
+from strange_physics.bounded_json import bounded_canonical, parse_bounded_json
 from strange_physics.contracts import Message
 from strange_physics.measured_publication_contracts import (
     MIB,
@@ -64,6 +64,7 @@ from strange_physics.study_publication_contracts import StudyPublicationReceipt
 from strange_physics.workflow_io import private_stat, read_bytes, safe_path
 
 VERSION = "strange-physics.measured-publication.v1"
+REQUEST_BYTES = 128 * 1024
 
 
 class _Output(Message):
@@ -351,7 +352,7 @@ def _run_child(
     original: bytes | None,
     evidence: bytes | None,
     output: Path,
-) -> tuple[_Output, int]:
+) -> tuple[_Output | None, int]:
     pid = os.fork()
     if pid == 0:
         code = 70
@@ -369,7 +370,7 @@ def _run_child(
         reaped = True
         cpu = math.ceil((usage.ru_utime + usage.ru_stime) * 1_000_000_000)
         if not os.WIFEXITED(status) or os.WEXITSTATUS(status) != 0:
-            raise StudyLedgerError("publication_child_failed")
+            return None, cpu
         result = parse_bounded_json(
             read_bytes(output, limit=request.output_limit_bytes),
             _Output,
@@ -404,7 +405,7 @@ def _closure(
     if row[0] != _identity(request) or digest(row[5]) != row[6]:
         raise StudyLedgerError("publication_conflict")
     saved = parse_bounded_json(
-        row[1], NativePublicationRequest, max_bytes=128 * 1024, max_depth=12, max_nodes=1000
+        row[1], NativePublicationRequest, max_bytes=REQUEST_BYTES, max_depth=12, max_nodes=1000
     )
     if _identity(saved) != row[0]:
         raise StudyLedgerError("closure_corrupt")
@@ -440,6 +441,7 @@ def commit_native_publication(
     closure may replay; a real retry uses a fresh ticket and attempt identity.
     """
     started_cpu = time.process_time_ns()
+    bounded_canonical(request, REQUEST_BYTES)
     request = NativePublicationRequest.model_validate_json(raw(request))
     root = safe_path(store_root)
     private_stat(root.stat(), directory=True)
@@ -526,8 +528,6 @@ def commit_native_publication(
                     or meter.total > control.ticket_artifact_bytes
                 ):
                     raise StudyLedgerError("control_allowance_overrun")
-                clock.work()
-                work_extent = meter.total
                 reservation = StudyAttemptReservation(
                     attempt_id=request.attempt_id,
                     phase="accounting",
@@ -561,10 +561,14 @@ def commit_native_publication(
                 )
                 if required > request.artifact_reservation_bytes:
                     raise StudyLedgerError("publication_artifact_headroom")
-                store.limit_growth(request.artifact_reservation_bytes // 2)
                 with store.transaction():
                     store.replace(current, reserved)
                 current = reserved
+                if meter.total > control.ticket_artifact_bytes:
+                    raise StudyLedgerError("control_allowance_overrun")
+                clock.work()
+                work_extent = meter.total
+                store.limit_growth(request.artifact_reservation_bytes // 2)
                 scratch = root / f"work-{request.ticket}"
                 scratch.mkdir(mode=0o700)
                 durable_directory(root)
@@ -593,7 +597,24 @@ def commit_native_publication(
                         original_evidence,
                         output_path,
                     )
-                    meter.total += output_path.stat().st_size
+                    if output_path.exists():
+                        meter.total += output_path.stat().st_size
+                    if result is None:
+                        clock.tail()
+                        failed = StudyAttemptUpdate(
+                            attempt_id=request.attempt_id,
+                            state="unknown",
+                            cpu_ns=clock.work_cpu + child_cpu,
+                            wall_ns=clock.work_wall,
+                            artifact_bytes=meter.total - work_extent,
+                            facts=None,
+                        )
+                        measured_failure = _append(
+                            current, _event_id(request.attempt_id, "measure"), failed
+                        )
+                        with store.transaction():
+                            store.replace(current, measured_failure)
+                        raise StudyLedgerError("publication_child_failed")
                     actual = read_study_ledger(raw(result.ledger))
                     if result.replayed != (closure is not None):
                         raise StudyLedgerError("publication_result_mismatch")

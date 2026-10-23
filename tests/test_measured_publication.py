@@ -386,3 +386,103 @@ print(result.receipt.event_id)
         check=True,
     )
     assert completed.stdout.strip() == request.event_id
+
+
+def test_failed_reaped_child_retains_known_measurements_and_hold(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+
+    def rejected(*args: Any, **kwargs: Any) -> Any:
+        started = time.process_time_ns()
+        while time.process_time_ns() - started < 20_000_000:
+            pass
+        raise ValueError("synthetic child failure")
+
+    monkeypatch.setattr(publisher, "_compose", rejected)
+    with pytest.raises(StudyLedgerError, match="publication_child_failed"):
+        publisher.commit_native_publication(root, request)
+    h = read_study_ledger(current(root))
+    final = h.records[-1].event
+    assert isinstance(final, StudyAttemptUpdate) and final.state == "unknown"
+    assert final.cpu_ns is not None and final.cpu_ns >= 20_000_000
+    assert final.wall_ns is not None and final.wall_ns > 0
+    assert summarize_study(h).budget.unresolved_attempts == 2
+    assert summarize_study(h).budget.charged_cpu_ns >= request.cpu_reservation_ns
+    with sqlite3.connect(root / "publication.sqlite3") as db:
+        assert db.execute("SELECT count(*) FROM closures").fetchone()[0] == 0
+
+
+def test_sleeping_child_wall_time_is_not_cpu(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    original = publisher._compose
+
+    def delayed(*args: Any, **kwargs: Any) -> Any:
+        result = original(*args, **kwargs)
+        # This delay is the measured phenomenon, not test synchronization.
+        time.sleep(0.05)
+        return result
+
+    monkeypatch.setattr(publisher, "_compose", delayed)
+    result = publisher.commit_native_publication(root, request)
+    measured = result.measurements
+    assert measured.wall_ns > measured.parent_cpu_ns + measured.child_cpu_ns
+    assert measured.child_cpu_ns > 0
+
+
+def test_encoded_request_bound_precedes_ticket_consumption(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+) -> None:
+    from strange_physics.control_contracts import ContractViolation
+
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    files = tuple(
+        PublicationFile.model_validate(f.model_dump() | {"path": "\U0001f600" * 4000})
+        for f in request.files
+    )
+    oversized = change(request, files=files)
+    assert len(raw(oversized)) > publisher.REQUEST_BYTES
+    with pytest.raises(ContractViolation):
+        publisher.commit_native_publication(root, oversized)
+    assert not (root / "ticket-0").exists()
+
+
+def test_failed_reservation_cannot_borrow_unretained_work_cpu(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root, control_ns=1_000_000_000)
+    original = storage.Store.replace
+
+    def expensive_reservation(
+        store: storage.Store,
+        before: Any,
+        after: Any,
+    ) -> None:
+        started = time.process_time_ns()
+        while time.process_time_ns() - started < 2_000_000_000:
+            pass
+        original(store, before, after)
+
+    monkeypatch.setattr(storage.Store, "replace", expensive_reservation)
+    with pytest.raises(StudyLedgerError, match="publication_deadline"):
+        publisher.commit_native_publication(root, request)
+    h = read_study_ledger(current(root))
+    assert len(h.records) == request.expected_revision
+    assert summarize_study(h).budget.unresolved_attempts == 1

@@ -23,7 +23,9 @@ settles or releases that control hold.
 
 A ticket is an index in the admission's finite closed set. Each invocation
 creates an exclusive owner-only ticket file and fsyncs it and the directory
-before parsing the complete ledger or opening the store. Contention and
+before parsing the complete ledger or opening the store. The complete canonical
+request is capped at 128 KiB before ticket consumption, including JSON escaping;
+recovery uses the same byte cap. Contention and
 startup failure consume tickets. An uncertain/consumed ticket cannot execute
 again. A retry needs a new ticket and a new charged work attempt.
 
@@ -49,6 +51,8 @@ This is not an adversarial filesystem sandbox or a fork-proof budget service.
 A fresh caller head is checked before the work reservation. The durable
 reservation is phase=accounting, operation=accounting, cell_id=None. The proposal
 then uses the exact post-reservation ledger as its original preappend ledger.
+Reservation construction and persistence remain under the control CPU timer;
+the work timer starts only after that transaction is durable.
 
 The store lock precedes the actual present-Journal `BEGIN IMMEDIATE` lock.
 The latter excludes existing Journal writers, not merely cooperating advisory
@@ -92,6 +96,7 @@ Missing/shrinking tracked extents fail rather than imply negative work.
 Actual known operation measurements are followed by a separate ledger update.
 The global controller hold covers startup, cleanup, final commit/measurement
 and acknowledgement tails. It remains unresolved, even when a scientific cell
-is complete. Crashes keep the whole work reservation; recovery consumes fresh
+is complete. Reaped failed children retain known CPU/wall/artifact measurements under an
+unknown work hold. Crashes keep the whole work reservation; recovery consumes fresh
 capacity. These measurements do not retroactively meter the native numerical
 results supplied to the publisher.
