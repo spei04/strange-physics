@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Project lead owns primary/GitHub integration; N01 author source is released. No next N01 runtime writer yet.",
-      "identity": "Quality owns feat/native-study-contracts for combined native/accounting integration and review, then releases the clean checkout to lead; no extra checkout or dependency sharing.",
+      "scientific": "Quality performs bounded five-document reconciliation in primary, then releases for independent Research review; no primary installed-package consumer.",
+      "identity": "Project lead owns released clean feat/measured-publication source423ea566 and its owned environment for integration; no extra checkout or dependency sharing.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12103,7 +12103,7 @@
       "finding": "The approved first-result closure remains20 nodes:14 accepted and six unfinished research parents. Partial N01 candidate and RA-02 accounting checkpoints are accepted, but neither parent is complete; dependencies and run caps remain unchanged.",
       "next_task": "N01 candidate production/prediction/scoring is the next proposed unit after combined integration and explicit writer handoff; RA-02 scored-cell composition waits for that interface. Both parents remain in progress, and actual study freeze/execution awaits the existing numerical/acquisition gates.",
       "graph_unchanged": false,
-      "current_assignment": "Quality: combined integration/release in identity; Project lead: primary/GitHub integration; Research and Platform: independent composition review. No next N01 or scored-cell source writer has been handed off.",
+      "current_assignment": "Project lead: accepted measured publisher integration in identity; Platform: candidate delivery verification; Research: independent progress/dependency review; Quality: bounded primary progress reconciliation then release. No next numerical/simulation runtime writer assigned.",
       "proposal": {
         "id": "NATIVE_PATH_PROPOSAL_2026_10_20",
         "status": "approved_and_activated_2026_10_21",
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "early_stop_delivered_measured_publication_in_progress",
+      "status": "measured_publication_source_accepted_integration_pending",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Implement measured durable early/scored publisher in reused identity from accepted main2800188.",
-        "Platform": "Independent durability/concurrency/caps/package review of immutable Quality checkpoint.",
-        "Research": "Independent measurement, scientific isolation, retained-snapshot replay and parent admission review.",
-        "Project lead": "Primary progress records, assignment log and integration; parent tasks remain in progress."
+        "Quality": "Accepted source423ea566 released; reconcile five primary progress documents, then release. No environment consumer.",
+        "Platform": "Verify exact protected-main candidate delivery after accepted source/capacity review.",
+        "Research": "Independently review progress/dependency consistency and preserve separate numerical/simulation wrapper prerequisites.",
+        "Project lead": "Integrate accepted source in released identity; PR/main/candidate gates remain pending; parent tasks stay in progress."
       },
-      "handoff": "Explicit writer handoff and lock/environment revalidation precede code changes. Reuse the two existing independent cloud checkouts; no additional checkout or shared dependency installation.",
+      "handoff": "Quality explicitly released clean identity source423ea566 and its owned installed environment; all author/reviewer consumers ended. Lead owns identity integration. Quality reconciles primary progress, then releases it for independent Research review. Reuse existing cloud checkouts; no shared dependency installation.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Deliver one bounded measured atomic early/scored publication and crash-recovery path with real Journal-writer exclusion. Then explicitly audit and complete durable reservations and OS measurements for existing native numerical and purchased-simulation stages before parent source/delivery closure and finite-grid RA-N02.a admission. Future grid/calibration/selection outputs or the actual comparison are not prerequisites for closing those existing parent obligations. No study, budget reset or dependency-graph change.",
+      "next_units": "Complete publisher PR/main/candidate integration gates. Then audit and complete durable reservations and OS measurements for existing native numerical and purchased-simulation stages before parent source/delivery closure and finite-grid RA-N02.a admission. Future grid/calibration/selection outputs or the actual comparison are not prerequisites for auditing those existing parent obligations. No study, budget reset or dependency-graph change.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -12892,7 +12892,7 @@
             "progress_review_index_sha256": "56f89ca075add2c6bec02a0564ed439c00616ad14fc45d16b13e98b8865ceedc"
           },
           "durable_publication": {
-            "status": "implementation_assigned",
+            "status": "source_accepted_integration_pending",
             "owner": "Quality",
             "reviewers": [
               "Platform",
@@ -12906,10 +12906,39 @@
             "platform_review_prep_index_sha256": "ca8fb2b4e73d74b46e076ea9454f7e23058be94ff46e12b0cacc62bf68d78c77",
             "research_review_prep_index_sha256": "758c50c8a5e65ecb9bfc9648726d0b52dd9512092eff250162aade607118eb51",
             "scope": "One fixed early/scored publication producer: actual parent/child CPU, wall and artifact measurements; finite charged bootstrap/recovery/global tail; durable reservations; one private atomic SQLite closure; exact original-receipt recovery from retained original snapshots; actual present-Journal BEGIN IMMEDIATE writer exclusion and explicit cooperating absent-creator guarantee. No numeric execution, generic arbitrary runner, provider or study.",
-            "next_gate": "Immutable coherent executable checkpoint with meaningful measurement, concurrency, crash/recovery and bounded-admission evidence; independent Platform/Research review before integration.",
-            "environment": "Reused identity;70 installed/source files equal,5606 singly-owned site files, unchanged pinned lock/uv0.13.4 and pip check passed. No reinstall/new checkout.",
+            "next_gate": "Independent progress review, then required PR/main CI and protected-main candidate verification. Final integrated full-suite evidence remains pending.",
+            "environment": "Released identity:73 installed/source files equal;5526 dependency files unchanged, owned and singly-linked; same pinned lock/uv0.13.4, offline project-only copy refresh and pip check passed. No active author/reviewer consumers; no new checkout or dependencies.",
             "parent_admission": "Publication measurement does not prove prior candidate/preparation/prediction/scoring/classical or purchased-simulation measurement. Audit and complete their fixed-operation durable reservations, genuine OS measurements and failure/retry/recovery binding before closing105/106 and admitting N02.a. Future grid/likelihood measurement belongs to N02.a itself.",
-            "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20"
+            "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20",
+            "source": "423ea566406ecab8dd0693c8e004a3be697631b3",
+            "tree": "fcd3015c2748b413a0c32a11c1ec044400dbebd9",
+            "author_index_sha256": "e1abbae7776569c89017f6cb5de5df8956ebc42ca07eacfa63ef1e585385c42d",
+            "research_index_sha256": "dfd669ef8b8ee42755ed3934e4e1d075f33f9b13df1fecad3c62f3567a3fc497",
+            "platform_index_sha256": "ae29f05b0e7bc1b03da120dc6cbd4c3a458eb79d2f1a83bd6328a42e2c0e1a46",
+            "final_focused_tests": 56,
+            "final_checks": [
+              "Ruff",
+              "181-file format",
+              "strict mypy129",
+              "configured Bandit:0 medium/high;47 low",
+              "offline wheel/sdist and archive allowlist",
+              "pip check",
+              "73-file installed/source equality",
+              "installed original-receipt replay with15 numerical aliases forbidden",
+              "spring CLI8particles/8purchases investigate and inspect"
+            ],
+            "prior_full_gate_evidence": {
+              "source": "109daba56d8f780531400cbefc672a0d57e33ab2",
+              "full_tests": 4143,
+              "external_schema_cases": 1522,
+              "locked_dependency_audit": "passed",
+              "index_sha256": "53563ba8f30ba6cc70ef99afc323c32746b1bb8df47510843c29bb41df795df0",
+              "boundary": "Source-specific evidence; not claimed as final423 full-suite proof."
+            },
+            "integration_owner": "Project lead",
+            "delivery_reviewer": "Platform",
+            "progress_reviewer": "Research",
+            "counter_review": "Frozen work-end extents prevent control-tail growth from inflating work cost or reusing fallback allowance. Explicit8192-byte fault and exhausted-headroom cases plus sensitive mutants pass; seven natural rollback negatives are retained, not claimed cap-escape reproductions."
           }
         }
       },
@@ -13083,7 +13112,7 @@
         "progress_review_index_sha256": "56f89ca075add2c6bec02a0564ed439c00616ad14fc45d16b13e98b8865ceedc"
       },
       "durable_publication": {
-        "status": "implementation_assigned",
+        "status": "source_accepted_integration_pending",
         "owner": "Quality",
         "reviewers": [
           "Platform",
@@ -13097,10 +13126,39 @@
         "platform_review_prep_index_sha256": "ca8fb2b4e73d74b46e076ea9454f7e23058be94ff46e12b0cacc62bf68d78c77",
         "research_review_prep_index_sha256": "758c50c8a5e65ecb9bfc9648726d0b52dd9512092eff250162aade607118eb51",
         "scope": "One fixed early/scored publication producer: actual parent/child CPU, wall and artifact measurements; finite charged bootstrap/recovery/global tail; durable reservations; one private atomic SQLite closure; exact original-receipt recovery from retained original snapshots; actual present-Journal BEGIN IMMEDIATE writer exclusion and explicit cooperating absent-creator guarantee. No numeric execution, generic arbitrary runner, provider or study.",
-        "next_gate": "Immutable coherent executable checkpoint with meaningful measurement, concurrency, crash/recovery and bounded-admission evidence; independent Platform/Research review before integration.",
-        "environment": "Reused identity;70 installed/source files equal,5606 singly-owned site files, unchanged pinned lock/uv0.13.4 and pip check passed. No reinstall/new checkout.",
+        "next_gate": "Independent progress review, then required PR/main CI and protected-main candidate verification. Final integrated full-suite evidence remains pending.",
+        "environment": "Released identity:73 installed/source files equal;5526 dependency files unchanged, owned and singly-linked; same pinned lock/uv0.13.4, offline project-only copy refresh and pip check passed. No active author/reviewer consumers; no new checkout or dependencies.",
         "parent_admission": "Publication measurement does not prove prior candidate/preparation/prediction/scoring/classical or purchased-simulation measurement. Audit and complete their fixed-operation durable reservations, genuine OS measurements and failure/retry/recovery binding before closing105/106 and admitting N02.a. Future grid/likelihood measurement belongs to N02.a itself.",
-        "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20"
+        "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20",
+        "source": "423ea566406ecab8dd0693c8e004a3be697631b3",
+        "tree": "fcd3015c2748b413a0c32a11c1ec044400dbebd9",
+        "author_index_sha256": "e1abbae7776569c89017f6cb5de5df8956ebc42ca07eacfa63ef1e585385c42d",
+        "research_index_sha256": "dfd669ef8b8ee42755ed3934e4e1d075f33f9b13df1fecad3c62f3567a3fc497",
+        "platform_index_sha256": "ae29f05b0e7bc1b03da120dc6cbd4c3a458eb79d2f1a83bd6328a42e2c0e1a46",
+        "final_focused_tests": 56,
+        "final_checks": [
+          "Ruff",
+          "181-file format",
+          "strict mypy129",
+          "configured Bandit:0 medium/high;47 low",
+          "offline wheel/sdist and archive allowlist",
+          "pip check",
+          "73-file installed/source equality",
+          "installed original-receipt replay with15 numerical aliases forbidden",
+          "spring CLI8particles/8purchases investigate and inspect"
+        ],
+        "prior_full_gate_evidence": {
+          "source": "109daba56d8f780531400cbefc672a0d57e33ab2",
+          "full_tests": 4143,
+          "external_schema_cases": 1522,
+          "locked_dependency_audit": "passed",
+          "index_sha256": "53563ba8f30ba6cc70ef99afc323c32746b1bb8df47510843c29bb41df795df0",
+          "boundary": "Source-specific evidence; not claimed as final423 full-suite proof."
+        },
+        "integration_owner": "Project lead",
+        "delivery_reviewer": "Platform",
+        "progress_reviewer": "Research",
+        "counter_review": "Frozen work-end extents prevent control-tail growth from inflating work cost or reusing fallback allowance. Explicit8192-byte fault and exhausted-headroom cases plus sensitive mutants pass; seven natural rollback negatives are retained, not claimed cap-escape reproductions."
       }
     },
     "certificate_trust_update": {
@@ -13378,7 +13436,7 @@
             "progress_review_index_sha256": "56f89ca075add2c6bec02a0564ed439c00616ad14fc45d16b13e98b8865ceedc"
           },
           "durable_publication": {
-            "status": "implementation_assigned",
+            "status": "source_accepted_integration_pending",
             "owner": "Quality",
             "reviewers": [
               "Platform",
@@ -13392,10 +13450,39 @@
             "platform_review_prep_index_sha256": "ca8fb2b4e73d74b46e076ea9454f7e23058be94ff46e12b0cacc62bf68d78c77",
             "research_review_prep_index_sha256": "758c50c8a5e65ecb9bfc9648726d0b52dd9512092eff250162aade607118eb51",
             "scope": "One fixed early/scored publication producer: actual parent/child CPU, wall and artifact measurements; finite charged bootstrap/recovery/global tail; durable reservations; one private atomic SQLite closure; exact original-receipt recovery from retained original snapshots; actual present-Journal BEGIN IMMEDIATE writer exclusion and explicit cooperating absent-creator guarantee. No numeric execution, generic arbitrary runner, provider or study.",
-            "next_gate": "Immutable coherent executable checkpoint with meaningful measurement, concurrency, crash/recovery and bounded-admission evidence; independent Platform/Research review before integration.",
-            "environment": "Reused identity;70 installed/source files equal,5606 singly-owned site files, unchanged pinned lock/uv0.13.4 and pip check passed. No reinstall/new checkout.",
+            "next_gate": "Independent progress review, then required PR/main CI and protected-main candidate verification. Final integrated full-suite evidence remains pending.",
+            "environment": "Released identity:73 installed/source files equal;5526 dependency files unchanged, owned and singly-linked; same pinned lock/uv0.13.4, offline project-only copy refresh and pip check passed. No active author/reviewer consumers; no new checkout or dependencies.",
             "parent_admission": "Publication measurement does not prove prior candidate/preparation/prediction/scoring/classical or purchased-simulation measurement. Audit and complete their fixed-operation durable reservations, genuine OS measurements and failure/retry/recovery binding before closing105/106 and admitting N02.a. Future grid/likelihood measurement belongs to N02.a itself.",
-            "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20"
+            "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20",
+            "source": "423ea566406ecab8dd0693c8e004a3be697631b3",
+            "tree": "fcd3015c2748b413a0c32a11c1ec044400dbebd9",
+            "author_index_sha256": "e1abbae7776569c89017f6cb5de5df8956ebc42ca07eacfa63ef1e585385c42d",
+            "research_index_sha256": "dfd669ef8b8ee42755ed3934e4e1d075f33f9b13df1fecad3c62f3567a3fc497",
+            "platform_index_sha256": "ae29f05b0e7bc1b03da120dc6cbd4c3a458eb79d2f1a83bd6328a42e2c0e1a46",
+            "final_focused_tests": 56,
+            "final_checks": [
+              "Ruff",
+              "181-file format",
+              "strict mypy129",
+              "configured Bandit:0 medium/high;47 low",
+              "offline wheel/sdist and archive allowlist",
+              "pip check",
+              "73-file installed/source equality",
+              "installed original-receipt replay with15 numerical aliases forbidden",
+              "spring CLI8particles/8purchases investigate and inspect"
+            ],
+            "prior_full_gate_evidence": {
+              "source": "109daba56d8f780531400cbefc672a0d57e33ab2",
+              "full_tests": 4143,
+              "external_schema_cases": 1522,
+              "locked_dependency_audit": "passed",
+              "index_sha256": "53563ba8f30ba6cc70ef99afc323c32746b1bb8df47510843c29bb41df795df0",
+              "boundary": "Source-specific evidence; not claimed as final423 full-suite proof."
+            },
+            "integration_owner": "Project lead",
+            "delivery_reviewer": "Platform",
+            "progress_reviewer": "Research",
+            "counter_review": "Frozen work-end extents prevent control-tail growth from inflating work cost or reusing fallback allowance. Explicit8192-byte fault and exhausted-headroom cases plus sensitive mutants pass; seven natural rollback negatives are retained, not claimed cap-escape reproductions."
           }
         }
       },
