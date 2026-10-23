@@ -1043,3 +1043,51 @@ def test_sqlite_journal_headroom_denies_before_mutation(
         finally:
             store.close()
     assert current(root) == before == raw(result.ledger)
+
+
+def test_failed_settlement_deducts_control_growth_without_changing_work_cost(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    original_limit, original_replace = storage.Store.limit_growth, storage.Store.replace
+    limits: list[int] = []
+    completed_work_bytes: int | None = None
+    injected = 8192
+
+    def limited(store: storage.Store, amount: int) -> None:
+        limits.append(amount)
+        original_limit(store, amount)
+
+    def interrupted(store: storage.Store, before: Any, after: Any) -> None:
+        nonlocal completed_work_bytes
+        original_replace(store, before, after)
+        event = after.records[-1].event
+        if isinstance(event, StudyAttemptUpdate) and event.state == "completed":
+            completed_work_bytes = event.artifact_bytes
+            # Explicit fault injection of real private control extents; this is
+            # not a claim that ordinary settlement SQL naturally grew a file.
+            store.meter.write(root / "injected-control-extent", b"x" * injected)
+            raise OSError("synthetic settlement write failure")
+
+    with monkeypatch.context() as patch:
+        patch.setattr(storage.Store, "limit_growth", limited)
+        patch.setattr(storage.Store, "replace", interrupted)
+        with pytest.raises(OSError, match="synthetic settlement write failure"):
+            publisher.commit_native_publication(root, request)
+    assert len(limits) == 5  # initialization, reservation, work, settlement, fallback
+    assert limits[-1] <= limits[-2] - injected
+    ledger = read_study_ledger(current(root))
+    failed = ledger.records[-1].event
+    assert isinstance(failed, StudyAttemptUpdate) and failed.state == "unknown"
+    assert completed_work_bytes is not None and failed.artifact_bytes == completed_work_bytes
+    assert summarize_study(ledger).budget.unresolved_attempts == 2
+    replay = publisher.commit_native_publication(
+        root,
+        change(request, ticket=1, attempt_id="recovery"),
+    )
+    assert replay.replayed
+    assert replay.ledger.records[: len(ledger.records)] == ledger.records

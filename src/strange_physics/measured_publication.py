@@ -509,6 +509,7 @@ def commit_native_publication(
         durable_directory(root)
         store: Store | None = None
         work_extent = 0
+        work_artifact_bytes: int | None = None
         reservation: StudyAttemptReservation | None = None
         child_cpu = 0
         output_path: Path | None = None
@@ -694,12 +695,16 @@ def commit_native_publication(
                         elif raw(actual) != raw(current):
                             raise StudyLedgerError("publication_result_mismatch")
                     clock.tail()
-                    store.limit_growth(control.ticket_artifact_bytes - work_extent)
+                    meter.sample()
+                    work_artifact_bytes = meter.total - work_extent
+                    store.limit_growth(
+                        control.ticket_artifact_bytes - (meter.total - work_artifact_bytes)
+                    )
                     measured = PublicationMeasurements(
                         parent_cpu_ns=clock.work_cpu,
                         child_cpu_ns=child_cpu,
                         wall_ns=clock.work_wall,
-                        created_artifact_bytes=meter.total - work_extent,
+                        created_artifact_bytes=work_artifact_bytes,
                         control_parent_cpu_ns=clock.control_used,
                         control_created_artifact_bytes=work_extent,
                     )
@@ -742,7 +747,14 @@ def commit_native_publication(
                 except Exception as error:
                     try:
                         if clock.tail() and clock.work_started_wall:
-                            store.limit_growth(control.ticket_artifact_bytes - work_extent)
+                            meter.sample()
+                            if work_artifact_bytes is None:
+                                work_artifact_bytes = meter.total - work_extent
+                            # A failed settlement can itself grow retained extents.
+                            # Never fund its fallback with the same bytes twice.
+                            store.limit_growth(
+                                control.ticket_artifact_bytes - (meter.total - work_artifact_bytes)
+                            )
                             latest = store.ledger()
                             if not any(
                                 isinstance(row.event, StudyAttemptUpdate)
@@ -755,7 +767,7 @@ def commit_native_publication(
                                     state="unknown",
                                     cpu_ns=clock.work_cpu + child_cpu,
                                     wall_ns=clock.work_wall,
-                                    artifact_bytes=meter.total - work_extent,
+                                    artifact_bytes=work_artifact_bytes,
                                     facts=None,
                                 )
                                 measured_failure = _append(

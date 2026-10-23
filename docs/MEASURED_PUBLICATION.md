@@ -5,11 +5,12 @@ for the existing early-stop and scored publication proposals. Its fixed child
 performs composition only. It never runs candidate generation, simulation,
 prediction, fitting, scoring, classical diagnostics, providers or a study.
 
-This initial executable checkpoint is under review. The remaining acceptance
-matrix includes kill/fault injection, original scored outcomes, concurrent
-publication, resource exhaustion, retained control failures and package gates.
-It is not parent closure or permission to admit the finite-grid stage. The
-numerical and purchased-simulation metering wrappers are separate obligations.
+Acceptance covers process crashes and faults, original scored outcomes,
+concurrent publication, resource limits, retained control failures and package
+checks. Exact source identities, independent reviews and gate results are retained
+in private indexed evidence; repository integration still requires its CI gates.
+This producer is not parent closure or permission to admit the finite-grid stage.
+Numerical and purchased-simulation metering wrappers are separate obligations.
 
 ## Admission and retention
 
@@ -125,6 +126,10 @@ compatibility tests. This is not a binary-authenticity claim.
 The prelimit is recalculated before initialization, reservation, publication
 and success/unknown settlement. The work allowance also reserves the bounded
 snapshot and child-output extents. Settlement uses only the remaining control
-allowance, even when unused work capacity exists. Insufficient headroom denies
+allowance, even when unused work capacity exists. The work-end artifact count is
+frozen; any bytes created by a failed control settlement reduce the fallback's
+remaining allowance and cannot inflate the recorded work measurement. Insufficient
+headroom denies
 the operation; a larger store may therefore require an admission with a larger
-already-retained control allowance. No allowance is increased automatically.
+already-retained control allowance chosen at initial admission. An existing
+admission cannot be enlarged or replaced to recover capacity.
