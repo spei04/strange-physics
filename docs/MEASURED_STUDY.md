@@ -42,14 +42,14 @@ never refunded, reseeded or erased.
 ## Bounded synthetic construction
 
 The test fixture has six finite slots but executes four calls: freeze and
-comparison candidate at slots0/1, then their recoveries at3/4. Classical slots2/5
-remain unused. Its ordinary classical8MiB/120s is not escrowed; the unused third
+comparison candidate at slots 0/1, then their recoveries at 3/4. Classical slots 2/5
+remain unused. Its ordinary classical 8 MiB/120 s is not escrowed; the unused third
 recovery and publication promises remain protected by the existing admission.
 
-The declared first-slice envelope is269,631,488 bytes and342 CPU seconds. It
-includes the unresolved48MiB/120s setup hold, control hold, twelve unresolved
-1MiB/5s purchase holds, the actual work ceilings, all three recovery ceilings and
-80MiB/71s publication protection. It is not measured expenditure or throughput.
+The declared first-slice envelope is 269,631,488 bytes and 342 CPU seconds. It
+includes the unresolved 48 MiB/120 s setup hold, control hold, twelve unresolved
+1 MiB/5 s purchase holds, the actual work ceilings, all three recovery ceilings and
+80 MiB/71 s publication protection. It is not measured expenditure or throughput.
 
 A real same-store freeze precedes a clearly test-only injection of twelve
 purchase intents in one existing-store transaction. No production import API
@@ -57,20 +57,20 @@ exists for that seam. A fixed isolated child then creates genuine current-engine
 observations: eleven successful simulations and one explicitly injected failure.
 Historical synthetic engine fingerprints are never rewritten or adopted.
 
-Before file creation the child applies a262,400-byte file-size ceiling; it
+Before file creation the child applies a 262,400-byte file-size ceiling; it
 never opens CandidateStore. An exact-path, original-connection fixture guard
-applies and reads back4096-byte pages,32 pages, spill OFF, DELETE rollback mode
+applies and reads back 4096-byte pages, 32 pages, spill OFF, DELETE rollback mode
 and FULL synchronization before schema writes. Its pre-write epoch guard
-counts the32 ordinary Journal epochs and three configuration epochs, denying
-before epoch37. This bounds each Journal DB/journal epoch by393,472 bytes.
-Four conservative2MiB-store envelopes plus36 Journal envelopes and a cumulative
-4MiB export/copy allowance total35,677,184 bytes inside the setup hold. Parent and
-child each have at most60 CPU seconds under one absolute180-second setup
+counts the 32 ordinary Journal epochs and three configuration epochs, denying
+before epoch 37. This bounds each Journal DB/journal epoch by 393,472 bytes.
+Four conservative 2 MiB store envelopes plus 36 Journal envelopes and a cumulative
+4 MiB export/copy allowance total 35,677,184 bytes inside the setup hold. Parent and
+child each have at most 60 CPU seconds under one absolute 180-second setup
 deadline; failure terminates/reaps the child without automatic retry.
 
-The first-slice successful ledger has23 records and14 unresolved holds. The
-fixture retains a256KiB raw-ledger cap and14 finalization records/64KiB, and
-protects a512KiB publisher-ledger allowance. Larger public classical limits
+The first-slice successful ledger has 23 records and 14 unresolved holds. The
+fixture retains a 256 KiB raw-ledger cap and 14 finalization records/64 KiB, and
+protects a 512 KiB publisher-ledger allowance. Larger public classical limits
 remain future integration tests, not a reason to truncate data here.
 
 These are implementation and fixture acceptance requirements. Source-specific

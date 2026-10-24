@@ -239,12 +239,19 @@ def test_capture_substitution_rejects_without_closure(
         path = kwargs["snapshot_path"]
         if fault == "after-binding":
             original(*args, **kwargs)
-        assert f.budget.copies + 1 <= COPY_LIMIT
-        f.budget.copies += 1
+        saved = path.read_bytes() if fault == "raw" else None
+        restoration_bytes = len(saved) if saved is not None else 0
+        assert f.budget.copies + 1 + restoration_bytes <= COPY_LIMIT
+        f.budget.copies += 1 + restoration_bytes
         with path.open("ab") as out:
             out.write(b"x")
-        if fault == "raw":
-            return original(*args, **kwargs)
+        if saved is not None:
+            try:
+                return original(*args, **kwargs)
+            finally:
+                # Isolate the reader-digest join: a later capture check sees
+                # the original bytes and cannot mask removal of that guard.
+                path.write_bytes(saved)
         return None
 
     monkeypatch.setattr(supervisor, "bind_captured_candidate", changed)
