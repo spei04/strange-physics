@@ -12,12 +12,12 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Measured preparation, prediction and scoring in reused identity | Repair ingress-clock/setup-accounting findings; prove bounded fixture and preserve candidate compatibility |
-| Platform | Independent capacity, accounting and recovery review | Small-profile target reviewed; actual usability and future full-study census remain separate gates |
-| Research | Independent scientific and lineage review | Security source accepted in PR119; preserve exact model/config/prefix and pre-freeze authority boundaries |
-| Project lead | PR119 security delivery and next-slice integration | Hosted CI/main/package gates pending; parent issues105/106 stay open |
+| Quality | Final patched-lock native-stage checks in reused identity | Both repairs and bounded fixture independently accepted; final integrated checks pending |
+| Platform | Final native-stage source/package integration review | Runtime review accepted; verify finalized author evidence without repeating tests |
+| Research | Next Journal/classical handoff and progress review | Charged same-store freeze/Journal binding precedes classical dispatch |
+| Project lead | Native-stage integration and delivery | PR119 main/package accepted; parent issues105/106 stay open |
 
-## Assignments
+## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
