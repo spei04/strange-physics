@@ -191,8 +191,52 @@ def test_missing_material_retains_durable_work_hold(
     assert len(h.records) == request.expected_revision + 2
     failure = h.records[-1].event
     assert isinstance(failure, StudyAttemptUpdate) and failure.state == "unknown"
-    assert failure.cpu_ns is not None and failure.cpu_ns > 0
+    # A short failure can occur between equal CPU-clock readings.
+    assert failure.cpu_ns is not None and failure.cpu_ns >= 0
     assert summarize_study(h).budget.unresolved_attempts == 2
+
+
+@pytest.mark.parametrize("cpu_delta", [0, 250_000])
+def test_missing_material_preserves_exact_known_cpu_and_full_hold(
+    material: Material,
+    path: Path,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    cpu_delta: int,
+) -> None:
+    root = tmp_path / "store"
+    request = prepare(material, path, root)
+    before = summarize_study(read_study_ledger((root / "seed-ledger.json").read_bytes())).budget
+    missing = Path(request.files[0].path)
+    missing.unlink()
+    cpu_now = 1_000_000_000
+    original_payloads = publisher._payloads
+
+    def failing_payloads(value: NativePublicationRequest) -> dict[str, bytes]:
+        nonlocal cpu_now
+        # Model equal clock readings or one exact positive increment. The
+        # real missing-file operation still raises at the public boundary.
+        cpu_now += cpu_delta
+        return original_payloads(value)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(time, "process_time_ns", lambda: cpu_now)
+        patch.setattr(publisher, "_payloads", failing_payloads)
+        with pytest.raises(FileNotFoundError):
+            publisher.commit_native_publication(root, request)
+
+    ledger = read_study_ledger(current(root))
+    failure = ledger.records[-1].event
+    assert isinstance(failure, StudyAttemptUpdate) and failure.state == "unknown"
+    assert failure.cpu_ns == cpu_delta
+    assert failure.wall_ns is not None and failure.wall_ns >= 0
+    budget = summarize_study(ledger).budget
+    assert budget.unresolved_attempts == before.unresolved_attempts + 1
+    assert budget.charged_cpu_ns == before.charged_cpu_ns + request.cpu_reservation_ns
+    assert (
+        budget.charged_artifact_bytes
+        == before.charged_artifact_bytes + request.artifact_reservation_bytes
+    )
 
 
 def test_closure_corruption_is_not_fresh_absence(
