@@ -28,14 +28,21 @@ class PublicationEscrow(Message):
     control_artifact_bytes: SafeCount
     work_cpu_ns: SafeCount
 
-    def required_bytes(self) -> int:
-        return self.control_artifact_bytes + self.calls * (
+    def work_bytes_per_call(self) -> int:
+        # Match both the publisher's material headroom and request minimum.
+        return max(
+            16 * MIB,
             4 * (self.material_bytes + self.journal_bytes + self.ledger_bytes + self.output_bytes)
-            + 4 * MIB
+            + 4 * MIB,
         )
+
+    def required_bytes(self) -> int:
+        return self.control_artifact_bytes + self.calls * self.work_bytes_per_call()
 
     @model_validator(mode="after")
     def publisher_floor(self) -> Self:
+        if self.calls and self.work_bytes_per_call() > 512 * MIB:
+            raise ValueError("Promised publication work exceeds the request ceiling")
         if self.calls and (
             self.control_artifact_bytes < self.calls * 16 * MIB + 16 * MIB
             or self.control_cpu_ns < self.calls * 1_000_000_000 + 1_000_000_000

@@ -42,7 +42,9 @@ and returns the exact original bytes/receipt without invoking numerical code.
 
 Extra ledger record/byte room is protected beyond the existing per-unresolved
 final-update reserve. The publication profile represents the current publisher's
-actual material/Journal/ledger/output work formula and its control floors.
+actual material/Journal/ledger/output work formula and its control floors. Each
+promised call protects at least the publisher request's 16 MiB work minimum;
+profiles requiring more than its 512 MiB per-call ceiling are rejected.
 Zero promised publications means this execution is intentionally unpublishable;
 it does not invent a manifest. Nonzero promises also restrict ledger growth and
 unspent CPU/artifact capacity. No default ticket profile is a study throughput

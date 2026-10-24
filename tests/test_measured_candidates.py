@@ -39,6 +39,7 @@ from strange_physics.contracts import (
 )
 from strange_physics.installed_identity import BuildFile, TrustedInstallation
 from strange_physics.laws import LawSpec, reference_registry
+from strange_physics.measured_publication_contracts import NativePublicationRequest, PublicationFile
 from strange_physics.native_spring_contracts import (
     NativeCandidateConfig,
     NativeCandidateInput,
@@ -1125,3 +1126,143 @@ def test_candidate_work_preserves_nonzero_publication_escrow(
         len(raw(result.ledger)) + budget.unresolved_attempts * 4096 + control.finalization_bytes
         <= MIB
     )
+
+
+@pytest.mark.parametrize(
+    ("material_bytes", "work_bytes"),
+    [
+        (0, 16 * MIB),
+        (3 * MIB - 64 * 1024 - 2, 16 * MIB),
+        (3 * MIB - 64 * 1024 - 1, 16 * MIB),
+        (3 * MIB - 64 * 1024, 16 * MIB + 4),
+    ],
+)
+def test_publication_escrow_request_floor_and_formula_transition(
+    material_bytes: int, work_bytes: int
+) -> None:
+    escrow = PublicationEscrow(
+        calls=1,
+        material_bytes=material_bytes,
+        journal_bytes=0,
+        ledger_bytes=1,
+        output_bytes=64 * 1024,
+        control_cpu_ns=2_000_000_000,
+        control_artifact_bytes=32 * MIB,
+        work_cpu_ns=4_000_000_000,
+    )
+    assert escrow.required_bytes() == 32 * MIB + work_bytes
+
+
+@pytest.mark.parametrize("offset", [-1, 0, 1])
+def test_publication_escrow_rejects_unfulfillable_request_ceiling(offset: int) -> None:
+    payload = dict(
+        calls=1,
+        material_bytes=64 * MIB,
+        journal_bytes=32 * MIB,
+        ledger_bytes=8 * MIB,
+        output_bytes=23 * MIB + offset,
+        control_cpu_ns=2_000_000_000,
+        control_artifact_bytes=32 * MIB,
+        work_cpu_ns=4_000_000_000,
+    )
+    if offset > 0:
+        with pytest.raises(ValueError, match="request ceiling"):
+            PublicationEscrow.model_validate(payload)
+    else:
+        escrow = PublicationEscrow.model_validate(payload)
+        assert escrow.required_bytes() == 32 * MIB + 512 * MIB + 4 * offset
+
+
+def test_publication_escrow_zero_calls_remains_unpublishable() -> None:
+    escrow = PublicationEscrow(
+        calls=0,
+        material_bytes=64 * MIB,
+        journal_bytes=32 * MIB,
+        ledger_bytes=8 * MIB,
+        output_bytes=48 * MIB,
+        control_cpu_ns=0,
+        control_artifact_bytes=0,
+        work_cpu_ns=0,
+    )
+    assert escrow.required_bytes() == 0
+
+
+@pytest.mark.parametrize("calls", [1, 2])
+def test_publication_minimum_is_preserved_in_remaining_work(
+    tmp_path: Path, actual_build: TrustedInstallation, calls: int
+) -> None:
+    root = tmp_path / "run"
+    publication = PublicationEscrow(
+        calls=calls,
+        material_bytes=0,
+        journal_bytes=0,
+        ledger_bytes=MIB,
+        output_bytes=64 * 1024,
+        control_cpu_ns=(calls + 1) * 1_000_000_000,
+        control_artifact_bytes=(calls + 1) * 16 * MIB,
+        work_cpu_ns=calls * 4_000_000_000,
+    )
+    setup(root, actual_build, publication=publication)
+    seed = read_study_ledger((root / "candidate-seed.json").read_bytes())
+    control = CandidateAdmission.model_validate_json(
+        (root / "candidate-admission.json").read_bytes()
+    ).control
+    budget = summarize_study(seed).budget
+    protected = (2 * calls + 1) * 16 * MIB
+    assert publication.required_bytes() == protected
+    recovery = control.recovery_tickets * control.recovery_work_artifact_bytes
+    reservation = StudyAttemptReservation(
+        attempt_id="boundary",
+        phase="reference",
+        cell_id=None,
+        operation="reference",
+        config_sha256="a" * 64,
+        input_sha256="b" * 64,
+        retry_of=None,
+        cpu_reservation_ns=1,
+        artifact_reservation_bytes=budget.remaining_artifact_bytes - protected - recovery,
+        purchase=None,
+    )
+    equal = append_study_attempt(
+        seed, event_id="boundary-event", event=reservation, expected_revision=len(seed.records)
+    )
+    executor._capacity(root, equal, control)
+    over = append_study_attempt(
+        seed,
+        event_id="boundary-event",
+        event=change(
+            reservation, artifact_reservation_bytes=reservation.artifact_reservation_bytes + 1
+        ),
+        expected_revision=len(seed.records),
+    )
+    with pytest.raises(StudyLedgerError, match="candidate_protected_work_headroom"):
+        executor._capacity(root, over, control)
+
+
+@pytest.mark.parametrize("amount", [16 * MIB - 1, 16 * MIB, 512 * MIB, 512 * MIB + 1])
+def test_escrow_boundaries_match_actual_publication_request(amount: int) -> None:
+    payload = dict(
+        mode="early",
+        event_id="publish",
+        cell_id="cell",
+        attempt_id="attempt",
+        ticket=0,
+        expected_revision=0,
+        expected_head_sha256="a" * 64,
+        journal_path="/private/journal",
+        journal_sha256=None,
+        files=(
+            PublicationFile(
+                name="witnesses", path="/private/witnesses", sha256="b" * 64, byte_count=1
+            ),
+        ),
+        cpu_reservation_ns=4_000_000_000,
+        artifact_reservation_bytes=amount,
+        output_limit_bytes=64 * 1024,
+        wall_limit_ns=1_000_000_000,
+    )
+    if amount in (16 * MIB, 512 * MIB):
+        assert NativePublicationRequest.model_validate(payload).artifact_reservation_bytes == amount
+    else:
+        with pytest.raises(ValueError, match="artifact_reservation_bytes"):
+            NativePublicationRequest.model_validate(payload)
