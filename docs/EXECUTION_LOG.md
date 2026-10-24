@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Final five-document delivery reconciliation, then release primary | No source or environment work; preserve historical checks and remaining gates |
-| Platform | Final PR118 delivery accepted | Main9818ca0/candidate12556446152 verified against repaired archives; consumer released |
-| Research | Independent final progress/dependency review | Verify delivered identities, three mirrors and unchanged graph/caps/effort |
-| Project lead | Delivery closure and next scoped handoff in identity | PR118/main/candidate accepted; RA-02/#105 and RA-N01/#106 stay open |
+| Quality | Measured preparation, prediction and scoring in reused identity | Repair ingress-clock/setup-accounting findings; prove bounded fixture and preserve candidate compatibility |
+| Platform | Independent capacity, accounting and recovery review | Small-profile target reviewed; actual usability and future full-study census remain separate gates |
+| Research | Independent scientific and lineage review | Security source accepted in PR119; preserve exact model/config/prefix and pre-freeze authority boundaries |
+| Project lead | PR119 security delivery and next-slice integration | Hosted CI/main/package gates pending; parent issues105/106 stay open |
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-24 | Quality | Bounded measured preparation/prediction/scoring | Identity writer; preliminary chain passes; ingress clock and setup reservation repairs pending |
+| 2026-10-24 | Platform | Cumulative capacity plan, then independent source review | Small profile 761.703125MiB/550s is a target; future full-study admission remains closed |
+| 2026-10-24 | Research | Certifi/pip reconciliation and narrow repair, then scientific review | Source92d9a15 independently accepted; primary released; PR119 delivery pending |
+| 2026-10-24 | Project lead | Security PR119 and native-stage coordination | Reuse released primary; preserve all charges/caps and avoid future-algorithm dependency cycle |
 | 2026-10-24 | Quality | Final PR118 five-document progress record | Reconcile accepted delivery; release primary for independent review |
 | 2026-10-24 | Research | Independent final progress and dependency review | Read immutable checkpoint; no environment or scientific rerun |
 | 2026-10-24 | Platform | PR118/main9818ca0 candidate verification | Accepted all five jobs, exact 77-file archives and 13 hosted copied-interpreter observations |
@@ -832,3 +836,13 @@ Platform accepted candidate12556446152: 475,760 bytes, ZIP SHA256 df2dd431ba7f1a
 Thirteen hosted observations directly confirm source mode 0777 to byte-identical owned copies at 0755, with single links and checks repeated after installation across both Python jobs, security and protected-main build/runtime environments. The original failed run lacked individual stat values; these new observations do not invent those missing values. Copied executables still use base standard/shared libraries, so this is not hermetic Python isolation. The runtime-requirements digest matches accepted prior evidence under the same lock/uv, but export bytes are absent from the candidate and were not independently recomputed. The runtime-only installed-wheel smoke passed in hosted CI; no local environment or scientific rerun was needed for delivery reconciliation.
 
 Quality owns this final five-document update and then releases primary; Research independently checks the immutable record and dependency invariants. Platform's delivery review is accepted, and Lead owns private closure and the next scoped handoff in identity. Comparison dispatch/actual-Journal admission, the other four numerical wrappers, purchased-simulation measurement and recovery, one-way handoff, full-study allocation and explicit parent audit remain open. RA-02/#105 and RA-N01/#106 stay in progress; no finite-grid admission, actual comparison, cap reset, new approval, graph, effort or forecast change is claimed. This is an unpublished candidate, not a deployment, signing or enterprise-production acceptance.
+
+## 2026-10-24 — Measured native stages and trust-store repair assigned
+
+Quality owns the bounded preparation/prediction/scoring slice; Research owns scientific review; Platform owns capacity/recovery review; Lead owns integration and delivery. Reuse the two existing cloud checkouts. The first synthetic candidate → preparation → 24 predictions → score chain and three paid replays passed preliminary tests at e1088d0; its source and fixture are not accepted until the identified ingress-clock and setup-reservation gaps are repaired.
+
+Platform's small-profile target reserves 761.703125 MiB and 550 CPU seconds, including setup, control, normal work, recovery and protected publication. Actual file sizes, database/ledger limits and execution usability still require tests. Current full-study admission remains infeasible: even 432 minimum control tickets exceed 1 GiB, and the completed-path operation census is at least 1,440 before acquisition, retries, recovery and publication. The 36-call publication escrow promises 1,168 MiB; that is an up-front reservation, not measured terminal usage. A versioned immutable-storage design is a recommendation, not implemented capacity.
+
+The complete future grid/acquisition schedule is a full-study admission gate. It does not introduce a circular dependency on future N02 implementation for RA-02/RA-N01 source completion: those gates require their real measured wrappers, purchase/handoff behavior, durability, feasible bounded profiles and explicit parent audit. All existing graph edges, charges, unknown holds and approved caps remain.
+
+[PR #119](https://github.com/spei04/strange-physics/pull/119) updates pip's vendored certificate bundle and adds an explicit installed-bundle security guard. Source 92d9a15 passed 64 focused tests, configured static/security checks and independent review; hosted PR/main/package delivery remains pending. Standalone certifi already matches the patched lock. Dependabot alert 1 and its graph report an inconsistent older standalone version; retain the alert and recheck after the legitimate dependency change. No audit suppression, study execution, new budget or release claim.
