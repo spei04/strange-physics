@@ -70,7 +70,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 
 The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. The primary checkout and one separate identity checkout are retained for independently active writers. Existing migration archives and other experiments are not disposable build caches.
 
-Current execution roster: Lead owns candidate integration/delivery in identity; Quality reconciles primary progress and releases it for Research review. Research verifies scientific/source equivalence and document consistency; Platform prepares and performs candidate delivery verification. The candidate-only pre-freeze slice is locally accepted; PR/main/candidate delivery is pending. Both checkouts remain needed, VAL1 stays deferred in draft PR #101, and RA-02/RA-N01 remain open until the remaining wrappers and parent audit pass. No comparison has run.
+Current execution roster: Lead owns primary progress and candidate integration/delivery in identity; Quality released the repaired source/environment. Research verifies scientific/source equivalence and document consistency; Platform prepares and performs candidate delivery verification. The candidate-only pre-freeze slice is locally accepted; PR/main/candidate delivery is pending. Both checkouts remain needed, VAL1 stays deferred in draft PR #101, and RA-02/RA-N01 remain open until the remaining wrappers and parent audit pass. No comparison has run.
 
 ### 0.3 Update procedure for every implementation change
 
