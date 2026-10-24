@@ -565,5 +565,7 @@ def test_foreign_stage_facts_retain_unknown_cost_and_fresh_retry(
     )
     result = commit(root, retry)
     assert result.result.facts.attempt_id == "fresh-retry"
-    assert last_update(result.ledger).facts == result.result.facts
+    retained_facts = last_update(result.ledger).facts
+    assert retained_facts is not None
+    assert raw(retained_facts) == raw(result.result.facts)
     assert summarize_study(result.ledger).budget.unresolved_attempts == 3
