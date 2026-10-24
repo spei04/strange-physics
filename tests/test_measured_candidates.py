@@ -385,7 +385,7 @@ def test_real_child_setup_failure_is_unknown(
         raise KeyboardInterrupt("synthetic child setup interruption")
 
     monkeypatch.setattr(executor, "produce_native_candidates", fail)
-    with pytest.raises(StudyLedgerError, match="synthetic output parse failure"):
+    with pytest.raises(StudyLedgerError, match="candidate_child_failed"):
         executor.commit_native_candidates(root, request)
     update = last_update(current(root))
     assert update.state == "unknown" and update.facts is None
@@ -694,7 +694,7 @@ def test_real_ledger_byte_finalization_boundary(
     control = CandidateAdmission.model_validate_json(
         (root / "candidate-admission.json").read_bytes()
     ).control
-    base = synthetic_history(seed, 3000)
+    base = synthetic_history(seed, 3300)
     target = 8 * MIB - 4096 - control.finalization_bytes
     equal = pad_history(base, target)
     executor._capacity(root, equal, control)
