@@ -117,8 +117,7 @@ class CandidateAdmission(Message):
     seed_ledger_sha256: Digest
 
 
-class CandidateRequest(Message):
-    operation: Literal["candidate_production"] = "candidate_production"
+class _ExecutionRequest(Message):
     mode: Literal["execute", "recover"]
     logical_id: Identifier
     attempt_id: Identifier
@@ -147,10 +146,11 @@ class CandidateRequest(Message):
         return self
 
 
-class CandidateReceipt(Message):
-    schema_version: Literal["strange-physics.candidate-execution-receipt.v1"] = (
-        "strange-physics.candidate-execution-receipt.v1"
-    )
+class CandidateRequest(_ExecutionRequest):
+    operation: Literal["candidate_production"] = "candidate_production"
+
+
+class _ExecutionReceipt(Message):
     logical_id: Identifier
     original_attempt_id: Identifier
     request_sha256: Digest
@@ -161,6 +161,12 @@ class CandidateReceipt(Message):
     result_raw_sha256: Digest
     source_commit: Commit
     installation_sha256: Digest
+
+
+class CandidateReceipt(_ExecutionReceipt):
+    schema_version: Literal["strange-physics.candidate-execution-receipt.v1"] = (
+        "strange-physics.candidate-execution-receipt.v1"
+    )
 
 
 class CandidateMeasurements(Message):
