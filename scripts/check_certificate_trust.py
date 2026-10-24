@@ -7,6 +7,7 @@ import json
 import re
 import ssl
 from importlib.metadata import distribution
+from pathlib import Path
 
 # Standalone certifi upgrades do not replace pip's vendored trust store.
 # https://discuss.python.org/t/109576
@@ -44,7 +45,7 @@ def check_installed() -> list[dict[str, str | int]]:
         ("pip", "pip/_vendor/certifi/cacert.pem"),
     ):
         installed = distribution(package)
-        path = installed.locate_file(relative)
+        path = Path(str(installed.locate_file(relative)))
         raw = path.read_bytes()
         count = check_bundle(raw.decode("ascii"))
         result.append(
