@@ -12,10 +12,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Implement charged same-store freeze and a Journal-bound comparison candidate | Identity writer; prove four-call admission/recovery; classical follows |
-| Platform | Independent boundary review and test preparation | Immutable source only until author freeze; verify accounting, locks and recovery |
-| Research | Independent scientific review and test preparation | Current-engine prefix, failed rows and absent-selection semantics |
-| Project lead | Assignment log, integration and delivery | Primary owner; reuse two cloud checkouts; parent issues105/106 stay open |
+| Quality | Freeze/Journal author checks accepted; next fixed classical slice prepared for assignment after delivery | Identity source/environment released at 27081a7 |
+| Platform | Both boundary reviews accepted; finalize exact-source delivery verifier | Journal locks, atomic closure, resource limits and recovery sensitivity passed |
+| Research | Scientific review accepted; reconcile five progress documents | Actual mixed prefix and retained-material identity accepted |
+| Project lead | Integrate accepted source and reviewed progress; PR/main delivery | Primary and identity sequential ownership; parent issues105/106 remain open |
 
 ## Assignment history
 
@@ -870,3 +870,15 @@ The six-call profile remains a conditional design. The first slice implements fr
 Lead verified the clean progress checkout and preserved uncommitted freeze/Journal work in the existing identity branch. The same Quality author and Platform/Research reviewers resumed; no checkout reset or duplicate environment was created. The independently accepted first-slice amendment declares 269,631,488 bytes / 342 CPU seconds, four calls, 23 records and 14 unresolved holds. Actual source/runtime admission remains pending. All three recovery ceilings and publication protection remain; ordinary future classical work is unreserved.
 
 A fresh read-only GitHub check reports alert #1 fixed at 2026-10-24T20:54:23Z, with no dismissed-at value or dismissing actor. The dependency graph still reports certifi 2026.10.19 and pip 26.2.2. Private readback index a42eac1458887e94eace1227053ec267165e01f8b5270f2225f4d99ad4bf8410 binds both raw responses. This supersedes the earlier open-alert status; those observations and PR #119 repair evidence remain retained. No dismissal, dependency change, weakened guard or additional numerical run was used to reconcile the alert.
+
+## 2026-10-24 — Charged freeze and Journal-bound comparison candidates
+
+Quality completed source 27081a7da9f0a897aca09b7a8c7046964688e2ae / tree c321999d29a480d012765cbc5f7156f3ef940609 and released identity. Platform and Research released their independent runtime holds. Lead owns integration and progress; Research now reviews the immutable five-document checkpoint and Platform finalizes the delivery verifier. Both cloud checkouts remain retained for sequential reuse, with no new checkout or shared dependency installation.
+
+The first slice adds measured same-store freeze and a separately tagged comparison-candidate entrypoint. Freeze event, measured outcome and receipt commit atomically. The actual Journal is held against writes through closure, a separate captured file supplies all twelve rows, and retained freeze artifacts/source/lock/engine/receipt identities are revalidated. Paid recovery returns original bytes without redoing numerical production.
+
+Author index 0fd67dda3f3922e603eb1cdfec8f8e54205be05cf4ce85b61c5c6c9edbd5eb89 binds the full 8545a18 suite: 4,263 tests in 734.58 seconds, formatting/lint, strict typing, 1,522 schema checks, configured dependency/security checks, archives and installed CLI smoke. Final 27081a7 changes only a regression test and documentation spacing; production/build/lock inputs are unchanged. Its raw-reader positive test passes and removing the reader-digest guard causes the intended failure. The earlier failed 008 fixture-limit run and source-specific evidence remain preserved.
+
+Research index 0c34c8de5c4ff91ce09d22b186bbf51aec4e4cb4db6f0e0a0424ba32b506abea accepts sixteen scientific/material cases and eight sensitivity executions across four guard families. Platform index d46ef9600e0333a21a7434f73b040ba568cd6cc766b038a1f7b0337d792ec59d accepts six structural/accounting cases and three sensitive mutations, including competing writers, atomic rollback, lost acknowledgments and paid recovery. Research separately accepted the final test-only delta in f99b735d321c5eb61e5327be6f1611e1472dbcef60f7229eca98c165ea22de2b. These reviews apply to the unchanged production code; normal combined-head CI and main candidate verification remain pending.
+
+The declared synthetic envelope remains 269,631,488 bytes / 342 CPU seconds for four calls at tickets 0/1/3/4. The actual retained proof has 23 ledger records, 14 unresolved holds and 35 Journal write epochs; ledger/database/capture sizes are 25,342 / 73,728 / 110,592 bytes. These are observed fixture dimensions, not exact physical writes or full-study throughput. Classical tickets 2/5 remain unused and ordinary classical work is unreserved; all recovery ceilings and 80 MiB publication protection remain. This does not start the research study or establish classical, public purchase, handoff, full-study or parent completion.
