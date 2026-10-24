@@ -3720,3 +3720,7 @@ Measured preparation/prediction/scoring is delivered in [PR #120](https://github
 ## 2026-10-24 — Charged freeze and Journal-bound comparison candidates
 
 Charged same-store freezing and Journal-bound comparison candidates are source-accepted at 27081a7. The synthetic chain executes freeze, candidate production and two paid recoveries, retaining original results without producer reruns. All 4,263 tests passed on production-equivalent 8545a18; the final test-only refinement passed its targeted regression and guard-removal sensitivity check. Both independent runtime reviews passed. Normal PR/main CI and exact candidate verification remain pending. Classical dispatch, public purchased simulation, publisher handoff and full-study admission remain open; RA-02/#105 and RA-N01/#106 stay in progress.
+
+## 2026-10-24 — Measured freeze and Journal candidates delivered
+
+Charged same-store freeze and Journal-bound comparison candidates are delivered in [PR #121](https://github.com/spei04/strange-physics/pull/121), main 1474e57. All five main jobs passed; both Python 3.12/3.14 suites passed 4,263 tests. Candidate 12577366173 matched all 83 package files and both reviewed author archives. The bounded four-call synthetic chain proves freeze, candidate production and paid original-byte recovery within its declared scope. The next fixed classical unit is prepared; measured public purchases, publisher handoff, full-study admission and explicit parent audit remain open. RA-02/#105 and RA-N01/#106 stay in progress; no research comparison has run.

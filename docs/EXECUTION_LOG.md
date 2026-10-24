@@ -12,10 +12,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Freeze/Journal author checks accepted; next fixed classical slice prepared for assignment after delivery | Identity source/environment released at 27081a7 |
-| Platform | Both boundary reviews accepted; finalize exact-source delivery verifier | Journal locks, atomic closure, resource limits and recovery sensitivity passed |
-| Research | Scientific review accepted; reconcile five progress documents | Actual mixed prefix and retained-material identity accepted |
-| Project lead | Integrate accepted source and reviewed progress; PR/main delivery | Primary and identity sequential ownership; parent issues105/106 remain open |
+| Quality | Next: fixed Journal-bound classical diagnostic | Concrete file/interface/test handoff prepared; implementation has not started |
+| Platform | Freeze/Journal package delivery verified; next boundary review | Exact main, 83 package files and both archives accepted; hold released |
+| Research | Reconcile final delivery progress; next scientific review | Earlier runtime/material review accepted; no active runtime hold |
+| Project lead | Record verified delivery and coordinate the next source handoff | Reuse the two cloud checkouts; parent issues105/106 stay open |
 
 ## Assignment history
 
@@ -882,3 +882,15 @@ Author index 0fd67dda3f3922e603eb1cdfec8f8e54205be05cf4ce85b61c5c6c9edbd5eb89 bi
 Research index 0c34c8de5c4ff91ce09d22b186bbf51aec4e4cb4db6f0e0a0424ba32b506abea accepts sixteen scientific/material cases and eight sensitivity executions across four guard families. Platform index d46ef9600e0333a21a7434f73b040ba568cd6cc766b038a1f7b0337d792ec59d accepts six structural/accounting cases and three sensitive mutations, including competing writers, atomic rollback, lost acknowledgments and paid recovery. Research separately accepted the final test-only delta in f99b735d321c5eb61e5327be6f1611e1472dbcef60f7229eca98c165ea22de2b. These reviews apply to the unchanged production code; normal combined-head CI and main candidate verification remain pending.
 
 The declared synthetic envelope remains 269,631,488 bytes / 342 CPU seconds for four calls at tickets 0/1/3/4. The actual retained proof has 23 ledger records, 14 unresolved holds and 35 Journal write epochs; ledger/database/capture sizes are 25,342 / 73,728 / 110,592 bytes. These are observed fixture dimensions, not exact physical writes or full-study throughput. Classical tickets 2/5 remain unused and ordinary classical work is unreserved; all recovery ceilings and 80 MiB publication protection remain. This does not start the research study or establish classical, public purchase, handoff, full-study or parent completion.
+
+## 2026-10-24 — Measured freeze and Journal candidates delivered
+
+PR #121 was merged at 1474e57199fbb29773cc0715df22135b32db9e6e / tree 376b8e3b3862e33be80c72048ec25eeee8c79274 after exact PR head f7ce76e passed all four applicable checks in run40135748032. Main run40136316780 passed all five jobs, with 4,263 tests on each Python 3.12/3.14 runtime.
+
+Candidate 12577366173 (491391 bytes; SHA256 f07f00345c07908dbe40ceda722d11189203710b79b609a52284875356a1b67b) matches all 83 immutable package files, the exact source/run/lock provenance and both reviewed author archives. Private acceptance index 2e86247934ae3e128810d305f3e4c0479bdbffcd9ae1b890b44760574b66b1a3 binds the acquired metadata, raw logs and verification. The verifier also checked thirteen hosted interpreter-copy observations and both CA trust stores. Exported runtime-requirement bytes were not independently recomputed; copied executables still use base standard/shared libraries, so this is not a hermetic-runtime claim.
+
+The merged source preserves Quality's final author implementation at27081a7; its only changes from that source are the exact five files from accepted progress212f990. All author and reviewer holds are released. Lead retains primary for progress and identity for sequential next-source reuse; no new checkout/environment or Mac project copy was created.
+
+Quality prepared the next fixed classical implementation handoff (private index377f7fd774443c0253fd6cf0942920cfd6e00f5ea2c75b88b1d503326872984c), based on Research's minimal handoff9116dd0274648eaa9770420f419ebb9e9d5460397cdf9d825e3e916da3921fa7. It extends the existing concrete interfaces and supervisor, freezes actual typed configs at the start of a fresh fixture, and retains optional native selection and independent classical success. Implementation has not started; its six-call allocation remains conditional until actual proof. Ordinary classical work remains unreserved before admission.
+
+The accepted four-call scope, all failed/unknown cost holds and cumulative approved study limits remain unchanged. Classical dispatch, measured public purchased simulation, publisher authority handoff, feasible full-study allocation and explicit RA-02/RA-N01 parent audit remain open. The actual research comparison has not started. Laplace remains later than the calibrated finite-grid comparison; the grid/calibration/acquisition census gates the actual study rather than becoming a circular source-acceptance prerequisite.
