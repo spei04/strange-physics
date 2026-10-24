@@ -86,6 +86,8 @@ jobs:
           python scripts/ci_python.py create .venv "$RUNNER_TEMP/build-python.json"
           uv sync --python .venv/bin/python --locked --all-groups --no-install-project
           python scripts/ci_python.py check .venv "$RUNNER_TEMP/build-python.json"
+      - name: Check standalone and vendored CA trust stores
+        run: .venv/bin/python scripts/check_certificate_trust.py
       - name: Audit all locked dependency groups
         run: |
           uv export --locked --all-groups --no-emit-project --format requirements-txt --output-file "$RUNNER_TEMP/audit-requirements.txt"
