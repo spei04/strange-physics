@@ -15,6 +15,7 @@ concurrency:
 
 env:
   UV_NO_CACHE: "1"
+  UV_LINK_MODE: "copy"
   PYTHONDONTWRITEBYTECODE: "1"
 
 jobs:
@@ -41,8 +42,12 @@ jobs:
           enable-cache: false
       - name: Install locked dependencies, then build the project offline
         run: |
-          uv sync --locked --all-groups --no-install-project
-          uv sync --locked --all-groups --no-editable --no-build-isolation --offline
+          umask 0022
+          python scripts/ci_python.py create .venv "$RUNNER_TEMP/build-python.json"
+          uv sync --python .venv/bin/python --locked --all-groups --no-install-project
+          python scripts/ci_python.py check .venv "$RUNNER_TEMP/build-python.json"
+          uv sync --python .venv/bin/python --locked --all-groups --no-editable --no-build-isolation --offline
+          python scripts/ci_python.py check .venv "$RUNNER_TEMP/build-python.json"
       - run: uv run --no-sync ruff check .
       - run: uv run --no-sync ruff format --check .
       - run: uv run --no-sync mypy src tests examples
@@ -76,7 +81,11 @@ jobs:
           version: "0.13.4"
           enable-cache: false
       - name: Install locked security tools
-        run: uv sync --locked --all-groups --no-install-project
+        run: |
+          umask 0022
+          python scripts/ci_python.py create .venv "$RUNNER_TEMP/build-python.json"
+          uv sync --python .venv/bin/python --locked --all-groups --no-install-project
+          python scripts/ci_python.py check .venv "$RUNNER_TEMP/build-python.json"
       - name: Audit all locked dependency groups
         run: |
           uv export --locked --all-groups --no-emit-project --format requirements-txt --output-file "$RUNNER_TEMP/audit-requirements.txt"
@@ -123,15 +132,21 @@ jobs:
           enable-cache: false
       - name: Build the unpublished candidate with locked dependencies
         run: |
-          uv sync --locked --all-groups --no-install-project
+          umask 0022
+          python scripts/ci_python.py create .venv "$RUNNER_TEMP/build-python.json"
+          uv sync --python .venv/bin/python --locked --all-groups --no-install-project
+          python scripts/ci_python.py check .venv "$RUNNER_TEMP/build-python.json"
           uv build --no-create-gitignore --no-build-isolation --offline --python .venv/bin/python --out-dir "$RUNNER_TEMP/candidate"
           .venv/bin/python scripts/ci_artifacts.py --dist "$RUNNER_TEMP/candidate"
       - name: Install only locked runtime dependencies and the candidate wheel
         run: |
+          umask 0022
           uv export --locked --no-default-groups --no-emit-project --format requirements-txt --output-file "$RUNNER_TEMP/runtime-requirements.txt"
-          uv venv --python 3.12 "$RUNNER_TEMP/runtime"
+          python scripts/ci_python.py create "$RUNNER_TEMP/runtime" "$RUNNER_TEMP/runtime-python.json"
           uv pip sync --python "$RUNNER_TEMP/runtime/bin/python" --require-hashes "$RUNNER_TEMP/runtime-requirements.txt"
+          python scripts/ci_python.py check "$RUNNER_TEMP/runtime" "$RUNNER_TEMP/runtime-python.json"
           uv pip install --python "$RUNNER_TEMP/runtime/bin/python" --no-deps --offline "$RUNNER_TEMP"/candidate/strange_physics-*.whl
+          python scripts/ci_python.py check "$RUNNER_TEMP/runtime" "$RUNNER_TEMP/runtime-python.json"
           uv pip check --python "$RUNNER_TEMP/runtime/bin/python"
       - name: Smoke the installed wheel outside the source checkout
         run: |
