@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Accepted source released; bounded primary progress reconciliation, then release | Source 423ea566 and final evidence sealed; no environment consumer |
-| Platform | Candidate delivery verification | Independently accepted source 423ea566; verify exact integrated main/package evidence |
-| Research | Independent progress and dependency review | Keep source 423ea566 / prior 109daba evidence distinct; numerical/simulation wrapper audit remains before parent closure |
-| Project lead | Integration in released identity checkout | PR/main/candidate gates pending; RA-02 and RA-N01 remain in progress |
+| Quality | Test-only repair af694e5 completed; identity released | 58 focused tests and narrow static checks pass; production remains 423ea566 |
+| Platform | Repair review accepted; candidate delivery verification | Three affected tests and unchanged package/build inputs verified; hosted delivery pending |
+| Research | Minimal five-document update in primary, then release | Preserve failed CI, exact repair evidence and accepted parent audit; no environment use |
+| Project lead | Integrate released repair and progress in identity | PR/main/candidate gates pending; RA-02 and RA-N01 remain open |
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-24 | Quality | PR117 CPU-clock test repair af694e5 | 58 focused cases and narrow static checks pass; identity released; runtime/package unchanged |
+| 2026-10-24 | Platform | Independent test-repair/package continuity review | Three affected cases pass; 73 production files and 80 source/build inputs unchanged; delivery verification next |
+| 2026-10-24 | Research | Parent admission audit and minimal primary progress update | Six producer boundaries remain; pre-freeze accounting/control feasibility required; release docs for review |
+| 2026-10-24 | Project lead | PR117 repaired-source delivery | Integrate accepted test repair and progress; rerun required CI and verify protected-main candidate |
 | 2026-10-23 | Quality | Measured publication source 423ea566 accepted and released | 56 final focused tests, static/package/installed gates; prior 109daba full 4,143-test evidence preserved separately |
 | 2026-10-23 | Project lead | Measured publisher integration | Owns released identity; normal PR/main/candidate gates remain pending |
 | 2026-10-23 | Platform | Candidate delivery verification | Final source/capacity review accepted; verify integrated package/source/lock identity |
@@ -748,3 +752,11 @@ Final source 423ea566 passed 56 focused tests, Ruff, 181-file formatting, strict
 Final counter review independently checked control-tail growth deduction and frozen work costs, including exhausted headroom and sensitive mutations. The injected 8,192-byte control write is a regression fault, not a claimed naturally reproduced SQLite cap escape. Author index e1abbae7776569c89017f6cb5de5df8956ebc42ca07eacfa63ef1e585385c42d, Research index dfd669ef8b8ee42755ed3934e4e1d075f33f9b13df1fecad3c62f3567a3fc497 and Platform index ae29f05b0e7bc1b03da120dc6cbd4c3a458eb79d2f1a83bd6328a42e2c0e1a46 identify retained private evidence and earlier scoped reviews. Quality released the clean identity source and owned environment; all author/reviewer consumers ended.
 
 Lead owns integration in identity; Platform verifies candidate delivery; Research independently reviews progress and dependency consistency. Quality reconciles these progress records in primary, then releases that checkout. After publisher integration, audit and complete actual fixed-operation durable reservations and OS measurements for existing candidate/preparation/prediction/scoring/classical and purchased-simulation work before closing RA-02/#105 or RA-N01/#106 and admitting finite-grid RA-N02.a. Both parents remain in progress. Future inference/calibration/selection and the actual study are separate gates, not prerequisites for auditing existing producer wrappers. No comparison, budget reset, graph, approval, effort or forecast change is introduced; all project work remains cloud-only.
+
+### 2026-10-24 — PR117 CPU-clock test repair; delivery pending
+
+PR #117 CI40042885180 at 7ab2c8deb4c0f8f324460b9b691809c027e29fd0 produced 4,143 passes and one failure in each Python 3.12/3.14 job. The missing-material test required strictly positive CPU, but the actual recorded delta was zero. The raw failure logs remain indexed by 034b6799b9927daaf72b7068b7988f8e71acc94fa959ea003866728443589e87; these runs are not full passes. Prior full 4,143-test evidence belongs to 109daba, and the 56 focused/static/package checks above belong to 423ea566.
+
+Repair af694e595de5585be366ffb42027b3ce5dd5a6ee (tree 867fad33ae433b5d47effc2d00d0326634de1c1a) changes only tests/test_measured_publication.py. It retains a real-clock known-nonnegative assertion and adds deterministic zero/250,000 ns persistence cases, both retaining the full unknown CPU/artifact reservation. Known zero is not proof of no work. Quality passed 58 focused tests in 32.60 s plus narrow Ruff/format/mypy checks; author index dea390e598653f24cdd47b81fc0354ef2762174d2d6799fde522f86871311c76 retains initial harness diagnostics separately. Platform independently passed all three affected cases and verified 73 production files, 80 source/build inputs and retained package compatibility; index bcb39e5a994472424b53bf1d6a185edff578598d640231ba3de9b4b6a48c026b. Research rehashed all 31 author and seven Platform children plus both failed-CI logs. No production, dependency or package rebuild was needed. New PR/main/candidate gates remain pending.
+
+The accepted parent audit at 7ab2c8d confirms that five native executors and purchased simulation still lack measured global envelopes; nine relevant source blobs are unchanged from the prior audit. Index 3afbdb76c6c0dbe22885fafac168ea76da44e776c000014dc3dc172b03369b3b retains nine records and three references. The next bounded assignment covers actual reservations, OS costs, result/facts identity and retry/recovery across those six boundaries. It must support allowed pre-freeze plan-bound work and a feasible finite control allocation: copying the publisher's permanent 16 MiB ticket floor to 432 purchases would exceed 1 GiB. Parent closure/grid source admission waits for accepted producer implementation and delivery, without requiring future MAP/calibration/selector outputs or the actual comparison. RA-02/#105 and RA-N01/#106 remain open; 36 episodes, 432 purchases, eight CPU-core-hours and 1 GiB stay cumulative. No study, graph, approval, effort or forecast change.
