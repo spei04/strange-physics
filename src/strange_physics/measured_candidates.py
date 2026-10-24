@@ -79,6 +79,7 @@ from strange_physics.study_execution_binding import (
     bind_captured_candidate,
     freeze_result,
     propose_freeze,
+    validate_frozen_materials,
 )
 from strange_physics.study_execution_contracts import (
     NativeComparisonCandidateRequest,
@@ -269,6 +270,7 @@ def _validate(result: ExecutionResult, actual: ExecutionInput, attempt_id: str) 
             or result != freeze_result(actual, attempt_id)
         ):
             raise StudyLedgerError("freeze_result_identity")
+        validate_frozen_materials(actual)
         return
     if isinstance(result, NativeCandidateResult) and isinstance(actual, NativeCandidateInput):
         validate_native_candidate_result(result, actual, attempt_id=attempt_id)
@@ -579,18 +581,43 @@ def _retained_freeze(
     store: CandidateStore, material: NativeComparisonInput, ledger: NativeStudyLedger
 ) -> NativeFreezeInput:
     row = store.db.execute(
-        "SELECT length(request),request FROM closures WHERE logical_id=?",
+        "SELECT length(request) FROM closures WHERE logical_id=?",
         (material.freeze_logical_id,),
     ).fetchone()
     if row is None or not 0 < row[0] <= REQUEST_BYTES:
         raise StudyLedgerError("comparison_freeze_missing")
-    request = _request(row[1], "freeze")
+    saved_raw = store.db.execute(
+        "SELECT request FROM closures WHERE logical_id=?", (material.freeze_logical_id,)
+    ).fetchone()[0]
+    request = _request(saved_raw, "freeze")
+    if request.logical_id != material.freeze_logical_id:
+        raise StudyLedgerError("comparison_freeze_identity")
     retained = _closure(store, request, ledger)
-    if retained is None or digest(raw(retained[0])) != material.freeze_receipt_sha256:
+    if (
+        retained is None
+        or digest(raw(retained[0])) != material.freeze_receipt_sha256
+        or (retained[0].source_commit, retained[0].installation_sha256)
+        != (store.admission.control.source_commit, store.admission.control.installation_sha256)
+    ):
         raise StudyLedgerError("comparison_freeze_identity")
     actual = _input(retained[1], request)
     assert isinstance(actual, NativeFreezeInput)
     return actual
+
+
+@dataclass(frozen=True)
+class _ComparisonCapture:
+    path: Path
+    sha256: str
+    byte_count: int
+    held: LockedJournal | None
+
+    def recheck(self) -> None:
+        value = read_bytes(self.path, limit=self.byte_count)
+        if len(value) != self.byte_count or digest(value) != self.sha256:
+            raise StudyLedgerError("comparison_journal_capture")
+        if self.held is not None:
+            self.held.recheck()
 
 
 def _bind_comparison(
@@ -602,7 +629,7 @@ def _bind_comparison(
     scope: ExitStack,
     *,
     replayed: bool,
-) -> LockedJournal | None:
+) -> _ComparisonCapture:
     material = _comparison_input(input_raw)
     frozen = _retained_freeze(store, material, original)
     ticket = request.ticket
@@ -638,8 +665,9 @@ def _bind_comparison(
         freeze=frozen,
         snapshot_path=snapshot,
         cell_id=request.cell_id,
+        journal_sha256=material.journal_sha256,
     )
-    return held
+    return _ComparisonCapture(snapshot, material.journal_sha256, material.journal_bytes, held)
 
 
 def _commit_native_execution(
@@ -767,14 +795,14 @@ def _commit_native_execution(
                     store.replace(current, proposed)
                 current = proposed
                 frozen_ledger: NativeStudyLedger | None = None
-                held_journal: LockedJournal | None = None
+                captured_journal: _ComparisonCapture | None = None
                 clock.work()
                 work_start = meter.total
                 if closure:
                     receipt, input_raw, result_raw, original = closure
                     result = _result(result_raw, request)
                     if isinstance(request, NativeComparisonCandidateRequest):
-                        _bind_comparison(
+                        captured_journal = _bind_comparison(
                             store, request, input_raw, original, meter, journal_scope, replayed=True
                         )
                 else:
@@ -793,7 +821,7 @@ def _commit_native_execution(
                         raise StudyLedgerError("candidate_input_identity")
                     meter.write(root / f"candidate-input-{request.ticket}", input_raw)
                     if isinstance(request, NativeComparisonCandidateRequest):
-                        held_journal = _bind_comparison(
+                        captured_journal = _bind_comparison(
                             store, request, input_raw, current, meter, journal_scope, replayed=False
                         )
                     produced: bytes | None
@@ -926,10 +954,12 @@ def _commit_native_execution(
                 if isinstance(request, NativeFreezeRequest) and frozen_ledger is not None:
                     _capacity(root, settled, c)
                 # ExitStack retains actual Journal exclusion through this commit.
-                if held_journal is not None:
-                    held_journal.recheck()
+                if captured_journal is not None:
+                    captured_journal.recheck()
                 store.limit_control_growth()
                 with store.transaction():
+                    if captured_journal is not None:
+                        captured_journal.recheck()
                     store.replace(current, settled)
                     if closure is None:
                         store.db.execute(
@@ -946,6 +976,8 @@ def _commit_native_execution(
                         )
                     if overrun:
                         store.stop()
+                    if captured_journal is not None:
+                        captured_journal.recheck()
                 if overrun:
                     raise StudyLedgerError("candidate_measurement_overrun")
                 return _CommittedExecution(

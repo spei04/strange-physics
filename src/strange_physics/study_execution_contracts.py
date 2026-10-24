@@ -64,7 +64,7 @@ class NativeFreezeReceipt(_ExecutionReceipt):
 
 
 class NativeComparisonInput(Message):
-    """Private capture request; the numerical child receives only candidate."""
+    """Private capture request; the numerical producer receives only candidate."""
 
     candidate: NativeCandidateInput
     freeze_logical_id: Identifier

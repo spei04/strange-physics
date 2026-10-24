@@ -12,12 +12,39 @@ from strange_physics.native_spring_contracts import (
 )
 from strange_physics.publication_store import digest, raw
 from strange_physics.research_contracts import message_sha256
+from strange_physics.serialization import canonical_json
 from strange_physics.study_contracts import NativeStudyLedger, NativeWorkFacts, NativeWorldCatalog
 from strange_physics.study_execution_contracts import NativeFreezeInput, NativeFreezeResult
 from strange_physics.study_journal import reconcile_study_journal
-from strange_physics.study_ledger import StudyLedgerError, freeze_native_study, study_manifest
+from strange_physics.study_ledger import (
+    StudyLedgerError,
+    _ArtifactJSON,
+    freeze_native_study,
+    study_manifest,
+)
 
 VERSION = "strange-physics.measured-freeze.v1"
+
+
+def validate_frozen_materials(actual: NativeFreezeInput) -> None:
+    """Recheck retained originals without replaying a freeze transition."""
+    if set(actual.artifacts) != {r.kind for r in actual.manifest.artifacts}:
+        raise StudyLedgerError("artifact_set_mismatch")
+    if sum(len(value.encode()) for value in actual.artifacts.values()) > 8 * 1024**2:
+        raise StudyLedgerError("artifact_set_mismatch")
+    for ref in actual.manifest.artifacts:
+        value = actual.artifacts[ref.kind].encode()
+        if (len(value), digest(value)) != (ref.byte_count, ref.sha256):
+            raise StudyLedgerError("artifact_identity_mismatch")
+        parsed = parse_bounded_json(
+            b'{"value":' + value + b"}",
+            _ArtifactJSON,
+            max_bytes=8 * 1024**2 + 10,
+            max_depth=33,
+            max_nodes=1_000_000,
+        )
+        if canonical_json(parsed.value).encode() != value:
+            raise StudyLedgerError("artifact_not_canonical")
 
 
 def freeze_result(actual: NativeFreezeInput, attempt_id: str) -> NativeFreezeResult:
@@ -73,8 +100,10 @@ def bind_captured_candidate(
     freeze: NativeFreezeInput,
     snapshot_path: Path,
     cell_id: str,
+    journal_sha256: str,
 ) -> None:
     """Consume a different-inode snapshot while its producer holds the real Journal."""
+    validate_frozen_materials(freeze)
     manifest = study_manifest(ledger)
     if raw(manifest) != raw(freeze.manifest):
         raise StudyLedgerError("comparison_freeze_identity")
@@ -100,6 +129,8 @@ def bind_captured_candidate(
         max_nodes=1_000_000,
     )
     reconciled = reconcile_study_journal(ledger, snapshot_path, catalog=catalog, cell_id=cell_id)
+    if reconciled.snapshot.journal_bytes_sha256 != journal_sha256:
+        raise StudyLedgerError("comparison_journal_capture")
     if (
         reconciled.reserved_slots != 12
         or len(reconciled.snapshot.reservations) != 12
