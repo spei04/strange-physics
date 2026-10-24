@@ -211,10 +211,10 @@ class Fixture:
 
 
 def prepare(root: Path, build: TrustedInstallation) -> Fixture:
-    root.mkdir(mode=0o700)
-    sync_directory(root.parent)
     budget = SetupBudget(time.monotonic_ns() + 180_000_000_000)
     with budget.phase():
+        root.mkdir(mode=0o700)
+        sync_directory(root.parent)
         plan = NativeAccountingPlan(
             study_id="freeze-" + root.name[:48],
             purpose="synthetic_validation",

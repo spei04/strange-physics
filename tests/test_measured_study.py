@@ -203,6 +203,21 @@ assert with_error
         not (f.root / "candidate-ticket-2").exists()
         and not (f.root / "candidate-ticket-5").exists()
     )
+    proof = {
+        "scope": "Four synthetic calls; no classical, purchase producer or study admission.",
+        "ledger_records": len(replay.ledger.records),
+        "ledger_bytes": len(raw(replay.ledger)),
+        "unresolved_holds": summarize_study(replay.ledger).budget.unresolved_attempts,
+        "database_bytes": (f.root / "candidate.sqlite3").stat().st_size,
+        "captured_journal_bytes": (f.root / "candidate-journal-1").stat().st_size,
+        "setup_parent_cpu_before_proof_ns": f.budget.parent_cpu,
+        "setup_child_cpu_ns": f.budget.child_cpu,
+        "setup_copy_bytes_before_proof": f.budget.copies,
+        "journal_write_epochs": f.budget.child_epochs,
+        "publication_escrow_bytes": f.control.publication.required_bytes(),
+    }
+    with f.budget.phase():
+        f.budget.write(f.root / "fixture-proof.json", json.dumps(proof, sort_keys=True).encode())
 
 
 @pytest.mark.parametrize("fault", ["raw", "after-binding"])
@@ -284,7 +299,7 @@ def test_freeze_closure_failure_leaves_no_manifest_and_unknown_hold(
         assert db.execute("SELECT count(*) FROM closures").fetchone()[0] == 0
 
 
-def test_freeze_stale_head_and_wrong_wrapper_are_denied_before_work(
+def test_freeze_stale_head_is_denied_before_work(
     tmp_path: Path,
     actual_build: TrustedInstallation,
 ) -> None:
@@ -513,3 +528,29 @@ def test_nested_freeze_uses_selected_sql_row_and_verified_build(
                 supervisor._retained_freeze(store, material, committed.ledger)
         finally:
             store.close()
+
+
+def test_root_creation_sync_uses_existing_setup_timer(
+    tmp_path: Path, actual_build: TrustedInstallation, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import signal
+
+    import freeze_journal_fixture as fixture_module
+
+    original = fixture_module.sync_directory
+    cpu = [100]
+    observed = []
+
+    def checked(path: Path) -> None:
+        assert signal.getitimer(signal.ITIMER_REAL)[0] > 0
+        assert signal.getitimer(signal.ITIMER_PROF)[0] > 0
+        if path == tmp_path:
+            cpu[0] += 250_000
+            observed.append(path)
+        original(path)
+
+    monkeypatch.setattr(fixture_module, "sync_directory", checked)
+    monkeypatch.setattr(time, "process_time_ns", lambda: cpu[0])
+    f = prepare(tmp_path / "timed-root", actual_build)
+    assert observed == [tmp_path]
+    assert f.budget.parent_cpu == 250_000
