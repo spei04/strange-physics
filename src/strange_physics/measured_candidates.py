@@ -14,7 +14,6 @@ import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Literal
 
 from strange_physics.bounded_json import bounded_canonical, parse_bounded_json
 from strange_physics.candidate_execution_contracts import (
@@ -31,10 +30,27 @@ from strange_physics.installed_identity import TrustedInstallation, verify_nativ
 from strange_physics.measured_publication import _deadline
 from strange_physics.native_candidates import produce_native_candidates
 from strange_physics.native_spring_contracts import (
+    NativeCandidateInput,
     NativeCandidateResult,
     parse_native_candidate_input,
     parse_native_candidate_result,
     validate_native_candidate_result,
+)
+from strange_physics.native_stage_dispatch import (
+    StageInput,
+    StageResult,
+    observation_engine,
+    parse_stage_input,
+    parse_stage_result,
+    produce_stage,
+    stage_config,
+    validate_stage,
+)
+from strange_physics.native_stage_execution_contracts import (
+    NativePredictionRequest,
+    NativePreparationRequest,
+    NativeScoreRequest,
+    NativeStageReceipt,
 )
 from strange_physics.publication_store import (
     Extents,
@@ -66,6 +82,14 @@ from strange_physics.workflow_io import private_stat, read_bytes, safe_path
 VERSION = "strange-physics.measured-candidates.v1"
 
 
+type ExecutionRequest = (
+    CandidateRequest | NativePreparationRequest | NativePredictionRequest | NativeScoreRequest
+)
+type ExecutionReceipt = CandidateReceipt | NativeStageReceipt
+type ExecutionInput = NativeCandidateInput | StageInput
+type ExecutionResult = NativeCandidateResult | StageResult
+
+
 @dataclass(frozen=True)
 class CommittedCandidate:
     receipt: CandidateReceipt
@@ -77,7 +101,98 @@ class CommittedCandidate:
     replayed: bool
 
 
-def _identity(request: CandidateRequest) -> str:
+@dataclass(frozen=True)
+class _CommittedExecution:
+    receipt: ExecutionReceipt
+    result: ExecutionResult
+    result_raw: bytes
+    original_ledger: NativeStudyLedger
+    ledger: NativeStudyLedger
+    measurements: CandidateMeasurements
+    replayed: bool
+
+
+def _request(data: bytes, operation: str) -> ExecutionRequest:
+    if operation == "candidate_production":
+        model = CandidateRequest
+    elif operation == "preparation":
+        return parse_bounded_json(
+            data, NativePreparationRequest, max_bytes=REQUEST_BYTES, max_depth=8, max_nodes=128
+        )
+    elif operation == "prediction":
+        return parse_bounded_json(
+            data, NativePredictionRequest, max_bytes=REQUEST_BYTES, max_depth=8, max_nodes=128
+        )
+    elif operation == "scoring":
+        return parse_bounded_json(
+            data, NativeScoreRequest, max_bytes=REQUEST_BYTES, max_depth=8, max_nodes=128
+        )
+    else:
+        raise StudyLedgerError("native_stage_operation")
+    return parse_bounded_json(data, model, max_bytes=REQUEST_BYTES, max_depth=8, max_nodes=128)
+
+
+def _receipt(data: bytes, request: ExecutionRequest) -> ExecutionReceipt:
+    if request.operation == "candidate_production":
+        return parse_bounded_json(
+            data, CandidateReceipt, max_bytes=8192, max_depth=8, max_nodes=128
+        )
+    value = parse_bounded_json(data, NativeStageReceipt, max_bytes=8192, max_depth=8, max_nodes=128)
+    if value.operation != request.operation:
+        raise StudyLedgerError("candidate_closure_corrupt")
+    return value
+
+
+def _input_limit(request: ExecutionRequest) -> int:
+    return (8 if request.operation in ("candidate_production", "prediction") else 16) * MIB
+
+
+def _result_limit(request: ExecutionRequest) -> int:
+    return (4 if request.operation in ("candidate_production", "prediction") else 8) * MIB
+
+
+def _input(data: bytes, request: ExecutionRequest) -> ExecutionInput:
+    if request.operation == "candidate_production":
+        return parse_native_candidate_input(data)
+    return parse_stage_input(request.operation, data)
+
+
+def _result(data: bytes, request: ExecutionRequest) -> ExecutionResult:
+    if request.operation == "candidate_production":
+        return parse_native_candidate_result(data)
+    return parse_stage_result(request.operation, data)
+
+
+def _config(actual: ExecutionInput) -> str:
+    return (
+        message_sha256(actual.config)
+        if isinstance(actual, NativeCandidateInput)
+        else stage_config(actual)
+    )
+
+
+def _check_engine(actual: ExecutionInput, expected: str) -> None:
+    engine = (
+        actual.observations.engine_fingerprint
+        if isinstance(actual, NativeCandidateInput)
+        else observation_engine(actual)
+    )
+    if engine is not None and engine != expected:
+        raise StudyLedgerError("candidate_observation_engine")
+
+
+def _validate(result: ExecutionResult, actual: ExecutionInput, attempt_id: str) -> None:
+    if isinstance(result, NativeCandidateResult) and isinstance(actual, NativeCandidateInput):
+        validate_native_candidate_result(result, actual, attempt_id=attempt_id)
+    elif not isinstance(result, NativeCandidateResult) and not isinstance(
+        actual, NativeCandidateInput
+    ):
+        validate_stage(result, actual, attempt_id)
+    else:
+        raise StudyLedgerError("candidate_result_identity")
+
+
+def _identity(request: ExecutionRequest) -> str:
     return digest(
         canonical_json(
             {
@@ -166,9 +281,11 @@ def _capacity(root: Path, ledger: NativeStudyLedger, c: CandidateControl) -> Non
 
 
 def _bind_context(
-    ledger: NativeStudyLedger, request: CandidateRequest, c: CandidateControl
+    ledger: NativeStudyLedger, request: ExecutionRequest, c: CandidateControl
 ) -> None:
     if request.phase == "comparison":
+        if request.operation != "candidate_production":
+            raise StudyLedgerError("native_stage_comparison_not_available")
         manifest = study_manifest(ledger)
         if (manifest.source_commit, manifest.uv_lock_sha256, manifest.engine_fingerprint) != (
             c.source_commit,
@@ -181,7 +298,7 @@ def _bind_context(
 
 
 def _run_child(
-    request: CandidateRequest, actual_raw: bytes, output: Path
+    request: ExecutionRequest, actual_raw: bytes, output: Path
 ) -> tuple[bytes | None, int]:
     deadline = time.monotonic_ns() + int(signal.getitimer(signal.ITIMER_REAL)[0] * 1e9)
     pid = os.fork()
@@ -208,8 +325,11 @@ def _run_child(
             )
             signal.signal(signal.SIGXFSZ, signal.SIG_DFL)
             resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
-            actual = parse_native_candidate_input(actual_raw)
-            result = raw(produce_native_candidates(actual, attempt_id=request.attempt_id))
+            if request.operation == "candidate_production":
+                actual = parse_native_candidate_input(actual_raw)
+                result = raw(produce_native_candidates(actual, attempt_id=request.attempt_id))
+            else:
+                result = produce_stage(request.operation, actual_raw, request.attempt_id)
             if len(result) > limit:
                 os._exit(2)
             fd = os.open(output, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
@@ -251,8 +371,8 @@ def _run_child(
 
 
 def _closure(
-    store: CandidateStore, request: CandidateRequest, current: NativeStudyLedger
-) -> tuple[CandidateReceipt, bytes, bytes, NativeStudyLedger] | None:
+    store: CandidateStore, request: ExecutionRequest, current: NativeStudyLedger
+) -> tuple[ExecutionReceipt, bytes, bytes, NativeStudyLedger] | None:
     row = store.db.execute(
         "SELECT identity,length(request),input_name,result_name,"
         "length(receipt),receipt_digest FROM closures WHERE logical_id=?",
@@ -267,18 +387,14 @@ def _closure(
     saved_raw, receipt_raw = store.db.execute(
         "SELECT request,receipt FROM closures WHERE logical_id=?", (request.logical_id,)
     ).fetchone()
-    saved = parse_bounded_json(
-        saved_raw, CandidateRequest, max_bytes=REQUEST_BYTES, max_depth=8, max_nodes=128
-    )
-    receipt = parse_bounded_json(
-        receipt_raw, CandidateReceipt, max_bytes=8192, max_depth=8, max_nodes=128
-    )
+    saved = _request(saved_raw, request.operation)
+    receipt = _receipt(receipt_raw, request)
     if _identity(saved) != row[0] or digest(receipt_raw) != row[5]:
         raise StudyLedgerError("candidate_closure_corrupt")
     if (row[2], row[3]) != (f"candidate-input-{saved.ticket}", f"candidate-output-{saved.ticket}"):
         raise StudyLedgerError("candidate_closure_corrupt")
-    input_raw = read_bytes(store.root / row[2], limit=8 * MIB)
-    result_raw = read_bytes(store.root / row[3], limit=4 * MIB)
+    input_raw = read_bytes(store.root / row[2], limit=_input_limit(saved))
+    result_raw = read_bytes(store.root / row[3], limit=_result_limit(saved))
     if (
         digest(input_raw),
         len(input_raw),
@@ -317,7 +433,7 @@ def _closure(
         attempt_id=saved.attempt_id,
         phase=saved.phase,
         cell_id=saved.cell_id,
-        operation="candidate_production",
+        operation=saved.operation,
         config_sha256=saved.config_sha256,
         input_sha256=saved.input_sha256,
         retry_of=saved.retry_of,
@@ -333,7 +449,7 @@ def _closure(
         if isinstance(r.event, StudyAttemptUpdate)
         and r.event.attempt_id == receipt.original_attempt_id
     ]
-    result = parse_native_candidate_result(result_raw)
+    result = _result(result_raw, request)
     if (
         not updates
         or updates[0].facts is None
@@ -343,11 +459,13 @@ def _closure(
     return receipt, input_raw, result_raw, original
 
 
-def commit_native_candidates(store_root: Path, request: CandidateRequest) -> CommittedCandidate:
+def _commit_native_execution(
+    store_root: Path, request: ExecutionRequest, *, expected_operation: str
+) -> _CommittedExecution:
     """Tiny ingress precedes a finite ticket; no automatic retry or free replay."""
     started = time.process_time_ns()
     bounded_canonical(request, REQUEST_BYTES)
-    request = CandidateRequest.model_validate_json(raw(request))
+    request = _request(raw(request), expected_operation)
     root = safe_path(store_root)
     private_stat(root.stat(), directory=True)
     admission_raw = read_bytes(root / "candidate-admission.json", limit=16 * 1024)
@@ -434,9 +552,7 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                     for record in current.records
                 ):
                     raise StudyLedgerError("candidate_attempt_reused")
-                operation: Literal["candidate_production", "accounting"] = (
-                    "accounting" if closure else "candidate_production"
-                )
+                operation = "accounting" if closure else request.operation
                 reservation = StudyAttemptReservation(
                     attempt_id=request.attempt_id,
                     phase="accounting" if closure else request.phase,
@@ -471,18 +587,17 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                 work_start = meter.total
                 if closure:
                     receipt, input_raw, result_raw, original = closure
-                    result = parse_native_candidate_result(result_raw)
+                    result = _result(result_raw, request)
                 else:
-                    input_raw = read_bytes(Path(request.input_path), limit=8 * MIB)
+                    input_raw = read_bytes(Path(request.input_path), limit=_input_limit(request))
                     if (len(input_raw), digest(input_raw)) != (
                         request.input_bytes,
                         request.input_raw_sha256,
                     ):
                         raise StudyLedgerError("candidate_input_raw_identity")
-                    actual = parse_native_candidate_input(input_raw)
-                    if actual.observations.engine_fingerprint != observed.engine_fingerprint:
-                        raise StudyLedgerError("candidate_observation_engine")
-                    if (message_sha256(actual), message_sha256(actual.config)) != (
+                    actual = _input(input_raw, request)
+                    _check_engine(actual, observed.engine_fingerprint)
+                    if (message_sha256(actual), _config(actual)) != (
                         request.input_sha256,
                         request.config_sha256,
                     ):
@@ -497,7 +612,7 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                     if produced is None:
                         raise StudyLedgerError("candidate_child_failed")
                     result_raw = produced
-                    result = parse_native_candidate_result(result_raw)
+                    result = _result(result_raw, request)
                     original = current
                     receipt = CandidateReceipt(
                         logical_id=request.logical_id,
@@ -511,13 +626,20 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                         source_commit=c.source_commit,
                         installation_sha256=c.installation_sha256,
                     )
-                actual = parse_native_candidate_input(input_raw)
-                if actual.observations.engine_fingerprint != observed.engine_fingerprint:
-                    raise StudyLedgerError("candidate_observation_engine")
-                validate_native_candidate_result(
-                    result, actual, attempt_id=receipt.original_attempt_id
-                )
-                if (message_sha256(actual), message_sha256(actual.config)) != (
+                    if request.operation != "candidate_production":
+                        receipt = NativeStageReceipt.model_validate(
+                            {
+                                **receipt.model_dump(),
+                                "schema_version": (
+                                    "strange-physics.native-stage-execution-receipt.v1"
+                                ),
+                                "operation": request.operation,
+                            }
+                        )
+                actual = _input(input_raw, request)
+                _check_engine(actual, observed.engine_fingerprint)
+                _validate(result, actual, receipt.original_attempt_id)
+                if (message_sha256(actual), _config(actual)) != (
                     request.input_sha256,
                     request.config_sha256,
                 ) or (receipt.source_commit, receipt.installation_sha256) != (
@@ -550,7 +672,9 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                     NativeWorkFacts(
                         attempt_id=request.attempt_id,
                         operation="accounting",
-                        producer_version=VERSION,
+                        producer_version=VERSION
+                        if request.operation == "candidate_production"
+                        else "strange-physics.measured-native-stages.v1",
                         config_sha256=reservation.config_sha256,
                         input_sha256=reservation.input_sha256,
                         observation_sha256=None,
@@ -597,7 +721,7 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                         store.stop()
                 if overrun:
                     raise StudyLedgerError("candidate_measurement_overrun")
-                return CommittedCandidate(
+                return _CommittedExecution(
                     receipt, result, result_raw, original, settled, measured, closure is not None
                 )
         except Exception as error:
@@ -645,3 +769,19 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                     if original_error is None:
                         raise
                     original_error.add_note("Final store close failed; original failure preserved.")
+
+
+def commit_native_candidates(store_root: Path, request: CandidateRequest) -> CommittedCandidate:
+    """Preserve the original candidate API over the shared fixed supervisor."""
+    value = _commit_native_execution(store_root, request, expected_operation="candidate_production")
+    assert isinstance(value.receipt, CandidateReceipt)
+    assert isinstance(value.result, NativeCandidateResult)
+    return CommittedCandidate(
+        value.receipt,
+        value.result,
+        value.result_raw,
+        value.original_ledger,
+        value.ledger,
+        value.measurements,
+        value.replayed,
+    )
