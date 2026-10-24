@@ -3,15 +3,17 @@
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 from typing import Any
 
 import pytest
-from test_measured_candidates import actual_build, change, private, setup
+from test_measured_candidates import actual_build, actual_input, private
 from test_native_spring_contracts import selection
 
 from strange_physics import measured_candidates as supervisor
 from strange_physics import measured_native_stages as stages
+from strange_physics.bounded_json import bounded_canonical
 from strange_physics.candidate_execution_contracts import (
     MIB,
     CandidateAdmission,
@@ -41,13 +43,13 @@ from strange_physics.native_stage_execution_contracts import (
 from strange_physics.publication_store import digest, head, raw
 from strange_physics.research_contracts import message_sha256
 from strange_physics.study_contracts import (
+    NativeAccountingPlan,
     NativeStudyLedger,
     StudyAttemptReservation,
 )
 from strange_physics.study_ledger import (
     StudyLedgerError,
     append_study_attempt,
-    read_study_ledger,
     summarize_study,
 )
 from strange_physics.worlds import WorldDefinition
@@ -66,25 +68,57 @@ def sequence_setup(root: Path, build: TrustedInstallation) -> CandidateRequest:
         control_artifact_bytes=48 * MIB,
         work_cpu_ns=8_000_000_000,
     )
-    first = setup(root, build, publication=publication)
-    admission = CandidateAdmission.model_validate_json(
-        (root / "candidate-admission.json").read_bytes()
+    root.mkdir(mode=0o700)
+    plan = NativeAccountingPlan(
+        study_id="stage-test",
+        purpose="synthetic_validation",
+        approval_id="NATIVE_COMPARISON_APPROVAL_2026_10_21",
     )
-    c = CandidateControl.model_validate(
-        admission.control.model_dump()
-        | {
-            "tickets": 30,
-            "recovery_tickets": 3,
-            "finalization_records": 14,
-            "finalization_bytes": 64 * 1024,
-        }
+    seed = NativeStudyLedger(plan=plan, records=())
+    setup_hold = StudyAttemptReservation(
+        attempt_id="synthetic-setup",
+        phase="accounting",
+        cell_id=None,
+        operation="accounting",
+        config_sha256=message_sha256(plan),
+        input_sha256=message_sha256(plan),
+        retry_of=None,
+        cpu_reservation_ns=120_000_000_000,
+        artifact_reservation_bytes=32 * MIB,
+        purchase=None,
     )
-    old = read_study_ledger((root / "candidate-seed.json").read_bytes())
-    seed = NativeStudyLedger(plan=old.plan, records=())
+    seed = append_study_attempt(
+        seed, event_id="setup-reserve", expected_revision=0, event=setup_hold
+    )
+    # Retain the allowance before creating synthetic observations/materials.
+    # It remains unresolved; current file sizes are not exact total disk work.
+    private(root / "setup-accounting.json", raw(seed))
+    c = CandidateControl(
+        root=str(root),
+        plan_sha256=message_sha256(plan),
+        source_commit=build.source_commit,
+        uv_lock_sha256=build.uv_lock_sha256,
+        engine_fingerprint=build.engine_fingerprint,
+        installation_sha256=message_sha256(build),
+        attempt_id="control",
+        tickets=30,
+        recovery_tickets=3,
+        recovery_work_cpu_ns=8_000_000_000,
+        recovery_work_artifact_bytes=2 * MIB,
+        ticket_cpu_ns=5_000_000_000,
+        ticket_wall_ns=30_000_000_000,
+        ticket_artifact_bytes=8192,
+        bootstrap_artifact_bytes=4 * MIB,
+        bootstrap_cpu_ns=5_000_000_000,
+        database_limit_bytes=2 * MIB,
+        finalization_records=14,
+        finalization_bytes=64 * 1024,
+        publication=publication,
+    )
     seed = append_study_attempt(
         seed,
         event_id="control-reserve",
-        expected_revision=0,
+        expected_revision=len(seed.records),
         event=StudyAttemptReservation(
             attempt_id=c.attempt_id,
             phase="accounting",
@@ -98,16 +132,34 @@ def sequence_setup(root: Path, build: TrustedInstallation) -> CandidateRequest:
             purchase=None,
         ),
     )
+    private(root / "candidate-installation.json", raw(build))
     private(root / "candidate-seed.json", raw(seed))
     private(
         root / "candidate-admission.json",
         raw(CandidateAdmission(control=c, seed_ledger_sha256=digest(raw(seed)))),
     )
-    return change(
-        first,
+    actual = actual_input(root / "fixture-observations.sqlite")
+    data = raw(actual)
+    private(root / "input.json", data)
+    return CandidateRequest(
+        mode="execute",
+        logical_id="candidates",
+        attempt_id="candidate-0",
+        retry_of=None,
+        phase="reference",
+        cell_id=None,
+        ticket=0,
         expected_revision=len(seed.records),
         expected_head_sha256=head(seed),
+        input_path=str(root / "input.json"),
+        input_raw_sha256=digest(data),
+        input_bytes=len(data),
+        input_sha256=message_sha256(actual),
+        config_sha256=message_sha256(actual.config),
+        cpu_reservation_ns=8_000_000_000,
         artifact_reservation_bytes=12 * MIB,
+        output_limit_bytes=MIB,
+        wall_limit_ns=30_000_000_000,
     )
 
 
@@ -259,8 +311,15 @@ def test_one_ledger_candidate_preparation_24_predictions_score_and_paid_replays(
     score = stages.commit_native_score(root, score_request)
     assert score.result.payload.evaluation is not None
     assert score.result.payload.evaluation.status == "scored"
-    assert len(score.ledger.records) == 55
+    assert len(score.ledger.records) == 56
     assert score.original_ledger.records[:-1] == ledger.records
+
+    original_paths = [
+        path for path in root.iterdir() if path.is_file() and not path.name.startswith("candidate")
+    ]
+    original_bytes = sum(path.stat().st_size for path in original_paths)
+    assert original_bytes < 32 * MIB
+    assert (root / "candidate.sqlite3").stat().st_size <= 2 * MIB
 
     def forbidden(*args: object, **kwargs: object) -> None:
         raise AssertionError("Paid recovery reran a numerical child")
@@ -297,12 +356,17 @@ def test_one_ledger_candidate_preparation_24_predictions_score_and_paid_replays(
     assert recovered_preparation.result_raw == preparation.result_raw
     assert recovered_prediction.result == entries[0].result
     assert recovered.result_raw == score.result_raw and recovered.receipt == score.receipt
+    assert len(raw(recovered.ledger)) <= 512 * 1024
     budget = summarize_study(recovered.ledger).budget
-    assert budget.unresolved_attempts == 1 and budget.remaining_artifact_bytes > 140 * MIB
+    assert budget.unresolved_attempts == 2 and budget.remaining_artifact_bytes > 140 * MIB
     private(
         root / "fixture-sizes.json",
         json.dumps(
             {
+                "original_material_retained_bytes": original_bytes,
+                "setup_hold_cpu_ns": 120_000_000_000,
+                "setup_hold_artifact_bytes": 32 * MIB,
+                "setup_hold_status": "unresolved",
                 "prediction_input_max": max(v[0] for v in sizes),
                 "prediction_result_max": max(v[1] for v in sizes),
                 "preparation_input": preparation_request.input_bytes,
@@ -338,3 +402,73 @@ def test_preparation_paid_recovery_rejects_candidate_receipt_substitution(
     with pytest.raises(StudyLedgerError, match="request_conflict"):
         stages.commit_native_preparation(root, foreign)
     assert first.receipt.operation == "preparation"
+
+
+@pytest.mark.parametrize(
+    "operation", ["candidate_production", "preparation", "prediction", "scoring"]
+)
+def test_public_ingress_validation_is_inside_control_clock(
+    tmp_path: Path,
+    actual_build: TrustedInstallation,
+    monkeypatch: pytest.MonkeyPatch,
+    operation: str,
+) -> None:
+    root = tmp_path / "run"
+    first = sequence_setup(root, actual_build)
+    models: dict[str, Any] = {
+        "candidate_production": CandidateRequest,
+        "preparation": NativePreparationRequest,
+        "prediction": NativePredictionRequest,
+        "scoring": NativeScoreRequest,
+    }
+    calls: dict[str, Any] = {
+        "candidate_production": supervisor.commit_native_candidates,
+        "preparation": stages.commit_native_preparation,
+        "prediction": stages.commit_native_prediction,
+        "scoring": stages.commit_native_score,
+    }
+    request = models[operation].model_validate(first.model_dump() | {"operation": operation})
+    actual_clock = time.process_time_ns
+    actual_validate = bounded_canonical
+    offset = 0
+
+    def validation(*args: Any, **kwargs: Any) -> Any:
+        nonlocal offset
+        offset += 2_000_000
+        return actual_validate(*args, **kwargs)
+
+    def deadline(*args: Any, **kwargs: Any) -> Any:
+        assert offset == 2_000_000  # One bounded validation, not duplicate wrappers.
+        assert time.process_time_ns() - args[-1] >= offset
+        raise RuntimeError("ingress clock checked before ticket")
+
+    monkeypatch.setattr(time, "process_time_ns", lambda: actual_clock() + offset)
+    monkeypatch.setattr(supervisor, "bounded_canonical", validation)
+    monkeypatch.setattr(supervisor, "_deadline", deadline)
+    with pytest.raises(RuntimeError, match="ingress clock checked"):
+        calls[operation](root, request)
+    assert not tuple(root.glob("candidate-ticket-*"))
+
+
+@pytest.mark.parametrize(
+    "operation", ["candidate_production", "preparation", "prediction", "scoring"]
+)
+def test_wrong_public_wrapper_rejects_before_ticket(
+    tmp_path: Path, actual_build: TrustedInstallation, operation: str
+) -> None:
+    root = tmp_path / "run"
+    first = sequence_setup(root, actual_build)
+    calls: dict[str, Any] = {
+        "candidate_production": supervisor.commit_native_candidates,
+        "preparation": stages.commit_native_preparation,
+        "prediction": stages.commit_native_prediction,
+        "scoring": stages.commit_native_score,
+    }
+    foreign: Any = (
+        NativePredictionRequest.model_validate(first.model_dump() | {"operation": "prediction"})
+        if operation == "candidate_production"
+        else first
+    )
+    with pytest.raises(ValueError):
+        calls[operation](root, foreign)
+    assert not tuple(root.glob("candidate-ticket-*"))

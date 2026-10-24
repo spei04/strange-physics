@@ -10,8 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
-from strange_physics.bounded_json import bounded_canonical
-from strange_physics.candidate_execution_contracts import REQUEST_BYTES, CandidateMeasurements
+from strange_physics.candidate_execution_contracts import CandidateMeasurements
 from strange_physics.measured_candidates import _commit_native_execution
 from strange_physics.native_prediction_contracts import NativePredictionResult
 from strange_physics.native_scoring_contracts import NativePreparationResult, NativeScoreResult
@@ -22,7 +21,6 @@ from strange_physics.native_stage_execution_contracts import (
     NativeScoreRequest,
     NativeStageReceipt,
 )
-from strange_physics.publication_store import raw
 from strange_physics.study_contracts import NativeStudyLedger
 
 
@@ -40,9 +38,7 @@ class CommittedNativeStage[Result: StageResult]:
 def commit_native_preparation(
     store_root: Path, request: NativePreparationRequest
 ) -> CommittedNativeStage[NativePreparationResult]:
-    bounded_canonical(request, REQUEST_BYTES)
-    request = NativePreparationRequest.model_validate_json(raw(request))
-    value = _commit_native_execution(store_root, request)
+    value = _commit_native_execution(store_root, request, expected_operation="preparation")
     assert isinstance(value.receipt, NativeStageReceipt)
     assert isinstance(value.result, NativePreparationResult)
     return CommittedNativeStage(
@@ -59,9 +55,7 @@ def commit_native_preparation(
 def commit_native_prediction(
     store_root: Path, request: NativePredictionRequest
 ) -> CommittedNativeStage[NativePredictionResult]:
-    bounded_canonical(request, REQUEST_BYTES)
-    request = NativePredictionRequest.model_validate_json(raw(request))
-    value = _commit_native_execution(store_root, request)
+    value = _commit_native_execution(store_root, request, expected_operation="prediction")
     assert isinstance(value.receipt, NativeStageReceipt)
     assert isinstance(value.result, NativePredictionResult)
     return CommittedNativeStage(
@@ -78,9 +72,7 @@ def commit_native_prediction(
 def commit_native_score(
     store_root: Path, request: NativeScoreRequest
 ) -> CommittedNativeStage[NativeScoreResult]:
-    bounded_canonical(request, REQUEST_BYTES)
-    request = NativeScoreRequest.model_validate_json(raw(request))
-    value = _commit_native_execution(store_root, request)
+    value = _commit_native_execution(store_root, request, expected_operation="scoring")
     assert isinstance(value.receipt, NativeStageReceipt)
     assert isinstance(value.result, NativeScoreResult)
     return CommittedNativeStage(

@@ -45,7 +45,9 @@ their existing 16/8 MiB parser caps. Canonical execution requests stay within
 publisher's actual work formula, 16 MiB per-call floor and 512 MiB ceiling.
 
 The proposed synthetic chain uses 30 tickets (27 executions and three recoveries)
-and a 2 MiB store. Its measured usability and exact material sizes must pass
+and a 2 MiB store, plus a retained unresolved 32 MiB/120-second synthetic
+setup/material-assembly reservation created before observation fixtures. It
+asserts retained material sizes without presenting that hold as exact cost. Its measured usability and exact material sizes must pass
 before it is accepted as a fixture. It is not a study run or evidence that
 432 purchases or 36 cells fit. The existing conservative per-ticket transaction
 envelopes and per-cell publication escrow make large profiles inadmissible under

@@ -459,11 +459,13 @@ def _closure(
     return receipt, input_raw, result_raw, original
 
 
-def _commit_native_execution(store_root: Path, request: ExecutionRequest) -> _CommittedExecution:
+def _commit_native_execution(
+    store_root: Path, request: ExecutionRequest, *, expected_operation: str
+) -> _CommittedExecution:
     """Tiny ingress precedes a finite ticket; no automatic retry or free replay."""
     started = time.process_time_ns()
     bounded_canonical(request, REQUEST_BYTES)
-    request = _request(raw(request), request.operation)
+    request = _request(raw(request), expected_operation)
     root = safe_path(store_root)
     private_stat(root.stat(), directory=True)
     admission_raw = read_bytes(root / "candidate-admission.json", limit=16 * 1024)
@@ -771,9 +773,7 @@ def _commit_native_execution(store_root: Path, request: ExecutionRequest) -> _Co
 
 def commit_native_candidates(store_root: Path, request: CandidateRequest) -> CommittedCandidate:
     """Preserve the original candidate API over the shared fixed supervisor."""
-    bounded_canonical(request, REQUEST_BYTES)
-    request = CandidateRequest.model_validate_json(raw(request))
-    value = _commit_native_execution(store_root, request)
+    value = _commit_native_execution(store_root, request, expected_operation="candidate_production")
     assert isinstance(value.receipt, CandidateReceipt)
     assert isinstance(value.result, NativeCandidateResult)
     return CommittedCandidate(
