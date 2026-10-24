@@ -63,6 +63,7 @@ def test_compromised_root_rejected_even_with_different_label(prefix: str) -> Non
         _ALLOWED + "\n-----END CERTIFICATE-----",
         "-----BEGIN CERTIFICATE-----\nnot-a-certificate\n-----END CERTIFICATE-----",
         _ALLOWED + "\n" + _ALLOWED,
+        _ALLOWED + "\nnot-a-comment-or-certificate",
     ],
 )
 def test_empty_incomplete_malformed_or_duplicate_bundle_rejected(bundle: str) -> None:

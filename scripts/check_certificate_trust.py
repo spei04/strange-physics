@@ -20,6 +20,9 @@ def check_bundle(bundle: str) -> int:
     certificates = re.findall(f"{_BEGIN}.*?{_END}", bundle, re.DOTALL)
     if not certificates or not (bundle.count(_BEGIN) == bundle.count(_END) == len(certificates)):
         raise ValueError("CA bundle is empty or has incomplete certificate blocks")
+    outside = re.sub(f"{_BEGIN}.*?{_END}", "", bundle, flags=re.DOTALL)
+    if any(line.strip() and not line.lstrip().startswith("#") for line in outside.splitlines()):
+        raise ValueError("CA bundle contains malformed data outside certificate blocks")
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     context.load_verify_locations(cadata=bundle)
     parsed = context.get_ca_certs(binary_form=True)
