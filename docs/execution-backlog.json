@@ -13756,7 +13756,7 @@
             "name": "strange_physics-0.1.0a1.tar.gz"
           }
         ],
-        "next_profile_handoff": "Quality implements freeze and a Journal-bound candidate with their two recoveries. Platform/Research review a narrow pre-run amendment: four implemented calls, two unused classical slots, unreserved future ordinary classical work, protected recovery/publication. V4 remains conditional design until actual bounded runtime admission.",
+        "next_profile_handoff": "Preserved Quality implementation resumed; Platform and Research retain independent review roles. The four-call amendment passed both design reviews; source/runtime enforcement remains unproved. Classical ordinary work is unreserved, while recovery/publication protection remains.",
         "delivery": {
           "pull_request": 120,
           "merge": "ff3d47ed6e0ce77ab8787b79bc512ce2ca25a6e9",
@@ -13797,6 +13797,23 @@
           "case": "Genuine current-engine Journal; produced candidate, absent native selection, independent classical success.",
           "purchase_seam": "One test-only existing-store intent transaction;12 unresolved purchase holds; no public purchase-path claim.",
           "remaining": "Pre-write Journal/epoch/copy/CPU enforcement, actual six-call usability and recovery evidence."
+        },
+        "first_slice_profile_amendment": {
+          "status": "conditional_design_accepted_runtime_admission_pending",
+          "author_index_sha256": "abc94032766c7193680fc086554ddbb217b0888c78fdb5710f55cd6ead9aa477",
+          "platform_review_sha256": "54833e0ef7e450ba35384edb694f107f4b96614ae204309b53462b5d5fd33f8c",
+          "research_review_sha256": "97c9af5ec621d1ff75b30d128851ea92a52727f238760c1010a7e090e2a246fd",
+          "declared_artifact_ceiling_bytes": 269631488,
+          "declared_cpu_ceiling_seconds": 342,
+          "unused_slots": [
+            2,
+            5
+          ],
+          "ordinary_classical_cost_reserved": false,
+          "recovery_and_publication_protection_retained": true,
+          "declared_call_census": 4,
+          "declared_successful_record_census": 23,
+          "declared_unresolved_hold_census": 14
         }
       }
     },
@@ -13816,7 +13833,7 @@
         "pip_version": "26.2.2",
         "focused_tests": 64,
         "runtime_dependencies_unchanged": true,
-        "alert_state": "open_old_requirement_fresh_graph_now_patched",
+        "alert_state": "fixed",
         "audit_suppressed": false,
         "merge": "8d0a6c7b0ca3074fefbebe6d5b4edccf6e61cf99",
         "pr_ci": 40097997498,
@@ -13829,7 +13846,12 @@
         "graph_versions": {
           "certifi": "2026.10.19",
           "pip": "26.2.2"
-        }
+        },
+        "alert_fixed_at": "2026-10-24T20:54:23Z",
+        "alert_dismissed_at": null,
+        "alert_dismissed_by": null,
+        "alert_readback_index_sha256": "a42eac1458887e94eace1227053ec267165e01f8b5270f2225f4d99ad4bf8410",
+        "previous_alert_observation": "Open on older requirement at earlier checkpoints; retained history."
       }
     }
   },
