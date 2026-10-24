@@ -12,6 +12,7 @@ import resource
 import signal
 import sys
 import time
+from contextlib import ExitStack
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -54,9 +55,11 @@ from strange_physics.native_stage_execution_contracts import (
 )
 from strange_physics.publication_store import (
     Extents,
+    LockedJournal,
     digest,
     durable_directory,
     head,
+    journal_snapshot,
     raw,
     regular,
     root_lock,
@@ -67,8 +70,24 @@ from strange_physics.study_contracts import (
     MAX_STUDY_JSON_BYTES,
     NativeStudyLedger,
     NativeWorkFacts,
+    OperationKind,
     StudyAttemptReservation,
     StudyAttemptUpdate,
+    StudyManifestFreeze,
+)
+from strange_physics.study_execution_binding import (
+    bind_captured_candidate,
+    freeze_result,
+    propose_freeze,
+)
+from strange_physics.study_execution_contracts import (
+    NativeComparisonCandidateRequest,
+    NativeComparisonInput,
+    NativeComparisonReceipt,
+    NativeFreezeInput,
+    NativeFreezeReceipt,
+    NativeFreezeRequest,
+    NativeFreezeResult,
 )
 from strange_physics.study_ledger import (
     StudyLedgerError,
@@ -83,11 +102,18 @@ VERSION = "strange-physics.measured-candidates.v1"
 
 
 type ExecutionRequest = (
-    CandidateRequest | NativePreparationRequest | NativePredictionRequest | NativeScoreRequest
+    CandidateRequest
+    | NativePreparationRequest
+    | NativePredictionRequest
+    | NativeScoreRequest
+    | NativeFreezeRequest
+    | NativeComparisonCandidateRequest
 )
-type ExecutionReceipt = CandidateReceipt | NativeStageReceipt
-type ExecutionInput = NativeCandidateInput | StageInput
-type ExecutionResult = NativeCandidateResult | StageResult
+type ExecutionReceipt = (
+    CandidateReceipt | NativeStageReceipt | NativeFreezeReceipt | NativeComparisonReceipt
+)
+type ExecutionInput = NativeCandidateInput | StageInput | NativeFreezeInput
+type ExecutionResult = NativeCandidateResult | StageResult | NativeFreezeResult
 
 
 @dataclass(frozen=True)
@@ -113,6 +139,18 @@ class _CommittedExecution:
 
 
 def _request(data: bytes, operation: str) -> ExecutionRequest:
+    if operation == "freeze":
+        return parse_bounded_json(
+            data, NativeFreezeRequest, max_bytes=REQUEST_BYTES, max_depth=8, max_nodes=128
+        )
+    if operation == "comparison_candidate":
+        return parse_bounded_json(
+            data,
+            NativeComparisonCandidateRequest,
+            max_bytes=REQUEST_BYTES,
+            max_depth=8,
+            max_nodes=128,
+        )
     if operation == "candidate_production":
         model = CandidateRequest
     elif operation == "preparation":
@@ -133,6 +171,14 @@ def _request(data: bytes, operation: str) -> ExecutionRequest:
 
 
 def _receipt(data: bytes, request: ExecutionRequest) -> ExecutionReceipt:
+    if request.operation == "freeze":
+        return parse_bounded_json(
+            data, NativeFreezeReceipt, max_bytes=8192, max_depth=8, max_nodes=128
+        )
+    if request.operation == "comparison_candidate":
+        return parse_bounded_json(
+            data, NativeComparisonReceipt, max_bytes=8192, max_depth=8, max_nodes=128
+        )
     if request.operation == "candidate_production":
         return parse_bounded_json(
             data, CandidateReceipt, max_bytes=8192, max_depth=8, max_nodes=128
@@ -144,26 +190,56 @@ def _receipt(data: bytes, request: ExecutionRequest) -> ExecutionReceipt:
 
 
 def _input_limit(request: ExecutionRequest) -> int:
-    return (8 if request.operation in ("candidate_production", "prediction") else 16) * MIB
+    return (
+        8
+        if request.operation in ("candidate_production", "comparison_candidate", "prediction")
+        else 16
+    ) * MIB
 
 
 def _result_limit(request: ExecutionRequest) -> int:
-    return (4 if request.operation in ("candidate_production", "prediction") else 8) * MIB
+    return (
+        4
+        if request.operation
+        in ("candidate_production", "comparison_candidate", "freeze", "prediction")
+        else 8
+    ) * MIB
+
+
+def _comparison_input(data: bytes) -> NativeComparisonInput:
+    return parse_bounded_json(
+        data, NativeComparisonInput, max_bytes=8 * MIB, max_depth=40, max_nodes=1_000_000
+    )
 
 
 def _input(data: bytes, request: ExecutionRequest) -> ExecutionInput:
+    if request.operation == "freeze":
+        return parse_bounded_json(
+            data, NativeFreezeInput, max_bytes=16 * MIB, max_depth=40, max_nodes=1_000_000
+        )
+    if request.operation == "comparison_candidate":
+        return _comparison_input(data).candidate
     if request.operation == "candidate_production":
         return parse_native_candidate_input(data)
     return parse_stage_input(request.operation, data)
 
 
 def _result(data: bytes, request: ExecutionRequest) -> ExecutionResult:
-    if request.operation == "candidate_production":
+    if request.operation == "freeze":
+        return parse_bounded_json(
+            data, NativeFreezeResult, max_bytes=4 * MIB, max_depth=16, max_nodes=256
+        )
+    if request.operation in ("candidate_production", "comparison_candidate"):
         return parse_native_candidate_result(data)
-    return parse_stage_result(request.operation, data)
+    operation = request.operation
+    if operation in ("preparation", "prediction", "scoring"):
+        return parse_stage_result(operation, data)
+    raise StudyLedgerError("native_stage_operation")
 
 
 def _config(actual: ExecutionInput) -> str:
+    if isinstance(actual, NativeFreezeInput):
+        return message_sha256(actual.manifest)
     return (
         message_sha256(actual.config)
         if isinstance(actual, NativeCandidateInput)
@@ -172,6 +248,10 @@ def _config(actual: ExecutionInput) -> str:
 
 
 def _check_engine(actual: ExecutionInput, expected: str) -> None:
+    if isinstance(actual, NativeFreezeInput):
+        if actual.manifest.engine_fingerprint != expected:
+            raise StudyLedgerError("freeze_engine_identity")
+        return
     engine = (
         actual.observations.engine_fingerprint
         if isinstance(actual, NativeCandidateInput)
@@ -182,6 +262,14 @@ def _check_engine(actual: ExecutionInput, expected: str) -> None:
 
 
 def _validate(result: ExecutionResult, actual: ExecutionInput, attempt_id: str) -> None:
+    if isinstance(result, NativeFreezeResult) or isinstance(actual, NativeFreezeInput):
+        if (
+            not isinstance(result, NativeFreezeResult)
+            or not isinstance(actual, NativeFreezeInput)
+            or result != freeze_result(actual, attempt_id)
+        ):
+            raise StudyLedgerError("freeze_result_identity")
+        return
     if isinstance(result, NativeCandidateResult) and isinstance(actual, NativeCandidateInput):
         validate_native_candidate_result(result, actual, attempt_id=attempt_id)
     elif not isinstance(result, NativeCandidateResult) and not isinstance(
@@ -280,11 +368,22 @@ def _capacity(root: Path, ledger: NativeStudyLedger, c: CandidateControl) -> Non
         raise StudyLedgerError("candidate_protected_work_headroom")
 
 
+def _operation(request: ExecutionRequest) -> OperationKind:
+    if request.operation == "freeze":
+        return "accounting"
+    if request.operation == "comparison_candidate":
+        return "candidate_production"
+    return request.operation
+
+
 def _bind_context(
     ledger: NativeStudyLedger, request: ExecutionRequest, c: CandidateControl
 ) -> None:
+    if request.operation == "freeze" and request.mode == "execute":
+        if any(isinstance(r.event, StudyManifestFreeze) for r in ledger.records):
+            raise StudyLedgerError("freeze_already_committed")
     if request.phase == "comparison":
-        if request.operation != "candidate_production":
+        if request.operation not in ("candidate_production", "comparison_candidate"):
             raise StudyLedgerError("native_stage_comparison_not_available")
         manifest = study_manifest(ledger)
         if (manifest.source_commit, manifest.uv_lock_sha256, manifest.engine_fingerprint) != (
@@ -293,8 +392,9 @@ def _bind_context(
             c.engine_fingerprint,
         ) or manifest.artifact("candidate_config").sha256 != request.config_sha256:
             raise StudyLedgerError("candidate_frozen_identity")
-        # No supplied bundle is promoted to complete actual-Journal provenance.
-        raise StudyLedgerError("candidate_comparison_not_available")
+        if request.operation == "candidate_production":
+            # The old supplied-bundle interface does not acquire Journal authority.
+            raise StudyLedgerError("candidate_comparison_not_available")
 
 
 def _run_child(
@@ -325,11 +425,18 @@ def _run_child(
             )
             signal.signal(signal.SIGXFSZ, signal.SIG_DFL)
             resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
-            if request.operation == "candidate_production":
-                actual = parse_native_candidate_input(actual_raw)
+            if request.operation in ("candidate_production", "comparison_candidate"):
+                actual = (
+                    parse_native_candidate_input(actual_raw)
+                    if request.operation == "candidate_production"
+                    else _comparison_input(actual_raw).candidate
+                )
                 result = raw(produce_native_candidates(actual, attempt_id=request.attempt_id))
             else:
-                result = produce_stage(request.operation, actual_raw, request.attempt_id)
+                operation = request.operation
+                if operation not in ("preparation", "prediction", "scoring"):
+                    os._exit(70)
+                result = produce_stage(operation, actual_raw, request.attempt_id)
             if len(result) > limit:
                 os._exit(2)
             fd = os.open(output, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
@@ -433,7 +540,7 @@ def _closure(
         attempt_id=saved.attempt_id,
         phase=saved.phase,
         cell_id=saved.cell_id,
-        operation=saved.operation,
+        operation=_operation(saved),
         config_sha256=saved.config_sha256,
         input_sha256=saved.input_sha256,
         retry_of=saved.retry_of,
@@ -456,7 +563,83 @@ def _closure(
         or (message_sha256(updates[0].facts) != message_sha256(result.facts))
     ):
         raise StudyLedgerError("candidate_closure_corrupt")
+    if isinstance(result, NativeFreezeResult):
+        actual = _input(input_raw, saved)
+        if not isinstance(actual, NativeFreezeInput) or (
+            receipt.original_revision >= len(current.records)
+            or current.records[receipt.original_revision].event
+            != StudyManifestFreeze(manifest=actual.manifest)
+        ):
+            raise StudyLedgerError("candidate_closure_corrupt")
+        _validate(result, actual, saved.attempt_id)
     return receipt, input_raw, result_raw, original
+
+
+def _retained_freeze(
+    store: CandidateStore, material: NativeComparisonInput, ledger: NativeStudyLedger
+) -> NativeFreezeInput:
+    row = store.db.execute(
+        "SELECT length(request),request FROM closures WHERE logical_id=?",
+        (material.freeze_logical_id,),
+    ).fetchone()
+    if row is None or not 0 < row[0] <= REQUEST_BYTES:
+        raise StudyLedgerError("comparison_freeze_missing")
+    request = _request(row[1], "freeze")
+    retained = _closure(store, request, ledger)
+    if retained is None or digest(raw(retained[0])) != material.freeze_receipt_sha256:
+        raise StudyLedgerError("comparison_freeze_identity")
+    actual = _input(retained[1], request)
+    assert isinstance(actual, NativeFreezeInput)
+    return actual
+
+
+def _bind_comparison(
+    store: CandidateStore,
+    request: NativeComparisonCandidateRequest,
+    input_raw: bytes,
+    original: NativeStudyLedger,
+    meter: Extents,
+    scope: ExitStack,
+    *,
+    replayed: bool,
+) -> LockedJournal | None:
+    material = _comparison_input(input_raw)
+    frozen = _retained_freeze(store, material, original)
+    ticket = request.ticket
+    if replayed:
+        saved_raw = store.db.execute(
+            "SELECT request FROM closures WHERE logical_id=?", (request.logical_id,)
+        ).fetchone()[0]
+        ticket = _request(saved_raw, "comparison_candidate").ticket
+    snapshot = store.root / f"candidate-journal-{ticket}"
+    held: LockedJournal | None = None
+    if not replayed:
+        live = safe_path(Path(material.journal_path))
+        if live.is_relative_to(store.root):
+            raise StudyLedgerError("comparison_journal_store_alias")
+        info = regular(live)
+        if info is None or info.st_size != material.journal_bytes:
+            raise StudyLedgerError("comparison_journal_size")
+        if (
+            request.artifact_reservation_bytes
+            < request.input_bytes + request.output_limit_bytes + 2 * material.journal_bytes
+        ):
+            raise StudyLedgerError("comparison_work_headroom")
+        held = scope.enter_context(journal_snapshot(live, material.journal_sha256))
+        if held.original is None or len(held.original) != material.journal_bytes:
+            raise StudyLedgerError("comparison_journal_size")
+        meter.write(snapshot, held.original)
+    captured = read_bytes(snapshot, limit=material.journal_bytes)
+    if len(captured) != material.journal_bytes or digest(captured) != material.journal_sha256:
+        raise StudyLedgerError("comparison_journal_capture")
+    bind_captured_candidate(
+        original,
+        material.candidate,
+        freeze=frozen,
+        snapshot_path=snapshot,
+        cell_id=request.cell_id,
+    )
+    return held
 
 
 def _commit_native_execution(
@@ -506,7 +689,7 @@ def _commit_native_execution(
         output = root / f"candidate-output-{request.ticket}"
         output_counted = False
         try:
-            with root_lock(root):
+            with root_lock(root), ExitStack() as journal_scope:
                 seed_raw = read_bytes(root / "candidate-seed.json", limit=MAX_STUDY_JSON_BYTES)
                 build_raw = read_bytes(root / "candidate-installation.json", limit=2 * MIB)
                 if digest(seed_raw) != admission.seed_ledger_sha256:
@@ -552,7 +735,7 @@ def _commit_native_execution(
                     for record in current.records
                 ):
                     raise StudyLedgerError("candidate_attempt_reused")
-                operation = "accounting" if closure else request.operation
+                operation = "accounting" if closure else _operation(request)
                 reservation = StudyAttemptReservation(
                     attempt_id=request.attempt_id,
                     phase="accounting" if closure else request.phase,
@@ -583,11 +766,17 @@ def _commit_native_execution(
                 with store.transaction():
                     store.replace(current, proposed)
                 current = proposed
+                frozen_ledger: NativeStudyLedger | None = None
+                held_journal: LockedJournal | None = None
                 clock.work()
                 work_start = meter.total
                 if closure:
                     receipt, input_raw, result_raw, original = closure
                     result = _result(result_raw, request)
+                    if isinstance(request, NativeComparisonCandidateRequest):
+                        _bind_comparison(
+                            store, request, input_raw, original, meter, journal_scope, replayed=True
+                        )
                 else:
                     input_raw = read_bytes(Path(request.input_path), limit=_input_limit(request))
                     if (len(input_raw), digest(input_raw)) != (
@@ -603,8 +792,29 @@ def _commit_native_execution(
                     ):
                         raise StudyLedgerError("candidate_input_identity")
                     meter.write(root / f"candidate-input-{request.ticket}", input_raw)
-                    produced, child_cpu = _run_child(request, input_raw, output)
-                    if regular(output, missing=True) is not None:
+                    if isinstance(request, NativeComparisonCandidateRequest):
+                        held_journal = _bind_comparison(
+                            store, request, input_raw, current, meter, journal_scope, replayed=False
+                        )
+                    produced: bytes | None
+                    if isinstance(actual, NativeFreezeInput):
+                        lock_bytes = read_bytes(Path(build.lock_path), limit=8 * MIB)
+                        frozen_ledger = propose_freeze(
+                            current,
+                            actual,
+                            attempt_id=request.attempt_id,
+                            source_commit=observed.source_commit,
+                            lock_bytes=lock_bytes,
+                            engine=observed.engine_fingerprint,
+                        )
+                        produced = raw(freeze_result(actual, request.attempt_id))
+                        if len(produced) > request.output_limit_bytes:
+                            raise StudyLedgerError("freeze_output_limit")
+                        meter.write(output, produced)
+                        output_counted = True
+                    else:
+                        produced, child_cpu = _run_child(request, input_raw, output)
+                    if not output_counted and regular(output, missing=True) is not None:
                         meter.total += max(
                             output.stat().st_size, len(produced) if produced is not None else 0
                         )
@@ -626,7 +836,19 @@ def _commit_native_execution(
                         source_commit=c.source_commit,
                         installation_sha256=c.installation_sha256,
                     )
-                    if request.operation != "candidate_production":
+                    if request.operation == "freeze":
+                        receipt = NativeFreezeReceipt.model_validate(
+                            {
+                                **receipt.model_dump(exclude={"schema_version"}),
+                            }
+                        )
+                    elif request.operation == "comparison_candidate":
+                        receipt = NativeComparisonReceipt.model_validate(
+                            {
+                                **receipt.model_dump(exclude={"schema_version"}),
+                            }
+                        )
+                    elif request.operation != "candidate_production":
                         receipt = NativeStageReceipt.model_validate(
                             {
                                 **receipt.model_dump(),
@@ -691,7 +913,7 @@ def _commit_native_execution(
                     else NativeWorkFacts.model_validate_json(result.facts.model_dump_json())
                 )
                 settled = _append(
-                    current,
+                    frozen_ledger if frozen_ledger is not None else current,
                     StudyAttemptUpdate(
                         attempt_id=request.attempt_id,
                         state="unknown" if overrun else facts.outcome,
@@ -701,6 +923,11 @@ def _commit_native_execution(
                         facts=facts,
                     ),
                 )
+                if isinstance(request, NativeFreezeRequest) and frozen_ledger is not None:
+                    _capacity(root, settled, c)
+                # ExitStack retains actual Journal exclusion through this commit.
+                if held_journal is not None:
+                    held_journal.recheck()
                 store.limit_control_growth()
                 with store.transaction():
                     store.replace(current, settled)
