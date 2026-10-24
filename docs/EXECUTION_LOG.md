@@ -12,15 +12,17 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Reconcile five primary progress documents, then release | Candidate source accepted; no environment use or source rerun during this update |
-| Platform | Candidate verification preparation, then protected-main verification | Scoped capacity/recovery review accepted; actual delivery proof remains pending |
-| Research | Final scientific/source equivalence and document consistency | Scoped reviews accepted; independently review this progress checkpoint |
-| Project lead | Candidate integration and delivery in identity | Normal PR/main/candidate gates pending; parent tasks remain open |
+| Quality | Repaired source released; available for next scoped assignment | Clean 2894a40 and owned environment released to Lead; focused evidence sealed |
+| Platform | Verify repaired protected-main candidate | Escrow and CI bootstrap accepted; final verifier uses repaired archive pins |
+| Research | Scientific/source equivalence and document consistency | Narrow escrow acceptance sealed; review final five-document checkpoint |
+| Project lead | Primary progress and identity integration/delivery | Clean source released; repaired PR/main/candidate proof pending; parents remain open |
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-24 | Quality + Platform | PR118 escrow and CI installation repairs | Escrow floor/ceiling accepted; owned-interpreter bootstrap under implementation/review |
+| 2026-10-24 | Project lead + Research | Five-document repair reconciliation | Preserve original source/failed CI evidence, current assignments and unchanged graph/caps |
 | 2026-10-24 | Quality | Candidate-only pre-freeze execution source 6dfceb4 | Accepted with 4,186 tests including 40 candidate cases; source/environment released to lead |
 | 2026-10-24 | Research + Platform | Independent candidate and installed-identity review | Scoped source/capacity/recovery/verifier evidence accepted; final delivery remains separate |
 | 2026-10-24 | Project lead + Platform | Candidate integration and delivery | Lead owns identity; Platform prepares and verifies protected-main candidate |
@@ -791,3 +793,27 @@ Author index 33c20a2497dadccfd01007a19257388bad61fd8abeb3209202dc6b2659c4a689 re
 Earlier failed fixtures and original review reproductions remain retained at their exact sources: split result/raw bytes, missing receipt joins, stale-head recovery, hard-cap stop/recovery escrow and malformed hot-journal capacity were repaired before final acceptance. The conservative control hold reserves four bounded database/journal transaction envelopes per ticket; it does not claim exact physical I/O. The original PR117 failed run, publisher 56/58 focused results and prior 4,143-test evidence above remain historical and are not relabeled as candidate checks.
 
 Lead now owns integration/delivery in identity; Platform prepares and verifies the protected-main candidate; Research reviews final scientific/source equivalence and these documents. Quality completes this primary progress checkpoint and releases it. No environment is used or modified for this update. PR/main CI and candidate verification remain pending. Comparison dispatch, the other four numerical wrappers, purchased-simulation recovery, one-way handoff and full-study allocation remain unimplemented/unaccepted. RA-02/#105 and RA-N01/#106 stay open, with explicit parent audit before finite-grid admission. No comparison study, budget reset, scope, graph, approval, effort or forecast change; owner-local/trusted-retention limits remain.
+
+### 2026-10-24 — Candidate delivery repair checkpoint
+
+PR #118 was opened at 696eaf896cb262b570f9bb164a7ae1c05377b7d7, combining 6dfceb4 source with aada279's five reviewed progress documents. The initial source acceptance above is qualified by two delivery findings; no merge or study occurred.
+
+Lead found that publication escrow omitted the publisher's 16 MiB minimum per call and could promise a work reservation beyond its 512 MiB request ceiling. Quality's 1d62a91b0b53967b7a74f9c288e7db0ec6498ee5 repair takes the maximum of the minimum and material formula and rejects impossible nonzero promises. The test-only 1cc86ec00c8ac9db613998e0b91a80b1f49706c7 follow-up corrects a new fixture's reservation type; the original 17-pass/two-fixture-failure diagnostic remains retained. All 19 relevant author cases then passed, together with narrow strict typing, lint/format, offline archive and outside-checkout installed checks. Author index 88eeb4a6f75093903c9115e3bd525cf0a8f104006298b3db2d5165af8c20755e preserves this repair separately from the earlier 4,186-test source.
+
+Platform independently passed 25 boundary/actual-ledger cases and one sensitive mutation at 1d62a91. Index 54b3950d632d57702bb5a62611c7f89a76928c77d1c5d18dc7857f60bee77942 retains 13 children, rehashed by Lead. Coverage includes the exact 512 MiB ceiling, a four-byte excess, the per-call minimum, and equality/one-byte-deficit admission with one/two calls and zero/two recovery tickets. Zero-call intentionally unpublishable behavior remains unchanged. This closes the narrow arithmetic defect; it does not establish full-study capacity.
+
+Original PR CI40081493657 failed 26 candidate tests in each Python 3.12/3.14 job, with 4,160 others passing. Both failures occur at the actual resolved hosted Python executable's installed-identity stat checks before numerical dispatch. The logs do not distinguish which ownership/link/mode condition failed; no exact cause is claimed yet. Index e40d23f7eb182b9dc178e8c26ff738b0217cce7a0617532645e17d0f10f79673 retains both raw logs and run/job metadata. These failures remain part of delivery evidence.
+
+Quality owns the existing identity checkout/environment for a narrow CI installation fix that preserves verification; Platform independently reviews the installation contract. Lead owns primary progress and delivery, and Research reviews the repair's scientific/source equivalence and document consistency. New exact-head PR checks, all protected-main checks and rebuilt candidate verification remain required. The existing 1 GiB cumulative cap and eight CPU-core-hours are unchanged; comparison dispatch, the remaining producer wrappers, full-study allocation and explicit parent audit remain open. RA-02/#105 and RA-N01/#106 remain in progress. No study, approval, graph, effort or forecast change.
+
+
+Quality committed CI bootstrap repair 2894a40bbe1d432c5bb0cf3ad5be9253d50cb7e6 (tree e613ac1f858202bc7fff8e6c73e1b241c02af4a1). It creates owned copied interpreters, verifies byte identity and file properties, explicitly selects them for locked copy-mode uv installation, and repeats the checks after each sync/install in test, security and protected-main runtime environments. The product installation verifier remains unchanged; shared toolcache files are not modified. Thirteen focused cases include actual environment creation and copied-executable byte/symlink substitution plus installed-file permission rejection. A separate controlled owned 0777 source produced a 0755 copy without modifying the source. Ruff/format, configured strict mypy across 135 files and the medium/high Bandit gate passed. This is local bootstrap evidence; actual hosted stat readback and both Python runtimes remain required.
+
+Platform's diagnosis index 9060dce5b83a3c0a88a42320b31f3f95207b2c84672d0e539242c66026f269fa retains 21 source/log records, rehashed by Lead. The exact runner image recursively sets /opt permissions after toolset installation, supporting the writable-file explanation without inventing the missing original stat values. Copied binaries continue using the base standard/shared libraries; no hermetic-runtime claim is made. Research escrow acceptance ddcd0e1e9e3f49b0664850b0c6a7eb9037c596fb2439e575da248a8b9c10ddb9 rehashed all 41 author and 13 Platform children and checked seven integer boundaries; Lead additionally rehashed its three records.
+
+All 83 runtime/package archive inputs remain equal to 1d62a91 after the test and CI-only follow-ups; the CI build procedure itself has changed. Repaired author wheel SHA256 8065b6f4d0c8604e92ea1b619de4908d1140da5642c32c6e97810ad84904984a (269,339 bytes) and sdist 60e01ccc2fcf5ce397c0068c909a86e08aa1a2319625afb38fc347e2edbf1f9c (212,185 bytes) replace the older archive pins for final delivery. They remain private author artifacts pending protected-main candidate verification.
+
+
+The CI author index 5e2d65a3200f498af68ddc33eb54b72eed1928849cc693291aa79bd55f1c1093 retains 17 children, rehashed by Lead. Platform accepted exact 2894a40 after 13 authored cases, 12 independent cases and one sensitive digest-guard mutation (26 checks in 3.64 seconds); its consumer is released. The installed-file inventory contains 4,687 nonproject dependency files; the earlier 4,696 count also included nine project dist-info files. No dependency file was removed or changed. Final integration uses these repaired source/archive identities; hosted checks remain an independent gate.
+
+Quality released clean identity 2894a40 and its owned environment with no remaining author/reviewer consumer. Handoff f1935cdc0896fead3dda2efc793f2ca9fe0d26ce604b34243234a08ddb493090 records source, archive and inventory definitions. Lead now owns both progress and integration; Research reviews the immutable five-document checkpoint and Platform prepares the final candidate verifier. No new checkout or environment is needed.
