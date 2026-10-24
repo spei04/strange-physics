@@ -574,6 +574,16 @@ def _closure(
         ):
             raise StudyLedgerError("candidate_closure_corrupt")
         _validate(result, actual, saved.attempt_id)
+        if (
+            actual.manifest.source_commit,
+            actual.manifest.uv_lock_sha256,
+            actual.manifest.engine_fingerprint,
+        ) != (
+            store.admission.control.source_commit,
+            store.admission.control.uv_lock_sha256,
+            store.admission.control.engine_fingerprint,
+        ):
+            raise StudyLedgerError("freeze_build_identity")
     return receipt, input_raw, result_raw, original
 
 

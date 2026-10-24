@@ -71,7 +71,7 @@ def sync_directory(path: Path) -> None:
 
 def restrict_limit(which: int, ceiling: int) -> None:
     soft, hard = resource.getrlimit(which)
-    bound = min(ceiling, *(v for v in (soft, hard) if v != resource.RLIM_INFINITY))
+    bound = min([ceiling, *(v for v in (soft, hard) if v != resource.RLIM_INFINITY)])
     resource.setrlimit(which, (bound, bound))
 
 

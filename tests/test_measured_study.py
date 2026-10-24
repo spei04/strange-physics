@@ -299,7 +299,7 @@ def test_freeze_stale_head_and_wrong_wrapper_are_denied_before_work(
 
 
 @pytest.mark.parametrize(
-    "limits,expected", [((100, 1000), 100), ((-1, 1000), 500), ((700, 800), 500)]
+    "limits,expected", [((100, 1000), 100), ((-1, 1000), 500), ((700, 800), 500), ((-1, -1), 500)]
 )
 def test_setup_preserves_inherited_soft_and_hard_limits(
     monkeypatch: pytest.MonkeyPatch, limits: tuple[int, int], expected: int
@@ -330,3 +330,186 @@ def test_setup_file_and_directory_are_synced_before_materials(
     budget = SetupBudget(time.monotonic_ns() + 1_000_000_000)
     budget.write(tmp_path / "setup.json", b"retained-hold")
     assert observed == ["file", "directory"]
+
+
+@pytest.mark.parametrize("fault", ["pool", "manifest-source", "manifest-lock"])
+def test_coherent_retained_freeze_corruption_rejects_public_paid_recovery(
+    tmp_path: Path, actual_build: TrustedInstallation, fault: str
+) -> None:
+    from strange_physics import study_ledger
+    from strange_physics.candidate_execution_contracts import CandidateAdmission
+    from strange_physics.publication_store import Extents, digest, head, root_lock
+    from strange_physics.research_contracts import message_sha256
+    from strange_physics.study_contracts import NativeStudyLedger
+    from strange_physics.study_execution_binding import freeze_result
+    from strange_physics.study_execution_contracts import NativeFreezeReceipt
+
+    # One real freeze, one fixed corruption transaction under the setup hold,
+    # then a consumed recovery ticket. No observations or numerical call.
+    f = prepare(tmp_path / ("coherent-" + fault), actual_build)
+    committed = commit_native_freeze(f.root, f.freeze_request)
+    data = f.freeze.model_dump()
+    if fault == "pool":
+        data["artifacts"]["pool"] = data["artifacts"]["pool"].replace("4.0", "5.0")
+        assert data["artifacts"]["pool"] != f.freeze.artifacts["pool"]
+    else:
+        field = "source_commit" if fault == "manifest-source" else "uv_lock_sha256"
+        data["manifest"][field] = "a" * (40 if field == "source_commit" else 64)
+    changed = NativeFreezeInput.model_validate(data)
+    changed_input = raw(changed)
+    changed_result = freeze_result(changed, f.freeze_request.attempt_id)
+    request = NativeFreezeRequest.model_validate(
+        f.freeze_request.model_dump()
+        | {
+            "input_raw_sha256": digest(changed_input),
+            "input_bytes": len(changed_input),
+            "input_sha256": message_sha256(changed),
+            "config_sha256": message_sha256(changed.manifest),
+        }
+    )
+    after = NativeStudyLedger(plan=committed.ledger.plan)
+    for record in committed.ledger.records:
+        event = record.event
+        if event.kind == "reserve" and event.attempt_id == request.attempt_id:
+            event = type(event).model_validate(
+                event.model_dump()
+                | {"input_sha256": request.input_sha256, "config_sha256": request.config_sha256}
+            )
+        elif event.kind == "freeze":
+            event = type(event)(manifest=changed.manifest)
+        elif event.kind == "update" and event.attempt_id == request.attempt_id:
+            event = type(event).model_validate(event.model_dump() | {"facts": changed_result.facts})
+        after = study_ledger._append(after, record.event_id, event, len(after.records))
+    original = NativeStudyLedger(plan=after.plan, records=after.records[:3])
+    receipt = NativeFreezeReceipt.model_validate(
+        committed.receipt.model_dump()
+        | {
+            "request_sha256": supervisor._identity(request),
+            "input_raw_sha256": digest(changed_input),
+            "result_raw_sha256": digest(raw(changed_result)),
+            "original_head_sha256": head(original),
+            "original_ledger_sha256": digest(raw(original)),
+        }
+    )
+    with f.budget.phase(), root_lock(f.root):
+        admission = CandidateAdmission.model_validate_json(
+            (f.root / "candidate-admission.json").read_bytes()
+        )
+        store = CandidateStore(
+            f.root,
+            admission,
+            (f.root / "candidate-seed.json").read_bytes(),
+            Extents(f.root, database_name="candidate.sqlite3"),
+        )
+        try:
+            for name, value in (
+                ("candidate-input-0", changed_input),
+                ("candidate-output-0", raw(changed_result)),
+            ):
+                assert f.budget.copies + len(value) <= COPY_LIMIT
+                f.budget.copies += len(value)
+                (f.root / name).write_bytes(value)
+            store.limit_control_growth()
+            with store.transaction():
+                store.db.execute(
+                    "UPDATE state SET ledger=?,revision=?,head=? WHERE id=1",
+                    (raw(after), len(after.records), head(after)),
+                )
+                store.db.execute("DELETE FROM records")
+                store._records(after, 0)
+                store.db.execute(
+                    "UPDATE closures SET identity=?,request=?,receipt=?,receipt_digest=? "
+                    "WHERE logical_id='freeze'",
+                    (
+                        supervisor._identity(request),
+                        raw(request),
+                        raw(receipt),
+                        digest(raw(receipt)),
+                    ),
+                )
+            assert store.ledger() == after
+        finally:
+            store.close()
+    expected = "artifact_identity" if fault == "pool" else "freeze_build_identity"
+    with pytest.raises(StudyLedgerError, match=expected):
+        commit_native_freeze(f.root, recover(request, 3))
+    assert (f.root / "candidate-ticket-3").exists()
+    assert len(current(f.root).records) == 5
+
+
+@pytest.mark.parametrize("fault", ["source_commit", "installation_sha256", "logical_alias"])
+def test_nested_freeze_uses_selected_sql_row_and_verified_build(
+    tmp_path: Path, actual_build: TrustedInstallation, fault: str
+) -> None:
+    from strange_physics.candidate_execution_contracts import CandidateAdmission
+    from strange_physics.contracts import ObservationBundle
+    from strange_physics.native_spring_contracts import (
+        NativeCandidateConfig,
+        NativeCandidateInput,
+        NativeSpringPool,
+    )
+    from strange_physics.publication_store import Extents, digest, root_lock
+    from strange_physics.study_contracts import NativeWorldCatalog
+    from strange_physics.study_execution_contracts import NativeComparisonInput, NativeFreezeReceipt
+
+    f = prepare(tmp_path / ("nested-" + fault), actual_build)
+    committed = commit_native_freeze(f.root, f.freeze_request)
+    catalog = NativeWorldCatalog.model_validate_json(f.freeze.artifacts["world_catalog"])
+    material = NativeComparisonInput(
+        candidate=NativeCandidateInput(
+            pool=NativeSpringPool.model_validate_json(f.freeze.artifacts["pool"]),
+            config=NativeCandidateConfig(),
+            observations=ObservationBundle(
+                run_id=f.freeze.manifest.cells[0].journal_id,
+                engine_version="synthetic-no-observation",
+                engine_fingerprint=actual_build.engine_fingerprint,
+                space=catalog.worlds[0].definition.space,
+                records=(),
+            ),
+        ),
+        freeze_logical_id="freeze",
+        freeze_receipt_sha256=digest(raw(committed.receipt)),
+        journal_path=str(f.journal),
+        journal_sha256="0" * 64,
+        journal_bytes=100,
+    )
+    with f.budget.phase(), root_lock(f.root):
+        admission = CandidateAdmission.model_validate_json(
+            (f.root / "candidate-admission.json").read_bytes()
+        )
+        store = CandidateStore(
+            f.root,
+            admission,
+            (f.root / "candidate-seed.json").read_bytes(),
+            Extents(f.root, database_name="candidate.sqlite3"),
+        )
+        try:
+            # Positive uses the real SQLite closure, before changing just one join.
+            assert supervisor._retained_freeze(store, material, committed.ledger) == f.freeze
+            store.limit_control_growth()
+            with store.transaction():
+                if fault == "logical_alias":
+                    store.db.execute(
+                        "INSERT INTO closures SELECT 'alias',identity,request,"
+                        "input_name,result_name,"
+                        "receipt,receipt_digest FROM closures WHERE logical_id='freeze'"
+                    )
+                    material = NativeComparisonInput.model_validate(
+                        material.model_dump() | {"freeze_logical_id": "alias"}
+                    )
+                else:
+                    receipt = NativeFreezeReceipt.model_validate(
+                        committed.receipt.model_dump()
+                        | {fault: "a" * (40 if fault == "source_commit" else 64)}
+                    )
+                    store.db.execute(
+                        "UPDATE closures SET receipt=?,receipt_digest=? WHERE logical_id='freeze'",
+                        (raw(receipt), digest(raw(receipt))),
+                    )
+                    material = NativeComparisonInput.model_validate(
+                        material.model_dump() | {"freeze_receipt_sha256": digest(raw(receipt))}
+                    )
+            with pytest.raises(StudyLedgerError, match="comparison_freeze_identity"):
+                supervisor._retained_freeze(store, material, committed.ledger)
+        finally:
+            store.close()
