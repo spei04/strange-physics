@@ -12592,10 +12592,10 @@
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Final patched-lock native-stage checks in reused identity.",
-        "Platform": "Final source/package integration review; runtime scientific/capacity reviews accepted.",
-        "Research": "Concrete next Journal/classical handoff and immutable progress review.",
-        "Project lead": "PR119 delivered; wrapper integration and public progress."
+        "Quality": "Prepare the next bounded freeze/Journal/classical profile; current source/environment released.",
+        "Platform": "Final source/package integration review and candidate verifier.",
+        "Research": "Immutable progress review; concrete Journal/classical handoff complete.",
+        "Project lead": "Deliver reviewed native-stage source with five consistent progress documents."
       },
       "handoff": "Lead owns primary for security delivery/progress; Quality owns identity for bounded native stages. Each environment remains separately owned; future patched-lock handoff is explicit.",
       "interface_decisions": [
@@ -13693,7 +13693,7 @@
         }
       },
       "bounded_native_stages": {
-        "status": "independent_review_accepted_final_integrated_gates_pending",
+        "status": "final_local_checks_passed_hosted_delivery_pending",
         "source": "bf90fe76739de0056bc7576bc811f25b259b39de",
         "normal_operations": 27,
         "paid_recoveries": 3,
@@ -13723,13 +13723,40 @@
           "research_independent_cases": 11,
           "platform_independent_cases": 11,
           "platform_sensitive_mutants": 2,
-          "final_integrated_full_checks": "pending"
+          "final_integrated_full_checks": {
+            "source": "f672e52296bde968e5784b9922d366639b6cf924",
+            "pytest_passed": 4240,
+            "pytest_seconds": 674.2,
+            "ruff_format_files": 196,
+            "mypy_files": 140,
+            "schema_cases": 1522,
+            "bandit": "configured gate passed;57 low findings retained,0 medium/high",
+            "strict_dependency_audit": "passed;no known vulnerabilities",
+            "actual_certificate_guard": "passed",
+            "archive_source_installed_parity": "passed;80 modules",
+            "installed_cli": "outside-checkout8-particle8-budget investigate/inspect passed",
+            "gate_records": 17
+          }
         },
         "review_indices": {
           "research": "c7adeb7615ea56df5dabd1bffe0b233cf46cf0518ab9035dcc2628e8c2cc9ce3",
           "platform": "5bb2ee80469090e8039eadfbcf72be2f71071443c172d5fff9799a44b297cacc"
         },
-        "remaining": "Actual comparison Journal/freeze/classical binding, purchase measurement, publisher handoff, feasible full-study allocation and explicit parent audit."
+        "remaining": "Actual comparison Journal/freeze/classical binding, purchase measurement, publisher handoff, feasible full-study allocation and explicit parent audit.",
+        "author_index_sha256": "d73c09aea05edfeb535f9bd0b1ebecbda4abd08e8d3db1aa1c8071ea4fb3aa14",
+        "author_archives": [
+          {
+            "bytes": 272969,
+            "sha256": "e34f7f9ad45211b9fcde4978df4bff4d073c6bcde03d3f2addc9f3eee3771396",
+            "name": "strange_physics-0.1.0a1-py3-none-any.whl"
+          },
+          {
+            "bytes": 215193,
+            "sha256": "41d11683b8ee866c31a5c469712c7c719bfc67be7607404184722c037fd99e65",
+            "name": "strange_physics-0.1.0a1.tar.gz"
+          }
+        ],
+        "next_profile_handoff": "research-journal-classical-handoff-8d0a6c7; read-only scoped proposal, not implementation"
       }
     },
     "certificate_trust_update": {
