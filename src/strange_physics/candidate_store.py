@@ -8,7 +8,11 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
 
-from strange_physics.candidate_execution_contracts import MIB, CandidateAdmission
+from strange_physics.candidate_execution_contracts import (
+    MIB,
+    STORE_ATTEMPTS_PER_TICKET,
+    CandidateAdmission,
+)
 from strange_physics.publication_store import (
     Extents,
     digest,
@@ -49,7 +53,12 @@ class CandidateStore:
             os.close(fd)
         elif not 100 <= existing.st_size <= admission.control.database_limit_bytes:
             raise StudyLedgerError("candidate_store_corrupt")
-        regular(Path(str(self.path) + "-journal"), missing=True)
+        journal = regular(Path(str(self.path) + "-journal"), missing=True)
+        if journal is not None and journal.st_size > admission.control.database_envelope():
+            raise StudyLedgerError("candidate_store_journal_bound")
+        # Existing-store recovery gets the same envelope as first initialization.
+        # Reserve, closure and one fallback are the only remaining write attempts.
+        self._transaction_attempts = 0 if existing is None else 1
         self.db = sqlite3.connect(self.path, timeout=0, isolation_level=None)
         try:
             if existing is None:
@@ -129,8 +138,9 @@ class CandidateStore:
             raise
 
     def limit_control_growth(self) -> None:
-        # A single retained DB/PERSIST pair has a lifetime extent envelope, not
-        # a fresh large per-ticket artifact allocation. Neither file may shrink.
+        # Each bounded transaction has a separately prepaid whole DB/PERSIST
+        # envelope. Rollback or a later restart may recreate an earlier range;
+        # observed high-water extents alone are not a lifetime cost bound.
         self.meter.sample()
         existing = sum(v[1] for v in self.meter.high.values())
         self.limit_growth(self.admission.control.database_envelope() - existing)
@@ -200,6 +210,9 @@ class CandidateStore:
 
     @contextmanager
     def transaction(self) -> Iterator[None]:
+        if self._transaction_attempts >= STORE_ATTEMPTS_PER_TICKET:
+            raise StudyLedgerError("candidate_transaction_limit")
+        self._transaction_attempts += 1
         self.db.execute("BEGIN IMMEDIATE")
         try:
             yield

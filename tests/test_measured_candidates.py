@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+from test_study_ledger import materials
 
 import strange_physics
 import strange_physics.session as session_module
@@ -43,7 +44,7 @@ from strange_physics.native_spring_contracts import (
     NativeCandidateInput,
     NativeSpringPool,
 )
-from strange_physics.publication_store import digest, head, raw
+from strange_physics.publication_store import Extents, digest, head, raw
 from strange_physics.research_contracts import message_sha256
 from strange_physics.serialization import engine_fingerprint
 from strange_physics.session import LocalSession
@@ -51,6 +52,7 @@ from strange_physics.simulation import SimulationError
 from strange_physics.study_contracts import (
     NativeAccountingPlan,
     NativeStudyLedger,
+    NativeStudyManifest,
     NativeWorkFacts,
     StudyAttemptReservation,
     StudyAttemptUpdate,
@@ -59,6 +61,7 @@ from strange_physics.study_contracts import (
 from strange_physics.study_ledger import (
     StudyLedgerError,
     append_study_attempt,
+    freeze_native_study,
     read_study_ledger,
     summarize_study,
 )
@@ -906,3 +909,144 @@ def test_remaining_recovery_work_escrow_is_preserved(
     )
     with pytest.raises(StudyLedgerError, match="candidate_protected_work_headroom"):
         executor._capacity(root, over, control)
+
+
+@pytest.mark.parametrize("matching_source", [True, False])
+def test_frozen_comparison_requires_identity_and_unimplemented_journal_adapter(
+    tmp_path: Path, actual_build: TrustedInstallation, matching_source: bool
+) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+    seed = read_study_ledger((root / "candidate-seed.json").read_bytes())
+    manifest, payloads = materials()
+    value = manifest.model_dump(mode="json")
+    value.update(
+        study_id=seed.plan.study_id,
+        source_commit=actual_build.source_commit if matching_source else "f" * 40,
+        uv_lock_sha256=actual_build.uv_lock_sha256,
+        engine_fingerprint=actual_build.engine_fingerprint,
+    )
+    actual = NativeCandidateInput.model_validate_json((root / "input.json").read_bytes())
+    payloads["candidate_config"] = raw(actual.config)
+    for entry in value["artifacts"]:
+        if entry["kind"] == "candidate_config":
+            entry["sha256"] = digest(payloads["candidate_config"])
+            entry["byte_count"] = len(payloads["candidate_config"])
+    manifest = NativeStudyManifest.model_validate_json(json.dumps(value))
+    seed = freeze_native_study(
+        seed,
+        event_id="synthetic-freeze",
+        manifest=manifest,
+        expected_revision=len(seed.records),
+        expected_purpose="synthetic_validation",
+        source_commit=manifest.source_commit,
+        uv_lock_bytes=Path(actual_build.lock_path).read_bytes(),
+        engine_fingerprint=manifest.engine_fingerprint,
+        artifacts=payloads,
+    )
+    admission = CandidateAdmission.model_validate_json(
+        (root / "candidate-admission.json").read_bytes()
+    )
+    private(root / "candidate-seed.json", raw(seed))
+    private(
+        root / "candidate-admission.json",
+        raw(CandidateAdmission(control=admission.control, seed_ledger_sha256=digest(raw(seed)))),
+    )
+    request = change(
+        request,
+        phase="comparison",
+        cell_id=manifest.cells[0].cell_id,
+        expected_revision=len(seed.records),
+        expected_head_sha256=head(seed),
+    )
+    reason = (
+        "candidate_comparison_not_available" if matching_source else "candidate_frozen_identity"
+    )
+    with pytest.raises(StudyLedgerError, match=reason):
+        executor.commit_native_candidates(root, request)
+    assert current(root) == seed
+    assert not (root / "candidate-output-0").exists()
+
+
+@pytest.mark.parametrize("reopened", [False, True])
+def test_transaction_allowance_covers_rollback_regrowth_and_bounds_retries(
+    tmp_path: Path, actual_build: TrustedInstallation, reopened: bool
+) -> None:
+    root = tmp_path / "run"
+    setup(root, actual_build)
+    admission = CandidateAdmission.model_validate_json(
+        (root / "candidate-admission.json").read_bytes()
+    )
+    seed = (root / "candidate-seed.json").read_bytes()
+    if reopened:
+        initial = CandidateStore(
+            root, admission, seed, Extents(root, database_name="candidate.sqlite3")
+        )
+        initial.close()
+        # Retained sidecar loss between invocations cannot reuse a lifetime hold.
+        (root / "candidate.sqlite3-journal").unlink(missing_ok=True)
+    store = CandidateStore(root, admission, seed, Extents(root, database_name="candidate.sqlite3"))
+    grown = []
+    try:
+        for _ in range(3):
+            store.limit_control_growth()
+            before = store.path.stat().st_size
+            with pytest.raises(RuntimeError, match="rollback probe"):
+                with store.transaction():
+                    store.db.execute("CREATE TABLE rollback_probe(payload BLOB)")
+                    store.db.execute("INSERT INTO rollback_probe VALUES(zeroblob(131072))")
+                    # Allocate dirty pages without sampling. This tests the finite
+                    # rollback-attempt bound, not a physical-growth reproduction.
+                    grown.append(
+                        store.db.execute("PRAGMA page_count").fetchone()[0] * 4096 - before
+                    )
+                    raise RuntimeError("rollback probe")
+            assert store.ledger() == read_study_ledger(seed)
+        with pytest.raises(StudyLedgerError, match="candidate_transaction_limit"):
+            with store.transaction():
+                pytest.fail("fifth startup/write attempt must not begin")
+        assert len(grown) == 3 and all(value > 0 for value in grown)
+        assert store.path.stat().st_size <= admission.control.database_limit_bytes
+    finally:
+        store.close()
+
+
+def test_control_hold_prepays_each_bounded_store_attempt(
+    tmp_path: Path, actual_build: TrustedInstallation
+) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+    admission = CandidateAdmission.model_validate_json(
+        (root / "candidate-admission.json").read_bytes()
+    )
+    control = admission.control
+    expected = control.bootstrap_artifact_bytes + control.tickets * (
+        control.ticket_artifact_bytes + 4 * control.database_envelope()
+    )
+    assert control.required_control_bytes() == expected < 1024 * MIB
+    with pytest.raises(ValueError, match="protected future artifacts"):
+        CandidateControl.model_validate(control.model_dump() | {"tickets": 3072})
+    seed = read_study_ledger((root / "candidate-seed.json").read_bytes())
+    hold = seed.records[0].event
+    assert isinstance(hold, StudyAttemptReservation)
+    insufficient = StudyAttemptReservation.model_validate(
+        hold.model_dump()
+        | {
+            "artifact_reservation_bytes": expected - 1,
+        }
+    )
+    seed = append_study_attempt(
+        NativeStudyLedger(plan=seed.plan, records=()),
+        event_id="control-reserve",
+        event=insufficient,
+        expected_revision=0,
+    )
+    private(root / "candidate-seed.json", raw(seed))
+    private(
+        root / "candidate-admission.json",
+        raw(CandidateAdmission(control=control, seed_ledger_sha256=digest(raw(seed)))),
+    )
+    request = change(request, expected_head_sha256=head(seed))
+    with pytest.raises(StudyLedgerError, match="candidate_control_hold"):
+        executor.commit_native_candidates(root, request)
+    assert not (root / "candidate.sqlite3").exists()

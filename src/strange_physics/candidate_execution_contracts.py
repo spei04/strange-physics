@@ -13,6 +13,7 @@ from strange_physics.study_contracts import Commit, SafeCount
 MIB = 1024**2
 PrivatePath = Annotated[str, Field(min_length=1, max_length=4096)]
 REQUEST_BYTES = 8192
+STORE_ATTEMPTS_PER_TICKET = 4
 
 
 class PublicationEscrow(Message):
@@ -73,10 +74,8 @@ class CandidateControl(Message):
         return 2 * self.database_limit_bytes + self.database_limit_bytes // 512 + 2 * 65536
 
     def required_control_bytes(self) -> int:
-        return (
-            self.tickets * self.ticket_artifact_bytes
-            + self.bootstrap_artifact_bytes
-            + self.database_envelope()
+        return self.bootstrap_artifact_bytes + self.tickets * (
+            self.ticket_artifact_bytes + STORE_ATTEMPTS_PER_TICKET * self.database_envelope()
         )
 
     @model_validator(mode="after")

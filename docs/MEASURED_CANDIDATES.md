@@ -21,10 +21,16 @@ Before full input parsing, one closed-set ticket is permanently consumed. Normal
 work cannot use the reserved recovery ticket range. The same durable seed/control
 hold is required after restart; missing initialized storage never reseeds. The
 controller holds CPU for all finite tickets and bootstrap/tail. Control artifact
-capacity uses a single bounded database/PERSIST-journal lifetime envelope, bounded
-ticket files and bounded bootstrap files. Work input/output bytes are charged
-separately. Deleted or recreated scratch cannot refund prior costs. The metric is
-logical new extents, not physical I/O or write amplification.
+capacity retains bounded bootstrap files and, for every finite ticket, its file
+allowance plus four whole database/PERSIST-journal growth envelopes. The guarded
+attempts are startup recovery or initialization, reservation, result closure and
+one fallback update. Even failed transaction entries consume their allowance;
+rollback and later restart cannot reuse it. This is conservative retained control
+capacity, not a claim that all envelopes were written. Work input/output bytes are
+charged separately. Local observed extents exclude unobserved rollback growth,
+which remains covered by the unresolved control hold; they are not an exact total
+physical-I/O or write-amplification metric. Large ticket profiles may therefore
+be inadmissible under the unchanged global cap.
 
 Each work reservation precedes the actual fixed child. Returned raw result, facts,
 measured cost and original-prefix receipt commit atomically; body/attempt/config
