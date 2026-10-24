@@ -20,6 +20,7 @@ from freeze_journal_fixture import (
     generate_journal,
     inject_intents,
     prepare,
+    restrict_limit,
 )
 from test_measured_candidates import actual_build, current, last_update
 
@@ -295,3 +296,37 @@ def test_freeze_stale_head_and_wrong_wrapper_are_denied_before_work(
         commit_native_freeze(f.root, bad)
     assert len(current(f.root).records) == 2
     assert (f.root / "candidate-ticket-0").exists()
+
+
+@pytest.mark.parametrize(
+    "limits,expected", [((100, 1000), 100), ((-1, 1000), 500), ((700, 800), 500)]
+)
+def test_setup_preserves_inherited_soft_and_hard_limits(
+    monkeypatch: pytest.MonkeyPatch, limits: tuple[int, int], expected: int
+) -> None:
+    import resource
+
+    calls: list[tuple[int, tuple[int, int]]] = []
+    monkeypatch.setattr(resource, "getrlimit", lambda which: limits)
+    monkeypatch.setattr(resource, "setrlimit", lambda which, value: calls.append((which, value)))
+    restrict_limit(resource.RLIMIT_FSIZE, 500)
+    assert calls == [(resource.RLIMIT_FSIZE, (expected, expected))]
+
+
+def test_setup_file_and_directory_are_synced_before_materials(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import os
+    import stat
+
+    actual = os.fsync
+    observed: list[str] = []
+
+    def checked(fd: int) -> None:
+        observed.append("directory" if stat.S_ISDIR(os.fstat(fd).st_mode) else "file")
+        actual(fd)
+
+    monkeypatch.setattr(os, "fsync", checked)
+    budget = SetupBudget(time.monotonic_ns() + 1_000_000_000)
+    budget.write(tmp_path / "setup.json", b"retained-hold")
+    assert observed == ["file", "directory"]

@@ -61,6 +61,20 @@ COPY_LIMIT = 4 * MIB
 STORE_ENVELOPE = 4329472
 
 
+def sync_directory(path: Path) -> None:
+    fd = os.open(path, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
+def restrict_limit(which: int, ceiling: int) -> None:
+    soft, hard = resource.getrlimit(which)
+    bound = min(ceiling, *(v for v in (soft, hard) if v != resource.RLIM_INFINITY))
+    resource.setrlimit(which, (bound, bound))
+
+
 @dataclass
 class SetupBudget:
     """Retained unknown hold; bounded actual setup phases, never settled to zero."""
@@ -113,6 +127,7 @@ class SetupBudget:
             f.write(value)
             f.flush()
             os.fsync(f.fileno())
+        sync_directory(path.parent)
 
 
 class JournalConnection(sqlite3.Connection):
@@ -197,6 +212,7 @@ class Fixture:
 
 def prepare(root: Path, build: TrustedInstallation) -> Fixture:
     root.mkdir(mode=0o700)
+    sync_directory(root.parent)
     budget = SetupBudget(time.monotonic_ns() + 180_000_000_000)
     with budget.phase():
         plan = NativeAccountingPlan(
@@ -410,9 +426,7 @@ def generate_journal(fixture: Fixture) -> None:
                     (resource.RLIMIT_CPU, 60),
                     (resource.RLIMIT_CORE, 0),
                 ):
-                    _, hard = resource.getrlimit(which)
-                    bound = limit if hard == resource.RLIM_INFINITY else min(limit, hard)
-                    resource.setrlimit(which, (bound, bound))
+                    restrict_limit(which, limit)
                 original = sqlite3.connect
                 connections: list[JournalConnection] = []
 
