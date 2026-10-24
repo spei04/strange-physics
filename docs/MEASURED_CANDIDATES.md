@@ -53,3 +53,17 @@ The initial executable checkpoint is under author validation. Focused tests use
 actual installed synthetic builds and real child processes. Purchase/handoff and
 other four numerical wrappers remain separately reviewed follow-on work. Full
 configured gates and independent review are required before accepting this slice.
+
+The first execution profile requires the historical observation engine fingerprint to
+match the independently observed current engine. It preserves the historical value;
+cross-epoch execution needs a separate explicit policy and is not supported here.
+
+Exact recovery requires the original logical request identity, not a separately
+queried latest ledger head. After binding the retained closure under the root lock,
+it reserves fresh accounting work against the authoritative current head. Fresh
+execution still requires the caller expected revision and hash to match.
+
+Each remaining recovery ticket also protects an explicit fresh-work CPU/artifact
+ceiling, separately from the unresolved control hold and publication escrow. Normal
+work cannot borrow that capacity. Recovery requests above their declared ceiling
+are denied before consuming a ticket; retained global overruns are not reset.

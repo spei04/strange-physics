@@ -57,6 +57,8 @@ class CandidateControl(Message):
     attempt_id: Identifier
     tickets: Annotated[int, Field(ge=1, le=3072)]
     recovery_tickets: Annotated[int, Field(ge=1, le=512)]
+    recovery_work_cpu_ns: Annotated[int, Field(ge=4_000_000_000, le=120_000_000_000)]
+    recovery_work_artifact_bytes: Annotated[int, Field(ge=256 * 1024, le=256 * MIB)]
     ticket_cpu_ns: Annotated[int, Field(ge=1_000_000_000, le=120_000_000_000)]
     ticket_wall_ns: Annotated[int, Field(ge=1_000_000_000, le=300_000_000_000)]
     ticket_artifact_bytes: Annotated[int, Field(ge=8192, le=32 * MIB)]
@@ -85,10 +87,22 @@ class CandidateControl(Message):
             raise ValueError("Reserve recovery, stop and promised publication records")
         if self.finalization_bytes < 4096 * self.finalization_records:
             raise ValueError("Finalization records need a separate byte escrow")
-        if self.tickets * self.ticket_cpu_ns + self.bootstrap_cpu_ns > 28_800_000_000_000:
-            raise ValueError("Control CPU exceeds the existing plan")
-        if self.required_control_bytes() > 1024 * MIB:
-            raise ValueError("Control artifacts exceed the existing plan")
+        if (
+            self.tickets * self.ticket_cpu_ns
+            + self.bootstrap_cpu_ns
+            + self.recovery_tickets * self.recovery_work_cpu_ns
+            + self.publication.control_cpu_ns
+            + self.publication.work_cpu_ns
+            > 28_800_000_000_000
+        ):
+            raise ValueError("Control and protected future work CPU exceed the existing plan")
+        if (
+            self.required_control_bytes()
+            + self.recovery_tickets * self.recovery_work_artifact_bytes
+            + self.publication.required_bytes()
+            > 1024 * MIB
+        ):
+            raise ValueError("Control and protected future artifacts exceed the existing plan")
         return self
 
 

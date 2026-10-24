@@ -121,8 +121,11 @@ class CandidateStore:
                 or current.records[: len(original.records)] != original.records
             ):
                 raise StudyLedgerError("candidate_store_seed_prefix")
-        except BaseException:
-            self.close()
+        except BaseException as error:
+            try:
+                self.close()
+            except Exception:
+                error.add_note("Store cleanup failed; original initialization failure preserved.")
             raise
 
     def limit_control_growth(self) -> None:

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import copy
 import json
 import platform
 import sqlite3
@@ -16,9 +15,9 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from test_native_spring_contracts import inputs
 
 import strange_physics
+import strange_physics.session as session_module
 from strange_physics import measured_candidates as executor
 from strange_physics.candidate_execution_contracts import (
     MIB,
@@ -28,17 +27,34 @@ from strange_physics.candidate_execution_contracts import (
     PublicationEscrow,
 )
 from strange_physics.candidate_store import CandidateStore
+from strange_physics.contracts import (
+    Anchor,
+    Connection,
+    Experiment,
+    ExperimentSpace,
+    ParticleInitial,
+    Sampling,
+    Structure,
+)
 from strange_physics.installed_identity import BuildFile, TrustedInstallation
-from strange_physics.laws import reference_registry
-from strange_physics.native_spring_contracts import NativeCandidateInput
+from strange_physics.laws import LawSpec, reference_registry
+from strange_physics.native_spring_contracts import (
+    NativeCandidateConfig,
+    NativeCandidateInput,
+    NativeSpringPool,
+)
 from strange_physics.publication_store import digest, head, raw
 from strange_physics.research_contracts import message_sha256
 from strange_physics.serialization import engine_fingerprint
+from strange_physics.session import LocalSession
+from strange_physics.simulation import SimulationError
 from strange_physics.study_contracts import (
     NativeAccountingPlan,
     NativeStudyLedger,
+    NativeWorkFacts,
     StudyAttemptReservation,
     StudyAttemptUpdate,
+    StudyLedgerRecord,
 )
 from strange_physics.study_ledger import (
     StudyLedgerError,
@@ -46,6 +62,7 @@ from strange_physics.study_ledger import (
     read_study_ledger,
     summarize_study,
 )
+from strange_physics.worlds import WorldDefinition
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -117,11 +134,45 @@ def actual_build(tmp_path_factory: pytest.TempPathFactory) -> TrustedInstallatio
     )
 
 
+def actual_input(path: Path, *, completed: bool = True) -> NativeCandidateInput:
+    """Real session capture plus explicit fault injection; never relabel historical data."""
+    space = ExperimentSpace(
+        structure=Structure(
+            particle_ids=("p",),
+            anchors=(Anchor(id="a", position=(0.0, 0.0)),),
+            connections=(Connection(a="p", b="a"),),
+        ),
+        sampling=Sampling(duration=0.1, dt=0.01, sample_interval=0.05),
+        budget=2,
+        calibration_experiments=0,
+    )
+    world = WorldDefinition(
+        space=space, noise_seed=31, initial_law=LawSpec(kind="spring", parameters={"linear": 1.0})
+    )
+    experiment = Experiment(particles=(ParticleInitial(id="p", position=(1.0, 0.0)),))
+
+    def injected(*args: object, **kwargs: object) -> None:
+        raise SimulationError("explicit synthetic preparation fault")
+
+    with LocalSession.create(path, "candidate-fixture", world) as session:
+        if completed:
+            assert session.run_experiment(experiment, operation_id="complete").status == "completed"
+        with pytest.MonkeyPatch.context() as patch:
+            patch.setattr(session_module, "simulate", injected)
+            assert session.run_experiment(experiment, operation_id="failure").status == "failed"
+        observations = session.export()
+    return NativeCandidateInput(
+        pool=NativeSpringPool(coefficients=(-0.0, 1.0, 4.0)),
+        config=NativeCandidateConfig(),
+        observations=observations,
+    )
+
+
 def setup(
     root: Path, build: TrustedInstallation, actual: NativeCandidateInput | None = None
 ) -> CandidateRequest:
     root.mkdir(mode=0o700)
-    actual = inputs() if actual is None else actual
+    actual = actual_input(root / "fixture-observations.sqlite") if actual is None else actual
     data = raw(actual)
     private(root / "input.json", data)
     plan = NativeAccountingPlan(
@@ -140,6 +191,8 @@ def setup(
         attempt_id="control",
         tickets=6,
         recovery_tickets=2,
+        recovery_work_cpu_ns=8_000_000_000,
+        recovery_work_artifact_bytes=2 * MIB,
         ticket_cpu_ns=5_000_000_000,
         ticket_wall_ns=30_000_000_000,
         ticket_artifact_bytes=8192,
@@ -218,15 +271,13 @@ def change(request: CandidateRequest, **values: Any) -> CandidateRequest:
 
 
 def recovery(root: Path, request: CandidateRequest, ticket: int = 4) -> CandidateRequest:
-    ledger = current(root)
+    """Retain the caller's original head; no free state lookup is required."""
     return change(
         request,
         mode="recover",
         ticket=ticket,
         attempt_id=f"recover-{ticket}",
         retry_of=None,
-        expected_revision=len(ledger.records),
-        expected_head_sha256=head(ledger),
     )
 
 
@@ -258,11 +309,7 @@ def test_actual_candidate_and_exact_paid_replay(
 
 
 def test_real_no_completed_rejection(tmp_path: Path, actual_build: TrustedInstallation) -> None:
-    data = inputs().model_dump(mode="json")
-    failed = copy.deepcopy(data["observations"]["records"][1])
-    failed["index"] = 0
-    data["observations"]["records"] = [failed]
-    actual = NativeCandidateInput.model_validate_json(json.dumps(data))
+    actual = actual_input(tmp_path / "failed-observations.sqlite", completed=False)
     request = setup(tmp_path / "run", actual_build, actual)
     result = executor.commit_native_candidates(tmp_path / "run", request)
     assert result.result.payload.reason == "no_completed_records"
@@ -313,14 +360,16 @@ def test_replay_changed_raw_signed_zero_conflicts(
     root = tmp_path / "run"
     request = setup(root, actual_build)
     executor.commit_native_candidates(root, request)
-    altered = raw(inputs((0.0, 1.0, 4.0)))
+    payload = json.loads((root / "input.json").read_bytes())
+    payload["pool"]["coefficients"] = [0.0, 1.0, 4.0]
+    altered = raw(NativeCandidateInput.model_validate_json(json.dumps(payload)))
     with pytest.raises(StudyLedgerError, match="candidate_request_conflict"):
         executor.commit_native_candidates(
             root,
             change(
                 recovery(root, request),
                 input_raw_sha256=digest(altered),
-                input_sha256=message_sha256(inputs((0.0, 1.0, 4.0))),
+                input_sha256=message_sha256(NativeCandidateInput.model_validate_json(altered)),
                 input_bytes=len(altered),
             ),
         )
@@ -336,7 +385,7 @@ def test_real_child_setup_failure_is_unknown(
         raise KeyboardInterrupt("synthetic child setup interruption")
 
     monkeypatch.setattr(executor, "produce_native_candidates", fail)
-    with pytest.raises(StudyLedgerError, match="candidate_child_failed"):
+    with pytest.raises(StudyLedgerError, match="synthetic output parse failure"):
         executor.commit_native_candidates(root, request)
     update = last_update(current(root))
     assert update.state == "unknown" and update.facts is None
@@ -413,3 +462,447 @@ def test_work_capacity_stop_is_durable(tmp_path: Path, actual_build: TrustedInst
     with pytest.raises(StudyLedgerError, match="candidate_stopped"):
         executor.commit_native_candidates(root, change(request, ticket=1, attempt_id="next"))
     assert len(current(root).records) == 1
+
+
+def test_unknown_attempt_cannot_reexecute_under_old_hold(
+    tmp_path: Path, actual_build: TrustedInstallation
+) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+    data = (root / "input.json").read_bytes()
+    (root / "input.json").unlink()
+    with pytest.raises(FileNotFoundError):
+        executor.commit_native_candidates(root, request)
+    before = current(root)
+    private(root / "input.json", data)
+    duplicate = change(
+        request, ticket=1, expected_revision=len(before.records), expected_head_sha256=head(before)
+    )
+    with pytest.raises(StudyLedgerError, match="candidate_attempt_reused"):
+        executor.commit_native_candidates(root, duplicate)
+    assert current(root) == before
+    assert not (root / "candidate-output-1").exists()
+
+
+def test_recovery_attempt_must_be_fresh(tmp_path: Path, actual_build: TrustedInstallation) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+    executor.commit_native_candidates(root, request)
+    paid = recovery(root, request)
+    executor.commit_native_candidates(root, paid)
+    before = current(root)
+    with pytest.raises(StudyLedgerError, match="candidate_attempt_reused"):
+        executor.commit_native_candidates(
+            root, change(recovery(root, request, 5), attempt_id=paid.attempt_id)
+        )
+    assert current(root) == before
+
+
+def test_close_failure_preserves_original_failure(
+    tmp_path: Path, actual_build: TrustedInstallation, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+    (root / "input.json").unlink()
+    original = CandidateStore.close
+
+    def broken(self: CandidateStore) -> None:
+        original(self)
+        raise OSError("synthetic close failure")
+
+    monkeypatch.setattr(CandidateStore, "close", broken)
+    with pytest.raises(FileNotFoundError) as caught:
+        executor.commit_native_candidates(root, request)
+    assert any("Final store close" in n for n in caught.value.__notes__)
+    assert last_update(current(root)).state == "unknown"
+
+
+def test_reaped_malformed_output_retains_known_cost(
+    tmp_path: Path, actual_build: TrustedInstallation, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+
+    def malformed(value: bytes) -> None:
+        raise StudyLedgerError("synthetic output parse failure")
+
+    monkeypatch.setattr(executor, "parse_native_candidate_result", malformed)
+    with pytest.raises(StudyLedgerError, match="synthetic output parse failure"):
+        executor.commit_native_candidates(root, request)
+    update = last_update(current(root))
+    assert update.state == "unknown" and update.facts is None
+    assert update.cpu_ns is not None and update.wall_ns is not None
+    assert (
+        update.artifact_bytes == request.input_bytes + (root / "candidate-output-0").stat().st_size
+    )
+    assert summarize_study(current(root)).budget.unresolved_attempts == 2
+
+
+def test_unicode_request_byte_limit_precedes_ticket(
+    tmp_path: Path, actual_build: TrustedInstallation
+) -> None:
+    root = tmp_path / "run"
+    request = change(setup(root, actual_build), input_path="/" + "𐀀" * 4095)
+    with pytest.raises(ValueError, match="invalid_request"):
+        executor.commit_native_candidates(root, request)
+    assert not (root / "candidate-ticket-0").exists()
+
+
+@pytest.mark.parametrize("path", ["input.json", "candidate-installation.json"])
+def test_private_symlink_materials_rejected(
+    tmp_path: Path, actual_build: TrustedInstallation, path: str
+) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+    material = root / path
+    target = root / (path + ".target")
+    material.rename(target)
+    material.symlink_to(target)
+    with pytest.raises(ValueError, match="unsafe_path"):
+        executor.commit_native_candidates(root, request)
+    assert not (root / "candidate-output-0").exists()
+    if path == "input.json":
+        assert last_update(current(root)).state == "unknown"
+
+
+def synthetic_history(
+    seed: NativeStudyLedger, pairs: int, *, running: bool = False
+) -> NativeStudyLedger:
+    """O(n) real legal history, validated by the public complete-prefix reader."""
+    records = list(seed.records)
+    previous = head(seed)
+    for index in range(pairs):
+        identity = f"history-{index}"
+        reservation = StudyAttemptReservation(
+            attempt_id=identity,
+            phase="reference",
+            cell_id=None,
+            operation="reference",
+            config_sha256="a" * 64,
+            input_sha256="b" * 64,
+            retry_of=None,
+            cpu_reservation_ns=1,
+            artifact_reservation_bytes=0,
+            purchase=None,
+        )
+        facts = NativeWorkFacts(
+            attempt_id=identity,
+            operation="reference",
+            producer_version="x",
+            config_sha256=reservation.config_sha256,
+            input_sha256=reservation.input_sha256,
+            observation_sha256=None,
+            model_sha256=None,
+            output_sha256="c" * 64,
+            unit="work",
+            requested_count=1,
+            completed_count=1,
+            failed_count=0,
+            not_assessed_count=0,
+            outcome="completed",
+        )
+        events: list[StudyAttemptReservation | StudyAttemptUpdate] = [reservation]
+        if running and index == 0:
+            events.append(
+                StudyAttemptUpdate(
+                    attempt_id=identity,
+                    state="running",
+                    cpu_ns=0,
+                    wall_ns=0,
+                    artifact_bytes=0,
+                    facts=None,
+                )
+            )
+        events.append(
+            StudyAttemptUpdate(
+                attempt_id=identity,
+                state="completed",
+                cpu_ns=1,
+                wall_ns=1,
+                artifact_bytes=0,
+                facts=facts,
+            )
+        )
+        for event in events:
+            record = StudyLedgerRecord(
+                event_id=f"history-event-{len(records)}",
+                sequence=len(records),
+                previous_sha256=previous,
+                event=event,
+            )
+            records.append(record)
+            previous = message_sha256(record)
+    return read_study_ledger(raw(NativeStudyLedger(plan=seed.plan, records=tuple(records))))
+
+
+def pad_history(ledger: NativeStudyLedger, target: int) -> NativeStudyLedger:
+    """Tune permitted producer-version encoding, retaining real hash-chain semantics."""
+    needed = target - len(raw(ledger))
+    assert needed >= 0
+    records = []
+    previous = message_sha256(ledger.plan)
+    for record in ledger.records:
+        event = record.event
+        if isinstance(event, StudyAttemptUpdate) and event.facts is not None and needed:
+            extra = min(needed, 1400)
+            encoded = extra + 1
+            astral, ascii_count = divmod(encoded, 12)
+            version = "𐀀" * astral + "x" * ascii_count
+            assert 1 <= len(version) <= 128
+            value = event.model_dump(mode="json")
+            value["facts"]["producer_version"] = version
+            event = StudyAttemptUpdate.model_validate_json(json.dumps(value))
+            needed -= extra
+        replacement = StudyLedgerRecord(
+            event_id=record.event_id,
+            sequence=record.sequence,
+            previous_sha256=previous,
+            event=event,
+        )
+        records.append(replacement)
+        previous = message_sha256(replacement)
+    assert needed == 0
+    result = read_study_ledger(raw(NativeStudyLedger(plan=ledger.plan, records=tuple(records))))
+    assert len(raw(result)) == target
+    return result
+
+
+def test_real_ledger_record_finalization_boundary(
+    tmp_path: Path, actual_build: TrustedInstallation
+) -> None:
+    root = tmp_path / "run"
+    setup(root, actual_build)
+    seed = read_study_ledger((root / "candidate-seed.json").read_bytes())
+    control = CandidateAdmission.model_validate_json(
+        (root / "candidate-admission.json").read_bytes()
+    ).control
+    equal = synthetic_history(seed, 4092)
+    assert len(equal.records) == 8185
+    executor._capacity(root, equal, control)
+    over = synthetic_history(seed, 4092, running=True)
+    assert len(over.records) == 8186
+    with pytest.raises(StudyLedgerError, match="candidate_finalization_headroom"):
+        executor._capacity(root, over, control)
+
+
+def test_real_ledger_byte_finalization_boundary(
+    tmp_path: Path, actual_build: TrustedInstallation
+) -> None:
+    root = tmp_path / "run"
+    setup(root, actual_build)
+    seed = read_study_ledger((root / "candidate-seed.json").read_bytes())
+    control = CandidateAdmission.model_validate_json(
+        (root / "candidate-admission.json").read_bytes()
+    ).control
+    base = synthetic_history(seed, 3000)
+    target = 8 * MIB - 4096 - control.finalization_bytes
+    equal = pad_history(base, target)
+    executor._capacity(root, equal, control)
+    over = pad_history(base, target + 1)
+    with pytest.raises(StudyLedgerError, match="candidate_finalization_headroom"):
+        executor._capacity(root, over, control)
+
+
+def test_foreign_historical_engine_is_not_relabelled(
+    tmp_path: Path, actual_build: TrustedInstallation
+) -> None:
+    data = actual_input(tmp_path / "foreign-observations.sqlite").model_dump(mode="json")
+    data["observations"]["engine_fingerprint"] = "f" * 64
+    actual = NativeCandidateInput.model_validate_json(json.dumps(data))
+    root = tmp_path / "run"
+    request = setup(root, actual_build, actual)
+    with pytest.raises(StudyLedgerError, match="candidate_observation_engine"):
+        executor.commit_native_candidates(root, request)
+    update = last_update(current(root))
+    assert update.state == "unknown" and update.facts is None
+    assert actual.observations.engine_fingerprint == "f" * 64
+    assert not (root / "candidate-output-0").exists()
+
+
+def test_global_budget_denial_persists_stop(
+    tmp_path: Path, actual_build: TrustedInstallation
+) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+    seed = read_study_ledger((root / "candidate-seed.json").read_bytes())
+    remaining = summarize_study(seed).budget.remaining_cpu_ns
+    charge = StudyAttemptReservation(
+        attempt_id="other-work",
+        phase="reference",
+        cell_id=None,
+        operation="reference",
+        config_sha256="a" * 64,
+        input_sha256="b" * 64,
+        retry_of=None,
+        cpu_reservation_ns=remaining,
+        artifact_reservation_bytes=0,
+        purchase=None,
+    )
+    seed = append_study_attempt(
+        seed, event_id="other-reserve", event=charge, expected_revision=len(seed.records)
+    )
+    admission = CandidateAdmission.model_validate_json(
+        (root / "candidate-admission.json").read_bytes()
+    )
+    private(root / "candidate-seed.json", raw(seed))
+    private(
+        root / "candidate-admission.json",
+        raw(CandidateAdmission(control=admission.control, seed_ledger_sha256=digest(raw(seed)))),
+    )
+    request = change(request, expected_revision=len(seed.records), expected_head_sha256=head(seed))
+    with pytest.raises(StudyLedgerError, match="budget_exhausted"):
+        executor.commit_native_candidates(root, request)
+    with sqlite3.connect(root / "candidate.sqlite3") as db:
+        assert db.execute("SELECT stopped FROM state").fetchone()[0] == 1
+    assert current(root) == seed
+
+
+@pytest.mark.parametrize("field", ["input_raw_sha256", "original_prefix"])
+def test_receipt_corruption_cannot_rebind_original_snapshot(
+    tmp_path: Path, actual_build: TrustedInstallation, field: str
+) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+    first = executor.commit_native_candidates(root, request)
+    with sqlite3.connect(root / "candidate.sqlite3") as db:
+        value = json.loads(db.execute("SELECT receipt FROM closures").fetchone()[0])
+        if field == "input_raw_sha256":
+            value[field] = "f" * 64
+        else:
+            value.update(
+                original_revision=len(first.ledger.records),
+                original_head_sha256=head(first.ledger),
+                original_ledger_sha256=digest(raw(first.ledger)),
+            )
+        encoded = json.dumps(value, sort_keys=True, separators=(",", ":")).encode()
+        db.execute("UPDATE closures SET receipt=?,receipt_digest=?", (encoded, digest(encoded)))
+    with pytest.raises(StudyLedgerError, match="candidate_closure_corrupt"):
+        executor.commit_native_candidates(root, recovery(root, request))
+    assert current(root) == first.ledger
+
+
+def test_child_output_substitution_cannot_detach_raw_result(
+    tmp_path: Path, actual_build: TrustedInstallation, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+    original = executor._run_child
+
+    def substituted(
+        request: CandidateRequest, source: bytes, path: Path
+    ) -> tuple[bytes | None, int]:
+        result, cpu = original(request, source, path)
+        assert result is not None
+        private(path, b"{}")
+        return result, cpu
+
+    monkeypatch.setattr(executor, "_run_child", substituted)
+    with pytest.raises(StudyLedgerError, match="candidate_output_changed"):
+        executor.commit_native_candidates(root, request)
+    update = last_update(current(root))
+    assert update.state == "unknown" and update.cpu_ns is not None
+    with sqlite3.connect(root / "candidate.sqlite3") as db:
+        assert db.execute("SELECT count(*) FROM closures").fetchone()[0] == 0
+
+
+@pytest.mark.parametrize("phase", [2, 3])
+def test_sqlite_transaction_failure_retains_correct_prefix(
+    tmp_path: Path, actual_build: TrustedInstallation, monkeypatch: pytest.MonkeyPatch, phase: int
+) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+    original = CandidateStore.transaction
+    count = 0
+
+    @contextmanager
+    def fault(self: CandidateStore) -> Iterator[None]:
+        nonlocal count
+        count += 1
+        current_phase = count
+        with original(self):
+            yield
+            if current_phase == phase:
+                raise sqlite3.OperationalError("synthetic database or disk is full")
+
+    with monkeypatch.context() as patch:
+        patch.setattr(CandidateStore, "transaction", fault)
+        with pytest.raises(sqlite3.OperationalError, match="synthetic database"):
+            executor.commit_native_candidates(root, request)
+    ledger = current(root)
+    assert len(ledger.records) == (1 if phase == 2 else 3)
+    assert summarize_study(ledger).budget.unresolved_attempts == (1 if phase == 2 else 2)
+    with sqlite3.connect(root / "candidate.sqlite3") as db:
+        assert db.execute("SELECT count(*) FROM closures").fetchone()[0] == 0
+    retry = change(
+        request,
+        ticket=1,
+        attempt_id="candidate-retry",
+        retry_of=None if phase == 2 else request.attempt_id,
+        expected_revision=len(ledger.records),
+        expected_head_sha256=head(ledger),
+    )
+    result = executor.commit_native_candidates(root, retry)
+    assert result.result.payload.status == "produced"
+    assert summarize_study(result.ledger).budget.unresolved_attempts == (1 if phase == 2 else 2)
+
+
+def test_recovery_work_ceiling_precedes_ticket(
+    tmp_path: Path, actual_build: TrustedInstallation
+) -> None:
+    root = tmp_path / "run"
+    request = setup(root, actual_build)
+    with pytest.raises(StudyLedgerError, match="candidate_recovery_work_limit"):
+        executor.commit_native_candidates(
+            root, change(recovery(root, request), cpu_reservation_ns=8_000_000_001)
+        )
+    assert not (root / "candidate-ticket-4").exists()
+
+
+@pytest.mark.parametrize("field", ["cpu_reservation_ns", "artifact_reservation_bytes"])
+def test_remaining_recovery_work_escrow_is_preserved(
+    tmp_path: Path, actual_build: TrustedInstallation, field: str
+) -> None:
+    root = tmp_path / "run"
+    setup(root, actual_build)
+    seed = read_study_ledger((root / "candidate-seed.json").read_bytes())
+    control = CandidateAdmission.model_validate_json(
+        (root / "candidate-admission.json").read_bytes()
+    ).control
+    budget = summarize_study(seed).budget
+    remaining = (
+        budget.remaining_cpu_ns
+        if field == "cpu_reservation_ns"
+        else budget.remaining_artifact_bytes
+    )
+    escrow = control.recovery_tickets * (
+        control.recovery_work_cpu_ns
+        if field == "cpu_reservation_ns"
+        else control.recovery_work_artifact_bytes
+    )
+    payload: dict[str, Any] = dict(
+        attempt_id="boundary",
+        phase="reference",
+        cell_id=None,
+        operation="reference",
+        config_sha256="a" * 64,
+        input_sha256="b" * 64,
+        retry_of=None,
+        cpu_reservation_ns=1,
+        artifact_reservation_bytes=0,
+        purchase=None,
+    )
+    payload[field] = remaining - escrow
+    reservation = StudyAttemptReservation.model_validate(payload)
+    equal = append_study_attempt(
+        seed, event_id="boundary-event", event=reservation, expected_revision=len(seed.records)
+    )
+    executor._capacity(root, equal, control)
+    payload[field] += 1
+    over = append_study_attempt(
+        seed,
+        event_id="boundary-event",
+        event=StudyAttemptReservation.model_validate(payload),
+        expected_revision=len(seed.records),
+    )
+    with pytest.raises(StudyLedgerError, match="candidate_protected_work_headroom"):
+        executor._capacity(root, over, control)

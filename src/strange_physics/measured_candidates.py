@@ -10,6 +10,7 @@ import math
 import os
 import resource
 import signal
+import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -151,14 +152,17 @@ def _capacity(root: Path, ledger: NativeStudyLedger, c: CandidateControl) -> Non
         or len(raw(ledger)) + budget.unresolved_attempts * 4096 + extra_bytes > MAX_STUDY_JSON_BYTES
     ):
         raise StudyLedgerError("candidate_finalization_headroom")
+    remaining_recovery = c.recovery_tickets - used
     p = c.publication
     if (
         p.calls
         and len(raw(ledger)) + budget.unresolved_attempts * 4096 + extra_bytes > p.ledger_bytes
-        or budget.remaining_artifact_bytes < p.required_bytes()
-        or budget.remaining_cpu_ns < p.control_cpu_ns + p.work_cpu_ns
+        or budget.remaining_artifact_bytes
+        < p.required_bytes() + remaining_recovery * c.recovery_work_artifact_bytes
+        or budget.remaining_cpu_ns
+        < p.control_cpu_ns + p.work_cpu_ns + remaining_recovery * c.recovery_work_cpu_ns
     ):
-        raise StudyLedgerError("candidate_publication_headroom")
+        raise StudyLedgerError("candidate_protected_work_headroom")
 
 
 def _bind_context(
@@ -178,7 +182,7 @@ def _bind_context(
 
 def _run_child(
     request: CandidateRequest, actual_raw: bytes, output: Path
-) -> tuple[NativeCandidateResult | None, int]:
+) -> tuple[bytes | None, int]:
     deadline = time.monotonic_ns() + int(signal.getitimer(signal.ITIMER_REAL)[0] * 1e9)
     pid = os.fork()
     if pid == 0:
@@ -232,9 +236,7 @@ def _run_child(
         cpu = math.ceil((usage.ru_utime + usage.ru_stime) * 1e9)
         if not os.WIFEXITED(status) or os.WEXITSTATUS(status) != 0:
             return None, cpu
-        return parse_native_candidate_result(
-            read_bytes(output, limit=request.output_limit_bytes)
-        ), cpu
+        return read_bytes(output, limit=request.output_limit_bytes), cpu
     except Exception:
         if not reaped:
             os.kill(pid, signal.SIGKILL)
@@ -284,6 +286,7 @@ def _closure(
         receipt.request_sha256,
         receipt.logical_id,
         receipt.original_attempt_id,
+        receipt.input_raw_sha256,
     ) != (
         request.input_raw_sha256,
         request.input_bytes,
@@ -291,9 +294,14 @@ def _closure(
         row[0],
         request.logical_id,
         saved.attempt_id,
+        request.input_raw_sha256,
     ):
         raise StudyLedgerError("candidate_closure_corrupt")
-    if receipt.original_revision > len(current.records):
+    if (
+        saved.mode != "execute"
+        or receipt.original_revision != saved.expected_revision + 1
+        or receipt.original_revision > len(current.records)
+    ):
         raise StudyLedgerError("candidate_closure_corrupt")
     original = NativeStudyLedger(
         plan=current.plan, records=current.records[: receipt.original_revision]
@@ -302,6 +310,22 @@ def _closure(
         receipt.original_head_sha256,
         receipt.original_ledger_sha256,
     ):
+        raise StudyLedgerError("candidate_closure_corrupt")
+    before = NativeStudyLedger(plan=current.plan, records=original.records[:-1])
+    reservation = original.records[-1].event
+    expected_reservation = StudyAttemptReservation(
+        attempt_id=saved.attempt_id,
+        phase=saved.phase,
+        cell_id=saved.cell_id,
+        operation="candidate_production",
+        config_sha256=saved.config_sha256,
+        input_sha256=saved.input_sha256,
+        retry_of=saved.retry_of,
+        cpu_reservation_ns=saved.cpu_reservation_ns,
+        artifact_reservation_bytes=saved.artifact_reservation_bytes,
+        purchase=None,
+    )
+    if head(before) != saved.expected_head_sha256 or reservation != expected_reservation:
         raise StudyLedgerError("candidate_closure_corrupt")
     updates = [
         r.event
@@ -335,6 +359,11 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
         raise StudyLedgerError("candidate_admission_identity")
     if (request.ticket >= c.tickets - c.recovery_tickets) != (request.mode == "recover"):
         raise StudyLedgerError("candidate_ticket_scope")
+    if request.mode == "recover" and (
+        request.cpu_reservation_ns > c.recovery_work_cpu_ns
+        or request.artifact_reservation_bytes > c.recovery_work_artifact_bytes
+    ):
+        raise StudyLedgerError("candidate_recovery_work_limit")
     with _deadline(
         c.ticket_cpu_ns,
         request.cpu_reservation_ns // 2,
@@ -391,7 +420,7 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                     raise StudyLedgerError("candidate_receipt_missing")
                 if request.mode == "execute" and closure is not None:
                     raise StudyLedgerError("candidate_use_charged_recovery")
-                if (len(current.records), head(current)) != (
+                if request.mode == "execute" and (len(current.records), head(current)) != (
                     request.expected_revision,
                     request.expected_head_sha256,
                 ):
@@ -399,6 +428,12 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                 if request.mode == "execute" and store.stopped:
                     raise StudyLedgerError("candidate_stopped")
                 _bind_context(current, request, c)
+                if any(
+                    isinstance(record.event, StudyAttemptReservation)
+                    and record.event.attempt_id == request.attempt_id
+                    for record in current.records
+                ):
+                    raise StudyLedgerError("candidate_attempt_reused")
                 operation: Literal["candidate_production", "accounting"] = (
                     "accounting" if closure else "candidate_production"
                 )
@@ -414,11 +449,12 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                     artifact_reservation_bytes=request.artifact_reservation_bytes,
                     purchase=None,
                 )
-                proposed = _append(current, reservation)
                 try:
+                    proposed = _append(current, reservation)
                     _capacity(root, proposed, c)
                     if (
-                        request.artifact_reservation_bytes
+                        closure is None
+                        and request.artifact_reservation_bytes
                         < request.input_bytes + request.output_limit_bytes
                     ):
                         raise StudyLedgerError("candidate_work_headroom")
@@ -444,6 +480,8 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                     ):
                         raise StudyLedgerError("candidate_input_raw_identity")
                     actual = parse_native_candidate_input(input_raw)
+                    if actual.observations.engine_fingerprint != observed.engine_fingerprint:
+                        raise StudyLedgerError("candidate_observation_engine")
                     if (message_sha256(actual), message_sha256(actual.config)) != (
                         request.input_sha256,
                         request.config_sha256,
@@ -452,12 +490,14 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                     meter.write(root / f"candidate-input-{request.ticket}", input_raw)
                     produced, child_cpu = _run_child(request, input_raw, output)
                     if regular(output, missing=True) is not None:
-                        meter.total += output.stat().st_size
+                        meter.total += max(
+                            output.stat().st_size, len(produced) if produced is not None else 0
+                        )
                         output_counted = True
                     if produced is None:
                         raise StudyLedgerError("candidate_child_failed")
-                    result = produced
-                    result_raw = read_bytes(output, limit=request.output_limit_bytes)
+                    result_raw = produced
+                    result = parse_native_candidate_result(result_raw)
                     original = current
                     receipt = CandidateReceipt(
                         logical_id=request.logical_id,
@@ -472,6 +512,8 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                         installation_sha256=c.installation_sha256,
                     )
                 actual = parse_native_candidate_input(input_raw)
+                if actual.observations.engine_fingerprint != observed.engine_fingerprint:
+                    raise StudyLedgerError("candidate_observation_engine")
                 validate_native_candidate_result(
                     result, actual, attempt_id=receipt.original_attempt_id
                 )
@@ -483,6 +525,11 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
                     c.installation_sha256,
                 ):
                     raise StudyLedgerError("candidate_result_identity")
+                if (
+                    closure is None
+                    and read_bytes(output, limit=request.output_limit_bytes) != result_raw
+                ):
+                    raise StudyLedgerError("candidate_output_changed")
                 durable_directory(root)
                 clock.tail()
                 meter.sample()
@@ -591,4 +638,10 @@ def commit_native_candidates(store_root: Path, request: CandidateRequest) -> Com
             raise
         finally:
             if clock.tail() and store is not None:
-                store.close()
+                original_error = sys.exception()
+                try:
+                    store.close()
+                except Exception:
+                    if original_error is None:
+                        raise
+                    original_error.add_note("Final store close failed; original failure preserved.")
