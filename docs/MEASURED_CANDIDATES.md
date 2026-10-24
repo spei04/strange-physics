@@ -50,7 +50,10 @@ claim. Capacity denial durably stops new execution while bounded paid recovery
 may remain possible; exhaustion may honestly leave stopped/unpublishable work.
 
 Metadata uses a fixed 4 KiB, FULL, PERSIST, no-cache-spill SQLite profile and bounded
-growth. One root lock excludes cooperating writers; there is no distributed or
+growth. Before opening SQLite, a hot rollback-journal header must declare a
+database within the cap, 4 KiB pages and a bounded sector size; SQLite recovery
+cannot be allowed to resize an unchecked database before its page limit is set.
+Malformed retained state is rejected, not automatically repaired. One root lock excludes cooperating writers; there is no distributed or
 adversarial-owner guarantee. A compact receipt references immutable input/output
 files and an original prefix of the append-only ledger, avoiding full ledger
 copies per result. All private files remain outside public artifacts.

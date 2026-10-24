@@ -28,6 +28,43 @@ from strange_physics.workflow_io import read_bytes
 
 PAGE = 4096
 STORE_ID = 0x53504341
+JOURNAL_MAGIC = bytes.fromhex("d9d505f920a163d7")
+
+
+def _journal_bound(path: Path, admission: CandidateAdmission) -> None:
+    before = regular(path, missing=True)
+    if before is None:
+        return
+    if before.st_size > admission.control.database_envelope():
+        raise StudyLedgerError("candidate_store_journal_bound")
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        opened = os.fstat(fd)
+        header = os.pread(fd, 28, 0)
+        after = os.fstat(fd)
+        if (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns) != (
+            opened.st_dev,
+            opened.st_ino,
+            after.st_size,
+            after.st_mtime_ns,
+        ):
+            raise StudyLedgerError("candidate_store_journal_changed")
+    finally:
+        os.close(fd)
+    if header[:8] == JOURNAL_MAGIC:
+        # SQLite can resize the DB during hot-journal recovery, before our
+        # PRAGMA max_page_count takes effect. Check its actual header first.
+        pages = int.from_bytes(header[16:20], "big")
+        sector = int.from_bytes(header[20:24], "big")
+        page_size = int.from_bytes(header[24:28], "big")
+        if (
+            len(header) != 28
+            or pages > admission.control.database_limit_bytes // PAGE
+            or page_size != PAGE
+            or not 512 <= sector <= 65536
+            or sector & (sector - 1)
+        ):
+            raise StudyLedgerError("candidate_store_hot_journal_bound")
 
 
 class CandidateStore:
@@ -53,9 +90,7 @@ class CandidateStore:
             os.close(fd)
         elif not 100 <= existing.st_size <= admission.control.database_limit_bytes:
             raise StudyLedgerError("candidate_store_corrupt")
-        journal = regular(Path(str(self.path) + "-journal"), missing=True)
-        if journal is not None and journal.st_size > admission.control.database_envelope():
-            raise StudyLedgerError("candidate_store_journal_bound")
+        _journal_bound(Path(str(self.path) + "-journal"), admission)
         # Existing-store recovery gets the same envelope as first initialization.
         # Reserve, closure and one fallback are the only remaining write attempts.
         self._transaction_attempts = 0 if existing is None else 1

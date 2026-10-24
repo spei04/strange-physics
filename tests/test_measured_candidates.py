@@ -172,7 +172,11 @@ def actual_input(path: Path, *, completed: bool = True) -> NativeCandidateInput:
 
 
 def setup(
-    root: Path, build: TrustedInstallation, actual: NativeCandidateInput | None = None
+    root: Path,
+    build: TrustedInstallation,
+    actual: NativeCandidateInput | None = None,
+    *,
+    publication: PublicationEscrow | None = None,
 ) -> CandidateRequest:
     root.mkdir(mode=0o700)
     actual = actual_input(root / "fixture-observations.sqlite") if actual is None else actual
@@ -202,9 +206,12 @@ def setup(
         bootstrap_artifact_bytes=4 * MIB,
         bootstrap_cpu_ns=5_000_000_000,
         database_limit_bytes=2 * MIB,
-        finalization_records=6,
-        finalization_bytes=32 * 1024,
-        publication=PublicationEscrow(
+        finalization_records=6 + (3 * publication.calls if publication else 0),
+        finalization_bytes=max(
+            32 * 1024, 4096 * (6 + (3 * publication.calls if publication else 0))
+        ),
+        publication=publication
+        or PublicationEscrow(
             calls=0,
             material_bytes=0,
             journal_bytes=0,
@@ -921,7 +928,6 @@ def test_frozen_comparison_requires_identity_and_unimplemented_journal_adapter(
     manifest, payloads = materials()
     value = manifest.model_dump(mode="json")
     value.update(
-        study_id=seed.plan.study_id,
         source_commit=actual_build.source_commit if matching_source else "f" * 40,
         uv_lock_sha256=actual_build.uv_lock_sha256,
         engine_fingerprint=actual_build.engine_fingerprint,
@@ -1050,3 +1056,71 @@ def test_control_hold_prepays_each_bounded_store_attempt(
     with pytest.raises(StudyLedgerError, match="candidate_control_hold"):
         executor.commit_native_candidates(root, request)
     assert not (root / "candidate.sqlite3").exists()
+
+
+@pytest.mark.parametrize("bad_field", ["pages", "page_size", "sector"])
+def test_hot_journal_bound_precedes_sqlite_recovery(
+    tmp_path: Path, actual_build: TrustedInstallation, bad_field: str
+) -> None:
+    root = tmp_path / "run"
+    setup(root, actual_build)
+    admission = CandidateAdmission.model_validate_json(
+        (root / "candidate-admission.json").read_bytes()
+    )
+    seed = (root / "candidate-seed.json").read_bytes()
+    store = CandidateStore(root, admission, seed, Extents(root, database_name="candidate.sqlite3"))
+    store.close()
+    db_path = root / "candidate.sqlite3"
+    original = db_path.read_bytes()
+    values = {"pages": len(original) // 4096, "page_size": 4096, "sector": 512}
+    values[bad_field] = {
+        "pages": admission.control.database_limit_bytes // 4096 + 1,
+        "page_size": 8192,
+        "sector": 131072,
+    }[bad_field]
+    header = bytes.fromhex("d9d505f920a163d7") + (0).to_bytes(4, "big") + (1).to_bytes(4, "big")
+    header += b"".join(values[key].to_bytes(4, "big") for key in ("pages", "sector", "page_size"))
+    journal = Path(str(db_path) + "-journal")
+    private(journal, header.ljust(544, b"\0"))
+    with pytest.raises(StudyLedgerError, match="candidate_store_hot_journal_bound"):
+        CandidateStore(root, admission, seed, Extents(root, database_name="candidate.sqlite3"))
+    assert db_path.read_bytes() == original
+    # A normal zeroed PERSIST header remains usable after the malformed fixture
+    # is removed by this explicit owner-side test repair, never by the API.
+    private(journal, b"\0" * 544)
+    store = CandidateStore(root, admission, seed, Extents(root, database_name="candidate.sqlite3"))
+    try:
+        assert store.ledger() == read_study_ledger(seed)
+    finally:
+        store.close()
+
+
+def test_candidate_work_preserves_nonzero_publication_escrow(
+    tmp_path: Path, actual_build: TrustedInstallation
+) -> None:
+    root = tmp_path / "run"
+    publication = PublicationEscrow(
+        calls=2,
+        material_bytes=MIB,
+        journal_bytes=MIB,
+        ledger_bytes=MIB,
+        output_bytes=4 * MIB,
+        control_cpu_ns=3_000_000_000,
+        control_artifact_bytes=48 * MIB,
+        work_cpu_ns=8_000_000_000,
+    )
+    request = setup(root, actual_build, publication=publication)
+    result = executor.commit_native_candidates(root, request)
+    assert result.result.payload.status == "produced"
+    control = CandidateAdmission.model_validate_json(
+        (root / "candidate-admission.json").read_bytes()
+    ).control
+    executor._capacity(root, result.ledger, control)
+    budget = summarize_study(result.ledger).budget
+    assert publication.required_bytes() == 112 * MIB
+    assert budget.remaining_artifact_bytes >= publication.required_bytes() + 4 * MIB
+    assert budget.remaining_cpu_ns >= 27_000_000_000
+    assert (
+        len(raw(result.ledger)) + budget.unresolved_attempts * 4096 + control.finalization_bytes
+        <= MIB
+    )
