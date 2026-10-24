@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Repaired source released; available for next scoped assignment | Clean 2894a40 and owned environment released to Lead; focused evidence sealed |
-| Platform | Verify repaired protected-main candidate | Escrow and CI bootstrap accepted; final verifier uses repaired archive pins |
-| Research | Scientific/source equivalence and document consistency | Narrow escrow acceptance sealed; review final five-document checkpoint |
-| Project lead | Primary progress and identity integration/delivery | Clean source released; repaired PR/main/candidate proof pending; parents remain open |
+| Quality | Final five-document delivery reconciliation, then release primary | No source or environment work; preserve historical checks and remaining gates |
+| Platform | Final PR118 delivery accepted | Main9818ca0/candidate12556446152 verified against repaired archives; consumer released |
+| Research | Independent final progress/dependency review | Verify delivered identities, three mirrors and unchanged graph/caps/effort |
+| Project lead | Delivery closure and next scoped handoff in identity | PR118/main/candidate accepted; RA-02/#105 and RA-N01/#106 stay open |
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-24 | Quality | Final PR118 five-document progress record | Reconcile accepted delivery; release primary for independent review |
+| 2026-10-24 | Research | Independent final progress and dependency review | Read immutable checkpoint; no environment or scientific rerun |
+| 2026-10-24 | Platform | PR118/main9818ca0 candidate verification | Accepted all five jobs, exact 77-file archives and 13 hosted copied-interpreter observations |
+| 2026-10-24 | Project lead | PR118 delivery closure | Own identity/private closure and next scoped handoff; parent tasks remain open |
 | 2026-10-24 | Quality + Platform | PR118 escrow and CI installation repairs | Escrow floor/ceiling accepted; owned-interpreter bootstrap under implementation/review |
 | 2026-10-24 | Project lead + Research | Five-document repair reconciliation | Preserve original source/failed CI evidence, current assignments and unchanged graph/caps |
 | 2026-10-24 | Quality | Candidate-only pre-freeze execution source 6dfceb4 | Accepted with 4,186 tests including 40 candidate cases; source/environment released to lead |
@@ -817,3 +821,14 @@ All 83 runtime/package archive inputs remain equal to 1d62a91 after the test and
 The CI author index 5e2d65a3200f498af68ddc33eb54b72eed1928849cc693291aa79bd55f1c1093 retains 17 children, rehashed by Lead. Platform accepted exact 2894a40 after 13 authored cases, 12 independent cases and one sensitive digest-guard mutation (26 checks in 3.64 seconds); its consumer is released. The installed-file inventory contains 4,687 nonproject dependency files; the earlier 4,696 count also included nine project dist-info files. No dependency file was removed or changed. Final integration uses these repaired source/archive identities; hosted checks remain an independent gate.
 
 Quality released clean identity 2894a40 and its owned environment with no remaining author/reviewer consumer. Handoff f1935cdc0896fead3dda2efc793f2ca9fe0d26ce604b34243234a08ddb493090 records source, archive and inventory definitions. Lead now owns both progress and integration; Research reviews the immutable five-document checkpoint and Platform prepares the final candidate verifier. No new checkout or environment is needed.
+
+
+### 2026-10-24 — Candidate-only measured execution delivered
+
+[PR #118](https://github.com/spei04/strange-physics/pull/118) merged as 9818ca0c18e5bf303174ba958b14fca75f3f67d0 (tree a8b617c0146c552b3019d5cd6b30ccc22747d983), retaining repaired runtime 1d62a91 and final author/test/CI source 2894a40 plus reviewed progress. [PR CI40082633265](https://github.com/spei04/strange-physics/actions/runs/40082633265) passed 4,213 tests in each Python 3.12/3.14 job. [Protected-main CI40083151176](https://github.com/spei04/strange-physics/actions/runs/40083151176) passed all five jobs, again with 4,213 tests in each runtime. These exact-head results supersede the pending delivery gate; the earlier 4,186-test source, original failed CI and 19/13 focused repair checks remain separately scoped history.
+
+Platform accepted candidate12556446152: 475,760 bytes, ZIP SHA256 df2dd431ba7f1a85aed30d2b9719ebdeaec0d142db0f43668221e5407beec949. All 77 package source files, archive allowlists, checksums and actual source/run/lock provenance matched. Wheel 8065b6f4d0c8604e92ea1b619de4908d1140da5642c32c6e97810ad84904984a and sdist 60e01ccc2fcf5ce397c0068c909a86e08aa1a2319625afb38fc347e2edbf1f9c are byte-identical to the repaired author archives. The private final index 6f5976a14f71b6126168a1d0fbc4289df28c47b603f8a1e2f5cba5e7b99df092 retains 14 rehashed owner-readable records; its consumer is released.
+
+Thirteen hosted observations directly confirm source mode 0777 to byte-identical owned copies at 0755, with single links and checks repeated after installation across both Python jobs, security and protected-main build/runtime environments. The original failed run lacked individual stat values; these new observations do not invent those missing values. Copied executables still use base standard/shared libraries, so this is not hermetic Python isolation. The runtime-requirements digest matches accepted prior evidence under the same lock/uv, but export bytes are absent from the candidate and were not independently recomputed. The runtime-only installed-wheel smoke passed in hosted CI; no local environment or scientific rerun was needed for delivery reconciliation.
+
+Quality owns this final five-document update and then releases primary; Research independently checks the immutable record and dependency invariants. Platform's delivery review is accepted, and Lead owns private closure and the next scoped handoff in identity. Comparison dispatch/actual-Journal admission, the other four numerical wrappers, purchased-simulation measurement and recovery, one-way handoff, full-study allocation and explicit parent audit remain open. RA-02/#105 and RA-N01/#106 stay in progress; no finite-grid admission, actual comparison, cap reset, new approval, graph, effort or forecast change is claimed. This is an unpublished candidate, not a deployment, signing or enterprise-production acceptance.

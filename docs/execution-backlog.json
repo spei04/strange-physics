@@ -10830,7 +10830,7 @@
       "status": "complete",
       "lead": "Engineer Research",
       "scorer": "Engineer Quality after accepted SP-04.b",
-      "next_authoring_task": "Candidate PR #118's publication escrow and copied-interpreter CI repairs are locally accepted at 2894a40. Focused author and independent checks pass; repaired PR/main/candidate delivery gates remain pending. Earlier 6dfceb4 checks and failed hosted CI remain source-specific history. Remaining producer wrappers/full-study allocation/parent audit remain open.",
+      "next_authoring_task": "Candidate-only pre-freeze execution delivered through PR118/main9818ca0,4213 tests per Python runtime and candidate12556446152 accepted. Remaining producer wrappers/full-study allocation/parent audit stay open.",
       "path": [
         "SP-02.b",
         "SP-03.a",
@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Lead owns primary for five progress documents; existing environment unused.",
-      "identity": "Lead owns clean released2894a40 and existing owned environment for integration/delivery; author/reviewer consumers released.",
+      "scientific": "Quality owns primary for final five progress documents fromd454dad, then releases to Lead; installed environment intentionally unused.",
+      "identity": "Lead owns identity and private delivery closure after accepted PR118/main9818ca0; author/reviewer consumers released.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "candidate_source_repairs_accepted_delivery_pending",
+      "status": "candidate_only_delivery_accepted_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Clean repaired2894a40 source/environment released; available for next scoped assignment.",
-        "Platform": "Repaired-source candidate verifier preparation and protected-main verification.",
-        "Research": "Immutable five-document scientific/source and dependency consistency review.",
-        "Project lead": "Own primary progress and released identity integration/delivery; exact-head PR/main/candidate gates pending."
+        "Quality": "Final five-document delivery reconciliation in primary, then release; no environment use.",
+        "Platform": "Final PR118/main9818ca0 candidate verification accepted; consumer released.",
+        "Research": "Independent final progress, evidence and dependency consistency review.",
+        "Project lead": "Own identity, private delivery closure and next scoped handoff; parent tasks remain open."
       },
-      "handoff": "Quality owns primary for this five-document update frome7db239 and releases after commit; lead owns released identity for integration/delivery. No environment use or change by progress writer.",
+      "handoff": "Quality owns only primary five-document reconciliation fromd454dad, then releases to Lead for independent Research review. Lead owns identity and private delivery closure. No environment use or mutation by progress writer.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Integrate reviewed five-document progress with accepted source2894a40, then updated PR/main checks and protected-main candidate proof. Remaining producers/full-study allocation/parent audit stay open.",
+      "next_units": "Remaining preparation/prediction/scoring/classical wrappers, comparison Journal admission, purchased-simulation recovery, one-way handoff and full-study allocation require scoped implementation/review and parent audit before finite-grid admission. No actual comparison has run.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -13038,7 +13038,7 @@
             }
           },
           "candidate_execution": {
-            "status": "source_repairs_accepted_delivery_pending",
+            "status": "candidate_only_delivery_accepted",
             "owner": "Quality",
             "reviewers": [
               "Research",
@@ -13107,16 +13107,42 @@
             "review_scope": "Research eight scientific/material cases at eabb3ca; Platform fourteen receipt/recovery cases at eabb3ca and thirteen capacity cases plus one sensitive mutant at6874082; Research seventeen actual-installed cases at6dfceb4. Final relevant source equivalence is verified.",
             "artifact_bound": "Finite control hold includes four guarded whole database/PERSIST envelopes per ticket; pre-open hot-journal header bounds prevent recovery expansion before SQLite limits. Logical observed extents are not exact physical I/O.",
             "diagnostics": "Original fa/eabb/5f9 review failures and fixture diagnostics remain indexed with their own sources; repaired hot-journal reproduction is malformed-state capacity evidence, not a natural-crash claim. Prior publisher CI failure and56/58/4143 checks remain separate history.",
-            "environment": "Clean identity2894a40 and existing owned environment released to Lead; no author/reviewer consumers. Primary progress uses no environment.",
-            "delivery": "Repaired source2894a40 locally accepted; updated PR118 exact-head checks, protected-main CI and candidate verification pending. Original CI40081493657 remains retained failed-source evidence.",
+            "environment": "Lead owns identity after final source/environment release. Quality updates only five primary progress files then releases; no environment consumer or changes for this checkpoint.",
+            "delivery": {
+              "status": "accepted",
+              "pull_request": 118,
+              "reviewed_pr_head": "d8d72a5efcc87f51c6d2fecbf91b68aaab4244e4",
+              "final_author": "2894a40bbe1d432c5bb0cf3ad5be9253d50cb7e6",
+              "main": "9818ca0c18e5bf303174ba958b14fca75f3f67d0",
+              "tree": "a8b617c0146c552b3019d5cd6b30ccc22747d983",
+              "pr_ci": 40082633265,
+              "pr_tests_each_python": 4213,
+              "main_ci": 40083151176,
+              "main_jobs_passed": 5,
+              "main_tests_each_python": 4213,
+              "candidate": 12556446152,
+              "candidate_bytes": 475760,
+              "candidate_zip_sha256": "df2dd431ba7f1a85aed30d2b9719ebdeaec0d142db0f43668221e5407beec949",
+              "source_files_verified": 77,
+              "same_bytes_as_repaired_author_archives": true,
+              "index_sha256": "6f5976a14f71b6126168a1d0fbc4289df28c47b603f8a1e2f5cba5e7b99df092",
+              "indexed_children_rehashed": 14,
+              "hosted_copied_interpreter_observations": 13,
+              "hosted_profile": "Actual source0777 to byte-identical owned0755 copies, nlink1; post-install rechecks in checks/security/candidate environments. Original failed run did not capture individual stat fields.",
+              "runtime_requirements_limit": "Digest matches accepted prior under same lock/uv; export bytes absent from candidate and not independently recomputed.",
+              "runtime_isolation_limit": "Copied executable retains shared base standard/shared libraries; not hermetic Python.",
+              "scope": "Unpublished candidate; no deployment/signing/scientific comparison/parent completion. Hosted runtime-only installed-wheel smoke passed; no local rerun.",
+              "reviewer": "Platform",
+              "consumer_released": true
+            },
             "remaining": [
               "Only fixed produce_native_candidates dispatch plus charged exact receipt recovery is implemented.",
               "Comparison execution denies until actual-Journal adapter exists; no purchase/handoff or other four numerical wrappers.",
               "No actual comparison study/grid or parent task closure; allocation profiles remain parameterized, no full-study throughput guarantee.",
-              "Synthetic actual-installed verification is local evidence. Protected-main candidate delivery/accepted-release verification remains integration work.",
+              "Local synthetic verifier cases retain their scope. Protected-main source/provenance/archive and runtime-only installed-wheel delivery are accepted; requirements-export and shared-runtime limits remain explicit.",
               "Owner-local Linux/trusted retention only; no hostile-Python, distributed authority, whole-state rollback or exact physical-I/O claim."
             ],
-            "next_gate": "Integrate reviewed five-document progress with accepted source2894a40, then updated PR/main checks and protected-main candidate proof. Remaining producers/full-study allocation/parent audit stay open.",
+            "next_gate": "Remaining preparation/prediction/scoring/classical wrappers, comparison Journal admission, purchased-simulation recovery, one-way handoff and full-study allocation require scoped implementation/review and parent audit before finite-grid admission. No actual comparison has run.",
             "integration_owner": "Project lead",
             "delivery_reviewer": "Platform",
             "progress_reviewer": "Research",
@@ -13146,7 +13172,7 @@
                 "research_index_sha256": "ddcd0e1e9e3f49b0664850b0c6a7eb9037c596fb2439e575da248a8b9c10ddb9"
               },
               "installation": {
-                "status": "source_accepted_hosted_checks_pending",
+                "status": "source_and_hosted_delivery_accepted",
                 "owner": "Quality",
                 "independent_reviewer": "Platform",
                 "constraint": "Preserve installed source/interpreter ownership, mode and link verification.",
@@ -13156,13 +13182,13 @@
                 "strict_mypy_files": 135,
                 "diagnosis_index_sha256": "9060dce5b83a3c0a88a42320b31f3f95207b2c84672d0e539242c66026f269fa",
                 "controlled_smoke": "Owned0777 source copied to0755, exact bytes and original unchanged; no shared toolcache mutation.",
-                "boundary": "Owned executable and installed-file profile; base standard/shared libraries remain shared. Hosted before/after stats and both runtimes pending.",
+                "boundary": "Owned executable and installed-file profile;13 actual hosted0777-to0755 observations passed across both runtimes/security/candidate. Base standard/shared libraries remain shared; no hermetic claim.",
                 "author_index_sha256": "5e2d65a3200f498af68ddc33eb54b72eed1928849cc693291aa79bd55f1c1093",
                 "independent_cases": 12,
                 "sensitive_mutants": 1,
                 "peer_review": "Platform accepted exact2894a40;26 total checks including13 authored and1 mutation;3.64seconds; consumer released."
               },
-              "scope": "Original source checks/packages remain source-specific history; repaired delivery proof pending.",
+              "scope": "Original source checks, failed CI and earlier packages remain source-specific history. Repaired exact-head PR/main/candidate delivery accepted.",
               "final_runtime_source": "1d62a91b0b53967b7a74f9c288e7db0ec6498ee5",
               "packages": [
                 {
@@ -13498,7 +13524,7 @@
         }
       },
       "candidate_execution": {
-        "status": "source_repairs_accepted_delivery_pending",
+        "status": "candidate_only_delivery_accepted",
         "owner": "Quality",
         "reviewers": [
           "Research",
@@ -13567,16 +13593,42 @@
         "review_scope": "Research eight scientific/material cases at eabb3ca; Platform fourteen receipt/recovery cases at eabb3ca and thirteen capacity cases plus one sensitive mutant at6874082; Research seventeen actual-installed cases at6dfceb4. Final relevant source equivalence is verified.",
         "artifact_bound": "Finite control hold includes four guarded whole database/PERSIST envelopes per ticket; pre-open hot-journal header bounds prevent recovery expansion before SQLite limits. Logical observed extents are not exact physical I/O.",
         "diagnostics": "Original fa/eabb/5f9 review failures and fixture diagnostics remain indexed with their own sources; repaired hot-journal reproduction is malformed-state capacity evidence, not a natural-crash claim. Prior publisher CI failure and56/58/4143 checks remain separate history.",
-        "environment": "Clean identity2894a40 and existing owned environment released to Lead; no author/reviewer consumers. Primary progress uses no environment.",
-        "delivery": "Repaired source2894a40 locally accepted; updated PR118 exact-head checks, protected-main CI and candidate verification pending. Original CI40081493657 remains retained failed-source evidence.",
+        "environment": "Lead owns identity after final source/environment release. Quality updates only five primary progress files then releases; no environment consumer or changes for this checkpoint.",
+        "delivery": {
+          "status": "accepted",
+          "pull_request": 118,
+          "reviewed_pr_head": "d8d72a5efcc87f51c6d2fecbf91b68aaab4244e4",
+          "final_author": "2894a40bbe1d432c5bb0cf3ad5be9253d50cb7e6",
+          "main": "9818ca0c18e5bf303174ba958b14fca75f3f67d0",
+          "tree": "a8b617c0146c552b3019d5cd6b30ccc22747d983",
+          "pr_ci": 40082633265,
+          "pr_tests_each_python": 4213,
+          "main_ci": 40083151176,
+          "main_jobs_passed": 5,
+          "main_tests_each_python": 4213,
+          "candidate": 12556446152,
+          "candidate_bytes": 475760,
+          "candidate_zip_sha256": "df2dd431ba7f1a85aed30d2b9719ebdeaec0d142db0f43668221e5407beec949",
+          "source_files_verified": 77,
+          "same_bytes_as_repaired_author_archives": true,
+          "index_sha256": "6f5976a14f71b6126168a1d0fbc4289df28c47b603f8a1e2f5cba5e7b99df092",
+          "indexed_children_rehashed": 14,
+          "hosted_copied_interpreter_observations": 13,
+          "hosted_profile": "Actual source0777 to byte-identical owned0755 copies, nlink1; post-install rechecks in checks/security/candidate environments. Original failed run did not capture individual stat fields.",
+          "runtime_requirements_limit": "Digest matches accepted prior under same lock/uv; export bytes absent from candidate and not independently recomputed.",
+          "runtime_isolation_limit": "Copied executable retains shared base standard/shared libraries; not hermetic Python.",
+          "scope": "Unpublished candidate; no deployment/signing/scientific comparison/parent completion. Hosted runtime-only installed-wheel smoke passed; no local rerun.",
+          "reviewer": "Platform",
+          "consumer_released": true
+        },
         "remaining": [
           "Only fixed produce_native_candidates dispatch plus charged exact receipt recovery is implemented.",
           "Comparison execution denies until actual-Journal adapter exists; no purchase/handoff or other four numerical wrappers.",
           "No actual comparison study/grid or parent task closure; allocation profiles remain parameterized, no full-study throughput guarantee.",
-          "Synthetic actual-installed verification is local evidence. Protected-main candidate delivery/accepted-release verification remains integration work.",
+          "Local synthetic verifier cases retain their scope. Protected-main source/provenance/archive and runtime-only installed-wheel delivery are accepted; requirements-export and shared-runtime limits remain explicit.",
           "Owner-local Linux/trusted retention only; no hostile-Python, distributed authority, whole-state rollback or exact physical-I/O claim."
         ],
-        "next_gate": "Integrate reviewed five-document progress with accepted source2894a40, then updated PR/main checks and protected-main candidate proof. Remaining producers/full-study allocation/parent audit stay open.",
+        "next_gate": "Remaining preparation/prediction/scoring/classical wrappers, comparison Journal admission, purchased-simulation recovery, one-way handoff and full-study allocation require scoped implementation/review and parent audit before finite-grid admission. No actual comparison has run.",
         "integration_owner": "Project lead",
         "delivery_reviewer": "Platform",
         "progress_reviewer": "Research",
@@ -13606,7 +13658,7 @@
             "research_index_sha256": "ddcd0e1e9e3f49b0664850b0c6a7eb9037c596fb2439e575da248a8b9c10ddb9"
           },
           "installation": {
-            "status": "source_accepted_hosted_checks_pending",
+            "status": "source_and_hosted_delivery_accepted",
             "owner": "Quality",
             "independent_reviewer": "Platform",
             "constraint": "Preserve installed source/interpreter ownership, mode and link verification.",
@@ -13616,13 +13668,13 @@
             "strict_mypy_files": 135,
             "diagnosis_index_sha256": "9060dce5b83a3c0a88a42320b31f3f95207b2c84672d0e539242c66026f269fa",
             "controlled_smoke": "Owned0777 source copied to0755, exact bytes and original unchanged; no shared toolcache mutation.",
-            "boundary": "Owned executable and installed-file profile; base standard/shared libraries remain shared. Hosted before/after stats and both runtimes pending.",
+            "boundary": "Owned executable and installed-file profile;13 actual hosted0777-to0755 observations passed across both runtimes/security/candidate. Base standard/shared libraries remain shared; no hermetic claim.",
             "author_index_sha256": "5e2d65a3200f498af68ddc33eb54b72eed1928849cc693291aa79bd55f1c1093",
             "independent_cases": 12,
             "sensitive_mutants": 1,
             "peer_review": "Platform accepted exact2894a40;26 total checks including13 authored and1 mutation;3.64seconds; consumer released."
           },
-          "scope": "Original source checks/packages remain source-specific history; repaired delivery proof pending.",
+          "scope": "Original source checks, failed CI and earlier packages remain source-specific history. Repaired exact-head PR/main/candidate delivery accepted.",
           "final_runtime_source": "1d62a91b0b53967b7a74f9c288e7db0ec6498ee5",
           "packages": [
             {
@@ -14062,7 +14114,7 @@
             }
           },
           "candidate_execution": {
-            "status": "source_repairs_accepted_delivery_pending",
+            "status": "candidate_only_delivery_accepted",
             "owner": "Quality",
             "reviewers": [
               "Research",
@@ -14131,16 +14183,42 @@
             "review_scope": "Research eight scientific/material cases at eabb3ca; Platform fourteen receipt/recovery cases at eabb3ca and thirteen capacity cases plus one sensitive mutant at6874082; Research seventeen actual-installed cases at6dfceb4. Final relevant source equivalence is verified.",
             "artifact_bound": "Finite control hold includes four guarded whole database/PERSIST envelopes per ticket; pre-open hot-journal header bounds prevent recovery expansion before SQLite limits. Logical observed extents are not exact physical I/O.",
             "diagnostics": "Original fa/eabb/5f9 review failures and fixture diagnostics remain indexed with their own sources; repaired hot-journal reproduction is malformed-state capacity evidence, not a natural-crash claim. Prior publisher CI failure and56/58/4143 checks remain separate history.",
-            "environment": "Clean identity2894a40 and existing owned environment released to Lead; no author/reviewer consumers. Primary progress uses no environment.",
-            "delivery": "Repaired source2894a40 locally accepted; updated PR118 exact-head checks, protected-main CI and candidate verification pending. Original CI40081493657 remains retained failed-source evidence.",
+            "environment": "Lead owns identity after final source/environment release. Quality updates only five primary progress files then releases; no environment consumer or changes for this checkpoint.",
+            "delivery": {
+              "status": "accepted",
+              "pull_request": 118,
+              "reviewed_pr_head": "d8d72a5efcc87f51c6d2fecbf91b68aaab4244e4",
+              "final_author": "2894a40bbe1d432c5bb0cf3ad5be9253d50cb7e6",
+              "main": "9818ca0c18e5bf303174ba958b14fca75f3f67d0",
+              "tree": "a8b617c0146c552b3019d5cd6b30ccc22747d983",
+              "pr_ci": 40082633265,
+              "pr_tests_each_python": 4213,
+              "main_ci": 40083151176,
+              "main_jobs_passed": 5,
+              "main_tests_each_python": 4213,
+              "candidate": 12556446152,
+              "candidate_bytes": 475760,
+              "candidate_zip_sha256": "df2dd431ba7f1a85aed30d2b9719ebdeaec0d142db0f43668221e5407beec949",
+              "source_files_verified": 77,
+              "same_bytes_as_repaired_author_archives": true,
+              "index_sha256": "6f5976a14f71b6126168a1d0fbc4289df28c47b603f8a1e2f5cba5e7b99df092",
+              "indexed_children_rehashed": 14,
+              "hosted_copied_interpreter_observations": 13,
+              "hosted_profile": "Actual source0777 to byte-identical owned0755 copies, nlink1; post-install rechecks in checks/security/candidate environments. Original failed run did not capture individual stat fields.",
+              "runtime_requirements_limit": "Digest matches accepted prior under same lock/uv; export bytes absent from candidate and not independently recomputed.",
+              "runtime_isolation_limit": "Copied executable retains shared base standard/shared libraries; not hermetic Python.",
+              "scope": "Unpublished candidate; no deployment/signing/scientific comparison/parent completion. Hosted runtime-only installed-wheel smoke passed; no local rerun.",
+              "reviewer": "Platform",
+              "consumer_released": true
+            },
             "remaining": [
               "Only fixed produce_native_candidates dispatch plus charged exact receipt recovery is implemented.",
               "Comparison execution denies until actual-Journal adapter exists; no purchase/handoff or other four numerical wrappers.",
               "No actual comparison study/grid or parent task closure; allocation profiles remain parameterized, no full-study throughput guarantee.",
-              "Synthetic actual-installed verification is local evidence. Protected-main candidate delivery/accepted-release verification remains integration work.",
+              "Local synthetic verifier cases retain their scope. Protected-main source/provenance/archive and runtime-only installed-wheel delivery are accepted; requirements-export and shared-runtime limits remain explicit.",
               "Owner-local Linux/trusted retention only; no hostile-Python, distributed authority, whole-state rollback or exact physical-I/O claim."
             ],
-            "next_gate": "Integrate reviewed five-document progress with accepted source2894a40, then updated PR/main checks and protected-main candidate proof. Remaining producers/full-study allocation/parent audit stay open.",
+            "next_gate": "Remaining preparation/prediction/scoring/classical wrappers, comparison Journal admission, purchased-simulation recovery, one-way handoff and full-study allocation require scoped implementation/review and parent audit before finite-grid admission. No actual comparison has run.",
             "integration_owner": "Project lead",
             "delivery_reviewer": "Platform",
             "progress_reviewer": "Research",
@@ -14170,7 +14248,7 @@
                 "research_index_sha256": "ddcd0e1e9e3f49b0664850b0c6a7eb9037c596fb2439e575da248a8b9c10ddb9"
               },
               "installation": {
-                "status": "source_accepted_hosted_checks_pending",
+                "status": "source_and_hosted_delivery_accepted",
                 "owner": "Quality",
                 "independent_reviewer": "Platform",
                 "constraint": "Preserve installed source/interpreter ownership, mode and link verification.",
@@ -14180,13 +14258,13 @@
                 "strict_mypy_files": 135,
                 "diagnosis_index_sha256": "9060dce5b83a3c0a88a42320b31f3f95207b2c84672d0e539242c66026f269fa",
                 "controlled_smoke": "Owned0777 source copied to0755, exact bytes and original unchanged; no shared toolcache mutation.",
-                "boundary": "Owned executable and installed-file profile; base standard/shared libraries remain shared. Hosted before/after stats and both runtimes pending.",
+                "boundary": "Owned executable and installed-file profile;13 actual hosted0777-to0755 observations passed across both runtimes/security/candidate. Base standard/shared libraries remain shared; no hermetic claim.",
                 "author_index_sha256": "5e2d65a3200f498af68ddc33eb54b72eed1928849cc693291aa79bd55f1c1093",
                 "independent_cases": 12,
                 "sensitive_mutants": 1,
                 "peer_review": "Platform accepted exact2894a40;26 total checks including13 authored and1 mutation;3.64seconds; consumer released."
               },
-              "scope": "Original source checks/packages remain source-specific history; repaired delivery proof pending.",
+              "scope": "Original source checks, failed CI and earlier packages remain source-specific history. Repaired exact-head PR/main/candidate delivery accepted.",
               "final_runtime_source": "1d62a91b0b53967b7a74f9c288e7db0ec6498ee5",
               "packages": [
                 {
