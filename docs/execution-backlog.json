@@ -12592,10 +12592,10 @@
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Measured preparation/prediction/scoring in reused identity; repair ingress clock and fixture setup accounting before acceptance.",
-        "Platform": "Independent bounded capacity, accounting and recovery review; full-study feasibility remains separate.",
-        "Research": "Independent scientific/lineage review after authored security repair92d9a15 released.",
-        "Project lead": "PR119 hosted delivery and primary progress; integration after independent acceptance."
+        "Quality": "Final patched-lock native-stage checks in reused identity.",
+        "Platform": "Final source/package integration review; runtime scientific/capacity reviews accepted.",
+        "Research": "Concrete next Journal/classical handoff and immutable progress review.",
+        "Project lead": "PR119 delivered; wrapper integration and public progress."
       },
       "handoff": "Lead owns primary for security delivery/progress; Quality owns identity for bounded native stages. Each environment remains separately owned; future patched-lock handoff is explicit.",
       "interface_decisions": [
@@ -13693,19 +13693,43 @@
         }
       },
       "bounded_native_stages": {
-        "status": "preliminary_chain_passed_repairs_pending",
-        "source": "e1088d0e55898b92aabb1e7dcf1802846e846bc6",
+        "status": "independent_review_accepted_final_integrated_gates_pending",
+        "source": "bf90fe76739de0056bc7576bc811f25b259b39de",
         "normal_operations": 27,
         "paid_recoveries": 3,
         "profile_reserved_artifact_bytes": 798703616,
-        "profile_reserved_cpu_seconds": 550,
-        "actual_profile_acceptance": false,
+        "profile_reserved_cpu_seconds": 630,
+        "actual_profile_acceptance": true,
         "findings": [
           "Public ingress validation moved before the shared CPU timer.",
           "Original setup/material assembly allowance absent from fixture seed."
         ],
         "study_executed": false,
-        "replacement_under_review": "bf90fe76739de0056bc7576bc811f25b259b39de"
+        "final_integrated_source": "f672e52296bde968e5784b9922d366639b6cf924",
+        "initial_profile_target_cpu_seconds": 550,
+        "finding_status": "Both original gaps repaired and independently accepted.",
+        "actual_fixture": {
+          "database_bytes": 200704,
+          "ledger_bytes": 48897,
+          "original_material_bytes": 301580,
+          "setup_hold_bytes": 33554432,
+          "setup_hold_cpu_seconds": 120,
+          "setup_hold_status": "unresolved",
+          "publication_protected_bytes": 146800640
+        },
+        "checks": {
+          "shared_focused": 64,
+          "additional_facts_regressions": 3,
+          "research_independent_cases": 11,
+          "platform_independent_cases": 11,
+          "platform_sensitive_mutants": 2,
+          "final_integrated_full_checks": "pending"
+        },
+        "review_indices": {
+          "research": "c7adeb7615ea56df5dabd1bffe0b233cf46cf0518ab9035dcc2628e8c2cc9ce3",
+          "platform": "5bb2ee80469090e8039eadfbcf72be2f71071443c172d5fff9799a44b297cacc"
+        },
+        "remaining": "Actual comparison Journal/freeze/classical binding, purchase measurement, publisher handoff, feasible full-study allocation and explicit parent audit."
       }
     },
     "certificate_trust_update": {
@@ -13720,12 +13744,24 @@
       "pip_vendor_followup": {
         "pull_request": 119,
         "source": "92d9a15ecb5f2a9885c3413659f52ee10d71404c",
-        "status": "source_review_accepted_hosted_delivery_pending",
+        "status": "main_candidate_accepted",
         "pip_version": "26.2.2",
         "focused_tests": 64,
         "runtime_dependencies_unchanged": true,
-        "alert_state": "open_graph_version_inconsistent_with_exact_lock",
-        "audit_suppressed": false
+        "alert_state": "open_old_requirement_fresh_graph_now_patched",
+        "audit_suppressed": false,
+        "merge": "8d0a6c7b0ca3074fefbebe6d5b4edccf6e61cf99",
+        "pr_ci": 40097997498,
+        "main_ci": 40098675605,
+        "main_tests_per_runtime": 4227,
+        "candidate": 12562615092,
+        "candidate_bytes": 475755,
+        "candidate_zip_sha256": "5b2a273defd879369fe35b38f5bb78318f8d5e11f5ca6583c9ac004551f2710e",
+        "main_acceptance_index_sha256": "36ffa5463d080ce5a566d7099d1934516a9d0a3083fb811f514e658e545b8a5f",
+        "graph_versions": {
+          "certifi": "2026.10.19",
+          "pip": "26.2.2"
+        }
       }
     }
   },
