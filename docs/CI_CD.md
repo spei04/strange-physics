@@ -25,6 +25,23 @@ cancelled, skipped, missing and unknown results fail. A skipped optional
 candidate job is not a substitute for this check. New required jobs must be
 added to both its `needs` list and the tested aggregate predicate.
 
+CI creates fresh environments with the setup-python interpreter using stdlib
+`venv --copies --without-pip`, then explicitly points uv at their copied
+executables. `scripts/ci_python.py` records source mode/uid/link count/size/hash,
+checks copy byte identity and owned regular-file permissions, and rechecks the
+actual executable, prefix and installed files after each sync/install. This
+also applies to the isolated protected-main candidate runtime. Copy mode and
+umask 0022 avoid writable/shared installed files; the product installation
+verifier stays strict. Shared toolcache permissions are never modified.
+
+The Ubuntu 26.04 image used by the initial failed PR118 run
+[sets /opt permissions recursively](https://github.com/actions/runner-images/blob/fefaeb5b2d395fba0b32802a0c23273f71f0a213/images/ubuntu/scripts/build/configure-system.sh).
+That corroborates the writable-toolcache explanation, but the original logs
+did not capture individual stat fields. The new bootstrap logs supply direct
+readback. A copied executable still uses the base standard library/shared
+libraries; this establishes the checked binary profile, not a hermetic Python
+distribution or additional supply-chain authority.
+
 Dependencies install only in bootstrap steps from `uv.lock` with uv 0.13.4.
 The project installs as a regular wheel offline against the locked Hatchling
 backend; editable-build helpers are not required. Check steps

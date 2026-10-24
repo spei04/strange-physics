@@ -72,18 +72,21 @@ class Extents:
     accounting fault. Crashes retain the full unknown reservation.
     """
 
-    def __init__(self, root: Path) -> None:
+    def __init__(self, root: Path, *, database_name: str = "publication.sqlite3") -> None:
+        if database_name not in {"publication.sqlite3", "candidate.sqlite3"}:
+            raise StudyLedgerError("extent_database_name")
+        self.database_names = (database_name, database_name + "-journal")
         self.root = root
         self.total = 0
         self.high: dict[Path, tuple[int, int]] = {}
-        for name in ("publication.sqlite3", "publication.sqlite3-journal"):
+        for name in self.database_names:
             p = root / name
             s = regular(p, missing=True)
             if s is not None:
                 self.high[p] = (s.st_ino, s.st_size)
 
     def sample(self) -> None:
-        for name in ("publication.sqlite3", "publication.sqlite3-journal"):
+        for name in self.database_names:
             p = self.root / name
             s = regular(p, missing=True)
             previous = self.high.get(p)
