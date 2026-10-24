@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://strange-physics.dev/contracts/tooling/manifest.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "strange-physics.contract-tooling.v1"
+    },
+    "phase": {
+      "const": "manifest-fixture-review"
+    },
+    "generation_profile": {
+      "const": "strange-physics.public-closure.v1"
+    },
+    "canonical_profile": {
+      "const": "strange-physics.python-json.v1"
+    },
+    "source_base": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$",
+      "minLength": 40,
+      "maxLength": 40
+    },
+    "audiences": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "kind": {
+            "enum": [
+              "static-openapi",
+              "generated-schema"
+            ]
+          }
+        },
+        "required": [
+          "path",
+          "sha256",
+          "kind"
+        ]
+      },
+      "minItems": 1
+    },
+    "roots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          },
+          "audience": {
+            "enum": [
+              "browser-auth",
+              "owner-management",
+              "credential-once",
+              "world-author",
+              "world-grantee",
+              "run-viewer",
+              "purchased-observation",
+              "agent-checkpoint",
+              "prediction-input",
+              "prediction-output",
+              "development-evaluator",
+              "package-submission",
+              "worker-submission",
+              "control-client-input",
+              "control-client-output",
+              "error",
+              "invitation-recipient",
+              "browser-world-viewer"
+            ]
+          },
+          "agent_safe_structure": {
+            "type": "boolean"
+          },
+          "runtime_model": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Base-message JSON parser only. Bounded parsing adds byte/depth/node/strict-JSON checks; neither parsing result proves route-schema, authorization or contextual acceptance."
+          },
+          "origin": {
+            "enum": [
+              "reviewed-message",
+              "static-route-schema"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "schema",
+          "audience",
+          "agent_safe_structure",
+          "runtime_model",
+          "origin"
+        ]
+      },
+      "minItems": 1
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "method": {
+            "enum": [
+              "get",
+              "post",
+              "put",
+              "patch",
+              "delete"
+            ]
+          },
+          "operation_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "security": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "source",
+          "path",
+          "method",
+          "operation_id",
+          "security"
+        ]
+      },
+      "minItems": 1
+    },
+    "excluded_roots": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "exclusions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "toolchain": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "uv": {
+          "const": "0.11.21"
+        },
+        "lock": {
+          "const": "uv.lock"
+        },
+        "lock_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "pydantic": {
+          "type": "string",
+          "minLength": 1
+        },
+        "jsonschema": {
+          "type": "string",
+          "minLength": 1
+        },
+        "referencing": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "uv",
+        "lock",
+        "lock_sha256",
+        "pydantic",
+        "jsonschema",
+        "referencing"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "phase",
+    "generation_profile",
+    "canonical_profile",
+    "source_base",
+    "audiences",
+    "sources",
+    "roots",
+    "routes",
+    "excluded_roots",
+    "exclusions",
+    "toolchain"
+  ]
+}
