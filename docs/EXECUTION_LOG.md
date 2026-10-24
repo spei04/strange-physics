@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Measured-execution design and primary progress update | Candidate-only next slice awaits explicit identity handoff; allocation profile remains provisional |
-| Platform | Capacity/recovery contract review | Conditional review returned; publication escrow, finite recovery and usable bounds required |
-| Research | Independent authority/scientific contract review | Conditional review and installed-identity addendum returned; actual source/Journal/payload joins required |
-| Project lead | Contract decisions and integration | PR117 delivery accepted; reviewed conditions accepted for bounded candidate-only next slice; parents remain open |
+| Quality | Reconcile five primary progress documents, then release | Candidate source accepted; no environment use or source rerun during this update |
+| Platform | Candidate verification preparation, then protected-main verification | Scoped capacity/recovery review accepted; actual delivery proof remains pending |
+| Research | Final scientific/source equivalence and document consistency | Scoped reviews accepted; independently review this progress checkpoint |
+| Project lead | Candidate integration and delivery in identity | Normal PR/main/candidate gates pending; parent tasks remain open |
 
 ## Assignments
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-24 | Quality | Candidate-only pre-freeze execution source 6dfceb4 | Accepted with 4,186 tests including 40 candidate cases; source/environment released to lead |
+| 2026-10-24 | Research + Platform | Independent candidate and installed-identity review | Scoped source/capacity/recovery/verifier evidence accepted; final delivery remains separate |
+| 2026-10-24 | Project lead + Platform | Candidate integration and delivery | Lead owns identity; Platform prepares and verifies protected-main candidate |
+| 2026-10-24 | Quality + Research | Five-document primary reconciliation | Quality commits/releases; Research independently checks evidence and unchanged dependencies |
 | 2026-10-24 | Project lead + Platform | PR117/main fb537d34 delivery | All five main jobs and candidate 12541505445 verified; root rehashed 13 acceptance records |
 | 2026-10-24 | Quality | Measured-execution design and five-doc progress reconciliation | Proposed profile sealed at 0b1b9da5; no source/env implementation; release primary for independent review |
 | 2026-10-24 | Research + Platform | Independent execution-contract reviews | Conditions returned; lead accepts bounded candidate-only next slice, profile/purchase/handoff remain unfrozen |
@@ -773,3 +777,17 @@ Quality's design checkpoint 0b1b9da59d2044c12a8c2606cc1cff949855cf16957e3fb149cc
 Required conditions include actual installed source/lock/engine verification; compact bounded ticket identities with separately charged inputs; mandatory finalization record/byte escrow and real publisher work headroom before dispatch; exact charged replay and unknown holds; and a single authoritative budget ledger. Later purchase needs a narrow record/facts binder and parent-owned Journal writes. Later handoff must preserve the actual-Journal/payload guarantees and finite stopped/no-manifest recovery; existing paid publication file reads are preferred to a general receipt API. These later adapters are not implemented or admitted by the candidate-only assignment.
 
 Lead owns contract decisions/integration in identity; Quality completes this primary progress update; Research reviews authority/scientific contracts and Platform reviews capacity/recovery. Both checkouts and environments are preserved. RA-02/#105 and RA-N01/#106 remain open; all six producer boundaries, delivery and the explicit parent audit must pass before finite-grid admission. No comparison, cap, graph, approval, estimate or forecast change is introduced.
+
+### 2026-10-24 — Candidate-only measured execution accepted; integration pending
+
+Quality released candidate source 6dfceb46ff2b4413560c00bc76f5d0e74e7c8c21 (tree f87bbb6fd240ed089d8fe84e2a07a255135583af) from accepted main fb537d34. The owner-local Linux path dispatches only the existing produce_native_candidates function for plan-bound pre-freeze work. It verifies actual installed source/lock/archive/Python/dependency/engine identity, retains finite compact tickets and durable work reservations, measures parent/child costs, commits result/facts/raw receipt atomically, and charges exact original-result recovery without rerunning the producer. Same-engine observation provenance is preserved. Mandatory finalization/publication and recovery escrow is reserved; bounded fixture usability does not freeze a full-study allocation.
+
+The final configured run passed 4,186 tests, including 40 candidate cases, in 569.31 seconds; 1,522 external schema cases, strict mypy across 134 files, Ruff lint/format, archive allowlists, the configured medium/high Bandit gate and locked dependency audit passed. The audit found no known vulnerabilities; 47 low-severity Bandit findings remain reported. Installed checks verified 54 compatible packages, 77 package files and 4,696 nonbytecode dependency files. Outside-checkout candidate fresh/paid replay passed with the producer forbidden during replay, as did spring investigate/inspect with eight particles and eight purchases.
+
+Evidence remains source-specific: runtime/build inputs equal 68740828d3130165e8f4b61c21e818a9be759d63; tests equal b7cf8fa6f62fa11bf47b06280582a052cb32bd63. The full run began at b7cf8fa and finished at 6dfceb4 while only MEASURED_CANDIDATES.md changed; relevant-input equality is retained. The 269,245-byte author wheel (SHA256 ae47f444ba2b74a82d3869449024db55f11c4ebec7fa52f4184aa0653b5ed238) and 212,111-byte sdist (384ddc825ec9551f296da799e829910144080344343a5221599ebdca1db78b25) were built at 6874082 and validated against the final unchanged build inputs. These are private author archives, not a hosted delivery candidate.
+
+Author index 33c20a2497dadccfd01007a19257388bad61fd8abeb3209202dc6b2659c4a689 retains 153 rehashed children and references 97 peer evidence children. Research's eight scientific/material cases are scoped to unchanged eabb3ca source (3289b25bc9b6d95ed61b87a317088e58d2e0d0c9bfaba89f88aa4cac562c2d58); Platform's 14 receipt/recovery cases use that source (5a19fb14f55f7f08cd04b4b7b4c390c2c6f21c95799436642f82f0daddfa1a12). Platform's final 6874082 capacity review passed 13 behavioral cases and a sensitive mutant (bc13af8a71cda8f3054dcbf6c4f475dc042f877a6786fb434416b87772cce829). Research's actual-installed 6dfceb4 verifier passed two positive and 15 negative cases (ea172b8855e8ce9709eeda8f630bb1ee151c5189cb3cb1c97b3eb29d4f986a55). Synthetic actual-build verification is not hosted-release provenance.
+
+Earlier failed fixtures and original review reproductions remain retained at their exact sources: split result/raw bytes, missing receipt joins, stale-head recovery, hard-cap stop/recovery escrow and malformed hot-journal capacity were repaired before final acceptance. The conservative control hold reserves four bounded database/journal transaction envelopes per ticket; it does not claim exact physical I/O. The original PR117 failed run, publisher 56/58 focused results and prior 4,143-test evidence above remain historical and are not relabeled as candidate checks.
+
+Lead now owns integration/delivery in identity; Platform prepares and verifies the protected-main candidate; Research reviews final scientific/source equivalence and these documents. Quality completes this primary progress checkpoint and releases it. No environment is used or modified for this update. PR/main CI and candidate verification remain pending. Comparison dispatch, the other four numerical wrappers, purchased-simulation recovery, one-way handoff and full-study allocation remain unimplemented/unaccepted. RA-02/#105 and RA-N01/#106 stay open, with explicit parent audit before finite-grid admission. No comparison study, budget reset, scope, graph, approval, effort or forecast change; owner-local/trusted-retention limits remain.
