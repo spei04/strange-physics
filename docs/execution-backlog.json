@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "native_stages_local_accepted_hosted_delivery_pending_parents_open",
+      "status": "native_stages_delivered_next_journal_design_reviewed_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Prepare the next bounded freeze/Journal/classical profile; current source/environment released.",
-        "Platform": "Final source/package integration review and candidate verifier.",
-        "Research": "Immutable progress review; concrete Journal/classical handoff complete.",
-        "Project lead": "Deliver reviewed native-stage source with five consistent progress documents."
+        "Quality": "Next: fixed charged freeze and actual Journal/material binding under the reviewed bounded design; runtime admission unproved.",
+        "Platform": "Native-stage package delivery accepted and source hold released; next shared-authority/recovery boundary review.",
+        "Research": "Review the immutable delivery/progress checkpoint; next scientific provenance and baseline-independence review.",
+        "Project lead": "Record PR120 delivery and prepare the next scoped assignment using the two existing cloud checkouts."
       },
-      "handoff": "Current source/environment released atf672e52; Lead owns identity integration/delivery and primary progress. Quality prepares a private bounded next profile without source/environment use; Platform verifies integration/candidates and Research reviews progress. Both separately owned environments are preserved.",
+      "handoff": "PR120 exact-main candidate accepted; all author/runtime/package holds released. Lead owns the five-document checkpoint and both reusable checkouts. Existing environments remain separate and unused during documentation; revalidate installation/source identity before future runtime work.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Deliver reviewed measured preparation/prediction/scoring, then implement real-Journal freeze/comparison/classical, purchased-simulation recovery, one-way handoff and parent audit with feasible bounded profiles. Test-only injected purchase intents do not prove public purchase execution. Future actual grid/acquisition census gates full-study admission, not N02 implementation.",
+      "next_units": "Implement charged same-store freeze and real Journal/material binding, then fixed comparison/classical dispatch under the conditionally reviewed bounded profile. Purchased-simulation measurement/recovery, one-way handoff and parent audit remain separate. Test-only injected purchase intents do not prove public purchase execution. Future actual grid/acquisition census gates full-study admission, not N02 implementation.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -13693,7 +13693,7 @@
         }
       },
       "bounded_native_stages": {
-        "status": "final_local_checks_passed_hosted_delivery_pending",
+        "status": "protected_main_and_candidate_accepted",
         "source": "bf90fe76739de0056bc7576bc811f25b259b39de",
         "normal_operations": 27,
         "paid_recoveries": 3,
@@ -13756,7 +13756,48 @@
             "name": "strange_physics-0.1.0a1.tar.gz"
           }
         ],
-        "next_profile_handoff": "research-journal-classical-handoff-8d0a6c7; read-only scoped proposal, not implementation"
+        "next_profile_handoff": "Quality v4 and independent Research review accepted as conditional implementation design; no runtime admission.",
+        "delivery": {
+          "pull_request": 120,
+          "merge": "ff3d47ed6e0ce77ab8787b79bc512ce2ca25a6e9",
+          "tree": "bc9c94388431b535b18f91e00c01967860770585",
+          "pr_head": "116223330a5a786b31c5beb9a1171e404eda35fb",
+          "reviewed_progress": "5a94eb5ea81fefccf70b3b23ca29aee342e6f329",
+          "pr_ci": 40100052283,
+          "main_ci": 40100514488,
+          "main_jobs_passed": 5,
+          "pytest_passed_per_runtime": 4240,
+          "python_runtimes": [
+            "3.12",
+            "3.14"
+          ],
+          "artifact": 12561739881,
+          "artifact_bytes": 481978,
+          "artifact_sha256": "73dd9cb4b496fc490dcaf1b7d78c72cf1a132f77fde73ff88543e773da0e94ff",
+          "package_source_files": 80,
+          "source_archive_provenance": "accepted",
+          "acceptance_index_sha256": "01800ea03a25748d894d32cad8f5c52131d16c81af95da11f6f7f9350f0ac070",
+          "records_rehashed": 15,
+          "references_rehashed": 4,
+          "hosted_interpreter_observations": 13,
+          "actual_certificate_guards": 2,
+          "limits": [
+            "Runtime-requirements export bytes were not independently recomputed.",
+            "Copied executables use base standard/shared libraries.",
+            "Unpublished candidate; no study or parent completion."
+          ]
+        },
+        "next_bounded_profile": {
+          "status": "conditional_design_accepted_runtime_admission_unproved",
+          "author_index_sha256": "c82acd4feb6165a92363b88f4ef63037b8d64020eb76d4bf62be957f2ab2435b",
+          "review_index_sha256": "7305944b4d0a36af42dacab25dff06095723e37d10cfb9ae65a028ed971fee54",
+          "proposed_calls": 6,
+          "proposed_reserved_artifact_bytes": 278020096,
+          "proposed_reserved_cpu_seconds": 462,
+          "case": "Genuine current-engine Journal; produced candidate, absent native selection, independent classical success.",
+          "purchase_seam": "One test-only existing-store intent transaction;12 unresolved purchase holds; no public purchase-path claim.",
+          "remaining": "Pre-write Journal/epoch/copy/CPU enforcement, actual six-call usability and recovery evidence."
+        }
       }
     },
     "certificate_trust_update": {
