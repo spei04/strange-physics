@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from test_measured_candidates import actual_build, actual_input, private
+from test_measured_candidates import actual_build, actual_input, current, last_update, private
 from test_native_spring_contracts import selection
 
 from strange_physics import measured_candidates as supervisor
@@ -472,3 +472,98 @@ def test_wrong_public_wrapper_rejects_before_ticket(
     with pytest.raises(ValueError):
         calls[operation](root, foreign)
     assert not tuple(root.glob("candidate-ticket-*"))
+
+
+@pytest.mark.parametrize("operation", ["preparation", "prediction", "scoring"])
+def test_foreign_stage_facts_retain_unknown_cost_and_fresh_retry(
+    tmp_path: Path,
+    actual_build: TrustedInstallation,
+    monkeypatch: pytest.MonkeyPatch,
+    operation: str,
+) -> None:
+    root = tmp_path / "run"
+    context, preparation, _ = prepared(root, actual_build)
+    protocol = preparation.result.payload.protocol
+    assert protocol is not None and context.selected is not None
+    value: Any
+    model: Any
+    commit: Any
+    if operation == "preparation":
+        value, model, commit = context, NativePreparationRequest, stages.commit_native_preparation
+    elif operation == "prediction":
+        value = NativePredictionInput(
+            model=context.selected.model,
+            candidate_config=context.candidates.config,
+            request=protocol.probes[0].request,
+            config=context.prediction_config,
+        )
+        model, commit = NativePredictionRequest, stages.commit_native_prediction
+    else:
+        value = NativeScoringInput(
+            context=context,
+            preparation=preparation.result,
+            predictions=NativePredictionCollection(
+                entries=tuple(
+                    NativeProbeOutcome(
+                        probe_id=probe.probe_id,
+                        request_sha256=probe.request_sha256,
+                        attempt_id=f"missing-{index}",
+                        status="missing",
+                        result=None,
+                    )
+                    for index, probe in enumerate(protocol.probes)
+                )
+            ),
+            world=WorldDefinition(
+                space=context.candidates.observations.space,
+                noise_seed=31,
+                initial_law=LawSpec(kind="spring", parameters={"linear": 1.0}),
+            ),
+        )
+        model, commit = NativeScoreRequest, stages.commit_native_score
+    request = model(
+        **request_data(
+            root,
+            value,
+            context.prediction_config if operation == "prediction" else context.policy,
+            preparation.ledger,
+            2,
+            operation=operation,
+            output=512 * 1024 if operation == "prediction" else 8 * MIB,
+            artifact=MIB if operation == "prediction" else 24 * MIB,
+        )
+    )
+    real_child = supervisor._run_child
+
+    def foreign_facts(*args: Any, **kwargs: Any) -> tuple[bytes | None, int]:
+        produced, cpu = real_child(*args, **kwargs)
+        assert produced is not None
+        data = json.loads(produced)
+        data["facts"]["attempt_id"] = "foreign-attempt"
+        altered = json.dumps(data, sort_keys=True, separators=(",", ":")).encode()
+        private(args[2], altered)
+        return altered, cpu
+
+    with monkeypatch.context() as patch:
+        patch.setattr(supervisor, "_run_child", foreign_facts)
+        with pytest.raises(ValueError):
+            commit(root, request)
+    failed = current(root)
+    update = last_update(failed)
+    assert update.state == "unknown" and update.facts is None
+    assert update.cpu_ns is not None and update.cpu_ns >= 0
+    assert summarize_study(failed).budget.unresolved_attempts == 3
+    retry = model.model_validate(
+        request.model_dump()
+        | {
+            "ticket": 3,
+            "attempt_id": "fresh-retry",
+            "retry_of": request.attempt_id,
+            "expected_revision": len(failed.records),
+            "expected_head_sha256": head(failed),
+        }
+    )
+    result = commit(root, retry)
+    assert result.result.facts.attempt_id == "fresh-retry"
+    assert last_update(result.ledger).facts == result.result.facts
+    assert summarize_study(result.ledger).budget.unresolved_attempts == 3
