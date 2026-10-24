@@ -44,15 +44,22 @@ their existing 16/8 MiB parser caps. Canonical execution requests stay within
 8 KiB. Admission protects recovery and finalization headroom as well as the
 publisher's actual work formula, 16 MiB per-call floor and 512 MiB ceiling.
 
-The proposed synthetic chain uses 30 tickets (27 executions and three recoveries)
-and a 2 MiB store, plus a retained unresolved 32 MiB/120-second synthetic
-setup/material-assembly reservation created before observation fixtures. It
-asserts retained material sizes without presenting that hold as exact cost. Its measured usability and exact material sizes must pass
-before it is accepted as a fixture. It is not a study run or evidence that
-432 purchases or 36 cells fit. The existing conservative per-ticket transaction
-envelopes and per-cell publication escrow make large profiles inadmissible under
-the unchanged global cap; a separate storage/control design is still required.
+The bounded synthetic chain in `tests/test_measured_native_stages.py` uses
+30 tickets (27 executions and three recoveries), a 2 MiB store and a protected
+512 KiB ledger envelope. Its conservative predeclared allowances total
+761.703125 MiB and 630 CPU seconds, including two promised publication calls,
+recovery/finalization capacity, and an unresolved 32 MiB/120-second setup and
+material-assembly reservation persisted before observation fixtures are created.
+The tests check actual material, store and ledger sizes, exact paid replays,
+operation separation, ingress timing and facts-corruption/fresh-retry behavior.
+Unresolved holds are not presented as exact measured costs.
 
-This is an initial executable checkpoint under review. Focused contract, stage,
-fault and installed-source checks accompany the implementation; final source
-acceptance, configured checks and hosted delivery are separate evidence gates.
+This is not a study run or evidence that 432 purchases or 36 cells fit. The
+existing conservative per-ticket transaction envelopes and per-cell publication
+escrow make large profiles inadmissible under the unchanged global cap; a
+separate storage/control design is still required. Classical execution, the
+actual Journal adapter, purchases, handoff and full-study admission remain open.
+
+Installed-source, package, dependency and configured test evidence is specific
+to each reviewed source and lock. Hosted delivery and production readiness are
+separate gates; the local fixtures do not claim either.
