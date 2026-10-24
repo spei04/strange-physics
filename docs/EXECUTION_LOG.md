@@ -12,10 +12,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Next: fixed charged freeze and actual Journal/material binding | Reviewed bounded design; prove runtime admission before acceptance |
-| Platform | Native-stage package delivery accepted; next boundary review | Source/environment holds released; verify shared authority and recovery |
-| Research | Independent delivery/progress review; next scientific review | Preserve current-engine provenance, failed rows and independent classical outcome |
-| Project lead | Record PR120 delivery and prepare the next scoped assignment | Reuse the two cloud checkouts; parent issues105/106 stay open |
+| Quality | Implement charged same-store freeze and actual Journal/material binding | Identity writer; prove bounded runtime admission; classical follows |
+| Platform | Independent boundary review and test preparation | Immutable source only until author freeze; verify accounting, locks and recovery |
+| Research | Independent scientific review and test preparation | Current-engine prefix, failed rows and absent-selection semantics |
+| Project lead | Assignment log, integration and delivery | Primary owner; reuse two cloud checkouts; parent issues105/106 stay open |
 
 ## Assignment history
 
@@ -858,3 +858,9 @@ Platform independently accepted candidate12561739881: 481,978 bytes, ZIP SHA256 
 Quality's next freeze/Journal/classical fixture design and Research's independent review are accepted as a conditional implementation design only. Its six proposed calls reserve 278,020,096 bytes and 462 CPU seconds, including setup, twelve unresolved purchase holds, recovery and publication protection. It requires genuinely current-engine observations; the historical placeholder-engine Journal remains size-only. The primary case is a produced candidate with absent native selection and independent classical success. Pre-write Journal limits, epoch/copy bounds, actual runtime usability and recovery still need implementation evidence. One explicitly test-only purchase-intent transaction cannot prove a public purchase producer. Author/review indices are c82acd4feb6165a92363b88f4ef63037b8d64020eb76d4bf62be957f2ab2435b and 7305944b4d0a36af42dacab25dff06095723e37d10cfb9ae65a028ed971fee54; superseded findings remain private retained history.
 
 Platform released the package-verification source hold; Lead owns this five-document checkpoint, with Research reviewing it. Quality's next source unit is charged same-store freeze plus actual Journal/material binding, followed by fixed comparison/classical dispatch. Both existing cloud checkouts remain for sequential reuse, with no new checkout or shared dependency installation. Purchase measurement, publisher handoff, feasible full-study allocation and explicit parent audit remain open. RA-02/#105 and RA-N01/#106 remain in progress. No study, deployment, signing, production-readiness, budget, graph, approval, effort or forecast change is claimed.
+
+### 2026-10-24 17:18 UTC — Charged freeze and Journal binding assigned
+
+Quality owns the existing identity checkout for charged same-store freeze/receipt and actual Journal/material binding from accepted main ff3d47e. The first coherent slice may include the minimum fixed comparison-candidate consumer needed to exercise that binding; classical dispatch follows in a separate handoff. Platform and Research independently inspect immutable source and prepare boundary/scientific tests, then review the exact author checkpoint. Lead retains primary for progress and integration.
+
+The six-call profile remains a conditional design. The first slice must prove admission and recovery for the operations it implements while preserving unused/future reservations; it cannot claim completed classical execution or all six calls. Genuine current-engine setup, pre-write limits, one test-only intent transaction and unresolved purchase holds remain required. All source, environments, tests and evidence remain cloud-only. No new checkout, study, cap reset, deployment or broader approval.

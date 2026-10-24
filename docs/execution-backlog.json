@@ -12588,16 +12588,16 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "native_stages_delivered_next_journal_design_reviewed_parents_open",
+      "status": "journal_freeze_implementation_assigned_native_stages_delivered_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Next: fixed charged freeze and actual Journal/material binding under the reviewed bounded design; runtime admission unproved.",
-        "Platform": "Native-stage package delivery accepted and source hold released; next shared-authority/recovery boundary review.",
-        "Research": "Review the immutable delivery/progress checkpoint; next scientific provenance and baseline-independence review.",
-        "Project lead": "Record PR120 delivery and prepare the next scoped assignment using the two existing cloud checkouts."
+        "Quality": "Implement charged same-store freeze/receipt and actual Journal/material binding in identity; minimum comparison-candidate consumer if required; classical follows.",
+        "Platform": "Independent immutable-source boundary review and test preparation; exact-source runtime review follows author freeze.",
+        "Research": "Independent immutable-source scientific review and test preparation; preserve genuine prefix, failed rows and absent-selection semantics.",
+        "Project lead": "Maintain progress in primary, coordinate source freeze/reviews, integrate and verify delivery."
       },
-      "handoff": "PR120 exact-main candidate accepted; all author/runtime/package holds released. Lead owns the five-document checkpoint and both reusable checkouts. Existing environments remain separate and unused during documentation; revalidate installation/source identity before future runtime work.",
+      "handoff": "Quality exclusively owns identity source/environment from accepted main ff3d47e; Lead owns primary progress. Platform and Research inspect immutable Git and private evidence until a frozen source/runtime handoff. Reuse both separate environments and revalidate installed identity before runtime.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
@@ -13756,7 +13756,7 @@
             "name": "strange_physics-0.1.0a1.tar.gz"
           }
         ],
-        "next_profile_handoff": "Quality v4 and independent Research review accepted as conditional implementation design; no runtime admission.",
+        "next_profile_handoff": "Quality implementation assigned from accepted main; Platform and Research independently review. V4 remains conditional design until actual bounded runtime admission; classical/full six-call proof is not claimed by the first slice.",
         "delivery": {
           "pull_request": 120,
           "merge": "ff3d47ed6e0ce77ab8787b79bc512ce2ca25a6e9",
