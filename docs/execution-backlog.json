@@ -12588,7 +12588,7 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "candidate_delivered_bounded_native_stages_in_progress_parents_open",
+      "status": "native_stages_local_accepted_hosted_delivery_pending_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
@@ -12597,14 +12597,14 @@
         "Research": "Immutable progress review; concrete Journal/classical handoff complete.",
         "Project lead": "Deliver reviewed native-stage source with five consistent progress documents."
       },
-      "handoff": "Lead owns primary for security delivery/progress; Quality owns identity for bounded native stages. Each environment remains separately owned; future patched-lock handoff is explicit.",
+      "handoff": "Current source/environment released atf672e52; Lead owns identity integration/delivery and primary progress. Quality prepares a private bounded next profile without source/environment use; Platform verifies integration/candidates and Research reviews progress. Both separately owned environments are preserved.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Complete measured preparation/prediction/scoring, then real-Journal comparison/classical, purchased-simulation recovery, one-way handoff and parent audit with feasible bounded profiles. Future actual grid/acquisition census is required before full-study admission, not as a circular prerequisite to N02 implementation.",
+      "next_units": "Deliver reviewed measured preparation/prediction/scoring, then implement real-Journal freeze/comparison/classical, purchased-simulation recovery, one-way handoff and parent audit with feasible bounded profiles. Test-only injected purchase intents do not prove public purchase execution. Future actual grid/acquisition census gates full-study admission, not N02 implementation.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
