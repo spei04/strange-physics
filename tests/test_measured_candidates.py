@@ -928,6 +928,7 @@ def test_frozen_comparison_requires_identity_and_unimplemented_journal_adapter(
     manifest, payloads = materials()
     value = manifest.model_dump(mode="json")
     value.update(
+        accounting_plan_sha256=message_sha256(seed.plan),
         source_commit=actual_build.source_commit if matching_source else "f" * 40,
         uv_lock_sha256=actual_build.uv_lock_sha256,
         engine_fingerprint=actual_build.engine_fingerprint,
