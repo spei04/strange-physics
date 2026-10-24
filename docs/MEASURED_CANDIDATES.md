@@ -53,15 +53,20 @@ Metadata uses a fixed 4 KiB, FULL, PERSIST, no-cache-spill SQLite profile and bo
 growth. Before opening SQLite, a hot rollback-journal header must declare a
 database within the cap, 4 KiB pages and a bounded sector size; SQLite recovery
 cannot be allowed to resize an unchecked database before its page limit is set.
-Malformed retained state is rejected, not automatically repaired. One root lock excludes cooperating writers; there is no distributed or
+The [SQLite rollback-journal format](https://www.sqlite.org/fileformat2.html#the_rollback_journal)
+defines these recovery fields. Malformed retained state is rejected, not
+automatically repaired. One root lock excludes cooperating writers; there is no distributed or
 adversarial-owner guarantee. A compact receipt references immutable input/output
 files and an original prefix of the append-only ledger, avoiding full ledger
 copies per result. All private files remain outside public artifacts.
 
-The initial executable checkpoint is under author validation. Focused tests use
-actual installed synthetic builds and real child processes. Purchase/handoff and
-other four numerical wrappers remain separately reviewed follow-on work. Full
-configured gates and independent review are required before accepting this slice.
+The focused tests in `tests/test_measured_candidates.py` use actual installed
+synthetic builds and real child processes. They cover original-result recovery,
+unknown costs, rollback limits, capacity boundaries, private paths and malformed
+retained state. Source-specific independent reviews and configured checks are
+retained separately from hosted integration and delivery evidence. Purchase,
+handoff, comparison Journal admission and the other four numerical wrappers remain
+follow-on work; this slice does not close the parent execution or study gates.
 
 The first execution profile requires the historical observation engine fingerprint to
 match the independently observed current engine. It preserves the historical value;
