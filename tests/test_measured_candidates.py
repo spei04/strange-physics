@@ -1230,8 +1230,9 @@ def test_publication_minimum_is_preserved_in_remaining_work(
     over = append_study_attempt(
         seed,
         event_id="boundary-event",
-        event=change(
-            reservation, artifact_reservation_bytes=reservation.artifact_reservation_bytes + 1
+        event=StudyAttemptReservation.model_validate(
+            reservation.model_dump()
+            | {"artifact_reservation_bytes": reservation.artifact_reservation_bytes + 1}
         ),
         expected_revision=len(seed.records),
     )
