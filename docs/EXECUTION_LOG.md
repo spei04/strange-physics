@@ -12,7 +12,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Implement charged same-store freeze and actual Journal/material binding | Identity writer; prove bounded runtime admission; classical follows |
+| Quality | Implement charged same-store freeze and a Journal-bound comparison candidate | Identity writer; prove four-call admission/recovery; classical follows |
 | Platform | Independent boundary review and test preparation | Immutable source only until author freeze; verify accounting, locks and recovery |
 | Research | Independent scientific review and test preparation | Current-engine prefix, failed rows and absent-selection semantics |
 | Project lead | Assignment log, integration and delivery | Primary owner; reuse two cloud checkouts; parent issues105/106 stay open |
@@ -863,4 +863,4 @@ Platform released the package-verification source hold; Lead owns this five-docu
 
 Quality owns the existing identity checkout for charged same-store freeze/receipt and actual Journal/material binding from accepted main ff3d47e. The first coherent slice may include the minimum fixed comparison-candidate consumer needed to exercise that binding; classical dispatch follows in a separate handoff. Platform and Research independently inspect immutable source and prepare boundary/scientific tests, then review the exact author checkpoint. Lead retains primary for progress and integration.
 
-The six-call profile remains a conditional design. The first slice must prove admission and recovery for the operations it implements while preserving unused/future reservations; it cannot claim completed classical execution or all six calls. Genuine current-engine setup, pre-write limits, one test-only intent transaction and unresolved purchase holds remain required. All source, environments, tests and evidence remain cloud-only. No new checkout, study, cap reset, deployment or broader approval.
+The six-call profile remains a conditional design. The first slice implements freeze and a Journal-bound candidate plus their two recoveries: four calls. Classical's two slots remain unused, and its future ordinary work is unreserved; slot capacity is not cost escrow. Recovery and publication protection remain explicit. The first slice must prove actual admission for its implemented operations and cannot claim completed classical execution or all six calls. Genuine current-engine setup, pre-write limits, one test-only intent transaction and unresolved purchase holds remain required. All source, environments, tests and evidence remain cloud-only. No new checkout, study, cap reset, deployment or broader approval.
