@@ -2,7 +2,7 @@
   "schema_version": "strange-physics.execution-plan.v1",
   "status": "approved_execution_in_progress",
   "baseline_commit": "28a4c19e8f9c92b83d886be6b96667d834784f9e",
-  "updated": "2026-10-22",
+  "updated": "2026-10-24",
   "staffing": {
     "engineers": 9,
     "delivery_fraction": 0.7,
@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research owns primary for minimal five-document progress reconciliation from f637297; release after immutable commit; no environment use.",
-      "identity": "Project lead owns released test-only af694e5 and unchanged identity environment for integration/delivery; no extra checkout.",
+      "scientific": "Quality owns primary for five-document reconciliation from3169765; release after immutable commit and consistency checks; installed environment unused.",
+      "identity": "Project lead owns identity for integration and future explicit candidate-only handoff; no source/environment mutation by progress writer.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "measured_publication_test_repair_accepted_delivery_pending",
+      "status": "measured_publication_delivered_execution_design_reviewed",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Completed test-only repair af694e5; 58 focused tests and narrow static checks passed; identity released.",
-        "Platform": "Accepted three affected tests and package continuity; verify exact repaired PR/main/candidate delivery.",
-        "Research": "Own minimal five-document primary update, then release; parent admission audit accepted; no environment consumer.",
-        "Project lead": "Integrate released repair and progress in identity; hosted delivery pending; both parent tasks stay in progress."
+        "Quality": "Measured-execution design author and primary progress writer; candidate-only next slice awaits explicit identity handoff.",
+        "Platform": "Independent capacity/recovery design review returned with required conditions; publisher candidate delivery accepted.",
+        "Research": "Independent authority/scientific design review and installed-identity addendum returned with required conditions.",
+        "Project lead": "Contract/integration lead; PR117 delivery accepted; conditions accepted for bounded candidate-only next slice, profile remains unfrozen."
       },
-      "handoff": "Quality released clean test-only af694e5 and unchanged environment. Research owns primary docs from f637297 until commit/release; lead owns identity integration. Reuse both cloud checkouts; no dependency or package rebuild.",
+      "handoff": "Quality owns primary for this five-document progress update and releases after commit; lead owns identity. Candidate-only implementation awaits explicit writer handoff; neither environment is changed.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Complete repaired PR/main/candidate gates, then implement the reviewed closed measured-execution boundary for five existing native stages plus purchased simulation. Preserve plan-bound pre-freeze work and a feasible finite cumulative control allocation, exact result/facts/cost and purchase retry/recovery joins. Explicit parent acceptance precedes N02.a source; future MAP/calibration/selector outputs or the actual comparison do not create a prerequisite cycle. No graph, cap or approval change.",
+      "next_units": "Implement only the bounded candidate vertical after explicit writer handoff, under the lead-accepted review conditions. Allocation/profile usability, mandatory finalization/publication escrow and actual installed identity must be proved. Remaining numerical/purchase/handoff adapters and parent audit stay required before N02.a admission. No future grid/study prerequisite cycle, graph/cap/approval change or full-study throughput claim.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -12724,7 +12724,7 @@
           }
         },
         "RA-02": {
-          "status": "accounting_journal_scored_early_publication_delivered_parent_in_progress",
+          "status": "accounting_journal_measured_publication_delivered_parent_in_progress",
           "runtime_source": "78b3be9510c71c4c5a60a7e69080c3989f3cb27b",
           "final_author": "c3502f7f1f318ca01ef24bb80172d21cb5004e57",
           "author_full_tests": 3331,
@@ -12734,7 +12734,7 @@
           "platform_extra_checks": 35,
           "platform_mutants": 8,
           "author_index_sha256": "75258c03042c2e98d347ba1df05c9dcadb20a55855db1be21fe097228b46ae54",
-          "scope": "Accounting, material freeze, Journal reconciliation and pure scored/early publication delivered. Actual measured atomic publication/recovery is assigned; explicit numerical/simulation measurement audit remains before parent closure.",
+          "scope": "Accounting, material freeze, Journal reconciliation, pure scored/early composition and measured atomic publication/recovery delivered. Numerical/purchased-simulation measurement wrappers and explicit parent audit remain required.",
           "pull_request": 110,
           "reviewed_head": "5b839d4b2582f05b2e871ab72b5257f25d4c5c05",
           "merge": "f9f450b51b9b5c7a79a30817b6deacb070bda23e",
@@ -12892,7 +12892,7 @@
             "progress_review_index_sha256": "56f89ca075add2c6bec02a0564ed439c00616ad14fc45d16b13e98b8865ceedc"
           },
           "durable_publication": {
-            "status": "runtime_accepted_test_repair_accepted_delivery_pending",
+            "status": "delivered",
             "owner": "Quality",
             "reviewers": [
               "Platform",
@@ -12906,7 +12906,7 @@
             "platform_review_prep_index_sha256": "ca8fb2b4e73d74b46e076ea9454f7e23058be94ff46e12b0cacc62bf68d78c77",
             "research_review_prep_index_sha256": "758c50c8a5e65ecb9bfc9648726d0b52dd9512092eff250162aade607118eb51",
             "scope": "One fixed early/scored publication producer: actual parent/child CPU, wall and artifact measurements; finite charged bootstrap/recovery/global tail; durable reservations; one private atomic SQLite closure; exact original-receipt recovery from retained original snapshots; actual present-Journal BEGIN IMMEDIATE writer exclusion and explicit cooperating absent-creator guarantee. No numeric execution, generic arbitrary runner, provider or study.",
-            "next_gate": "Integrate the accepted test-only repair and progress update; required repaired PR/main CI and protected-main candidate verification remain pending.",
+            "next_gate": "Publisher delivery accepted. Remaining measured-execution design conditions and candidate-only vertical precede the other native/purchase wrappers and explicit parent admission audit.",
             "environment": "Quality released af694e5 without runtime/dependency/package changes; 73 production/source-installed files and 80 source/build inputs equal423. Existing author archives remain compatible; no rebuild or environment refresh.",
             "parent_admission": "Publication measurement does not prove prior candidate/preparation/prediction/scoring/classical or purchased-simulation measurement. Audit and complete their fixed-operation durable reservations, genuine OS measurements and failure/retry/recovery binding before closing105/106 and admitting N02.a. Future grid/likelihood measurement belongs to N02.a itself.",
             "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20",
@@ -12937,7 +12937,7 @@
             },
             "integration_owner": "Project lead",
             "delivery_reviewer": "Platform",
-            "progress_reviewer": "Independent review required after Research's docs authoring",
+            "progress_reviewer": "Independent review required after Quality progress authoring",
             "counter_review": "Frozen work-end extents prevent control-tail growth from inflating work cost or reusing fallback allowance. Explicit8192-byte fault and exhausted-headroom cases plus sensitive mutants pass; seven natural rollback negatives are retained, not claimed cap-escape reproductions.",
             "ci_failure": {
               "source": "7ab2c8deb4c0f8f324460b9b691809c027e29fd0",
@@ -12981,7 +12981,7 @@
               "unchanged_production_files": 73,
               "unchanged_source_build_inputs": 80,
               "package_rebuild": false,
-              "acceptance": "Test-only repair accepted; exact zero/positive measurements and full unknown holds verified. Hosted delivery pending."
+              "acceptance": "Test-only repair accepted; exact zero/positive measurements and full unknown holds verified. Hosted delivery subsequently accepted in the delivery record."
             },
             "parent_admission_audit": {
               "source": "7ab2c8deb4c0f8f324460b9b691809c027e29fd0",
@@ -12998,6 +12998,44 @@
                 "Parent source/delivery acceptance can admit N02.a source without waiting for its own MAP or later calibration/selector/study outputs."
               ],
               "status": "Planning accepted; implementation not started; parents remain open."
+            },
+            "delivery": {
+              "pull_request": 117,
+              "merge": "fb537d34a285e9375c5f628cdf128bc5d55bbf4f",
+              "tree": "f291708720632c8af201b01788ab4d1e2896d61c",
+              "pr_ci": 40044501624,
+              "pr_tests_per_runtime": 4146,
+              "python_runtimes": [
+                "3.12",
+                "3.14"
+              ],
+              "main_ci": 40045114585,
+              "main_jobs_passed": 5,
+              "candidate": 12541505445,
+              "candidate_zip_bytes": 449152,
+              "candidate_zip_sha256": "cde550171c40446ca50944799112b79387b57ed035e25a96ec10666cc7f59064",
+              "acceptance_index_sha256": "aa114a0ae160bffedd5ae9194e53ca3cef74884a1ea755d3ebbb163f3f1e38e2",
+              "root_rehashed_children": 13,
+              "verifier_diff_reviewed": true,
+              "status": "accepted"
+            },
+            "execution_design": {
+              "source": "fb537d34a285e9375c5f628cdf128bc5d55bbf4f",
+              "index_sha256": "0b1b9da59d2044c12a8c2606cc1cff949855cf16957e3fb149cc44a1c2b5f013",
+              "status": "contract_accepted_candidate_only_profile_provisional",
+              "research_review_index_sha256": "848cce2f1ea0365598a462b2d1132a6a971dfa3ab484ca989454a1f78cfafe2b",
+              "installed_identity_addendum_index_sha256": "bc3fa30ed9f3325923b1b7fddc200a2746f273bcfcc451ff3981a860035fc764",
+              "platform_review_index_sha256": "8e288bc5b3e3dcab9658e5b7c455cae5cf5412c5a0903c9491ff1b345961e090",
+              "lead_decision": "Corrected contract accepted for bounded candidate-only first vertical and follow-on purchase/handoff conditions; explicit writer handoff still required; no runtime acceptance, allocation freeze or numerical implementation yet.",
+              "remaining_conditions": [
+                "Verify actual installed source/lock/engine and exact result/facts identity.",
+                "Compact bounded tickets; separate input/work costs; finalization records/bytes and actual publication work escrow before dispatch.",
+                "Prove finite usable control/recovery within unchanged caps, not a 3072-ticket or36-cell completion promise.",
+                "Later purchase record/facts binder, actual Journal ownership and single-authority handoff/stopped recovery remain unimplemented."
+              ],
+              "experiment_execution": "not_started",
+              "implementation_started": false,
+              "lead_decision_index_sha256": "726e8e07a41b8f5fca2596f4ea9e6315ed971292b9f9f81243f47ec5a4e3edc3"
             }
           }
         }
@@ -13172,7 +13210,7 @@
         "progress_review_index_sha256": "56f89ca075add2c6bec02a0564ed439c00616ad14fc45d16b13e98b8865ceedc"
       },
       "durable_publication": {
-        "status": "runtime_accepted_test_repair_accepted_delivery_pending",
+        "status": "delivered",
         "owner": "Quality",
         "reviewers": [
           "Platform",
@@ -13186,7 +13224,7 @@
         "platform_review_prep_index_sha256": "ca8fb2b4e73d74b46e076ea9454f7e23058be94ff46e12b0cacc62bf68d78c77",
         "research_review_prep_index_sha256": "758c50c8a5e65ecb9bfc9648726d0b52dd9512092eff250162aade607118eb51",
         "scope": "One fixed early/scored publication producer: actual parent/child CPU, wall and artifact measurements; finite charged bootstrap/recovery/global tail; durable reservations; one private atomic SQLite closure; exact original-receipt recovery from retained original snapshots; actual present-Journal BEGIN IMMEDIATE writer exclusion and explicit cooperating absent-creator guarantee. No numeric execution, generic arbitrary runner, provider or study.",
-        "next_gate": "Integrate the accepted test-only repair and progress update; required repaired PR/main CI and protected-main candidate verification remain pending.",
+        "next_gate": "Publisher delivery accepted. Remaining measured-execution design conditions and candidate-only vertical precede the other native/purchase wrappers and explicit parent admission audit.",
         "environment": "Quality released af694e5 without runtime/dependency/package changes; 73 production/source-installed files and 80 source/build inputs equal423. Existing author archives remain compatible; no rebuild or environment refresh.",
         "parent_admission": "Publication measurement does not prove prior candidate/preparation/prediction/scoring/classical or purchased-simulation measurement. Audit and complete their fixed-operation durable reservations, genuine OS measurements and failure/retry/recovery binding before closing105/106 and admitting N02.a. Future grid/likelihood measurement belongs to N02.a itself.",
         "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20",
@@ -13217,7 +13255,7 @@
         },
         "integration_owner": "Project lead",
         "delivery_reviewer": "Platform",
-        "progress_reviewer": "Independent review required after Research's docs authoring",
+        "progress_reviewer": "Independent review required after Quality progress authoring",
         "counter_review": "Frozen work-end extents prevent control-tail growth from inflating work cost or reusing fallback allowance. Explicit8192-byte fault and exhausted-headroom cases plus sensitive mutants pass; seven natural rollback negatives are retained, not claimed cap-escape reproductions.",
         "ci_failure": {
           "source": "7ab2c8deb4c0f8f324460b9b691809c027e29fd0",
@@ -13261,7 +13299,7 @@
           "unchanged_production_files": 73,
           "unchanged_source_build_inputs": 80,
           "package_rebuild": false,
-          "acceptance": "Test-only repair accepted; exact zero/positive measurements and full unknown holds verified. Hosted delivery pending."
+          "acceptance": "Test-only repair accepted; exact zero/positive measurements and full unknown holds verified. Hosted delivery subsequently accepted in the delivery record."
         },
         "parent_admission_audit": {
           "source": "7ab2c8deb4c0f8f324460b9b691809c027e29fd0",
@@ -13278,6 +13316,44 @@
             "Parent source/delivery acceptance can admit N02.a source without waiting for its own MAP or later calibration/selector/study outputs."
           ],
           "status": "Planning accepted; implementation not started; parents remain open."
+        },
+        "delivery": {
+          "pull_request": 117,
+          "merge": "fb537d34a285e9375c5f628cdf128bc5d55bbf4f",
+          "tree": "f291708720632c8af201b01788ab4d1e2896d61c",
+          "pr_ci": 40044501624,
+          "pr_tests_per_runtime": 4146,
+          "python_runtimes": [
+            "3.12",
+            "3.14"
+          ],
+          "main_ci": 40045114585,
+          "main_jobs_passed": 5,
+          "candidate": 12541505445,
+          "candidate_zip_bytes": 449152,
+          "candidate_zip_sha256": "cde550171c40446ca50944799112b79387b57ed035e25a96ec10666cc7f59064",
+          "acceptance_index_sha256": "aa114a0ae160bffedd5ae9194e53ca3cef74884a1ea755d3ebbb163f3f1e38e2",
+          "root_rehashed_children": 13,
+          "verifier_diff_reviewed": true,
+          "status": "accepted"
+        },
+        "execution_design": {
+          "source": "fb537d34a285e9375c5f628cdf128bc5d55bbf4f",
+          "index_sha256": "0b1b9da59d2044c12a8c2606cc1cff949855cf16957e3fb149cc44a1c2b5f013",
+          "status": "contract_accepted_candidate_only_profile_provisional",
+          "research_review_index_sha256": "848cce2f1ea0365598a462b2d1132a6a971dfa3ab484ca989454a1f78cfafe2b",
+          "installed_identity_addendum_index_sha256": "bc3fa30ed9f3325923b1b7fddc200a2746f273bcfcc451ff3981a860035fc764",
+          "platform_review_index_sha256": "8e288bc5b3e3dcab9658e5b7c455cae5cf5412c5a0903c9491ff1b345961e090",
+          "lead_decision": "Corrected contract accepted for bounded candidate-only first vertical and follow-on purchase/handoff conditions; explicit writer handoff still required; no runtime acceptance, allocation freeze or numerical implementation yet.",
+          "remaining_conditions": [
+            "Verify actual installed source/lock/engine and exact result/facts identity.",
+            "Compact bounded tickets; separate input/work costs; finalization records/bytes and actual publication work escrow before dispatch.",
+            "Prove finite usable control/recovery within unchanged caps, not a 3072-ticket or36-cell completion promise.",
+            "Later purchase record/facts binder, actual Journal ownership and single-authority handoff/stopped recovery remain unimplemented."
+          ],
+          "experiment_execution": "not_started",
+          "implementation_started": false,
+          "lead_decision_index_sha256": "726e8e07a41b8f5fca2596f4ea9e6315ed971292b9f9f81243f47ec5a4e3edc3"
         }
       }
     },
@@ -13388,7 +13464,7 @@
         "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
         "issue": "https://github.com/spei04/strange-physics/issues/105",
         "checkpoint": {
-          "status": "accounting_journal_scored_early_publication_delivered_parent_in_progress",
+          "status": "accounting_journal_measured_publication_delivered_parent_in_progress",
           "runtime_source": "78b3be9510c71c4c5a60a7e69080c3989f3cb27b",
           "final_author": "c3502f7f1f318ca01ef24bb80172d21cb5004e57",
           "author_full_tests": 3331,
@@ -13398,7 +13474,7 @@
           "platform_extra_checks": 35,
           "platform_mutants": 8,
           "author_index_sha256": "75258c03042c2e98d347ba1df05c9dcadb20a55855db1be21fe097228b46ae54",
-          "scope": "Accounting, material freeze, Journal reconciliation and pure scored/early publication delivered. Actual measured atomic publication/recovery is assigned; explicit numerical/simulation measurement audit remains before parent closure.",
+          "scope": "Accounting, material freeze, Journal reconciliation, pure scored/early composition and measured atomic publication/recovery delivered. Numerical/purchased-simulation measurement wrappers and explicit parent audit remain required.",
           "pull_request": 110,
           "reviewed_head": "5b839d4b2582f05b2e871ab72b5257f25d4c5c05",
           "merge": "f9f450b51b9b5c7a79a30817b6deacb070bda23e",
@@ -13556,7 +13632,7 @@
             "progress_review_index_sha256": "56f89ca075add2c6bec02a0564ed439c00616ad14fc45d16b13e98b8865ceedc"
           },
           "durable_publication": {
-            "status": "runtime_accepted_test_repair_accepted_delivery_pending",
+            "status": "delivered",
             "owner": "Quality",
             "reviewers": [
               "Platform",
@@ -13570,7 +13646,7 @@
             "platform_review_prep_index_sha256": "ca8fb2b4e73d74b46e076ea9454f7e23058be94ff46e12b0cacc62bf68d78c77",
             "research_review_prep_index_sha256": "758c50c8a5e65ecb9bfc9648726d0b52dd9512092eff250162aade607118eb51",
             "scope": "One fixed early/scored publication producer: actual parent/child CPU, wall and artifact measurements; finite charged bootstrap/recovery/global tail; durable reservations; one private atomic SQLite closure; exact original-receipt recovery from retained original snapshots; actual present-Journal BEGIN IMMEDIATE writer exclusion and explicit cooperating absent-creator guarantee. No numeric execution, generic arbitrary runner, provider or study.",
-            "next_gate": "Integrate the accepted test-only repair and progress update; required repaired PR/main CI and protected-main candidate verification remain pending.",
+            "next_gate": "Publisher delivery accepted. Remaining measured-execution design conditions and candidate-only vertical precede the other native/purchase wrappers and explicit parent admission audit.",
             "environment": "Quality released af694e5 without runtime/dependency/package changes; 73 production/source-installed files and 80 source/build inputs equal423. Existing author archives remain compatible; no rebuild or environment refresh.",
             "parent_admission": "Publication measurement does not prove prior candidate/preparation/prediction/scoring/classical or purchased-simulation measurement. Audit and complete their fixed-operation durable reservations, genuine OS measurements and failure/retry/recovery binding before closing105/106 and admitting N02.a. Future grid/likelihood measurement belongs to N02.a itself.",
             "parent_admission_index_sha256": "2433601d7708a536608d5905f5ed1105b66fd9e546b3ab4fe634297de498fd20",
@@ -13601,7 +13677,7 @@
             },
             "integration_owner": "Project lead",
             "delivery_reviewer": "Platform",
-            "progress_reviewer": "Independent review required after Research's docs authoring",
+            "progress_reviewer": "Independent review required after Quality progress authoring",
             "counter_review": "Frozen work-end extents prevent control-tail growth from inflating work cost or reusing fallback allowance. Explicit8192-byte fault and exhausted-headroom cases plus sensitive mutants pass; seven natural rollback negatives are retained, not claimed cap-escape reproductions.",
             "ci_failure": {
               "source": "7ab2c8deb4c0f8f324460b9b691809c027e29fd0",
@@ -13645,7 +13721,7 @@
               "unchanged_production_files": 73,
               "unchanged_source_build_inputs": 80,
               "package_rebuild": false,
-              "acceptance": "Test-only repair accepted; exact zero/positive measurements and full unknown holds verified. Hosted delivery pending."
+              "acceptance": "Test-only repair accepted; exact zero/positive measurements and full unknown holds verified. Hosted delivery subsequently accepted in the delivery record."
             },
             "parent_admission_audit": {
               "source": "7ab2c8deb4c0f8f324460b9b691809c027e29fd0",
@@ -13662,6 +13738,44 @@
                 "Parent source/delivery acceptance can admit N02.a source without waiting for its own MAP or later calibration/selector/study outputs."
               ],
               "status": "Planning accepted; implementation not started; parents remain open."
+            },
+            "delivery": {
+              "pull_request": 117,
+              "merge": "fb537d34a285e9375c5f628cdf128bc5d55bbf4f",
+              "tree": "f291708720632c8af201b01788ab4d1e2896d61c",
+              "pr_ci": 40044501624,
+              "pr_tests_per_runtime": 4146,
+              "python_runtimes": [
+                "3.12",
+                "3.14"
+              ],
+              "main_ci": 40045114585,
+              "main_jobs_passed": 5,
+              "candidate": 12541505445,
+              "candidate_zip_bytes": 449152,
+              "candidate_zip_sha256": "cde550171c40446ca50944799112b79387b57ed035e25a96ec10666cc7f59064",
+              "acceptance_index_sha256": "aa114a0ae160bffedd5ae9194e53ca3cef74884a1ea755d3ebbb163f3f1e38e2",
+              "root_rehashed_children": 13,
+              "verifier_diff_reviewed": true,
+              "status": "accepted"
+            },
+            "execution_design": {
+              "source": "fb537d34a285e9375c5f628cdf128bc5d55bbf4f",
+              "index_sha256": "0b1b9da59d2044c12a8c2606cc1cff949855cf16957e3fb149cc44a1c2b5f013",
+              "status": "contract_accepted_candidate_only_profile_provisional",
+              "research_review_index_sha256": "848cce2f1ea0365598a462b2d1132a6a971dfa3ab484ca989454a1f78cfafe2b",
+              "installed_identity_addendum_index_sha256": "bc3fa30ed9f3325923b1b7fddc200a2746f273bcfcc451ff3981a860035fc764",
+              "platform_review_index_sha256": "8e288bc5b3e3dcab9658e5b7c455cae5cf5412c5a0903c9491ff1b345961e090",
+              "lead_decision": "Corrected contract accepted for bounded candidate-only first vertical and follow-on purchase/handoff conditions; explicit writer handoff still required; no runtime acceptance, allocation freeze or numerical implementation yet.",
+              "remaining_conditions": [
+                "Verify actual installed source/lock/engine and exact result/facts identity.",
+                "Compact bounded tickets; separate input/work costs; finalization records/bytes and actual publication work escrow before dispatch.",
+                "Prove finite usable control/recovery within unchanged caps, not a 3072-ticket or36-cell completion promise.",
+                "Later purchase record/facts binder, actual Journal ownership and single-authority handoff/stopped recovery remain unimplemented."
+              ],
+              "experiment_execution": "not_started",
+              "implementation_started": false,
+              "lead_decision_index_sha256": "726e8e07a41b8f5fca2596f4ea9e6315ed971292b9f9f81243f47ec5a4e3edc3"
             }
           }
         }
