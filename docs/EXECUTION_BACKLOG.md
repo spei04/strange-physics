@@ -3766,3 +3766,7 @@ Source 730cc86 passed both scoped runtime reviews; final author checks and PR/ma
 ## 2026-10-25 — Bounded Journal final author acceptance
 
 Final source 8c85fef preserves reviewed runtime 730cc86; all 14 configured checks passed, including 4,314 tests. PR/main/candidate delivery is pending. Quality is queued for public purchase integration after delivery; the V3 specimen, publisher handoff, full-study capacity and parent issues #105/#106 remain open. [Evidence and assignments](EXECUTION_LOG.md#2026-10-25--bounded-journal-final-checks-accepted-delivery-pending).
+
+## 2026-10-25 — Bounded Journal prerequisite delivered
+
+PR #123/main c784f15 and exact 84-file candidate 12589122154 are accepted; all five main jobs passed. Quality is queued for public purchase integration after explicit handoff. The conditional V3 specimen, publisher handoff, full-study capacity and parent issues #105/#106 remain open. [Delivery evidence and assignments](EXECUTION_LOG.md#2026-10-25--bounded-journal-pr-123-delivered).

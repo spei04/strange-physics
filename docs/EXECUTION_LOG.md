@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Queued public purchase integration after prerequisite delivery | Final Journal source released; PR2 wiring handoff prepared; implementation not started |
-| Platform | Verify the integrated PR/main release candidate | Boundary review and final author evidence accepted; delivery pins pending |
-| Research | Verify final evidence and progress consistency | Primary docs update, then release for Lead review; no runtime hold |
-| Project lead | Integrate and deliver the bounded Journal prerequisite | Author and peer checks accepted; PR/main/candidate delivery pending; parents #105/#106 open |
+| Quality | Queued public purchase integration | Journal prerequisite delivered; await explicit writer handoff; implementation not started |
+| Platform | Review next purchase resource, process and recovery boundaries | PR #123 main candidate accepted; next immutable source required |
+| Research | Reconcile delivery, then review next purchase identities and semantics | Primary docs update then release; no runtime hold |
+| Project lead | Coordinate the explicit PR2 writer handoff | PR #123 delivery accepted; parents #105/#106 and study gates remain open |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-25 | Project lead + Platform | Bounded Journal PR #123 delivery | Main c784f15, all five jobs and exact candidate 12589122154 accepted |
+| 2026-10-25 | Quality | Next public purchase integration | Queued after delivered prerequisite; explicit writer handoff pending |
+| 2026-10-25 | Platform + Research | Next purchase boundary and semantic reviews | Existing PR2 handoff prepared; await immutable implementation |
+| 2026-10-25 | Research | Final five-document delivery reconciliation | Preserve source-specific history, open parents and conditional profile |
 | 2026-10-25 | Quality | Final bounded Journal release 8c85fef | Fourteen configured checks pass on runtime-identical 730cc86; identity released; public purchase integration queued |
 | 2026-10-25 | Platform | Integrated source and candidate verification | Final author and boundary evidence accepted; await PR/main delivery pins |
 | 2026-10-25 | Research | Final evidence and five-document consistency | Docs-only parity and sealed records verified; primary update then release |
@@ -965,3 +969,11 @@ All 14 configured checks passed on 730cc86, including 4,314 tests in 917.64 seco
 The private PR2 wiring handoff (index feeb5e31f93b18c462b921267509f382b988aed6767c9dca4b5c55388a4a5de8) maps the accepted helper to durable purchase intent before Journal access, preserved child limits, confirmed writer reap before capture, immutable original input with paid current context, and distinct replay/reconciliation receipts. It is preparation only. Public measured purchase integration and the conditional V3 16-call specimen have not run; the 128 KiB rollback limitation remains.
 
 Quality released the source and environment and is queued for PR2 after prerequisite delivery and explicit handoff. Lead owns integration/delivery, Platform verifies the candidate, and Research checks consistency. PR/main/candidate acceptance remains pending. Parent issues #105/#106, publisher handoff, full-study capacity and the first-result re-estimate remain open; the study has not started and approved caps, graph and estimates are unchanged.
+
+## 2026-10-25 — Bounded Journal PR #123 delivered
+
+[PR #123](https://github.com/spei04/strange-physics/pull/123) merged as c784f15dd91dfed169a5af0847dbd31445bcad88 with the exact reviewed PR tree 7774a4b129b9f447acbd86253825c6925330c966. PR run 40168091571 passed all four applicable jobs; its main-only candidate job was skipped. [Main run 40168720858](https://github.com/spei04/strange-physics/actions/runs/40168720858) passed all five jobs. Python 3.12 passed 4,314 tests in 604.82 seconds; Python 3.14 passed 4,314 in 433.70 seconds. The local 730cc86 result and docs-only final 8c85fef release remain recorded separately above.
+
+Candidate 12589122154 is 504,852 bytes, ZIP SHA256 baf8e0a294c55bd753aa55511da39b51b96e91d6bccc0c1964fa4c372d9130a7. Independent verification accepted all 84 source files and byte-identical author wheel/sdist archives, with 13 hosted interpreter-copy observations and both certificate-bundle guard outputs. The acceptance index is c77260d07accd79c36f6236fe6376537c5290beccd4a0e63337840a0da34d904; its 15 files and nine references were rehashed. Exported runtime-requirements bytes were not included or independently recomputed, and copied interpreters still use base standard/shared libraries. This candidate is unpublished and carries no signing or deployment claim.
+
+Quality is queued for PR2 under the existing wiring handoff, awaiting explicit checkout ownership. Platform and Research review its next resource/recovery and identity/semantic boundaries; Lead coordinates the handoff. Public measured purchase integration and the conditional V3 16-call specimen have not started. Parent issues #105/#106, publisher handoff, full-study capacity and the first-result re-estimate remain open. The study, approved caps, graph, approvals and estimates are unchanged.

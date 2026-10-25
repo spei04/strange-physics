@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "bounded_journal_final_author_and_peer_checks_accepted_delivery_pending_parents_open",
+      "status": "bounded_journal_prerequisite_delivered_public_purchase_queued_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Final bounded Journal source/environment released; public purchase integration queued after prerequisite delivery and explicit writer handoff.",
-        "Platform": "Verify exact integrated source and PR/main release candidate; boundary review accepted, no runtime hold.",
-        "Research": "Final author evidence and five-document consistency; release primary docs to Lead after commit.",
-        "Project lead": "Review final progress, integrate and deliver the Journal prerequisite; parents and study remain open."
+        "Quality": "Public measured purchase integration queued after delivered PR1; await explicit writer handoff, no implementation started.",
+        "Platform": "Independent resource/process/recovery review of next purchase wiring; PR123 main candidate accepted, no runtime hold.",
+        "Research": "Final delivery progress consistency, then independent identity/semantic review of next purchase wiring; no runtime hold.",
+        "Project lead": "PR123 delivery accepted; review progress and coordinate explicit PR2 handoff; parents and study gates remain open."
       },
-      "handoff": "Quality released identity at docs-only 8c85fef with runtime 730cc86 and all final configured checks accepted. Research owns only the primary five-doc update and releases it to Lead for review. Lead owns source integration/delivery; Platform verifies hosted candidate evidence. No public purchase implementation has started.",
+      "handoff": "PR123/main c784f15 and its exact candidate are accepted; all source/environment verification holds are released. Research completes only the primary five-doc delivery update, then releases it to Lead. Quality is queued for PR2 after explicit ownership handoff; Platform and Research review immutable implementation. Public purchase and study execution have not started.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Deliver accepted bounded Journal/capture-holder source through PR/main/candidate checks, then implement the existing measured public purchase integration after explicit handoff. Publisher handoff, full-study capacity and explicit parent audit remain separate; future grid/acquisition census gates the actual study.",
+      "next_units": "Implement the existing measured public purchase/retry/replay/reconciliation integration after explicit handoff from delivered bounded Journal support. Prove the conditional V3 specimen without new allocation. Publisher handoff, full-study capacity and explicit parent audit remain separate; future grid/acquisition census gates the actual study.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14139,7 +14139,7 @@
         "qualification": "Purchase estimate decomposes parent work and is not blindly additive. Remaining publisher handoff, full-study capacity and parent audit are not yet re-estimated; no current aggregate or calendar date is claimed."
       },
       "bounded_journal_prerequisite": {
-        "status": "final_author_and_peer_checks_accepted_delivery_pending",
+        "status": "delivered_main_and_candidate_accepted",
         "base_source": "1bc87e9f7914b3fdf35d4e13b2e56c4b0dfed37f",
         "source_commit": "730cc862f0a5ba66a1267c6e1dce6183f518eaaa",
         "source_tree": "6d1436e354be3f2f3032fd8bc8de41be4fa5a4c6",
@@ -14193,7 +14193,49 @@
         "prior_findings_and_diagnostics_retained": true,
         "peer_runtime_holds": "released",
         "author_configured_full_suite_package_gates": "passed at 730cc86; final 8c85fef differs only in implementation documentation",
-        "delivery": "PR/main/candidate pending",
+        "delivery": {
+          "status": "accepted",
+          "pr": 123,
+          "pr_url": "https://github.com/spei04/strange-physics/pull/123",
+          "pr_head": "323f54d00d2323d42316701e6dccdb14cac8e922",
+          "pr_run": 40168091571,
+          "pr_applicable_jobs_passed": 4,
+          "pr_candidate_job": "skipped; protected-main only",
+          "main_commit": "c784f15dd91dfed169a5af0847dbd31445bcad88",
+          "main_tree": "7774a4b129b9f447acbd86253825c6925330c966",
+          "main_run": 40168720858,
+          "main_jobs_passed": 5,
+          "hosted_pytest": {
+            "3.12": {
+              "passed": 4314,
+              "seconds": 604.82
+            },
+            "3.14": {
+              "passed": 4314,
+              "seconds": 433.7
+            }
+          },
+          "artifact_id": 12589122154,
+          "artifact_bytes": 504852,
+          "candidate_zip_sha256": "baf8e0a294c55bd753aa55511da39b51b96e91d6bccc0c1964fa4c372d9130a7",
+          "package_files": 84,
+          "source_allowlists_exact": true,
+          "archives_identical_to_author": true,
+          "wheel_sha256": "d398a40393bff13953214bd2c537046f7f0b0b225d13ef80eaa0d23e3a9ce96f",
+          "sdist_sha256": "5898b418982847b2350057c74d8131030332078317bfbeff0052f2af0c5c08d5",
+          "hosted_interpreter_copy_observations": 13,
+          "certificate_bundle_observations": 2,
+          "acceptance_index_sha256": "c77260d07accd79c36f6236fe6376537c5290beccd4a0e63337840a0da34d904",
+          "verified_files": 15,
+          "verified_references": 9,
+          "lead_acceptance_review_sha256": "aba1b2b34ca02968343f1f86478b01c309c1fef5f8950c81e0a26b5470448edd",
+          "limits": [
+            "Exported runtime-requirements bytes absent and not independently recomputed; digest and successful locked steps retained.",
+            "Owned executable copies use base standard/shared libraries; no hermetic Python claim.",
+            "Unpublished candidate only; no signing, deployment, public purchase integration, V3 runtime admission, study or parent completion."
+          ],
+          "holds": "released"
+        },
         "public_purchase_integration": "not_started",
         "v3_16_call_profile": "conditional; no runtime admission",
         "experiment_execution": "not_started",
@@ -14202,7 +14244,6 @@
           "RA-N01": 106
         },
         "remaining": [
-          "Normal PR/main/candidate delivery",
           "Public measured purchase/retry/replay/reconciliation integration",
           "Conditional 16-call fixture proof",
           "Publisher authority handoff",
@@ -14252,7 +14293,7 @@
             "Immutable original purchase identity with separately paid current attempt context",
             "Holder exclusion through final closure; original replay distinct from new reconciliation receipt"
           ],
-          "prerequisite": "Final PR1 PR/main/candidate acceptance and explicit writer handoff"
+          "prerequisite": "PR1 PR/main/candidate acceptance satisfied; explicit PR2 writer handoff still required"
         }
       }
     },
