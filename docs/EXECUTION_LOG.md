@@ -12,15 +12,18 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Bounded Journal/capture-holder PR queued; purchase integration follows | V3 accepted; clean identity checkout prepared at delivered main, implementation not started |
-| Platform | Resource, process and durability review for the next Journal PR | PR #122 exact main/package accepted; all source/environment holds released |
-| Research | Scientific identity and progress review | Design V3 and split accepted; first-result forecast needs re-estimation |
-| Project lead | Integration, delivery and assignment tracking | PR #122 delivered; existing checkout prepared for next PR, parents #105/#106 remain open |
+| Quality | Implement bounded Journal/capture-holder prerequisite in the existing identity checkout | V3 accepted; immutable source and focused runtime evidence pending; public purchase integration follows acceptance |
+| Platform | Independent Journal resource, process and durability review | Immutable source review first; runtime access follows an explicit author handoff |
+| Research | Independent Journal identity, failure-semantics and progress review | Preserve ordinary behavior and unknown costs; first-result forecast needs re-estimation |
+| Project lead | Integration, delivery and assignment tracking | PR #122 delivered; bounded Journal prerequisite assigned; parents #105/#106 remain open |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-25 | Quality | Bounded Journal/capture-holder prerequisite PR | Existing identity checkout reused; immutable source and finite test-plan checkpoint precede runtime review |
+| 2026-10-25 | Platform + Research | Independent prerequisite reviews | Resource/process/durability and identity/failure-semantics lanes; no checkout mutation |
+| 2026-10-25 | Project lead | Progress and delivery coordination | Classical delivery accepted; current assignment pointers reconciled; no scientific comparison started |
 | 2026-10-24 | Quality | Bounded measured preparation/prediction/scoring | Identity writer; preliminary chain passes; ingress clock and setup reservation repairs pending |
 | 2026-10-24 | Platform | Cumulative capacity plan, then independent source review | Small profile 761.703125MiB/550s is a target; future full-study admission remains closed |
 | 2026-10-24 | Research | Certifi/pip reconciliation and narrow repair, then scientific review | Source92d9a15 independently accepted; primary released; PR119 delivery pending |
@@ -928,3 +931,9 @@ Implementation is split into two sequential PRs: bounded Journal support and cap
 Lead independently read and rehashed the final 14-file/nine-reference evidence index and its 12-record monitor index. The accepted six-call synthetic scope and retained failure/unknown costs remain unchanged. This delivery does not run the research comparison or establish full-study capacity. RA-02/#105 and RA-N01/#106 remain open.
 
 Next, Quality owns the queued bounded Journal/capture-holder PR, followed by complete measured-purchase integration after that prerequisite is accepted. Platform reviews resource limits, process lifetime and durability; Research reviews scientific identities, failure semantics and progress consistency; Lead owns integration and delivery. The existing identity checkout is prepared at accepted main on feat/bounded-purchase-journal; source implementation has not started. V3's conditional profile and the first-result forecast re-estimation remain as recorded above.
+
+## 2026-10-25 — Bounded Journal prerequisite assigned
+
+Quality owns the existing identity checkout for the first of the two reviewed purchase PRs: fixed bounded Journal access and capture holding. Platform reviews resource, process and durability limits; Research reviews identity, failure semantics and ordinary Journal compatibility. The next gate is an immutable source checkpoint and finite lower-level test plan, followed by independent runtime evidence and normal delivery checks. Public measured purchase integration follows this prerequisite's acceptance.
+
+PR #122 remains delivered. The V3 16-call allocation is conditional; no scientific comparison or new allocation has started. Parent issues #105/#106, publisher handoff and full-study capacity remain open. The native first-result forecast still requires bottom-up re-estimation; approved caps and broader programme scope are unchanged.

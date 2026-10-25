@@ -10925,7 +10925,7 @@
     },
     "checkout_ownership": {
       "scientific": "Lead owns primary progress; final main/package verification hold released clean, no installed-environment use.",
-      "identity": "Clean at accepted main1bc87e9 on feat/bounded-purchase-journal; queued for Quality's bounded Journal support PR, implementation not started.",
+      "identity": "Quality owns existing identity on feat/bounded-purchase-journal from accepted main1bc87e9 for bounded Journal/capture-holder PR1; reviewers immutable reads until coordinated runtime handoff.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,16 +12588,16 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "classical_delivered_bounded_journal_queued_parents_open",
+      "status": "classical_delivered_bounded_journal_prerequisite_active_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Queued bounded Journal/capture-holder PR from accepted main; full purchase integration follows predecessor acceptance.",
-        "Platform": "Review resource, process and durability boundaries; current main/package verification accepted and released.",
-        "Research": "Review scientific identity, failure semantics and progress; first-result forecast requires re-estimation.",
-        "Project lead": "Maintain progress, coordinate checkout ownership, integrate and deliver reviewed units."
+        "Quality": "Implement bounded Journal/capture-holder prerequisite PR in identity; no public purchase API.",
+        "Platform": "Independent resource, process and durability review; immutable reads until coordinated runtime handoff.",
+        "Research": "Independent identity, failure-semantics and progress review; immutable reads until coordinated runtime handoff.",
+        "Project lead": "Primary progress and assignment reconciliation, then review/integration/delivery."
       },
-      "handoff": "Classical main/package verification is accepted and all holds are released. Lead owns primary progress. Existing identity checkout is clean at accepted main1bc87e9 on feat/bounded-purchase-journal, queued for Quality; source implementation has not started.",
+      "handoff": "Classical delivery is accepted. Lead owns primary progress. Quality owns existing identity on feat/bounded-purchase-journal from accepted main1bc87e9 for bounded Journal/capture-holder PR1. Reviewers use immutable source until explicit runtime handoff; public purchase integration has not started.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
@@ -14031,7 +14031,7 @@
           "status": "design_v3_and_two_pr_split_accepted_runtime_unproved",
           "proposed_specimen_calls": 16,
           "profile": "conditional_not_runtime_admitted",
-          "implementation": "not_started",
+          "implementation": "bounded_journal_prerequisite_active_public_purchase_not_started",
           "design_source": "28431b6d5a977114310f4643e00510f208d5abf4",
           "design_index_sha256": "1181b243924ba8d89baf82752844465397ba8353fccb54af813701df36febfcf",
           "design_reviews": {
@@ -14056,7 +14056,7 @@
           "estimate_confidence": "moderate; lower confidence in profile usability until executable evidence",
           "queued_branch": "feat/bounded-purchase-journal",
           "queued_base": "1bc87e9f7914b3fdf35d4e13b2e56c4b0dfed37f",
-          "writer": "Quality queued; implementation not started"
+          "writer": "Quality owns PR1 source/environment; independent reviews pending"
         },
         "runtime_source": "11aada9310115f1fcb6a869a4d7a2be31d3f7c25",
         "runtime_tree": "360f1ee1d7c3f1bcc575d4fed945f0f74a06100d",
