@@ -378,6 +378,7 @@ def test_raced_hot_recovery_cannot_exceed_preopen_file_cap(
     create(path)
     raw = path.read_bytes()
     checked = m.check_files
+    parent_limits = resource.getrlimit(resource.RLIMIT_FSIZE)
 
     def race(path: Path, *, create: bool = False) -> Path:
         result = checked(path, create=create)
@@ -408,7 +409,7 @@ def test_raced_hot_recovery_cannot_exceed_preopen_file_cap(
         _, status, _ = os.wait4(pid, 0)
         assert status != 0
     assert path.stat().st_size <= JOURNAL_BYTES
-    assert resource.getrlimit(resource.RLIMIT_FSIZE)[0] != JOURNAL_BYTES
+    assert resource.getrlimit(resource.RLIMIT_FSIZE) == parent_limits
 
 
 @pytest.mark.parametrize("soft,hard", [(32768, 65536), (65536, 65536), (-1, -1)])
