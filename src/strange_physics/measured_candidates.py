@@ -458,11 +458,13 @@ def _bind_context(
             if request.operation == "classical_diagnostic"
             else "candidate_config"
         )
-        if (manifest.source_commit, manifest.uv_lock_sha256, manifest.engine_fingerprint) != (
-            c.source_commit,
-            c.uv_lock_sha256,
-            c.engine_fingerprint,
-        ) or manifest.artifact(role).sha256 != request.config_sha256:
+        artifact = next((a for a in manifest.artifacts if a.kind == role), None)
+        if (
+            (manifest.source_commit, manifest.uv_lock_sha256, manifest.engine_fingerprint)
+            != (c.source_commit, c.uv_lock_sha256, c.engine_fingerprint)
+            or artifact is None
+            or artifact.sha256 != request.config_sha256
+        ):
             raise StudyLedgerError("candidate_frozen_identity")
         if request.operation == "candidate_production":
             # The old supplied-bundle interface does not acquire Journal authority.

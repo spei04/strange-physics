@@ -437,7 +437,7 @@ def test_classical_requires_freeze_and_actual_frozen_configuration(
         }
     )
     monkeypatch.setattr(supervisor, "_run_child", forbidden)
-    with pytest.raises((StudyLedgerError, ValueError)):
+    with pytest.raises(StudyLedgerError, match="candidate_frozen_identity" if frozen else None):
         commit_journal_classical(f.root, request)
     assert not (f.root / "candidate-output-2").exists()
 
