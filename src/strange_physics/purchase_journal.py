@@ -449,7 +449,9 @@ def capture_journal(
             cleanup_errors.append(error)
         except BaseException as error:
             cleanup_errors.append(error)
-            kill()
+            # An ambiguous failed wait may already have reaped this child.
+            # Never signal that PID again; the fixed child still obeys its
+            # original absolute deadline if it remains alive.
             try:
                 _, status, usage = os.wait4(pid, 0)
             except BaseException as second_error:
