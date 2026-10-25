@@ -5,10 +5,19 @@ from __future__ import annotations
 from pathlib import Path
 
 from strange_physics.bounded_json import parse_bounded_json
+from strange_physics.native_classical_contracts import (
+    ClassicalDiagnosticConfig,
+    ClassicalDiagnosticInput,
+)
+from strange_physics.native_prediction_contracts import NativePredictionConfig
+from strange_physics.native_scoring_contracts import NativeEvaluationInput, NativeScoringPolicy
 from strange_physics.native_spring_contracts import (
     NativeCandidateConfig,
     NativeCandidateInput,
+    NativeCandidateResult,
     NativeSpringPool,
+    validate_native_candidate_result,
+    validate_selected_native_candidate,
 )
 from strange_physics.publication_store import digest, raw
 from strange_physics.research_contracts import message_sha256
@@ -143,3 +152,72 @@ def bind_captured_candidate(
     )
     if message_sha256(actual) != message_sha256(expected):
         raise StudyLedgerError("comparison_candidate_input")
+
+
+def bind_classical_material(
+    actual: ClassicalDiagnosticInput,
+    *,
+    candidate: NativeCandidateInput,
+    result: NativeCandidateResult,
+    attempt_id: str,
+    freeze: NativeFreezeInput,
+    cell_id: str,
+) -> None:
+    """Bind concrete retained materials; selection is optional, never a selector proof."""
+    validate_frozen_materials(freeze)
+    validate_native_candidate_result(result, candidate, attempt_id=attempt_id)
+    selected = actual.context.selected
+    if selected is not None:
+        validate_selected_native_candidate(selected, result, candidate, attempt_id=attempt_id)
+    if "classical_diagnostic_config" not in freeze.artifacts:
+        raise StudyLedgerError("classical_frozen_config_missing")
+    catalog = parse_bounded_json(
+        freeze.artifacts["world_catalog"].encode(),
+        NativeWorldCatalog,
+        max_bytes=8 * 1024**2,
+        max_depth=32,
+        max_nodes=1_000_000,
+    )
+    cells = [cell for cell in freeze.manifest.cells if cell.cell_id == cell_id]
+    if len(cells) != 1:
+        raise StudyLedgerError("classical_cell_identity")
+    world = next(
+        entry.definition for entry in catalog.worlds if entry.world_id == cells[0].world_id
+    )
+    policy = parse_bounded_json(
+        freeze.artifacts["scoring_policy"].encode(),
+        NativeScoringPolicy,
+        max_bytes=8 * 1024**2,
+        max_depth=32,
+        max_nodes=1_000_000,
+    )
+    prediction = parse_bounded_json(
+        freeze.artifacts["prediction_config"].encode(),
+        NativePredictionConfig,
+        max_bytes=8 * 1024**2,
+        max_depth=32,
+        max_nodes=1_000_000,
+    )
+    config = parse_bounded_json(
+        freeze.artifacts["classical_diagnostic_config"].encode(),
+        ClassicalDiagnosticConfig,
+        max_bytes=8 * 1024**2,
+        max_depth=32,
+        max_nodes=1_000_000,
+    )
+    if message_sha256(config.scoring_policy) != message_sha256(policy):
+        raise StudyLedgerError("classical_policy_identity")
+    expected = ClassicalDiagnosticInput(
+        context=NativeEvaluationInput(
+            candidates=candidate,
+            candidate_result=result,
+            candidate_attempt_id=attempt_id,
+            selected=selected,
+            policy=policy,
+            prediction_config=prediction,
+        ),
+        config=config,
+        world=world,
+    )
+    if message_sha256(actual) != message_sha256(expected):
+        raise StudyLedgerError("classical_material_identity")

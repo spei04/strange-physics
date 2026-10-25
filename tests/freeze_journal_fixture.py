@@ -27,12 +27,21 @@ from strange_physics.candidate_execution_contracts import (
 )
 from strange_physics.candidate_store import CandidateStore
 from strange_physics.contracts import Experiment, ParticleInitial
+from strange_physics.fitting_contracts import SpringFitConfig
 from strange_physics.installed_identity import TrustedInstallation
+from strange_physics.native_classical_contracts import (
+    ClassicalDiagnosticConfig,
+    ClassicalDiagnosticInput,
+)
+from strange_physics.native_prediction_contracts import NativePredictionConfig
+from strange_physics.native_scoring_contracts import NativeEvaluationInput, NativeScoringPolicy
 from strange_physics.native_spring_contracts import (
     NativeCandidateConfig,
     NativeCandidateInput,
+    NativeCandidateResult,
     NativeSpringPool,
 )
+from strange_physics.prediction_contracts import SpringPredictionConfig
 from strange_physics.publication_store import Extents, digest, head, raw, root_lock
 from strange_physics.research_contracts import message_sha256
 from strange_physics.session import LocalSession
@@ -47,6 +56,8 @@ from strange_physics.study_contracts import (
 )
 from strange_physics.study_execution_contracts import (
     NativeComparisonCandidateRequest,
+    NativeComparisonClassicalInput,
+    NativeComparisonClassicalRequest,
     NativeComparisonInput,
     NativeFreezeInput,
     NativeFreezeRequest,
@@ -84,6 +95,7 @@ class SetupBudget:
     child_cpu: int = 0
     copies: int = 0
     child_epochs: int = 0
+    store_attempts: int = 0
 
     @contextmanager
     def phase(self) -> Iterator[None]:
@@ -210,7 +222,7 @@ class Fixture:
     journal: Path
 
 
-def prepare(root: Path, build: TrustedInstallation) -> Fixture:
+def prepare(root: Path, build: TrustedInstallation, *, classical: bool = False) -> Fixture:
     budget = SetupBudget(time.monotonic_ns() + 180_000_000_000)
     with budget.phase():
         root.mkdir(mode=0o700)
@@ -298,6 +310,23 @@ def prepare(root: Path, build: TrustedInstallation) -> Fixture:
         )
         artifacts["pool"] = raw(NativeSpringPool(coefficients=(0.0, 1.0, 4.0)))
         artifacts["candidate_config"] = raw(NativeCandidateConfig())
+        if classical:
+            policy = NativeScoringPolicy()
+            config = ClassicalDiagnosticConfig(
+                fit_config=SpringFitConfig(),
+                prediction_config=SpringPredictionConfig(),
+                scoring_policy=policy,
+            )
+            artifacts["scoring_policy"] = raw(policy)
+            artifacts["prediction_config"] = raw(NativePredictionConfig())
+            artifacts["classical_diagnostic_config"] = raw(config)
+            data["artifacts"].append(
+                {
+                    "kind": "classical_diagnostic_config",
+                    "sha256": digest(raw(config)),
+                    "byte_count": len(raw(config)),
+                }
+            )
         for ref in data["artifacts"]:
             value = artifacts[ref["kind"]]
             ref.update(sha256=digest(value), byte_count=len(value))
@@ -397,7 +426,9 @@ def inject_intents(fixture: Fixture) -> None:
             assert store._transaction_attempts == 2
         finally:
             store.close()
-        assert meter.total <= 4 * STORE_ENVELOPE
+        budget.store_attempts += store._transaction_attempts
+        assert budget.store_attempts <= 4
+        assert meter.total <= store._transaction_attempts * STORE_ENVELOPE
 
 
 def generate_journal(fixture: Fixture) -> None:
@@ -559,4 +590,66 @@ def comparison_request(fixture: Fixture, freeze_receipt: bytes) -> NativeCompari
             artifact_reservation_bytes=4 * MIB,
             output_limit_bytes=128 * 1024,
             wall_limit_ns=30_000_000_000,
+        )
+
+
+def classical_request(
+    fixture: Fixture,
+    candidate_receipt: bytes,
+    candidate_result: NativeCandidateResult,
+) -> NativeComparisonClassicalRequest:
+    """Assemble actual typed private input within the original unresolved setup hold."""
+    with fixture.budget.phase():
+        material = NativeComparisonInput.model_validate_json(
+            (fixture.root / "candidate-input-1").read_bytes()
+        )
+        frozen = fixture.freeze
+        catalog = NativeWorldCatalog.model_validate_json(frozen.artifacts["world_catalog"])
+        context = NativeEvaluationInput(
+            candidates=material.candidate,
+            candidate_result=candidate_result,
+            candidate_attempt_id="candidate-1",
+            selected=None,
+            policy=NativeScoringPolicy.model_validate_json(frozen.artifacts["scoring_policy"]),
+            prediction_config=NativePredictionConfig.model_validate_json(
+                frozen.artifacts["prediction_config"]
+            ),
+        )
+        actual = ClassicalDiagnosticInput(
+            context=context,
+            config=ClassicalDiagnosticConfig.model_validate_json(
+                frozen.artifacts["classical_diagnostic_config"]
+            ),
+            world=catalog.worlds[0].definition,
+        )
+        wrapper = NativeComparisonClassicalInput(
+            candidate_logical_id="candidate",
+            candidate_receipt_sha256=digest(candidate_receipt),
+            diagnostic=actual,
+        )
+        value = raw(wrapper)
+        assert len(value) <= 256 * 1024
+        fixture.budget.write(fixture.root / "classical-input.json", value)
+        with sqlite3.connect(fixture.root / "candidate.sqlite3") as db:
+            ledger = NativeStudyLedger.model_validate_json(
+                db.execute("SELECT ledger FROM state").fetchone()[0]
+            )
+        return NativeComparisonClassicalRequest(
+            mode="execute",
+            logical_id="classical",
+            attempt_id="classical-2",
+            retry_of=None,
+            cell_id=frozen.manifest.cells[0].cell_id,
+            ticket=2,
+            expected_revision=len(ledger.records),
+            expected_head_sha256=head(ledger),
+            input_path=str(fixture.root / "classical-input.json"),
+            input_raw_sha256=digest(value),
+            input_bytes=len(value),
+            input_sha256=message_sha256(actual),
+            config_sha256=message_sha256(actual.config),
+            cpu_reservation_ns=120_000_000_000,
+            artifact_reservation_bytes=8 * MIB,
+            output_limit_bytes=MIB,
+            wall_limit_ns=180_000_000_000,
         )
