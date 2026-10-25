@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "classical_author_fixture_passed_independent_runtime_pending_parents_open",
+      "status": "classical_source_runtime_accepted_delivery_pending_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Implement one fixed Journal-bound classical diagnostic and fresh bounded six-call fixture in identity.",
-        "Platform": "Independent accounting/boundary review of immutable source, then exact frozen runtime.",
-        "Research": "Independent retained-material/scientific semantics review, then exact frozen runtime.",
-        "Project lead": "Maintain primary progress, integration and delivery; preserve cumulative limits and parents."
+        "Quality": "Source/environment released after final classical evidence; next purchase implementation handoff preparation.",
+        "Platform": "Exact package/delivery verification; next purchase accounting handoff prepared.",
+        "Research": "Progress consistency review; next purchase semantics handoff prepared.",
+        "Project lead": "Maintain progress, integrate and deliver after final gates; preserve cumulative limits and parents."
       },
-      "handoff": "Both cloud checkouts were clean with no active cwd consumers. Quality exclusively owns identity source/environment from accepted main1474e57; Lead owns primary progress. Peer runtime work waits for an explicit frozen author handoff. Reuse existing checkouts and preserve retained evidence.",
+      "handoff": "Final author28431b6 is released to Lead, with no checkout consumers. It differs from fully gated11aada9 only in implementation documentation. Both independent runtime holds are released. Lead owns primary progress and identity integration; reuse both cloud checkouts.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Implement charged same-store freeze and real Journal/material binding, then fixed comparison/classical dispatch under the conditionally reviewed bounded profile. Purchased-simulation measurement/recovery, one-way handoff and parent audit remain separate. Test-only injected purchase intents do not prove public purchase execution. Future actual grid/acquisition census gates full-study admission, not N02 implementation.",
+      "next_units": "Complete fixed-classical normal delivery, then implement measured public purchased simulation under a separately derived feasible finite profile. Publisher handoff, full-study allocation and explicit parent audit remain separate; future grid/acquisition census gates the actual study, not N02 implementation.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -13923,7 +13923,7 @@
         }
       },
       "classical_execution": {
-        "status": "author_fixture_passed_independent_runtime_pending",
+        "status": "source_runtime_accepted_delivery_pending",
         "base_source": "1474e57199fbb29773cc0715df22135b32db9e6e",
         "branch": "feat/measured-journal-classical",
         "author_handoff_sha256": "377f7fd774443c0253fd6cf0942920cfd6e00f5ea2c75b88b1d503326872984c",
@@ -13942,7 +13942,7 @@
           "expected_terminal_records": 27,
           "expected_unresolved_holds": 14,
           "ordinary_classical_reserved_only_on_admission": true,
-          "runtime_admission": "author_fixture_passed_independent_runtime_pending"
+          "runtime_admission": "accepted_for_declared_synthetic_fixture"
         },
         "experiment_execution": "not_started",
         "parent_issues": [
@@ -13950,21 +13950,14 @@
           106
         ],
         "remaining": [
-          "Independent source/runtime acceptance and normal PR/main delivery",
+          "Normal PR/main CI and exact candidate verification",
           "Measured public purchased simulation and publisher handoff",
           "Feasible full-study allocation and explicit parent audit"
         ],
-        "source_commit": "0cbff3b4b30fb5a949876ec794ad44110ffbe99d",
-        "source_tree": "1a943172963c822e5b312152098ce2d570e5caaa",
-        "author_checkpoint": {
-          "index_sha256": "4218dfd04ee775d22ed9d077cb30d26f3bbead8563fb02bd07caeddaea9427d4",
-          "direct_files_verified": 37,
-          "tests_passed": 2,
-          "seconds": 21.24,
-          "scope": "Genuine six-call chain and declared request-size limits; remaining fault/runtime/configured gates pending."
-        },
+        "source_commit": "28431b6d5a977114310f4643e00510f208d5abf4",
+        "source_tree": "f3a6a42df22dda2a1190204dcad94c6f76033fe6",
         "actual_synthetic_fixture": {
-          "proof_sha256": "d3a3337b70019f8681b7711a2cd367773494e21d87f98c50e943a1e421d3051b",
+          "proof_sha256": "f43a9928ccf135416786a868ce45397c52195df1550a106b6ca92cc8e4563f77",
           "ledger_records": 27,
           "unresolved_holds": 14,
           "ledger_bytes": 28608,
@@ -13974,7 +13967,7 @@
           "classical_input_bytes": 70646,
           "classical_output_bytes": 430645,
           "classical_created_artifact_bytes": 501291,
-          "qualification": "Author observation only; independent runtime pending. Logical observed extents, not cumulative physical writes or full-study throughput."
+          "qualification": "Fresh author fixture with scoped independent runtime acceptance. Logical observed extents, not cumulative physical writes or full-study throughput."
         },
         "static_reviews": {
           "Research": {
@@ -13985,7 +13978,90 @@
             "status": "no_source_blocker_runtime_pending",
             "index_sha256": "49893d300218f0141959573177be8c86ff83fa5ce5efe97cc127a301a3d54a84"
           }
-        }
+        },
+        "first_author_checkpoint": {
+          "index_sha256": "4218dfd04ee775d22ed9d077cb30d26f3bbead8563fb02bd07caeddaea9427d4",
+          "direct_files_verified": 37,
+          "tests_passed": 2,
+          "seconds": 21.24,
+          "scope": "Genuine six-call chain and declared request-size limits; remaining fault/runtime/configured gates pending."
+        },
+        "first_source_commit": "0cbff3b4b30fb5a949876ec794ad44110ffbe99d",
+        "production_equal_to": "6c09f59851063c306dbf11831b1fd88c27a52fa8",
+        "runtime_handoff": {
+          "index_sha256": "240aa2c18c6ee43843373a1624c9f668077d7e4ebf8a108b3d45be79b6e5ea19",
+          "files_rehashed": 70,
+          "references_rehashed": 22,
+          "final_targeted_cases": 3,
+          "seconds": 55.48,
+          "scope": "Fresh exact-source six-call fixture, evaluator outcome and lost acknowledgement; prior cases remain source-qualified."
+        },
+        "independent_reviews": {
+          "Research": {
+            "index_sha256": "d8c8b2ec102ca69c8fff2bb46393d2385a9b8dfd176d074867bd21c859da51e5",
+            "cases": 7,
+            "public_calls": 9,
+            "classical_children": 2,
+            "status": "accepted_released"
+          },
+          "Platform": {
+            "index_sha256": "963402495001a36fca0c81d4114c22adfc07bbbd4348c59b007b1a5b1a2736fe",
+            "behavioral_cases": 6,
+            "sensitive_mutants": 2,
+            "scope": "Structural retained-result feeder with zero child CPU; no numerical claim.",
+            "status": "accepted_released"
+          }
+        },
+        "findings": [
+          {
+            "source": "985ce55",
+            "finding": "Missing optional frozen classical role leaked StopIteration before work/child.",
+            "repair_source": "6c09f59",
+            "status": "typed_error_regression_passed"
+          },
+          {
+            "source": "6c09f59",
+            "finding": "Test expected failed instead of existing evaluator_failure status; product behavior correct.",
+            "repair_source": "11aada9",
+            "status": "test_only_correction_passed"
+          }
+        ],
+        "next_purchase_preparation": {
+          "research_index_sha256": "874373f57e8cf1ae29005397192de9ae21f2aca8b05ac33c9ba171d07c308666",
+          "platform_index_sha256": "eef9d2712d8da781d22df5d6757add4f8fd09bdd41e1145f199e8b7b3785278e",
+          "status": "read_only_handoffs_only",
+          "proposed_specimen_calls": 16,
+          "profile": "not_derived_or_admitted",
+          "implementation": "not_started"
+        },
+        "runtime_source": "11aada9310115f1fcb6a869a4d7a2be31d3f7c25",
+        "runtime_tree": "360f1ee1d7c3f1bcc575d4fed945f0f74a06100d",
+        "final_checks": {
+          "full_suite_source": "11aada9310115f1fcb6a869a4d7a2be31d3f7c25",
+          "pytest_passed": 4283,
+          "pytest_seconds": 926.83,
+          "mypy_files": 146,
+          "schema_cases": 1522,
+          "configured_stages": 14,
+          "status": "passed",
+          "final_delta": "Only implementation documentation; runtime/package/build/lock inputs unchanged. No redundant full-suite run.",
+          "scope": "Cloud-author verification; hosted CI timing and candidate acceptance remain separate."
+        },
+        "author_index_sha256": "efcf57d00122a2514e687d8b19fb29c503e028a4ccd218e94523327a071a20fb",
+        "author_archives": [
+          {
+            "name": "strange_physics-0.1.0a1-py3-none-any.whl",
+            "bytes": 280044,
+            "sha256": "36877066876108a49d58f90723710b0dd29a6a4a7850ed137221abda586ee9f2"
+          },
+          {
+            "name": "strange_physics-0.1.0a1.tar.gz",
+            "bytes": 220651,
+            "sha256": "9cb9e1f7f214179f9f1072fe183bbf86d9f2cb74c59e6efba141db3c22fbc72a"
+          }
+        ],
+        "source_environment_released": true,
+        "package_files": 83
       }
     },
     "certificate_trust_update": {

@@ -12,10 +12,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Implement fixed Journal-bound classical diagnostic and bounded fixture | Exclusive identity writer from main1474e57; source/runtime proof pending |
-| Platform | Independent accounting/boundary review | Immutable source first, then frozen-runtime recovery and fault checks |
-| Research | Independent scientific/material review | Typed frozen configs, original mixed prefix and independent classical outcomes |
-| Project lead | Assignment log, integration and delivery | Own primary progress; reuse existing checkouts; parents105/106 stay open |
+| Quality | Classical source/evidence released; next purchase handoff preparation | 4,283 tests and configured gates passed; documentation-only 28431b6; no remaining source/environment hold |
+| Platform | Exact source/package delivery verification | Structural runtime accepted; verifier prepared and awaiting final pins |
+| Research | Progress consistency and next measured-purchase handoff | Scientific runtime accepted; next source-pinned handoff prepared, no implementation |
+| Project lead | Progress, integration and normal delivery | Reuse existing cloud checkouts; parents105/106 and study admission remain open |
 
 ## Assignment history
 
@@ -906,3 +906,9 @@ Lead checked both cloud checkouts clean and found no active checkout process bef
 The first fixed classical implementation checkpoint is 0cbff3b. Its bounded synthetic fixture passed freeze, candidate production, classical execution and three paid recoveries: 27 ledger records, 14 unresolved holds, a 28,608-byte ledger and 90,112-byte database. The original 12-row Journal prefix retains 11 successful experiments and one explicit failure; absent native selection permits an independent classical result. Both static reviews found no source blocker. Failure coverage, independent runtime acceptance, configured checks and PR/main delivery remain pending. The 278,020,096-byte / 462-CPU-second envelope describes this finite fixture; it does not admit the full study. Parent issues105/106 remain open.
 
 Quality finishes the permanent failure cases and then freezes the source and installed runtime for independent review. Platform prepares accounting and boundary tests; Research prepares retained-material and outcome tests. Lead verified the author's 37 evidence files and both static-review records, and maintains the assignment log. The existing cloud checkouts are reused; the accepted four-call fixture remains unchanged.
+
+## 2026-10-24 — Classical execution independently reviewed
+
+The fixed Journal-bound classical implementation at 28431b6 has passed review. All 4,283 tests passed in 926.83 seconds on 11aada9; the final change affects documentation only. Configured lint/type checks, 1,522 schema cases, security checks, package checks and installed-CLI checks passed. The fresh six-call synthetic fixture retains 27 ledger records and 14 unresolved holds within its declared 278,020,096-byte / 462-CPU-second envelope. Research passed seven independent cases with nine public calls and two classical children; Platform passed six structural cases and two guard-removal checks using an explicitly labeled retained-result feeder. Paid recovery preserves original results without numerical reruns. Normal PR/main CI and exact candidate verification remain pending. Public purchased simulation, publisher handoff, feasible full-study allocation and explicit parent audit remain open; no research comparison has run.
+
+The missing optional classical configuration originally leaked StopIteration at 985ce55; the explicit typed-error guard was repaired at 6c09f59 and its precise regression passed. A separate evaluator test expected the wrong existing outcome name; only that assertion changed at 11aada9. Both failed diagnostics remain source-specific evidence. The next measured-purchase handoffs agree on durable intent before Journal work, bounded transient writes and truthful recovery across separate databases. Their proposed 16-call specimen has no inherited allocation or execution claim.
