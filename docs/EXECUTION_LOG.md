@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Implement bounded Journal/capture-holder prerequisite in the existing identity checkout | V3 accepted; immutable source and focused runtime evidence pending; public purchase integration follows acceptance |
-| Platform | Independent Journal resource, process and durability review | Immutable source review first; runtime access follows an explicit author handoff |
-| Research | Independent Journal identity, failure-semantics and progress review | Preserve ordinary behavior and unknown costs; first-result forecast needs re-estimation |
-| Project lead | Integration, delivery and assignment tracking | PR #122 delivered; bounded Journal prerequisite assigned; parents #105/#106 remain open |
+| Quality | Run configured, full-suite and package checks for bounded Journal source 730cc86 | Both runtime review lanes accepted; final author evidence and delivery pending |
+| Platform | Prepare exact-source delivery verification | Boundary review accepted; runtime hold released; await final author and integration pins |
+| Research | Reconcile the five progress documents | Semantic review accepted; runtime hold released; first-result forecast still needs re-estimation |
+| Project lead | Review progress, then integrate and deliver the Journal prerequisite | PR #122 remains delivered; author checks and PR/main/candidate delivery pending; parents #105/#106 open |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-25 | Quality | Final bounded Journal author checks | Source 730cc86 accepted by both runtime lanes; configured/full-suite/package results pending |
+| 2026-10-25 | Platform | Exact-source delivery verifier preparation | Fourteen boundary cases accepted; no runtime hold |
+| 2026-10-25 | Research | Five-document progress reconciliation | Eight semantic cases and one guard mutant accepted; primary environment unused |
+| 2026-10-25 | Project lead | Integration and delivery | Await final author evidence and reviewed documentation; no purchase/study admission |
 | 2026-10-25 | Quality | Bounded Journal/capture-holder prerequisite PR | Existing identity checkout reused; immutable source and finite test-plan checkpoint precede runtime review |
 | 2026-10-25 | Platform + Research | Independent prerequisite reviews | Resource/process/durability and identity/failure-semantics lanes; no checkout mutation |
 | 2026-10-25 | Project lead | Progress and delivery coordination | Classical delivery accepted; current assignment pointers reconciled; no scientific comparison started |
@@ -937,3 +941,13 @@ Next, Quality owns the queued bounded Journal/capture-holder PR, followed by com
 Quality owns the existing identity checkout for the first of the two reviewed purchase PRs: fixed bounded Journal access and capture holding. Platform reviews resource, process and durability limits; Research reviews identity, failure semantics and ordinary Journal compatibility. The next gate is an immutable source checkpoint and finite lower-level test plan, followed by independent runtime evidence and normal delivery checks. Public measured purchase integration follows this prerequisite's acceptance.
 
 PR #122 remains delivered. The V3 16-call allocation is conditional; no scientific comparison or new allocation has started. Parent issues #105/#106, publisher handoff and full-study capacity remain open. The native first-result forecast still requires bottom-up re-estimation; approved caps and broader programme scope are unchanged.
+
+## 2026-10-25 — Bounded Journal source accepted; final checks pending
+
+Both independent runtime lanes accepted source 730cc862f0a5ba66a1267c6e1dce6183f518eaaa (tree 6d1436e354be3f2f3032fd8bc8de41be4fa5a4c6). This prerequisite adds bounded Journal access and a fixed capture holder; it grants no public purchase, ledger reservation, receipt or cost-settlement authority. Ordinary Journal behavior remains available.
+
+The repairs preserve original errors during cleanup, leave lost reap observations unknown without signalling a possibly reused process ID, require complete raw captures, load Unix-only support only for the bounded path, and carry the parent's stricter timer across fork. Earlier findings and test diagnostics remain retained. The author passed 31 focused cases on production-identical 2d039d6; the two changed cap checks passed on 730cc86. These are source-specific checks, not a completed full-suite result. Research passed eight semantic cases plus one precise guard mutant. Platform passed 14 boundary cases, including four sensitive executions across three guard families.
+
+Real hot recovery and guarded raced recovery retained a 40 KiB database; removed-cap variants grew to 256 KiB. A separate synthetic dirty-all-pages SQLite case succeeded at 64 KiB but hit the file-size limit during rollback-journal growth at 128 KiB. This bounds the demonstrated profile: it does not promise success for every 32-page transaction or establish public purchase behavior. Full failed/pending row identity and unknown costs remain explicit.
+
+Both peer runtime holds are released. Quality is running the configured, full-suite and package gates; Platform prepares exact-source verification, Research reconciles progress, and Lead owns integration and delivery. PR/main/candidate acceptance remains pending. Public measured purchase integration, its conditional V3 16-call specimen, publisher handoff, full-study capacity and parent issues #105/#106 remain open. No simulator or research comparison ran in these prerequisite checks; no caps, graph, approvals or estimates changed.

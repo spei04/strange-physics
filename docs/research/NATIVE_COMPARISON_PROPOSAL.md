@@ -129,7 +129,7 @@ Use the existing machine, at most8 CPU-core-hours and1GiB new artifacts, with ze
 
 ## Current assignment
 
-Quality is implementing the bounded Journal/capture-holder prerequisite in the existing identity checkout; the subsequent public purchase integration has not started. Platform and Research own independent boundary and semantic reviews.
+The bounded Journal/capture-holder prerequisite at 730cc86 passed independent boundary and semantic runtime reviews. Quality is running final author checks; Platform prepares delivery verification, Research reconciles progress, and Lead owns integration. PR/main/candidate delivery and subsequent public purchase integration remain pending.
 
 Candidate-only execution is delivered through PR #118; preparation/prediction/scoring is delivered through PR #120 with exact main/package acceptance. PR #119 security delivery remains accepted. Charged same-store freeze and actual-Journal comparison-candidate execution are delivered through PR #121/main 1474e57, including independent runtime review, paid recovery and exact candidate verification. The fixed classical unit is delivered through PR #122/main 1bc87e9: all five main jobs passed, each Python runtime passed 4,283 tests, and exact 83-file candidate 12584546922 matched the reviewed archives. See the [assignment board](../EXECUTION_LOG.md#current-assignment-board) for current and next ownership and the delivery record below for evidence.
 
@@ -180,3 +180,7 @@ Next, Quality owns the queued bounded Journal/capture-holder PR, followed by com
 Quality owns the existing identity checkout for the first of the two reviewed purchase PRs: fixed bounded Journal access and capture holding. Platform reviews resource, process and durability limits; Research reviews identity, failure semantics and ordinary Journal compatibility. The next gate is an immutable source checkpoint and finite lower-level test plan, followed by independent runtime evidence and normal delivery checks. Public measured purchase integration follows this prerequisite's acceptance.
 
 PR #122 remains delivered. The V3 16-call allocation is conditional; no scientific comparison or new allocation has started. Parent issues #105/#106, publisher handoff and full-study capacity remain open. The native first-result forecast still requires bottom-up re-estimation; approved caps and broader programme scope are unchanged.
+
+## 2026-10-25 — Bounded Journal source reviewed
+
+Source 730cc86 passed both scoped runtime reviews; final author checks and PR/main/candidate delivery remain pending. Public purchase integration and the conditional V3 16-call specimen have not run. Parent issues #105/#106, publisher handoff, full-study capacity and the first-result re-estimate remain open. [Evidence and current assignments](../EXECUTION_LOG.md#2026-10-25--bounded-journal-source-accepted-final-checks-pending).
