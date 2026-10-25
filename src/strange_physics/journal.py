@@ -8,10 +8,14 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from strange_physics.contracts import Checkpoint, Experiment, ExperimentRecord
 from strange_physics.serialization import canonical_json
 from strange_physics.worlds import WorldDefinition
+
+if TYPE_CHECKING:
+    from strange_physics.purchase_journal import JournalWriteBudget
 
 APPLICATION_ID = 0x53504859
 
@@ -35,19 +39,40 @@ class Reservation:
 
 
 class Journal:
-    def __init__(self, path: Path, *, create: bool = False) -> None:
+    def __init__(
+        self, path: Path, *, create: bool = False, bounded: JournalWriteBudget | None = None
+    ) -> None:
+        self._bounded = bounded
+        if bounded is not None:
+            from strange_physics.purchase_journal import check_files, configure_writer
+
+            bounded.claim("open")
+            path = check_files(path, create=create)
         if path.is_symlink():
             raise ValueError("a run journal cannot be a symbolic link")
         if create:
-            path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+            if bounded is None:
+                path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
             descriptor = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
             os.close(descriptor)
+            if bounded is not None:
+                directory = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+                try:
+                    os.fsync(directory)
+                finally:
+                    os.close(directory)
         elif not path.is_file():
             raise FileNotFoundError(path)
         self._db = sqlite3.connect(path, isolation_level=None, timeout=10)
         self._db.row_factory = sqlite3.Row
+        if bounded is not None:
+            try:
+                configure_writer(self._db, bounded)
+            except BaseException:
+                self._db.close()
+                raise
         if create:
-            self._db.executescript(f"""
+            schema = f"""
                 PRAGMA application_id = {APPLICATION_ID};
                 PRAGMA user_version = 1;
                 CREATE TABLE run (
@@ -65,7 +90,17 @@ class Journal:
                     operation_id TEXT PRIMARY KEY, exception_type TEXT NOT NULL,
                     stack_locations TEXT NOT NULL
                 );
-            """)
+            """
+            if bounded is None:
+                self._db.executescript(schema)
+            else:
+                try:
+                    for index, statement in enumerate(s for s in schema.split(";") if s.strip()):
+                        bounded.claim(f"schema-{index}")
+                        self._db.execute(statement)
+                except BaseException:
+                    self._db.close()
+                    raise
         elif (
             self._db.execute("PRAGMA application_id").fetchone()[0] != APPLICATION_ID
             or self._db.execute("PRAGMA user_version").fetchone()[0] != 1
@@ -76,18 +111,25 @@ class Journal:
         self._db.execute("PRAGMA synchronous = FULL")
 
     @contextmanager
-    def _transaction(self) -> Iterator[None]:
+    def _transaction(self, operation: str) -> Iterator[None]:
+        if self._bounded is not None:
+            self._bounded.claim(operation)
         self._db.execute("BEGIN IMMEDIATE")
         try:
             yield
-        except BaseException:
-            self._db.execute("ROLLBACK")
+        except BaseException as error:
+            try:
+                self._db.execute("ROLLBACK")
+            except BaseException:
+                if self._bounded is None:
+                    raise
+                error.add_note("Bounded Journal rollback failed; allowance remains spent.")
             raise
         else:
             self._db.execute("COMMIT")
 
     def initialize(self, run_id: str, world: WorldDefinition, fingerprint: str) -> None:
-        with self._transaction():
+        with self._transaction("initialize"):
             self._db.execute(
                 "INSERT INTO run VALUES (?, ?, ?, NULL)",
                 (run_id, world.model_dump_json(), fingerprint),
@@ -104,7 +146,7 @@ class Journal:
         return int(self._db.execute("SELECT COUNT(*) FROM experiments").fetchone()[0])
 
     def bind_agent(self, agent_id: str) -> None:
-        with self._transaction():
+        with self._transaction("bind_agent"):
             row = self._db.execute("SELECT agent_id FROM run").fetchone()
             if row is None:
                 raise IncompatibleRun("journal initialization is incomplete")
@@ -113,6 +155,8 @@ class Journal:
             self._db.execute("UPDATE run SET agent_id = ?", (agent_id,))
 
     def record_failure(self, operation_id: str, exception_type: str, locations: list[str]) -> None:
+        if self._bounded is not None:
+            self._bounded.claim("failure")
         self._db.execute(
             "INSERT OR IGNORE INTO failures VALUES (?, ?, ?)",
             (operation_id, exception_type[:256], canonical_json(locations[-20:])),
@@ -120,7 +164,7 @@ class Journal:
 
     def reserve(self, operation_id: str, experiment: Experiment, budget: int) -> Reservation:
         request = canonical_json(experiment.model_dump(mode="json"))
-        with self._transaction():
+        with self._transaction("reserve"):
             row = self._db.execute(
                 "SELECT ordinal, request_json, record_json FROM experiments WHERE operation_id = ?",
                 (operation_id,),
@@ -142,7 +186,7 @@ class Journal:
             return Reservation(used, None)
 
     def commit(self, record: ExperimentRecord) -> ExperimentRecord:
-        with self._transaction():
+        with self._transaction("commit"):
             row = self._db.execute(
                 "SELECT ordinal, request_json, record_json FROM experiments WHERE operation_id = ?",
                 (record.operation_id,),
@@ -184,7 +228,7 @@ class Journal:
         payload = canonical_json(checkpoint.model_dump(mode="json"))
         if len(payload.encode()) > 262_144:
             raise ValueError("checkpoint state exceeds 256 KiB; store bulk data as artifacts")
-        with self._transaction():
+        with self._transaction("save_checkpoint"):
             rows = self._db.execute(
                 "SELECT ordinal, record_json FROM experiments ORDER BY ordinal"
             ).fetchall()
