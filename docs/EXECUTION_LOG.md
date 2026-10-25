@@ -12,10 +12,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Classical source/evidence released; next purchase handoff preparation | 4,283 tests and configured gates passed; documentation-only 28431b6; no remaining source/environment hold |
-| Platform | Exact source/package delivery verification | Structural runtime accepted; verifier prepared and awaiting final pins |
-| Research | Progress consistency and next measured-purchase handoff | Scientific runtime accepted; next source-pinned handoff prepared, no implementation |
-| Project lead | Progress, integration and normal delivery | Reuse existing cloud checkouts; parents105/106 and study admission remain open |
+| Quality | Two purchase PRs planned; bounded Journal support queued | Accepted design V3; source/runtime work awaits current delivery and checkout handoff |
+| Platform | Exact protected-main package verification for PR #122 | Main 1bc87e9 / run 40156370203; all jobs and candidate evidence required |
+| Research | Progress consistency and purchase scope/estimate review | Design V3 and sequential split accepted; current programme forecast needs re-estimation |
+| Project lead | Final delivery and next checkout assignment | Reuse both cloud checkouts; parents #105/#106 and study admission remain open |
 
 ## Assignment history
 
@@ -912,3 +912,11 @@ Quality finishes the permanent failure cases and then freezes the source and ins
 The fixed Journal-bound classical implementation at 28431b6 has passed review. All 4,283 tests passed in 926.83 seconds on 11aada9; the final change affects documentation only. Configured lint/type checks, 1,522 schema cases, security checks, package checks and installed-CLI checks passed. The fresh six-call synthetic fixture retains 27 ledger records and 14 unresolved holds within its declared 278,020,096-byte / 462-CPU-second envelope. Research passed seven independent cases with nine public calls and two classical children; Platform passed six structural cases and two guard-removal checks using an explicitly labeled retained-result feeder. Paid recovery preserves original results without numerical reruns. Normal PR/main CI and exact candidate verification remain pending. Public purchased simulation, publisher handoff, feasible full-study allocation and explicit parent audit remain open; no research comparison has run.
 
 The missing optional classical configuration originally leaked StopIteration at 985ce55; the explicit typed-error guard was repaired at 6c09f59 and its precise regression passed. A separate evaluator test expected the wrong existing outcome name; only that assertion changed at 11aada9. Both failed diagnostics remain source-specific evidence. The next measured-purchase handoffs agree on durable intent before Journal work, bounded transient writes and truthful recovery across separate databases. Their proposed 16-call specimen has no inherited allocation or execution claim.
+
+## 2026-10-24 — Classical merged; purchase work split
+
+The fixed Journal-bound classical unit merged in [PR #122](https://github.com/spei04/strange-physics/pull/122) as main 1bc87e9 after required PR checks passed. Its tree equals reviewed head 58ce8bf. Protected-main run 40156370203 and exact candidate verification remain pending; this is not a release or a completed research study. Parent issues #105 and #106 remain open.
+
+The next purchase design passed two independent source reviews at revision 3. It preserves immutable purchase identity across retries, separately binds the current paid attempt, and distinguishes new reconciliation evidence from an original measured receipt. Both fixed Journal processes require a 128 KiB file limit before opening SQLite; oversized rollback files must fail with unknown costs retained. The conditional 16-call specimen reserves 589,561,856 bytes and 708 CPU-seconds, including setup, recovery and publication protection. Runtime enforcement and usability remain unproved.
+
+Implementation is split into two sequential PRs: bounded Journal support and capture holding first; then the measured purchase, same-slot retry, paid replay and reconciliation flow. Their provisional estimate is 6–11 engineer-days including review/repair, with moderate confidence. This decomposes remaining parent work; it is not an addition to the historical task estimates. The earlier 15–23-day remainder and approved 17–26-day full path are retained as historical baselines. A current total requires bottom-up re-estimation, including still-open publisher handoff, full-study capacity and parent audit. No new completion date, approval, scientific scope or allocation is established.
