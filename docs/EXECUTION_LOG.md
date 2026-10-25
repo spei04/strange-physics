@@ -12,10 +12,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Next: fixed Journal-bound classical diagnostic | Concrete file/interface/test handoff prepared; implementation has not started |
-| Platform | Freeze/Journal package delivery verified; next boundary review | Exact main, 83 package files and both archives accepted; hold released |
-| Research | Reconcile final delivery progress; next scientific review | Earlier runtime/material review accepted; no active runtime hold |
-| Project lead | Record verified delivery and coordinate the next source handoff | Reuse the two cloud checkouts; parent issues105/106 stay open |
+| Quality | Implement fixed Journal-bound classical diagnostic and bounded fixture | Exclusive identity writer from main1474e57; source/runtime proof pending |
+| Platform | Independent accounting/boundary review | Immutable source first, then frozen-runtime recovery and fault checks |
+| Research | Independent scientific/material review | Typed frozen configs, original mixed prefix and independent classical outcomes |
+| Project lead | Assignment log, integration and delivery | Own primary progress; reuse existing checkouts; parents105/106 stay open |
 
 ## Assignment history
 
@@ -894,3 +894,9 @@ The merged source preserves Quality's final author implementation at27081a7; its
 Quality prepared the next fixed classical implementation handoff (private index377f7fd774443c0253fd6cf0942920cfd6e00f5ea2c75b88b1d503326872984c), based on Research's minimal handoff9116dd0274648eaa9770420f419ebb9e9d5460397cdf9d825e3e916da3921fa7. It extends the existing concrete interfaces and supervisor, freezes actual typed configs at the start of a fresh fixture, and retains optional native selection and independent classical success. Implementation has not started; its six-call allocation remains conditional until actual proof. Ordinary classical work remains unreserved before admission.
 
 The accepted four-call scope, all failed/unknown cost holds and cumulative approved study limits remain unchanged. Classical dispatch, measured public purchased simulation, publisher authority handoff, feasible full-study allocation and explicit RA-02/RA-N01 parent audit remain open. The actual research comparison has not started. Laplace remains later than the calibrated finite-grid comparison; the grid/calibration/acquisition census gates the actual study rather than becoming a circular source-acceptance prerequisite.
+
+## 2026-10-24 — Fixed classical execution assigned
+
+Quality now implements the fixed Journal-bound classical diagnostic in the released identity checkout, from accepted main1474e57. Platform independently reviews accounting, boundaries and recovery; Research reviews retained-material and scientific semantics; Lead owns integration and progress. The fresh fixture must freeze actual typed configs before work and demonstrate the existing conditional six-call envelope (278,020,096 bytes / 462 CPU seconds). Classical work is reserved on admission; prior unresolved holds remain. Public purchased simulation, publisher handoff, feasible full-study allocation and explicit parent audit remain open. RA-02/#105 and RA-N01/#106 remain in progress; no research comparison has started.
+
+Lead checked both cloud checkouts clean and found no active checkout process before handoff. Quality owns identity source and its environment exclusively until a frozen review handoff; Lead owns primary progress. Existing handoffs377f7fd7 and9116dd02 define one extension to the four concrete implementation modules and a fresh fixture; no general dispatch framework, new dependency or new allocation is authorized. The expected six-call census is27 records/14 unresolved holds and remains conditional until measured. The accepted four-call evidence is preserved unchanged.
