@@ -475,7 +475,9 @@ def test_measured_classical_scientific_outcomes_remain_distinct(
         assert value.result.facts.outcome == "failed"
     else:
         assert p.status == "evaluated" and p.evaluation is not None
-        assert p.evaluation.status == ("unscorable" if outcome == "unscorable" else "failed")
+        assert p.evaluation.status == (
+            "unscorable" if outcome == "unscorable" else "evaluator_failure"
+        )
         assert (p.evaluation.report is not None) == (outcome == "unscorable")
         assert value.result.facts.outcome == ("completed" if outcome == "unscorable" else "failed")
     assert value.measurements.child_cpu_ns > 0
