@@ -12,10 +12,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Two purchase PRs planned; bounded Journal support queued | Accepted design V3; source/runtime work awaits current delivery and checkout handoff |
-| Platform | Exact protected-main package verification for PR #122 | Main 1bc87e9 / run 40156370203; all jobs and candidate evidence required |
-| Research | Progress consistency and purchase scope/estimate review | Design V3 and sequential split accepted; current programme forecast needs re-estimation |
-| Project lead | Final delivery and next checkout assignment | Reuse both cloud checkouts; parents #105/#106 and study admission remain open |
+| Quality | Bounded Journal/capture-holder PR queued; purchase integration follows | V3 accepted; clean identity checkout prepared at delivered main, implementation not started |
+| Platform | Resource, process and durability review for the next Journal PR | PR #122 exact main/package accepted; all source/environment holds released |
+| Research | Scientific identity and progress review | Design V3 and split accepted; first-result forecast needs re-estimation |
+| Project lead | Integration, delivery and assignment tracking | PR #122 delivered; existing checkout prepared for next PR, parents #105/#106 remain open |
 
 ## Assignment history
 
@@ -920,3 +920,11 @@ The fixed Journal-bound classical unit merged in [PR #122](https://github.com/sp
 The next purchase design passed two independent source reviews at revision 3. It preserves immutable purchase identity across retries, separately binds the current paid attempt, and distinguishes new reconciliation evidence from an original measured receipt. Both fixed Journal processes require a 128 KiB file limit before opening SQLite; oversized rollback files must fail with unknown costs retained. The conditional 16-call specimen reserves 589,561,856 bytes and 708 CPU-seconds, including setup, recovery and publication protection. Runtime enforcement and usability remain unproved.
 
 Implementation is split into two sequential PRs: bounded Journal support and capture holding first; then the measured purchase, same-slot retry, paid replay and reconciliation flow. Their provisional estimate is 6–11 engineer-days including review/repair, with moderate confidence. This decomposes remaining parent work; it is not an addition to the historical task estimates. The earlier 15–23-day remainder and approved 17–26-day full path are retained as historical baselines. A current total requires bottom-up re-estimation, including still-open publisher handoff, full-study capacity and parent audit. No new completion date, approval, scientific scope or allocation is established.
+
+## 2026-10-24 — Measured classical delivery accepted
+
+[PR #122](https://github.com/spei04/strange-physics/pull/122) is delivered as main 1bc87e9. All five jobs in [protected-main run 40156370203](https://github.com/spei04/strange-physics/actions/runs/40156370203) passed; Python 3.12 and 3.14 each passed 4,283 tests (477.84 and 545.72 seconds). Unpublished candidate 12584546922 matched all 83 package files and both reviewed author archives. Its 494,358-byte ZIP has SHA-256 ba042b3e3ccf78a1179a29be978e1dd6093fd5c74570b7f5289d7abd0dbf97e4. The exact-source review also checked 13 hosted interpreter-copy observations and both certificate-store guards. Exported requirements bytes were not independently recomputed; copied interpreters still use base standard/shared libraries.
+
+Lead independently read and rehashed the final 14-file/nine-reference evidence index and its 12-record monitor index. The accepted six-call synthetic scope and retained failure/unknown costs remain unchanged. This delivery does not run the research comparison or establish full-study capacity. RA-02/#105 and RA-N01/#106 remain open.
+
+Next, Quality owns the queued bounded Journal/capture-holder PR, followed by complete measured-purchase integration after that prerequisite is accepted. Platform reviews resource limits, process lifetime and durability; Research reviews scientific identities, failure semantics and progress consistency; Lead owns integration and delivery. The existing identity checkout is prepared at accepted main on feat/bounded-purchase-journal; source implementation has not started. V3's conditional profile and the first-result forecast re-estimation remain as recorded above.
