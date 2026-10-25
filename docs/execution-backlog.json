@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "bounded_journal_runtime_reviews_accepted_author_gates_running_delivery_pending_parents_open",
+      "status": "bounded_journal_final_author_and_peer_checks_accepted_delivery_pending_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Run final configured/full-suite/package checks for bounded Journal 730cc86; final author evidence pending.",
-        "Platform": "Prepare exact-source delivery verification after accepted boundary review; runtime hold released.",
-        "Research": "Five-document progress reconciliation after accepted semantic review; runtime hold released.",
-        "Project lead": "Review progress and final evidence, then integrate and deliver; no parent or study closure."
+        "Quality": "Final bounded Journal source/environment released; public purchase integration queued after prerequisite delivery and explicit writer handoff.",
+        "Platform": "Verify exact integrated source and PR/main release candidate; boundary review accepted, no runtime hold.",
+        "Research": "Final author evidence and five-document consistency; release primary docs to Lead after commit.",
+        "Project lead": "Review final progress, integrate and deliver the Journal prerequisite; parents and study remain open."
       },
-      "handoff": "Quality retains identity for configured/full-suite/package gates on peer-reviewed 730cc86. Both peer runtime holds are released. Research authors the primary five-doc checkpoint then releases it to Lead for review/integration; Platform prepares exact delivery verification. Public purchase integration has not started.",
+      "handoff": "Quality released identity at docs-only 8c85fef with runtime 730cc86 and all final configured checks accepted. Research owns only the primary five-doc update and releases it to Lead for review. Lead owns source integration/delivery; Platform verifies hosted candidate evidence. No public purchase implementation has started.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Implement and verify bounded Journal/capture-holder support, then complete measured public purchase integration. Publisher handoff, full-study capacity and explicit parent audit remain separate; future grid/acquisition census gates the actual study.",
+      "next_units": "Deliver accepted bounded Journal/capture-holder source through PR/main/candidate checks, then implement the existing measured public purchase integration after explicit handoff. Publisher handoff, full-study capacity and explicit parent audit remain separate; future grid/acquisition census gates the actual study.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14139,7 +14139,7 @@
         "qualification": "Purchase estimate decomposes parent work and is not blindly additive. Remaining publisher handoff, full-study capacity and parent audit are not yet re-estimated; no current aggregate or calendar date is claimed."
       },
       "bounded_journal_prerequisite": {
-        "status": "runtime_reviews_accepted_author_gates_running_delivery_pending",
+        "status": "final_author_and_peer_checks_accepted_delivery_pending",
         "base_source": "1bc87e9f7914b3fdf35d4e13b2e56c4b0dfed37f",
         "source_commit": "730cc862f0a5ba66a1267c6e1dce6183f518eaaa",
         "source_tree": "6d1436e354be3f2f3032fd8bc8de41be4fa5a4c6",
@@ -14192,7 +14192,7 @@
         "installed_package_files_verified": 84,
         "prior_findings_and_diagnostics_retained": true,
         "peer_runtime_holds": "released",
-        "author_configured_full_suite_package_gates": "running; results not yet recorded",
+        "author_configured_full_suite_package_gates": "passed at 730cc86; final 8c85fef differs only in implementation documentation",
         "delivery": "PR/main/candidate pending",
         "public_purchase_integration": "not_started",
         "v3_16_call_profile": "conditional; no runtime admission",
@@ -14202,12 +14202,58 @@
           "RA-N01": 106
         },
         "remaining": [
-          "Final author gates and normal delivery",
+          "Normal PR/main/candidate delivery",
           "Public measured purchase/retry/replay/reconciliation integration",
           "Conditional 16-call fixture proof",
           "Publisher authority handoff",
           "Full-study capacity and explicit parent audit"
-        ]
+        ],
+        "final_author": {
+          "source_commit": "8c85fef1a0a6750284053823b2e2e0097ae9fca4",
+          "source_tree": "1f10ad205dba0a365bd27a4688f799aa6fd18881",
+          "runtime_source": "730cc862f0a5ba66a1267c6e1dce6183f518eaaa",
+          "index_sha256": "73f6dd393309f7565f1e432d8494dab6e1c11ee5e893025a98a4ba33a3bb5755",
+          "verified_index_children": 21,
+          "verified_index_references": 11,
+          "docs_only_delta": [
+            "docs/BOUNDED_PURCHASE_JOURNAL.md"
+          ],
+          "configured_checks": 14,
+          "configured_checks_passed": 14,
+          "full_tests": 4314,
+          "pytest_seconds": 917.64,
+          "format_files": 206,
+          "strict_mypy_files": 148,
+          "schema_checks": 1522,
+          "bandit_findings": {
+            "low": 67,
+            "medium": 0,
+            "high": 0
+          },
+          "strict_audit": "passed; no known vulnerabilities",
+          "installed_certificate_trust_guard": "passed",
+          "package_build_source": "2d039d6e9bcad585bec4c089b5a4c053280e09e1",
+          "package_archive_source_parity": "passed; runtime and build inputs unchanged through final source",
+          "installed_package_files": 84,
+          "unchanged_dependency_files": 4689,
+          "unchanged_project_metadata_files": 9,
+          "isolated_installed_import": "passed",
+          "dependency_compatibility": "passed",
+          "existing_cli_smoke": "passed",
+          "source_environment_release": "clean and released to Lead; no active consumer"
+        },
+        "pr2_integration_handoff": {
+          "source_commit": "730cc862f0a5ba66a1267c6e1dce6183f518eaaa",
+          "index_sha256": "feeb5e31f93b18c462b921267509f382b988aed6767c9dca4b5c55388a4a5de8",
+          "status": "read_only_wiring_preparation_no_implementation_or_runtime_admission",
+          "required_joins": [
+            "Durable StudyPurchase before writer budget or Journal open",
+            "Preserve inherited limits and confirm writer reap before holder",
+            "Immutable original purchase identity with separately paid current attempt context",
+            "Holder exclusion through final closure; original replay distinct from new reconciliation receipt"
+          ],
+          "prerequisite": "Final PR1 PR/main/candidate acceptance and explicit writer handoff"
+        }
       }
     },
     "certificate_trust_update": {

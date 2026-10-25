@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Run configured, full-suite and package checks for bounded Journal source 730cc86 | Both runtime review lanes accepted; final author evidence and delivery pending |
-| Platform | Prepare exact-source delivery verification | Boundary review accepted; runtime hold released; await final author and integration pins |
-| Research | Reconcile the five progress documents | Semantic review accepted; runtime hold released; first-result forecast still needs re-estimation |
-| Project lead | Review progress, then integrate and deliver the Journal prerequisite | PR #122 remains delivered; author checks and PR/main/candidate delivery pending; parents #105/#106 open |
+| Quality | Queued public purchase integration after prerequisite delivery | Final Journal source released; PR2 wiring handoff prepared; implementation not started |
+| Platform | Verify the integrated PR/main release candidate | Boundary review and final author evidence accepted; delivery pins pending |
+| Research | Verify final evidence and progress consistency | Primary docs update, then release for Lead review; no runtime hold |
+| Project lead | Integrate and deliver the bounded Journal prerequisite | Author and peer checks accepted; PR/main/candidate delivery pending; parents #105/#106 open |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-25 | Quality | Final bounded Journal release 8c85fef | Fourteen configured checks pass on runtime-identical 730cc86; identity released; public purchase integration queued |
+| 2026-10-25 | Platform | Integrated source and candidate verification | Final author and boundary evidence accepted; await PR/main delivery pins |
+| 2026-10-25 | Research | Final evidence and five-document consistency | Docs-only parity and sealed records verified; primary update then release |
+| 2026-10-25 | Project lead | PR integration and delivery | Review final documentation, retain normal hosted gates; parents remain open |
 | 2026-10-25 | Quality | Final bounded Journal author checks | Source 730cc86 accepted by both runtime lanes; configured/full-suite/package results pending |
 | 2026-10-25 | Platform | Exact-source delivery verifier preparation | Fourteen boundary cases accepted; no runtime hold |
 | 2026-10-25 | Research | Five-document progress reconciliation | Eight semantic cases and one guard mutant accepted; primary environment unused |
@@ -951,3 +955,13 @@ The repairs preserve original errors during cleanup, leave lost reap observation
 Real hot recovery and guarded raced recovery retained a 40 KiB database; removed-cap variants grew to 256 KiB. A separate synthetic dirty-all-pages SQLite case succeeded at 64 KiB but hit the file-size limit during rollback-journal growth at 128 KiB. This bounds the demonstrated profile: it does not promise success for every 32-page transaction or establish public purchase behavior. Full failed/pending row identity and unknown costs remain explicit.
 
 Both peer runtime holds are released. Quality is running the configured, full-suite and package gates; Platform prepares exact-source verification, Research reconciles progress, and Lead owns integration and delivery. PR/main/candidate acceptance remains pending. Public measured purchase integration, its conditional V3 16-call specimen, publisher handoff, full-study capacity and parent issues #105/#106 remain open. No simulator or research comparison ran in these prerequisite checks; no caps, graph, approvals or estimates changed.
+
+## 2026-10-25 — Bounded Journal final checks accepted; delivery pending
+
+Final source 8c85fef1a0a6750284053823b2e2e0097ae9fca4 (tree 1f10ad205dba0a365bd27a4688f799aa6fd18881) changes only implementation documentation after reviewed 730cc86. Runtime, tests, lock and build inputs remain unchanged. The sealed author index is 73f6dd393309f7565f1e432d8494dab6e1c11ee5e893025a98a4ba33a3bb5755; all 21 files and 11 references were independently rehashed.
+
+All 14 configured checks passed on 730cc86, including 4,314 tests in 917.64 seconds, format checks for 206 files, strict type checks for 148 files and 1,522 schema checks. Strict dependency audit, installed certificate-bundle checks, package archives, isolated installed import, dependency compatibility and existing CLI smoke passed. Configured Bandit reported 67 low findings and zero medium/high findings. The retained archives built at production-identical 2d039d6 remain applicable; 84 installed package files, 4,689 dependency files and nine project metadata files are unchanged. Earlier focused results, repaired findings and peer evidence above remain source-specific.
+
+The private PR2 wiring handoff (index feeb5e31f93b18c462b921267509f382b988aed6767c9dca4b5c55388a4a5de8) maps the accepted helper to durable purchase intent before Journal access, preserved child limits, confirmed writer reap before capture, immutable original input with paid current context, and distinct replay/reconciliation receipts. It is preparation only. Public measured purchase integration and the conditional V3 16-call specimen have not run; the 128 KiB rollback limitation remains.
+
+Quality released the source and environment and is queued for PR2 after prerequisite delivery and explicit handoff. Lead owns integration/delivery, Platform verifies the candidate, and Research checks consistency. PR/main/candidate acceptance remains pending. Parent issues #105/#106, publisher handoff, full-study capacity and the first-result re-estimate remain open; the study has not started and approved caps, graph and estimates are unchanged.

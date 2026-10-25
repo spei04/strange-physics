@@ -45,7 +45,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 | Three force families, 2D, 1–8 particles, public contracts, SDK and CLI | Verified and integrated | Baseline commit above; src/strange_physics and numerical/contract tests |
 | Local transactional reservations, checkpoints, replay after interruption | Verified locally | journal.py, session.py, sdk.py; failure and concurrency tests; not distributed durability |
 | External custom agent and law example | Verified locally | examples/custom_extension.py and tests/test_extensions.py; not outside-team adoption |
-| Current code and delivery checks | Classical delivered; bounded Journal runtime reviews accepted | Main 1bc87e9, all five main jobs and exact 83-file candidate 12584546922 accepted; 4,283 tests on each Python runtime. [Current assignments](EXECUTION_LOG.md#current-assignment-board). Bounded Journal final author checks and delivery pending; purchase integration, handoff, full-study capacity and parent gates remain open |
+| Current code and delivery checks | Classical delivered; bounded Journal final local checks accepted | Final Journal source 8c85fef preserves reviewed 730cc86; 4,314 tests and all 14 configured checks passed. PR/main/candidate delivery remains pending. [Current assignments](EXECUTION_LOG.md#current-assignment-board). Public purchase integration, handoff, full-study capacity and parent gates remain open |
 | Existing GitHub CI | Verified at reviewed integration head | All four Python 3.12/3.14 PR and push checks passed at 5cb1895; 55 tests, Ruff, strict mypy, package build and CLI smoke. Merge tree matches this reviewed head; [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060 |
 | Baseline integration to main | Verified | PR #1 merged as 7117060; Quality/Research peer reviews passed and git diff confirms tree identity with 5cb1895. This is not a product release |
 | Stage 2 execution backlog | Approved 2026-10-19 | 168 PR tasks across 42 epic issues; 369 task/gate prerequisites; scope, exclusions, contracts, tests, confidence and done criteria; dependency/resource audit passed |
@@ -1471,3 +1471,7 @@ PR #122 remains delivered. The V3 16-call allocation is conditional; no scientif
 ## 2026-10-25 — Bounded Journal source reviewed
 
 Source 730cc86 passed both scoped runtime reviews; final author checks and PR/main/candidate delivery remain pending. Public purchase integration and the conditional V3 16-call specimen have not run. Parent issues #105/#106, publisher handoff, full-study capacity and the first-result re-estimate remain open. [Evidence and current assignments](EXECUTION_LOG.md#2026-10-25--bounded-journal-source-accepted-final-checks-pending).
+
+## 2026-10-25 — Bounded Journal final author acceptance
+
+Final source 8c85fef preserves reviewed runtime 730cc86; all 14 configured checks passed, including 4,314 tests. PR/main/candidate delivery is pending. Quality is queued for public purchase integration after delivery; the V3 specimen, publisher handoff, full-study capacity and parent issues #105/#106 remain open. [Evidence and assignments](EXECUTION_LOG.md#2026-10-25--bounded-journal-final-checks-accepted-delivery-pending).

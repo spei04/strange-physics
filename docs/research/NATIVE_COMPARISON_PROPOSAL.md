@@ -129,7 +129,7 @@ Use the existing machine, at most8 CPU-core-hours and1GiB new artifacts, with ze
 
 ## Current assignment
 
-The bounded Journal/capture-holder prerequisite at 730cc86 passed independent boundary and semantic runtime reviews. Quality is running final author checks; Platform prepares delivery verification, Research reconciles progress, and Lead owns integration. PR/main/candidate delivery and subsequent public purchase integration remain pending.
+The bounded Journal/capture-holder prerequisite is released at 8c85fef with reviewed runtime 730cc86 and all final author checks accepted. Lead owns integration/delivery, Platform verifies the release candidate, and Research checks progress consistency. Quality is queued for public purchase integration after prerequisite delivery and explicit handoff; implementation and the V3 specimen have not started.
 
 Candidate-only execution is delivered through PR #118; preparation/prediction/scoring is delivered through PR #120 with exact main/package acceptance. PR #119 security delivery remains accepted. Charged same-store freeze and actual-Journal comparison-candidate execution are delivered through PR #121/main 1474e57, including independent runtime review, paid recovery and exact candidate verification. The fixed classical unit is delivered through PR #122/main 1bc87e9: all five main jobs passed, each Python runtime passed 4,283 tests, and exact 83-file candidate 12584546922 matched the reviewed archives. See the [assignment board](../EXECUTION_LOG.md#current-assignment-board) for current and next ownership and the delivery record below for evidence.
 
@@ -184,3 +184,7 @@ PR #122 remains delivered. The V3 16-call allocation is conditional; no scientif
 ## 2026-10-25 — Bounded Journal source reviewed
 
 Source 730cc86 passed both scoped runtime reviews; final author checks and PR/main/candidate delivery remain pending. Public purchase integration and the conditional V3 16-call specimen have not run. Parent issues #105/#106, publisher handoff, full-study capacity and the first-result re-estimate remain open. [Evidence and current assignments](../EXECUTION_LOG.md#2026-10-25--bounded-journal-source-accepted-final-checks-pending).
+
+## 2026-10-25 — Bounded Journal final author acceptance
+
+Final source 8c85fef preserves reviewed runtime 730cc86; all 14 configured checks passed, including 4,314 tests. PR/main/candidate delivery is pending. Quality is queued for public purchase integration after delivery; the V3 specimen, publisher handoff, full-study capacity and parent issues #105/#106 remain open. [Evidence and assignments](../EXECUTION_LOG.md#2026-10-25--bounded-journal-final-checks-accepted-delivery-pending).
