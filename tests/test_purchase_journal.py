@@ -6,6 +6,8 @@ import hashlib
 import json
 import os
 import resource
+import signal
+import socket
 import sqlite3
 import subprocess
 import sys
@@ -238,3 +240,115 @@ def test_ordinary_journal_idempotence_unchanged(tmp_path: Path) -> None:
         assert journal.records() == (original,)
     finally:
         journal.close()
+
+
+def test_ordinary_import_does_not_require_unix_resource() -> None:
+    code = """import importlib.abc,sys
+class Block(importlib.abc.MetaPathFinder):
+ def find_spec(self, fullname, path=None, target=None):
+  if fullname == "resource":
+   raise ModuleNotFoundError("resource intentionally unavailable")
+sys.meta_path.insert(0,Block())
+from strange_physics.sdk import *
+from strange_physics.journal import Journal
+"""
+    result = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=5)
+    assert result.returncode == 0, result.stderr
+
+
+def test_writer_captures_stricter_parent_timer_before_fork() -> None:
+    epochs = JournalEpochs()
+    previous = signal.getitimer(signal.ITIMER_REAL)
+    try:
+        signal.setitimer(signal.ITIMER_REAL, 2.0)
+        now = time.monotonic_ns()
+        budget = epochs.writer(deadline(20))
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, *previous)
+    try:
+        assert now < budget.deadline_ns <= time.monotonic_ns() + 2_000_000_000
+    finally:
+        budget.close()
+
+
+def test_short_raw_read_with_matching_prefix_digest_is_not_capture(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from strange_physics import purchase_journal as m
+
+    path = private(tmp_path / "private") / "journal.db"
+    create(path)
+    raw = path.read_bytes()
+    epochs = JournalEpochs()
+    original = os.pread
+    monkeypatch.setattr(m.os, "pread", lambda fd, count, offset: original(fd, count, offset)[:100])
+    with pytest.raises(JournalBoundError):
+        with capture_journal(
+            path, hashlib.sha256(raw[:100]).hexdigest(), epochs=epochs, deadline_ns=deadline()
+        ):
+            pytest.fail("truncated Journal became a full capture")
+    assert epochs.holder_status != 0 and epochs.holder_cpu_ns is not None
+
+
+def test_postfork_parent_close_failure_still_reaps(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = private(tmp_path / "private") / "journal.db"
+    create(path)
+    epochs = JournalEpochs()
+    parent_pid = os.getpid()
+    original = socket.socket.close
+    failed = False
+
+    def close(channel: socket.socket) -> None:
+        nonlocal failed
+        if os.getpid() == parent_pid and not failed:
+            failed = True
+            raise OSError("parent setup close failed")
+        original(channel)
+
+    monkeypatch.setattr(socket.socket, "close", close)
+    with pytest.raises(OSError, match="parent setup"):
+        with capture_journal(
+            path,
+            hashlib.sha256(path.read_bytes()).hexdigest(),
+            epochs=epochs,
+            deadline_ns=deadline(),
+        ):
+            pytest.fail("setup failure reached yield")
+    assert epochs.holder_pid is not None and epochs.holder_status is not None
+    with pytest.raises(ChildProcessError):
+        os.waitpid(epochs.holder_pid, os.WNOHANG)
+
+
+def test_reap_failure_preserves_original_error_and_unknown_usage(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from strange_physics import purchase_journal as m
+
+    path = private(tmp_path / "private") / "journal.db"
+    create(path)
+    epochs = JournalEpochs()
+    real_wait = os.wait4
+    waited = False
+
+    def wait(pid: int, options: int) -> tuple[int, int, resource.struct_rusage]:
+        nonlocal waited
+        if not waited:
+            real_wait(pid, options)  # Actually reap; deliberately lose the observation.
+            waited = True
+            raise OSError("first cleanup fault")
+        raise ChildProcessError("second cleanup fault")
+
+    monkeypatch.setattr(m.os, "wait4", wait)
+    with pytest.raises(ValueError, match="original caller error") as caught:
+        with capture_journal(
+            path,
+            hashlib.sha256(path.read_bytes()).hexdigest(),
+            epochs=epochs,
+            deadline_ns=deadline(),
+        ):
+            raise ValueError("original caller error")
+    assert epochs.holder_status is None and epochs.holder_cpu_ns is None
+    assert any("unknown" in note for note in caught.value.__notes__)
+    assert epochs.used == 1

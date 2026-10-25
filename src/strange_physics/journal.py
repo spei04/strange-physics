@@ -8,11 +8,14 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from strange_physics.contracts import Checkpoint, Experiment, ExperimentRecord
-from strange_physics.purchase_journal import JournalWriteBudget, check_files, configure_writer
 from strange_physics.serialization import canonical_json
 from strange_physics.worlds import WorldDefinition
+
+if TYPE_CHECKING:
+    from strange_physics.purchase_journal import JournalWriteBudget
 
 APPLICATION_ID = 0x53504859
 
@@ -41,6 +44,8 @@ class Journal:
     ) -> None:
         self._bounded = bounded
         if bounded is not None:
+            from strange_physics.purchase_journal import check_files, configure_writer
+
             bounded.claim("open")
             path = check_files(path, create=create)
         if path.is_symlink():

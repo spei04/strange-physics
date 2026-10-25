@@ -41,6 +41,15 @@ def _remaining(deadline_ns: int) -> float:
     return remaining
 
 
+def _effective_deadline(deadline_ns: int) -> int:
+    # POSIX timers do not survive fork. Capture the parent's stricter timer
+    # before forking; child startup/scheduling time consumes this same bound.
+    inherited = signal.getitimer(signal.ITIMER_REAL)[0]
+    if inherited > 0:
+        return min(deadline_ns, time.monotonic_ns() + int(inherited * 1e9))
+    return deadline_ns
+
+
 def _lower_limit(kind: int, ceiling: int) -> None:
     soft, hard = resource.getrlimit(kind)
     values = [ceiling, *(v for v in (soft, hard) if v != resource.RLIM_INFINITY)]
@@ -79,6 +88,7 @@ class JournalEpochs:
     def writer(self, deadline_ns: int) -> JournalWriteBudget:
         if os.getpid() != self.parent_pid or self._writer_reserved:
             raise JournalBoundError("journal_writer_reused")
+        deadline_ns = _effective_deadline(deadline_ns)
         _remaining(deadline_ns)
         self._writer_reserved = True
         self.used += WRITER_EPOCHS
@@ -233,6 +243,7 @@ def _raw(fd: int, path: Path) -> bytes:
     after = os.fstat(fd)
     if (
         len(data) > JOURNAL_BYTES
+        or len(data) != before.st_size
         or before.st_nlink != 1
         or (before.st_size, before.st_mtime_ns, before.st_ctime_ns)
         != (after.st_size, after.st_mtime_ns, after.st_ctime_ns)
@@ -360,6 +371,7 @@ def capture_journal(
     or rollback. A lost acknowledgement remains a failure, never a free retry.
     """
     epochs.holder()  # Spent even if validation, fork, IPC or cleanup fails.
+    deadline_ns = _effective_deadline(deadline_ns)
     _remaining(deadline_ns)
     if len(expected_sha256) != 64 or any(c not in "0123456789abcdef" for c in expected_sha256):
         raise JournalBoundError("journal_identity")
@@ -384,12 +396,12 @@ def capture_journal(
                 child.close()
             finally:
                 os._exit(code)
-    child.close()
     epochs.holder_pid = pid
     capture: JournalCapture | None = None
     failure: BaseException | None = None
     graceful = False
     try:
+        child.close()
         payload = _receive(parent, deadline_ns)
         if payload[:1] != b"D" or hashlib.sha256(payload[1:]).hexdigest() != expected_sha256:
             raise JournalBoundError("journal_identity")
@@ -410,32 +422,52 @@ def capture_journal(
             pass
         raise
     finally:
-        parent.close()
-        if not graceful:
+        cleanup_errors: list[BaseException] = []
+        for endpoint in (parent, child):
+            try:
+                endpoint.close()
+            except BaseException as error:
+                cleanup_errors.append(error)
+
+        def kill() -> None:
             try:
                 os.kill(pid, signal.SIGKILL)
             except ProcessLookupError:
                 pass
-        cleanup_failure: BaseException | None = None
+            except BaseException as error:
+                cleanup_errors.append(error)
+
+        if not graceful or cleanup_errors:
+            kill()
+        status: int | None = None
+        usage: resource.struct_rusage | None = None
         try:
             _, status, usage = os.wait4(pid, 0)
-        except BaseException as cleanup_error:
+        except ChildProcessError as error:
+            # Already reaped/unknown ownership: never signal a possibly reused
+            # PID and never invent its exit status or usage.
+            cleanup_errors.append(error)
+        except BaseException as error:
+            cleanup_errors.append(error)
+            kill()
             try:
-                os.kill(pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
-            _, status, usage = os.wait4(pid, 0)
-            cleanup_failure = cleanup_error
-            if failure is not None:
-                failure.add_note("Holder wait interrupted; killed and reaped.")
+                _, status, usage = os.wait4(pid, 0)
+            except BaseException as second_error:
+                cleanup_errors.append(second_error)
         epochs.holder_status = status
-        epochs.holder_cpu_ns = math.ceil((usage.ru_utime + usage.ru_stime) * 1e9)
+        if usage is not None:
+            epochs.holder_cpu_ns = math.ceil((usage.ru_utime + usage.ru_stime) * 1e9)
         if capture is not None:
             capture.holder_status = status
-            capture.holder_cpu_ns = math.ceil((usage.ru_utime + usage.ru_stime) * 1e9)
-        if not os.WIFEXITED(status) or os.WEXITSTATUS(status) != 0:
-            if failure is None:
+            capture.holder_cpu_ns = epochs.holder_cpu_ns
+        bad_status = status is None or not os.WIFEXITED(status) or os.WEXITSTATUS(status) != 0
+        if cleanup_errors or bad_status:
+            if failure is not None:
+                failure.add_note(
+                    "Journal holder cleanup/status failed; known observations are retained "
+                    "and unavailable observations remain unknown under the prepaid allowance."
+                )
+            elif cleanup_errors:
+                raise JournalBoundError("journal_cleanup_unknown") from cleanup_errors[0]
+            else:
                 raise JournalBoundError("journal_holder_failed")
-            failure.add_note("Journal holder failed; its prepaid control allowance remains held.")
-        if failure is None and cleanup_failure is not None:
-            raise cleanup_failure
