@@ -3770,3 +3770,7 @@ Final source 8c85fef preserves reviewed runtime 730cc86; all 14 configured check
 ## 2026-10-25 — Bounded Journal prerequisite delivered
 
 PR #123/main c784f15 and exact 84-file candidate 12589122154 are accepted; all five main jobs passed. Quality is queued for public purchase integration after explicit handoff. The conditional V3 specimen, publisher handoff, full-study capacity and parent issues #105/#106 remain open. [Delivery evidence and assignments](EXECUTION_LOG.md#2026-10-25--bounded-journal-pr-123-delivered).
+
+## 2026-10-25 — Measured purchase handoff prepared
+
+Quality's PR2 purchase/recovery handoff is prepared from pinned GitHub source, with independent Platform and Research review. Cloud execution awaits restored access and verified checkout ownership, disk and retained evidence. Purchase implementation, V3 and the study remain unstarted; parents and caps are unchanged. See the [implementation handoff](MEASURED_PURCHASE_HANDOFF.md) and [assignment log](EXECUTION_LOG.md#current-assignment-board).

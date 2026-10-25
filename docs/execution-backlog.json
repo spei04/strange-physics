@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "bounded_journal_prerequisite_delivered_public_purchase_queued_parents_open",
+      "status": "bounded_journal_delivered_purchase_handoff_prepared_cloud_execution_pending_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Public measured purchase integration queued after delivered PR1; await explicit writer handoff, no implementation started.",
-        "Platform": "Independent resource/process/recovery review of next purchase wiring; PR123 main candidate accepted, no runtime hold.",
-        "Research": "Final delivery progress consistency, then independent identity/semantic review of next purchase wiring; no runtime hold.",
-        "Project lead": "PR123 delivery accepted; review progress and coordinate explicit PR2 handoff; parents and study gates remain open."
+        "Quality": "Assigned future purchase author; source handoff prepared, cloud writer ownership not granted.",
+        "Platform": "Independent resource/process/cost/recovery constraints and paired evidence prepared; immutable implementation pending.",
+        "Research": "Independent frozen identity, receipt and mixed-history semantics reviewed; complete-path proof and re-estimate remain open.",
+        "Project lead": "Restore verified cloud access, confirm ownership/disk/evidence, then grant checkout and coordinate implementation/delivery."
       },
-      "handoff": "PR123/main c784f15 and its exact candidate are accepted; all source/environment verification holds are released. Research completes only the primary five-doc delivery update, then releases it to Lead. Quality is queued for PR2 after explicit ownership handoff; Platform and Research review immutable implementation. Public purchase and study execution have not started.",
+      "handoff": "GitHub source/document preparation at pinned main c784f15 and progress aeca99b only. Current cloud access, checkout ownership, disk and private evidence are unverified. Historical PR123 source-qualified acceptance is preserved; no runtime or purchase implementation has started.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Implement the existing measured public purchase/retry/replay/reconciliation integration after explicit handoff from delivered bounded Journal support. Prove the conditional V3 specimen without new allocation. Publisher handoff, full-study capacity and explicit parent audit remain separate; future grid/acquisition census gates the actual study.",
+      "next_units": "Restore verified cloud access and explicit checkout ownership, then implement the reviewed public purchase/retry/replay/reconciliation path and its declared bounded proof. Preserve conditional V3 and existing caps. Re-estimate first-result work before study admission; publisher handoff, full-study capacity and parent audits remain open.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14295,6 +14295,20 @@
           ],
           "prerequisite": "PR1 PR/main/candidate acceptance satisfied; explicit PR2 writer handoff still required"
         }
+      },
+      "purchase_integration_handoff": {
+        "status": "prepared_cloud_execution_pending",
+        "source_base": "c784f15dd91dfed169a5af0847dbd31445bcad88",
+        "planning_base": "aeca99b3e865937d8e89e6b41afb77a1999174e0",
+        "document": "docs/MEASURED_PURCHASE_HANDOFF.md",
+        "code_implementation": "not_started",
+        "current_private_evidence_rehashed": false,
+        "fresh_cloud_disk_and_ownership_verified": false,
+        "runtime_execution": "not_started",
+        "initial_checkpoint": "One end-to-end bounded purchase with immutable receipt, known cost settlement and recovery evidence",
+        "full_path_gate": "Declared bounded 12-slot mixed history, retry/reconciliation and downstream candidate/classical proof, peer review and full delivery checks",
+        "v3": "conditional; no new allocation or runtime admission",
+        "reestimate_before_study_admission": true
       }
     },
     "certificate_trust_update": {

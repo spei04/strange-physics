@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Queued public purchase integration | Journal prerequisite delivered; await explicit writer handoff; implementation not started |
-| Platform | Review next purchase resource, process and recovery boundaries | PR #123 main candidate accepted; next immutable source required |
-| Research | Reconcile delivery, then review next purchase identities and semantics | Primary docs update then release; no runtime hold |
-| Project lead | Coordinate the explicit PR2 writer handoff | PR #123 delivery accepted; parents #105/#106 and study gates remain open |
+| Quality | Assigned future author for purchase execution and recovery | GitHub source handoff prepared; cloud checkout ownership awaits verified access and explicit handoff |
+| Platform | Review purchase resource, process, cost and recovery boundaries | Caller constraints and paired evidence prepared; immutable implementation pending |
+| Research | Review purchase identity, failure semantics and history | Semantic handoff reviewed; full-path proof and first-result re-estimate remain open |
+| Project lead | Restore verified cloud access, then grant checkout ownership | PR #123 remains delivered; current disk/private evidence/ownership unverified; caps and parents unchanged |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-25 | Quality | PR2 purchase/retry/recovery handoff | Fixed-source mapping prepared through GitHub; source/runtime work awaits cloud ownership |
+| 2026-10-25 | Platform | PR2 bounded execution and charged failure review | Existing helper guarantees separated from unimplemented caller responsibilities |
+| 2026-10-25 | Research | PR2 frozen identity, receipts and complete-history review | Initial purchase checkpoint distinguished from full 12-slot path and conditional specimen |
+| 2026-10-25 | Project lead | Reviewed source handoff and access prerequisite | Cloud access unavailable; no fresh private index, disk or checkout verification |
 | 2026-10-25 | Project lead + Platform | Bounded Journal PR #123 delivery | Main c784f15, all five jobs and exact candidate 12589122154 accepted |
 | 2026-10-25 | Quality | Next public purchase integration | Queued after delivered prerequisite; explicit writer handoff pending |
 | 2026-10-25 | Platform + Research | Next purchase boundary and semantic reviews | Existing PR2 handoff prepared; await immutable implementation |
@@ -977,3 +981,11 @@ Quality released the source and environment and is queued for PR2 after prerequi
 Candidate 12589122154 is 504,852 bytes, ZIP SHA256 baf8e0a294c55bd753aa55511da39b51b96e91d6bccc0c1964fa4c372d9130a7. Independent verification accepted all 84 source files and byte-identical author wheel/sdist archives, with 13 hosted interpreter-copy observations and both certificate-bundle guard outputs. The acceptance index is c77260d07accd79c36f6236fe6376537c5290beccd4a0e63337840a0da34d904; its 15 files and nine references were rehashed. Exported runtime-requirements bytes were not included or independently recomputed, and copied interpreters still use base standard/shared libraries. This candidate is unpublished and carries no signing or deployment claim.
 
 Quality is queued for PR2 under the existing wiring handoff, awaiting explicit checkout ownership. Platform and Research review its next resource/recovery and identity/semantic boundaries; Lead coordinates the handoff. Public measured purchase integration and the conditional V3 16-call specimen have not started. Parent issues #105/#106, publisher handoff, full-study capacity and the first-result re-estimate remain open. The study, approved caps, graph, approvals and estimates are unchanged.
+
+## 2026-10-25 — Measured purchase handoff prepared
+
+Quality is the assigned future author for PR2; Platform and Research supplied independent resource/accounting and semantic handoffs from immutable main c784f15 and published progress aeca99b. The [implementation handoff](MEASURED_PURCHASE_HANDOFF.md) records the concrete source seams, review checkpoints and acceptance evidence. It includes one initial purchase with an immutable receipt, known cost settlement and recovery, followed by the declared complete mixed-history and downstream proof before full-path acceptance.
+
+Cloud source/runtime work awaits restored access and fresh ownership, disk and source/lock/environment readback. Current private evidence was not freshly rehashed in this checkpoint; historical PR #123 acceptance remains valid for its recorded source. No checkout ownership is inferred from old release records. This is GitHub source/document preparation only; public purchase implementation, the conditional V3 specimen and the study have not started.
+
+Restore verified cloud access, review retained evidence, reuse the existing checkout and grant explicit writer ownership before implementation. Re-estimate first-result work before study admission. Parents #105/#106, publisher handoff and full-study capacity remain open; caps, graph, approvals and historical estimates are unchanged.
