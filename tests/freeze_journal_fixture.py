@@ -95,6 +95,7 @@ class SetupBudget:
     child_cpu: int = 0
     copies: int = 0
     child_epochs: int = 0
+    store_attempts: int = 0
 
     @contextmanager
     def phase(self) -> Iterator[None]:
@@ -425,7 +426,9 @@ def inject_intents(fixture: Fixture) -> None:
             assert store._transaction_attempts == 2
         finally:
             store.close()
-        assert meter.total <= 4 * STORE_ENVELOPE
+        budget.store_attempts += store._transaction_attempts
+        assert budget.store_attempts <= 4
+        assert meter.total <= store._transaction_attempts * STORE_ENVELOPE
 
 
 def generate_journal(fixture: Fixture) -> None:
