@@ -1,9 +1,9 @@
-# Measured freeze and Journal-bound candidates
+# Measured freeze, Journal-bound candidates and classical diagnostics
 
 This owner-local slice extends the existing candidate store with fixed
 entrypoints: `commit_native_freeze`, `commit_journal_candidates` and
-`commit_journal_classical`. It does not implement a purchase producer, publication transfer, hosted
-isolation, or a full study.
+`commit_journal_classical`. It does not implement a purchase producer,
+publication transfer, hosted isolation, or a full study.
 
 A freeze request points to bounded raw `NativeFreezeInput` bytes containing the
 manifest and its canonical artifact strings. The current installed source, lock,
@@ -39,9 +39,9 @@ installation. Recovery reads the retained capture instead of the current
 Journal and does not rerun freeze or numerical production. Unknown costs are
 never refunded, reseeded or erased.
 
-## Bounded synthetic construction
+## Retained four-call synthetic fixture
 
-The test fixture has six finite slots but executes four calls: freeze and
+The first-slice test fixture has six finite slots but executes four calls: freeze and
 comparison candidate at slots 0/1, then their recoveries at 3/4. Classical slots 2/5
 remain unused. Its ordinary classical 8 MiB/120 s is not escrowed; the unused third
 recovery and publication promises remain protected by the existing admission.
@@ -70,13 +70,12 @@ deadline; failure terminates/reaps the child without automatic retry.
 
 The first-slice successful ledger has 23 records and 14 unresolved holds. The
 fixture retains a 256 KiB raw-ledger cap and 14 finalization records/64 KiB, and
-protects a 512 KiB publisher-ledger allowance. Larger public classical limits
-remain future integration tests, not a reason to truncate data here.
+protects a 512 KiB publisher-ledger allowance. The separate classical parser conformance tests exercise the 16 MiB boundary;
+they do not claim that this smaller fixture admits every maximum-size workload.
 
 These are implementation and fixture acceptance requirements. Source-specific
 test and package evidence is retained privately; an implementation checkpoint
 alone does not establish runtime admission or production readiness.
-
 
 ## Fixed classical diagnostic
 
@@ -108,8 +107,12 @@ later live Journal is unchanged.
 The new fresh fixture freezes typed policy, native prediction and classical
 config before its first freeze; the previous four-call manifest is never
 retrofitted. Slots 2/5 add ordinary classical work and paid recovery to 0/1/3/4.
-The conditional six-call envelope is 278,020,096 bytes/462 CPU seconds, with 27
-terminal records and 14 unresolved holds expected. Its 8 MiB/120 s ordinary
-classical work is reserved only on admission. Setup/Journal/copy guards and
-recovery/publication protection remain as above. This conditional profile is
-not a full-study allocation or a public purchased-simulation producer.
+The exercised six-call synthetic conformance fixture retains 27 ledger records
+and 14 unresolved holds. Its declared ceiling is 278,020,096 bytes/462 CPU
+seconds, not measured expenditure or full-study throughput. The 8 MiB/120 s
+ordinary classical work is reserved only on admission. Setup/Journal/copy guards
+and recovery/publication protection remain as above. Tests preserve original
+bytes on paid recovery and distinguish scored, unscorable and evaluator-failure
+outcomes; source-specific author and independent-review evidence remains private.
+This profile is not a full-study allocation or a public purchased-simulation
+producer.
