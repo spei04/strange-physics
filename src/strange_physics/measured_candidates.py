@@ -1,7 +1,7 @@
 """Fixed owner-local candidate production and paid exact-result recovery.
 
-This first vertical has no comparison Journal adapter, purchase, selector or
-handoff dispatcher. Control holds remain unresolved, never exact zero costs.
+Fixed supplied and Journal-bound operations share one ledger; no purchase, selector or
+handoff dispatcher is exposed. Control holds remain unresolved, never exact zero costs.
 """
 
 from __future__ import annotations
@@ -30,6 +30,15 @@ from strange_physics.candidate_store import CandidateStore
 from strange_physics.installed_identity import TrustedInstallation, verify_native_installation
 from strange_physics.measured_publication import _deadline
 from strange_physics.native_candidates import produce_native_candidates
+from strange_physics.native_classical import (
+    run_classical_diagnostic,
+    validate_classical_diagnostic_result,
+)
+from strange_physics.native_classical_contracts import (
+    ClassicalDiagnosticInput,
+    ClassicalDiagnosticResult,
+    parse_classical_diagnostic_result,
+)
 from strange_physics.native_spring_contracts import (
     NativeCandidateInput,
     NativeCandidateResult,
@@ -68,6 +77,7 @@ from strange_physics.research_contracts import message_sha256
 from strange_physics.serialization import canonical_json
 from strange_physics.study_contracts import (
     MAX_STUDY_JSON_BYTES,
+    ArtifactKind,
     NativeStudyLedger,
     NativeWorkFacts,
     OperationKind,
@@ -77,12 +87,16 @@ from strange_physics.study_contracts import (
 )
 from strange_physics.study_execution_binding import (
     bind_captured_candidate,
+    bind_classical_material,
     freeze_result,
     propose_freeze,
     validate_frozen_materials,
 )
 from strange_physics.study_execution_contracts import (
+    NativeClassicalReceipt,
     NativeComparisonCandidateRequest,
+    NativeComparisonClassicalInput,
+    NativeComparisonClassicalRequest,
     NativeComparisonInput,
     NativeComparisonReceipt,
     NativeFreezeInput,
@@ -109,12 +123,21 @@ type ExecutionRequest = (
     | NativeScoreRequest
     | NativeFreezeRequest
     | NativeComparisonCandidateRequest
+    | NativeComparisonClassicalRequest
 )
 type ExecutionReceipt = (
-    CandidateReceipt | NativeStageReceipt | NativeFreezeReceipt | NativeComparisonReceipt
+    CandidateReceipt
+    | NativeStageReceipt
+    | NativeFreezeReceipt
+    | NativeComparisonReceipt
+    | NativeClassicalReceipt
 )
-type ExecutionInput = NativeCandidateInput | StageInput | NativeFreezeInput
-type ExecutionResult = NativeCandidateResult | StageResult | NativeFreezeResult
+type ExecutionInput = (
+    NativeCandidateInput | StageInput | NativeFreezeInput | ClassicalDiagnosticInput
+)
+type ExecutionResult = (
+    NativeCandidateResult | StageResult | NativeFreezeResult | ClassicalDiagnosticResult
+)
 
 
 @dataclass(frozen=True)
@@ -140,6 +163,14 @@ class _CommittedExecution:
 
 
 def _request(data: bytes, operation: str) -> ExecutionRequest:
+    if operation == "classical_diagnostic":
+        return parse_bounded_json(
+            data,
+            NativeComparisonClassicalRequest,
+            max_bytes=REQUEST_BYTES,
+            max_depth=8,
+            max_nodes=128,
+        )
     if operation == "freeze":
         return parse_bounded_json(
             data, NativeFreezeRequest, max_bytes=REQUEST_BYTES, max_depth=8, max_nodes=128
@@ -172,6 +203,10 @@ def _request(data: bytes, operation: str) -> ExecutionRequest:
 
 
 def _receipt(data: bytes, request: ExecutionRequest) -> ExecutionReceipt:
+    if request.operation == "classical_diagnostic":
+        return parse_bounded_json(
+            data, NativeClassicalReceipt, max_bytes=8192, max_depth=8, max_nodes=128
+        )
     if request.operation == "freeze":
         return parse_bounded_json(
             data, NativeFreezeReceipt, max_bytes=8192, max_depth=8, max_nodes=128
@@ -199,6 +234,8 @@ def _input_limit(request: ExecutionRequest) -> int:
 
 
 def _result_limit(request: ExecutionRequest) -> int:
+    if request.operation == "classical_diagnostic":
+        return 16 * MIB
     return (
         4
         if request.operation
@@ -213,7 +250,16 @@ def _comparison_input(data: bytes) -> NativeComparisonInput:
     )
 
 
+def _classical_input(data: bytes) -> NativeComparisonClassicalInput:
+    # The whole private wrapper, including reference overhead, must fit this cap.
+    return parse_bounded_json(
+        data, NativeComparisonClassicalInput, max_bytes=16 * MIB, max_depth=40, max_nodes=1_000_000
+    )
+
+
 def _input(data: bytes, request: ExecutionRequest) -> ExecutionInput:
+    if request.operation == "classical_diagnostic":
+        return _classical_input(data).diagnostic
     if request.operation == "freeze":
         return parse_bounded_json(
             data, NativeFreezeInput, max_bytes=16 * MIB, max_depth=40, max_nodes=1_000_000
@@ -226,6 +272,8 @@ def _input(data: bytes, request: ExecutionRequest) -> ExecutionInput:
 
 
 def _result(data: bytes, request: ExecutionRequest) -> ExecutionResult:
+    if request.operation == "classical_diagnostic":
+        return parse_classical_diagnostic_result(data)
     if request.operation == "freeze":
         return parse_bounded_json(
             data, NativeFreezeResult, max_bytes=4 * MIB, max_depth=16, max_nodes=256
@@ -243,7 +291,7 @@ def _config(actual: ExecutionInput) -> str:
         return message_sha256(actual.manifest)
     return (
         message_sha256(actual.config)
-        if isinstance(actual, NativeCandidateInput)
+        if isinstance(actual, (NativeCandidateInput, ClassicalDiagnosticInput))
         else stage_config(actual)
     )
 
@@ -252,6 +300,10 @@ def _check_engine(actual: ExecutionInput, expected: str) -> None:
     if isinstance(actual, NativeFreezeInput):
         if actual.manifest.engine_fingerprint != expected:
             raise StudyLedgerError("freeze_engine_identity")
+        return
+    if isinstance(actual, ClassicalDiagnosticInput):
+        if actual.context.candidates.observations.engine_fingerprint != expected:
+            raise StudyLedgerError("classical_observation_engine")
         return
     engine = (
         actual.observations.engine_fingerprint
@@ -263,6 +315,15 @@ def _check_engine(actual: ExecutionInput, expected: str) -> None:
 
 
 def _validate(result: ExecutionResult, actual: ExecutionInput, attempt_id: str) -> None:
+    if isinstance(result, ClassicalDiagnosticResult) or isinstance(
+        actual, ClassicalDiagnosticInput
+    ):
+        if not isinstance(result, ClassicalDiagnosticResult) or not isinstance(
+            actual, ClassicalDiagnosticInput
+        ):
+            raise StudyLedgerError("classical_result_identity")
+        validate_classical_diagnostic_result(result, actual, attempt_id=attempt_id)
+        return
     if isinstance(result, NativeFreezeResult) or isinstance(actual, NativeFreezeInput):
         if (
             not isinstance(result, NativeFreezeResult)
@@ -385,14 +446,23 @@ def _bind_context(
         if any(isinstance(r.event, StudyManifestFreeze) for r in ledger.records):
             raise StudyLedgerError("freeze_already_committed")
     if request.phase == "comparison":
-        if request.operation not in ("candidate_production", "comparison_candidate"):
+        if request.operation not in (
+            "candidate_production",
+            "comparison_candidate",
+            "classical_diagnostic",
+        ):
             raise StudyLedgerError("native_stage_comparison_not_available")
         manifest = study_manifest(ledger)
+        role: ArtifactKind = (
+            "classical_diagnostic_config"
+            if request.operation == "classical_diagnostic"
+            else "candidate_config"
+        )
         if (manifest.source_commit, manifest.uv_lock_sha256, manifest.engine_fingerprint) != (
             c.source_commit,
             c.uv_lock_sha256,
             c.engine_fingerprint,
-        ) or manifest.artifact("candidate_config").sha256 != request.config_sha256:
+        ) or manifest.artifact(role).sha256 != request.config_sha256:
             raise StudyLedgerError("candidate_frozen_identity")
         if request.operation == "candidate_production":
             # The old supplied-bundle interface does not acquire Journal authority.
@@ -434,6 +504,12 @@ def _run_child(
                     else _comparison_input(actual_raw).candidate
                 )
                 result = raw(produce_native_candidates(actual, attempt_id=request.attempt_id))
+            elif request.operation == "classical_diagnostic":
+                result = raw(
+                    run_classical_diagnostic(
+                        _classical_input(actual_raw).diagnostic, attempt_id=request.attempt_id
+                    )
+                )
             else:
                 operation = request.operation
                 if operation not in ("preparation", "prediction", "scoring"):
@@ -680,6 +756,71 @@ def _bind_comparison(
     return _ComparisonCapture(snapshot, material.journal_sha256, material.journal_bytes, held)
 
 
+def _bind_classical(
+    store: CandidateStore,
+    request: NativeComparisonClassicalRequest,
+    input_raw: bytes,
+    current: NativeStudyLedger,
+    meter: Extents,
+    scope: ExitStack,
+) -> _ComparisonCapture:
+    """Use one retained candidate's original capture, never the current live Journal."""
+    material = _classical_input(input_raw)
+    row = store.db.execute(
+        "SELECT length(request) FROM closures WHERE logical_id=?",
+        (material.candidate_logical_id,),
+    ).fetchone()
+    if row is None or not 0 < row[0] <= REQUEST_BYTES:
+        raise StudyLedgerError("classical_candidate_missing")
+    saved_raw = store.db.execute(
+        "SELECT request FROM closures WHERE logical_id=?",
+        (material.candidate_logical_id,),
+    ).fetchone()[0]
+    saved = _request(saved_raw, "comparison_candidate")
+    assert isinstance(saved, NativeComparisonCandidateRequest)
+    if saved.logical_id != material.candidate_logical_id or saved.cell_id != request.cell_id:
+        raise StudyLedgerError("classical_candidate_identity")
+    retained = _closure(store, saved, current)
+    if retained is None:
+        raise StudyLedgerError("classical_candidate_missing")
+    receipt, candidate_raw, result_raw, original = retained
+    if digest(raw(receipt)) != material.candidate_receipt_sha256 or (
+        receipt.source_commit,
+        receipt.installation_sha256,
+    ) != (store.admission.control.source_commit, store.admission.control.installation_sha256):
+        raise StudyLedgerError("classical_candidate_identity")
+    actual_candidate = _input(candidate_raw, saved)
+    candidate_result = _result(result_raw, saved)
+    assert isinstance(actual_candidate, NativeCandidateInput)
+    assert isinstance(candidate_result, NativeCandidateResult)
+    _check_engine(actual_candidate, store.admission.control.engine_fingerprint)
+    _validate(candidate_result, actual_candidate, receipt.original_attempt_id)
+    if (message_sha256(actual_candidate), _config(actual_candidate)) != (
+        saved.input_sha256,
+        saved.config_sha256,
+    ):
+        raise StudyLedgerError("classical_candidate_identity")
+    updates = [
+        r.event
+        for r in current.records
+        if isinstance(r.event, StudyAttemptUpdate) and r.event.attempt_id == saved.attempt_id
+    ]
+    if not updates or updates[-1].state != candidate_result.facts.outcome:
+        raise StudyLedgerError("classical_candidate_unknown")
+    capture = _bind_comparison(store, saved, candidate_raw, original, meter, scope, replayed=True)
+    frozen = _retained_freeze(store, _comparison_input(candidate_raw), original)
+    bind_classical_material(
+        material.diagnostic,
+        candidate=actual_candidate,
+        result=candidate_result,
+        attempt_id=receipt.original_attempt_id,
+        freeze=frozen,
+        cell_id=request.cell_id,
+    )
+    capture.recheck()
+    return capture
+
+
 def _commit_native_execution(
     store_root: Path, request: ExecutionRequest, *, expected_operation: str
 ) -> _CommittedExecution:
@@ -815,6 +956,10 @@ def _commit_native_execution(
                         captured_journal = _bind_comparison(
                             store, request, input_raw, original, meter, journal_scope, replayed=True
                         )
+                    elif isinstance(request, NativeComparisonClassicalRequest):
+                        captured_journal = _bind_classical(
+                            store, request, input_raw, original, meter, journal_scope
+                        )
                 else:
                     input_raw = read_bytes(Path(request.input_path), limit=_input_limit(request))
                     if (len(input_raw), digest(input_raw)) != (
@@ -833,6 +978,10 @@ def _commit_native_execution(
                     if isinstance(request, NativeComparisonCandidateRequest):
                         captured_journal = _bind_comparison(
                             store, request, input_raw, current, meter, journal_scope, replayed=False
+                        )
+                    elif isinstance(request, NativeComparisonClassicalRequest):
+                        captured_journal = _bind_classical(
+                            store, request, input_raw, current, meter, journal_scope
                         )
                     produced: bytes | None
                     if isinstance(actual, NativeFreezeInput):
@@ -885,6 +1034,10 @@ def _commit_native_execution(
                             {
                                 **receipt.model_dump(exclude={"schema_version"}),
                             }
+                        )
+                    elif request.operation == "classical_diagnostic":
+                        receipt = NativeClassicalReceipt.model_validate(
+                            receipt.model_dump(exclude={"schema_version"})
                         )
                     elif request.operation != "candidate_production":
                         receipt = NativeStageReceipt.model_validate(

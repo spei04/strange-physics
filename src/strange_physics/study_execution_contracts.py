@@ -13,6 +13,7 @@ from strange_physics.candidate_execution_contracts import (
     _ExecutionRequest,
 )
 from strange_physics.contracts import Identifier, Message
+from strange_physics.native_classical_contracts import ClassicalDiagnosticInput
 from strange_physics.native_spring_contracts import NativeCandidateInput
 from strange_physics.research_contracts import Digest
 from strange_physics.study_contracts import ArtifactKind, NativeStudyManifest, NativeWorkFacts
@@ -85,3 +86,26 @@ class NativeComparisonReceipt(_ExecutionReceipt):
         "strange-physics.journal-candidate-receipt.v1"
     )
     operation: Literal["comparison_candidate"] = "comparison_candidate"
+
+
+class NativeComparisonClassicalInput(Message):
+    """Private diagnostic of an exact retained candidate and its original capture."""
+
+    candidate_logical_id: Identifier
+    candidate_receipt_sha256: Digest
+    diagnostic: ClassicalDiagnosticInput
+
+
+class NativeComparisonClassicalRequest(_ExecutionRequest):
+    operation: Literal["classical_diagnostic"] = "classical_diagnostic"
+    phase: Literal["comparison"] = "comparison"
+    cell_id: Identifier
+    input_bytes: Annotated[int, Field(ge=1, le=16 * MIB)]
+    output_limit_bytes: Annotated[int, Field(ge=64 * 1024, le=16 * MIB)]
+
+
+class NativeClassicalReceipt(_ExecutionReceipt):
+    schema_version: Literal["strange-physics.journal-classical-receipt.v1"] = (
+        "strange-physics.journal-classical-receipt.v1"
+    )
+    operation: Literal["classical_diagnostic"] = "classical_diagnostic"

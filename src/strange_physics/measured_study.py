@@ -1,6 +1,6 @@
 """Charged same-store freeze and private Journal-bound candidate production.
 
-These interfaces do not implement purchased simulation, classical execution,
+These interfaces do not implement purchased simulation,
 publication transfer, future menu semantics, or full-study admission.
 """
 
@@ -11,10 +11,13 @@ from pathlib import Path
 
 from strange_physics.candidate_execution_contracts import CandidateMeasurements
 from strange_physics.measured_candidates import _commit_native_execution
+from strange_physics.native_classical_contracts import ClassicalDiagnosticResult
 from strange_physics.native_spring_contracts import NativeCandidateResult
 from strange_physics.study_contracts import NativeStudyLedger
 from strange_physics.study_execution_contracts import (
+    NativeClassicalReceipt,
     NativeComparisonCandidateRequest,
+    NativeComparisonClassicalRequest,
     NativeComparisonReceipt,
     NativeFreezeReceipt,
     NativeFreezeRequest,
@@ -23,8 +26,10 @@ from strange_physics.study_execution_contracts import (
 
 
 @dataclass(frozen=True)
-class CommittedStudyTransition[Result: NativeFreezeResult | NativeCandidateResult]:
-    receipt: NativeFreezeReceipt | NativeComparisonReceipt
+class CommittedStudyTransition[
+    Result: NativeFreezeResult | NativeCandidateResult | ClassicalDiagnosticResult
+]:
+    receipt: NativeFreezeReceipt | NativeComparisonReceipt | NativeClassicalReceipt
     result: Result
     result_raw: bytes
     original_ledger: NativeStudyLedger
@@ -56,6 +61,24 @@ def commit_journal_candidates(
     value = _commit_native_execution(store_root, request, expected_operation="comparison_candidate")
     assert isinstance(value.receipt, NativeComparisonReceipt)
     assert isinstance(value.result, NativeCandidateResult)
+    return CommittedStudyTransition(
+        value.receipt,
+        value.result,
+        value.result_raw,
+        value.original_ledger,
+        value.ledger,
+        value.measurements,
+        value.replayed,
+    )
+
+
+def commit_journal_classical(
+    store_root: Path, request: NativeComparisonClassicalRequest
+) -> CommittedStudyTransition[ClassicalDiagnosticResult]:
+    """Measure an independent diagnostic of the retained original purchased prefix."""
+    value = _commit_native_execution(store_root, request, expected_operation="classical_diagnostic")
+    assert isinstance(value.receipt, NativeClassicalReceipt)
+    assert isinstance(value.result, ClassicalDiagnosticResult)
     return CommittedStudyTransition(
         value.receipt,
         value.result,

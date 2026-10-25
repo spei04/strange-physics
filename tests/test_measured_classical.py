@@ -1,0 +1,323 @@
+"""Fixed v4 synthetic profiles; each case owns finite slots/holds and never a study."""
+
+from __future__ import annotations
+
+import json
+import sqlite3
+from pathlib import Path
+from typing import Any
+
+import pytest
+from freeze_journal_fixture import (
+    COPY_LIMIT,
+    Fixture,
+    classical_request,
+    comparison_request,
+    generate_journal,
+    inject_intents,
+    prepare,
+)
+from test_measured_candidates import actual_build, current, last_update
+from test_measured_study import recover
+
+import strange_physics.native_candidates as candidate_producer
+import strange_physics.native_classical as classical_producer
+from strange_physics import measured_candidates as supervisor
+from strange_physics.candidate_execution_contracts import MIB
+from strange_physics.candidate_store import CandidateStore
+from strange_physics.control_contracts import ContractViolation
+from strange_physics.installed_identity import TrustedInstallation
+from strange_physics.measured_study import (
+    CommittedStudyTransition,
+    commit_journal_candidates,
+    commit_journal_classical,
+    commit_native_freeze,
+)
+from strange_physics.native_spring_contracts import NativeCandidateResult
+from strange_physics.publication_store import digest, raw
+from strange_physics.research_contracts import message_sha256
+from strange_physics.study_execution_contracts import (
+    NativeComparisonCandidateRequest,
+    NativeComparisonClassicalInput,
+    NativeComparisonClassicalRequest,
+    NativeFreezeResult,
+)
+from strange_physics.study_ledger import StudyLedgerError, summarize_study
+
+__all__ = ["actual_build"]
+
+
+def candidate_fixture(
+    path: Path,
+    build: TrustedInstallation,
+) -> tuple[
+    Fixture,
+    CommittedStudyTransition[NativeFreezeResult],
+    NativeComparisonCandidateRequest,
+    CommittedStudyTransition[NativeCandidateResult],
+]:
+    f = prepare(path, build, classical=True)
+    frozen = commit_native_freeze(f.root, f.freeze_request)
+    inject_intents(f)
+    generate_journal(f)
+    request = comparison_request(f, raw(frozen.receipt))
+    value = commit_journal_candidates(f.root, request)
+    return f, frozen, request, value
+
+
+def paid(request: NativeComparisonClassicalRequest) -> NativeComparisonClassicalRequest:
+    return NativeComparisonClassicalRequest.model_validate(
+        {
+            **request.model_dump(),
+            "mode": "recover",
+            "ticket": 5,
+            "attempt_id": "recovery-5",
+            "cpu_reservation_ns": 8_000_000_000,
+            "artifact_reservation_bytes": 2 * MIB,
+        }
+    )
+
+
+def forbidden(*args: Any, **kwargs: Any) -> Any:
+    raise AssertionError("numerical production must not execute")
+
+
+def test_six_call_original_prefix_optional_selection_and_paid_replay(
+    tmp_path: Path,
+    actual_build: TrustedInstallation,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    f, frozen, candidate_request, candidate = candidate_fixture(tmp_path / "six", actual_build)
+    request = classical_request(f, raw(candidate.receipt), candidate.result)
+    assert last_update(current(f.root)).attempt_id == "candidate-1"
+    assert not (f.root / "candidate-ticket-2").exists()  # Ordinary work is not yet reserved.
+    material = NativeComparisonClassicalInput.model_validate_json(
+        Path(request.input_path).read_bytes()
+    )
+    assert material.diagnostic.context.selected is None
+    assert candidate.result.payload.status == "produced"
+    value = commit_journal_classical(f.root, request)
+    p = value.result.payload
+    assert p.status == "evaluated" and p.evaluation is not None and p.evaluation.status == "scored"
+    assert p.fit is not None and len(p.fit.observations.records) == 12
+    assert [r.status for r in p.fit.observations.records] == ["completed"] * 11 + ["failed"]
+    assert len(p.predictions) == 24 and value.result.facts.outcome == "completed"
+    assert value.measurements.child_cpu_ns > 0 and value.measurements.parent_cpu_ns > 0
+    assert raw(p.fit.observations) == raw(material.diagnostic.context.candidates.observations)
+    assert summarize_study(value.ledger).budget.unresolved_attempts == 14
+    for path in [
+        f.journal,
+        Path(request.input_path),
+        Path(candidate_request.input_path),
+        Path(f.freeze_request.input_path),
+    ]:
+        path.unlink()
+    for name in ["_run_child", "propose_freeze"]:
+        monkeypatch.setattr(supervisor, name, forbidden)
+    for name in [
+        "run_classical_diagnostic",
+        "fit_spring",
+        "predict_linear_spring",
+        "evaluate_spring_predictions",
+    ]:
+        monkeypatch.setattr(classical_producer, name, forbidden)
+    freeze_replay = commit_native_freeze(f.root, recover(f.freeze_request, 3))
+    candidate_replay = commit_journal_candidates(f.root, recover(candidate_request, 4))
+    replay = commit_journal_classical(f.root, paid(request))
+    assert (
+        freeze_replay.result_raw == frozen.result_raw
+        and candidate_replay.result_raw == candidate.result_raw
+    )
+    assert replay.replayed and replay.result_raw == value.result_raw
+    assert (
+        raw(replay.receipt) == raw(value.receipt)
+        and replay.original_ledger == value.original_ledger
+    )
+    ledger = replay.ledger
+    assert len(ledger.records) == 27 and summarize_study(ledger).budget.unresolved_attempts == 14
+    assert (
+        len(raw(ledger)) <= 256 * 1024 and (f.root / "candidate.sqlite3").stat().st_size <= 2 * MIB
+    )
+    assert (
+        f.budget.copies <= COPY_LIMIT
+        and f.budget.parent_cpu + f.budget.child_cpu <= 120_000_000_000
+    )
+    assert f.budget.child_epochs == 35 and f.control.publication.required_bytes() == 80 * MIB
+    proof = {
+        "scope": "Six finite synthetic calls; no public purchase producer or study admission.",
+        "ledger_records": len(ledger.records),
+        "ledger_bytes": len(raw(ledger)),
+        "unresolved_holds": 14,
+        "database_bytes": (f.root / "candidate.sqlite3").stat().st_size,
+        "journal_bytes": (f.root / "candidate-journal-1").stat().st_size,
+        "classical_input_bytes": request.input_bytes,
+        "classical_output_bytes": len(value.result_raw),
+        "classical_measurements": value.measurements.model_dump(),
+        "setup_parent_cpu_before_proof_ns": f.budget.parent_cpu,
+        "setup_child_cpu_ns": f.budget.child_cpu,
+        "setup_copy_bytes_before_proof": f.budget.copies,
+        "journal_write_epochs": f.budget.child_epochs,
+        "declared_bytes": 278020096,
+        "declared_cpu_ns": 462000000000,
+        "publication_escrow_bytes": f.control.publication.required_bytes(),
+    }
+    with f.budget.phase():
+        f.budget.write(f.root / "six-call-proof.json", json.dumps(proof, sort_keys=True).encode())
+
+
+@pytest.mark.parametrize(
+    "field",
+    ["world", "prediction_signed_zero", "attempt", "receipt", "candidate_alias", "failed_record"],
+)
+def test_bound_material_substitutions_deny_before_child(
+    field: str,
+    tmp_path: Path,
+    actual_build: TrustedInstallation,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    f, _, _, candidate = candidate_fixture(tmp_path / field, actual_build)
+    request = classical_request(f, raw(candidate.receipt), candidate.result)
+    data = json.loads(Path(request.input_path).read_bytes())
+    if field == "world":
+        data["diagnostic"]["world"]["noise_seed"] += 1
+    elif field == "prediction_signed_zero":
+        data["diagnostic"]["context"]["prediction_config"]["min_coefficient"] = -0.0
+    elif field == "attempt":
+        data["diagnostic"]["context"]["candidate_attempt_id"] = "foreign"
+    elif field == "receipt":
+        data["candidate_receipt_sha256"] = "e" * 64
+    elif field == "candidate_alias":
+        data["candidate_logical_id"] = "foreign"
+    else:
+        data["diagnostic"]["context"]["candidates"]["observations"]["records"][-1][
+            "operation_id"
+        ] = "foreign"
+    changed = NativeComparisonClassicalInput.model_validate_json(json.dumps(data))
+    with f.budget.phase():
+        f.budget.write(f.root / "changed.json", raw(changed))
+    request = NativeComparisonClassicalRequest.model_validate(
+        {
+            **request.model_dump(),
+            "input_path": str(f.root / "changed.json"),
+            "input_bytes": len(raw(changed)),
+            "input_raw_sha256": digest(raw(changed)),
+            "input_sha256": message_sha256(changed.diagnostic),
+        }
+    )
+    monkeypatch.setattr(supervisor, "_run_child", forbidden)
+    with pytest.raises((StudyLedgerError, ValueError)):
+        commit_journal_classical(f.root, request)
+    update = last_update(current(f.root))
+    assert (
+        update.attempt_id == "classical-2"
+        and update.state == "unknown"
+        and update.cpu_ns is not None
+    )
+    assert not (f.root / "candidate-output-2").exists()
+
+
+def test_genuine_typed_candidate_failure_does_not_prevent_classical_success(
+    tmp_path: Path,
+    actual_build: TrustedInstallation,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def broken(*args: Any, **kwargs: Any) -> Any:
+        raise ValueError("explicit finite candidate construction fault")
+
+    with monkeypatch.context() as m:
+        m.setattr(candidate_producer, "LinearSpringModel", broken)
+        f, _, _, candidate = candidate_fixture(tmp_path / "native-failed", actual_build)
+    assert (
+        candidate.result.payload.status == "failed" and candidate.result.facts.outcome == "failed"
+    )
+    request = classical_request(f, raw(candidate.receipt), candidate.result)
+    value = commit_journal_classical(f.root, request)
+    assert (
+        value.result.payload.evaluation is not None
+        and value.result.payload.evaluation.status == "scored"
+    )
+    assert value.result.facts.outcome == "completed"
+
+
+@pytest.mark.parametrize("fault", ["malformed", "interrupt", "closure"])
+def test_classical_failure_retains_known_cost_and_unknown_hold(
+    fault: str,
+    tmp_path: Path,
+    actual_build: TrustedInstallation,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    f, _, _, candidate = candidate_fixture(tmp_path / fault, actual_build)
+    request = classical_request(f, raw(candidate.receipt), candidate.result)
+    if fault == "malformed":
+        original = supervisor._run_child
+
+        def malformed(*args: Any, **kwargs: Any) -> Any:
+            result, cpu = original(*args, **kwargs)
+            assert result is not None and cpu > 0
+            return b"{", cpu
+
+        monkeypatch.setattr(supervisor, "_run_child", malformed)
+    elif fault == "interrupt":
+
+        def interrupt(*args: Any, **kwargs: Any) -> Any:
+            raise KeyboardInterrupt("finite child interruption")
+
+        monkeypatch.setattr(classical_producer, "fit_spring", interrupt)
+    else:
+        original_replace = CandidateStore.replace
+
+        def replace(self: CandidateStore, before: Any, after: Any) -> None:
+            event = after.records[-1].event
+            if (
+                event.kind == "update"
+                and event.attempt_id == "classical-2"
+                and event.facts is not None
+            ):
+                raise RuntimeError("finite closure failure")
+            original_replace(self, before, after)
+
+        monkeypatch.setattr(CandidateStore, "replace", replace)
+    with pytest.raises((StudyLedgerError, ContractViolation, RuntimeError)):
+        commit_journal_classical(f.root, request)
+    update = last_update(current(f.root))
+    assert update.state == "unknown" and update.facts is None
+    assert (
+        update.cpu_ns is not None
+        and update.wall_ns is not None
+        and update.artifact_bytes is not None
+    )
+    assert summarize_study(current(f.root)).budget.unresolved_attempts == 15
+    with sqlite3.connect(f.root / "candidate.sqlite3") as db:
+        assert (
+            db.execute("SELECT count(*) FROM closures WHERE logical_id='classical'").fetchone()[0]
+            == 0
+        )
+
+
+def test_classical_contracts_have_distinct_receipt_and_sixteen_mib_limits() -> None:
+    data = dict(
+        mode="execute",
+        logical_id="c",
+        attempt_id="c-2",
+        retry_of=None,
+        cell_id="cell",
+        ticket=2,
+        expected_revision=0,
+        expected_head_sha256="a" * 64,
+        input_path="/private/input",
+        input_raw_sha256="a" * 64,
+        input_bytes=16 * MIB,
+        input_sha256="b" * 64,
+        config_sha256="c" * 64,
+        cpu_reservation_ns=120000000000,
+        artifact_reservation_bytes=64 * MIB,
+        output_limit_bytes=16 * MIB,
+        wall_limit_ns=180000000000,
+    )
+    request = NativeComparisonClassicalRequest.model_validate(data)
+    assert supervisor._input_limit(request) == supervisor._result_limit(request) == 16 * MIB
+    for field in ["input_bytes", "output_limit_bytes"]:
+        with pytest.raises(ValueError):
+            NativeComparisonClassicalRequest.model_validate({**data, field: 16 * MIB + 1})
+    with pytest.raises(ValueError):
+        supervisor._request(raw(request), "comparison_candidate")
