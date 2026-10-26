@@ -186,11 +186,30 @@ def test_receipt_reference_allows_reconciliation_without_original_receipt() -> N
         NativePurchaseInput.model_validate({**actual.model_dump(), "predecessor": ref}).predecessor
         == ref
     )
-    # Reconciliation cannot parse an original execution receipt's schema/kind.
-    with pytest.raises(ValueError):
-        NativePurchaseReconciliationReceipt.model_validate(
-            {"schema_version": "strange-physics.purchase-receipt.v1", "kind": "execution"}
-        )
+    valid = NativePurchaseReconciliationReceipt(
+        logical_id="reconciliation",
+        original_attempt_id="paid",
+        request_sha256="a" * 64,
+        original_revision=4,
+        original_head_sha256="b" * 64,
+        original_ledger_sha256="c" * 64,
+        input_raw_sha256="d" * 64,
+        result_raw_sha256="e" * 64,
+        source_commit="f" * 40,
+        installation_sha256="a" * 64,
+        purchase_logical_id="purchase",
+        unresolved_attempt_id="old",
+        context_sha256="b" * 64,
+        journal=NativePurchaseJournalIdentity(sha256="c" * 64, byte_count=24576),
+    )
+    for field, foreign in (
+        ("schema_version", "strange-physics.purchase-receipt.v1"),
+        ("kind", "execution"),
+    ):
+        with pytest.raises(ValueError):
+            NativePurchaseReconciliationReceipt.model_validate(
+                {**valid.model_dump(), field: foreign}
+            )
 
 
 def test_retry_keeps_input_and_slot_while_context_changes() -> None:
@@ -284,3 +303,33 @@ def test_record_facts_and_whole_capture_binding(reconciliation: bool) -> None:
         bind_purchase_capture(
             actual, result, prefix, replace(snapshot, journal_bytes_sha256="e" * 64)
         )
+
+
+def test_128_member_menu_and_one_over_with_unchanged_raw_bound() -> None:
+    actual, _, _ = fixture()
+    pid = actual.experiment.particles[0].id
+    actions = tuple(
+        Experiment(particles=(ParticleInitial(id=pid, position=(i / 128, 0.0)),))
+        for i in range(129)
+    )
+    accepted = NativePurchaseActions(role="menu", actions=actions[:128])
+    assert len(raw(accepted)) < 64 * 1024
+    with pytest.raises(ValueError):
+        NativePurchaseActions(role="menu", actions=actions)
+
+
+@pytest.mark.parametrize("state", ["missing", "pending", "terminal"])
+def test_observed_row_requires_actual_journal_identity(state: str) -> None:
+    values = dict(
+        attempt_id="paid",
+        row_state=state,
+        original_prefix_sha256="a" * 64,
+        observed_journal=NativePurchaseJournalIdentity(sha256="b" * 64, byte_count=24576),
+    )
+    NativePurchaseAttemptContext.model_validate(values)
+    values["observed_journal"] = None
+    if state == "missing":
+        NativePurchaseAttemptContext.model_validate(values)
+    else:
+        with pytest.raises(ValueError, match="requires an observed Journal"):
+            NativePurchaseAttemptContext.model_validate(values)

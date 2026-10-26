@@ -31,7 +31,7 @@ class NativePurchaseActions(Message):
         "strange-physics.purchase-actions.v1"
     )
     role: Literal["calibration", "menu"]
-    actions: Annotated[tuple[Experiment, ...], Field(min_length=1, max_length=64)]
+    actions: Annotated[tuple[Experiment, ...], Field(min_length=1, max_length=128)]
 
     @model_validator(mode="after")
     def action_scope(self) -> Self:
@@ -119,6 +119,12 @@ class NativePurchaseAttemptContext(Message):
     observed_journal: NativePurchaseJournalIdentity | None
     original_prefix_sha256: Digest
     row_state: Literal["missing", "pending", "terminal"]
+
+    @model_validator(mode="after")
+    def observed_row(self) -> Self:
+        if self.row_state != "missing" and self.observed_journal is None:
+            raise ValueError("A pending or terminal row requires an observed Journal")
+        return self
 
 
 class NativePurchaseResult(Message):

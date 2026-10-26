@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Literal
 
 from strange_physics.bounded_json import bounded_canonical, parse_bounded_json
 from strange_physics.contracts import ExperimentRecord
@@ -55,7 +56,7 @@ def bind_purchase_material(
     world = next(
         entry.definition for entry in catalog.worlds if entry.world_id == cells[0].world_id
     )
-    role = "calibration" if actual.purchase.calibration else "menu"
+    role: Literal["calibration", "menu"] = "calibration" if actual.purchase.calibration else "menu"
     actions = parse_bounded_json(
         freeze.artifacts[role].encode(),
         NativePurchaseActions,
