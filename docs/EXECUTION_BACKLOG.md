@@ -3785,4 +3785,4 @@ Pure contracts/binder 3df6dc3 is accepted and published on the source branch; ac
 
 ## 2026-10-26 — First measured purchase checkpoint accepted
 
-Source 2c43f97 is accepted and published for the first-purchase and bounded recovery checkpoint, including qualified failure/replay evidence. Quality's test-only full-history/downstream and boundary run is in progress; no result is claimed. Full PR2, final checks and delivery remain pending; V3, cumulative caps and parent issues #105/#106 are unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-26--first-measured-purchase-checkpoint-accepted).
+Source 2c43f97 is accepted and published for the first-purchase and bounded recovery checkpoint, including qualified failure/replay evidence. The five selected author cases at test-only 075c733 passed in 72.30 seconds; independent full-path review and final gates remain pending. Full PR2, final checks and delivery remain pending; V3, cumulative caps and parent issues #105/#106 are unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-26--first-measured-purchase-checkpoint-accepted).
