@@ -1487,3 +1487,7 @@ Quality's PR2 purchase/recovery handoff is prepared from pinned GitHub source, w
 ## 2026-10-26 — Measured purchase implementation assigned
 
 Verified cloud access and clean, unused checkouts allow the existing identity checkout to pass to Quality at accepted main c784f15. Platform and Research independently review the first immutable source checkpoint. The initial real-purchase/receipt/recovery gate remains distinct from full 12-slot mixed-history and downstream acceptance; V3 remains conditional. The study, caps, parent issues and later Laplace sequencing are unchanged. [Assignments and evidence](EXECUTION_LOG.md#2026-10-26--measured-purchase-implementation-assigned).
+
+## 2026-10-26 — Pure purchase contracts accepted
+
+Pure contracts/binder 3df6dc3 is accepted and published on the source branch; actual purchase execution and recovery remain in implementation, with no PR/merge or runtime acceptance. The first purchase checkpoint is separate from full mixed-history/downstream proof. V3, caps and parent status remain unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-26--pure-purchase-contracts-accepted).

@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Implement measured purchase contracts, binding, execution and recovery in the existing identity checkout | Exclusive source/environment ownership granted; first immutable checkpoint and focused tests next |
-| Platform | Independently review purchase resource, process, cost and recovery boundaries | Static review now; runtime review follows a coordinated source freeze |
-| Research | Independently review frozen identity, receipt, failure and history semantics | Review contract decisions and immutable source; full-path proof remains open |
-| Project lead | Maintain primary progress records and coordinate reviews | Cloud handoff verified; first real purchase and full mixed-history acceptance remain separate gates |
+| Quality | Implement the actual purchase facade, lifecycle, receipts and recovery in identity | Pure contracts/binder 3df6dc3 accepted and published; caller and runtime proof next |
+| Platform | Review the next immutable purchase caller and accounting boundaries | Pure checkpoint accepted; runtime review follows a coordinated source freeze |
+| Research | Reconcile six progress documents, then review identity, history and recovery | Pure checkpoint accepted; first purchase and full-path proof remain open |
+| Project lead | Review progress, coordinate source handoffs and integrate accepted work | Source branch published; no purchase PR/merge or runtime acceptance |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-26 | Quality | Pure purchase contracts/binder accepted | Published 3df6dc3; continue actual facade, lifecycle, receipt and recovery implementation |
+| 2026-10-26 | Platform + Research | Independent pure-checkpoint review | Static repairs accepted; actual caller and runtime review await immutable execution source |
+| 2026-10-26 | Research | Six-document progress reconciliation | Primary documentation only; release to Lead for review and publication |
+| 2026-10-26 | Project lead | Checkpoint evidence and source publication | Author and peer evidence rehashed; no purchase PR or merge |
 | 2026-10-26 04:31 | Quality | PR2 measured purchase implementation | Identity ownership granted on feat/measured-journal-purchase at accepted c784f15; validate installed identity before runtime |
 | 2026-10-26 04:31 | Platform + Research | Independent PR2 reviews | Resource/recovery and frozen-identity/semantic lanes; immutable source first, runtime only after coordinated freeze |
 | 2026-10-26 04:31 | Project lead | Cloud handoff and progress reconciliation | Published f6c58bf4 synced; two clean checkouts, no consumers and 93,668,601,856 free bytes verified; no new checkout |
@@ -1001,3 +1005,11 @@ Cloud access is verified. The existing primary checkout is synchronized to publi
 Quality implements the fixed purchase contract, binding, execution and recovery path. Platform reviews charging, limits, process lifetime and recovery; Research reviews frozen identities, action semantics and complete history; Lead owns primary documentation and integration. The first source checkpoint requires focused tests and independent review. The subsequent initial integration gate requires a real bounded purchase, an immutable receipt, known cost settlement and recovery evidence. Full PR2 acceptance additionally requires the declared 12-slot mixed history, retry/reconciliation and downstream candidate/classical consumption, followed by configured and delivery checks.
 
 The conditional V3 specimen is not admitted or demonstrated by this handoff. Existing cumulative caps and unresolved holds remain unchanged. The research comparison has not run; publisher handoff, full-study capacity, first-result re-estimation and parent issues #105/#106 remain open. The finite-grid reference remains first, with Laplace and its approximation audit later. Historical delivery records above remain source-specific.
+
+## 2026-10-26 — Pure purchase contracts accepted
+
+The pure purchase contracts/binder checkpoint [3df6dc3](https://github.com/spei04/strange-physics/commit/3df6dc34d1467b94e84db6c72af40a6af4f69edf), tree 86871c4007f14e35b1b7a426fbbaf59016cc610e, is independently accepted and published on feat/measured-journal-purchase. There is no purchase PR or merge. Author evidence records 14 pure tests passing in 0.74 seconds, scoped mypy on two source files and Ruff passing. All 86 package files match the retained wheel, sdist and installed-file manifest. The 4,689 unchanged dependencies are an author record at this source, not a fresh claim about the environment while implementation continues. Lead rehashed all 24 author entries and independently matched archive bytes to Git; Platform and Research accepted the bounded static scope.
+
+The repairs admit the proposed 128-action menu under the unchanged 64 KiB parser bound, require a Journal descriptor for pending/terminal contexts, and correct the reconciliation-positive and isolated receipt-discriminator tests. Both receipt variants bind StudyPurchase. Original failed tests and intermediate diagnostics remain retained. The author index is 3f50129614a55c20a6da66b4afebea03ea66d1a803c57e38b89dcbb866784fbe; Platform and Research review identities are retained in the execution JSON.
+
+Quality continues the actual purchase facade, durable lifecycle, retained receipt and recovery implementation. Those caller joins and execution outcomes are not accepted by the pure tests. First real purchase/receipt/settlement/recovery evidence remains distinct from complete 12-slot mixed history and downstream candidate/classical consumption. V3 is conditional; cumulative caps, unknown holds, parent issues #105/#106, publisher handoff and full-study capacity remain unchanged. First-result work still needs re-estimation before study admission; finite grid remains first and Laplace later.
