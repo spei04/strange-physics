@@ -1483,3 +1483,7 @@ PR #123/main c784f15 and exact 84-file candidate 12589122154 are accepted; all f
 ## 2026-10-25 — Measured purchase handoff prepared
 
 Quality's PR2 purchase/recovery handoff is prepared from pinned GitHub source, with independent Platform and Research review. Cloud execution awaits restored access and verified checkout ownership, disk and retained evidence. Purchase implementation, V3 and the study remain unstarted; parents and caps are unchanged. See the [implementation handoff](MEASURED_PURCHASE_HANDOFF.md) and [assignment log](EXECUTION_LOG.md#current-assignment-board).
+
+## 2026-10-26 — Measured purchase implementation assigned
+
+Verified cloud access and clean, unused checkouts allow the existing identity checkout to pass to Quality at accepted main c784f15. Platform and Research independently review the first immutable source checkpoint. The initial real-purchase/receipt/recovery gate remains distinct from full 12-slot mixed-history and downstream acceptance; V3 remains conditional. The study, caps, parent issues and later Laplace sequencing are unchanged. [Assignments and evidence](EXECUTION_LOG.md#2026-10-26--measured-purchase-implementation-assigned).

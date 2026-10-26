@@ -12,15 +12,18 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Assigned future author for purchase execution and recovery | GitHub source handoff prepared; cloud checkout ownership awaits verified access and explicit handoff |
-| Platform | Review purchase resource, process, cost and recovery boundaries | Caller constraints and paired evidence prepared; immutable implementation pending |
-| Research | Review purchase identity, failure semantics and history | Semantic handoff reviewed; full-path proof and first-result re-estimate remain open |
-| Project lead | Restore verified cloud access, then grant checkout ownership | PR #123 remains delivered; current disk/private evidence/ownership unverified; caps and parents unchanged |
+| Quality | Implement measured purchase contracts, binding, execution and recovery in the existing identity checkout | Exclusive source/environment ownership granted; first immutable checkpoint and focused tests next |
+| Platform | Independently review purchase resource, process, cost and recovery boundaries | Static review now; runtime review follows a coordinated source freeze |
+| Research | Independently review frozen identity, receipt, failure and history semantics | Review contract decisions and immutable source; full-path proof remains open |
+| Project lead | Maintain primary progress records and coordinate reviews | Cloud handoff verified; first real purchase and full mixed-history acceptance remain separate gates |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-26 04:31 | Quality | PR2 measured purchase implementation | Identity ownership granted on feat/measured-journal-purchase at accepted c784f15; validate installed identity before runtime |
+| 2026-10-26 04:31 | Platform + Research | Independent PR2 reviews | Resource/recovery and frozen-identity/semantic lanes; immutable source first, runtime only after coordinated freeze |
+| 2026-10-26 04:31 | Project lead | Cloud handoff and progress reconciliation | Published f6c58bf4 synced; two clean checkouts, no consumers and 93,668,601,856 free bytes verified; no new checkout |
 | 2026-10-25 | Quality | PR2 purchase/retry/recovery handoff | Fixed-source mapping prepared through GitHub; source/runtime work awaits cloud ownership |
 | 2026-10-25 | Platform | PR2 bounded execution and charged failure review | Existing helper guarantees separated from unimplemented caller responsibilities |
 | 2026-10-25 | Research | PR2 frozen identity, receipts and complete-history review | Initial purchase checkpoint distinguished from full 12-slot path and conditional specimen |
@@ -989,3 +992,12 @@ Quality is the assigned future author for PR2; Platform and Research supplied in
 Cloud source/runtime work awaits restored access and fresh ownership, disk and source/lock/environment readback. Current private evidence was not freshly rehashed in this checkpoint; historical PR #123 acceptance remains valid for its recorded source. No checkout ownership is inferred from old release records. This is GitHub source/document preparation only; public purchase implementation, the conditional V3 specimen and the study have not started.
 
 Restore verified cloud access, review retained evidence, reuse the existing checkout and grant explicit writer ownership before implementation. Re-estimate first-result work before study admission. Parents #105/#106, publisher handoff and full-study capacity remain open; caps, graph, approvals and historical estimates are unchanged.
+
+
+## 2026-10-26 — Measured purchase implementation assigned
+
+Cloud access is verified. The existing primary checkout is synchronized to published handoff f6c58bf40139e6fb88349a0c461e3ea8dd004855. Both checkouts were clean, the process scan found no checkout consumers, and 93,668,601,856 bytes were free at handoff. Quality now owns the reused identity checkout on feat/measured-journal-purchase, based on accepted main c784f15. The immutable private assignment snapshot has SHA256 d5e3915cc242c9eb220dec9aae26ba880770434e1577d26f4af917c41f76c5ed. Source, dependencies, tests and evidence remain in the cloud; installed source/lock/interpreter validation precedes runtime work.
+
+Quality implements the fixed purchase contract, binding, execution and recovery path. Platform reviews charging, limits, process lifetime and recovery; Research reviews frozen identities, action semantics and complete history; Lead owns primary documentation and integration. The first source checkpoint requires focused tests and independent review. The subsequent initial integration gate requires a real bounded purchase, an immutable receipt, known cost settlement and recovery evidence. Full PR2 acceptance additionally requires the declared 12-slot mixed history, retry/reconciliation and downstream candidate/classical consumption, followed by configured and delivery checks.
+
+The conditional V3 specimen is not admitted or demonstrated by this handoff. Existing cumulative caps and unresolved holds remain unchanged. The research comparison has not run; publisher handoff, full-study capacity, first-result re-estimation and parent issues #105/#106 remain open. The finite-grid reference remains first, with Laplace and its approximation audit later. Historical delivery records above remain source-specific.

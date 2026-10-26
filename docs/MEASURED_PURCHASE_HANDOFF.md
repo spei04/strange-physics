@@ -1,6 +1,6 @@
 # Measured purchase implementation handoff
 
-Status: preparation only. Public purchase execution, the conditional V3 specimen and the research comparison have not started.
+Status: implementation assigned on 2026-10-26 after verified cloud handoff. The first immutable source checkpoint and real purchase evidence remain pending; the conditional V3 specimen and research comparison have not started.
 
 This handoff is pinned to [main c784f15](https://github.com/spei04/strange-physics/tree/c784f15dd91dfed169a5af0847dbd31445bcad88), with the existing plan and delivery record at [aeca99b](https://github.com/spei04/strange-physics/blob/aeca99b3e865937d8e89e6b41afb77a1999174e0/docs/EXECUTION_LOG.md). PR #123 supplies the bounded Journal primitive; it does not supply durable purchase authority or cost settlement.
 
@@ -8,12 +8,12 @@ This handoff is pinned to [main c784f15](https://github.com/spei04/strange-physi
 
 | Owner | Work |
 | --- | --- |
-| Quality | Assigned future author for purchase contracts, binding, execution and recovery; checkout ownership awaits verified access and explicit handoff |
+| Quality | Exclusive author for purchase contracts, binding, execution and recovery in the existing identity checkout |
 | Platform | Independent file/process limits, durable charging, cost and recovery review |
 | Research | Independent frozen identity, failure semantics, complete history and recovery review |
 | Project lead | Checkout handoff, review integration, delivery and progress consistency |
 
-Cloud execution is awaiting restored access. Current checkout ownership, disk availability and private evidence have not been freshly verified in this checkpoint. Recheck those before granting the existing identity checkout to Quality. Reuse that checkout; keep source, dependencies, tests, outputs and private evidence in the cloud. Historical PR #123 acceptance remains source-qualified; this preparation does not replace its private verification record.
+Cloud access and checkout ownership were verified on 2026-10-26: both checkouts were clean, no checkout consumers were found and 93,668,601,856 bytes were free. Primary is synchronized to the reviewed f6c58bf4 handoff; Quality owns the existing identity checkout on feat/measured-journal-purchase at accepted c784f15. Revalidate the owned installed source, lock and interpreter before runtime. Keep source, dependencies, tests, outputs and private evidence in the cloud. The new private assignment snapshot records this transition; historical PR #123 acceptance remains source-qualified and unchanged.
 
 ## Implementation checkpoints
 

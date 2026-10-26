@@ -10924,10 +10924,10 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Primary docs-only checkpoint authored by Research, then released to Lead for review/integration; environment unused.",
-      "identity": "Quality owns existing identity at 730cc86 on feat/bounded-purchase-journal for final configured/full-suite/package gates; both peer runtime holds released.",
+      "scientific": "Project lead owns primary documentation synchronized to f6c58bf4; installed environment unused.",
+      "identity": "Quality owns source/environment in existing feat/measured-journal-purchase at accepted c784f15; installed identity revalidation precedes runtime.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
-      "storage": "Additional worktree about 179 MiB; available bytes at creation 103889854464. Both are active consumers; preserve/reuse them.",
+      "storage": "Two existing cloud checkouts reused; both clean and no consumers before handoff; free bytes 93668601856 at 2026-10-26T04:31:31Z. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
     },
     "spring_calibration_evidence": {
@@ -12588,14 +12588,14 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "bounded_journal_delivered_purchase_handoff_prepared_cloud_execution_pending_parents_open",
+      "status": "bounded_journal_delivered_purchase_implementation_assigned_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Assigned future purchase author; source handoff prepared, cloud writer ownership not granted.",
-        "Platform": "Independent resource/process/cost/recovery constraints and paired evidence prepared; immutable implementation pending.",
-        "Research": "Independent frozen identity, receipt and mixed-history semantics reviewed; complete-path proof and re-estimate remain open.",
-        "Project lead": "Restore verified cloud access, confirm ownership/disk/evidence, then grant checkout and coordinate implementation/delivery."
+        "Quality": "Exclusive identity author: measured purchase contracts/binding, bounded execution and durable recovery; first immutable source checkpoint next.",
+        "Platform": "Independent immutable resource/process/cost/recovery review; runtime after coordinated source freeze.",
+        "Research": "Independent frozen identity, receipt, failure-semantics and complete-history review; runtime after coordinated source freeze.",
+        "Project lead": "Primary progress and assignment owner; review integration and checkpoint delivery."
       },
       "handoff": "GitHub source/document preparation at pinned main c784f15 and progress aeca99b only. Current cloud access, checkout ownership, disk and private evidence are unverified. Historical PR123 source-qualified acceptance is preserved; no runtime or purchase implementation has started.",
       "interface_decisions": [
@@ -14031,7 +14031,7 @@
           "status": "design_v3_and_two_pr_split_accepted_runtime_unproved",
           "proposed_specimen_calls": 16,
           "profile": "conditional_not_runtime_admitted",
-          "implementation": "bounded_journal_runtime_reviews_accepted_author_gates_pending_public_purchase_not_started",
+          "implementation": "PR1 delivered; PR2 assigned under purchase_integration_handoff; V3 runtime unproved",
           "design_source": "28431b6d5a977114310f4643e00510f208d5abf4",
           "design_index_sha256": "1181b243924ba8d89baf82752844465397ba8353fccb54af813701df36febfcf",
           "design_reviews": {
@@ -14054,9 +14054,9 @@
             11
           ],
           "estimate_confidence": "moderate; lower confidence in profile usability until executable evidence",
-          "queued_branch": "feat/bounded-purchase-journal",
-          "queued_base": "1bc87e9f7914b3fdf35d4e13b2e56c4b0dfed37f",
-          "writer": "Quality retains PR1 source/environment for final gates; peers accepted and released."
+          "queued_branch": "feat/measured-journal-purchase",
+          "queued_base": "c784f15dd91dfed169a5af0847dbd31445bcad88",
+          "writer": "Quality now owns PR2; historical PR1 assignment below is superseded by purchase_integration_handoff."
         },
         "runtime_source": "11aada9310115f1fcb6a869a4d7a2be31d3f7c25",
         "runtime_tree": "360f1ee1d7c3f1bcc575d4fed945f0f74a06100d",
@@ -14236,7 +14236,7 @@
           ],
           "holds": "released"
         },
-        "public_purchase_integration": "not_started",
+        "public_purchase_integration": "assigned_under_purchase_integration_handoff",
         "v3_16_call_profile": "conditional; no runtime admission",
         "experiment_execution": "not_started",
         "parent_issues": {
@@ -14293,22 +14293,30 @@
             "Immutable original purchase identity with separately paid current attempt context",
             "Holder exclusion through final closure; original replay distinct from new reconciliation receipt"
           ],
-          "prerequisite": "PR1 PR/main/candidate acceptance satisfied; explicit PR2 writer handoff still required"
+          "prerequisite": "PR1 PR/main/candidate acceptance satisfied; explicit PR2 writer handoff granted 2026-10-26."
         }
       },
       "purchase_integration_handoff": {
-        "status": "prepared_cloud_execution_pending",
+        "status": "implementation_assigned",
         "source_base": "c784f15dd91dfed169a5af0847dbd31445bcad88",
         "planning_base": "aeca99b3e865937d8e89e6b41afb77a1999174e0",
         "document": "docs/MEASURED_PURCHASE_HANDOFF.md",
-        "code_implementation": "not_started",
+        "code_implementation": "assigned_first_source_checkpoint_pending",
         "current_private_evidence_rehashed": false,
-        "fresh_cloud_disk_and_ownership_verified": false,
+        "fresh_cloud_disk_and_ownership_verified": true,
         "runtime_execution": "not_started",
         "initial_checkpoint": "One end-to-end bounded purchase with immutable receipt, known cost settlement and recovery evidence",
         "full_path_gate": "Declared bounded 12-slot mixed history, retry/reconciliation and downstream candidate/classical proof, peer review and full delivery checks",
         "v3": "conditional; no new allocation or runtime admission",
-        "reestimate_before_study_admission": true
+        "reestimate_before_study_admission": true,
+        "published_handoff": "f6c58bf40139e6fb88349a0c461e3ea8dd004855",
+        "assigned_at": "2026-10-26T04:31:31.543793+00:00",
+        "branch": "feat/measured-journal-purchase",
+        "free_bytes_at_handoff": 93668601856,
+        "checkout_consumers_before_handoff": [],
+        "assignment_snapshot_sha256": "d5e3915cc242c9eb220dec9aae26ba880770434e1577d26f4af917c41f76c5ed",
+        "installed_identity_revalidation": "required_before_runtime",
+        "source_checkpoint": "pending"
       }
     },
     "certificate_trust_update": {
