@@ -141,6 +141,7 @@ class NativePurchaseReceipt(_ExecutionReceipt):
     )
     operation: Literal["purchase"] = "purchase"
     kind: Literal["execution"] = "execution"
+    purchase: StudyPurchase
     context_sha256: Digest
     journal: NativePurchaseJournalIdentity
 

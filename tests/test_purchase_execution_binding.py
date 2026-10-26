@@ -188,6 +188,7 @@ def test_receipt_reference_allows_reconciliation_without_original_receipt() -> N
     )
     valid = NativePurchaseReconciliationReceipt(
         logical_id="reconciliation",
+        purchase=actual.purchase,
         original_attempt_id="paid",
         request_sha256="a" * 64,
         original_revision=4,
