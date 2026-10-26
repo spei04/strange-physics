@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research owns six progress documents from 65ea0f7 for merged-PR status, then releases clean primary to Lead; primary environment unused.",
-      "identity": "Lead owns released source/environment after PR124 merge; no new implementation author assigned in this checkpoint.",
+      "scientific": "Research prepared six progress documents from b3992c3 and released primary to Lead for final review/publication; primary environment unused.",
+      "identity": "Lead owns released source/environment after PR124 main/candidate acceptance; no new implementation author assigned in this checkpoint.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused; both clean and no consumers before handoff; free bytes 93668601856 at 2026-10-26T04:31:31Z. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "bounded_purchase_pr124_merged_main_candidate_pending_parents_open",
+      "status": "bounded_purchase_pr124_delivered_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Source/environment released; exact PR124 CI independently accepted; next implementation awaits explicit handoff.",
-        "Platform": "Verify protected-main run 40277055513 and exact candidate when ready; no candidate acceptance claimed.",
-        "Research": "Reconcile six documents for merged PR and accepted next-work recommendation, then release to Lead.",
-        "Project lead": "Complete main/candidate delivery and coordinate later implementation handoff; parents remain open."
+        "Quality": "Source/environment released; bounded purchase slice delivered; next implementation remains unassigned.",
+        "Platform": "Protected-main run 40277055513 and exact unpublished candidate accepted; read hold released.",
+        "Research": "Final delivery update prepared and released to Lead; next-work recommendation remains preparation only.",
+        "Project lead": "Delivery and progress reconciled; next implementation handoff unassigned; parents remain open."
       },
-      "handoff": "PR124 merged at dfda60f with exact reviewed tree after required PR CI. Lead owns identity; Research temporarily owns six progress documents. Main/candidate acceptance remains pending; no new implementation author assigned.",
+      "handoff": "PR124/main dfda60f and its exact unpublished candidate are accepted. Lead owns both released checkouts; no active source/runtime consumers or new implementation assignment.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Finish main/candidate verification. Then assign retained-Journal comparison preparation/prediction/scoring bindings before scored publisher authority handoff; early-only transfer is a separate limited option. Full-study allocation, parent audit and first-result re-estimation remain open; no new scope/caps or implementation in this checkpoint.",
+      "next_units": "Prepare retained-Journal comparison preparation/prediction/scoring bindings before one-way scored publisher authority handoff; early-only transfer is a separate limited option. Full-study allocation/census, parent audits and first-result re-estimation remain open. Next work is unassigned preparation; no new scope/caps or implementation in this checkpoint.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14297,16 +14297,16 @@
         }
       },
       "purchase_integration_handoff": {
-        "status": "pr124_merged_main_candidate_pending",
+        "status": "pr124_delivered_candidate_accepted_unpublished",
         "source_base": "c784f15dd91dfed169a5af0847dbd31445bcad88",
         "planning_base": "aeca99b3e865937d8e89e6b41afb77a1999174e0",
         "document": "docs/MEASURED_PURCHASE_HANDOFF.md",
-        "code_implementation": "bounded_purchase_pr124_merged_main_candidate_pending",
+        "code_implementation": "bounded_purchase_pr124_delivered",
         "current_private_evidence_rehashed": true,
         "fresh_cloud_disk_and_ownership_verified": true,
         "runtime_execution": "bounded_075c_full_path_accepted_as_synthetic_conformance",
         "initial_checkpoint": "Accepted at 2c43f97 within source-qualified first purchase, known settlement, failure/replay and terminal-reconciliation evidence",
-        "full_path_gate": "Bounded 12-slot history/retry/downstream, local gates and required PR CI accepted; protected-main/candidate pending",
+        "full_path_gate": "Bounded 12-slot history/retry/downstream, local gates, required PR CI and protected-main/candidate accepted; broader study admission remains open",
         "v3": "bounded single-cell synthetic usability accepted; no new allocation, full-study capacity or publisher-handoff admission",
         "reestimate_before_study_admission": true,
         "published_handoff": "f6c58bf40139e6fb88349a0c461e3ea8dd004855",
@@ -14321,7 +14321,7 @@
         "source_tree": "864fd38638ca530c44c12e14a796af63a1db5ec4",
         "source_checkpoint_published": true,
         "checkpoint_assignment_snapshot_sha256": "dcbbe3f76d1b6cf462e0e3907e07ee9138402b8356c30354e49d7e98b1797a2b",
-        "delivery": "Exact 2c43f97 source branch published and remotely verified; no purchase PR or merge",
+        "delivery": "PR124/main dfda60f delivered with exact unpublished candidate acceptance; source-specific checkpoint history retained below.",
         "pure_contracts_checkpoint": {
           "source": "3df6dc34d1467b94e84db6c72af40a6af4f69edf",
           "tree": "86871c4007f14e35b1b7a426fbbaf59016cc610e",
@@ -14526,8 +14526,33 @@
           "pr_ci_index_sha256": "f8eb8c490322fc3059914724fe67c6ef820bb8d90e65ececc587b7537dd2a8de",
           "merge_record_sha256": "ddbc809ef629edfbc2a91d4407e87e151d76069f6740f2dc972f8fccf1478494",
           "main_ci": 40277055513,
-          "main_ci_status": "pending",
-          "candidate_status": "not_accepted"
+          "main_ci_status": "accepted",
+          "candidate_status": "accepted_unpublished",
+          "main_applicable_jobs": 5,
+          "main_python": {
+            "3.12": {
+              "tests": 4339,
+              "seconds": 406.85
+            },
+            "3.14": {
+              "tests": 4339,
+              "seconds": 543.61
+            }
+          },
+          "candidate_artifact_id": 12630997569,
+          "candidate_zip_bytes": 525619,
+          "candidate_zip_sha256": "ff0ccae6090fa9008de023f371ab41264dcf5bc16578790f655abaef3337d04c",
+          "package_files_equal_source": 87,
+          "both_archives_byte_equal_author": true,
+          "hosted_interpreter_observations": 13,
+          "ca_guard_observations": 2,
+          "main_acceptance_index_sha256": "a2614f44fbc937cff817d4fe45bfb6cfd641b23e236375116fb1f0d4ba8cefe4",
+          "verification_limits": [
+            "Exported requirements bytes absent; not independently recomputed",
+            "Owned copied interpreter still uses shared standard library; no hermeticity claim",
+            "Unpublished candidate acceptance is not a production release, study admission or parent closure"
+          ],
+          "verifier_read_hold_released": true
         },
         "next_work_recommendation": {
           "source": "9c8ebae594166245544820416480fd184ad0d285",
