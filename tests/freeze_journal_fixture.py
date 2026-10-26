@@ -43,6 +43,7 @@ from strange_physics.native_spring_contracts import (
 )
 from strange_physics.prediction_contracts import SpringPredictionConfig
 from strange_physics.publication_store import Extents, digest, head, raw, root_lock
+from strange_physics.purchase_execution_contracts import NativePurchaseActions
 from strange_physics.research_contracts import message_sha256
 from strange_physics.session import LocalSession
 from strange_physics.simulation import SimulationError
@@ -222,7 +223,9 @@ class Fixture:
     journal: Path
 
 
-def prepare(root: Path, build: TrustedInstallation, *, classical: bool = False) -> Fixture:
+def prepare(
+    root: Path, build: TrustedInstallation, *, classical: bool = False, purchase: bool = False
+) -> Fixture:
     budget = SetupBudget(time.monotonic_ns() + 180_000_000_000)
     with budget.phase():
         root.mkdir(mode=0o700)
@@ -260,13 +263,13 @@ def prepare(root: Path, build: TrustedInstallation, *, classical: bool = False) 
             engine_fingerprint=build.engine_fingerprint,
             installation_sha256=message_sha256(build),
             attempt_id="control",
-            tickets=6,
-            recovery_tickets=3,
+            tickets=16 if purchase else 6,
+            recovery_tickets=1 if purchase else 3,
             recovery_work_cpu_ns=8_000_000_000,
             recovery_work_artifact_bytes=2 * MIB,
-            ticket_cpu_ns=5_000_000_000,
+            ticket_cpu_ns=7_000_000_000 if purchase else 5_000_000_000,
             ticket_wall_ns=30_000_000_000,
-            ticket_artifact_bytes=8192,
+            ticket_artifact_bytes=6 * MIB if purchase else 8192,
             bootstrap_artifact_bytes=4 * MIB,
             bootstrap_cpu_ns=5_000_000_000,
             database_limit_bytes=2 * MIB,
@@ -295,7 +298,7 @@ def prepare(root: Path, build: TrustedInstallation, *, classical: bool = False) 
                 config_sha256=message_sha256(control),
                 input_sha256=control.plan_sha256,
                 retry_of=None,
-                cpu_reservation_ns=35_000_000_000,
+                cpu_reservation_ns=117_000_000_000 if purchase else 35_000_000_000,
                 artifact_reservation_bytes=control.required_control_bytes(),
                 purchase=None,
             ),
@@ -327,6 +330,14 @@ def prepare(root: Path, build: TrustedInstallation, *, classical: bool = False) 
                     "byte_count": len(raw(config)),
                 }
             )
+        if purchase:
+            catalog = NativeWorldCatalog.model_validate_json(artifacts["world_catalog"])
+            pid = catalog.worlds[0].definition.space.structure.particle_ids[0]
+            action = Experiment(particles=(ParticleInitial(id=pid, position=(0.125, 0.25)),))
+            artifacts["calibration"] = raw(
+                NativePurchaseActions(role="calibration", actions=(action,) * 4)
+            )
+            artifacts["menu"] = raw(NativePurchaseActions(role="menu", actions=(action,)))
         for ref in data["artifacts"]:
             value = artifacts[ref["kind"]]
             ref.update(sha256=digest(value), byte_count=len(value))
@@ -543,7 +554,9 @@ def generate_journal(fixture: Fixture) -> None:
         assert 36 * (JOURNAL_LIMIT + FILE_LIMIT) + 4 * STORE_ENVELOPE + COPY_LIMIT == 35677184
 
 
-def comparison_request(fixture: Fixture, freeze_receipt: bytes) -> NativeComparisonCandidateRequest:
+def comparison_request(
+    fixture: Fixture, freeze_receipt: bytes, *, ticket: int = 1
+) -> NativeComparisonCandidateRequest:
     with fixture.budget.phase():
         manifest = fixture.freeze.manifest
         catalog = NativeWorldCatalog.model_validate_json(fixture.freeze.artifacts["world_catalog"])
@@ -575,10 +588,10 @@ def comparison_request(fixture: Fixture, freeze_receipt: bytes) -> NativeCompari
         return NativeComparisonCandidateRequest(
             mode="execute",
             logical_id="candidate",
-            attempt_id="candidate-1",
+            attempt_id=f"candidate-{ticket}",
             retry_of=None,
             cell_id=manifest.cells[0].cell_id,
-            ticket=1,
+            ticket=ticket,
             expected_revision=len(ledger.records),
             expected_head_sha256=head(ledger),
             input_path=str(fixture.root / "comparison-input.json"),
@@ -597,18 +610,21 @@ def classical_request(
     fixture: Fixture,
     candidate_receipt: bytes,
     candidate_result: NativeCandidateResult,
+    *,
+    candidate_ticket: int = 1,
+    ticket: int = 2,
 ) -> NativeComparisonClassicalRequest:
     """Assemble actual typed private input within the original unresolved setup hold."""
     with fixture.budget.phase():
         material = NativeComparisonInput.model_validate_json(
-            (fixture.root / "candidate-input-1").read_bytes()
+            (fixture.root / f"candidate-input-{candidate_ticket}").read_bytes()
         )
         frozen = fixture.freeze
         catalog = NativeWorldCatalog.model_validate_json(frozen.artifacts["world_catalog"])
         context = NativeEvaluationInput(
             candidates=material.candidate,
             candidate_result=candidate_result,
-            candidate_attempt_id="candidate-1",
+            candidate_attempt_id=f"candidate-{candidate_ticket}",
             selected=None,
             policy=NativeScoringPolicy.model_validate_json(frozen.artifacts["scoring_policy"]),
             prediction_config=NativePredictionConfig.model_validate_json(
@@ -637,10 +653,10 @@ def classical_request(
         return NativeComparisonClassicalRequest(
             mode="execute",
             logical_id="classical",
-            attempt_id="classical-2",
+            attempt_id=f"classical-{ticket}",
             retry_of=None,
             cell_id=frozen.manifest.cells[0].cell_id,
-            ticket=2,
+            ticket=ticket,
             expected_revision=len(ledger.records),
             expected_head_sha256=head(ledger),
             input_path=str(fixture.root / "classical-input.json"),

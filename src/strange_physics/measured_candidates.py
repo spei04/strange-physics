@@ -1,6 +1,6 @@
 """Fixed owner-local candidate production and paid exact-result recovery.
 
-Fixed supplied and Journal-bound operations share one ledger; no purchase, selector or
+Fixed supplied and Journal-bound operations share one ledger. No selector or
 handoff dispatcher is exposed. Control holds remain unresolved, never exact zero costs.
 """
 
@@ -73,6 +73,29 @@ from strange_physics.publication_store import (
     regular,
     root_lock,
 )
+from strange_physics.purchase_execution import PurchaseWriterOutput, run_purchase_writer
+from strange_physics.purchase_execution_binding import (
+    BoundPurchase,
+    bind_purchase_capture,
+    bind_purchase_material,
+    purchase_facts,
+    validate_purchase_result,
+)
+from strange_physics.purchase_execution_contracts import (
+    PURCHASE_CONTROL_BYTES,
+    PURCHASE_CONTROL_NS,
+    PURCHASE_COPY_BYTES,
+    PURCHASE_HOLDER_NS,
+    PURCHASE_INPUT_BYTES,
+    PURCHASE_RESULT_BYTES,
+    NativePurchaseInput,
+    NativePurchasePrefix,
+    NativePurchaseReceipt,
+    NativePurchaseReconciliationReceipt,
+    NativePurchaseRequest,
+    NativePurchaseResult,
+)
+from strange_physics.purchase_journal import JournalCapture, JournalEpochs, capture_journal
 from strange_physics.research_contracts import message_sha256
 from strange_physics.serialization import canonical_json
 from strange_physics.study_contracts import (
@@ -104,6 +127,7 @@ from strange_physics.study_execution_contracts import (
     NativeFreezeRequest,
     NativeFreezeResult,
 )
+from strange_physics.study_journal import reconcile_study_journal
 from strange_physics.study_ledger import (
     StudyLedgerError,
     append_study_attempt,
@@ -124,6 +148,7 @@ type ExecutionRequest = (
     | NativeFreezeRequest
     | NativeComparisonCandidateRequest
     | NativeComparisonClassicalRequest
+    | NativePurchaseRequest
 )
 type ExecutionReceipt = (
     CandidateReceipt
@@ -131,12 +156,22 @@ type ExecutionReceipt = (
     | NativeFreezeReceipt
     | NativeComparisonReceipt
     | NativeClassicalReceipt
+    | NativePurchaseReceipt
+    | NativePurchaseReconciliationReceipt
 )
 type ExecutionInput = (
-    NativeCandidateInput | StageInput | NativeFreezeInput | ClassicalDiagnosticInput
+    NativeCandidateInput
+    | StageInput
+    | NativeFreezeInput
+    | ClassicalDiagnosticInput
+    | NativePurchaseInput
 )
 type ExecutionResult = (
-    NativeCandidateResult | StageResult | NativeFreezeResult | ClassicalDiagnosticResult
+    NativeCandidateResult
+    | StageResult
+    | NativeFreezeResult
+    | ClassicalDiagnosticResult
+    | NativePurchaseResult
 )
 
 
@@ -160,9 +195,14 @@ class _CommittedExecution:
     ledger: NativeStudyLedger
     measurements: CandidateMeasurements
     replayed: bool
+    purchase_epochs: JournalEpochs | None = None
 
 
 def _request(data: bytes, operation: str) -> ExecutionRequest:
+    if operation == "purchase":
+        return parse_bounded_json(
+            data, NativePurchaseRequest, max_bytes=REQUEST_BYTES, max_depth=8, max_nodes=128
+        )
     if operation == "classical_diagnostic":
         return parse_bounded_json(
             data,
@@ -203,6 +243,18 @@ def _request(data: bytes, operation: str) -> ExecutionRequest:
 
 
 def _receipt(data: bytes, request: ExecutionRequest) -> ExecutionReceipt:
+    if isinstance(request, NativePurchaseRequest):
+        if request.purpose == "reconciliation":
+            return parse_bounded_json(
+                data,
+                NativePurchaseReconciliationReceipt,
+                max_bytes=8192,
+                max_depth=8,
+                max_nodes=128,
+            )
+        return parse_bounded_json(
+            data, NativePurchaseReceipt, max_bytes=8192, max_depth=8, max_nodes=128
+        )
     if request.operation == "classical_diagnostic":
         return parse_bounded_json(
             data, NativeClassicalReceipt, max_bytes=8192, max_depth=8, max_nodes=128
@@ -226,6 +278,8 @@ def _receipt(data: bytes, request: ExecutionRequest) -> ExecutionReceipt:
 
 
 def _input_limit(request: ExecutionRequest) -> int:
+    if isinstance(request, NativePurchaseRequest):
+        return PURCHASE_INPUT_BYTES
     return (
         8
         if request.operation in ("candidate_production", "comparison_candidate", "prediction")
@@ -234,6 +288,8 @@ def _input_limit(request: ExecutionRequest) -> int:
 
 
 def _result_limit(request: ExecutionRequest) -> int:
+    if isinstance(request, NativePurchaseRequest):
+        return PURCHASE_RESULT_BYTES
     if request.operation == "classical_diagnostic":
         return 16 * MIB
     return (
@@ -258,6 +314,14 @@ def _classical_input(data: bytes) -> NativeComparisonClassicalInput:
 
 
 def _input(data: bytes, request: ExecutionRequest) -> ExecutionInput:
+    if isinstance(request, NativePurchaseRequest):
+        return parse_bounded_json(
+            data,
+            NativePurchaseInput,
+            max_bytes=PURCHASE_INPUT_BYTES,
+            max_depth=32,
+            max_nodes=100_000,
+        )
     if request.operation == "classical_diagnostic":
         return _classical_input(data).diagnostic
     if request.operation == "freeze":
@@ -272,6 +336,14 @@ def _input(data: bytes, request: ExecutionRequest) -> ExecutionInput:
 
 
 def _result(data: bytes, request: ExecutionRequest) -> ExecutionResult:
+    if isinstance(request, NativePurchaseRequest):
+        return parse_bounded_json(
+            data,
+            NativePurchaseResult,
+            max_bytes=PURCHASE_RESULT_BYTES,
+            max_depth=40,
+            max_nodes=100_000,
+        )
     if request.operation == "classical_diagnostic":
         return parse_classical_diagnostic_result(data)
     if request.operation == "freeze":
@@ -287,6 +359,8 @@ def _result(data: bytes, request: ExecutionRequest) -> ExecutionResult:
 
 
 def _config(actual: ExecutionInput) -> str:
+    if isinstance(actual, NativePurchaseInput):
+        return actual.config_sha256
     if isinstance(actual, NativeFreezeInput):
         return message_sha256(actual.manifest)
     return (
@@ -297,6 +371,9 @@ def _config(actual: ExecutionInput) -> str:
 
 
 def _check_engine(actual: ExecutionInput, expected: str) -> None:
+    if isinstance(actual, NativePurchaseInput):
+        # Current engine is joined through its retained frozen material and fixed writer.
+        return
     if isinstance(actual, NativeFreezeInput):
         if actual.manifest.engine_fingerprint != expected:
             raise StudyLedgerError("freeze_engine_identity")
@@ -315,6 +392,21 @@ def _check_engine(actual: ExecutionInput, expected: str) -> None:
 
 
 def _validate(result: ExecutionResult, actual: ExecutionInput, attempt_id: str) -> None:
+    if isinstance(actual, NativePurchaseInput) or isinstance(result, NativePurchaseResult):
+        if not isinstance(actual, NativePurchaseInput) or not isinstance(
+            result, NativePurchaseResult
+        ):
+            raise StudyLedgerError("purchase_result_identity")
+        expected = purchase_facts(
+            actual,
+            result.record,
+            result.context,
+            config_sha256=actual.config_sha256,
+            reconciliation=result.kind == "reconciliation",
+        )
+        if result.context.attempt_id != attempt_id or raw(expected) != raw(result.facts):
+            raise StudyLedgerError("purchase_result_facts")
+        return
     if isinstance(result, ClassicalDiagnosticResult) or isinstance(
         actual, ClassicalDiagnosticInput
     ):
@@ -355,6 +447,16 @@ def _identity(request: ExecutionRequest) -> str:
                 "input_bytes": request.input_bytes,
                 "input_sha256": request.input_sha256,
                 "config_sha256": request.config_sha256,
+                **(
+                    {
+                        "purpose": request.purpose,
+                        "purchase_logical_id": request.purchase_logical_id,
+                        "reconcile_attempt_id": request.reconcile_attempt_id,
+                        "purchase": request.purchase.model_dump(mode="json"),
+                    }
+                    if isinstance(request, NativePurchaseRequest)
+                    else {}
+                ),
             }
         ).encode()
     )
@@ -432,6 +534,8 @@ def _capacity(root: Path, ledger: NativeStudyLedger, c: CandidateControl) -> Non
 
 
 def _operation(request: ExecutionRequest) -> OperationKind:
+    if isinstance(request, NativePurchaseRequest) and request.purpose == "reconciliation":
+        return "accounting"
     if request.operation == "freeze":
         return "accounting"
     if request.operation == "comparison_candidate":
@@ -450,6 +554,7 @@ def _bind_context(
             "candidate_production",
             "comparison_candidate",
             "classical_diagnostic",
+            "purchase",
         ):
             raise StudyLedgerError("native_stage_comparison_not_available")
         manifest = study_manifest(ledger)
@@ -458,6 +563,8 @@ def _bind_context(
             if request.operation == "classical_diagnostic"
             else "candidate_config"
         )
+        if isinstance(request, NativePurchaseRequest):
+            role = "calibration" if request.purchase.calibration else "menu"
         artifact = next((a for a in manifest.artifacts if a.kind == role), None)
         if (
             (manifest.source_commit, manifest.uv_lock_sha256, manifest.engine_fingerprint)
@@ -601,7 +708,10 @@ def _closure(
     ):
         raise StudyLedgerError("candidate_closure_corrupt")
     if (
-        saved.mode != "execute"
+        (
+            saved.mode != "execute"
+            and not (isinstance(saved, NativePurchaseRequest) and saved.purpose == "reconciliation")
+        )
         or receipt.original_revision != saved.expected_revision + 1
         or receipt.original_revision > len(current.records)
     ):
@@ -618,15 +728,21 @@ def _closure(
     reservation = original.records[-1].event
     expected_reservation = StudyAttemptReservation(
         attempt_id=saved.attempt_id,
-        phase=saved.phase,
-        cell_id=saved.cell_id,
+        phase="accounting"
+        if isinstance(saved, NativePurchaseRequest) and saved.purpose == "reconciliation"
+        else saved.phase,
+        cell_id=None
+        if isinstance(saved, NativePurchaseRequest) and saved.purpose == "reconciliation"
+        else saved.cell_id,
         operation=_operation(saved),
         config_sha256=saved.config_sha256,
         input_sha256=saved.input_sha256,
         retry_of=saved.retry_of,
         cpu_reservation_ns=saved.cpu_reservation_ns,
         artifact_reservation_bytes=saved.artifact_reservation_bytes,
-        purchase=None,
+        purchase=saved.purchase
+        if isinstance(saved, NativePurchaseRequest) and saved.purpose == "execution"
+        else None,
     )
     if head(before) != saved.expected_head_sha256 or reservation != expected_reservation:
         raise StudyLedgerError("candidate_closure_corrupt")
@@ -643,6 +759,30 @@ def _closure(
         or (message_sha256(updates[0].facts) != message_sha256(result.facts))
     ):
         raise StudyLedgerError("candidate_closure_corrupt")
+    if isinstance(saved, NativePurchaseRequest):
+        actual = _input(input_raw, saved)
+        if not isinstance(actual, NativePurchaseInput) or not isinstance(
+            result, NativePurchaseResult
+        ):
+            raise StudyLedgerError("purchase_closure_identity")
+        validate_purchase_result(actual, result, saved)
+        _purchase_original(store, saved, current)
+        if not isinstance(
+            receipt, (NativePurchaseReceipt, NativePurchaseReconciliationReceipt)
+        ) or (
+            receipt.purchase != saved.purchase
+            or receipt.kind != saved.purpose
+            or receipt.context_sha256 != message_sha256(result.context)
+            or receipt.journal != result.journal
+            or (receipt.source_commit, receipt.installation_sha256)
+            != (store.admission.control.source_commit, store.admission.control.installation_sha256)
+        ):
+            raise StudyLedgerError("purchase_closure_identity")
+        if isinstance(receipt, NativePurchaseReconciliationReceipt) and (
+            receipt.purchase_logical_id != saved.purchase_logical_id
+            or receipt.unresolved_attempt_id != saved.reconcile_attempt_id
+        ):
+            raise StudyLedgerError("purchase_closure_identity")
     if isinstance(result, NativeFreezeResult):
         actual = _input(input_raw, saved)
         if not isinstance(actual, NativeFreezeInput) or (
@@ -666,7 +806,9 @@ def _closure(
 
 
 def _retained_freeze(
-    store: CandidateStore, material: NativeComparisonInput, ledger: NativeStudyLedger
+    store: CandidateStore,
+    material: NativeComparisonInput | NativePurchaseInput,
+    ledger: NativeStudyLedger,
 ) -> NativeFreezeInput:
     row = store.db.execute(
         "SELECT length(request) FROM closures WHERE logical_id=?",
@@ -823,6 +965,249 @@ def _bind_classical(
     return capture
 
 
+@dataclass
+class _PurchaseCapture:
+    retained: list[tuple[Path, bytes]]
+    holder: JournalCapture | None = None
+
+    def recheck(self) -> None:
+        for path, value in self.retained:
+            if read_bytes(path, limit=128 * 1024) != value:
+                raise StudyLedgerError("purchase_capture_changed")
+        if self.holder is not None:
+            self.holder.recheck()
+
+
+def _purchase_snapshot(
+    store: CandidateStore,
+    ticket: int,
+    result: NativePurchaseResult,
+    actual: NativePurchaseInput,
+    bound: BoundPurchase,
+    prefix: NativePurchasePrefix,
+    ledger: NativeStudyLedger,
+    capture: _PurchaseCapture,
+) -> None:
+    path = store.root / f"candidate-purchase-capture-{ticket}"
+    value = read_bytes(path, limit=128 * 1024)
+    if (len(value), digest(value)) != (result.journal.byte_count, result.journal.sha256):
+        raise StudyLedgerError("purchase_capture_identity")
+    snapshot = reconcile_study_journal(
+        ledger, path, catalog=bound.catalog, cell_id=actual.cell_id
+    ).snapshot
+    bind_purchase_capture(actual, result, prefix, snapshot)
+    capture.retained.append((path, value))
+    before = store.root / f"candidate-purchase-before-{ticket}"
+    observed = result.context.observed_journal
+    if observed is None:
+        if result.context.row_state != "missing" or actual.purchase.ordinal != 0:
+            raise StudyLedgerError("purchase_context_identity")
+        if regular(before, missing=True) is not None:
+            raise StudyLedgerError("purchase_context_identity")
+        return
+    value = read_bytes(before, limit=128 * 1024)
+    if (len(value), digest(value)) != (observed.byte_count, observed.sha256):
+        raise StudyLedgerError("purchase_context_identity")
+    previous = reconcile_study_journal(
+        ledger, before, catalog=bound.catalog, cell_id=actual.cell_id
+    ).snapshot
+    if previous.journal_bytes_sha256 != observed.sha256:
+        raise StudyLedgerError("purchase_context_identity")
+    rows = previous.reservations
+    n = actual.purchase.ordinal
+    state = result.context.row_state
+    if len(rows) != n + int(state != "missing"):
+        raise StudyLedgerError("purchase_context_prefix")
+    for record, row in zip(prefix.records, rows[:n], strict=True):
+        if row.record is None or raw(row.record) != raw(record):
+            raise StudyLedgerError("purchase_context_prefix")
+    if state != "missing":
+        row = rows[-1]
+        if (row.operation_id, row.ordinal, message_sha256(row.experiment)) != (
+            actual.purchase.operation_id,
+            n,
+            actual.purchase.experiment_sha256,
+        ):
+            raise StudyLedgerError("purchase_context_prefix")
+        if state == "pending" and row.record is not None:
+            raise StudyLedgerError("purchase_context_prefix")
+        if state == "terminal" and (row.record is None or raw(row.record) != raw(result.record)):
+            raise StudyLedgerError("purchase_context_prefix")
+    capture.retained.append((before, value))
+
+
+def _purchase_material(
+    store: CandidateStore,
+    request: NativePurchaseRequest,
+    actual: NativePurchaseInput,
+    ledger: NativeStudyLedger,
+    capture: _PurchaseCapture,
+) -> tuple[BoundPurchase, NativePurchasePrefix]:
+    if (
+        raw(request.purchase) != raw(actual.purchase)
+        or request.cell_id != actual.cell_id
+        or request.config_sha256 != actual.config_sha256
+    ):
+        raise StudyLedgerError("purchase_request_identity")
+    # Replay must not stat the current Journal or its original path. The fixed
+    # writer performs the actual no-symlink checks after durable admission.
+    path = Path(actual.journal_path).absolute()
+    if ".." in path.parts or path == store.root or store.root in path.parents:
+        raise StudyLedgerError("purchase_journal_scope")
+    freeze = _retained_freeze(store, actual, ledger)
+    bound = bind_purchase_material(actual, freeze, ledger)
+    if actual.predecessor is None:
+        return bound, NativePurchasePrefix(records=())
+    reference = actual.predecessor
+    row = store.db.execute(
+        "SELECT length(request) FROM closures WHERE logical_id=?", (reference.logical_id,)
+    ).fetchone()
+    if row is None or not 0 < row[0] <= REQUEST_BYTES:
+        raise StudyLedgerError("purchase_predecessor_missing")
+    saved_raw = store.db.execute(
+        "SELECT request FROM closures WHERE logical_id=?", (reference.logical_id,)
+    ).fetchone()[0]
+    saved = _request(saved_raw, "purchase")
+    assert isinstance(saved, NativePurchaseRequest)
+    if (
+        saved.logical_id != reference.logical_id
+        or saved.purchase.ordinal != actual.purchase.ordinal - 1
+    ):
+        raise StudyLedgerError("purchase_predecessor_identity")
+    closure = _closure(store, saved, ledger)
+    if closure is None:
+        raise StudyLedgerError("purchase_predecessor_missing")
+    receipt, input_raw, result_raw, _ = closure
+    updates = [
+        r.event
+        for r in ledger.records
+        if isinstance(r.event, StudyAttemptUpdate) and r.event.attempt_id == saved.attempt_id
+    ]
+    if not updates or updates[-1].state not in ("completed", "failed", "rejected"):
+        raise StudyLedgerError("purchase_predecessor_incomplete")
+    if not isinstance(receipt, (NativePurchaseReceipt, NativePurchaseReconciliationReceipt)) or (
+        digest(raw(receipt)) != reference.receipt_sha256 or receipt.kind != reference.kind
+    ):
+        raise StudyLedgerError("purchase_predecessor_identity")
+    previous = _input(input_raw, saved)
+    result = _result(result_raw, saved)
+    assert isinstance(previous, NativePurchaseInput) and isinstance(result, NativePurchaseResult)
+    if (
+        previous.cell_id,
+        previous.freeze_logical_id,
+        previous.freeze_receipt_sha256,
+        previous.journal_path,
+        result.journal,
+    ) != (
+        actual.cell_id,
+        actual.freeze_logical_id,
+        actual.freeze_receipt_sha256,
+        actual.journal_path,
+        actual.initial_journal,
+    ):
+        raise StudyLedgerError("purchase_predecessor_identity")
+    # Ordinals strictly decrease; at most twelve retained closures can be visited.
+    previous_bound, prefix = _purchase_material(store, saved, previous, ledger, capture)
+    _purchase_snapshot(
+        store, saved.ticket, result, previous, previous_bound, prefix, ledger, capture
+    )
+    return bound, NativePurchasePrefix(records=(*prefix.records, result.record))
+
+
+def _purchase_original(
+    store: CandidateStore, request: NativePurchaseRequest, ledger: NativeStudyLedger
+) -> None:
+    target = (
+        request.reconcile_attempt_id if request.purpose == "reconciliation" else request.retry_of
+    )
+    if target is None:
+        return
+    matches = [
+        (index, record.event)
+        for index, record in enumerate(ledger.records)
+        if isinstance(record.event, StudyAttemptReservation) and record.event.attempt_id == target
+    ]
+    if len(matches) != 1:
+        raise StudyLedgerError("purchase_original_missing")
+    index, reservation = matches[0]
+    if (
+        reservation.operation != "purchase"
+        or reservation.cell_id != request.cell_id
+        or reservation.purchase != request.purchase
+        or reservation.config_sha256 != request.config_sha256
+        or reservation.input_sha256 != request.input_sha256
+    ):
+        raise StudyLedgerError("purchase_original_identity")
+    updates = [
+        r.event
+        for r in ledger.records
+        if isinstance(r.event, StudyAttemptUpdate) and r.event.attempt_id == target
+    ]
+    if updates and updates[-1].state in ("completed", "failed", "rejected"):
+        raise StudyLedgerError("purchase_original_terminal")
+    # The consumed ticket proves original raw input/logical identity even if work
+    # died before retaining its input. No live input path or Journal is consulted.
+    original: NativePurchaseRequest | None = None
+    marker = ('"attempt_id":"' + target + '"').encode()
+    for ticket in range(store.admission.control.tickets):
+        path = store.root / f"candidate-ticket-{ticket}"
+        if regular(path, missing=True) is None:
+            continue
+        value = read_bytes(path, limit=REQUEST_BYTES)
+        if marker not in value:
+            continue
+        parsed = _request(value, "purchase")
+        assert isinstance(parsed, NativePurchaseRequest)
+        if original is not None:
+            raise StudyLedgerError("purchase_original_identity")
+        original = parsed
+    if original is None or (
+        original.attempt_id != target
+        or original.purpose != "execution"
+        or original.mode != "execute"
+        or original.logical_id != request.purchase_logical_id
+        or original.input_raw_sha256 != request.input_raw_sha256
+        or original.input_bytes != request.input_bytes
+        or reservation
+        != StudyAttemptReservation(
+            attempt_id=original.attempt_id,
+            phase=original.phase,
+            cell_id=original.cell_id,
+            operation="purchase",
+            config_sha256=original.config_sha256,
+            input_sha256=original.input_sha256,
+            retry_of=original.retry_of,
+            cpu_reservation_ns=original.cpu_reservation_ns,
+            artifact_reservation_bytes=original.artifact_reservation_bytes,
+            purchase=original.purchase,
+        )
+        or original.expected_revision != index
+        or original.expected_head_sha256
+        != head(NativeStudyLedger(plan=ledger.plan, records=ledger.records[:index]))
+    ):
+        raise StudyLedgerError("purchase_original_identity")
+
+
+def _purchase_receipt(
+    receipt: CandidateReceipt, request: NativePurchaseRequest, result: NativePurchaseResult
+) -> NativePurchaseReceipt | NativePurchaseReconciliationReceipt:
+    fields = {
+        **receipt.model_dump(exclude={"schema_version"}),
+        "purchase": request.purchase,
+        "context_sha256": message_sha256(result.context),
+        "journal": result.journal,
+    }
+    if request.purpose == "reconciliation":
+        return NativePurchaseReconciliationReceipt.model_validate(
+            {
+                **fields,
+                "purchase_logical_id": request.purchase_logical_id,
+                "unresolved_attempt_id": request.reconcile_attempt_id,
+            }
+        )
+    return NativePurchaseReceipt.model_validate(fields)
+
+
 def _commit_native_execution(
     store_root: Path, request: ExecutionRequest, *, expected_operation: str
 ) -> _CommittedExecution:
@@ -846,8 +1231,14 @@ def _commit_native_execution(
         or request.artifact_reservation_bytes > c.recovery_work_artifact_bytes
     ):
         raise StudyLedgerError("candidate_recovery_work_limit")
+    if isinstance(request, NativePurchaseRequest) and (
+        c.ticket_cpu_ns < PURCHASE_CONTROL_NS or c.ticket_artifact_bytes < PURCHASE_CONTROL_BYTES
+    ):
+        raise StudyLedgerError("purchase_control_allowance")
     with _deadline(
-        c.ticket_cpu_ns,
+        min(c.ticket_cpu_ns - PURCHASE_HOLDER_NS, 5_000_000_000)
+        if isinstance(request, NativePurchaseRequest)
+        else c.ticket_cpu_ns,
         request.cpu_reservation_ns // 2,
         c.ticket_wall_ns,
         request.wall_limit_ns,
@@ -864,6 +1255,7 @@ def _commit_native_execution(
         durable_directory(root)
         store: CandidateStore | None = None
         child_cpu = 0
+        purchase_epochs: JournalEpochs | None = None
         work_start = 0
         work_bytes: int | None = None
         reservation: StudyAttemptReservation | None = None
@@ -898,7 +1290,11 @@ def _commit_native_execution(
                 current = store.ledger()
                 _admitted(root, admission, seed, current)
                 closure = _closure(store, request, current)
-                if request.mode == "recover" and closure is None:
+                reconciliation = (
+                    isinstance(request, NativePurchaseRequest)
+                    and request.purpose == "reconciliation"
+                )
+                if request.mode == "recover" and closure is None and not reconciliation:
                     raise StudyLedgerError("candidate_receipt_missing")
                 if request.mode == "execute" and closure is not None:
                     raise StudyLedgerError("candidate_use_charged_recovery")
@@ -907,7 +1303,9 @@ def _commit_native_execution(
                     request.expected_head_sha256,
                 ):
                     raise StudyLedgerError("candidate_stale_head")
-                if request.mode == "execute" and store.stopped:
+                if (
+                    request.mode == "execute" or reconciliation and closure is None
+                ) and store.stopped:
                     raise StudyLedgerError("candidate_stopped")
                 _bind_context(current, request, c)
                 if any(
@@ -916,28 +1314,49 @@ def _commit_native_execution(
                     for record in current.records
                 ):
                     raise StudyLedgerError("candidate_attempt_reused")
+                if isinstance(request, NativePurchaseRequest) and closure is None:
+                    _purchase_original(store, request, current)
+                    if reconciliation:
+                        # Fresh reconciliation may recover from an unknown current head.
+                        # Its stored closure still binds the exact locked original prefix.
+                        request = NativePurchaseRequest.model_validate(
+                            {
+                                **request.model_dump(),
+                                "expected_revision": len(current.records),
+                                "expected_head_sha256": head(current),
+                            }
+                        )
                 operation = "accounting" if closure else _operation(request)
                 reservation = StudyAttemptReservation(
                     attempt_id=request.attempt_id,
-                    phase="accounting" if closure else request.phase,
-                    cell_id=None if closure else request.cell_id,
+                    phase="accounting" if closure or reconciliation else request.phase,
+                    cell_id=None if closure or reconciliation else request.cell_id,
                     operation=operation,
                     config_sha256=message_sha256(c) if closure else request.config_sha256,
                     input_sha256=_identity(request) if closure else request.input_sha256,
                     retry_of=request.retry_of,
                     cpu_reservation_ns=request.cpu_reservation_ns,
                     artifact_reservation_bytes=request.artifact_reservation_bytes,
-                    purchase=None,
+                    purchase=request.purchase
+                    if isinstance(request, NativePurchaseRequest)
+                    and closure is None
+                    and not reconciliation
+                    else None,
                 )
                 try:
                     proposed = _append(current, reservation)
                     _capacity(root, proposed, c)
-                    if (
-                        closure is None
-                        and request.artifact_reservation_bytes
-                        < request.input_bytes + request.output_limit_bytes
-                    ):
-                        raise StudyLedgerError("candidate_work_headroom")
+                    if closure is None:
+                        copy_bound = request.input_bytes + request.output_limit_bytes
+                        if isinstance(request, NativePurchaseRequest):
+                            # Retained input, pre-write Journal, child output,
+                            # post-write capture and final typed result are distinct.
+                            # Even ordinal zero conservatively reserves its absent preimage.
+                            copy_bound += request.output_limit_bytes + 2 * 128 * 1024
+                            if copy_bound > PURCHASE_COPY_BYTES:
+                                raise StudyLedgerError("purchase_copy_limit")
+                        if request.artifact_reservation_bytes < copy_bound:
+                            raise StudyLedgerError("candidate_work_headroom")
                 except StudyLedgerError:
                     store.limit_control_growth()
                     with store.transaction():
@@ -948,13 +1367,37 @@ def _commit_native_execution(
                     store.replace(current, proposed)
                 current = proposed
                 frozen_ledger: NativeStudyLedger | None = None
-                captured_journal: _ComparisonCapture | None = None
+                captured_journal: _ComparisonCapture | _PurchaseCapture | None = None
                 clock.work()
                 work_start = meter.total
                 if closure:
                     receipt, input_raw, result_raw, original = closure
                     result = _result(result_raw, request)
-                    if isinstance(request, NativeComparisonCandidateRequest):
+                    if isinstance(request, NativePurchaseRequest):
+                        actual = _input(input_raw, request)
+                        assert isinstance(actual, NativePurchaseInput)
+                        assert isinstance(result, NativePurchaseResult)
+                        purchase_capture = _PurchaseCapture([])
+                        bound, prefix = _purchase_material(
+                            store, request, actual, current, purchase_capture
+                        )
+                        saved_raw = store.db.execute(
+                            "SELECT request FROM closures WHERE logical_id=?", (request.logical_id,)
+                        ).fetchone()[0]
+                        saved_purchase = _request(saved_raw, "purchase")
+                        assert isinstance(saved_purchase, NativePurchaseRequest)
+                        _purchase_snapshot(
+                            store,
+                            saved_purchase.ticket,
+                            result,
+                            actual,
+                            bound,
+                            prefix,
+                            current,
+                            purchase_capture,
+                        )
+                        captured_journal = purchase_capture
+                    elif isinstance(request, NativeComparisonCandidateRequest):
                         captured_journal = _bind_comparison(
                             store, request, input_raw, original, meter, journal_scope, replayed=True
                         )
@@ -986,7 +1429,96 @@ def _commit_native_execution(
                             store, request, input_raw, current, meter, journal_scope
                         )
                     produced: bytes | None
-                    if isinstance(actual, NativeFreezeInput):
+                    if isinstance(actual, NativePurchaseInput):
+                        assert isinstance(request, NativePurchaseRequest)
+                        purchase_capture = _PurchaseCapture([])
+                        bound, prefix = _purchase_material(
+                            store, request, actual, current, purchase_capture
+                        )
+                        # All possible Journal writes are prepaid by permanent control.
+                        # Construction is deliberately after the durable work reservation.
+                        purchase_epochs = JournalEpochs()
+                        child_output = root / f"candidate-purchase-child-{request.ticket}"
+                        before_path = root / f"candidate-purchase-before-{request.ticket}"
+                        observation = run_purchase_writer(
+                            actual,
+                            request,
+                            bound,
+                            prefix,
+                            child_output,
+                            before_path,
+                            engine=observed.engine_fingerprint,
+                            epochs=purchase_epochs,
+                            deadline_ns=clock.wall_deadline,
+                        )
+                        if observation.cpu_ns is not None:
+                            child_cpu = observation.cpu_ns
+                        for path in (child_output, before_path):
+                            info = regular(path, missing=True)
+                            if info is not None:
+                                meter.total += info.st_size
+                        if observation.error is not None:
+                            if observation.cpu_ns is None:
+                                observation.error.add_note(
+                                    "Writer CPU unavailable; recorded parent CPU is a lower bound."
+                                )
+                            raise observation.error
+                        if (
+                            not observation.reaped
+                            or observation.cpu_ns is None
+                            or observation.output is None
+                        ):
+                            raise StudyLedgerError("purchase_writer_unknown")
+                        writer = parse_bounded_json(
+                            observation.output,
+                            PurchaseWriterOutput,
+                            max_bytes=PURCHASE_RESULT_BYTES,
+                            max_depth=40,
+                            max_nodes=100_000,
+                        )
+                        purchase_capture.holder = journal_scope.enter_context(
+                            capture_journal(
+                                Path(actual.journal_path),
+                                writer.journal.sha256,
+                                epochs=purchase_epochs,
+                                deadline_ns=clock.wall_deadline,
+                            )
+                        )
+                        meter.write(
+                            root / f"candidate-purchase-capture-{request.ticket}",
+                            purchase_capture.holder.raw,
+                        )
+                        result = NativePurchaseResult(
+                            kind=request.purpose,
+                            record=writer.record,
+                            context=writer.context,
+                            journal=writer.journal,
+                            facts=purchase_facts(
+                                actual,
+                                writer.record,
+                                writer.context,
+                                config_sha256=request.config_sha256,
+                                reconciliation=reconciliation,
+                            ),
+                        )
+                        validate_purchase_result(actual, result, request)
+                        _purchase_snapshot(
+                            store,
+                            request.ticket,
+                            result,
+                            actual,
+                            bound,
+                            prefix,
+                            current,
+                            purchase_capture,
+                        )
+                        captured_journal = purchase_capture
+                        produced = raw(result)
+                        if len(produced) > request.output_limit_bytes:
+                            raise StudyLedgerError("purchase_result_limit")
+                        meter.write(output, produced)
+                        output_counted = True
+                    elif isinstance(actual, NativeFreezeInput):
                         lock_bytes = read_bytes(Path(build.lock_path), limit=8 * MIB)
                         frozen_ledger = propose_freeze(
                             current,
@@ -1025,7 +1557,10 @@ def _commit_native_execution(
                         source_commit=c.source_commit,
                         installation_sha256=c.installation_sha256,
                     )
-                    if request.operation == "freeze":
+                    if isinstance(request, NativePurchaseRequest):
+                        assert isinstance(result, NativePurchaseResult)
+                        receipt = _purchase_receipt(receipt, request, result)
+                    elif request.operation == "freeze":
                         receipt = NativeFreezeReceipt.model_validate(
                             {
                                 **receipt.model_dump(exclude={"schema_version"}),
@@ -1082,6 +1617,8 @@ def _commit_native_execution(
                 overrun = (
                     clock.work_cpu + child_cpu > request.cpu_reservation_ns
                     or work_bytes > request.artifact_reservation_bytes
+                    or isinstance(request, NativePurchaseRequest)
+                    and work_bytes > PURCHASE_COPY_BYTES
                 )
                 facts = (
                     NativeWorkFacts(
@@ -1146,9 +1683,18 @@ def _commit_native_execution(
                 if overrun:
                     raise StudyLedgerError("candidate_measurement_overrun")
                 return _CommittedExecution(
-                    receipt, result, result_raw, original, settled, measured, closure is not None
+                    receipt,
+                    result,
+                    result_raw,
+                    original,
+                    settled,
+                    measured,
+                    closure is not None,
+                    purchase_epochs,
                 )
-        except Exception as error:
+        except BaseException as error:
+            if not isinstance(error, Exception) and not isinstance(request, NativePurchaseRequest):
+                raise
             try:
                 if (
                     store is not None

@@ -3766,3 +3766,23 @@ Source 730cc86 passed both scoped runtime reviews; final author checks and PR/ma
 ## 2026-10-25 — Bounded Journal final author acceptance
 
 Final source 8c85fef preserves reviewed runtime 730cc86; all 14 configured checks passed, including 4,314 tests. PR/main/candidate delivery is pending. Quality is queued for public purchase integration after delivery; the V3 specimen, publisher handoff, full-study capacity and parent issues #105/#106 remain open. [Evidence and assignments](EXECUTION_LOG.md#2026-10-25--bounded-journal-final-checks-accepted-delivery-pending).
+
+## 2026-10-25 — Bounded Journal prerequisite delivered
+
+PR #123/main c784f15 and exact 84-file candidate 12589122154 are accepted; all five main jobs passed. Quality is queued for public purchase integration after explicit handoff. The conditional V3 specimen, publisher handoff, full-study capacity and parent issues #105/#106 remain open. [Delivery evidence and assignments](EXECUTION_LOG.md#2026-10-25--bounded-journal-pr-123-delivered).
+
+## 2026-10-25 — Measured purchase handoff prepared
+
+Quality's PR2 purchase/recovery handoff is prepared from pinned GitHub source, with independent Platform and Research review. Cloud execution awaits restored access and verified checkout ownership, disk and retained evidence. Purchase implementation, V3 and the study remain unstarted; parents and caps are unchanged. See the [implementation handoff](MEASURED_PURCHASE_HANDOFF.md) and [assignment log](EXECUTION_LOG.md#current-assignment-board).
+
+## 2026-10-26 — Measured purchase implementation assigned
+
+Verified cloud access and clean, unused checkouts allow the existing identity checkout to pass to Quality at accepted main c784f15. Platform and Research independently review the first immutable source checkpoint. The initial real-purchase/receipt/recovery gate remains distinct from full 12-slot mixed-history and downstream acceptance; V3 remains conditional. The study, caps, parent issues and later Laplace sequencing are unchanged. [Assignments and evidence](EXECUTION_LOG.md#2026-10-26--measured-purchase-implementation-assigned).
+
+## 2026-10-26 — Pure purchase contracts accepted
+
+Pure contracts/binder 3df6dc3 is accepted and published on the source branch; actual purchase execution and recovery remain in implementation, with no PR/merge or runtime acceptance. The first purchase checkpoint is separate from full mixed-history/downstream proof. V3, caps and parent status remain unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-26--pure-purchase-contracts-accepted).
+
+## 2026-10-26 — First measured purchase checkpoint accepted
+
+Source 2c43f97 is accepted and published for the first-purchase and bounded recovery checkpoint, including qualified failure/replay evidence. The five selected 075c733 cases and retained bounded full path are independently accepted, with repeated-action calibration/menu limitations. Final source 2e63b50 is released after all 15 local configured checks passed at e3bafeb. PR/main/candidate delivery remains pending; V3, cumulative caps and parent issues #105/#106 are unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-26--first-measured-purchase-checkpoint-accepted).
