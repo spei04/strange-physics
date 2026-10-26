@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import Any, Literal
 
 import pytest
 from test_study_ledger import LOCK, append, empty, materials, reserve, update
@@ -132,7 +132,7 @@ def request(actual: NativePurchaseInput, config: str, **changes: Any) -> NativeP
 def test_actual_frozen_role_and_order(ordinal: int) -> None:
     actual, frozen, ledger = fixture(ordinal)
     bound = bind_purchase_material(actual, frozen, ledger)
-    role = "calibration" if ordinal < 4 else "menu"
+    role: Literal["calibration", "menu"] = "calibration" if ordinal < 4 else "menu"
     assert bound.config_sha256 == frozen.manifest.artifact(role).sha256
     assert bound.journal_id == frozen.manifest.cells[0].journal_id
     action = actual.experiment.model_copy(
