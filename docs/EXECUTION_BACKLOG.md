@@ -3782,3 +3782,7 @@ Verified cloud access and clean, unused checkouts allow the existing identity ch
 ## 2026-10-26 — Pure purchase contracts accepted
 
 Pure contracts/binder 3df6dc3 is accepted and published on the source branch; actual purchase execution and recovery remain in implementation, with no PR/merge or runtime acceptance. The first purchase checkpoint is separate from full mixed-history/downstream proof. V3, caps and parent status remain unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-26--pure-purchase-contracts-accepted).
+
+## 2026-10-26 — First measured purchase checkpoint accepted
+
+Source 2c43f97 is accepted and published for the first-purchase and bounded recovery checkpoint, including qualified failure/replay evidence. Quality's test-only full-history/downstream and boundary run is in progress; no result is claimed. Full PR2, final checks and delivery remain pending; V3, cumulative caps and parent issues #105/#106 are unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-26--first-measured-purchase-checkpoint-accepted).

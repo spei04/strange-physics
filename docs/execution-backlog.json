@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research owns the six progress documents from 8b3bfdf for this checkpoint, then releases to Lead for review/publication; primary environment unused.",
-      "identity": "Quality owns existing feat/measured-journal-purchase from c784f15; pure checkpoint 3df6dc3 published. Installed validation is source-bound; revalidate the next frozen runtime checkpoint.",
+      "scientific": "Research owns the six progress documents from c434a4d for this checkpoint, then releases to Lead for review/publication; primary environment unused.",
+      "identity": "Quality owns existing feat/measured-journal-purchase after all 2c43f97 peer consumers released; accepted first-execution source published. Test-only 075c733 full-history/downstream and boundary author run is in progress; no result claimed.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused; both clean and no consumers before handoff; free bytes 93668601856 at 2026-10-26T04:31:31Z. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "purchase_pure_contracts_accepted_execution_in_progress_parents_open",
+      "status": "first_execution_checkpoint_accepted_full_path_in_progress_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Continue actual purchase facade, lifecycle, receipt and recovery implementation in identity; pure checkpoint 3df6dc3 accepted and published.",
-        "Platform": "Pure contracts review accepted; review the next immutable caller/accounting checkpoint before coordinated runtime.",
-        "Research": "Reconcile six progress documents, then release to Lead; next identity/history/recovery review awaits immutable execution source.",
-        "Project lead": "Review progress and coordinate source handoffs/integration; source branch published, no purchase PR or merge."
+        "Quality": "Run the reviewed five-case/26-call full 12-slot/downstream and four-boundary package at test-only 075c733 in identity; results pending.",
+        "Platform": "Scoped 2c43f97 runtime accepted and hold released; review next immutable boundaries and later delivery candidate.",
+        "Research": "Reconcile six progress documents, then release to Lead; review complete mixed history and downstream semantics at the next coordinated checkpoint.",
+        "Project lead": "First-execution evidence accepted and exact 2c43f97 source published; review progress, coordinate handoffs and complete later integration/delivery."
       },
-      "handoff": "Pure contracts/binder 3df6dc3 published on feat/measured-journal-purchase and independently accepted. Quality retains identity; Research owns this six-document reconciliation until release. Installed/package evidence is bound to 3df, not the ongoing mutable environment. Actual purchase, receipt/recovery and full-path proof remain pending.",
+      "handoff": "First-execution 2c43f97 accepted within retained author/Research/Platform scopes and published on feat/measured-journal-purchase. Peer consumers released unchanged source/environment/origin; Quality regained identity writer and now runs the reviewed test-only 075c733 package. Research owns this six-document reconciliation until release. No purchase PR or merge.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Implement and independently review the actual purchase facade, durable lifecycle, receipt and recovery path. Demonstrate first purchase/settlement/recovery before complete 12-slot mixed history and downstream candidate/classical proof. Preserve conditional V3, caps and unknown holds; publisher handoff, capacity, parent audits and first-result re-estimation remain open.",
+      "next_units": "Complete the declared five-case/26-call author package and independent full 12-slot/downstream, same-slot retry and boundary review. Then complete final configured checks and PR/main/candidate delivery. Preserve conditional V3, caps and unknown holds; publisher handoff, capacity, parent audits and first-result re-estimation remain open.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14297,15 +14297,15 @@
         }
       },
       "purchase_integration_handoff": {
-        "status": "contracts_checkpoint_accepted_execution_in_progress",
+        "status": "first_execution_checkpoint_accepted_full_path_in_progress",
         "source_base": "c784f15dd91dfed169a5af0847dbd31445bcad88",
         "planning_base": "aeca99b3e865937d8e89e6b41afb77a1999174e0",
         "document": "docs/MEASURED_PURCHASE_HANDOFF.md",
-        "code_implementation": "pure_contracts_binder_accepted_actual_execution_in_progress",
+        "code_implementation": "first_purchase_and_bounded_recovery_checkpoint_accepted_full_pr2_pending",
         "current_private_evidence_rehashed": true,
         "fresh_cloud_disk_and_ownership_verified": true,
-        "runtime_execution": "not_started",
-        "initial_checkpoint": "One end-to-end bounded purchase with immutable receipt, known cost settlement and recovery evidence",
+        "runtime_execution": "bounded_first_execution_reviewed; full_mixed_history_and_downstream_author_run_in_progress",
+        "initial_checkpoint": "Accepted at 2c43f97 within source-qualified first purchase, known settlement, failure/replay and terminal-reconciliation evidence",
         "full_path_gate": "Declared bounded 12-slot mixed history, retry/reconciliation and downstream candidate/classical proof, peer review and full delivery checks",
         "v3": "conditional; no new allocation or runtime admission",
         "reestimate_before_study_admission": true,
@@ -14315,13 +14315,13 @@
         "free_bytes_at_handoff": 93668601856,
         "checkout_consumers_before_handoff": [],
         "assignment_snapshot_sha256": "d5e3915cc242c9eb220dec9aae26ba880770434e1577d26f4af917c41f76c5ed",
-        "installed_identity_revalidation": "Retained 3df record: 86 source/wheel/sdist/installed-manifest files match; 4,689 dependencies unchanged per author. Revalidate next frozen runtime source.",
-        "source_checkpoint": "3df6dc34d1467b94e84db6c72af40a6af4f69edf",
-        "private_evidence_scope": "Current author checkpoint 24 indexed entries and peer review indices; historical records remain source-qualified.",
-        "source_tree": "86871c4007f14e35b1b7a426fbbaf59016cc610e",
+        "installed_identity_revalidation": "Retained frozen 2c43f97 record: 87 installed package files equal source; 4,689 dependency files and nine project metadata files unchanged through peer release. No ongoing mutable-environment claim.",
+        "source_checkpoint": "2c43f97c589e0a6f6261d9743efe8b482f98f2cc",
+        "private_evidence_scope": "Author 77 children/3 references; Research origin 7/3 and qualified fault/replay 38/3; Platform 117/3 rehashed. Prior source-specific records retained.",
+        "source_tree": "864fd38638ca530c44c12e14a796af63a1db5ec4",
         "source_checkpoint_published": true,
         "checkpoint_assignment_snapshot_sha256": "dcbbe3f76d1b6cf462e0e3907e07ee9138402b8356c30354e49d7e98b1797a2b",
-        "delivery": "Exact source branch published; no purchase PR or merge",
+        "delivery": "Exact 2c43f97 source branch published and remotely verified; no purchase PR or merge",
         "pure_contracts_checkpoint": {
           "source": "3df6dc34d1467b94e84db6c72af40a6af4f69edf",
           "tree": "86871c4007f14e35b1b7a426fbbaf59016cc610e",
@@ -14354,6 +14354,86 @@
           "actual_purchase_execution": "pending",
           "full_mixed_history_and_downstream_proof": "pending",
           "purchase_pr_or_merge": false
+        },
+        "checkpoint_assignment_snapshot_scope": "Retained pure-checkpoint handoff at 3df6dc3; current roles are in native assignments and handoff.",
+        "executable_checkpoint": {
+          "source": "2c43f97c589e0a6f6261d9743efe8b482f98f2cc",
+          "tree": "864fd38638ca530c44c12e14a796af63a1db5ec4",
+          "scope": "Accepted first-execution checkpoint only; not complete PR2, conditional V3 usability or study admission",
+          "source_publication_sha256": "134a32f53359e41c7ff7cd3f0351c1af790865863c1aefdafa919977da1d4061",
+          "author": {
+            "index_sha256": "6d107d450135653330810b53c194ccd4e81005c6d5030224267cb04cb3f616a7",
+            "children": 77,
+            "references": 3,
+            "selected_cases_passed": 4,
+            "deselected": 2,
+            "seconds": 23.46,
+            "public_calls": 9,
+            "fresh_roots": 4,
+            "origin_ledger_records": 9,
+            "origin_unresolved_setup_control_holds": 2,
+            "earlier_d026_diagnostic": "Prior 17-case run did not retain successful roots; successor four-case origin evidence is separate, as qualified by Lead."
+          },
+          "repairs": [
+            "Admit input plus two bounded output copies and two 128 KiB Journal captures before durable work",
+            "Do not signal a PID after ambiguous wait failure; retain unavailable observations as unknown"
+          ],
+          "research": {
+            "origin_index_sha256": "d1b889ad2081395f01a358afe47bc8f6c6e582975d145d92219b86689b3d03f8",
+            "fault_replay_index_sha256": "bdae25e053bf13a640548ee75a2cb59c798adc238ab6dd0b544290de25aa6610",
+            "public_calls": 3,
+            "fresh_roots": 1,
+            "freeze_children": 0,
+            "writer_children": 1,
+            "holder_children": 1,
+            "explicit_simulation_error_entries": 1,
+            "unmodified_simulations": 0,
+            "outcome": "Calibration ordinal zero failed with simulation_failed; actual measured costs and byte-identical poisoned paid replay verified; nine records and two setup/control holds",
+            "qualification": "Zero-call import diagnostic and late incorrect freeze-child census assertion retained; scientific assertions passed and separate readback corrected census without more calls. Not a clean harness exit."
+          },
+          "platform": {
+            "index_sha256": "56f7ac6318f8f9bc5f3655d21d032c23af9bbc62d3a150e406d8b2c9b2b25f29",
+            "children": 117,
+            "references": 3,
+            "cumulative_public_calls": 13,
+            "fresh_roots": 5,
+            "fixed_writers": 3,
+            "holders": 4,
+            "actual_simulations": 1,
+            "retained_result_feeders": 2,
+            "lock_probes": 4,
+            "continuation_calls": 5,
+            "continuation_status": "passed",
+            "coverage": "Exact copy admission/deficit; unavailable reaping observation and stricter inherited limit; lost acknowledgement/paid replay; lock through commit/rollback; paid terminal reconciliation preserves original unknown hold",
+            "qualification": "Initial harness alias error caused one actual simulation in removed-guard case; execution and charges retained. Feeders use genuine retained bytes with synthetic reap/known-zero CPU. Separate approved continuation; not a clean uninterrupted 13-call run."
+          },
+          "retained_validation": {
+            "installed_package_files": 87,
+            "unchanged_dependency_files": 4689,
+            "unchanged_project_metadata_files": 9,
+            "peer_consumers_released": true
+          },
+          "next_author_checkpoint": {
+            "source": "075c73364f942824f6204b6f5a4cf25de440cdfc",
+            "tree": "478776cf4730e24199bb276ebc20043cbc77be57",
+            "kind": "test-only; production/build/lock identical to 2c43f97",
+            "prerun_index_sha256": "7038d0b19fc3d3fcadb6c54509f311861184806162820f8706732ea27fe8df5e",
+            "selected_cases": 5,
+            "declared_public_calls": 26,
+            "status": "author_run_in_progress_no_result_claimed"
+          },
+          "remaining": [
+            "Complete same-slot retry and mixed-history/downstream proof",
+            "Final configured checks",
+            "PR/main/candidate delivery",
+            "Publisher handoff, full-study capacity and parent audits",
+            "Current first-result forecast re-estimation"
+          ],
+          "experiment_execution": "not_started",
+          "parents_105_106": "open",
+          "v3": "conditional; no new allocation or full-profile admission",
+          "original_failures_and_harness_diagnostics_retained": true,
+          "lead_acceptance_index_sha256": "5cfe3077a1d456bf838a257799dd38bf8c020027b826b73b8011662c4d7d0f54"
         }
       }
     },

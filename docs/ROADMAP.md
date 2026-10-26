@@ -45,7 +45,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 | Three force families, 2D, 1–8 particles, public contracts, SDK and CLI | Verified and integrated | Baseline commit above; src/strange_physics and numerical/contract tests |
 | Local transactional reservations, checkpoints, replay after interruption | Verified locally | journal.py, session.py, sdk.py; failure and concurrency tests; not distributed durability |
 | External custom agent and law example | Verified locally | examples/custom_extension.py and tests/test_extensions.py; not outside-team adoption |
-| Current code and delivery checks | Classical and bounded Journal prerequisite delivered | PR #123/main c784f15, all five main jobs, 4,314 tests on each Python runtime and exact 84-file candidate 12589122154 accepted. [Current assignments](EXECUTION_LOG.md#current-assignment-board). Public purchase integration, handoff, full-study capacity and parent gates remain open |
+| Current code and delivery checks | Bounded Journal delivered; first purchase checkpoint reviewed | PR #123/main c784f15 remains delivered. Purchase source 2c43f97 is accepted and published for its scoped first-execution checkpoint; full mixed history, final checks and delivery remain pending. [Current assignments](EXECUTION_LOG.md#current-assignment-board). Handoff, full-study capacity and parent gates remain open |
 | Existing GitHub CI | Verified at reviewed integration head | All four Python 3.12/3.14 PR and push checks passed at 5cb1895; 55 tests, Ruff, strict mypy, package build and CLI smoke. Merge tree matches this reviewed head; [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060 |
 | Baseline integration to main | Verified | PR #1 merged as 7117060; Quality/Research peer reviews passed and git diff confirms tree identity with 5cb1895. This is not a product release |
 | Stage 2 execution backlog | Approved 2026-10-19 | 168 PR tasks across 42 epic issues; 369 task/gate prerequisites; scope, exclusions, contracts, tests, confidence and done criteria; dependency/resource audit passed |
@@ -1491,3 +1491,7 @@ Verified cloud access and clean, unused checkouts allow the existing identity ch
 ## 2026-10-26 — Pure purchase contracts accepted
 
 Pure contracts/binder 3df6dc3 is accepted and published on the source branch; actual purchase execution and recovery remain in implementation, with no PR/merge or runtime acceptance. The first purchase checkpoint is separate from full mixed-history/downstream proof. V3, caps and parent status remain unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-26--pure-purchase-contracts-accepted).
+
+## 2026-10-26 — First measured purchase checkpoint accepted
+
+Source 2c43f97 is accepted and published for the first-purchase and bounded recovery checkpoint, including qualified failure/replay evidence. Quality's test-only full-history/downstream and boundary run is in progress; no result is claimed. Full PR2, final checks and delivery remain pending; V3, cumulative caps and parent issues #105/#106 are unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-26--first-measured-purchase-checkpoint-accepted).

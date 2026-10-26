@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Implement the actual purchase facade, lifecycle, receipts and recovery in identity | Pure contracts/binder 3df6dc3 accepted and published; caller and runtime proof next |
-| Platform | Review the next immutable purchase caller and accounting boundaries | Pure checkpoint accepted; runtime review follows a coordinated source freeze |
-| Research | Reconcile six progress documents, then review identity, history and recovery | Pure checkpoint accepted; first purchase and full-path proof remain open |
-| Project lead | Review progress, coordinate source handoffs and integrate accepted work | Source branch published; no purchase PR/merge or runtime acceptance |
+| Quality | Run the reviewed full-history/downstream and boundary tests at test-only 075c733 in identity | First-execution source 2c43f97 accepted; five-case/26-call author run in progress, no result claimed |
+| Platform | Review the next immutable purchase boundary and recovery evidence | Scoped 2c43f97 runtime accepted and hold released; full-path and delivery verification remain |
+| Research | Reconcile six progress documents, then review complete history and downstream semantics | First-purchase/failure/replay evidence accepted with retained harness diagnostics |
+| Project lead | Review progress, coordinate writer/runtime handoffs and integrate accepted work | Exact 2c43f97 source published; no purchase PR, merge or full-path acceptance |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-26 | Quality | First executable purchase checkpoint | Four selected cases passed at 2c43f97; reviewed five-case/26-call package now running at test-only 075c733 |
+| 2026-10-26 | Platform + Research | Independent first-purchase and recovery review | Scoped runtime accepted; all peer consumers released before author handback |
+| 2026-10-26 | Research | Six-document checkpoint reconciliation | Primary docs only; release to Lead for review and publication |
+| 2026-10-26 | Project lead | First-execution acceptance and source publication | Exact 2c43f97 published; full PR2, final checks and delivery remain pending |
 | 2026-10-26 | Quality | Pure purchase contracts/binder accepted | Published 3df6dc3; continue actual facade, lifecycle, receipt and recovery implementation |
 | 2026-10-26 | Platform + Research | Independent pure-checkpoint review | Static repairs accepted; actual caller and runtime review await immutable execution source |
 | 2026-10-26 | Research | Six-document progress reconciliation | Primary documentation only; release to Lead for review and publication |
@@ -1013,3 +1017,13 @@ The pure purchase contracts/binder checkpoint [3df6dc3](https://github.com/spei0
 The repairs admit the proposed 128-action menu under the unchanged 64 KiB parser bound, require a Journal descriptor for pending/terminal contexts, and correct the reconciliation-positive and isolated receipt-discriminator tests. Both receipt variants bind StudyPurchase. Original failed tests and intermediate diagnostics remain retained. The author index is 3f50129614a55c20a6da66b4afebea03ea66d1a803c57e38b89dcbb866784fbe; Platform and Research review identities are retained in the execution JSON.
 
 Quality continues the actual purchase facade, durable lifecycle, retained receipt and recovery implementation. Those caller joins and execution outcomes are not accepted by the pure tests. First real purchase/receipt/settlement/recovery evidence remains distinct from complete 12-slot mixed history and downstream candidate/classical consumption. V3 is conditional; cumulative caps, unknown holds, parent issues #105/#106, publisher handoff and full-study capacity remain unchanged. First-result work still needs re-estimation before study admission; finite grid remains first and Laplace later.
+
+## 2026-10-26 — First measured purchase checkpoint accepted
+
+Source 2c43f97 (tree 864fd386) is independently accepted for the first-purchase and bounded recovery checkpoint and published on feat/measured-journal-purchase. It repairs the pre-write copy reservation to include both output copies and both bounded Journal captures, and avoids signalling a PID after ambiguous wait failure. Quality's four selected cases passed in 23.46 seconds across nine public calls/four fresh roots. The retained real completed calibration purchase and paid exact replay end at nine ledger records with two unresolved setup/control holds. Source-bound validation matched 87 installed package files; 4,689 dependency files and nine project metadata files were unchanged.
+
+Research independently checked the retained original input, result, context, capture, receipt and ledger joins, then used three fresh-root calls for inline freeze, an explicitly injected SimulationError at calibration ordinal zero, and poisoned paid replay without live inputs. The failed record, actual measured work, original receipt equality and retained holds passed their assertions. Actual census was one writer, one holder and one fault entry, with no unmodified simulation. A zero-call missing-fixture diagnostic and a final incorrect expectation of a freeze child were retained; freeze is inline, and a separate readback corrected the census without more public calls. This is qualified scientific/replay evidence, not a clean harness exit.
+
+Platform accepted 13 cumulative calls across five roots: three fixed writers, four holders, one actual simulation, two retained-result feeders and four lock probes. The feeders' synthetic reap/zero-CPU observations are fault-fixture values. An initial harness alias mistake reached one real simulation in the guard-removal case; that execution and its charges remain retained. The approved five-call continuation passed restored copy-deficit denial, lock retention through rollback, and distinct paid terminal reconciliation after confirmed writer reap while preserving the original unknown hold. Exact replay, lost-acknowledgement and unknown-usage checks are source-qualified; this is not an uninterrupted clean 13-call test run.
+
+All peer consumers released the frozen source, environment and original author material unchanged. Lead rehashed the author and peer evidence and verified source publication. Quality regained identity ownership and is running the reviewed five-case/26-call package at test-only 075c733; production/build/lock remain identical to 2c43f97. That run's full 12-slot/downstream and four-boundary results are pending. Complete mixed history, same-slot retry and downstream acceptance, final configured checks, PR/main/candidate delivery, publisher handoff, full-study capacity and parent audits remain open. V3 stays conditional, the first-result forecast still requires re-estimation, and no comparison has run. Detailed source identities and evidence hashes are retained in execution-backlog.json.
