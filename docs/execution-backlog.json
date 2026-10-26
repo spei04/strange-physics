@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research owns the six progress documents from b75f43e for this bounded full-path checkpoint, then releases to Lead; primary environment unused.",
-      "identity": "Quality owns existing feat/measured-journal-purchase for final configured checks at e3bafeb. Retained full 075c path independently accepted; no peer runtime consumers or current environment access by Research.",
+      "scientific": "Research owns only the six progress documents from 8827e03 for this final local-gate update, then releases clean primary to Lead; primary environment unused.",
+      "identity": "Quality released clean source 2e63b50 and environment to Lead after all 15 configured gates at e3bafeb; no active consumers. Final source differs only by implementation prose.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused; both clean and no consumers before handoff; free bytes 93668601856 at 2026-10-26T04:31:31Z. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "bounded_full_purchase_path_accepted_final_gates_pending_parents_open",
+      "status": "bounded_full_purchase_path_and_local_gates_accepted_delivery_pending_parents_open",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Run final configured checks at e3bafeb; Ruff/format and 153-file strict mypy passed, full pytest running.",
-        "Platform": "Bounded full-path accounting/recovery accepted; delivery verifier prepared for final source and candidate.",
-        "Research": "Full-history/downstream retained evidence accepted; reconcile six progress docs then release to Lead.",
-        "Project lead": "Review progress, integrate coherent source with exactly reviewed progress files and deliver after final gates."
+        "Quality": "Final source 2e63b50 and environment released to Lead; all 15 local configured checks passed at e3bafeb.",
+        "Platform": "Delivery verification ready for coherent final source and main candidate; scoped peer acceptance complete.",
+        "Research": "Reconcile final local gates in six progress documents, then release primary to Lead.",
+        "Project lead": "Integrate final source with exact reviewed progress files and perform PR/main/candidate delivery."
       },
-      "handoff": "Lead accepted bounded full 075c path after both independent retained-evidence reviews. Quality retains identity for configured checks at e3bafeb; Platform prepares delivery verification; Research owns this six-doc update until release. No purchase PR or merge.",
+      "handoff": "Full 075c retained evidence and final local gates accepted. Quality released source 2e63b50/environment; Research owns only this six-document follow-up until release. Lead owns source integration and delivery; no purchase PR or merge yet.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Finish configured/full/package checks and independent final source reconciliation, then coherent PR/main/candidate delivery. Bounded full 075c fixture is accepted with repeated-action limits; preserve cumulative caps and unknown holds. Publisher handoff, full-study capacity, parent audits and current first-result re-estimation remain open.",
+      "next_units": "Compose final source with reviewed progress, then PR/main/candidate delivery. Preserve scoped repeated-action limits, cumulative caps and unknown holds; publisher handoff, full-study capacity, parent audits and first-result re-estimation remain open.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14297,16 +14297,16 @@
         }
       },
       "purchase_integration_handoff": {
-        "status": "bounded_full_path_accepted_final_gates_pending",
+        "status": "bounded_full_path_and_local_gates_accepted_delivery_pending",
         "source_base": "c784f15dd91dfed169a5af0847dbd31445bcad88",
         "planning_base": "aeca99b3e865937d8e89e6b41afb77a1999174e0",
         "document": "docs/MEASURED_PURCHASE_HANDOFF.md",
-        "code_implementation": "bounded_purchase_history_retry_and_downstream_accepted_final_gates_pending",
+        "code_implementation": "bounded_purchase_history_retry_downstream_and_local_gates_accepted_delivery_pending",
         "current_private_evidence_rehashed": true,
         "fresh_cloud_disk_and_ownership_verified": true,
         "runtime_execution": "bounded_075c_full_path_accepted_as_synthetic_conformance",
         "initial_checkpoint": "Accepted at 2c43f97 within source-qualified first purchase, known settlement, failure/replay and terminal-reconciliation evidence",
-        "full_path_gate": "Declared bounded 12-slot mixed history, same-slot retry and downstream evidence independently accepted; configured/full/package and delivery gates pending",
+        "full_path_gate": "Declared bounded 12-slot mixed history, same-slot retry and downstream evidence independently accepted; all 15 local configured checks passed; PR/main/candidate pending",
         "v3": "bounded single-cell synthetic usability accepted; no new allocation, full-study capacity or publisher-handoff admission",
         "reestimate_before_study_admission": true,
         "published_handoff": "f6c58bf40139e6fb88349a0c461e3ea8dd004855",
@@ -14483,11 +14483,26 @@
             "ruff": "passed",
             "format": "passed; 212 files",
             "strict_mypy": "passed; 153 files",
-            "full_pytest": "running; no result claimed",
-            "remaining_checks": "pending",
+            "full_pytest": "passed; 4339 tests in 1034.43 seconds",
+            "schemas": "passed; 1522 cases",
+            "dependency_audit": "passed; no known vulnerabilities",
+            "ca_guards": "passed",
+            "configured_bandit": "77 low; zero medium/high",
+            "cli_package_import_dependencies": "passed",
+            "all_configured_commands": 15,
             "pr_main_candidate": "pending"
           },
-          "historical_author_and_first_execution_records": "Preserved as source-specific pre-review checkpoints"
+          "historical_author_and_first_execution_records": "Preserved as source-specific pre-review checkpoints",
+          "final_source": "2e63b50d0b6a0de8240ed7cedb70a4511095e81d",
+          "final_tree": "19f15373e8053832b3c8ee072a522774b95ff6a0",
+          "final_delta": "Only repeated-action limitation in implementation prose after gate source e3bafeb; runtime/build/lock remain 2c43f97",
+          "final_author_index_sha256": "b78b093a59bb7a87486ae7ba7a470e25a006afcd38b52b996e3ec5cd67032f5b",
+          "final_package_parity": {
+            "source_and_both_archives_and_installed_files": 87,
+            "nonproject_dependencies_unchanged": 4689,
+            "own_metadata_unchanged": 9
+          },
+          "author_release": "Clean source and environment released to Lead; no active consumers"
         }
       }
     },
