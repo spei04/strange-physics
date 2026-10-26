@@ -64,7 +64,7 @@ def bind_purchase_material(
         max_depth=32,
         max_nodes=100_000,
     )
-    if actions.role != role:
+    if actions.role != role or actual.config_sha256 != manifest.artifact(role).sha256:
         raise StudyLedgerError("purchase_action_role")
     identities = tuple(message_sha256(action) for action in actions.actions)
     expected = message_sha256(actual.experiment)

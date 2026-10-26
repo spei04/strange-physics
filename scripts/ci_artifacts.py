@@ -38,6 +38,7 @@ MODULES = frozenset(
         "purchase_journal.py",
         "purchase_execution_contracts.py",
         "purchase_execution_binding.py",
+        "purchase_execution.py",
         "laws.py",
         "linking_contracts.py",
         "model_submission_contracts.py",

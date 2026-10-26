@@ -43,6 +43,7 @@ from strange_physics.native_spring_contracts import (
 )
 from strange_physics.prediction_contracts import SpringPredictionConfig
 from strange_physics.publication_store import Extents, digest, head, raw, root_lock
+from strange_physics.purchase_execution_contracts import NativePurchaseActions
 from strange_physics.research_contracts import message_sha256
 from strange_physics.session import LocalSession
 from strange_physics.simulation import SimulationError
@@ -222,7 +223,9 @@ class Fixture:
     journal: Path
 
 
-def prepare(root: Path, build: TrustedInstallation, *, classical: bool = False) -> Fixture:
+def prepare(
+    root: Path, build: TrustedInstallation, *, classical: bool = False, purchase: bool = False
+) -> Fixture:
     budget = SetupBudget(time.monotonic_ns() + 180_000_000_000)
     with budget.phase():
         root.mkdir(mode=0o700)
@@ -260,13 +263,13 @@ def prepare(root: Path, build: TrustedInstallation, *, classical: bool = False) 
             engine_fingerprint=build.engine_fingerprint,
             installation_sha256=message_sha256(build),
             attempt_id="control",
-            tickets=6,
-            recovery_tickets=3,
+            tickets=16 if purchase else 6,
+            recovery_tickets=1 if purchase else 3,
             recovery_work_cpu_ns=8_000_000_000,
             recovery_work_artifact_bytes=2 * MIB,
-            ticket_cpu_ns=5_000_000_000,
+            ticket_cpu_ns=7_000_000_000 if purchase else 5_000_000_000,
             ticket_wall_ns=30_000_000_000,
-            ticket_artifact_bytes=8192,
+            ticket_artifact_bytes=6 * MIB if purchase else 8192,
             bootstrap_artifact_bytes=4 * MIB,
             bootstrap_cpu_ns=5_000_000_000,
             database_limit_bytes=2 * MIB,
@@ -295,7 +298,7 @@ def prepare(root: Path, build: TrustedInstallation, *, classical: bool = False) 
                 config_sha256=message_sha256(control),
                 input_sha256=control.plan_sha256,
                 retry_of=None,
-                cpu_reservation_ns=35_000_000_000,
+                cpu_reservation_ns=117_000_000_000 if purchase else 35_000_000_000,
                 artifact_reservation_bytes=control.required_control_bytes(),
                 purchase=None,
             ),
@@ -327,6 +330,14 @@ def prepare(root: Path, build: TrustedInstallation, *, classical: bool = False) 
                     "byte_count": len(raw(config)),
                 }
             )
+        if purchase:
+            catalog = NativeWorldCatalog.model_validate_json(artifacts["world_catalog"])
+            pid = catalog.worlds[0].definition.space.structure.particle_ids[0]
+            action = Experiment(particles=(ParticleInitial(id=pid, position=(0.125, 0.25)),))
+            artifacts["calibration"] = raw(
+                NativePurchaseActions(role="calibration", actions=(action,) * 4)
+            )
+            artifacts["menu"] = raw(NativePurchaseActions(role="menu", actions=(action,)))
         for ref in data["artifacts"]:
             value = artifacts[ref["kind"]]
             ref.update(sha256=digest(value), byte_count=len(value))

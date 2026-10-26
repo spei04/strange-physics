@@ -62,6 +62,7 @@ class NativePurchaseInput(Message):
     freeze_receipt_sha256: Digest
     cell_id: Identifier
     purchase: StudyPurchase
+    config_sha256: Digest
     experiment: Experiment
     journal_path: PrivatePath
     predecessor: NativePurchaseReference | None

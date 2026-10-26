@@ -86,6 +86,7 @@ def fixture(ordinal: int = 0) -> tuple[NativePurchaseInput, NativeFreezeInput, N
                 "experiment_sha256": message_sha256(action),
                 "calibration": ordinal < 4,
             },
+            "config_sha256": manifest.artifact("calibration" if ordinal < 4 else "menu").sha256,
             "experiment": action,
             "journal_path": "/private/run.sqlite",
             "predecessor": None
