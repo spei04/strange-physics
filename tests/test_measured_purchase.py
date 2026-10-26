@@ -237,3 +237,74 @@ def test_terminal_without_closure_reconciles_then_allows_next_purchase(
     next_value = commit_journal_purchase(f.root, next_request)
     assert next_value.result.record.index == 1
     assert summarize_study(next_value.ledger).budget.unresolved_attempts == 3
+
+
+@pytest.mark.parametrize("deficit", [0, 1])
+def test_complete_copy_headroom_equal_and_one_below_before_writer(
+    tmp_path: Path,
+    actual_build: TrustedInstallation,
+    monkeypatch: pytest.MonkeyPatch,
+    deficit: int,
+) -> None:
+    f, frozen = start(tmp_path / "headroom", actual_build)
+    request = purchase_request(f, frozen)
+    envelope = request.input_bytes + 2 * request.output_limit_bytes + 2 * 128 * 1024
+    request = NativePurchaseRequest.model_validate(
+        {
+            **request.model_dump(),
+            "artifact_reservation_bytes": envelope - deficit,
+        }
+    )
+    entered = False
+
+    def boundary(*args: Any, **kwargs: Any) -> Any:
+        nonlocal entered
+        entered = True
+        assert current(f.root).records[-1].event.purchase == request.purchase
+        assert not f.journal.exists()
+        raise OSError("admitted writer boundary")
+
+    monkeypatch.setattr(supervisor, "run_purchase_writer", boundary)
+    if deficit:
+        with pytest.raises(StudyLedgerError, match="^candidate_work_headroom$"):
+            commit_journal_purchase(f.root, request)
+        assert len(current(f.root).records) == 5
+    else:
+        with pytest.raises(OSError, match="admitted writer boundary"):
+            commit_journal_purchase(f.root, request)
+        assert last_update(current(f.root)).state == "unknown"
+    assert entered == (deficit == 0)
+    assert not f.journal.exists()
+
+
+def test_lost_writer_reap_observation_retains_unknown_without_holder_or_signal(
+    tmp_path: Path,
+    actual_build: TrustedInstallation,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    f, frozen = start(tmp_path / "lost-wait", actual_build)
+    request = purchase_request(f, frozen)
+    actual_wait = purchase_producer.os.wait4
+    calls = 0
+
+    def lost_wait(pid: int, options: int) -> Any:
+        nonlocal calls
+        calls += 1
+        value = actual_wait(pid, options)
+        if calls == 1:
+            raise OSError("lost writer wait observation")
+        return value
+
+    monkeypatch.setattr(purchase_producer.os, "wait4", lost_wait)
+    monkeypatch.setattr(purchase_producer.os, "kill", forbidden)
+    monkeypatch.setattr(supervisor, "capture_journal", forbidden)
+    with pytest.raises(OSError, match="lost writer wait observation") as error:
+        commit_journal_purchase(f.root, request)
+    assert calls == 2
+    assert any("unavailable" in note for note in error.value.__notes__)
+    ledger = current(f.root)
+    update = last_update(ledger)
+    assert update.state == "unknown" and update.facts is None
+    assert update.cpu_ns is not None and update.cpu_ns >= 0
+    assert summarize_study(ledger).budget.unresolved_attempts == 3
+    assert not (f.root / "candidate-purchase-capture-1").exists()

@@ -239,11 +239,10 @@ def run_purchase_writer(
         cpu = math.ceil((usage.ru_utime + usage.ru_stime) * 1e9)
     except BaseException as error:
         failure = error
-        # Prove child ownership before signalling after an ambiguous wait error.
+        # Ownership may already be gone after an ambiguous wait error. Never
+        # signal this PID again. The fixed child retains its original absolute
+        # deadline; one further wait may recover observations without a new lease.
         try:
-            waiting = os.waitid(os.P_PID, pid, os.WEXITED | os.WNOHANG | os.WNOWAIT)
-            if waiting is None:
-                os.kill(pid, signal.SIGKILL)
             _, status, usage = os.wait4(pid, 0)
             reaped = True
             cpu = math.ceil((usage.ru_utime + usage.ru_stime) * 1e9)

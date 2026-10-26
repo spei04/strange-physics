@@ -1346,12 +1346,17 @@ def _commit_native_execution(
                 try:
                     proposed = _append(current, reservation)
                     _capacity(root, proposed, c)
-                    if (
-                        closure is None
-                        and request.artifact_reservation_bytes
-                        < request.input_bytes + request.output_limit_bytes
-                    ):
-                        raise StudyLedgerError("candidate_work_headroom")
+                    if closure is None:
+                        copy_bound = request.input_bytes + request.output_limit_bytes
+                        if isinstance(request, NativePurchaseRequest):
+                            # Retained input, pre-write Journal, child output,
+                            # post-write capture and final typed result are distinct.
+                            # Even ordinal zero conservatively reserves its absent preimage.
+                            copy_bound += request.output_limit_bytes + 2 * 128 * 1024
+                            if copy_bound > PURCHASE_COPY_BYTES:
+                                raise StudyLedgerError("purchase_copy_limit")
+                        if request.artifact_reservation_bytes < copy_bound:
+                            raise StudyLedgerError("candidate_work_headroom")
                 except StudyLedgerError:
                     store.limit_control_growth()
                     with store.transaction():

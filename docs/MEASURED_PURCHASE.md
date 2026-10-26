@@ -19,7 +19,9 @@ preserving 128 KiB file limit before any open, using the prepaid 14-epoch writer
 partition. It invokes the actual simulator once. Only declared
 `SimulationError` produces a failed scientific record; infrastructure failure
 retains an unknown attempt. The writer's confirmed reap and available `wait4`
-usage gate the separate capture holder. Zero measured CPU and unavailable
+usage gate the separate capture holder. An ambiguous wait never authorizes another
+PID signal; one further bounded observation may recover usage, while the original
+child deadline and unknown hold remain. Zero measured CPU and unavailable
 usage remain distinct.
 
 The holder uses the remaining epoch and a two-second CPU ceiling while the
@@ -55,6 +57,20 @@ children and five simulator entries (one intentionally fails as infrastructure).
 They perform no test-only purchase-intent injection. Input assembly remains
 inside the retained setup ceiling. The first matrix does not execute the full
 12-purchase mixed-history, candidate or classical sequence.
+
+Fresh execution and reconciliation pre-admit the complete conservative copy
+bound: input plus two declared outputs plus two 128 KiB Journal captures. The
+first call reserves even its absent preimage; none of this allowance is inferred
+from the prepaid Journal write epochs. Exact equality and one-byte deficit are
+tested at the caller before writer dispatch.
+
+The first executable draft passed its 14 pure binding cases and three caller
+profiles. Its separate source-bound evidence records the two later static
+findings (copy pre-admission and ambiguous-wait signalling). The narrow repair
+matrix repeats only one retained first-purchase/replay origin and adds two
+non-numerical admission-boundary cases plus one lost-wait-observation case:
+nine public calls, at most two writer/simulator children and one holder across
+four fresh synthetic roots. It remains pending until its exact-source run.
 
 The conditional full V3 envelope remains 589,561,856 bytes and 708 CPU seconds,
 with 15 precharged Journal epochs per invocation, a 2 MiB cumulative work-copy
