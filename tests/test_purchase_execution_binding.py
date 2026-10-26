@@ -242,7 +242,12 @@ def test_record_facts_and_whole_capture_binding(reconciliation: bool) -> None:
         actual,
         bound.config_sha256,
         **(
-            {"purpose": "reconciliation", "logical_id": "reconciled", "reconcile_attempt_id": "old"}
+            {
+                "purpose": "reconciliation",
+                "mode": "recover",
+                "logical_id": "reconciled",
+                "reconcile_attempt_id": "old",
+            }
             if reconciliation
             else {}
         ),
