@@ -55,7 +55,10 @@ freeze, 12 genuine current-engine purchase attempts, Journal-bound candidate
 production, classical evaluation with no native selection, and paid replay.
 The last purchase deliberately raises `SimulationError`; all 11 completed rows
 and that failed row survive the downstream bindings. No test-only purchase
-intent injection is used. The retained run at test source `075c733` ended with
+intent injection is used. Repeating one canonical action across the four
+calibration entries and one-action menu demonstrates role, ordinal and history
+binding without establishing calibration diversity, selection or scientific
+accuracy. The retained run at test source `075c733` ended with
 35 ledger records and two unresolved setup/control holds. Its Journal was
 110,592 bytes, control store 163,840 bytes, and ledger 38,175 bytes. The classical
 result was scored independently of native selection. Replay returned the
