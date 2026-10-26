@@ -12597,14 +12597,14 @@
         "Research": "Independent frozen identity, receipt, failure-semantics and complete-history review; runtime after coordinated source freeze.",
         "Project lead": "Primary progress and assignment owner; review integration and checkpoint delivery."
       },
-      "handoff": "GitHub source/document preparation at pinned main c784f15 and progress aeca99b only. Current cloud access, checkout ownership, disk and private evidence are unverified. Historical PR123 source-qualified acceptance is preserved; no runtime or purchase implementation has started.",
+      "handoff": "Cloud primary synchronized to reviewed f6c58bf4; clean checkouts and no consumers verified. Quality owns existing identity at accepted c784f15 on feat/measured-journal-purchase. Immutable assignment recorded; installed-identity validation precedes runtime. Historical PR123 acceptance remains source-qualified; first source/purchase evidence pending.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Restore verified cloud access and explicit checkout ownership, then implement the reviewed public purchase/retry/replay/reconciliation path and its declared bounded proof. Preserve conditional V3 and existing caps. Re-estimate first-result work before study admission; publisher handoff, full-study capacity and parent audits remain open.",
+      "next_units": "Implement the assigned public purchase/retry/replay/reconciliation path; review the first immutable source checkpoint and focused tests. Initial actual purchase/receipt/recovery evidence is distinct from complete 12-slot mixed history and downstream proof. Preserve conditional V3 and existing caps. Re-estimate before study admission; publisher handoff, full-study capacity and parent audits remain open.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
