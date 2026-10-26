@@ -554,7 +554,9 @@ def generate_journal(fixture: Fixture) -> None:
         assert 36 * (JOURNAL_LIMIT + FILE_LIMIT) + 4 * STORE_ENVELOPE + COPY_LIMIT == 35677184
 
 
-def comparison_request(fixture: Fixture, freeze_receipt: bytes) -> NativeComparisonCandidateRequest:
+def comparison_request(
+    fixture: Fixture, freeze_receipt: bytes, *, ticket: int = 1
+) -> NativeComparisonCandidateRequest:
     with fixture.budget.phase():
         manifest = fixture.freeze.manifest
         catalog = NativeWorldCatalog.model_validate_json(fixture.freeze.artifacts["world_catalog"])
@@ -586,10 +588,10 @@ def comparison_request(fixture: Fixture, freeze_receipt: bytes) -> NativeCompari
         return NativeComparisonCandidateRequest(
             mode="execute",
             logical_id="candidate",
-            attempt_id="candidate-1",
+            attempt_id=f"candidate-{ticket}",
             retry_of=None,
             cell_id=manifest.cells[0].cell_id,
-            ticket=1,
+            ticket=ticket,
             expected_revision=len(ledger.records),
             expected_head_sha256=head(ledger),
             input_path=str(fixture.root / "comparison-input.json"),
@@ -608,18 +610,21 @@ def classical_request(
     fixture: Fixture,
     candidate_receipt: bytes,
     candidate_result: NativeCandidateResult,
+    *,
+    candidate_ticket: int = 1,
+    ticket: int = 2,
 ) -> NativeComparisonClassicalRequest:
     """Assemble actual typed private input within the original unresolved setup hold."""
     with fixture.budget.phase():
         material = NativeComparisonInput.model_validate_json(
-            (fixture.root / "candidate-input-1").read_bytes()
+            (fixture.root / f"candidate-input-{candidate_ticket}").read_bytes()
         )
         frozen = fixture.freeze
         catalog = NativeWorldCatalog.model_validate_json(frozen.artifacts["world_catalog"])
         context = NativeEvaluationInput(
             candidates=material.candidate,
             candidate_result=candidate_result,
-            candidate_attempt_id="candidate-1",
+            candidate_attempt_id=f"candidate-{candidate_ticket}",
             selected=None,
             policy=NativeScoringPolicy.model_validate_json(frozen.artifacts["scoring_policy"]),
             prediction_config=NativePredictionConfig.model_validate_json(
@@ -648,10 +653,10 @@ def classical_request(
         return NativeComparisonClassicalRequest(
             mode="execute",
             logical_id="classical",
-            attempt_id="classical-2",
+            attempt_id=f"classical-{ticket}",
             retry_of=None,
             cell_id=frozen.manifest.cells[0].cell_id,
-            ticket=2,
+            ticket=ticket,
             expected_revision=len(ledger.records),
             expected_head_sha256=head(ledger),
             input_path=str(fixture.root / "classical-input.json"),
