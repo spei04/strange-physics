@@ -1,9 +1,10 @@
 # Fixed measured Journal purchase
 
-This implementation checkpoint adds `commit_journal_purchase` to the existing
-same-store authority. It is awaiting executable caller validation. The accepted
-pure contracts and bounded Journal prerequisite do not by themselves establish
-purchase admission, recovery correctness or the full specimen.
+`commit_journal_purchase` uses the existing store, ledger and ticket authority.
+The author tests now exercise a complete synthetic 12-purchase prefix, downstream
+candidate and classical consumers, and paid recovery. Independent review has
+also exercised the first-purchase, failure, reconciliation and replay paths.
+Final configured checks and delivery remain separate from these scoped results.
 
 The immutable input binds the retained freeze, cell, complete action, ordinal,
 operation ID, frozen action-role digest and original predecessor. Calibration
@@ -19,10 +20,10 @@ preserving 128 KiB file limit before any open, using the prepaid 14-epoch writer
 partition. It invokes the actual simulator once. Only declared
 `SimulationError` produces a failed scientific record; infrastructure failure
 retains an unknown attempt. The writer's confirmed reap and available `wait4`
-usage gate the separate capture holder. An ambiguous wait never authorizes another
-PID signal; one further bounded observation may recover usage, while the original
-child deadline and unknown hold remain. Zero measured CPU and unavailable
-usage remain distinct.
+usage gate the separate capture holder. An ambiguous wait never authorizes
+another PID signal; one further bounded observation may recover usage, while
+the original child deadline and unknown hold remain. Zero measured CPU and
+unavailable usage remain distinct.
 
 The holder uses the remaining epoch and a two-second CPU ceiling while the
 parent retains a separate five-second control ceiling. Its original absolute
@@ -34,47 +35,55 @@ attempt; failed or unavailable observations preserve the original hold.
 
 Intact recovery is fresh paid accounting over original retained input, context,
 capture, result and receipt. It needs no live Journal or original input paths.
-A pending retry retains the original purchase input/configuration/ordinal under
-`retry_of`, with a new paid observation context. A terminal Journal row without
-a closure requires a distinct paid reconciliation receipt. That receipt proves
-the actual terminal record and may authorize the next ordinal; it never
-fabricates the lost receipt or measurements and never releases the interrupted
-attempt's unknown hold. Stopped authority cannot regain execution this way.
-
-The initial author matrix has three independent synthetic subprofiles:
-
-- Freeze, one real purchase, then intact paid replay: three public calls.
-- Freeze, infrastructure failure leaving a pending row, then an explicit fresh
-  retry of that ordinal: three public calls.
-- Freeze, a post-Journal/pre-closure fault, paid terminal reconciliation, then the
-  next ordinal using that reconciliation: four public calls.
-
-Each fresh profile retains the complete V3 control ceiling before work: 16
-tickets, 6 MiB plus four bounded store transactions per ticket, 117 seconds
-control CPU, 48 MiB/120 seconds setup, and protected recovery/publication.
-Together the selected tests permit at most six writer children, five holder
-children and five simulator entries (one intentionally fails as infrastructure).
-They perform no test-only purchase-intent injection. Input assembly remains
-inside the retained setup ceiling. The first matrix does not execute the full
-12-purchase mixed-history, candidate or classical sequence.
+A missing or pending retry retains the original purchase input, configuration
+and ordinal under `retry_of`, with a new paid observation context. A terminal
+Journal row without a closure requires a distinct paid reconciliation receipt.
+That receipt proves the actual terminal record and may authorize the next
+ordinal; it never fabricates the lost receipt or measurements and never
+releases the interrupted attempt's unknown hold. Stopped authority cannot
+regain execution this way.
 
 Fresh execution and reconciliation pre-admit the complete conservative copy
 bound: input plus two declared outputs plus two 128 KiB Journal captures. The
 first call reserves even its absent preimage; none of this allowance is inferred
 from the prepaid Journal write epochs. Exact equality and one-byte deficit are
-tested at the caller before writer dispatch.
+tested at the caller before writer dispatch. Earlier executable-checkpoint
+evidence retains the repaired incomplete-copy and ambiguous-wait findings.
 
-The first executable draft passed its 14 pure binding cases and three caller
-profiles. Its separate source-bound evidence records the two later static
-findings (copy pre-admission and ambiguous-wait signalling). The narrow repair
-matrix repeats only one retained first-purchase/replay origin and adds two
-non-numerical admission-boundary cases plus one lost-wait-observation case:
-nine public calls, at most two writer/simulator children and one holder across
-four fresh synthetic roots. It remains pending until its exact-source run.
+The full specimen in `tests/test_measured_purchase.py` performs 16 public calls:
+freeze, 12 genuine current-engine purchase attempts, Journal-bound candidate
+production, classical evaluation with no native selection, and paid replay.
+The last purchase deliberately raises `SimulationError`; all 11 completed rows
+and that failed row survive the downstream bindings. No test-only purchase
+intent injection is used. The retained run at test source `075c733` ended with
+35 ledger records and two unresolved setup/control holds. Its Journal was
+110,592 bytes, control store 163,840 bytes, and ledger 38,175 bytes. The classical
+result was scored independently of native selection. Replay returned the
+original result and receipt after live Journal and original input removal with
+producers forbidden; its measured child CPU was zero. This run did not
+separately serialize the replay holder observation.
 
-The conditional full V3 envelope remains 589,561,856 bytes and 708 CPU seconds,
-with 15 precharged Journal epochs per invocation, a 2 MiB cumulative work-copy
-limit, and 16 MiB/512 MiB publisher floor/ceiling. Actual dynamic unresolved
-counts govern finalization capacity. Legitimate rollback growth beyond the
-128 KiB file cap fails honestly; there is no all-32-page usability guarantee.
-This is synthetic conformance work, not a study or full-scale allocation proof.
+The same five-case selection adds lost acknowledgement after durable closure,
+a missing-Journal retry preserving its original unknown hold, stale-head denial,
+and failed reservation durability before any Journal entry. It passed 26 public
+calls across five fresh roots. Earlier finite profiles and independent review
+cover pending retry, terminal-row reconciliation followed by the next ordinal,
+explicit first-slot scientific failure, rollback and known-cost retention.
+These are separate source-bound checks, not a claim that every fault occurs
+inside the successful full specimen.
+
+The declared V3 ceiling remains 589,561,856 bytes and 708 CPU seconds. It
+includes 16 tickets, 6 MiB plus four bounded store transactions per ticket,
+117 seconds of control CPU, 48 MiB/120 seconds of setup, and protected
+recovery/publication. The full run consumed the one recovery ticket and
+retained publication protection of 80 MiB and 71 CPU seconds. Its validated
+ledger still had 638,783,315 artifact bytes available; the conservative
+finalization projection was 103,711 bytes against the 512 KiB publisher-ledger
+promise. Dynamic unresolved counts remain authoritative.
+
+The 15 precharged Journal epochs per invocation, 2 MiB cumulative work-copy
+limit, and publisher 16 MiB floor/512 MiB ceiling are unchanged. Legitimate
+rollback growth beyond the 128 KiB file cap fails honestly; the observed small
+fixture is not an all-32-page usability guarantee. This is synthetic conformance,
+not an actual study, 432-purchase allocation proof, selector approval or
+publication handoff.
