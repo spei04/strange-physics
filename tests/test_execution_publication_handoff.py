@@ -36,7 +36,7 @@ from strange_physics.candidate_execution_contracts import (
     PublicationEscrow,
 )
 from strange_physics.execution_publication_handoff import commit_publication_handoff
-from strange_physics.installed_identity import TrustedInstallation
+from strange_physics.installed_identity import TrustedInstallation, verify_native_installation
 from strange_physics.measured_publication_contracts import (
     NativePublicationRequest,
     PublicationControl,
@@ -91,7 +91,9 @@ from strange_physics.study_contracts import (
 from strange_physics.study_execution_contracts import (
     NativeComparisonCandidateRequest,
     NativeComparisonClassicalInput,
+    NativeComparisonClassicalRequest,
     NativeComparisonInput,
+    NativeFreezeRequest,
 )
 from strange_physics.study_ledger import summarize_study
 from strange_physics.study_publication_contracts import parse_study_publication_evidence
@@ -562,7 +564,7 @@ def test_forty_four_call_original_history_handoff_and_paid_publication_replay(
     publisher_children = 0
     target_verifications: list[str] = []
     compose_child = publisher._run_child
-    verify_installation = activation.verify_native_installation
+    verify_installation = verify_native_installation
 
     def tracked_target_verification(build: TrustedInstallation) -> Any:
         ticket = len(target_verifications)
@@ -597,19 +599,25 @@ def test_forty_four_call_original_history_handoff_and_paid_publication_replay(
         assert summarize_study(published.ledger).budget.unresolved_attempts == 3
         # Preserve sealed source/target authority and durable trusted artifacts.
         # Only disposable original inputs/live scientific exports are removed.
+        ordinary: list[
+            NativeFreezeRequest
+            | NativePurchaseRequest
+            | NativeComparisonCandidateRequest
+            | NativePreparationRequest
+            | NativePredictionRequest
+            | NativeScoreRequest
+            | NativeComparisonClassicalRequest
+        ] = [
+            f.freeze_request,
+            *purchase_requests,
+            candidate_request,
+            preparation_request,
+            *prediction_requests,
+            score_request,
+            diagnostic_request,
+        ]
         disposable = (
-            {
-                Path(request.input_path)
-                for request in (
-                    f.freeze_request,
-                    *purchase_requests,
-                    candidate_request,
-                    preparation_request,
-                    *prediction_requests,
-                    score_request,
-                    diagnostic_request,
-                )
-            }
+            {Path(request.input_path) for request in ordinary}
             | {f.journal, target / "journal.sqlite3"}
             | {Path(file.path) for file in origin.bundle.files}
         )
@@ -661,15 +669,6 @@ def test_forty_four_call_original_history_handoff_and_paid_publication_replay(
         assert target_verifications == [message_sha256(actual_build)] * 2
         assert not (f.root / "candidate-ticket-42").exists()
         assert not (target / "ticket-2").exists()
-        ordinary = [
-            f.freeze_request,
-            *purchase_requests,
-            candidate_request,
-            preparation_request,
-            *prediction_requests,
-            score_request,
-            diagnostic_request,
-        ]
         assert len(ordinary) == 41
         assert sum(r.artifact_reservation_bytes for r in ordinary) == 140 * MIB
         assert sum(r.cpu_reservation_ns for r in ordinary) == 704_000_000_000
