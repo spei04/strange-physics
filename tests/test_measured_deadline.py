@@ -182,6 +182,7 @@ def test_child_wait_deadline_keeps_existing_known_cpu_transport(
     with publisher._deadline(
         BUDGET_NS, BUDGET_NS, BUDGET_NS, BUDGET_NS, time.process_time_ns()
     ) as clock:
+        value: tuple[object, int]
         if kind == "candidate":
             value = executor._run_child(request, b"", tmp_path / "unused")
         else:
