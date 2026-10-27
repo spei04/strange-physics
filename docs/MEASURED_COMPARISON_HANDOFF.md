@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: pure checkpoint bdfed5d accepted and published; independent static reviews of adapter c427d39 complete. Quality integrates the reviewed fixture and explicit 50-call successor in identity. Concrete profile review and measured runtime remain pending.
+Status: first bounded attempt at 12a8a43 stopped before scoring after 39 successful public returns. Quality owns a narrow validation-cost repair and reviewed boundary-test integration. Further measured execution requires repaired-source/profile review.
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. The current supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,9 +8,9 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Adapter author; integrate reviewed fixture and explicit 50-call successor in identity |
-| Platform | Static adapter/fixture review complete; next concrete resource and recovery proof review |
-| Research | Source-only fixture delivered; independent adapter review complete; primary released |
+| Quality | Repair repeated ledger validation and integrate reviewed boundary fixture in identity |
+| Platform | Failed-run evidence and boundary source reviewed; next repaired-source/resource review |
+| Research | Boundary fixture and source diagnosis delivered; next independent repaired-source review |
 | Project lead | Checkout ownership, progress consistency, integration and exact delivery |
 
 The two existing cloud checkouts are reused. Quality owns source/environment in identity. Research released primary after delivering fixture 4a5c84a; Lead now uses it for progress-only edits. No additional dependency installation or checkout is needed.
@@ -59,3 +59,12 @@ Adapter c427d39 passed independent static review for retained authority and scie
 The successor must retain the successful 45-call prefix and add one unavailable prediction, an unscorable score, a valid retry under the same logical prediction, paid replay of the earlier score and denial of a fresh score that uses the stale unavailable reference. Replay must succeed after deleting its live input; stale denial must reach retained-state validation. Unknown original work remains charged, and replay adds its own cost.
 
 Conditional totals are 1,066,811,392 bytes and 1,338 CPU seconds. The initial authority declares all 50 calls and five recoveries. Added score work is capped at 4 MiB each; setup remains 48 MiB, finalization becomes 18 records/72 KiB and raw ledger 224 KiB. Tightened original exports, retained/reconstructed copies and exact store/CPU fit require concrete source and observed proof. No allocation extension, cap increase, public study or publisher handoff is included.
+
+
+## First attempted run and repair gate
+
+Exact 12a8a43 entered 40 calls and returned from 39, retaining 82 records/39 closures and three unresolved setup/control/scoring holds. The score deadline occurred during retained closure validation before its numerical child. No completed score, classical diagnostic or replay follows from this run. Final setup/child counters were unavailable; all failure evidence remains retained.
+
+Quality's repair scope is per-invocation validated-manifest reuse and equivalent head-only prefix checks. Original-prefix canonical digests, every request/receipt/ticket/latest-state join and raw witnesses remain mandatory. The next source profile declares the fixture lifetime as 600 seconds initially because the first 39 public intervals alone used 174.63 seconds; setup CPU, per-call limits and scientific caps remain unchanged. Runtime requires independent review of that exact repair.
+
+The separate four-call source ec726e7 is accepted for integration at a conditional 337,289,216 bytes/371 CPU seconds. Its injected-history qualification and prepaid mutation/restoration remain explicit. Mutation runs under the retained control tail; restoration is setup work. No additional calls are appended to or authorized by the failed 50-call authority.

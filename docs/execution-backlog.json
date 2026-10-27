@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research released primary clean at4a5c84a; Lead reuses it on docs/native-stage-delivery-progress for progress-only edits, without environment use.",
-      "identity": "Quality exclusively owns adapter/50-fixture source and environment on feat/retained-comparison-stages; measured runtime not admitted.",
+      "scientific": "Research released primary clean at ec726e7 after boundary source delivery; Lead reuses docs/native-stage-delivery-progress for progress only, no environment use.",
+      "identity": "Quality owns source/environment repair and synthetic checks after first50 runtime release at12a8a43; no new measured attempt admitted.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12592,12 +12592,12 @@
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Integrate reviewed fixture and implement explicit50 successor in identity; no measured calls yet.",
-        "Platform": "Static source reviews complete; next concrete50 resource/copy and observed accounting review.",
-        "Research": "Fixture delivered and primary released; independent adapter review complete; identify remaining finite boundary coverage.",
-        "Project lead": "Progress-only edits in released primary; review integration, resource admission and exact evidence."
+        "Quality": "Repair repeated ledger validation and integrate reviewed boundary fixture in identity; source/synthetic checks only.",
+        "Platform": "Failed50 evidence and boundary source accepted; next independent repaired source/resource review.",
+        "Research": "Boundary source and diagnosis delivered/released; next repaired-source scientific review.",
+        "Project lead": "Primary progress and failed-evidence reconciliation; coordinate exact repair review before another attempt."
       },
-      "handoff": "Research delivered source-only fixture4a5c84a and released primary. Quality integrates the reviewed fixture and explicit50 successor in identity; Lead maintains progress in primary. Both static adapter reviews are accepted; concrete source/profile review precedes measured runtime.",
+      "handoff": "Quality owns validation-cost repair and reviewed boundary integration in identity. First50 evidence is preserved; further measured execution requires exact repaired-source/profile review. Research released primary; Lead owns progress there.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "adapter_static_reviews_accepted_concrete50_source_in_progress",
+        "status": "first50_failed_validation_cost_repair_in_progress",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14577,9 +14577,9 @@
         "prior_delivery_free_bytes": 93518716928,
         "capacity_review": "accepted_for_lightweight_source_only",
         "proposed_full_specimen_calls_before_extra_faults": 45,
-        "runtime_profile": "concrete50_source_pending_runtime_not_admitted",
+        "runtime_profile": "first50_attempt_failed_repaired_source_review_required_before_next_attempt",
         "new_allocation": false,
-        "next_gate": "Concrete50 source/copy/resource review before any numerical dispatch",
+        "next_gate": "Immutable validation-cost repair, scoped checks and complete exact profile review before another measured attempt",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -14633,7 +14633,21 @@
           "research_review_sha256": "f0f4ef855219f3279d50cbfb668e9bfcf7f1461bfcf55ea2cbadd217ebfbd7f6",
           "lead_acceptance_sha256": "9f36ab996028d5fda856ce2dfaf3b4ac1a6515c9530c1b13ae2cb959d9c55c7d",
           "fixture_source": "4a5c84a23ffb595797df9b73cd6992eebb2bee5c",
-          "measured_calls": 0
+          "measured_calls": 40,
+          "first_attempt": {
+            "source": "12a8a43bbd489ba998e9c6d9011260c9b6e8fb92",
+            "public_calls_entered": 40,
+            "public_calls_returned": 39,
+            "records": 82,
+            "closures": 39,
+            "unresolved_holds": 3,
+            "status": "publication_deadline_before_score_dispatch",
+            "known_cost_recording": "Secondary failure; original full score hold retained",
+            "final_setup_child_counters": "Unavailable; surviving files are not substitutes",
+            "author_index_sha256": "b5b03d7e82abf109fc9cca4a767546ae0aa42f70bac09eea858e3fa9e0e30217",
+            "platform_review_sha256": "db018869d162d70336cdff76a2ab78534aeff34974f4e70690a65d209c8ca9e8",
+            "source_install_equal": true
+          }
         },
         "temporal_profile": {
           "calls": 50,
@@ -14648,6 +14662,30 @@
           "raw_ledger_cap_bytes": 229376,
           "status": "conditional_arithmetic_only_concrete_source_and_runtime_pending",
           "review_sha256": "e71dd00b374a20d072285dd5d3413f676aceaf06ff849945b49b5b914d4ee223"
+        },
+        "repair": {
+          "owner": "Quality",
+          "scope": "Invocation-local validated manifest and equivalent head-only prefix checks; all original digests and authority/witness checks retained",
+          "next_fixture_initial_lifetime_seconds": 600,
+          "old_fixture_lifetime_seconds": 180,
+          "per_call_and_scientific_caps_unchanged": true,
+          "status": "source_only_no_further_measured_attempt_admitted",
+          "research_diagnosis_sha256": "1bbfce62bf4c3b9a6ccb419e9f43280c631d63e13bb4ba8fbfedc921f57e75ff"
+        },
+        "boundary_fixture": {
+          "source": "ec726e7a7c4028475334b2a6faa697aaf8d455d9",
+          "author": "Research",
+          "reviewers": [
+            "Project lead",
+            "Platform"
+          ],
+          "calls": 4,
+          "artifact_bytes": 337289216,
+          "cpu_seconds": 371,
+          "qualification": "Separate synthetic injected-history guard fixture, not paid-purchase authority",
+          "status": "source_reviewed_runtime_pending",
+          "author_index_sha256": "4a1592c35f48aef1af14d1025d8926477d84b44d6b46476f85aecb3192f57eb4",
+          "platform_review_sha256": "336de63411964e329c484d0af16f4311c676c14cb63eb3b2c4491fb16118ffeb"
         }
       }
     },

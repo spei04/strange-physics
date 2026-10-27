@@ -3801,3 +3801,8 @@ Pure payloads and material bindings at bdfed5d are independently accepted and pu
 ## 2026-10-27 — Comparison adapter source reviewed
 
 Independent reviews found no static blocker in c427d39. Research delivered the source-only 45-call fixture at 4a5c84a; Quality is integrating it and implementing the explicit 50-call sequence for successful scoring and recovery after a missing prediction is retried. Its proposed bounds are 1,066,811,392 bytes and 1,338 CPU seconds under unchanged caps, conditional on smaller copy bounds and actual store fit. No measured runtime is admitted or observed. Lead owns progress in released primary; Quality retains identity. [Evidence and assignments](EXECUTION_LOG.md#2026-10-27--comparison-adapter-source-reviewed).
+
+
+## 2026-10-27 — Comparison runtime repair
+
+The first bounded integration attempt returned from 39 calls, then stopped during retained-history validation before the first score ran. Its original cost holds and failure evidence are preserved. Quality is removing repeated ledger validation and making the next fixture's overall lifetime explicit; per-call and scientific caps remain unchanged. The independently reviewed four-call boundary fixture is ready for integration. Repaired source/profile review is required before another measured attempt. [Evidence and assignments](EXECUTION_LOG.md#2026-10-27--first-comparison-run-exposed-validation-cost).

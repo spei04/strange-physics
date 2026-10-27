@@ -12,15 +12,18 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Integrate reviewed fixture and implement the 50-call recovery sequence in identity | Freeze source, copy bounds and complete profile before measured calls |
-| Platform | Independent adapter and fixture source reviews complete | Review concrete 50-call resource bounds and observed accounting |
-| Research | Independent fixture authored; adapter source review complete; primary released | Identify remaining finite public-boundary coverage |
-| Project lead | Compose progress in reused primary; review integration and exact evidence | Runtime remains pending concrete source/profile acceptance |
+| Quality | Remove repeated ledger validation and integrate reviewed boundary tests in identity | Source and synthetic checks; no further measured run admitted |
+| Platform | First failed run and boundary source independently reviewed | Review repaired source, resource bounds and subsequent observed accounting |
+| Research | Boundary fixture delivered; repeated-validation diagnosis complete | Review repaired scientific identity and replay behavior |
+| Project lead | Preserve failed evidence and maintain progress in primary | Approve exact repaired source/profile before a new bounded attempt |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Quality | First 50-call attempt stopped at call 40; 39 calls returned | Reassigned to invocation-local validation reuse; original failure and cost holds preserved |
+| 2026-10-27 | Platform + Research | Independent deadline and repeated-validation diagnosis | Same ledger scanned at least 48 times in a full score path; no measured speedup claimed |
+| 2026-10-27 | Research | Four-call boundary fixture ec726e7 delivered | Lead and Platform source review accepted; runtime and configured checks pending |
 | 2026-10-27 | Quality | Integrate Research fixture and extend it to 50 declared calls | Source work only; two synthetic test expectations corrected; measured runtime pending |
 | 2026-10-27 | Platform + Research | Independent c427d39 retained-authority review | No static blocker found; actual purchased-history and temporal replay still require integration proof |
 | 2026-10-27 | Research | Source-only fixture 4a5c84a delivered and primary released | Lead accepted integration; Platform reviewed resource boundaries |
@@ -1076,3 +1079,16 @@ The first synthetic resolver run passed 14 cases and failed two test expectation
 The proposed 50-call profile totals 1,066,811,392 bytes and 1,338 CPU seconds, leaving 6,930,432 bytes under the unchanged 1 GiB cap. It requires tighter original wrapper exports, 4 MiB per added score, 18 finalization records/72 KiB, and a 224 KiB raw-ledger bound. Setup remains 48 MiB. Arithmetic is conditionally accepted; concrete source, actual database fit, output sizes, cumulative costs and recovery behavior still need proof before runtime acceptance.
 
 Lead rehashed both independent review indices and their referenced evidence. The same two cloud checkouts remain assigned: Quality owns source/environment in identity, Lead owns progress-only edits in released primary. No measured comparison calls, provider calls or numerical comparison have run in this slice. Publisher authority handoff, full-study admission, grid/Laplace work and parent closure remain separate.
+
+
+## 2026-10-27 — First comparison run exposed validation cost
+
+The first bounded attempt at 12a8a43 entered 40 public calls and returned from 39: freeze, twelve purchases including the explicit failed experiment, candidate generation, preparation and all 24 predictions. The first score stopped with publication_deadline while authenticating retained prediction closures, before scoring dispatch. The retained store has 82 ledger records, 39 closures and three unresolved holds for setup, control and scoring. Source, installation and test hashes are unchanged. Platform and Lead independently verified the retained evidence; this is partial integration evidence, not completed scoring or recovery.
+
+The observed work-phase stack and 13.10-second call duration support exhaustion of the score's 6-second parent CPU allowance within its 12-second work reservation. The shared handler did not log which signal fired, so that attribution remains an inference. A later attempt to record known cost also failed; the full original score hold remains charged. The final setup/copy/child counters were not emitted and are not reconstructed from surviving file sizes.
+
+Source review found two full-ledger scans per retained prediction, at least 48 scans across a complete 24-result score, plus repeated prefix validation. Quality is implementing invocation-local reuse of a validated view/manifest and equivalent prefix-head checks, while retaining every original ledger digest, receipt, ticket, current-state and raw-file witness check. No global cache or scientific recipe change is included. The original failed authority remains untouched.
+
+A separate timing issue is the fixture's absolute setup lifetime: the first 39 public calls alone took 174.63 seconds, almost the entire 180-second window. The next source profile will declare a 600-second lifetime before initialization, preserving the existing setup CPU allowances, per-call timers, 1 GiB storage cap and eight CPU-hour cap. This is distinct from the immediate score failure. No further measured attempt is admitted before immutable repaired-source/profile review.
+
+Research delivered the separate four-call guard fixture ec726e7. Lead and Platform accepted its source and conditional 337,289,216-byte/371-second profile: an altered failed-row action must be denied after reservation, and a retained-file change immediately before commit must roll back the closure while preserving unknown costs. It uses explicitly injected test intents and is not paid-purchase evidence. Its runtime is pending. The same two checkouts are reused; parent issues, publisher handoff, full-study admission and grid/Laplace work remain open.
