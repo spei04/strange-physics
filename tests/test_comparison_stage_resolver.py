@@ -302,7 +302,7 @@ def test_unknown_transport_preserves_hold_and_rechecks_raw_witness(
         e.resolver.witness.recheck()
         assert summarize_study(e.store.ledger()).budget == before
         assert before.unresolved_attempts == 1
-        private(e.output, b"changed")
+        private(e.output, b"}")
         with pytest.raises(StudyLedgerError, match="comparison_retained_changed"):
             e.resolver.witness.recheck()
 
@@ -410,7 +410,7 @@ def test_historical_transport_does_not_read_a_later_retry_closure(
             e.resolve()
         if status == "invalid":
             e.output.unlink()
-            with pytest.raises(FileNotFoundError):
+            with pytest.raises(StudyLedgerError, match="comparison_prediction_transport"):
                 e.resolve(historical=True)
 
 
