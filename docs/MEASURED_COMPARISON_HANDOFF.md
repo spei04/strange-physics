@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: retained-comparison delivery is accepted through PR127/main 5897f97 and unpublished candidate 12715816385. Both PR and main runtimes passed 4,421 tests; all five main jobs and exact 89-file archive/source checks passed. Local 1cc9408 and selected 1dee2c5 evidence remain separate, including failed-only retention limits and historical failures. Quality is assigned the V2 one-way publisher handoff; design acceptance does not prove resource fit or crash recovery. No scientific comparison, MAP, accuracy, full-study or parent-closure claim follows.
+Status: source6d42 caller/activation, 22 primitive tests and the retained 44-call specimen are independently accepted within one-cell conformance scope. The ca9ee869 fault supplement is source-reviewed but unexecuted. Prior PR127 delivery remains accepted. Final checks, new PR/main/package delivery and parent audit remain pending.
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Implement V2 one-way publisher handoff in reused identity; first immutable checkpoint pending |
-| Platform | Delivery accepted; independently review next accounting, activation/recovery and capacity boundaries |
-| Research | Release delivery reconciliation; independently review next material/identity checkpoint |
-| Project lead | Own primary progress/integration after release and coordinate Quality source handoff |
+| Quality | Prepare final ten local checks and exact hosted candidate verification |
+| Platform | Accepted the 44-call outcome; review remaining fault/delivery evidence |
+| Research | Prepare the disabled separate two-case/four-call runner at ca9ee869 |
+| Project lead | Own primary progress and coordinate final source/delivery |
 
-The two existing cloud checkouts are reused. Quality is assigned the next implementation in identity from accepted main 5897f97, with Lead coordinating its source handoff. Research releases this six-file primary reconciliation to Lead for review/publication. Platform and Research independently review the first immutable store/contracts checkpoint; no extra checkout is required.
+The two existing cloud checkouts are reused. After Quality released the passing 44-call run, Lead integrated only the new ca9ee869 test file in identity. All 92 installed package files and locked dependencies remain unchanged; no refresh was needed. Primary holds this documentation update without using its environment. Reviewers inspect immutable source and retained evidence.
 
 The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
 
@@ -94,3 +94,11 @@ The observed normal full run stopped at 2,389 passed/one failed in 1,127.69 seco
 The source-seal/store checkpoint 0336b5f passed 26 tests; original diagnostic-input checkpoint 95e9621 has a qualified 30-case pass (pytest exit 0 and 30 passing markers, preserved quiet-output reporting assertion, no retry). Each tested package matches its exact 90-file source and archives; dependency identities stayed unchanged. Quality continues the measured caller/activation, while Research prepares the separate 44-call actual handoff fixture. These checkpoints do not prove measured handoff, full-study feasibility or parent completion.
 
 Full-study review found separate lower bounds above the existing 1 GiB authority and a missing multi-cell coordination boundary: the single-cell/three-ticket seal cannot serve all 36 cells by repetition. Before parent closure, make the bounded authority interface, one global budget, current limitations and later integration ownership explicit. Exact algorithm census and measured full-study fit belong after inference/policies exist and before RA-07.b admission; they are not circular prerequisites for implementing RA-N02.a/RA-N04. No graph, estimates, caps, experiment count or Laplace sequence changed. See the [assignment log and evidence](EXECUTION_LOG.md#2026-10-27--publisher-handoff-checkpoints-and-study-boundary).
+
+## 2026-10-27 — Handoff caller checked; integration verification in progress
+
+Caller/activation source 6d42df9 passed 22 primitive tests, then the separately reviewed 44-call specimen passed in 240.21 seconds. Independent readback accepted all 44 returns, the complete sealed source prefix, original publication/replay bytes and three retained cost holds. Passing evidence is retained. This is one-cell conformance with fixed selection, not a research comparison or a timing guarantee.
+
+The test-only ca9ee869 supplement is source-reviewed; its two-case/four-call runtime is pending. Research prepares that bounded runner, Quality prepares final static/schema/security/package checks, Platform reviews evidence and Lead updates progress. Both existing cloud checkouts are reused. Hosted full suites, PR/main/candidate delivery and the explicit parent audit remain pending; #105/#106 stay open. Global 36-cell authority/capacity and the grid-first/Laplace-later sequence are unchanged.
+
+[Evidence and assignments](EXECUTION_LOG.md#2026-10-27--handoff-caller-checked-integration-verification-in-progress).

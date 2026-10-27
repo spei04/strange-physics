@@ -12,15 +12,17 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Implement the measured handoff caller and publisher activation in identity | Store checkpoint accepted; next source and recovery review pending |
-| Platform | Independent integration review; full-study capacity/dependency census complete | Preserve one global budget; no new study admission |
-| Research | Prepare the independent 44-call handoff fixture in reused primary | Original-input checkpoint accepted with qualified 30-case pass; measured fixture unexecuted |
-| Project lead | Reconcile progress, compose reviewed source and coordinate integration | Parents #105/#106 remain open; full-study admission follows inference/policy integration |
+| Quality | Prepare final static/schema/security/package checks and candidate verification | Ten local checks planned; hosted full suites remain required |
+| Platform | Independent 44-call outcome accepted; review remaining fault/delivery evidence | Preserve original history, unknown holds and scoped claims |
+| Research | Prepare the separate caller-fault runner against frozen ca9ee869 | Two cases/four calls; source-reviewed, runtime pending |
+| Project lead | Reconcile progress in released primary; coordinate validation and delivery | Reuse both checkouts; parents #105/#106 remain open |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Quality + Platform + Project lead | Exact 6d42 caller/activation primitive verification | 22 primitives and one actual 44-call specimen passed; independently accepted; final checks pending |
+| 2026-10-27 | Research + Platform + Project lead | Separate ca9ee869 caller-fault supplement | Source/static review accepted; two-case/four-call runtime pending; primary released |
 | 2026-10-27 | Quality + Platform + Research | Atomic source-seal checkpoint 0336b5f | 26 tests passed; exact 90-file package accepted; Quality continues caller/activation |
 | 2026-10-27 | Research + Platform + Project lead | Original diagnostic input 95e9621 | Qualified 30-case pass; reporting diagnostic preserved without retry; Research prepares actual handoff fixture |
 | 2026-10-27 | Project lead + Platform + Research | PR127/main 5897f97 and exact candidate delivery accepted | Quality assigned V2 publication handoff; first immutable checkpoint goes to independent review |
@@ -1182,3 +1184,17 @@ The complete 36-cell terminal path has 1,441 source calls before online inferenc
 Before parent closure, document the bounded interface, one global plan without resets, retained costs, one-way seal, single-cell limit, full-study denial and ownership of later coordination. Exact future algorithm counts must not become a circular prerequisite for RA-N02.a/RA-N04. Their actual cadence, full-study authority integration and measured capacity precede RA-07.b admission after those algorithms exist. Parents #105/#106 remain open. The approved graph, experiment matrix, 8 CPU-hour/1 GiB study caps and finite-grid-first/Laplace-later sequence are unchanged.
 
 Private evidence indexes (owner-readable, review 2026-11-26): store outcome 88a95db92ab27340ee1938bf106fb45f2b7b08019eb56c1a596aa7f54ece2454; store review 102093d56587ccc310fb3511af21c66d31e43f636e1277a6ab39b0257dc9dd58; diagnostic outcome 94369d3e11ce14072d337aa5a249f235bfedb0e3886fb496a8bf38f4c3fa2c53; diagnostic review 7d5ae31b29d7f9f9a4ba1c8c8481c4296d6e96f1a846d32bf2221b57e284d940; study census 0c738b60de3771973fdf79792b5e6897c4b32184d13ef6ebcf53e6357e2ebec8 and dependency clarification 621120078e2ed4354b59a61dc03e2d55b446eb047d8f74332cc8d592fa439b8a.
+
+## 2026-10-27 — Handoff caller checked; integration verification in progress
+
+Caller/activation source 6d42df9 passed 22 primitive tests, then the separately reviewed 44-call specimen passed in 240.21 seconds. Independent readback accepted all 44 returns, the complete sealed source prefix, original publication/replay bytes and three retained cost holds. Passing evidence is retained. This is one-cell conformance with fixed selection, not a research comparison or a timing guarantee.
+
+The test-only ca9ee869 supplement is source-reviewed; its two-case/four-call runtime is pending. Research prepares that bounded runner, Quality prepares final static/schema/security/package checks, Platform reviews evidence and Lead updates progress. Both existing cloud checkouts are reused. Hosted full suites, PR/main/candidate delivery and the explicit parent audit remain pending; #105/#106 stay open. Global 36-cell authority/capacity and the grid-first/Laplace-later sequence are unchanged.
+
+The 44-call source has 88 sealed records and 41 closures; publication/replay ends with 93 records and one publication closure. The original 11-completed/one-failed history, 24 predictions and independently selected=None diagnostic survive. Replay succeeds after disposable live inputs are deleted, using two fresh actual installation verifications and two fixed publisher composition children. The counters are Python entry observations, not an independent OS process census.
+
+The declared specimen envelope was 1,026,908,160 bytes and 1,356 CPU seconds. Actual ledger charges are 784,256,925 bytes and 510,235,742,925 CPU nanoseconds, including the three unresolved setup/source-control/publisher-control holds. After protecting the remaining target work and source recovery, 249,114,723 bytes remain. Finalization requires 162,468 of 524,288 bytes. The retained 180 files total 7,924,184 bytes; this is distinct from admission envelopes and cumulative writes.
+
+All 92 package files, 5,402 nonproject records and nine package metadata records stayed unchanged. Original trusted archive/lock/provenance paths were preserved. Their separate synthetic harness setup used 3.0747 aggregate CPU seconds and 3.0805 wall seconds within its qualified bounds: a 30-second parent CPU timer, 60-second wall timer and aggregate CPU completion check, not a shared parent/child hard CPU cap. Setup copied 1,222,893 bytes including the final proof; its recorded CPU snapshot precedes the proof write. Final control and setup tails remain reserved, not falsely reported as exact totals.
+
+Private evidence (owner-readable; review 2026-11-26): primitive outcome 00967a507a957f8fc36fdcf2f36b5346bd70f53f5851ac8e4cf96f77fda970c3 and peer review 3babb00b95a00fe98237654b73d910f1127fc2cd0cb427e307d62966eafa2c63; actual44 outcome d5290b2f495532b488f5603d9bcb41e7e0b3f38754e8c53f2ee805f07aa99c56 and independent review b6b239bab56cdef2fd74ed11d1ac42c355adb23dcacfd77be1a909afa6e73801. The ca9ee869 source/static index is 09ab508152a158b11fae68a235eb43c9b8cfd710243efd7e0958ba88fc82f73d, with peer review 590874dcec904abf47fcfa9728ed8d662aa8d259e3b7182698c60bec80b489cf. Historical diagnostics remain source-specific.

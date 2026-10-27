@@ -10924,10 +10924,10 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Primary reused sequentially: original diagnostic 95e focused run released; Lead progress update, then Research independent 44-call fixture. Installed 90-file95e package remains owned by primary; revalidate for future source.",
-      "identity": "Quality owns caller/activation implementation; store 0336 source/90-file package/26-case run accepted. No other writer may switch this checkout.",
+      "scientific": "Primary released clean at ca9ee869 by Research, then reused by Lead on progress69e69b3; fault branch retained. Existing90-file environment unused/unrefreshed.",
+      "identity": "Research prepares disabled4-call runner against frozen test-onlyca9ee869. Quality44 released;92 installed package/lock/runtime files unchanged, no refresh.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
-      "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout. Latest primary reuse observed 62,242,344,960 free bytes on 2026-10-27; both existing checkouts remain needed. No checkout removed or new one created.",
+      "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout. Latest primary reuse observed 62,242,344,960 free bytes on 2026-10-27; both existing checkouts remain needed. No checkout removed or new one created. Primary reuse for this update observed62,066,012,160 free bytes and no visible cwd consumers (248 inaccessible/raced proc entries); no checkout created or removed.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
     },
     "spring_calibration_evidence": {
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "handoff_store_and_original_input_checked_caller_integration_in_progress",
+      "status": "handoff_22_and_44_accepted_fault_runtime_and_delivery_pending",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Measured execution-to-publisher caller, mandatory activation/origin and primitive tests in identity; store checkpoint accepted.",
-        "Platform": "Independent caller/recovery integration review; full-study capacity and dependency census complete.",
-        "Research": "Original diagnostic-input checkpoint accepted with qualified 30-case pass; independent 44-call actual handoff fixture in reused primary.",
-        "Project lead": "Progress publication and reviewed-source composition; explicit parent scope and later full-study integration boundary. Parents remain open."
+        "Quality": "Prepare final10 local static/schema/security/package checks and hosted candidate verification; no full local suite repeat planned.",
+        "Platform": "44 outcome independently accepted; review remaining caller-fault and delivery evidence.",
+        "Research": "Prepare disabled2case/4call runner atca9ee869; no source/env edits or execution yet.",
+        "Project lead": "Six-doc progress in primary; coordinate final source, validation and delivery. Parents105106 open."
       },
-      "handoff": "PR127/main 5897f97 and exact candidate remain delivered. Store 0336 passed 26 tests; original diagnostic 95e has a qualified 30-case product pass with original quiet-output reporting assertion preserved and no retry. Exact 90-file packages and unchanged dependencies verified. Caller/activation and actual 44-call fixture are in progress; no measured handoff, comparison, full-study or parent completion.",
+      "handoff": "PR127 remains delivered. Caller6d42,22 primitive tests and the actual44-call specimen (240.21s) are independently accepted with preserved88record source prefix,93record final ledger, original receipt/evidence and3unknown holds. Test-onlyca9ee869 is integrated; separate2case/4call runtime and final delivery remain pending. No scientific comparison/full-study or parent completion.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Compose reviewed caller/original-input/fixture sources; prove bounded 44-call handoff and supported recovery. Close parents only against explicit bounded authority/native-contract scope. Actual future algorithm census, global 36-cell authority and measured capacity precede RA-07.b admission after inference/policies exist, not before their implementation. Grid first; Laplace audit later; no new allocation.",
+      "next_units": "Bound and execute the reviewed separate caller-fault cases; complete10 local static/schema/security/package checks plus exact hosted full-suite PR/main/candidate delivery, then explicit bounded parent audit. Actual future algorithm census, global36-cell authority and measured capacity precede RA-07.b after inference/policies exist. Grid first; Laplace audit later; no new allocation.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -15112,7 +15112,7 @@
         }
       },
       "publisher_authority_handoff": {
-        "status": "store_and_original_input_checkpoints_accepted_caller_and_fixture_in_progress",
+        "status": "source_22_and_44_accepted_caller_fault_runtime_and_delivery_pending",
         "source_base": "5897f97b2bda7f76600b0590680d51f5a3936ac0",
         "proposal_source": "7d69c51796a3d873c4b15ab768f07270853f64a9",
         "proposal_version": 2,
@@ -15129,10 +15129,9 @@
         "material_scope": "Original inner scoring input and independent selected=None classical input, full failed-row history and original unknown holds. No receipt relabeling.",
         "activation": "First publication ticket includes activation; one recovery spare only, exhaustion fails closed with source sealed.",
         "not_proved": [
-          "resource fit",
-          "supported crash cuts",
-          "publisher authority implementation",
-          "full-study allocation/admission",
+          "caller fault runtime outcomes",
+          "final configured and PR/main/package delivery",
+          "full-study global authority/allocation/admission",
           "parent completion"
         ],
         "new_allocation": false,
@@ -15178,6 +15177,55 @@
           "dependency_index_sha256": "621120078e2ed4354b59a61dc03e2d55b446eb047d8f74332cc8d592fa439b8a",
           "graph_changed": false,
           "caps_changed": false
+        },
+        "caller_source": "6d42df91e05bcb4343d6503b82c39df2818c87ab",
+        "caller_tree": "6465f14416b631f96f96e78c970b973908a943d0",
+        "primitive_validation": {
+          "commands": 4,
+          "all_exits": 0,
+          "tests_passed": 22,
+          "pytest_seconds": 6.15,
+          "package_files": 92,
+          "unchanged_nonproject_files": 5402,
+          "outcome_index_sha256": "00967a507a957f8fc36fdcf2f36b5346bd70f53f5851ac8e4cf96f77fda970c3",
+          "peer_index_sha256": "3babb00b95a00fe98237654b73d910f1127fc2cd0cb427e307d62966eafa2c63",
+          "scope": "Real SQLite primitive accounting; verifier mocked; passing DBs removed; no public44 or caller-fault proof."
+        },
+        "integration_validation": {
+          "status": "independently_accepted_one_cell_conformance",
+          "source": "6d42df91e05bcb4343d6503b82c39df2818c87ab",
+          "plan_review_sha256": "ec9db12371bd521c75ff9bc4aeaa4def8852d31f675fb3154612ecc5a5f5a7a5",
+          "positive_fixture_retention": true,
+          "retries": 0,
+          "external_fixture": "Separate owner-trusted synthetic build: three original durable files <=6MiB, parent30CPU-s and60wall-s timer; aggregate parent/waited-child30s is completion check, not shared CPU hard limit.",
+          "pytest_seconds": 240.21,
+          "calls_returned": 44,
+          "outcome_index_sha256": "d5290b2f495532b488f5603d9bcb41e7e0b3f38754e8c53f2ee805f07aa99c56",
+          "peer_index_sha256": "b6b239bab56cdef2fd74ed11d1ac42c355adb23dcacfd77be1a909afa6e73801",
+          "source_records": 88,
+          "final_records": 93,
+          "unresolved_holds": 3,
+          "retained_files": 180,
+          "retained_bytes": 7924184,
+          "charged_artifact_bytes": 784256925,
+          "charged_cpu_ns": 510235742925,
+          "future_protected_artifact_margin_bytes": 249114723,
+          "finalization_bound_bytes": 162468,
+          "finalization_limit_bytes": 524288,
+          "limitations": "Fixed selection/repeated actions; Python entry counters, not OS census; final control/setup tails reserved; no full-study, timing guarantee or production-readiness claim."
+        },
+        "caller_fault_validation": {
+          "source": "ca9ee869ef476ff4d6fcac8d3af5ac0fd0d99f0a",
+          "status": "source_static_reviewed_runtime_not_started",
+          "cases": 2,
+          "planned_source_calls": 4,
+          "publisher_calls": 0,
+          "numerical_calls": 0,
+          "product_children": 0,
+          "index_sha256": "09ab508152a158b11fae68a235eb43c9b8cfd710243efd7e0958ba88fc82f73d",
+          "scope": "Synthetic ancestry with real verifier/tickets/store/unknown/recovery/seal; no target activation or universal power-loss proof.",
+          "peer_index_sha256": "590874dcec904abf47fcfa9728ed8d662aa8d259e3b7182698c60bec80b489cf",
+          "integrated_without_package_refresh": true
         }
       }
     },
