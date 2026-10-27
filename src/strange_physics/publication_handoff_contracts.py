@@ -14,7 +14,12 @@ from pydantic import Field, model_validator
 from strange_physics.bounded_json import bounded_canonical, parse_bounded_json
 from strange_physics.candidate_execution_contracts import MIB, CandidateAdmission
 from strange_physics.contracts import Identifier, Message
-from strange_physics.measured_publication_contracts import PublicationControl
+from strange_physics.measured_publication_contracts import (
+    PrivatePath,
+    PublicationAdmission,
+    PublicationControl,
+    PublicationFile,
+)
 from strange_physics.research_contracts import Digest, message_sha256
 from strange_physics.study_contracts import (
     MAX_LEDGER_RECORDS,
@@ -229,3 +234,91 @@ def validate_handoff_ledger(seal: PublicationHandoffSeal, ledger: NativeStudyLed
         > escrow.ledger_bytes
     ):
         raise StudyLedgerError("candidate_handoff_headroom")
+
+
+HANDOFF_ORIGIN_BYTES = 128 * 1024
+HANDOFF_BUILD_BYTES = 2 * MIB
+HANDOFF_MATERIAL_NAMES = frozenset(
+    {
+        "world_catalog",
+        "candidate_config",
+        "prediction_config",
+        "pool",
+        "scoring_policy",
+        "classical_diagnostic_config",
+        "scoring_input",
+        "scoring_result",
+        "diagnostic_input",
+        "diagnostic_result",
+    }
+)
+
+
+class PublicationHandoffBundle(Message):
+    """Exact exported original inputs, not a reconstruction of selected diagnostics."""
+
+    files: Annotated[tuple[PublicationFile, ...], Field(min_length=10, max_length=10)]
+    journal_sha256: Digest
+    journal_bytes: Annotated[int, Field(ge=100, le=128 * 1024)]
+    installation_raw_sha256: Digest
+    installation_bytes: Annotated[int, Field(ge=1, le=HANDOFF_BUILD_BYTES)]
+    diagnostic_attempt_id: Identifier
+
+    @model_validator(mode="after")
+    def closed_materials(self) -> Self:
+        if {item.name for item in self.files} != HANDOFF_MATERIAL_NAMES:
+            raise ValueError("Handoff requires original native and diagnostic inputs and results")
+        bounded_canonical(self, 16 * 1024)
+        return self
+
+
+class PublicationHandoffOrigin(Message):
+    version: Literal["strange-physics.publication-origin.v1"] = (
+        "strange-physics.publication-origin.v1"
+    )
+    seal: PublicationHandoffSeal
+    bundle: PublicationHandoffBundle
+
+    @model_validator(mode="after")
+    def exported_identity(self) -> Self:
+        escrow = self.seal.source_admission.control.publication
+        root = PurePosixPath(self.seal.intent.destination.root)
+        if (
+            message_sha256(self.bundle) != self.seal.bundle_sha256
+            or sum(item.byte_count for item in self.bundle.files) > escrow.material_bytes
+            or self.bundle.journal_bytes > escrow.journal_bytes
+            or any(item.path != str(root / (item.name + ".json")) for item in self.bundle.files)
+        ):
+            raise ValueError("Handoff bundle differs from the sealed export identity")
+        bounded_canonical(self, HANDOFF_ORIGIN_BYTES)
+        return self
+
+
+class HandoffPublicationAdmission(PublicationAdmission):
+    """Mandatory discriminator; absent origin never chooses the legacy route."""
+
+    version: Literal["strange-physics.handoff-publication-admission.v1"]
+    source_root: PrivatePath
+    origin_sha256: Digest
+
+
+class PublicationHandoffRequest(Message):
+    intent: PublicationHandoffIntent
+    attempt_id: Identifier
+    mode: Literal["execute", "recover"]
+    recover_attempt_id: Identifier | None
+    ticket: Annotated[int, Field(ge=0, le=3071)]
+    expected_revision: Annotated[int, Field(ge=0, le=MAX_LEDGER_RECORDS)]
+    expected_head_sha256: Digest
+    cpu_reservation_ns: Annotated[int, Field(ge=4_000_000_000, le=120_000_000_000)]
+    artifact_reservation_bytes: Annotated[int, Field(ge=16 * MIB, le=256 * MIB)]
+    wall_limit_ns: Annotated[int, Field(ge=1_000_000_000, le=300_000_000_000)]
+
+    @model_validator(mode="after")
+    def recovery_identity(self) -> Self:
+        if (self.mode == "recover") != (self.recover_attempt_id is not None):
+            raise ValueError("Recovery identifies one original unresolved transfer")
+        if self.recover_attempt_id == self.attempt_id:
+            raise ValueError("Recovery consumes a new attempt")
+        bounded_canonical(self, HANDOFF_INTENT_BYTES)
+        return self
