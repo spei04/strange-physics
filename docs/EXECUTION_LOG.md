@@ -12,10 +12,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Prepare retained-Journal comparison bindings; sole intended author | Source write handoff follows consumer/capacity review; no runtime admitted |
-| Platform | Audit shared disk growth and active consumers, then review resource/recovery boundaries | Refresh capacity recommendation before disk-heavy work |
-| Research | Review purchased-history, prediction and scoring identity/failure semantics | Independently review the frozen implementation and bounded evidence |
-| Project lead | Reconcile ownership, publish progress and coordinate source handoff | PR124 delivered; next gate is a feasible implementation/test profile |
+| Quality | Implement strict comparison payloads and retained bindings in identity | First immutable checkpoint and pure tests; measured runtime not admitted |
+| Platform | Capacity audit complete; review resource profile and immutable source | Host guards accepted; scientific runtime profile remains provisional |
+| Research | Scientific checklist complete; review first frozen source next | Preserve all 12 rows, 24 probes, truthful failures and paid recovery |
+| Project lead | Granted sole author handoff; maintain progress and independent review | First source checkpoint, then feasible runtime profile and bounded proof |
 
 ## Assignment history
 
@@ -1031,8 +1031,13 @@ All peer consumers released the frozen source, environment and original author m
 
 ## 2026-10-27 — Retained-Journal comparison bindings assigned
 
-Lead checked the durable assignment record and both existing cloud checkouts: no comparison writer was active. PR124/main dfda60f and progress 80a4d1f remain accepted. Quality is the sole intended implementation author; Platform and Research provide independent review. Initial work is read-only preparation against the accepted main source while Platform checks active consumers and the shared volume's roughly 30 GB reduction in free space.
+Lead checked the durable assignment record and both existing cloud checkouts: no comparison writer was active. PR124/main dfda60f and progress 80a4d1f remain accepted. Quality is the sole intended implementation author; Platform and Research provide independent review. Platform completed the bounded capacity/consumer audit, and Lead granted Quality the existing identity checkout on feat/retained-comparison-stages at accepted main dfda60f. Initial implementation is limited to strict payloads, retained bindings and pure tests; measured runtime remains unadmitted.
 
 The next slice connects actual retained purchased history to preparation, prediction and scoring. It must preserve failed rows, exact identities, cumulative cost holds and paid recovery. A preliminary census adds 26 execution calls and three stage recovery calls to the previous 16-call specimen; 45 calls is a proposed count, not an allocation. Complete control, CPU, artifact, copy, finalization and recovery requirements must fit the existing caps before runtime admission. Publisher authority handoff and full-study admission remain separate.
 
-See the [implementation handoff](MEASURED_COMPARISON_HANDOFF.md). Next gate: Platform's capacity/consumer recommendation and a source-backed finite implementation/test plan, followed by an explicit single-writer handoff. No new checkout, capacity purchase, provider call, full-study run or change to grid-first/Laplace-later sequencing is included.
+See the [implementation handoff](MEASURED_COMPARISON_HANDOFF.md). Next gate: an immutable contracts/binding checkpoint for independent review, followed by a complete feasible profile before measured execution. No new checkout, capacity purchase, provider call, full-study run or change to grid-first/Laplace-later sequencing is included.
+
+
+Platform's audit measured 63,060,946,944 bytes available, about 30.46 GB below the prior delivery. Current project checkouts and evidence occupy about 1.58 GB; coarse shared-volume scans do not establish the cause of growth without historical directory baselines. No observable checkout consumer was found, with process visibility limitations retained. No cleanup or new capacity was used. Lightweight work has a shared 256 MiB new-output ceiling. A later runtime batch must separately fit the scientific caps and the proposed 2 GiB host-output ceiling, start with at least 50 GiB available, and stop new dispatch below 45 GiB or before exceeding that shared output ceiling. Already-started child cleanup and cost settlement must complete. The host allowance adds no scientific budget.
+
+Quality proposes one PR with two review checkpoints: contracts/retained bindings, then measured integration and bounded proof. Its provisional 45-call profile uses the existing 1 MiB database option and totals 978,165,760 artifact bytes and 1,247 CPU seconds. The 2 MiB database alternative exceeds 1 GiB. Arithmetic fit is not storage or runtime acceptance; full copy, store-fit, unresolved-cost and recovery/finalization checks remain required.

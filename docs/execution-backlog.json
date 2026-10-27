@@ -10925,7 +10925,7 @@
     },
     "checkout_ownership": {
       "scientific": "Lead owns primary progress at80a4d1f; no Research writer or environment use.",
-      "identity": "Clean9c8ebae; Quality is intended sole author after Platform consumer/capacity audit and Lead handoff; initial work read-only.",
+      "identity": "Quality exclusive lightweight source writer on feat/retained-comparison-stages at dfda60f after Lead handoff; no measured runtime admission.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused; both clean and no consumers before handoff; free bytes 93668601856 at 2026-10-26T04:31:31Z. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "retained_journal_comparison_binding_preparation_capacity_review_pending",
+      "status": "retained_journal_comparison_pure_checkpoint_in_progress",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Read-only finite comparison binding plan; sole intended author after handoff.",
-        "Platform": "Shared disk growth/consumer audit, then independent resource/recovery review.",
-        "Research": "Read-only scientific identity/failure/scoring acceptance review.",
-        "Project lead": "Ownership reconciliation, primary progress and staged implementation handoff."
+        "Quality": "Implement strict comparison payloads/retained bindings and pure tests; freeze first checkpoint.",
+        "Platform": "Capacity audit complete; independent source/resource/recovery review.",
+        "Research": "Scientific checklist complete; independent frozen-source review next.",
+        "Project lead": "Source handoff granted; progress, review coordination and integration."
       },
-      "handoff": "No comparison writer found; two clean existing cloud checkouts reused. Initial immutable source preparation only; author checkout/runtime not yet granted.",
+      "handoff": "Two existing cloud checkouts reused; Quality owns identity at dfda60f for lightweight source work, Lead owns primary progress. No measured runtime admitted.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Accept capacity/consumer recommendation and finite comparison binding/test profile, then grant sole-writer source handoff. Publisher authority handoff and full-study admission remain separate.",
+      "next_units": "Review first immutable binding checkpoint and derive/accept a complete finite resource profile before measured integration proof. Publisher handoff and full-study admission remain separate.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "assigned_read_only_preparation",
+        "status": "pure_source_checkpoint_in_progress",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14575,13 +14575,24 @@
         "scope": "Retained purchased-history preparation, prediction and scoring with failed rows, exact identities, cumulative holds and paid recovery",
         "initial_free_bytes": 63166316544,
         "prior_delivery_free_bytes": 93518716928,
-        "capacity_review": "pending",
+        "capacity_review": "accepted_for_lightweight_source_only",
         "proposed_full_specimen_calls_before_extra_faults": 45,
-        "runtime_profile": "not_derived_or_admitted",
+        "runtime_profile": "author_arithmetic_proposal_not_independently_accepted_or_admitted",
         "new_allocation": false,
-        "next_gate": "Capacity/consumer recommendation plus feasible finite implementation/test plan; explicit author handoff",
+        "next_gate": "First immutable contract/binding source review; complete finite profile before measured runtime",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
-        "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98"
+        "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
+        "branch": "feat/retained-comparison-stages",
+        "capacity_index_sha256": "f1d9f7c4645f626b314589ff70ef7cb09ab38b468e15cdad2c4bdc0021cbc1b6",
+        "audit_available_bytes": 63060946944,
+        "source_handoff_sha256": "b4162fb9f959af86a1746749a0c74ec71a337d1e2127784642bf4d61eda6c8a7",
+        "host_source_output_ceiling_bytes": 268435456,
+        "host_runtime_ceiling_bytes": 2147483648,
+        "host_runtime_start_free_bytes": 53687091200,
+        "host_stop_new_dispatch_below_bytes": 48318382080,
+        "proposed_artifact_bytes": 978165760,
+        "proposed_cpu_seconds": 1247,
+        "proposed_database_bytes": 1048576
       }
     },
     "certificate_trust_update": {
