@@ -2,7 +2,7 @@
 
 Status: repaired source 36c9595 passed 20 synthetic cases, the 50-call successor and the separate four-call guard fixture. Both peers and Lead accepted the bounded 50-call evidence; Platform/Lead accepted the separate boundary fixture. Full configured checks are running; final results and delivery remain pending. Failed 12a8a43 and its unknown costs are preserved.
 
-Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. The current supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
+Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
 ## Owners
 
@@ -10,10 +10,10 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 | --- | --- |
 | Quality | Run the authorized 15-command configured batch in identity; retain both accepted fixture outcomes |
 | Platform | Observed accounting, capacity and boundary reviews accepted; delivery verification next |
-| Research | Scientific/temporal readback accepted; progress-only primary reconciliation |
-| Project lead | Bounded-run coordination, independent progress review, integration and exact delivery |
+| Research | Scientific/temporal readback and progress reconciliation complete; released and available for final review |
+| Project lead | Primary progress and integration after handoff; independent progress review and exact delivery |
 
-The two existing cloud checkouts are reused. Quality owns the frozen source/environment and authorized configured checks in identity. Research owns only the six progress documents in primary for this update; its environment is unused. Lead reviews and publishes the resulting checkpoint. No additional checkout is needed.
+The two existing cloud checkouts are reused. Quality owns the frozen source/environment and authorized configured checks in identity. Research has released primary and is available for final independent review; its environment was unused. Lead owns primary progress and integration, and reviews and publishes this checkpoint. No additional checkout is needed.
 
 ## Scope and acceptance
 

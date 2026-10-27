@@ -14,8 +14,8 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | --- | --- | --- |
 | Quality | Run 15 configured checks at accepted bounded source 36c9595 | Ruff/format/mypy passed; full pytest running, final results pending |
 | Platform | Observed accounting, capacity and boundary reviews accepted | Prepare exact delivery verification after configured checks |
-| Research | Scientific/temporal readback accepted; complete six-document reconciliation | Release primary for independent Lead review |
-| Project lead | Both bounded fixtures accepted; review current progress and integrate | Final configured results and PR/main/candidate delivery remain pending |
+| Research | Scientific/temporal readback and progress reconciliation complete | Primary released; available for final independent review |
+| Project lead | Own primary progress and integration after handoff; both bounded fixtures accepted | Final configured results and PR/main/candidate delivery remain pending |
 
 ## Assignment history
 
