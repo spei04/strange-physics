@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research released the six primary progress documents after sealed failure reconciliation; no environment use. Lead owns primary progress/integration after handoff.",
-      "identity": "Quality owns immutable lexical verifier repair 50b1118 in identity; Lead/Platform static review precedes refresh/tests. The failed 36c9595 run had unchanged source/environment.",
+      "scientific": "Research released the six primary progress documents after focused-verifier reconciliation; no environment use. Lead owns primary progress/integration after handoff.",
+      "identity": "Quality owns frozen 336d91b source/environment in identity for the new configured batch after accepted verifier source and focused checks.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "retained_journal_comparison_bounded_integration_accepted_full_gate_failed_delivery_held",
+      "status": "retained_journal_comparison_verifier_focused_pass_configured_successor_running",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Immutable lexical verifier repair 50b1118 committed; Lead/Platform static review before refresh/tests, no cap increase.",
-        "Platform": "Accepted bounded reviews retained; independently review verifier repair and preservation of fresh identity checks.",
-        "Research": "Failed full-gate progress reconciled against sealed evidence; primary released, available for final independent review.",
-        "Project lead": "Own primary progress/integration after handoff and review verifier repair; required checks and delivery held, parents open."
+        "Quality": "Run the 15-command configured batch at frozen 336d91b after accepted verifier source and 16 focused passes; final results pending.",
+        "Platform": "Accepted bounded and verifier source reviews retained; final verification and delivery review next.",
+        "Research": "Focused verifier progress reconciled; primary released, available for final independent review.",
+        "Project lead": "Own primary progress/integration after handoff; review final configured evidence before delivery, parents open."
       },
-      "handoff": "Accepted bounded 36c9595 50-call and separate four-call evidence remain intact. Full suite stopped at 1041 passed/1 failed before producer dispatch; verification failed/incomplete. Quality committed lexical verifier repair 50b1118, pending Lead/Platform static review before refresh/tests. Research released primary progress to Lead. Original 12a8a43 failure and unknown costs remain intact.",
+      "handoff": "Bounded 36c9595 50/four evidence and its failed full run remain separate and intact. Lead/Platform accepted verifier repair 50b1118; formatting-only 336d91b passed 16 focused cases. Quality runs the new configured batch; full results and delivery pending. Research released primary progress to Lead; original 12a8a43 failure/unknown costs retained.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Review exact lexical verifier repair, then run required checks before PR/main/candidate delivery; publisher authority handoff, full-study allocation/census and parent acceptance remain separate. No later scientific implementation is assigned by this checkpoint.",
+      "next_units": "Complete the new configured run and exact PR/main/candidate delivery; publisher authority handoff, full-study allocation/census and parent acceptance remain separate. No later scientific implementation is assigned by this checkpoint.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "bounded_integration_scoped_accepted_full_gate_failed_delivery_held",
+        "status": "bounded_integration_and_verifier_source_accepted_focused_pass_configured_successor_running",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14579,7 +14579,7 @@
         "proposed_full_specimen_calls_before_extra_faults": 45,
         "runtime_profile": "both_admitted36c_fixtures_completed_scope_qualified",
         "new_allocation": false,
-        "next_gate": "Lead/Platform static review of exact verifier repair before refresh/tests, required configured checks and exact PR/main/candidate delivery.",
+        "next_gate": "Complete the new 336d91b configured run and exact PR/main/candidate delivery.",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -14775,6 +14775,33 @@
             "scope": "Lexical dependency traversal optimization; fresh file/hash/stat/ancestry checks preserved, no cache or cap increase",
             "status": "Lead/Platform static review pending before refresh/tests"
           }
+        },
+        "verifier_successor": {
+          "source": "336d91b2009ccfac0480c0b10f64b036f53bf500",
+          "tree": "b1bd47d420711a2fcbb312117f3f0212437516a9",
+          "runtime_source": "50b11183124a2f43eae599c77bb551d220e2af74",
+          "source_review": "Lead and Platform accepted",
+          "delta": "Test formatting only; runtime/build/lock and test AST unchanged",
+          "author_focused_index_sha256": "9aae97f579f2665b08a0e69af57f3dc582fa0de5d644e968c71caae97d9c1c80",
+          "focused_cases": 16,
+          "new_verifier_cases": 15,
+          "exact_prior_failed_fit_case_passed": true,
+          "focused_seconds": 17.29,
+          "source_archive_installed_package_files": 89,
+          "nonproject_dependency_files_unchanged": 4689,
+          "project_metadata_files": 9,
+          "interpreter_lock_unchanged": true,
+          "configured_checks": {
+            "source": "336d91b2009ccfac0480c0b10f64b036f53bf500",
+            "planned_commands": 15,
+            "status": "running_results_pending",
+            "lint": "passed",
+            "format": "passed",
+            "strict_type": "passed",
+            "full_pytest": "result_pending"
+          },
+          "delivery": "pending",
+          "prior_failure_and_profile_preserved": true
         }
       }
     },

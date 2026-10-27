@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: repaired source 36c9595 passed 20 synthetic cases, the 50-call successor and the separate four-call guard fixture. Both peers and Lead accepted the bounded 50-call evidence; Platform/Lead accepted the separate boundary fixture. Full verification is failed/incomplete after 1,041 tests passed and one failed; verifier repair 50b1118 awaits Lead/Platform static review before refresh/tests. Required checks and delivery remain open. Failed 12a8a43 and its unknown costs are preserved.
+Status: repaired source 36c9595 passed 20 synthetic cases, the 50-call successor and the separate four-call guard fixture. Both peers and Lead accepted the bounded 50-call evidence; Platform/Lead accepted the separate boundary fixture. The failed 36c9595 full gate is preserved. Lead/Platform accepted verifier repair 50b1118; formatting-only successor 336d91b passed 16 focused cases in 17.29 seconds. Its new configured run is underway; full-suite results and delivery remain pending. Failed 12a8a43 and its unknown costs are preserved.
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Narrow verifier repair 50b1118 committed; wait for Lead/Platform static review before refresh/tests |
-| Platform | Bounded reviews accepted; independently review verifier repair and preserved identity checks |
-| Research | Failed full-gate progress reconciled; primary released, available for final independent review |
+| Quality | Run the configured suite at 336d91b after accepted verifier source and 16 focused passes |
+| Platform | Bounded and verifier source reviews accepted; final verification and delivery review next |
+| Research | Focused verifier progress reconciled; primary released, available for final independent review |
 | Project lead | Primary progress and integration after handoff; independent progress review and exact delivery |
 
-The two existing cloud checkouts are reused. Quality owns the immutable verifier repair in identity; static review precedes refresh/tests. Research has released the six primary progress documents without environment use. Lead owns primary progress/integration after handoff and reviews/publishes this checkpoint. No additional checkout is needed.
+The two existing cloud checkouts are reused. Quality owns frozen 336d91b in identity for the new configured batch after accepted source review and focused checks. Research has released the six primary progress documents without environment use. Lead owns primary progress/integration after handoff and reviews/publishes this checkpoint. No additional checkout is needed.
 
 ## Scope and acceptance
 
@@ -38,7 +38,7 @@ Lightweight source/pure-contract output is bounded to 256 MiB across this slice.
 
 The original source proposal used one PR with two immutable checkpoints: strict payloads/retained bindings, then measured integration/proof. Its provisional 45-call profile uses the existing 1 MiB database parameter, totaling 978,165,760 artifact bytes and 1,247 CPU seconds; the 2 MiB alternative exceeds 1 GiB. Those original 45-call bounds were conditional. The later 50-call evidence and its separate resource review govern observed fit and headroom.
 
-Remaining gates: exact failure diagnosis/repair, required configured checks and exact PR/main/candidate delivery. Historical estimates are not a new completion date. The approved backlog graph, caps and first-result forecast remain unchanged pending evidence-based re-estimation.
+Remaining gates: complete the new configured run and exact PR/main/candidate delivery. Historical estimates are not a new completion date. The approved backlog graph, caps and first-result forecast remain unchanged pending evidence-based re-estimation.
 
 
 ## Accepted first checkpoint
@@ -76,3 +76,7 @@ Exact 36c9595 passed independent static review and 20 synthetic cases (12.17 sec
 The successor passed in 166.20 seconds with 50 entries/48 returns and two intended denials. Its final 103 records/43 closures/four unresolved holds retain the completed native and same-history classical scores, original unscorable-score replay after a retry, and fresh stale-reference denial. Research independently verified the actual mixed 12-row history, 24 ordered predictions and original authority/receipt joins; Platform verified resource accounting and Lead accepted the bounded specimen. Fixed selection and repeated actions are conformance evidence only.
 
 The separate four-call guard fixture passed in 22.85 seconds with two exact denials, 23 records/two closures/16 holds and restored capture. Its injected-intent origin remains explicit. Platform and Lead independently accepted the fixture; Research's authorship remains separate from that review. Five recoveries have recorded child CPU zero, but the purchase holder field is absent; control tails remain reserved and final setup CPU is not fully serialized. The configured batch stopped after 1,041 passed/one failed in 476.55 seconds: the existing classical [fit] case received SIGPROF (27) inside installation verification during comparison-candidate admission, before producer dispatch. Ruff/format/mypy passed, but full verification is failed/incomplete. Source/environment were unchanged; no retry or cap increase was made. The retained root has 17 records/14 unresolved holds and consumed ticket 1, with no candidate reservation or producer. The separate fresh verifier profile measured 5.074 CPU/5.075 wall seconds with exact 4,698-file membership; it does not establish the failed timer's exact cost attribution. Quality's lexical repair 50b1118 awaits Lead/Platform static review before refresh/tests. Required checks and PR/main/candidate delivery remain pending. The failed first authority, parent issues and all later study/publication gates are preserved.
+
+## Current verifier checks
+
+Lead/Platform accepted repair 50b1118; 336d91b changes only test formatting, preserving runtime/build/lock bytes and test AST. Fifteen new verifier cases and the exact previously failing classical [fit] case passed together (16 cases, 17.29 seconds), with offline archives/installed records matching 89 package files and unchanged dependencies/interpreter/lock. The new 15-command configured batch is running: lint/format/type passed; full-suite results and remaining gates are pending. The failed 36c full run and earlier source-specific fixture evidence remain intact; no final delivery or study admission is claimed.
