@@ -1,4 +1,4 @@
-"""Declared 45-call retained comparison specimen; no study or runtime admission.
+"""Declared 50-call retained comparison specimen; no study or runtime admission.
 
 This test needs the measured comparison adapter. Fixed index selection, repeated
 calibration and a one-action menu test conformance, not MAP or scientific accuracy.
@@ -25,7 +25,6 @@ import strange_physics.purchase_execution as purchase_producer
 from strange_physics.candidate_execution_contracts import MIB, CandidateControl
 from strange_physics.contracts import Message
 from strange_physics.installed_identity import TrustedInstallation
-from strange_physics.native_classical import classical_condition_sha256
 from strange_physics.measured_study import (
     CommittedPurchase,
     commit_journal_candidates,
@@ -33,6 +32,7 @@ from strange_physics.measured_study import (
     commit_journal_purchase,
     commit_native_freeze,
 )
+from strange_physics.native_classical import classical_condition_sha256
 from strange_physics.native_prediction_contracts import (
     NativePredictionConfig,
     NativePredictionInput,
@@ -56,34 +56,43 @@ from strange_physics.native_stage_execution_contracts import (
 )
 from strange_physics.publication_store import digest, head, raw
 from strange_physics.purchase_execution_contracts import NativePurchaseRequest
-from strange_physics.purchase_journal import JournalEpochs
+from strange_physics.purchase_journal import JournalEpochs, capture_journal
 from strange_physics.research_contracts import message_sha256
 from strange_physics.simulation import SimulationError
-from strange_physics.study_contracts import NativeWorldCatalog, StudyAttemptReservation
+from strange_physics.study_contracts import (
+    NativeWorldCatalog,
+    StudyAttemptReservation,
+    StudyAttemptUpdate,
+)
 from strange_physics.study_execution_contracts import (
     NativeComparisonCandidateRequest,
     NativeComparisonClassicalInput,
     NativeComparisonInput,
 )
-from strange_physics.study_ledger import summarize_study
+from strange_physics.study_ledger import StudyLedgerError, summarize_study
 
 __all__ = ["actual_build"]
 
 SETUP_LIMIT = 48 * MIB
 PREDICTION_LIMIT = 512 * 1024
-DECLARED_BYTES = 978165760
-DECLARED_CPU_NS = 1247000000000
+DECLARED_BYTES = 1066811392
+DECLARED_CPU_NS = 1338000000000
 # Original exports only. Measured retained inputs/outputs are charged separately.
 # Bootstrap, 12 purchase inputs, candidate, classical, preparation, 24 predictions,
-# score and final proof all fit before the first public call; no scratch exports.
+# score, temporal inputs and final proof are bounded before the first public call.
+# Retry B reuses A; stale-score denial needs a distinct export after deleting the
+# original unscorable input for replay. No reconstructed inputs are persisted.
 SETUP_EXPORT_CEILING = (
     MIB
     + 12 * 64 * 1024
     + 128 * 1024
     + 256 * 1024
-    + 16 * MIB
+    + 2 * MIB
     + 24 * PREDICTION_LIMIT
-    + 16 * MIB
+    + 2 * MIB
+    + PREDICTION_LIMIT  # A; retry B reuses these exact bytes.
+    + 2 * MIB  # Unscorable score original.
+    + 2 * MIB  # Fresh stale-score input after original removal.
     + 64 * 1024
 )
 
@@ -94,10 +103,10 @@ def comparison_control(**values: Any) -> CandidateControl:
         **(
             values
             | {
-                "tickets": 45,
-                "recovery_tickets": 4,
-                "finalization_records": 16,
-                "finalization_bytes": 64 * 1024,
+                "tickets": 50,
+                "recovery_tickets": 5,
+                "finalization_records": 18,
+                "finalization_bytes": 72 * 1024,
             }
         )
     )
@@ -173,16 +182,17 @@ def assert_paid_replay(
     assert update.cpu_ns == replay.measurements.parent_cpu_ns
 
 
-def test_forty_five_call_retained_comparison_and_original_replays(
+def test_fifty_call_retained_comparison_and_historical_score_replay(
     tmp_path: Path,
     actual_build: TrustedInstallation,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    assert SETUP_EXPORT_CEILING == 23789568
     assert SETUP_EXPORT_CEILING <= SETUP_LIMIT == 50331648
     # All exports, including later removed files/proof, share the pre-write cap.
     monkeypatch.setattr(fixture_module, "COPY_LIMIT", SETUP_LIMIT)
-    with monkeypatch.context() as setup:
-        setup.setattr(fixture_module, "CandidateControl", comparison_control)
+    with monkeypatch.context() as setup_override:
+        setup_override.setattr(fixture_module, "CandidateControl", comparison_control)
         f = prepare(
             tmp_path / "comparison",
             actual_build,
@@ -191,18 +201,18 @@ def test_forty_five_call_retained_comparison_and_original_replays(
             database_limit_bytes=MIB,
         )
     assert f.budget.copies <= MIB
-    assert f.control.tickets == 45 and f.control.recovery_tickets == 4
+    assert f.control.tickets == 50 and f.control.recovery_tickets == 5
     assert f.control.database_limit_bytes == MIB
-    assert f.control.required_control_bytes() == 688758784
+    assert f.control.required_control_bytes() == 764821504
     assert f.control.publication.required_bytes() == 80 * MIB
     recovery_start = f.control.tickets - f.control.recovery_tickets
-    assert recovery_start == 41
+    assert recovery_start == 45
 
     epochs: list[JournalEpochs] = []
     counts = {"writer": 0, "holder": 0, "other_child": 0}
     writer, holder, child = (
-        supervisor.run_purchase_writer,
-        supervisor.capture_journal,
+        purchase_producer.run_purchase_writer,
+        capture_journal,
         supervisor._run_child,
     )
 
@@ -234,20 +244,23 @@ def test_forty_five_call_retained_comparison_and_original_replays(
     purchases: list[CommittedPurchase] = []
     purchase_requests: list[NativePurchaseRequest] = []
     for ordinal in range(12):
-        request = purchase_request(
-            f, raw(frozen.receipt), ordinal=ordinal, ticket=ordinal + 1,
+        purchase_call = purchase_request(
+            f,
+            raw(frozen.receipt),
+            ordinal=ordinal,
+            ticket=ordinal + 1,
             predecessor=purchases[-1] if purchases else None,
         )
         with monkeypatch.context() as fault:
             if ordinal == 11:
                 fault.setattr(purchase_producer, "simulate", scientific_failure)
-            value = commit_journal_purchase(f.root, request)
+            value = commit_journal_purchase(f.root, purchase_call)
         assert value.result.record.index == ordinal
         assert value.result.record.status == ("failed" if ordinal == 11 else "completed")
         assert value.holder_status == 0 and value.holder_cpu_ns is not None
         assert last_update(value.ledger).facts == value.result.facts
         assert summarize_study(value.ledger).budget.unresolved_attempts == 2
-        purchase_requests.append(request)
+        purchase_requests.append(purchase_call)
         purchases.append(value)
     assert len(epochs) == 12 and all(e.used == 15 for e in epochs)
 
@@ -262,9 +275,7 @@ def test_forty_five_call_retained_comparison_and_original_replays(
             (f.root / "candidate-input-13").read_bytes()
         )
         observations = material.candidate.observations
-        assert [r.status for r in observations.records] == (
-            ["completed"] * 11 + ["failed"]
-        )
+        assert [r.status for r in observations.records] == (["completed"] * 11 + ["failed"])
         assert tuple(raw(r) for r in observations.records) == tuple(
             raw(p.result.record) for p in purchases
         )
@@ -279,9 +290,7 @@ def test_forty_five_call_retained_comparison_and_original_replays(
             candidate_result=candidate.result,
             candidate_attempt_id=candidate_request.attempt_id,
             selected=chosen,
-            policy=NativeScoringPolicy.model_validate_json(
-                f.freeze.artifacts["scoring_policy"]
-            ),
+            policy=NativeScoringPolicy.model_validate_json(f.freeze.artifacts["scoring_policy"]),
             prediction_config=NativePredictionConfig.model_validate_json(
                 f.freeze.artifacts["prediction_config"]
             ),
@@ -293,8 +302,15 @@ def test_forty_five_call_retained_comparison_and_original_replays(
         )
     preparation_request = NativePreparationRequest(
         **stage_request_data(
-            f, prep_input, context, context.policy, ticket=14, operation="preparation",
-            input_limit=16 * MIB, output_limit=8 * MIB, artifact_limit=24 * MIB,
+            f,
+            prep_input,
+            context,
+            context.policy,
+            ticket=14,
+            operation="preparation",
+            input_limit=2 * MIB,
+            output_limit=8 * MIB,
+            artifact_limit=24 * MIB,
         )
     )
     preparation = stages.commit_native_preparation(f.root, preparation_request)
@@ -311,18 +327,28 @@ def test_forty_five_call_retained_comparison_and_original_replays(
     for index, probe in enumerate(protocol.probes):
         with f.budget.phase():
             inner = NativePredictionInput(
-                model=chosen.model, candidate_config=context.candidates.config,
-                request=probe.request, config=context.prediction_config,
+                model=chosen.model,
+                candidate_config=context.candidates.config,
+                request=probe.request,
+                config=context.prediction_config,
             )
             wrapper = NativeComparisonPredictionInput(
                 preparation_logical_id=preparation_request.logical_id,
                 preparation_receipt_sha256=digest(raw(preparation.receipt)),
-                probe_index=index, prediction=inner,
+                probe_index=index,
+                prediction=inner,
             )
         request = NativePredictionRequest(
             **stage_request_data(
-                f, wrapper, inner, inner.config, ticket=15 + index, operation="prediction",
-                input_limit=PREDICTION_LIMIT, output_limit=PREDICTION_LIMIT, artifact_limit=MIB,
+                f,
+                wrapper,
+                inner,
+                inner.config,
+                ticket=15 + index,
+                operation="prediction",
+                input_limit=PREDICTION_LIMIT,
+                output_limit=PREDICTION_LIMIT,
+                artifact_limit=MIB,
             )
         )
         predicted = stages.commit_native_prediction(f.root, request)
@@ -335,16 +361,22 @@ def test_forty_five_call_retained_comparison_and_original_replays(
             assert retained_request == raw(request)
             references.append(
                 NativePredictionReference(
-                    logical_id=request.logical_id, attempt_id=request.attempt_id,
-                    ticket=request.ticket, request_raw_sha256=digest(retained_request),
-                    status="result", receipt_sha256=digest(raw(predicted.receipt)),
+                    logical_id=request.logical_id,
+                    attempt_id=request.attempt_id,
+                    ticket=request.ticket,
+                    request_raw_sha256=digest(retained_request),
+                    status="result",
+                    receipt_sha256=digest(raw(predicted.receipt)),
                     output_raw_sha256=digest(predicted.result_raw),
                 )
             )
             entries.append(
                 NativeProbeOutcome(
-                    probe_id=probe.probe_id, request_sha256=probe.request_sha256,
-                    attempt_id=request.attempt_id, status="result", result=predicted.result,
+                    probe_id=probe.probe_id,
+                    request_sha256=probe.request_sha256,
+                    attempt_id=request.attempt_id,
+                    status="result",
+                    result=predicted.result,
                 )
             )
         prediction_requests.append(request)
@@ -355,18 +387,28 @@ def test_forty_five_call_retained_comparison_and_original_replays(
         cell = f.freeze.manifest.cells[0]
         world = next(w.definition for w in catalog.worlds if w.world_id == cell.world_id)
         scoring = NativeScoringInput(
-            context=context, preparation=preparation.result,
-            predictions=NativePredictionCollection(entries=tuple(entries)), world=world,
+            context=context,
+            preparation=preparation.result,
+            predictions=NativePredictionCollection(entries=tuple(entries)),
+            world=world,
         )
         score_input = NativeComparisonScoreInput(
             preparation_logical_id=preparation_request.logical_id,
             preparation_receipt_sha256=digest(raw(preparation.receipt)),
-            predictions=tuple(references), scoring=scoring,
+            predictions=tuple(references),
+            scoring=scoring,
         )
     score_request = NativeScoreRequest(
         **stage_request_data(
-            f, score_input, scoring, context.policy, ticket=39, operation="scoring",
-            input_limit=16 * MIB, output_limit=8 * MIB, artifact_limit=24 * MIB,
+            f,
+            score_input,
+            scoring,
+            context.policy,
+            ticket=39,
+            operation="scoring",
+            input_limit=2 * MIB,
+            output_limit=8 * MIB,
+            artifact_limit=24 * MIB,
         )
     )
     score = stages.commit_native_score(f.root, score_request)
@@ -383,9 +425,7 @@ def test_forty_five_call_retained_comparison_and_original_replays(
             Path(diagnostic_request.input_path).read_bytes()
         )
         assert diagnostic_input.diagnostic.context.selected is None
-        assert raw(diagnostic_input.diagnostic.context.candidates.observations) == raw(
-            observations
-        )
+        assert raw(diagnostic_input.diagnostic.context.candidates.observations) == raw(observations)
         assert message_sha256(diagnostic_input.diagnostic.world) == message_sha256(world)
     diagnostic = commit_journal_classical(f.root, diagnostic_request)
     payload = diagnostic.result.payload
@@ -418,8 +458,11 @@ def test_forty_five_call_retained_comparison_and_original_replays(
             )
         }
         for path in [
-            f.journal, Path(f.freeze_request.input_path), Path(candidate_request.input_path),
-            Path(preparation_request.input_path), Path(score_request.input_path),
+            f.journal,
+            Path(f.freeze_request.input_path),
+            Path(candidate_request.input_path),
+            Path(preparation_request.input_path),
+            Path(score_request.input_path),
             Path(diagnostic_request.input_path),
             *(Path(r.input_path) for r in purchase_requests),
             *(Path(r.input_path) for r in prediction_requests),
@@ -428,43 +471,44 @@ def test_forty_five_call_retained_comparison_and_original_replays(
 
     # Preserve deterministic protocol validation; prohibit numerical dispatch and
     # actual producer aliases. Recovery must use original retained material only.
-    for name in (
-        "strange_physics.measured_candidates._run_child",
-        "strange_physics.measured_candidates.run_purchase_writer",
-        "strange_physics.measured_candidates.capture_journal",
-        "strange_physics.measured_candidates.produce_native_candidates",
-        "strange_physics.measured_candidates.run_classical_diagnostic",
-        "strange_physics.measured_candidates.produce_stage",
-        "strange_physics.purchase_execution.simulate",
-        "strange_physics.native_stage_dispatch.predict_native_spring",
-        "strange_physics.native_stage_dispatch.score_native_predictions",
-        "strange_physics.native_scoring.evaluate_spring_predictions",
-    ):
-        monkeypatch.setattr(name, forbidden)
-    purchase_replay = commit_journal_purchase(
-        f.root,
-        recover(
-            purchase_requests[-1],
-            ticket=recovery_start,
-            attempt_id=f"recovery-{recovery_start}",
-        ),
-    )
-    prep_replay = stages.commit_native_preparation(
-        f.root,
-        NativePreparationRequest.model_validate(
-            recovery_data(preparation_request, recovery_start + 1)
-        ),
-    )
-    prediction_replay = stages.commit_native_prediction(
-        f.root,
-        NativePredictionRequest.model_validate(
-            recovery_data(prediction_requests[0], recovery_start + 2)
-        ),
-    )
-    score_replay = stages.commit_native_score(
-        f.root,
-        NativeScoreRequest.model_validate(recovery_data(score_request, recovery_start + 3)),
-    )
+    with monkeypatch.context() as replay_poison:
+        for name in (
+            "strange_physics.measured_candidates._run_child",
+            "strange_physics.measured_candidates.run_purchase_writer",
+            "strange_physics.measured_candidates.capture_journal",
+            "strange_physics.measured_candidates.produce_native_candidates",
+            "strange_physics.measured_candidates.run_classical_diagnostic",
+            "strange_physics.measured_candidates.produce_stage",
+            "strange_physics.purchase_execution.simulate",
+            "strange_physics.native_stage_dispatch.predict_native_spring",
+            "strange_physics.native_stage_dispatch.score_native_predictions",
+            "strange_physics.native_scoring.evaluate_spring_predictions",
+        ):
+            replay_poison.setattr(name, forbidden)
+        purchase_replay = commit_journal_purchase(
+            f.root,
+            recover(
+                purchase_requests[-1],
+                ticket=recovery_start,
+                attempt_id=f"recovery-{recovery_start}",
+            ),
+        )
+        prep_replay = stages.commit_native_preparation(
+            f.root,
+            NativePreparationRequest.model_validate(
+                recovery_data(preparation_request, recovery_start + 1)
+            ),
+        )
+        prediction_replay = stages.commit_native_prediction(
+            f.root,
+            NativePredictionRequest.model_validate(
+                recovery_data(prediction_requests[0], recovery_start + 2)
+            ),
+        )
+        score_replay = stages.commit_native_score(
+            f.root,
+            NativeScoreRequest.model_validate(recovery_data(score_request, recovery_start + 3)),
+        )
     assert_paid_replay(purchases[-1], purchase_replay)
     assert_paid_replay(preparation, prep_replay)
     assert_paid_replay(predictions[0], prediction_replay)
@@ -472,21 +516,180 @@ def test_forty_five_call_retained_comparison_and_original_replays(
     assert purchase_replay.holder_cpu_ns is None
     assert counts == {"writer": 12, "holder": 12, "other_child": 28}
 
+    # The original 45-call success path remains an explicit prefix of this
+    # initially declared 50-ticket authority. No allocation is rewritten here.
+    assert len(score_replay.ledger.records) == 93
+    assert summarize_study(score_replay.ledger).budget.unresolved_attempts == 2
+    prefix_counts = dict(counts)
+
     with f.budget.phase():
-        ledger = score_replay.ledger
-        budget = summarize_study(ledger).budget
-        assert len(ledger.records) == 93 and budget.unresolved_attempts == 2
-        assert len(raw(ledger)) <= 256 * 1024
-        assert (f.root / "candidate.sqlite3").stat().st_size <= MIB
-        assert all(
-            (f.root / f"candidate-ticket-{i}").is_file()
-            for i in (*range(41), *range(recovery_start, recovery_start + 4))
+        first_wrapper = NativeComparisonPredictionInput.model_validate_json(
+            (f.root / "candidate-input-15").read_bytes()
         )
+    unavailable_request = NativePredictionRequest(
+        **stage_request_data(
+            f,
+            first_wrapper,
+            first_wrapper.prediction,
+            context.prediction_config,
+            ticket=41,
+            operation="prediction",
+            input_limit=PREDICTION_LIMIT,
+            output_limit=PREDICTION_LIMIT,
+            artifact_limit=MIB,
+        )
+    )
+
+    def unavailable_prediction(*args: Any, **kwargs: Any) -> Any:
+        raise RuntimeError("declared unavailable prediction transport")
+
+    # This is an admitted real child failure, not a supplied missing label.
+    with monkeypatch.context() as fault:
+        fault.setattr(
+            "strange_physics.native_stage_dispatch.predict_native_spring",
+            unavailable_prediction,
+        )
+        with pytest.raises(StudyLedgerError, match="^candidate_child_failed$"):
+            stages.commit_native_prediction(f.root, unavailable_request)
+    with f.budget.phase():
+        unavailable_ledger = current(f.root)
+        unavailable_update = last_update(unavailable_ledger)
+        assert unavailable_update.attempt_id == unavailable_request.attempt_id
+        assert unavailable_update.state == "unknown" and unavailable_update.facts is None
+        assert not (f.root / "candidate-output-41").exists()
+        assert summarize_study(unavailable_ledger).budget.unresolved_attempts == 3
+        unavailable_reference = NativePredictionReference(
+            logical_id=unavailable_request.logical_id,
+            attempt_id=unavailable_request.attempt_id,
+            ticket=unavailable_request.ticket,
+            request_raw_sha256=digest((f.root / "candidate-ticket-41").read_bytes()),
+            status="missing",
+            receipt_sha256=None,
+            output_raw_sha256=None,
+        )
+        missing = NativeProbeOutcome(
+            probe_id=protocol.probes[0].probe_id,
+            request_sha256=protocol.probes[0].request_sha256,
+            attempt_id=unavailable_request.attempt_id,
+            status="missing",
+            result=None,
+        )
+        incomplete_scoring = NativeScoringInput(
+            context=context,
+            preparation=preparation.result,
+            predictions=NativePredictionCollection(entries=(missing, *entries[1:])),
+            world=world,
+        )
+        incomplete_wrapper = NativeComparisonScoreInput(
+            preparation_logical_id=preparation_request.logical_id,
+            preparation_receipt_sha256=digest(raw(preparation.receipt)),
+            predictions=(unavailable_reference, *references[1:]),
+            scoring=incomplete_scoring,
+        )
+    incomplete_request = NativeScoreRequest(
+        **stage_request_data(
+            f,
+            incomplete_wrapper,
+            incomplete_scoring,
+            context.policy,
+            ticket=42,
+            operation="scoring",
+            input_limit=2 * MIB,
+            output_limit=2 * MIB,
+            artifact_limit=4 * MIB,
+        )
+    )
+    incomplete_score = stages.commit_native_score(f.root, incomplete_request)
+    assert incomplete_score.result.payload.evaluation is not None
+    assert incomplete_score.result.payload.evaluation.status == "unscorable"
+    assert incomplete_score.result.facts.outcome == "completed"
+    assert summarize_study(incomplete_score.ledger).budget.unresolved_attempts == 3
+
+    with f.budget.phase():
+        retry_request = NativePredictionRequest.model_validate(
+            unavailable_request.model_dump()
+            | {
+                "ticket": 43,
+                "attempt_id": "prediction-retry-43",
+                "retry_of": unavailable_request.attempt_id,
+                "expected_revision": len(incomplete_score.ledger.records),
+                "expected_head_sha256": head(incomplete_score.ledger),
+            }
+        )
+        assert retry_request.input_path == unavailable_request.input_path
+        assert retry_request.input_raw_sha256 == unavailable_request.input_raw_sha256
+    retry = stages.commit_native_prediction(f.root, retry_request)
+    assert retry.result.payload.status == "predicted"
+    assert summarize_study(retry.ledger).budget.unresolved_attempts == 3
+
+    with f.budget.phase():
+        Path(incomplete_request.input_path).unlink()
+        assert not Path(incomplete_request.input_path).exists()
+    with monkeypatch.context() as replay_poison:
+        for name in (
+            "strange_physics.measured_candidates._run_child",
+            "strange_physics.measured_candidates.produce_stage",
+            "strange_physics.native_stage_dispatch.predict_native_spring",
+            "strange_physics.native_stage_dispatch.score_native_predictions",
+            "strange_physics.native_scoring.evaluate_spring_predictions",
+        ):
+            replay_poison.setattr(name, forbidden)
+        incomplete_replay = stages.commit_native_score(
+            f.root,
+            NativeScoreRequest.model_validate(
+                recovery_data(incomplete_request, recovery_start + 4)
+            ),
+        )
+    assert_paid_replay(incomplete_score, incomplete_replay)
+    assert summarize_study(incomplete_replay.ledger).budget.unresolved_attempts == 3
+
+    # A fresh caller has a readable, separately charged original input, so denial
+    # must reach current retained authority rather than a missing live input.
+    stale_request = NativeScoreRequest(
+        **stage_request_data(
+            f,
+            incomplete_wrapper,
+            incomplete_scoring,
+            context.policy,
+            ticket=44,
+            operation="scoring",
+            input_limit=2 * MIB,
+            output_limit=2 * MIB,
+            artifact_limit=4 * MIB,
+        )
+    )
+    assert stale_request.input_path != incomplete_request.input_path
+    assert stale_request.input_raw_sha256 == incomplete_request.input_raw_sha256
+    assert Path(stale_request.input_path).is_file()
+    with monkeypatch.context() as no_child:
+        no_child.setattr(supervisor, "_run_child", forbidden)
+        with pytest.raises(StudyLedgerError, match="^comparison_prediction_transport$"):
+            stages.commit_native_score(f.root, stale_request)
+
+    with f.budget.phase():
+        ledger = current(f.root)
+        budget = summarize_study(ledger).budget
+        assert len(ledger.records) == 103 and budget.unresolved_attempts == 4
+        stale_update = last_update(ledger)
+        assert stale_update.attempt_id == stale_request.attempt_id
+        assert stale_update.state == "unknown" and stale_update.facts is None
+        # Retry and replay never settle or rewrite A's original unknown update.
+        assert [
+            r.event
+            for r in ledger.records
+            if isinstance(r.event, StudyAttemptUpdate)
+            and r.event.attempt_id == unavailable_request.attempt_id
+        ] == [unavailable_update]
+        assert counts == {"writer": 12, "holder": 12, "other_child": 31}
+        assert len(epochs) == 12 and all(e.used == 15 for e in epochs)
+        assert len(raw(ledger)) <= 224 * 1024
+        assert (f.root / "candidate.sqlite3").stat().st_size <= MIB
+        assert all((f.root / f"candidate-ticket-{i}").is_file() for i in range(50))
         assert retained_inputs == {
             ticket: digest((f.root / f"candidate-input-{ticket}").read_bytes())
             for ticket in retained_inputs
         }
-        assert not (f.root / "candidate-ticket-45").exists()
+        assert not (f.root / "candidate-ticket-50").exists()
         assert f.budget.child_epochs == f.budget.store_attempts == 0
         assert f.budget.parent_cpu + f.budget.child_cpu <= 120_000_000_000
         assert f.budget.copies <= SETUP_EXPORT_CEILING
@@ -500,38 +703,59 @@ def test_forty_five_call_retained_comparison_and_original_replays(
         assert isinstance(setup, StudyAttemptReservation)
         assert setup.artifact_reservation_bytes == SETUP_LIMIT
         assert isinstance(control, StudyAttemptReservation)
-        assert control.cpu_reservation_ns == 320_000_000_000
-        ordinary = [
-            f.freeze_request, *purchase_requests, candidate_request, preparation_request,
-            *prediction_requests, score_request, diagnostic_request,
+        assert control.cpu_reservation_ns == 355_000_000_000
+        ordinary: list[supervisor.ExecutionRequest] = [
+            f.freeze_request,
+            *purchase_requests,
+            candidate_request,
+            preparation_request,
+            *prediction_requests,
+            score_request,
+            diagnostic_request,
+            unavailable_request,
+            incomplete_request,
+            retry_request,
+            stale_request,
         ]
-        assert len(ordinary) == 41
-        assert sum(r.artifact_reservation_bytes for r in ordinary) == 146800640
-        assert sum(r.cpu_reservation_ns for r in ordinary) == 704_000_000_000
+        assert len(ordinary) == 45
+        assert sum(r.artifact_reservation_bytes for r in ordinary) == 157286400
+        assert sum(r.cpu_reservation_ns for r in ordinary) == 752_000_000_000
         assert (
-            SETUP_LIMIT + f.control.required_control_bytes()
+            SETUP_LIMIT
+            + f.control.required_control_bytes()
             + sum(r.artifact_reservation_bytes for r in ordinary)
-            + 4 * f.control.recovery_work_artifact_bytes
+            + 5 * f.control.recovery_work_artifact_bytes
             + f.control.publication.required_bytes()
         ) == DECLARED_BYTES
         assert (
-            setup.cpu_reservation_ns + control.cpu_reservation_ns
+            setup.cpu_reservation_ns
+            + control.cpu_reservation_ns
             + sum(r.cpu_reservation_ns for r in ordinary)
-            + 4 * f.control.recovery_work_cpu_ns
-            + f.control.publication.control_cpu_ns + f.control.publication.work_cpu_ns
+            + 5 * f.control.recovery_work_cpu_ns
+            + f.control.publication.control_cpu_ns
+            + f.control.publication.work_cpu_ns
         ) == DECLARED_CPU_NS
         proof = {
             "scope": "Synthetic retained comparison conformance, not MAP/study/publication.",
-            "public_calls": 45, "normal_calls": 41, "paid_recoveries": 4,
-            "entry_counts": counts, "precharged_journal_epochs": sum(e.used for e in epochs),
-            "ledger_records": len(ledger.records), "ledger_bytes": len(raw(ledger)),
+            "public_calls": 50,
+            "normal_calls": 45,
+            "paid_recoveries": 5,
+            "success_prefix_calls": 45,
+            "success_prefix_records": 93,
+            "success_prefix_holds": 2,
+            "success_prefix_entry_counts": prefix_counts,
+            "entry_counts": counts,
+            "precharged_journal_epochs": sum(e.used for e in epochs),
+            "ledger_records": len(ledger.records),
+            "ledger_bytes": len(raw(ledger)),
             "unresolved_holds": budget.unresolved_attempts,
             "journal_bytes_before_removal": journal_bytes,
             "store_bytes": (f.root / "candidate.sqlite3").stat().st_size,
             "setup_copy_bytes_before_proof": f.budget.copies,
             "setup_export_ceiling_bytes": SETUP_EXPORT_CEILING,
             "setup_parent_cpu_before_proof_ns": f.budget.parent_cpu,
-            "declared_artifact_bytes": DECLARED_BYTES, "declared_cpu_ns": DECLARED_CPU_NS,
+            "declared_artifact_bytes": DECLARED_BYTES,
+            "declared_cpu_ns": DECLARED_CPU_NS,
             "remaining_artifact_bytes": budget.remaining_artifact_bytes,
             "remaining_cpu_ns": budget.remaining_cpu_ns,
             "publication_protection_bytes": f.control.publication.required_bytes(),
@@ -544,9 +768,28 @@ def test_forty_five_call_retained_comparison_and_original_replays(
             "classical_measurements": diagnostic.measurements.model_dump(),
             "recovery_measurements": [
                 p.measurements.model_dump()
-                for p in (purchase_replay, prep_replay, prediction_replay, score_replay)
+                for p in (
+                    purchase_replay,
+                    prep_replay,
+                    prediction_replay,
+                    score_replay,
+                    incomplete_replay,
+                )
             ],
             "recovery_holder_cpu_ns": purchase_replay.holder_cpu_ns,
+            "unavailable_prediction_update": unavailable_update.model_dump(),
+            "incomplete_score_measurements": incomplete_score.measurements.model_dump(),
+            "retry_measurements": retry.measurements.model_dump(),
+            "stale_score_update": stale_update.model_dump(),
+            "historical_score_input_removed": not Path(incomplete_request.input_path).exists(),
+            "fresh_stale_input_readable": Path(stale_request.input_path).is_file(),
+            "finalization_conservative_bytes": 224 * 1024 + 52 * 4096 + 72 * 1024,
+            "finalization_current_bytes": (
+                len(raw(ledger))
+                + budget.unresolved_attempts * 4096
+                + f.control.finalization_bytes
+                - 8192 * f.control.recovery_tickets
+            ),
         }
         proof_bytes = json.dumps(proof, sort_keys=True).encode()
         assert len(proof_bytes) <= 64 * 1024
