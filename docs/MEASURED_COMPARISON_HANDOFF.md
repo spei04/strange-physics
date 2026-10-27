@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Candidate verification complete; next independent contract review |
+| Quality | Candidate verification complete; independently review the next contract design |
 | Platform | Delivery/parent review complete; next numerical and resource contract review |
-| Research | Next parameterized finite-grid contracts; numerical profile not accepted |
+| Research | Design the smallest parameterized finite-grid contract unit; numerical profile not accepted |
 | Project lead | Publish bounded acceptance/progress and maintain the assignment log |
 
-The two existing cloud checkouts remain available for sequential reuse. Identity holds reviewed head 6c75368, with all 92 installed package files and locked dependencies unchanged. Primary retains its own unused environment and holds only this progress update after candidate-review consumers released it. No checkout or dependency environment was created.
+The two existing cloud checkouts are reused sequentially. At delivery, identity held reviewed head 6c75368. After acceptance it moved to byte-identical main e587f47 on feat/native-belief-contracts for Research's contract design; all 92 installed package files and locked dependencies remain unchanged. Quality reviews immutable Git source while primary retains its own unused environment and this documentation update. No checkout or dependency environment was created.
 
 The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
 

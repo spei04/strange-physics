@@ -12,15 +12,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Candidate verification complete; next review of N02.a contracts | Exact source/package accepted; no numerical runtime assigned |
+| Quality | Candidate verification complete; independent N02.a contract design review | Immutable Git only; no numerical runtime assigned |
 | Platform | Independent delivery and bounded parent review complete; next N02.a review | Grid proposal challenged; numerical settings remain unaccepted |
-| Research | Next: parameterized finite-grid belief contracts | Preserve original candidate/prefix/cost identities; justify numerical profile separately |
+| Research | Design the smallest parameterized finite-grid belief contract unit | Reused identity at e587f47; no source implementation or numerical run admitted yet |
 | Project lead | Record bounded parent acceptance and publish consistent progress | Two cloud checkouts retained for reuse; full-study admission remains separate |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Research + Quality | Smallest N02.a contract design and independent interface review | Existing identity reused at e587f47; numerical settings unaccepted; no runtime |
 | 2026-10-27 | Quality + Platform + Project lead | PR128/main e587f47 candidate verification and bounded parent acceptance | Delivered; RA-02/N01 accepted; next Research contract slice, numerical profile unaccepted |
 | 2026-10-27 | Research + Quality + Project lead | Caller unknown/protected retry and committed-seal lost acknowledgement | First case passed at ca9; corrected second case passed at 1b43838; original failed assertion retained |
 | 2026-10-27 | Platform + Project lead | Bounded parent audit and actual publication API guide | No additional production blocker identified; explicit final evidence/delivery acceptance remains |

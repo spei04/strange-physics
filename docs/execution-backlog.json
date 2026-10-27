@@ -10925,7 +10925,7 @@
     },
     "checkout_ownership": {
       "scientific": "Primary reused for this reviewed documentation checkpoint after candidate consumers released; existing environment remains unused.",
-      "identity": "Reviewed head6c75368 retained; main e587f47 has identical tree;92 installed package files unchanged. Available for next source work after assignment.",
+      "identity": "Reused after delivery at byte-identical main e587f47 on feat/native-belief-contracts; Research owns contract design.92 installed package files and locked dependencies unchanged; no refresh.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts retained for reuse; no checkout created or removed. Latest owner census: 61704564736 free bytes; 235 inaccessible/raced proc cwd entries; no observed checkout cwd consumers. Candidate verifier removed2071460 bytes of its temporary exports; no filesystem savings claim inferred from concurrent free-space changes.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12592,9 +12592,9 @@
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Exact candidate verification complete; next independent N02.a contract review.",
+        "Quality": "Candidate verification complete; independent N02.a contract design review from immutable Git, no mutable identity/env access.",
         "Platform": "Independent delivery/parent review complete; next contract review; numerical proposal remains unaccepted.",
-        "Research": "Next parameterized RA-N02.a contracts; numerical choices require separate justification and review.",
+        "Research": "Design the smallest parameterized RA-N02.a contract unit in reused identity; no implementation/runtime admission yet and numerical choices remain unaccepted.",
         "Project lead": "Bounded parent acceptance, consistent progress publication and dependency/cap enforcement."
       },
       "handoff": "Caller recovery now has passing evidence across two source-specific runs: the unknown/protected-retry case passed at ca9ee869, and the corrected lost-acknowledgement case passed at 1b43838 in 14.14 seconds. The initial four-call run remains recorded as one pass and one test-assertion failure; it is not relabelled a complete pass. Production package bytes are unchanged. The public handoff API and supported recovery limits are documented. Quality owns the final ten local static/schema/security/package checks and candidate verification; Platform reviews the final evidence and progress; Research has completed the targeted caller cases; Lead owns source composition and GitHub delivery. Hosted full suites on Python 3.12/3.14, PR/main/candidate verification and explicit parent acceptance remain pending. Parents #105/#106 stay open. Full-study authority/capacity, global caps and grid-first/Laplace-later sequencing are unchanged.",
@@ -15347,7 +15347,8 @@
           "Account for sensitivity/refinement/oracle work and all retained outputs"
         ],
         "laplace_sequence": "Comparative Laplace acceptance follows frozen N03 fixtures; shared interface and analytic unit design may overlap stable contracts. No graph change.",
-        "experiment_execution": "not_started"
+        "experiment_execution": "not_started",
+        "assignment_stage": "read_only_contract_design_and_independent_review"
       }
     },
     "certificate_trust_update": {
