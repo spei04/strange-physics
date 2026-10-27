@@ -85,6 +85,8 @@ MODULES = frozenset(
         "measured_publication_contracts.py",
         "publication_store.py",
         "publication_handoff_contracts.py",
+        "publication_activation.py",
+        "execution_publication_handoff.py",
         "study_publication_contracts.py",
         "serialization.py",
         "session.py",

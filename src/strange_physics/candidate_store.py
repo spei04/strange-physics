@@ -345,3 +345,92 @@ class CandidateStore:
             self.db.rollback()
         self.db.close()
         self.meter.sample()
+
+
+def read_sealed_handoff(
+    root: Path, admission: CandidateAdmission
+) -> tuple[PublicationHandoffSeal, bytes]:
+    """Read a committed seal under the caller's source lock, without writable open.
+
+    A hot journal or incomplete database is not an activation authority. No
+    recovery is attempted; original source costs and partial bytes are retained.
+    """
+    path = root / "candidate.sqlite3"
+    before = regular(path)
+    assert before is not None
+    if not 100 <= before.st_size <= admission.control.database_limit_bytes:
+        raise StudyLedgerError("candidate_store_corrupt")
+    if read_bytes(root / "candidate-created", limit=64) != digest(raw(admission)).encode():
+        raise StudyLedgerError("candidate_store_identity")
+    for suffix in ("-wal", "-shm"):
+        if Path(str(path) + suffix).exists():
+            raise StudyLedgerError("candidate_store_mode")
+    journal = regular(Path(str(path) + "-journal"), missing=True)
+    if journal is not None:
+        value = read_bytes(
+            Path(str(path) + "-journal"), limit=admission.control.database_envelope()
+        )
+        if value[:8].strip(b"\x00"):
+            raise StudyLedgerError("candidate_store_recovery_required")
+    db = sqlite3.connect(path.as_uri() + "?mode=ro", uri=True, timeout=0, isolation_level=None)
+    try:
+        db.execute("PRAGMA query_only=ON")
+        db.execute("PRAGMA trusted_schema=OFF")
+        db.setlimit(sqlite3.SQLITE_LIMIT_LENGTH, 16 * MIB)
+        if (
+            db.execute("PRAGMA application_id").fetchone()[0],
+            db.execute("PRAGMA user_version").fetchone()[0],
+        ) != (STORE_ID, 2):
+            raise StudyLedgerError("candidate_store_unsealed")
+        if set(
+            db.execute(
+                "SELECT name,type FROM sqlite_master WHERE name NOT LIKE 'sqlite_%'"
+            ).fetchall()
+        ) != {(n, "table") for n in ("state", "records", "closures", "handoff")}:
+            raise StudyLedgerError("candidate_store_corrupt")
+        row = db.execute(
+            "SELECT length(admission),length(ledger),revision,head,stopped FROM state WHERE id=1"
+        ).fetchone()
+        if (
+            row is None
+            or row[0] != len(raw(admission))
+            or not 0 < row[1] <= admission.control.publication.ledger_bytes
+            or row[4] != 0
+        ):
+            raise StudyLedgerError("candidate_store_identity")
+        saved, seed = db.execute("SELECT admission,ledger FROM state WHERE id=1").fetchone()
+        ledger = read_study_ledger(seed)
+        if saved != raw(admission) or (len(ledger.records), head(ledger)) != tuple(row[2:4]):
+            raise StudyLedgerError("candidate_store_identity")
+        if db.execute(
+            "SELECT sequence,event_id,digest FROM records ORDER BY sequence"
+        ).fetchall() != [(r.sequence, r.event_id, message_sha256(r)) for r in ledger.records]:
+            raise StudyLedgerError("candidate_store_corrupt")
+        row = db.execute("SELECT length(seal),digest FROM handoff WHERE id=1").fetchone()
+        if (
+            row is None
+            or not 0 < row[0] <= HANDOFF_SEAL_BYTES
+            or db.execute("SELECT count(*) FROM handoff").fetchone()[0] != 1
+        ):
+            raise StudyLedgerError("candidate_handoff_corrupt")
+        seal_raw = db.execute("SELECT seal FROM handoff WHERE id=1").fetchone()[0]
+        seal = read_handoff_seal(seal_raw)
+        if (
+            digest(seal_raw) != row[1]
+            or seal_raw != raw(seal)
+            or seal.source_admission != admission
+        ):
+            raise StudyLedgerError("candidate_handoff_corrupt")
+        validate_handoff_ledger(seal, ledger)
+        after = regular(path)
+        assert after is not None
+        if (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns) != (
+            after.st_dev,
+            after.st_ino,
+            after.st_size,
+            after.st_mtime_ns,
+        ):
+            raise StudyLedgerError("candidate_handoff_changed")
+        return seal, seed
+    finally:
+        db.close()
