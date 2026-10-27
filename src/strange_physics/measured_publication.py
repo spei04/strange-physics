@@ -302,7 +302,13 @@ def _compose(
         original_ledger_raw=original,
         original_evidence_raw=evidence,
     )
-    excluded = {"witnesses", "scoring_input", "scoring_result", "diagnostic_result"}
+    excluded = {
+        "witnesses",
+        "scoring_input",
+        "scoring_result",
+        "diagnostic_input",
+        "diagnostic_result",
+    }
     materials = {name: value for name, value in payloads.items() if name not in excluded}
     if request.mode == "early":
         p = propose_study_early_stop(
@@ -322,6 +328,7 @@ def _compose(
         scoring_result_raw=payloads["scoring_result"],
         diagnostic_attempt_id=request.diagnostic_attempt_id,
         diagnostic_result_raw=payloads.get("diagnostic_result"),
+        diagnostic_input_raw=payloads.get("diagnostic_input"),
         **common,
     )
     return _Output(
