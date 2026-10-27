@@ -1,0 +1,9 @@
+# Retained comparison stages
+
+Checkpoint 1 adds strict comparison payloads and pure material binders for preparation, prediction and scoring. Existing supplied-material request and receipt schemas are unchanged. Comparison execution remains denied by the measured supervisor until the retained-store integration is implemented and reviewed.
+
+Preparation binds the complete twelve-row candidate history, including failed rows, to frozen pool, candidate configuration, scoring policy, prediction configuration and world-space identity. A supplied selected candidate is explicit fixed selection, not a MAP or selector claim. Prediction reconstructs the exact prepared probe and selected model. Scoring compares all 24 ordered, independently resolved attempt outcomes and the private frozen world. Deterministic preparation/protocol recomputation performs no numerical prediction or evaluation.
+
+These pure binders do not authenticate SQLite closure rows, latest terminal states, Journal currency, installed code, source/lock identity, or observed missing/invalid transport. The later measured adapter must resolve those authorities before invoking the binders during charged work. A retained valid result cannot be relabelled missing or invalid; an unavailable result cannot release its original unknown hold. Exact paid recovery must reuse original retained materials without producers or live input paths.
+
+The proposed 45-call synthetic profile is arithmetic only: 978,165,760 bytes and 1,247 CPU seconds with a 1 MiB control database. Actual database fit, cumulative setup/copy bounds, remaining recovery/publication/finalization headroom and measured execution are pending. The prediction allowance assumes one retained input and one output, each at most 512 KiB; any additional persisted reconstruction or capture requires its own pre-write allowance. Publisher authority handoff, full-study admission and grid/Laplace work remain separate.
