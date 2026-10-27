@@ -153,8 +153,7 @@ def test_deadline_translates_after_unwind_preserving_notes_and_restoring_handler
     assert caught.value.__cause__.__notes__ == caught.value.__notes__
     assert {s: signal.getsignal(s) for s in handlers} == handlers
     assert all(
-        signal.getitimer(timer) == (0.0, 0.0)
-        for timer in (signal.ITIMER_REAL, signal.ITIMER_PROF)
+        signal.getitimer(timer) == (0.0, 0.0) for timer in (signal.ITIMER_REAL, signal.ITIMER_PROF)
     )
 
 
