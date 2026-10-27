@@ -10924,10 +10924,10 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research releases this six-doc delivery reconciliation without environment use to Lead for review/publication; independent material/identity review at the next handoff checkpoint.",
-      "identity": "PR127/main 5897f97 and exact candidate 12715816385 accepted. Quality assigned V2 one-way publisher handoff implementation in reused identity; Lead coordinates clean source handoff and first immutable review.",
+      "scientific": "Primary reused sequentially: original diagnostic 95e focused run released; Lead progress update, then Research independent 44-call fixture. Installed 90-file95e package remains owned by primary; revalidate for future source.",
+      "identity": "Quality owns caller/activation implementation; store 0336 source/90-file package/26-case run accepted. No other writer may switch this checkout.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
-      "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
+      "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout. Latest primary reuse observed 62,242,344,960 free bytes on 2026-10-27; both existing checkouts remain needed. No checkout removed or new one created.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
     },
     "spring_calibration_evidence": {
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "retained_comparison_delivered_publisher_handoff_implementation_assigned",
+      "status": "handoff_store_and_original_input_checked_caller_integration_in_progress",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Implement V2 one-way execution-to-publisher handoff in reused identity; first immutable store/contracts checkpoint goes to independent review. Design fit remains unproved.",
-        "Platform": "Retained-comparison delivery accepted; independent next accounting, activation/recovery and finite-capacity review.",
-        "Research": "Delivery reconciliation complete; release primary to Lead and review next immutable material/identity checkpoint.",
-        "Project lead": "Own primary progress/integration after release; accepted main/candidate delivery and coordinate Quality source handoff. Parents remain open."
+        "Quality": "Measured execution-to-publisher caller, mandatory activation/origin and primitive tests in identity; store checkpoint accepted.",
+        "Platform": "Independent caller/recovery integration review; full-study capacity and dependency census complete.",
+        "Research": "Original diagnostic-input checkpoint accepted with qualified 30-case pass; independent 44-call actual handoff fixture in reused primary.",
+        "Project lead": "Progress publication and reviewed-source composition; explicit parent scope and later full-study integration boundary. Parents remain open."
       },
-      "handoff": "PR127 merged as main 5897f97 with the exact reviewed tree; both PR and main runtimes passed 4,421 tests and candidate 12715816385 is accepted unpublished. Local 1cc9408 all-15 checks and selected 1dee2c5 measurements remain separate; historical failures and unknown holds are preserved. Quality is assigned V2 publisher handoff implementation; the first immutable store/contracts checkpoint awaits independent review. No scientific comparison, timing guarantee, MAP/accuracy, full-study or parent closure.",
+      "handoff": "PR127/main 5897f97 and exact candidate remain delivered. Store 0336 passed 26 tests; original diagnostic 95e has a qualified 30-case product pass with original quiet-output reporting assertion preserved and no retry. Exact 90-file packages and unchanged dependencies verified. Caller/activation and actual 44-call fixture are in progress; no measured handoff, comparison, full-study or parent completion.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Assigned V2 one-way publisher authority handoff, with independent first immutable store/contracts review and future measured resource/crash proof. Full-study allocation/census and explicit parent acceptance remain separate before finite-grid admission; grid first, Laplace later. No new scientific allocation.",
+      "next_units": "Compose reviewed caller/original-input/fixture sources; prove bounded 44-call handoff and supported recovery. Close parents only against explicit bounded authority/native-contract scope. Actual future algorithm census, global 36-cell authority and measured capacity precede RA-07.b admission after inference/policies exist, not before their implementation. Grid first; Laplace audit later; no new allocation.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -15112,7 +15112,7 @@
         }
       },
       "publisher_authority_handoff": {
-        "status": "implementation_assigned_design_only_runtime_fit_unproved",
+        "status": "store_and_original_input_checkpoints_accepted_caller_and_fixture_in_progress",
         "source_base": "5897f97b2bda7f76600b0590680d51f5a3936ac0",
         "proposal_source": "7d69c51796a3d873c4b15ab768f07270853f64a9",
         "proposal_version": 2,
@@ -15121,7 +15121,7 @@
           "Platform",
           "Research"
         ],
-        "first_checkpoint": "Immutable store/contracts before caller integration",
+        "first_checkpoint": "0336b5f store/contracts independently accepted with 26 tests",
         "conditional_selected_calls": 44,
         "conditional_artifact_bytes": 1026908160,
         "conditional_cpu_seconds": 1356,
@@ -15135,7 +15135,50 @@
           "full-study allocation/admission",
           "parent completion"
         ],
-        "new_allocation": false
+        "new_allocation": false,
+        "contract_checkpoint": "71c4a4a0cc41a203e24f6e49e622e96b343440ec",
+        "store_checkpoint": {
+          "source": "0336b5f83544afa688d02215ecafd25f72778fb2",
+          "tests_passed": 26,
+          "pytest_seconds": 3.32,
+          "package_files": 90,
+          "outcome_index_sha256": "88a95db92ab27340ee1938bf106fb45f2b7b08019eb56c1a596aa7f54ece2454",
+          "review_index_sha256": "102093d56587ccc310fb3511af21c66d31e43f636e1277a6ab39b0257dc9dd58",
+          "scope": "Synthetic accounting and real SQLite; no public/numerical calls."
+        },
+        "diagnostic_checkpoint": {
+          "source": "95e9621e8db7298a3d26aa7d29b37e2d48dd1162",
+          "qualified_tests_passed": 30,
+          "pytest_exit": 0,
+          "runner_exit": 1,
+          "qualification": "Exactly 30 passing markers/100%; duplicate quiet options suppressed textual summary. Original reporting assertion preserved; no retry. Duration is external, not pytest-printed.",
+          "external_wall_seconds": 58.335017679,
+          "external_cpu_seconds": 58.323053,
+          "project_files_before": 77,
+          "project_files_after": 90,
+          "unchanged_nonproject_files": 5402,
+          "outcome_index_sha256": "94369d3e11ce14072d337aa5a249f235bfedb0e3886fb496a8bf38f4c3fa2c53",
+          "review_index_sha256": "7d5ae31b29d7f9f9a4ba1c8c8481c4296d6e96f1a846d32bf2221b57e284d940",
+          "scope": "Supplied-material/strict identity/replay; no measured publisher or handoff proof."
+        },
+        "full_study_precheck": {
+          "terminal_source_calls": 1441,
+          "terminal_census_scope": "All 36 cells reaching current full terminal path; excludes online inference/acquisition/development/fault work.",
+          "purchase_control_floor_bytes": 3860432896,
+          "publication_protection_floor_mib": 1168,
+          "terminal_source_control_illustration_bytes": 12864526336,
+          "qualification": "Admission envelopes at optimistic minimum DB, not measured storage or a revised cap. Current one-cell/three-ticket handoff does not implement global 36-cell coordination.",
+          "required_decisions": [
+            "Global authority/coordination without budget reset",
+            "Actual online cadence and batch census after algorithms exist",
+            "Finite control allocation and measured payload/CPU/copy/failure bounds"
+          ],
+          "dependency_boundary": "Parents prove bounded interfaces and document full-study denial/ownership; exact future counts and measured full-study fit are later RA-07.b admission requirements, not a back-edge to N02/N04.",
+          "census_index_sha256": "0c738b60de3771973fdf79792b5e6897c4b32184d13ef6ebcf53e6357e2ebec8",
+          "dependency_index_sha256": "621120078e2ed4354b59a61dc03e2d55b446eb047d8f74332cc8d592fa439b8a",
+          "graph_changed": false,
+          "caps_changed": false
+        }
       }
     },
     "certificate_trust_update": {

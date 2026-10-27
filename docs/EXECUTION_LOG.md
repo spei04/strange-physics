@@ -12,15 +12,17 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Implement the V2 one-way execution-to-publisher handoff in reused identity | First immutable store/contracts checkpoint goes to independent review; profile fit remains unproved |
-| Platform | Retained-comparison delivery verification complete; review next handoff boundaries | Accounting, activation/recovery and finite resource fit |
-| Research | Delivery reconciliation complete; release primary to Lead | Independent material/identity review at the first handoff checkpoint |
-| Project lead | Accept PR127/main candidate and coordinate the next source handoff | Review/publish progress; parents #105/#106 remain open |
+| Quality | Implement the measured handoff caller and publisher activation in identity | Store checkpoint accepted; next source and recovery review pending |
+| Platform | Independent integration review; full-study capacity/dependency census complete | Preserve one global budget; no new study admission |
+| Research | Prepare the independent 44-call handoff fixture in reused primary | Original-input checkpoint accepted with qualified 30-case pass; measured fixture unexecuted |
+| Project lead | Reconcile progress, compose reviewed source and coordinate integration | Parents #105/#106 remain open; full-study admission follows inference/policy integration |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Quality + Platform + Research | Atomic source-seal checkpoint 0336b5f | 26 tests passed; exact 90-file package accepted; Quality continues caller/activation |
+| 2026-10-27 | Research + Platform + Project lead | Original diagnostic input 95e9621 | Qualified 30-case pass; reporting diagnostic preserved without retry; Research prepares actual handoff fixture |
 | 2026-10-27 | Project lead + Platform + Research | PR127/main 5897f97 and exact candidate delivery accepted | Quality assigned V2 publication handoff; first immutable checkpoint goes to independent review |
 | 2026-10-27 | Quality + Platform + Research | Exact 1cc9408 local full verification and independent evidence review | All 15 commands and 4,421 tests passed; Lead owns integration, hosted delivery pending |
 | 2026-10-27 | Quality + Platform + Research | Parsed-input reuse at 1dee2c5: focused 29 and one actual 50-call specimen accepted | Author handoff and disabled full-check runner preparation; full verification still pending |
@@ -1166,3 +1168,17 @@ All five jobs in [main run 40463652713](https://github.com/spei04/strange-physic
 The local 1cc9408 15-command result and separately retained selected 1dee2c5 measurements remain distinct. Passing local full-suite fixtures were removed under the approved failed-only policy; historical failures and unknown holds are preserved. Fixed selection, repeated calibration and bounded history/replay evidence establish conformance, not MAP, model accuracy, a scientific comparison, guaranteed timing or full-study admission.
 
 Quality is assigned the V2 one-way execution-to-publisher handoff in the reused identity checkout; Platform and Research review the first immutable store/contracts checkpoint. V2 is accepted design only: actual resource fit and supported crash recovery remain unproved. Durable owner-private lock, archive and provenance references must be established before seed/admission, with any copies charged to setup and no post-seal path rebasing. The transfer must preserve the original inner score input, independent selected=None classical input, failed rows and unknown holds. Full-study allocation/census and explicit parent #105/#106 audits remain open; finite grid stays first and Laplace later.
+
+## 2026-10-27 — Publisher handoff checkpoints and study boundary
+
+Quality's source-seal/contracts checkpoint 0336b5f passed 26 tests in 3.32 seconds. Independent review accepted atomic ledger/control/seal persistence, rollback, lost-acknowledgement and sealed-write denial within the store scope. Git, wheel, sdist and installed package agree on 90 files. These synthetic accounting/SQLite tests do not establish the measured handoff or target activation.
+
+Research's original diagnostic-input checkpoint 95e9621 passed its 30 selected cases: pytest exited 0 and printed exactly 30 passing markers at 100%. The runner then failed its textual-summary assertion because two quiet options suppressed that line; the original diagnostic is retained and no test was repeated. External command wall/CPU were 58.335/58.323 seconds. The primary installation was actually 77 files before refresh, correcting an unverified 89-file assumption; the tested 90 files match Git and both archives, with all 5,402 nonproject files unchanged. Original selected=None inputs, legacy bytes, raw/canonical identity, replay and unknown holds are covered within supplied-material tests. Numerical result payloads were not retained for independent inventory; this is not measured publication evidence.
+
+Quality owns the actual caller/activation and primitive tests. Research owns the separate 44-call integration fixture: the accepted 41-call real prefix, one handoff, one publication and original-byte replay. Its resource fit and supported recovery remain unproved. The stable contract checkpoint is 71c4a4a; durable trusted build references must exist before source admission, with setup copies charged. Both existing cloud checkouts remain in use; no new checkout or capacity was added.
+
+The complete 36-cell terminal path has 1,441 source calls before online inference, acquisition, development work or retries. Under current contracts, just 432 purchase tickets plus one recovery reserve at least 3,860,432,896 bytes of source control; publication-only protection separately requires 1,168 MiB. The 1,441-call scaffold plus a hypothetical transfer and recovery would reserve 12,864,526,336 bytes of source control at the optimistic minimum database size. These are admission bounds, not measured disk consumption or a proposed cap. The current single-cell/three-ticket handoff cannot be repeated to establish global 36-cell authority.
+
+Before parent closure, document the bounded interface, one global plan without resets, retained costs, one-way seal, single-cell limit, full-study denial and ownership of later coordination. Exact future algorithm counts must not become a circular prerequisite for RA-N02.a/RA-N04. Their actual cadence, full-study authority integration and measured capacity precede RA-07.b admission after those algorithms exist. Parents #105/#106 remain open. The approved graph, experiment matrix, 8 CPU-hour/1 GiB study caps and finite-grid-first/Laplace-later sequence are unchanged.
+
+Private evidence indexes (owner-readable, review 2026-11-26): store outcome 88a95db92ab27340ee1938bf106fb45f2b7b08019eb56c1a596aa7f54ece2454; store review 102093d56587ccc310fb3511af21c66d31e43f636e1277a6ab39b0257dc9dd58; diagnostic outcome 94369d3e11ce14072d337aa5a249f235bfedb0e3886fb496a8bf38f4c3fa2c53; diagnostic review 7d5ae31b29d7f9f9a4ba1c8c8481c4296d6e96f1a846d32bf2221b57e284d940; study census 0c738b60de3771973fdf79792b5e6897c4b32184d13ef6ebcf53e6357e2ebec8 and dependency clarification 621120078e2ed4354b59a61dc03e2d55b446eb047d8f74332cc8d592fa439b8a.
