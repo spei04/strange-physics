@@ -79,6 +79,7 @@ MODULES = frozenset(
         "native_stage_execution_contracts.py",
         "candidate_execution_contracts.py",
         "candidate_store.py",
+        "comparison_stage_resolver.py",
         "comparison_stage_binding.py",
         "installed_identity.py",
         "measured_publication_contracts.py",

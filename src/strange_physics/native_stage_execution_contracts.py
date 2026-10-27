@@ -44,7 +44,7 @@ class NativeStageReceipt(_ExecutionReceipt):
 
 
 # These payloads are deliberately additive. Existing supplied-material requests
-# and receipts keep their wire shapes; comparison dispatch is not enabled here.
+# and receipts keep their wire shapes; the measured resolver supplies authority.
 
 
 class NativeComparisonPreparationInput(Message):

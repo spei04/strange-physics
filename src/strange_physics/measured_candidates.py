@@ -27,6 +27,7 @@ from strange_physics.candidate_execution_contracts import (
     CandidateRequest,
 )
 from strange_physics.candidate_store import CandidateStore
+from strange_physics.comparison_stage_resolver import RetainedStageWitness, bind_retained_stage
 from strange_physics.installed_identity import TrustedInstallation, verify_native_installation
 from strange_physics.measured_publication import _deadline
 from strange_physics.native_candidates import produce_native_candidates
@@ -332,7 +333,7 @@ def _input(data: bytes, request: ExecutionRequest) -> ExecutionInput:
         return _comparison_input(data).candidate
     if request.operation == "candidate_production":
         return parse_native_candidate_input(data)
-    return parse_stage_input(request.operation, data)
+    return parse_stage_input(request.operation, data, comparison=request.phase == "comparison")
 
 
 def _result(data: bytes, request: ExecutionRequest) -> ExecutionResult:
@@ -555,6 +556,9 @@ def _bind_context(
             "comparison_candidate",
             "classical_diagnostic",
             "purchase",
+            "preparation",
+            "prediction",
+            "scoring",
         ):
             raise StudyLedgerError("native_stage_comparison_not_available")
         manifest = study_manifest(ledger)
@@ -563,6 +567,10 @@ def _bind_context(
             if request.operation == "classical_diagnostic"
             else "candidate_config"
         )
+        if request.operation in ("preparation", "scoring"):
+            role = "scoring_policy"
+        elif request.operation == "prediction":
+            role = "prediction_config"
         if isinstance(request, NativePurchaseRequest):
             role = "calibration" if request.purchase.calibration else "menu"
         artifact = next((a for a in manifest.artifacts if a.kind == role), None)
@@ -623,7 +631,12 @@ def _run_child(
                 operation = request.operation
                 if operation not in ("preparation", "prediction", "scoring"):
                     os._exit(70)
-                result = produce_stage(operation, actual_raw, request.attempt_id)
+                result = produce_stage(
+                    operation,
+                    actual_raw,
+                    request.attempt_id,
+                    comparison=request.phase == "comparison",
+                )
             if len(result) > limit:
                 os._exit(2)
             fd = os.open(output, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
@@ -1367,7 +1380,9 @@ def _commit_native_execution(
                     store.replace(current, proposed)
                 current = proposed
                 frozen_ledger: NativeStudyLedger | None = None
-                captured_journal: _ComparisonCapture | _PurchaseCapture | None = None
+                captured_journal: (
+                    _ComparisonCapture | _PurchaseCapture | RetainedStageWitness | None
+                ) = None
                 clock.work()
                 work_start = meter.total
                 if closure:
@@ -1405,6 +1420,13 @@ def _commit_native_execution(
                         captured_journal = _bind_classical(
                             store, request, input_raw, original, meter, journal_scope
                         )
+                    elif request.phase == "comparison" and isinstance(
+                        request,
+                        (NativePreparationRequest, NativePredictionRequest, NativeScoreRequest),
+                    ):
+                        captured_journal = bind_retained_stage(
+                            store, request, input_raw, original, meter, journal_scope, replayed=True
+                        )
                 else:
                     input_raw = read_bytes(Path(request.input_path), limit=_input_limit(request))
                     if (len(input_raw), digest(input_raw)) != (
@@ -1427,6 +1449,13 @@ def _commit_native_execution(
                     elif isinstance(request, NativeComparisonClassicalRequest):
                         captured_journal = _bind_classical(
                             store, request, input_raw, current, meter, journal_scope
+                        )
+                    elif request.phase == "comparison" and isinstance(
+                        request,
+                        (NativePreparationRequest, NativePredictionRequest, NativeScoreRequest),
+                    ):
+                        captured_journal = bind_retained_stage(
+                            store, request, input_raw, current, meter, journal_scope, replayed=False
                         )
                     produced: bytes | None
                     if isinstance(actual, NativePurchaseInput):
