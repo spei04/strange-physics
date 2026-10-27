@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research released the six primary progress documents after sealed second full-gate reconciliation; no environment use. Lead owns primary progress/integration after handoff.",
-      "identity": "Quality retains unchanged336d91b source/environment for one authorized bounded read-only pre-work diagnostic; no public stage, producer, mutation, further retry or source/cap change.",
+      "scientific": "Research released the six primary progress documents after reconciling both bounded ingress diagnostics; no environment use. Lead owns primary progress/integration after handoff.",
+      "identity": "Quality retains unchanged 336d91b source/environment after the completed mirror and two bounded 30-call diagnostics. The next observation in real full-suite execution context is under review, not admitted; no source/cap change.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12592,19 +12592,19 @@
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Second full-gate failure/census sealed; one bounded read-only pre-work cProfile mirror authorized, result pending, no public retry/source/cap change.",
-        "Platform": "Prior scoped reviews retained; independent total-ingress timer/source diagnosis.",
-        "Research": "Sealed second full-gate progress reconciled; primary released, available for final independent review, no runtime/environment use.",
-        "Project lead": "Own primary progress/integration after handoff and review diagnostic evidence before any source change/required checks; delivery held and parents open."
+        "Quality": "Mirror and both bounded 30-call outcomes sealed; unchanged source/environment. Prepare the next observation plan in real full-suite execution context, not yet admitted.",
+        "Platform": "Review diagnostic outcomes and proposed next context; preserve source-bound failures and distinguish observed measurements from cause.",
+        "Research": "Diagnostic outcomes reconciled in six progress documents; primary released to Lead, no runtime/environment use.",
+        "Project lead": "Own primary progress/integration after handoff; review the next diagnostic plan. Full verification/delivery held and parents open."
       },
-      "handoff": "Accepted selected36c 50/four evidence, failed36c full gate and16 focused336 cases remain distinct. Full336 run stopped1061 passed/1 failed at entry9/ticket8 before seventh prediction reservation. Failure/census sealed with18 records/eight closures/two setup-control holds. Quality runs only the authorized bounded read-only diagnostic; result pending. Research released primary progress to Lead; original12a failure/unknown costs preserved.",
+      "handoff": "Accepted selected 36c 50/four evidence, failed 36c/336 full gates and 16 focused 336 cases remain distinct. Read-only mirror completed in 3.03 CPU seconds; selected and full-collection-only 30-call diagnostics passed in 88.46/91.76 seconds under unchanged source/identities/caps. Each retains 62 records, 27 closures and two setup/control holds. Collection alone did not reproduce the timeout; preceding full-suite execution and historical cause remain unresolved. Next context plan under review, not admitted. Research released primary to Lead; original 12a failure/unknown costs preserved.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Exact second full-gate diagnosis and required checks before PR/main/candidate delivery; publisher authority handoff, full-study allocation/census and parent acceptance remain separate. No later scientific implementation is assigned.",
+      "next_units": "Review the next real-full-suite-context observation plan, then complete diagnosis and required checks before PR/main/candidate delivery; publisher authority handoff, full-study allocation/census and parent acceptance remain separate. No later scientific implementation is assigned.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14579,7 +14579,7 @@
         "proposed_full_specimen_calls_before_extra_faults": 45,
         "runtime_profile": "both_admitted36c_fixtures_completed_scope_qualified",
         "new_allocation": false,
-        "next_gate": "Exact second full-gate diagnosis, required checks and exact PR/main/candidate delivery.",
+        "next_gate": "Review the next real-full-suite-context observation plan; complete diagnosis, required checks and exact PR/main/candidate delivery. No cause or full pass established.",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -14836,8 +14836,47 @@
               "CandidateStore"
             ],
             "public_stage_or_producer_or_mutation": false,
-            "status": "authorized_result_pending",
-            "source_or_cap_change_authorized": false
+            "status": "completed_not_reproduction",
+            "source_or_cap_change_authorized": false,
+            "instrumented_cpu_seconds": 3.028,
+            "author_index_sha256": "7c6525943de9cbfd4252af67921ddbc47f61dafe65ad9295d92f1a5ea2a616ac",
+            "qualification": "Fresh-process mirror omits durable writes/store and original timer; no attribution of historical failed control time or five-second guarantee."
+          },
+          "bounded_ingress_observations": {
+            "source": "336d91b2009ccfac0480c0b10f64b036f53bf500",
+            "original_caps_and_source_install_dependency_interpreter_lock_unchanged": true,
+            "selected_test": {
+              "author_index_sha256": "57a6cc76af49598ddf88ca20ef81cd0d86aa27eeafe1f6ef87118cbbcbc46b4c",
+              "platform_outcome_sha256": "a1ddc778f1daec2b99837dcd1617046e4a0a78efb78ba2d1e78d4fbba099d054",
+              "passed_tests": 1,
+              "seconds": 88.46
+            },
+            "collection_context": {
+              "author_index_sha256": "4683f9190cf48e5d23eb6e8725459a0ea1a00d13008d9c17919fef5c835f4a44",
+              "lead_plan_sha256": "367dc3f15b363c3619f8d6c35f3b0a10fd611b29531b04e06ce1b2b4750bdb3d",
+              "collected_and_retained_items": 4395,
+              "deselected_tests": 4394,
+              "passed_tests": 1,
+              "seconds": 91.76,
+              "preceding_tests_executed": false
+            },
+            "each_run": {
+              "public_calls_returned": 30,
+              "executions": 27,
+              "paid_recoveries": 3,
+              "ledger_records": 62,
+              "closures": 27,
+              "unresolved_setup_control_holds": 2,
+              "paid_replay_child_cpu_ns": [
+                0,
+                0,
+                0
+              ]
+            },
+            "qualification": "Neither bounded run reproduces the historical full-suite timeout. Collection alone was insufficient here; no causal attribution, portability guarantee or full-suite pass. GC counts are not GC time, sampled threads do not exclude transient activity, and final control tails remain reserved.",
+            "original_full_suite_failures_preserved": true,
+            "next_context_observation": "Proposed real-full-suite-execution context under plan review; not yet admitted",
+            "delivery": "held"
           }
         }
       }
