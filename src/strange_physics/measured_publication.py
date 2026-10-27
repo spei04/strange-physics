@@ -29,6 +29,12 @@ from strange_physics.measured_publication_contracts import (
     PublicationAdmission,
     PublicationMeasurements,
 )
+from strange_physics.publication_activation import (
+    publication_authority,
+    publication_remaining_capacity,
+    publication_request_bounds,
+    read_publication_admission,
+)
 from strange_physics.publication_store import (
     Extents,
     LockedJournal,
@@ -39,7 +45,6 @@ from strange_physics.publication_store import (
     journal_snapshot,
     raw,
     regular,
-    root_lock,
 )
 from strange_physics.research_contracts import message_sha256
 from strange_physics.serialization import canonical_json
@@ -297,7 +302,13 @@ def _compose(
         original_ledger_raw=original,
         original_evidence_raw=evidence,
     )
-    excluded = {"witnesses", "scoring_input", "scoring_result", "diagnostic_result"}
+    excluded = {
+        "witnesses",
+        "scoring_input",
+        "scoring_result",
+        "diagnostic_input",
+        "diagnostic_result",
+    }
     materials = {name: value for name, value in payloads.items() if name not in excluded}
     if request.mode == "early":
         p = propose_study_early_stop(
@@ -317,6 +328,7 @@ def _compose(
         scoring_result_raw=payloads["scoring_result"],
         diagnostic_attempt_id=request.diagnostic_attempt_id,
         diagnostic_result_raw=payloads.get("diagnostic_result"),
+        diagnostic_input_raw=payloads.get("diagnostic_input"),
         **common,
     )
     return _Output(
@@ -496,13 +508,7 @@ def commit_native_publication(
     request = NativePublicationRequest.model_validate_json(raw(request))
     root = safe_path(store_root)
     private_stat(root.stat(), directory=True)
-    admission = parse_bounded_json(
-        read_bytes(root / "admission.json", limit=16 * 1024),
-        PublicationAdmission,
-        max_bytes=16 * 1024,
-        max_depth=8,
-        max_nodes=128,
-    )
+    admission = read_publication_admission(read_bytes(root / "admission.json", limit=16 * 1024))
     if str(root) != admission.control.root or request.ticket >= admission.control.tickets:
         raise StudyLedgerError("admission_identity")
     control = admission.control
@@ -530,13 +536,15 @@ def commit_native_publication(
         output_path: Path | None = None
         scratch: Path | None = None
         try:
-            with root_lock(root):
+            with publication_authority(root, admission) as origin:
                 seed_raw = read_bytes(root / "seed-ledger.json", limit=MAX_STUDY_JSON_BYTES)
                 if digest(seed_raw) != admission.seed_ledger_sha256:
                     raise StudyLedgerError("admission_identity")
                 seed = read_study_ledger(seed_raw)
                 _admitted(root, admission, seed, request.ticket)
-                store = Store(root, admission, seed_raw, meter)
+                if origin is not None:
+                    publication_request_bounds(origin, request, seed)
+                store = Store(root, admission, seed_raw, meter, origin=origin)
                 current = store.ledger()
                 if (
                     current.plan != seed.plan
@@ -594,6 +602,8 @@ def commit_native_publication(
                     purchase=None,
                 )
                 reserved = _append(current, _event_id(request.attempt_id, "reserve"), reservation)
+                if origin is not None:
+                    publication_remaining_capacity(root, origin, reserved)
                 # Include record/closure/finalization space before snapshot or child work.
                 original_bytes = len(raw(reserved))
                 journal_size = 0 if request.journal_sha256 is None else MAX_JOURNAL_BYTES

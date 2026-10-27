@@ -69,7 +69,9 @@ if TYPE_CHECKING:
 type ComparisonStageRequest = (
     NativePreparationRequest | NativePredictionRequest | NativeScoreRequest
 )
-type ParentOperation = Literal["freeze", "comparison_candidate", "preparation", "prediction"]
+type ParentOperation = Literal[
+    "freeze", "comparison_candidate", "preparation", "prediction", "scoring", "classical_diagnostic"
+]
 
 
 @dataclass

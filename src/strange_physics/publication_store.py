@@ -17,9 +17,19 @@ from pathlib import Path
 
 from strange_physics.contracts import Message
 from strange_physics.measured_publication_contracts import PublicationAdmission
+from strange_physics.publication_handoff_contracts import (
+    HANDOFF_PRODUCER,
+    HandoffPublicationAdmission,
+    PublicationHandoffOrigin,
+    validate_handoff_ledger,
+)
 from strange_physics.research_contracts import message_sha256
 from strange_physics.serialization import canonical_json
-from strange_physics.study_contracts import MAX_STUDY_JSON_BYTES, NativeStudyLedger
+from strange_physics.study_contracts import (
+    MAX_STUDY_JSON_BYTES,
+    NativeStudyLedger,
+    StudyAttemptUpdate,
+)
 from strange_physics.study_journal import MAX_JOURNAL_BYTES
 from strange_physics.study_ledger import StudyLedgerError, read_study_ledger
 from strange_physics.workflow_io import private_stat, read_bytes, safe_path
@@ -232,13 +242,75 @@ def journal_snapshot(path: Path, expected: str | None) -> Iterator[LockedJournal
             os.close(descriptor)
 
 
+def _activation_journal_bound(path: Path, database_limit: int) -> None:
+    """Keep unsupported hot recovery outside the paid activation path.
+
+    A committed PERSIST transaction has an invalidated header. The supported
+    marker/empty-file and committed-but-unacknowledged cuts do not need SQLite
+    to restore pages; a hot or ambiguous header is preserved and denied.
+    """
+    before = regular(path, missing=True)
+    if before is None:
+        return
+    if before.st_size > database_limit + database_limit // 512 + 2 * 65536:
+        raise StudyLedgerError("publication_activation_journal_bound")
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        opened = os.fstat(fd)
+        header = os.pread(fd, 8, 0)
+        after = os.fstat(fd)
+        expected = (before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns)
+        if expected != (
+            opened.st_dev,
+            opened.st_ino,
+            opened.st_size,
+            opened.st_mtime_ns,
+        ) or expected != (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns):
+            raise StudyLedgerError("publication_activation_journal_changed")
+    finally:
+        os.close(fd)
+    if before.st_size and header != b"\x00" * 8:
+        raise StudyLedgerError("publication_activation_recovery_required")
+
+
 class Store:
     """One bounded private closure store; no automatic repair/adoption of partial rows."""
 
     def __init__(
-        self, root: Path, admission: PublicationAdmission, seed: bytes, meter: Extents
+        self,
+        root: Path,
+        admission: PublicationAdmission,
+        seed: bytes,
+        meter: Extents,
+        *,
+        origin: PublicationHandoffOrigin | None = None,
     ) -> None:
         self.root, self.meter = root, meter
+        handed_off = isinstance(admission, HandoffPublicationAdmission)
+        # Each handed-off ticket prepays a whole DB/PERSIST recovery envelope.
+        # Cooperating writers hold the same target lock through this check/open.
+        self.database_limit = (
+            ((admission.control.ticket_artifact_bytes - 2 * 65536) // (2 * PAGE + 8)) * PAGE
+            if handed_off
+            else MAX_STORE_BYTES
+        )
+        ledger = read_study_ledger(seed)
+        if isinstance(admission, HandoffPublicationAdmission):
+            if origin is None or (
+                message_sha256(origin) != admission.origin_sha256
+                or origin.seal.intent.destination != admission.control
+                or origin.seal.source_admission.control.root != admission.source_root
+                or digest(seed) != admission.seed_ledger_sha256
+            ):
+                raise StudyLedgerError("publication_origin_identity")
+            validate_handoff_ledger(origin.seal, ledger)
+        elif origin is not None or any(
+            isinstance(row.event, StudyAttemptUpdate)
+            and row.event.facts is not None
+            and row.event.facts.producer_version == HANDOFF_PRODUCER
+            for row in ledger.records
+        ):
+            raise StudyLedgerError("publication_origin_required")
         self.path = root / "publication.sqlite3"
         self.db: sqlite3.Connection
         existing = regular(self.path, missing=True)
@@ -247,7 +319,7 @@ class Store:
                 raise StudyLedgerError("store_mode")
         marker = root / "store-created"
         marker_info = regular(marker, missing=True)
-        if existing is None and marker_info is not None:
+        if existing is None and marker_info is not None and not handed_off:
             raise StudyLedgerError("store_missing_after_creation")
         if existing is not None and marker_info is None:
             raise StudyLedgerError("store_creation_identity")
@@ -256,18 +328,28 @@ class Store:
             and read_bytes(marker, limit=64) != digest(raw(admission)).encode()
         ):
             raise StudyLedgerError("store_creation_identity")
+        initializing = existing is None or (handed_off and existing.st_size == 0)
+        if initializing and handed_off:
+            sidecar = regular(Path(str(self.path) + "-journal"), missing=True)
+            if sidecar is not None and sidecar.st_size:
+                raise StudyLedgerError("publication_activation_partial")
         if existing is None:
-            meter.write(marker, digest(raw(admission)).encode())
+            if marker_info is None:
+                meter.write(marker, digest(raw(admission)).encode())
             durable_directory(root)
             fd = os.open(self.path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
             os.close(fd)
         else:
-            if existing.st_size < 100 or existing.st_size > MAX_STORE_BYTES:
+            if (
+                not initializing and existing.st_size < 100
+            ) or existing.st_size > self.database_limit:
                 raise StudyLedgerError("store_corrupt")
             regular(Path(str(self.path) + "-journal"), missing=True)
+        if handed_off:
+            _activation_journal_bound(Path(str(self.path) + "-journal"), self.database_limit)
         self.db = sqlite3.connect(self.path, timeout=0, isolation_level=None)
         try:
-            if existing is None:
+            if initializing:
                 self.db.execute(f"PRAGMA page_size={PAGE}")
             if self.db.execute("PRAGMA page_size").fetchone()[0] != PAGE:
                 raise StudyLedgerError("store_page_size")
@@ -287,10 +369,10 @@ class Store:
                 raise StudyLedgerError("store_mode")
             self.db.execute("PRAGMA journal_size_limit=-1")
             self.limit_growth(admission.control.ticket_artifact_bytes - meter.total)
-            if existing is None:
+            if initializing:
                 self.db.execute("BEGIN IMMEDIATE")
                 self.db.execute(f"PRAGMA application_id={STORE_ID}")
-                self.db.execute("PRAGMA user_version=1")
+                self.db.execute(f"PRAGMA user_version={2 if handed_off else 1}")
                 self.db.execute(
                     "CREATE TABLE state (id INTEGER PRIMARY KEY CHECK(id=1), "
                     "admission BLOB NOT NULL, ledger BLOB NOT NULL, "
@@ -311,7 +393,14 @@ class Store:
                     "data BLOB NOT NULL, digest TEXT NOT NULL, "
                     "PRIMARY KEY(event_id,name))"
                 )
-                ledger = read_study_ledger(seed)
+                if origin is not None:
+                    self.db.execute(
+                        "CREATE TABLE origin (id INTEGER PRIMARY KEY CHECK(id=1), "
+                        "data BLOB NOT NULL, digest TEXT NOT NULL)"
+                    )
+                    self.db.execute(
+                        "INSERT INTO origin VALUES (1,?,?)", (raw(origin), message_sha256(origin))
+                    )
                 self.db.execute(
                     "INSERT INTO state VALUES (1,?,?,?,?)",
                     (raw(admission), seed, len(ledger.records), head(ledger)),
@@ -321,19 +410,33 @@ class Store:
                 self.db.commit()
                 self.meter.sample()
                 durable_directory(root)
-            if (
-                self.db.execute("PRAGMA application_id").fetchone()[0] != STORE_ID
-                or self.db.execute("PRAGMA user_version").fetchone()[0] != 1
+            if self.db.execute("PRAGMA application_id").fetchone()[
+                0
+            ] != STORE_ID or self.db.execute("PRAGMA user_version").fetchone()[0] != (
+                2 if handed_off else 1
             ):
                 raise StudyLedgerError("store_corrupt")
             rows = self.db.execute(
                 "SELECT name,type FROM sqlite_master WHERE name NOT LIKE 'sqlite_%'"
             ).fetchall()
-            if set(rows) != {(n, "table") for n in ("state", "records", "closures", "materials")}:
+            expected = {(n, "table") for n in ("state", "records", "closures", "materials")}
+            if handed_off:
+                expected.add(("origin", "table"))
+            if set(rows) != expected:
                 raise StudyLedgerError("store_corrupt")
             row = self.db.execute("SELECT admission FROM state WHERE id=1").fetchone()
             if row is None or row[0] != raw(admission):
                 raise StudyLedgerError("store_identity")
+            if origin is not None:
+                row = self.db.execute(
+                    "SELECT length(data),digest FROM origin WHERE id=1"
+                ).fetchone()
+                if row != (len(raw(origin)), message_sha256(origin)) or self.db.execute(
+                    "SELECT data FROM origin WHERE id=1"
+                ).fetchone() != (raw(origin),):
+                    raise StudyLedgerError("publication_origin_identity")
+                if self.db.execute("SELECT count(*) FROM origin").fetchone()[0] != 1:
+                    raise StudyLedgerError("publication_origin_identity")
             self.ledger()
         except BaseException:
             self.close()
@@ -351,7 +454,7 @@ class Store:
         journal_growth = max(0, envelope - retained)
         if amount < journal_growth:
             raise StudyLedgerError("publication_sqlite_headroom")
-        limit = min(MAX_STORE_BYTES // PAGE, pages + (amount - journal_growth) // PAGE)
+        limit = min(self.database_limit // PAGE, pages + (amount - journal_growth) // PAGE)
         if limit < max(1, pages):
             raise StudyLedgerError("publication_sqlite_headroom")
         if self.db.execute(f"PRAGMA max_page_count={limit}").fetchone()[0] != limit:
