@@ -15,7 +15,9 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 The two existing cloud checkouts are reused. Exact 1cc9408 source/environment and all runtime holds are released after local verification. Research releases these six primary progress documents without environment use to Lead for review/integration. Platform reviews delivery evidence; no new implementation or additional checkout is assigned.
 
-The corrected actual-run host guard counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
+The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
+
+The full configured run used 256 MiB whole-test/command headroom and 64 MiB scoped setup/public-call headroom, with the same 4 MiB diagnostic reserve and 2 GiB shared ceiling.
 
 ## Scope and acceptance
 
