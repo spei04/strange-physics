@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: exact source 1cc9408 passed all 15 local configured commands, including 4,421 tests in 1,850.02 seconds in normal complete order. Runtime/test bytes remain accepted 1dee2c5. Both full-context score replays returned; the four-call and 50-call traces retain their intended denials. Passing physical fixtures were removed under the approved failed-only policy, so this full run does not retain per-call CPU/receipt artifacts. Separate selected-run measurements and historical failures remain source-specific. Exact PR/main/candidate delivery is pending; no timing, MAP, accuracy, study or publisher-authority claim follows.
+Status: 22 primitive tests and the actual 44-call handoff/replay specimen are independently accepted. The caller-fault cases have separate passing evidence at ca9ee869 and corrected test source 1b43838; the original assertion failure remains retained. The API guide and bounded parent audit are complete. Final configured checks, exact PR/main/candidate delivery and explicit parent acceptance remain pending.
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Full local verification complete at 1cc9408; source/environment released |
-| Platform | Independently review full-gate evidence and prepare exact delivery verification |
-| Research | Complete scientific readback and release this six-file reconciliation to Lead |
-| Project lead | Own released checkouts; review progress and integrate for PR/main/candidate delivery |
+| Quality | Prepare final ten local checks and exact hosted candidate verification |
+| Platform | Parent audit and API guide complete; review final progress/delivery |
+| Research | Targeted caller cases complete; source/runtime released |
+| Project lead | Own primary progress and coordinate final source/delivery |
 
-The two existing cloud checkouts are reused. Exact 1cc9408 source/environment and all runtime holds are released after local verification. Research releases these six primary progress documents without environment use to Lead for review/integration. Platform reviews delivery evidence; no new implementation or additional checkout is assigned.
+The two existing cloud checkouts are reused. After Quality released the passing 44-call run, Lead integrated only the new ca9ee869 test file in identity. All 92 installed package files and locked dependencies remain unchanged; no refresh was needed. Primary holds this documentation update without using its environment. Reviewers inspect immutable source and retained evidence.
 
 The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
 
@@ -30,7 +30,7 @@ The full configured run used 256 MiB whole-test/command headroom and 64 MiB scop
 7. Present an immutable source checkpoint for independent Platform and Research review, then a bounded purchased-history-to-score path and the relevant configured checks.
 8. Verify exact PR/main/package delivery separately from scientific or production-readiness claims.
 
-Publisher authority handoff, full-study allocation/admission, finite-grid inference, Laplace, new selectors, providers and deployment remain outside this slice.
+The original retained-comparison slice excluded publisher authority handoff. Its follow-on handoff and recovery evidence is recorded below and in the [API guide](MEASURED_PUBLICATION.md). Full-study allocation/admission, finite-grid inference, Laplace, new selectors, providers and deployment remain separate.
 
 ## Capacity and validation gates
 
@@ -42,7 +42,7 @@ Lightweight source/pure-contract output is bounded to 256 MiB across this slice.
 
 The original source proposal used one PR with two immutable checkpoints: strict payloads/retained bindings, then measured integration/proof. Its provisional 45-call profile uses the existing 1 MiB database parameter, totaling 978,165,760 artifact bytes and 1,247 CPU seconds; the 2 MiB alternative exceeds 1 GiB. Those original 45-call bounds were conditional. The later 50-call evidence and its separate resource review govern observed fit and headroom.
 
-Remaining delivery gates: required hosted PR/main checks on both Python runtimes and exact candidate verification. The local full-suite duration does not establish hosted timing fit. Historical estimates are not a new completion date; the approved graph, caps and first-result forecast remain unchanged. [Full verification evidence and limits](EXECUTION_LOG.md#2026-10-27--retained-comparison-local-full-verification-passed).
+Retained-comparison PR/main/candidate delivery is accepted; [exact evidence and limits](EXECUTION_LOG.md#2026-10-27--retained-comparison-delivery-accepted) remain source-specific. The follow-on V2 handoff now has the source-specific evidence summarized at the top of this document. Its original conditional 44-call design totaled 1,026,908,160 artifact bytes and 1,356 CPU seconds within existing caps; that design arithmetic alone established no measured fit or runtime admission. Its original inner score and selected=None classical inputs, failed rows and unknown holds must retain their identities. Fresh target installation verification runs inside each paid ticket; durable owner-private lock/archive/provenance references must exist before seed/admission, with initial copies charged and no post-seal path rebasing. The existing forecast, caps and grid-first/Laplace-later order remain unchanged.
 
 
 ## Accepted first checkpoint
@@ -81,10 +81,33 @@ The successor passed in 166.20 seconds with 50 entries/48 returns and two intend
 
 The separate four-call guard fixture passed in 22.85 seconds with two exact denials, 23 records/two closures/16 holds and restored capture. Its injected-intent origin remains explicit. Platform and Lead independently accepted the fixture; Research's authorship remains separate from that review. Five recoveries have recorded child CPU zero, but the purchase holder field is absent; control tails remain reserved and final setup CPU is not fully serialized. The configured batch stopped after 1,041 passed/one failed in 476.55 seconds: the existing classical [fit] case received SIGPROF (27) inside installation verification during comparison-candidate admission, before producer dispatch. Ruff/format/mypy passed, but full verification is failed/incomplete. Source/environment were unchanged; no retry or cap increase was made. The retained root has 17 records/14 unresolved holds and consumed ticket 1, with no candidate reservation or producer. The separate fresh verifier profile measured 5.074 CPU/5.075 wall seconds with exact 4,698-file membership; it does not establish the failed timer's exact cost attribution. Quality's lexical repair 50b1118 awaits Lead/Platform static review before refresh/tests. Required checks and PR/main/candidate delivery remain pending. The failed first authority, parent issues and all later study/publication gates are preserved.
 
-## Current verifier checks
+## Verifier failure and repair history
 
 Lead/Platform accepted repair 50b1118; 336d91b changes only test formatting, preserving runtime/build/lock bytes and test AST. Fifteen new verifier cases and the exact previously failing classical [fit] case passed together (16 cases, 17.29 seconds), with offline archives/installed records matching 89 package files and unchanged dependencies/interpreter/lock. The subsequent full run stopped at 1,061 passed/one failed in 475.99 seconds: prediction ingress received SIGPROF (27) in installation verification before producer dispatch. The prior classical [fit]/outcome cases passed; 11 later commands were not run. Sealed readback confirms unchanged source/install/dependencies, entry nine/ticket 8, 18 records/eight closures and only setup/control holds. No seventh-prediction reservation/input/output or child was reached. The five-second control allowance covers total ingress; the 12-second work allowance was not started, and the signal location does not apportion CPU. The subsequent read-only pre-work mirror completed in 3.03 instrumented CPU seconds, omitting ticket write/fsync and CandidateStore with no public stage/producer or mutation. It is not a reproduction. Full verification remains failed/incomplete and delivery held. The failed 36c full run, 16 focused passes and earlier fixture evidence remain distinct; lexical repair sufficiency, final delivery and study admission are not claimed.
 
 The selected 30-call diagnostic passed in 88.46 seconds; a second run retained 4,395 collected items but executed only that test and passed in 91.76 seconds. Each returned all 30 calls with 62 records, 27 closures and two unresolved setup/control holds, under unchanged source, installed identities and caps. Collection alone did not reproduce the timeout; neither run includes preceding test execution. Timing, GC counts and sampled threads do not prove cause, and final control tails remain reserved. That observation was followed by the failed normal full run below. [Detailed diagnostic history](EXECUTION_LOG.md#2026-10-27--bounded-ingress-observations-full-suite-cause-unresolved).
 
 The observed normal full run stopped at 2,389 passed/one failed in 1,127.69 seconds; all 33 watched calls returned, but paid original-score replay failed before completing the 50-call specimen. The final specimen retains 93 records, 41 closures and three unresolved setup/control/replay holds. The later 11 gates did not run. Retained score inputs, all 24 submissions and the original receipt/prefix match. The deadline exception inherits ValueError and can be caught as a semantic mismatch; 4.001664812 seconds of recorded work CPU against a four-second timer supports this explanation, but no signal/caught-exception record proves it. Preserve original receipts and unknown holds. Subsequent propagation repair and the read-only profile are recorded in the [current checkpoint](EXECUTION_LOG.md#2026-10-27--deadline-propagation-repaired-replay-work-profiled); original validation, caps and this failed-run evidence remain unchanged. [Current failure and qualifications](EXECUTION_LOG.md#2026-10-27--observed-full-suite-failed-during-score-replay).
+
+## 2026-10-27 — Handoff checkpoints accepted; full-study boundary clarified
+
+The source-seal/store checkpoint 0336b5f passed 26 tests; original diagnostic-input checkpoint 95e9621 has a qualified 30-case pass (pytest exit 0 and 30 passing markers, preserved quiet-output reporting assertion, no retry). Each tested package matches its exact 90-file source and archives; dependency identities stayed unchanged. Quality continues the measured caller/activation, while Research prepares the separate 44-call actual handoff fixture. These checkpoints do not prove measured handoff, full-study feasibility or parent completion.
+
+Full-study review found separate lower bounds above the existing 1 GiB authority and a missing multi-cell coordination boundary: the single-cell/three-ticket seal cannot serve all 36 cells by repetition. Before parent closure, make the bounded authority interface, one global budget, current limitations and later integration ownership explicit. Exact algorithm census and measured full-study fit belong after inference/policies exist and before RA-07.b admission; they are not circular prerequisites for implementing RA-N02.a/RA-N04. No graph, estimates, caps, experiment count or Laplace sequence changed. See the [assignment log and evidence](EXECUTION_LOG.md#2026-10-27--publisher-handoff-checkpoints-and-study-boundary).
+
+## 2026-10-27 — Handoff caller checked; integration verification in progress
+
+Caller/activation source 6d42df9 passed 22 primitive tests, then the separately reviewed 44-call specimen passed in 240.21 seconds. Independent readback accepted all 44 returns, the complete sealed source prefix, original publication/replay bytes and three retained cost holds. Passing evidence is retained. This is one-cell conformance with fixed selection, not a research comparison or a timing guarantee.
+
+The test-only ca9ee869 supplement is source-reviewed; its two-case/four-call runtime is pending. Research prepares that bounded runner, Quality prepares final static/schema/security/package checks, Platform reviews evidence and Lead updates progress. Both existing cloud checkouts are reused. Hosted full suites, PR/main/candidate delivery and the explicit parent audit remain pending; #105/#106 stay open. Global 36-cell authority/capacity and the grid-first/Laplace-later sequence are unchanged.
+
+[Evidence and assignments](EXECUTION_LOG.md#2026-10-27--handoff-caller-checked-integration-verification-in-progress).
+
+
+## 2026-10-27 — Handoff recovery checked; final delivery pending
+
+Caller recovery now has passing evidence across two source-specific runs: the unknown/protected-retry case passed at ca9ee869, and the corrected lost-acknowledgement case passed at 1b43838 in 14.14 seconds. The initial four-call run remains recorded as one pass and one test-assertion failure; it is not relabelled a complete pass. Production package bytes are unchanged. The public handoff API and supported recovery limits are documented.
+
+Quality owns the final ten local static/schema/security/package checks and candidate verification; Platform reviews the final evidence and progress; Research has completed the targeted caller cases; Lead owns source composition and GitHub delivery. Hosted full suites on Python 3.12/3.14, PR/main/candidate verification and explicit parent acceptance remain pending. Parents #105/#106 stay open. Full-study authority/capacity, global caps and grid-first/Laplace-later sequencing are unchanged.
+
+[Detailed evidence](EXECUTION_LOG.md#2026-10-27--handoff-recovery-checked-final-delivery-pending).

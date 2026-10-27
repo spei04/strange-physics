@@ -10924,10 +10924,10 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research releases this six-doc reconciliation without environment use to Lead for independent review/integration; available for delivery consistency.",
-      "identity": "Exact 1cc9408 local all15 checks passed; Quality released source/environment/runtime holds to Lead. PR/main/candidate delivery remains pending.",
+      "scientific": "Primary reused for reviewed API/progress documentation; its existing environment remains unused and unchanged.",
+      "identity": "Corrected test source1b43838;92 installed package files unchanged. Targeted runtime complete; final source composition/checks next.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
-      "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
+      "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout. Latest primary reuse observed 62,242,344,960 free bytes on 2026-10-27; both existing checkouts remain needed. No checkout removed or new one created. Primary reuse for this update observed62,066,012,160 free bytes and no visible cwd consumers (248 inaccessible/raced proc entries); no checkout created or removed.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
     },
     "spring_calibration_evidence": {
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "retained_comparison_local_all15_passed_hosted_delivery_pending",
+      "status": "handoff_recovery_verified_final_delivery_pending",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Exact 1cc9408 local verification complete; source/environment released. No new implementation assigned.",
-        "Platform": "Independently review full-gate evidence and prepare exact PR/main/candidate verification.",
-        "Research": "Independent scientific full-gate readback complete; release six progress files to Lead for review, available for delivery consistency.",
-        "Project lead": "Own released checkouts, review progress and integrate for required hosted delivery. Parents remain open."
+        "Quality": "Final10 local static/schema/security/package checks and exact hosted candidate verification.",
+        "Platform": "Parent audit/API guide complete; review final progress and delivery evidence.",
+        "Research": "Caller cases complete with source-qualified passes; released for next dependency-ready work.",
+        "Project lead": "Compose reviewed source and seven docs; GitHub delivery and explicit bounded parent acceptance."
       },
-      "handoff": "Exact 1cc9408 differs from accepted 1dee2c5 by seven docs only. All 15 local commands passed; normal complete pytest passed 4,421 in 1,850.02 seconds. Scoped trace confirms original/historical score replays returned and all four expected denials. Passing physical fixtures removed under failed-only retention; selected 1dee per-call measurements remain separate. Source/install/dependencies unchanged. Earlier failures and unknown holds preserved; no timing guarantee. PR/main/candidate pending.",
+      "handoff": "Caller recovery now has passing evidence across two source-specific runs: the unknown/protected-retry case passed at ca9ee869, and the corrected lost-acknowledgement case passed at 1b43838 in 14.14 seconds. The initial four-call run remains recorded as one pass and one test-assertion failure; it is not relabelled a complete pass. Production package bytes are unchanged. The public handoff API and supported recovery limits are documented. Quality owns the final ten local static/schema/security/package checks and candidate verification; Platform reviews the final evidence and progress; Research has completed the targeted caller cases; Lead owns source composition and GitHub delivery. Hosted full suites on Python 3.12/3.14, PR/main/candidate verification and explicit parent acceptance remain pending. Parents #105/#106 stay open. Full-study authority/capacity, global caps and grid-first/Laplace-later sequencing are unchanged.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Required hosted PR/main checks and exact candidate verification. After retained-comparison delivery, one-way publisher authority handoff, full-study allocation/census and explicit parent acceptance remain separate, unassigned implementation work; grid first, Laplace later. No study or new scientific allocation.",
+      "next_units": "Freeze reviewed source/docs, run final10, then exact hosted full suites/PR/main/candidate verification and explicit parent acceptance. N02.a follows bounded parents. Global multi-cell authority/cadence/fit precede RA-07.b after algorithms; no cap/graph change.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "local_all15_commands_passed_hosted_delivery_pending",
+        "status": "delivered_main_5897f97_candidate_12715816385",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14579,7 +14579,7 @@
         "proposed_full_specimen_calls_before_extra_faults": 45,
         "runtime_profile": "Source-specific 36c9595 selected 50/four outcomes remain accepted; current 1dee2c5 selected 50-call outcome independently accepted under unchanged scientific caps.",
         "new_allocation": false,
-        "next_gate": "Required dual-runtime PR/main checks and exact candidate verification. Local full-suite duration is not hosted timing proof; parents #105/#106 remain open.",
+        "next_gate": "This slice is delivered. The assigned V2 publisher handoff requires first immutable store/contracts review and bounded executable proof; parents #105/#106 and full-study admission remain open.",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -15069,6 +15069,191 @@
           "retention": "Approved failed-only policy removed passing physical fixtures and per-call CPU/receipt artifacts; immutable passing assertions and ordered outcomes remain. Separately retained selected1dee measurements are not full-run measurements.",
           "preflight_history": "Two preserved FIFOs stopped the initial preflight before any configured command; reviewed census-only correction left them untouched.",
           "qualification": "No historical-cause or fixed-control timing guarantee, MAP/accuracy/full-study/publisher-authority or parent closure. Existing15-minute hosted job limit unchanged; both hosted runtimes and candidate still pending. Runtime export is not isolated runtime-only validation."
+        },
+        "delivery_127": {
+          "pull_request": 127,
+          "pr_head": "7d69c51796a3d873c4b15ab768f07270853f64a9",
+          "base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
+          "main": "5897f97b2bda7f76600b0590680d51f5a3936ac0",
+          "tree": "fa4d7c761a3cf8f5242e801b229e5e7c29337796",
+          "pr_run": 40462284706,
+          "applicable_pr_jobs_passed": 4,
+          "protected_main_job_on_pr": "skipped_by_design",
+          "pr_pytest": {
+            "3.12": {
+              "passed": 4421,
+              "seconds": 681.69
+            },
+            "3.14": {
+              "passed": 4421,
+              "seconds": 593.73
+            }
+          },
+          "main_run": 40463652713,
+          "main_jobs_passed": 5,
+          "main_pytest": {
+            "3.12": {
+              "passed": 4421,
+              "seconds": 386.9
+            },
+            "3.14": {
+              "passed": 4421,
+              "seconds": 468.88
+            }
+          },
+          "candidate": 12715816385,
+          "candidate_zip_bytes": 543189,
+          "candidate_zip_sha256": "10de83c7efafc405aa22118aca67e050bcfa57ffc38fbe3292a94cf13d303838",
+          "status": "accepted_unpublished_candidate",
+          "package_source_files": 89,
+          "both_archives_equal_reviewed_author": true,
+          "source_run_lock_provenance_verified": true,
+          "limits": "Exported runtime requirements bytes absent and not independently recomputed; copied Python uses base libraries. Local failed-only retention removed passing fixtures/per-call artifacts; selected measurements remain separate. No deployment/signing, timing reliability, MAP/accuracy, scientific comparison/full-study or parent closure."
+        }
+      },
+      "publisher_authority_handoff": {
+        "status": "targeted_handoff_recovery_checked_final_delivery_pending",
+        "source_base": "5897f97b2bda7f76600b0590680d51f5a3936ac0",
+        "proposal_source": "7d69c51796a3d873c4b15ab768f07270853f64a9",
+        "proposal_version": 2,
+        "author": "Quality",
+        "reviewers": [
+          "Platform",
+          "Research"
+        ],
+        "first_checkpoint": "0336b5f store/contracts independently accepted with 26 tests",
+        "conditional_selected_calls": 44,
+        "conditional_artifact_bytes": 1026908160,
+        "conditional_cpu_seconds": 1356,
+        "trusted_build_prerequisite": "Durable owner-private exact lock/archive/provenance references before seed/admission; initial copies charged to setup, no post-seal path rebasing. Fresh actual target installation verification inside every paid ticket.",
+        "material_scope": "Original inner scoring input and independent selected=None classical input, full failed-row history and original unknown holds. No receipt relabeling.",
+        "activation": "First publication ticket includes activation; one recovery spare only, exhaustion fails closed with source sealed.",
+        "not_proved": [
+          "final configured and PR/main/package delivery",
+          "full-study global authority/allocation/admission",
+          "explicit parent completion"
+        ],
+        "new_allocation": false,
+        "contract_checkpoint": "71c4a4a0cc41a203e24f6e49e622e96b343440ec",
+        "store_checkpoint": {
+          "source": "0336b5f83544afa688d02215ecafd25f72778fb2",
+          "tests_passed": 26,
+          "pytest_seconds": 3.32,
+          "package_files": 90,
+          "outcome_index_sha256": "88a95db92ab27340ee1938bf106fb45f2b7b08019eb56c1a596aa7f54ece2454",
+          "review_index_sha256": "102093d56587ccc310fb3511af21c66d31e43f636e1277a6ab39b0257dc9dd58",
+          "scope": "Synthetic accounting and real SQLite; no public/numerical calls."
+        },
+        "diagnostic_checkpoint": {
+          "source": "95e9621e8db7298a3d26aa7d29b37e2d48dd1162",
+          "qualified_tests_passed": 30,
+          "pytest_exit": 0,
+          "runner_exit": 1,
+          "qualification": "Exactly 30 passing markers/100%; duplicate quiet options suppressed textual summary. Original reporting assertion preserved; no retry. Duration is external, not pytest-printed.",
+          "external_wall_seconds": 58.335017679,
+          "external_cpu_seconds": 58.323053,
+          "project_files_before": 77,
+          "project_files_after": 90,
+          "unchanged_nonproject_files": 5402,
+          "outcome_index_sha256": "94369d3e11ce14072d337aa5a249f235bfedb0e3886fb496a8bf38f4c3fa2c53",
+          "review_index_sha256": "7d5ae31b29d7f9f9a4ba1c8c8481c4296d6e96f1a846d32bf2221b57e284d940",
+          "scope": "Supplied-material/strict identity/replay; no measured publisher or handoff proof."
+        },
+        "full_study_precheck": {
+          "terminal_source_calls": 1441,
+          "terminal_census_scope": "All 36 cells reaching current full terminal path; excludes online inference/acquisition/development/fault work.",
+          "purchase_control_floor_bytes": 3860432896,
+          "publication_protection_floor_mib": 1168,
+          "terminal_source_control_illustration_bytes": 12864526336,
+          "qualification": "Admission envelopes at optimistic minimum DB, not measured storage or a revised cap. Current one-cell/three-ticket handoff does not implement global 36-cell coordination.",
+          "required_decisions": [
+            "Global authority/coordination without budget reset",
+            "Actual online cadence and batch census after algorithms exist",
+            "Finite control allocation and measured payload/CPU/copy/failure bounds"
+          ],
+          "dependency_boundary": "Parents prove bounded interfaces and document full-study denial/ownership; exact future counts and measured full-study fit are later RA-07.b admission requirements, not a back-edge to N02/N04.",
+          "census_index_sha256": "0c738b60de3771973fdf79792b5e6897c4b32184d13ef6ebcf53e6357e2ebec8",
+          "dependency_index_sha256": "621120078e2ed4354b59a61dc03e2d55b446eb047d8f74332cc8d592fa439b8a",
+          "graph_changed": false,
+          "caps_changed": false
+        },
+        "caller_source": "6d42df91e05bcb4343d6503b82c39df2818c87ab",
+        "caller_tree": "6465f14416b631f96f96e78c970b973908a943d0",
+        "primitive_validation": {
+          "commands": 4,
+          "all_exits": 0,
+          "tests_passed": 22,
+          "pytest_seconds": 6.15,
+          "package_files": 92,
+          "unchanged_nonproject_files": 5402,
+          "outcome_index_sha256": "00967a507a957f8fc36fdcf2f36b5346bd70f53f5851ac8e4cf96f77fda970c3",
+          "peer_index_sha256": "3babb00b95a00fe98237654b73d910f1127fc2cd0cb427e307d62966eafa2c63",
+          "scope": "Real SQLite primitive accounting; verifier mocked; passing DBs removed; no public44 or caller-fault proof."
+        },
+        "integration_validation": {
+          "status": "independently_accepted_one_cell_conformance",
+          "source": "6d42df91e05bcb4343d6503b82c39df2818c87ab",
+          "plan_review_sha256": "ec9db12371bd521c75ff9bc4aeaa4def8852d31f675fb3154612ecc5a5f5a7a5",
+          "positive_fixture_retention": true,
+          "retries": 0,
+          "external_fixture": "Separate owner-trusted synthetic build: three original durable files <=6MiB, parent30CPU-s and60wall-s timer; aggregate parent/waited-child30s is completion check, not shared CPU hard limit.",
+          "pytest_seconds": 240.21,
+          "calls_returned": 44,
+          "outcome_index_sha256": "d5290b2f495532b488f5603d9bcb41e7e0b3f38754e8c53f2ee805f07aa99c56",
+          "peer_index_sha256": "b6b239bab56cdef2fd74ed11d1ac42c355adb23dcacfd77be1a909afa6e73801",
+          "source_records": 88,
+          "final_records": 93,
+          "unresolved_holds": 3,
+          "retained_files": 180,
+          "retained_bytes": 7924184,
+          "charged_artifact_bytes": 784256925,
+          "charged_cpu_ns": 510235742925,
+          "future_protected_artifact_margin_bytes": 249114723,
+          "finalization_bound_bytes": 162468,
+          "finalization_limit_bytes": 524288,
+          "limitations": "Fixed selection/repeated actions; Python entry counters, not OS census; final control/setup tails reserved; no full-study, timing guarantee or production-readiness claim."
+        },
+        "caller_fault_validation": {
+          "source": "ca9ee869ef476ff4d6fcac8d3af5ac0fd0d99f0a",
+          "status": "source_qualified_case_passes_original_assertion_failure_retained",
+          "cases": 2,
+          "planned_source_calls": 4,
+          "publisher_calls": 0,
+          "numerical_calls": 0,
+          "product_children": 0,
+          "index_sha256": "09ab508152a158b11fae68a235eb43c9b8cfd710243efd7e0958ba88fc82f73d",
+          "scope": "Synthetic ancestry with real verifier/tickets/store/unknown/recovery/seal; no target activation or universal power-loss proof.",
+          "peer_index_sha256": "590874dcec904abf47fcfa9728ed8d662aa8d259e3b7182698c60bec80b489cf",
+          "integrated_without_package_refresh": true,
+          "original_four_call_result": {
+            "source": "ca9ee869ef476ff4d6fcac8d3af5ac0fd0d99f0a",
+            "passed": 1,
+            "failed": 1,
+            "pytest_seconds": 30.14,
+            "public_calls": 4,
+            "outcome_index_sha256": "ed7183f9c8be72d03f5ccdb0f6406be6e7cf4ef7726b1d432ba432f8f4b66b2a",
+            "failure": "Anchored pytest message matcher included the expected exception diagnostic note; later second-case assertions were not reached.",
+            "first_case_records": 8,
+            "first_case_unresolved_holds": 4
+          },
+          "corrected_case": {
+            "source": "1b43838efe8b367df1a01a29dc22c6050300b5a8",
+            "passed": 1,
+            "pytest_seconds": 14.14,
+            "public_calls": 1,
+            "phase_reports": 3,
+            "records": 6,
+            "unresolved_holds": 3,
+            "source_scope": "Test-only exception-message assertion; first-case and92 production package files unchanged.",
+            "note": "No combined two-case pass claimed; prior failed run retained.",
+            "outcome_index_sha256": "7b4c64d11bfa03c5ac4da21705b1932b0ceaadc6309c23340bf448a78df6c31e"
+          }
+        },
+        "parent_exit_audit": {
+          "index_sha256": "613e1c4c8090df4539bf4bae3b63e7c3aa3bcde017141364b2a79f8d131c638e",
+          "scope": "Bounded parent interface; no additional algorithm or multi-cell implementation prerequisite. Final evidence/delivery acceptance pending.",
+          "api_documentation": "docs/MEASURED_PUBLICATION.md",
+          "full_study_owner": "Lead allocation/coordination decision; Quality assigned integration; Platform/Research independent reviews before RA-07.b."
         }
       }
     },
