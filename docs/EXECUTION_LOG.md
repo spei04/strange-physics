@@ -12,15 +12,17 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Prepare final static/schema/security/package checks and candidate verification | Ten local checks planned; hosted full suites remain required |
-| Platform | Independent 44-call outcome accepted; review remaining fault/delivery evidence | Preserve original history, unknown holds and scoped claims |
-| Research | Prepare the separate caller-fault runner against frozen ca9ee869 | Two cases/four calls; source-reviewed, runtime pending |
-| Project lead | Reconcile progress in released primary; coordinate validation and delivery | Reuse both checkouts; parents #105/#106 remain open |
+| Quality | Final ten local checks and exact hosted candidate verification | Frozen final source; hosted full suites remain required |
+| Platform | Parent exit audit and API guide complete; review final progress/delivery | Preserve source-specific evidence and global-budget limits |
+| Research | Targeted caller recovery complete; released for next dependency-ready work | First case at ca9; corrected lost-ack case at 1b43838 |
+| Project lead | Compose reviewed code and seven docs; own GitHub delivery | Reuse both checkouts; parents #105/#106 remain open |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Research + Quality + Project lead | Caller unknown/protected retry and committed-seal lost acknowledgement | First case passed at ca9; corrected second case passed at 1b43838; original failed assertion retained |
+| 2026-10-27 | Platform + Project lead | Bounded parent audit and actual publication API guide | No additional production blocker identified; explicit final evidence/delivery acceptance remains |
 | 2026-10-27 | Quality + Platform + Project lead | Exact 6d42 caller/activation primitive verification | 22 primitives and one actual 44-call specimen passed; independently accepted; final checks pending |
 | 2026-10-27 | Research + Platform + Project lead | Separate ca9ee869 caller-fault supplement | Source/static review accepted; two-case/four-call runtime pending; primary released |
 | 2026-10-27 | Quality + Platform + Research | Atomic source-seal checkpoint 0336b5f | 26 tests passed; exact 90-file package accepted; Quality continues caller/activation |
@@ -1198,3 +1200,16 @@ The declared specimen envelope was 1,026,908,160 bytes and 1,356 CPU seconds. Ac
 All 92 package files, 5,402 nonproject records and nine package metadata records stayed unchanged. Original trusted archive/lock/provenance paths were preserved. Their separate synthetic harness setup used 3.0747 aggregate CPU seconds and 3.0805 wall seconds within its qualified bounds: a 30-second parent CPU timer, 60-second wall timer and aggregate CPU completion check, not a shared parent/child hard CPU cap. Setup copied 1,222,893 bytes including the final proof; its recorded CPU snapshot precedes the proof write. Final control and setup tails remain reserved, not falsely reported as exact totals.
 
 Private evidence (owner-readable; review 2026-11-26): primitive outcome 00967a507a957f8fc36fdcf2f36b5346bd70f53f5851ac8e4cf96f77fda970c3 and peer review 3babb00b95a00fe98237654b73d910f1127fc2cd0cb427e307d62966eafa2c63; actual44 outcome d5290b2f495532b488f5603d9bcb41e7e0b3f38754e8c53f2ee805f07aa99c56 and independent review b6b239bab56cdef2fd74ed11d1ac42c355adb23dcacfd77be1a909afa6e73801. The ca9ee869 source/static index is 09ab508152a158b11fae68a235eb43c9b8cfd710243efd7e0958ba88fc82f73d, with peer review 590874dcec904abf47fcfa9728ed8d662aa8d259e3b7182698c60bec80b489cf. Historical diagnostics remain source-specific.
+
+
+## 2026-10-27 — Handoff recovery checked; final delivery pending
+
+The one admitted four-call run at ca9ee869 completed all four expected public transitions. Its first case passed setup/call/teardown: a material failure retained the original unknown work hold, an ordinary retry consumed a ticket and was denied, and a protected current-head recovery sealed without refunding the old hold. Its retained source has eight records and four unresolved holds. The second call raised the intended lost-acknowledgement OSError and retained a committed six-record seal, but an anchored pytest message matcher also matched the diagnostic note and failed before the later test assertions. The raw result remains one passed/one failed in 30.14 seconds, with complete diagnostics and unchanged source/environment identity.
+
+Test-only 1b43838 changes that assertion to check the exception message separately; the existing note, seal, known settlement, original seed and no-fallback assertions remain. The first case and all 92 production package files are unchanged. Only the affected lost-acknowledgement case ran again: one passed in 14.14 seconds, with three passing phases and one public call raising the exact intended OSError. Immutable readback confirms six records, three unresolved holds, the committed seal and the exact target seed. No later unknown fallback was appended. The earlier first-case pass and corrected second-case pass are separate evidence, not one successful four-call run. Passing physical evidence and the failed attempt are retained.
+
+These fault cases use synthetic typed ancestry and an opaque observation capture with real installation verification, tickets, ledger, SQLite, reservations and source seal. They make no numerical or publisher calls. The separately accepted actual 44-call specimen remains the real-history/publication/replay evidence. A private runner's initial blanket rejection of valid cold PERSIST journals was corrected before execution; the original preparation is preserved. No product limits, recovery allowances or study budget increased.
+
+Platform's bounded parent audit found no additional algorithm or multi-cell coordinator prerequisite for RA-02/RA-N01 interface closure. The updated [publication API guide](MEASURED_PUBLICATION.md) documents the irreversible one-cell seal, original trusted-file lifetime, paid activation/replay, exact supported cold recovery cuts, preserved global charges and later multi-cell integration owner. Exact future algorithm cadence and a feasible global profile remain required before RA-07.b, after those algorithms exist.
+
+Quality owns the final ten local static/schema/security/package checks and candidate verification; Platform reviews the final evidence and progress; Research has completed the targeted caller cases; Lead owns source composition and GitHub delivery. Hosted full suites on Python 3.12/3.14, PR/main/candidate verification and explicit parent acceptance remain pending. Parents #105/#106 stay open. Full-study authority/capacity, global caps and grid-first/Laplace-later sequencing are unchanged.

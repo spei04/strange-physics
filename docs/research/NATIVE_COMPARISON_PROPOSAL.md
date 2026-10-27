@@ -1,5 +1,7 @@
 # Native spring comparison execution plan
 
+**Current checkpoint (2026-10-27):** Targeted handoff and recovery verification is complete within its stated scope; final delivery checks and parent acceptance remain pending. [Latest evidence and assignments](../EXECUTION_LOG.md#2026-10-27--handoff-recovery-checked-final-delivery-pending).
+
 Status: **owner-approved for scoped implementation and the bounded comparison on2026-10-21**. Accepted plan source33ddfbf74837dde29e0f1db3b1b4263e7031ddc2, PR #100. The reviewed native dependency amendment and scoped RA_EXEC are active; scientific/implementation entry gates and all caps remain. See [approval record](APPROVALS.md#native-comparison-2026-10-21).
 
 ## Approved decision
@@ -131,7 +133,7 @@ Use the existing machine, at most8 CPU-core-hours and1GiB new artifacts, with ze
 
 PR127/main 5897f97 and unpublished candidate 12715816385 are accepted. Both PR and main Python runtimes passed 4,421 tests; all five main jobs and exact 89-file archive/source verification passed. The [delivery record](../EXECUTION_LOG.md#2026-10-27--retained-comparison-delivery-accepted) keeps PR/main timings, the local 1cc9408 result, separate selected-run measurements and historical failures distinct. No scientific comparison, MAP/accuracy or timing guarantee follows.
 
-V2 caller/activation source6d42 and its 22 primitive tests plus actual 44-call specimen are independently accepted within one-cell conformance scope. Research prepares the separate two-case/four-call runner for reviewed sourceca9ee869; Quality prepares final checks; Platform reviews remaining evidence and Lead owns progress/integration. Fault runtime, configured checks, delivery and parent audit remain pending. Full-study authority/capacity is a later gate; finite grid stays first and Laplace later.
+Caller recovery now has passing evidence across two source-specific runs: the unknown/protected-retry case passed at ca9ee869, and the corrected lost-acknowledgement case passed at 1b43838 in 14.14 seconds. The initial four-call run remains recorded as one pass and one test-assertion failure; it is not relabelled a complete pass. Production package bytes are unchanged. The public handoff API and supported recovery limits are documented. Quality owns the final ten local static/schema/security/package checks and candidate verification; Platform reviews the final evidence and progress; Research has completed the targeted caller cases; Lead owns source composition and GitHub delivery. Hosted full suites on Python 3.12/3.14, PR/main/candidate verification and explicit parent acceptance remain pending. Parents #105/#106 stay open. Full-study authority/capacity, global caps and grid-first/Laplace-later sequencing are unchanged.
 
 Candidate-only execution is delivered through PR #118; supplied-material pre-freeze preparation/prediction/scoring is delivered through PR #120 with exact main/package acceptance. PR #119 security delivery remains accepted. Charged same-store freeze and actual-Journal comparison-candidate execution are delivered through PR #121/main 1474e57, including independent runtime review, paid recovery and exact candidate verification. The fixed classical unit is delivered through PR #122/main 1bc87e9: all five main jobs passed, each Python runtime passed 4,283 tests, and exact 83-file candidate 12584546922 matched the reviewed archives. See the [assignment board](../EXECUTION_LOG.md#current-assignment-board) for current and next ownership and the delivery record below for evidence.
 
@@ -245,3 +247,12 @@ The test-only ca9ee869 supplement is source-reviewed; its two-case/four-call run
 [Evidence and assignments](../EXECUTION_LOG.md#2026-10-27--handoff-caller-checked-integration-verification-in-progress).
 
 Finite-grid inference remains the common reference for the first selector comparison. Laplace remains required in RA-N02.b: its approximation audit needs a validated grid reference and frozen validation cases. Source work can overlap once interfaces stabilize; validation follows the reference. The grid is a finite reference, not an exact continuous posterior. No dependency or estimate is changed here.
+
+
+## 2026-10-27 — Handoff recovery checked; final delivery pending
+
+Caller recovery now has passing evidence across two source-specific runs: the unknown/protected-retry case passed at ca9ee869, and the corrected lost-acknowledgement case passed at 1b43838 in 14.14 seconds. The initial four-call run remains recorded as one pass and one test-assertion failure; it is not relabelled a complete pass. Production package bytes are unchanged. The public handoff API and supported recovery limits are documented.
+
+Quality owns the final ten local static/schema/security/package checks and candidate verification; Platform reviews the final evidence and progress; Research has completed the targeted caller cases; Lead owns source composition and GitHub delivery. Hosted full suites on Python 3.12/3.14, PR/main/candidate verification and explicit parent acceptance remain pending. Parents #105/#106 stay open. Full-study authority/capacity, global caps and grid-first/Laplace-later sequencing are unchanged.
+
+[Evidence and assignments](../EXECUTION_LOG.md#2026-10-27--handoff-recovery-checked-final-delivery-pending).

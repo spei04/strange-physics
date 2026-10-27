@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: source6d42 caller/activation, 22 primitive tests and the retained 44-call specimen are independently accepted within one-cell conformance scope. The ca9ee869 fault supplement is source-reviewed but unexecuted. Prior PR127 delivery remains accepted. Final checks, new PR/main/package delivery and parent audit remain pending.
+Status: 22 primitive tests and the actual 44-call handoff/replay specimen are independently accepted. The caller-fault cases have separate passing evidence at ca9ee869 and corrected test source 1b43838; the original assertion failure remains retained. The API guide and bounded parent audit are complete. Final configured checks, exact PR/main/candidate delivery and explicit parent acceptance remain pending.
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -9,8 +9,8 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 | Owner | Assignment |
 | --- | --- |
 | Quality | Prepare final ten local checks and exact hosted candidate verification |
-| Platform | Accepted the 44-call outcome; review remaining fault/delivery evidence |
-| Research | Prepare the disabled separate two-case/four-call runner at ca9ee869 |
+| Platform | Parent audit and API guide complete; review final progress/delivery |
+| Research | Targeted caller cases complete; source/runtime released |
 | Project lead | Own primary progress and coordinate final source/delivery |
 
 The two existing cloud checkouts are reused. After Quality released the passing 44-call run, Lead integrated only the new ca9ee869 test file in identity. All 92 installed package files and locked dependencies remain unchanged; no refresh was needed. Primary holds this documentation update without using its environment. Reviewers inspect immutable source and retained evidence.
@@ -30,7 +30,7 @@ The full configured run used 256 MiB whole-test/command headroom and 64 MiB scop
 7. Present an immutable source checkpoint for independent Platform and Research review, then a bounded purchased-history-to-score path and the relevant configured checks.
 8. Verify exact PR/main/package delivery separately from scientific or production-readiness claims.
 
-Publisher authority handoff, full-study allocation/admission, finite-grid inference, Laplace, new selectors, providers and deployment remain outside this slice.
+The original retained-comparison slice excluded publisher authority handoff. Its follow-on handoff and recovery evidence is recorded below and in the [API guide](MEASURED_PUBLICATION.md). Full-study allocation/admission, finite-grid inference, Laplace, new selectors, providers and deployment remain separate.
 
 ## Capacity and validation gates
 
@@ -42,7 +42,7 @@ Lightweight source/pure-contract output is bounded to 256 MiB across this slice.
 
 The original source proposal used one PR with two immutable checkpoints: strict payloads/retained bindings, then measured integration/proof. Its provisional 45-call profile uses the existing 1 MiB database parameter, totaling 978,165,760 artifact bytes and 1,247 CPU seconds; the 2 MiB alternative exceeds 1 GiB. Those original 45-call bounds were conditional. The later 50-call evidence and its separate resource review govern observed fit and headroom.
 
-Retained-comparison PR/main/candidate delivery is accepted; [exact evidence and limits](EXECUTION_LOG.md#2026-10-27--retained-comparison-delivery-accepted) remain source-specific. The next unit is the assigned V2 one-way execution-to-publisher handoff, followed separately by full-study allocation/census and explicit parent audits before finite-grid admission. The conditional 44-call design totals 1,026,908,160 artifact bytes and 1,356 CPU seconds within existing caps; no measured fit or runtime admission follows. Its original inner score and selected=None classical inputs, failed rows and unknown holds must retain their identities. Fresh target installation verification runs inside each paid ticket; durable owner-private lock/archive/provenance references must exist before seed/admission, with initial copies charged and no post-seal path rebasing. The existing forecast, caps and grid-first/Laplace-later order remain unchanged.
+Retained-comparison PR/main/candidate delivery is accepted; [exact evidence and limits](EXECUTION_LOG.md#2026-10-27--retained-comparison-delivery-accepted) remain source-specific. The follow-on V2 handoff now has the source-specific evidence summarized at the top of this document. Its original conditional 44-call design totaled 1,026,908,160 artifact bytes and 1,356 CPU seconds within existing caps; that design arithmetic alone established no measured fit or runtime admission. Its original inner score and selected=None classical inputs, failed rows and unknown holds must retain their identities. Fresh target installation verification runs inside each paid ticket; durable owner-private lock/archive/provenance references must exist before seed/admission, with initial copies charged and no post-seal path rebasing. The existing forecast, caps and grid-first/Laplace-later order remain unchanged.
 
 
 ## Accepted first checkpoint
@@ -102,3 +102,12 @@ Caller/activation source 6d42df9 passed 22 primitive tests, then the separately 
 The test-only ca9ee869 supplement is source-reviewed; its two-case/four-call runtime is pending. Research prepares that bounded runner, Quality prepares final static/schema/security/package checks, Platform reviews evidence and Lead updates progress. Both existing cloud checkouts are reused. Hosted full suites, PR/main/candidate delivery and the explicit parent audit remain pending; #105/#106 stay open. Global 36-cell authority/capacity and the grid-first/Laplace-later sequence are unchanged.
 
 [Evidence and assignments](EXECUTION_LOG.md#2026-10-27--handoff-caller-checked-integration-verification-in-progress).
+
+
+## 2026-10-27 — Handoff recovery checked; final delivery pending
+
+Caller recovery now has passing evidence across two source-specific runs: the unknown/protected-retry case passed at ca9ee869, and the corrected lost-acknowledgement case passed at 1b43838 in 14.14 seconds. The initial four-call run remains recorded as one pass and one test-assertion failure; it is not relabelled a complete pass. Production package bytes are unchanged. The public handoff API and supported recovery limits are documented.
+
+Quality owns the final ten local static/schema/security/package checks and candidate verification; Platform reviews the final evidence and progress; Research has completed the targeted caller cases; Lead owns source composition and GitHub delivery. Hosted full suites on Python 3.12/3.14, PR/main/candidate verification and explicit parent acceptance remain pending. Parents #105/#106 stay open. Full-study authority/capacity, global caps and grid-first/Laplace-later sequencing are unchanged.
+
+[Detailed evidence](EXECUTION_LOG.md#2026-10-27--handoff-recovery-checked-final-delivery-pending).
