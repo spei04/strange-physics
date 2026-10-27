@@ -1314,6 +1314,7 @@ def _commit_native_execution(
                 store = CandidateStore(root, admission, seed_raw, meter)
                 current = store.ledger()
                 _admitted(root, admission, seed, current)
+                store.require_writable()
                 closure = _closure(store, request, current)
                 reconciliation = (
                     isinstance(request, NativePurchaseRequest)
