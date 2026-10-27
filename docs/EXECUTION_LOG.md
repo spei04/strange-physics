@@ -12,10 +12,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Sealed read-only mirror and two bounded 30-call diagnostic passes | Source/environment unchanged; next full-suite-context observation plan under review |
-| Platform | Review diagnostic observations and the next proposed context | No cause established; preserve original timers and unknown holds |
-| Research | Reconciled both diagnostic outcomes in six progress documents | Primary released to Lead; no runtime/environment use |
-| Project lead | Review/publish progress and the next diagnostic plan | Full verification and delivery held; parents remain open |
+| Quality | Retain the observed full-suite failure; propose narrow deadline propagation repair | Separate replay performance analysis; no implementation or new gate pass yet |
+| Platform | Review deadline propagation and replay resource evidence | Preserve original caps, failed runs and unresolved costs |
+| Research | Reconciled score-replay failure and source-bound diagnosis | Primary released to Lead; no runtime/environment use |
+| Project lead | Review progress, repair proposal and required verification | Full verification and delivery held; parents remain open |
 
 ## Assignment history
 
@@ -1119,4 +1119,12 @@ The read-only pre-work mirror completed in 3.03 instrumented CPU seconds. It omi
 
 At unchanged source 336d91b and original caps, the selected native-chain diagnostic passed in 88.46 seconds. The collection-context variant then retained all 4,395 collected items, deselected 4,394 and executed only the same test; it passed in 91.76 seconds. Each run returned all 30 public calls (27 executions and three paid recoveries), ending with 62 records, 27 closures and the two unresolved setup/control holds. Source, installed package, dependencies, interpreter and lock were unchanged. Platform accepted the first outcome; both sealed author records preserve the original failures and exact observations.
 
-Collection alone did not reproduce the five-second timeout. Neither run executed the preceding full-suite tests, and GC counts, boundary thread samples and observed timing do not establish causation or a portability guarantee. Reported pre-work CPU excludes the reserved final control tail. The 36c9595 and 336d91b full-suite failures, accepted selected 50/four evidence, 16 focused passes and earlier 12a8a43 failure remain distinct. Full verification is failed/incomplete and delivery held. The next proposed observation in real full-suite execution context is under plan review, not yet admitted; no source/cap change or study admission follows from these passes.
+Collection alone did not reproduce the five-second timeout. Neither run executed the preceding full-suite tests, and GC counts, boundary thread samples and observed timing do not establish causation or a portability guarantee. Reported pre-work CPU excludes the reserved final control tail. The 36c9595 and 336d91b full-suite failures, accepted selected 50/four evidence, 16 focused passes and earlier 12a8a43 failure remain distinct. Full verification is failed/incomplete and delivery held. At that checkpoint, the next observation in real full-suite execution context was under plan review; its later failed result is recorded below. No source/cap change or study admission follows from the bounded passes.
+
+## 2026-10-27 — Observed full suite failed during score replay
+
+The normal full-suite run at unchanged 336d91b, with minimal observation of the two historical failure nodes, stopped at 2,389 passed/one failed in 1,127.69 seconds. All 33 watched calls returned, but the retained comparison specimen failed on its paid original-score replay (ticket 48, 45th public entry) with “Score differs from actual private inputs or derived submissions.” The original score and classical diagnostic returned successfully. The specimen stopped after 45 entries/44 returns, retaining 93 records, 41 closures and three unresolved setup/control/replay holds; the temporal extension was not reached. The later 11 configured commands were not executed. Source/install/dependency identities remained unchanged; full verification is failed/incomplete and delivery held.
+
+Read-only scientific diagnosis found exact agreement in the original score's six material hashes, all 24 ordered submissions, raw input/result/receipt and original ledger prefix. Source proves a masking path: the deadline handler raises StudyLedgerError, a ValueError subclass; scoring's semantic ValueError handlers can turn it into a preparation/prediction mismatch. The failed replay retained 4.001664812 CPU seconds against a four-second parent-work timer. That supports masked expiry as an inference, but the signal and caught exception were not recorded. No numerical or float/order discrepancy is established, and score validation must not be weakened.
+
+The next work is a narrow deadline-propagation repair proposal and separate replay-performance analysis, not an implemented fix or gate pass. The two earlier full-suite failures, bounded diagnostic passes, accepted 36c selected 50/four fixtures and failed 12a attempt remain source-specific. Original receipts and unknown-cost holds remain retained. No cap, study, accuracy, publisher-handoff or parent-completion claim follows; #105/#106 remain open.

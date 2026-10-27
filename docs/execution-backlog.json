@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research released the six primary progress documents after reconciling both bounded ingress diagnostics; no environment use. Lead owns primary progress/integration after handoff.",
-      "identity": "Quality retains unchanged 336d91b source/environment after the completed mirror and two bounded 30-call diagnostics. The next observation in real full-suite execution context is under review, not admitted; no source/cap change.",
+      "scientific": "Research released the six primary progress documents after observed full-suite failure reconciliation; no environment use. Lead owns primary progress/integration after handoff.",
+      "identity": "Quality retains unchanged 336d91b source/environment after the failed observed full run. Narrow deadline propagation remains a repair proposal; replay performance is separate. No implementation or new gate pass yet.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "retained_journal_comparison_second_full_gate_failed_delivery_held",
+      "status": "retained_journal_comparison_observed_full_gate_failed_delivery_held",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Mirror and both bounded 30-call outcomes sealed; unchanged source/environment. Prepare the next observation plan in real full-suite execution context, not yet admitted.",
-        "Platform": "Review diagnostic outcomes and proposed next context; preserve source-bound failures and distinguish observed measurements from cause.",
-        "Research": "Diagnostic outcomes reconciled in six progress documents; primary released to Lead, no runtime/environment use.",
-        "Project lead": "Own primary progress/integration after handoff; review the next diagnostic plan. Full verification/delivery held and parents open."
+        "Quality": "Preserve observed full-run failure; prepare narrow deadline propagation repair proposal and separate replay-performance analysis. No implementation or new gate pass yet.",
+        "Platform": "Review deadline propagation and replay resource evidence, preserving original caps and unknown holds.",
+        "Research": "Read-only scientific diagnosis and six-doc failure reconciliation complete; primary released to Lead, no runtime/environment use.",
+        "Project lead": "Own progress/integration after handoff; review repair proposal and required verification. Delivery held and parents open."
       },
-      "handoff": "Accepted selected 36c 50/four evidence, failed 36c/336 full gates and 16 focused 336 cases remain distinct. Read-only mirror completed in 3.03 CPU seconds; selected and full-collection-only 30-call diagnostics passed in 88.46/91.76 seconds under unchanged source/identities/caps. Each retains 62 records, 27 closures and two setup/control holds. Collection alone did not reproduce the timeout; preceding full-suite execution and historical cause remain unresolved. Next context plan under review, not admitted. Research released primary to Lead; original 12a failure/unknown costs preserved.",
+      "handoff": "Accepted selected 36c 50/four, 16 focused checks and two bounded 30-call observations remain source-specific. Observed full suite at unchanged 336d91b stopped at 2389 passed/1 failed in 1127.69s on original score replay; all 33 watched calls passed and 11 later commands did not run. Retained score material matches. Source proves a deadline-to-semantic-error masking path; 4.001664812s work CPU against 4s supports expiry inference, not direct signal proof. Propagation proposal and replay performance are separate next work; Research released primary and delivery remains held.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Review the next real-full-suite-context observation plan, then complete diagnosis and required checks before PR/main/candidate delivery; publisher authority handoff, full-study allocation/census and parent acceptance remain separate. No later scientific implementation is assigned.",
+      "next_units": "Review narrow deadline propagation repair proposal and separate replay-performance analysis, then required checks before PR/main/candidate delivery. Publisher handoff, full-study allocation/census and parent acceptance remain separate; no later scientific implementation assigned.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "bounded_integration_and_focused_verifier_accepted_second_full_gate_failed",
+        "status": "bounded_integration_accepted_observed_full_gate_failed",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14579,7 +14579,7 @@
         "proposed_full_specimen_calls_before_extra_faults": 45,
         "runtime_profile": "both_admitted36c_fixtures_completed_scope_qualified",
         "new_allocation": false,
-        "next_gate": "Review the next real-full-suite-context observation plan; complete diagnosis, required checks and exact PR/main/candidate delivery. No cause or full pass established.",
+        "next_gate": "Narrow deadline propagation proposal and separate replay-performance analysis; required configured/PR/main/candidate checks remain pending. No implementation or new gate pass yet.",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -14877,6 +14877,52 @@
             "original_full_suite_failures_preserved": true,
             "next_context_observation": "Proposed real-full-suite-execution context under plan review; not yet admitted",
             "delivery": "held"
+          }
+        },
+        "observed_full_gate": {
+          "source": "336d91b2009ccfac0480c0b10f64b036f53bf500",
+          "status": "failed_incomplete",
+          "passed_tests": 2389,
+          "failed_tests": 1,
+          "pytest_seconds": 1127.69,
+          "watched_calls_returned": 33,
+          "remaining_commands_not_executed": 11,
+          "source_install_dependency_unchanged": true,
+          "failure": {
+            "test": "tests/test_retained_comparison_stages.py::test_fifty_call_retained_comparison_and_historical_score_replay",
+            "public_entry": 45,
+            "ticket": 48,
+            "original_score_ticket": 39,
+            "error": "Score differs from actual private inputs or derived submissions",
+            "original_score_and_classical_returned": true,
+            "known_work_cpu_ns": 4001664812,
+            "parent_work_limit_ns": 4000000000,
+            "signal_or_caught_exception_recorded": false
+          },
+          "diagnosis": {
+            "research_index_sha256": "0a9b1d895339b6a4bed3ab3c4f1723ec36c22591faf8697e6678f898823609c0",
+            "six_material_hashes_and_24_ordered_submissions_match": true,
+            "original_raw_input_result_receipt_ledger_prefix_match": true,
+            "deadline_masking_path_source_proven": true,
+            "actual_expiry": "Supported inference, not recorded signal proof",
+            "numerical_float_or_order_discrepancy_established": false
+          },
+          "next_work": "Narrow deadline propagation repair proposal; replay performance analyzed separately. No implementation or gate pass yet.",
+          "delivery": "held",
+          "prior_failures_and_accepted_scoped_evidence_preserved": true,
+          "author_index_sha256": "78504ec8b852d386bc42496f477f6fcec7414623583f62c4da9b1ff141da09c1",
+          "specimen": {
+            "public_entries": 45,
+            "public_returns": 44,
+            "ledger_records": 93,
+            "closures": 41,
+            "unresolved_holds": 3,
+            "held_attempts": [
+              "setup",
+              "control",
+              "recovery-48"
+            ],
+            "temporal_extension_reached": false
           }
         }
       }
