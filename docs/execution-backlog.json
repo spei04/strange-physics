@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research released the six primary progress documents after focused-verifier reconciliation; no environment use. Lead owns primary progress/integration after handoff.",
-      "identity": "Quality owns frozen 336d91b source/environment in identity for the new configured batch after accepted verifier source and focused checks.",
+      "scientific": "Research released the six primary progress documents after sealed second full-gate reconciliation; no environment use. Lead owns primary progress/integration after handoff.",
+      "identity": "Quality retains unchanged336d91b source/environment for one authorized bounded read-only pre-work diagnostic; no public stage, producer, mutation, further retry or source/cap change.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "retained_journal_comparison_verifier_focused_pass_configured_successor_running",
+      "status": "retained_journal_comparison_second_full_gate_failed_delivery_held",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Run the 15-command configured batch at frozen 336d91b after accepted verifier source and 16 focused passes; final results pending.",
-        "Platform": "Accepted bounded and verifier source reviews retained; final verification and delivery review next.",
-        "Research": "Focused verifier progress reconciled; primary released, available for final independent review.",
-        "Project lead": "Own primary progress/integration after handoff; review final configured evidence before delivery, parents open."
+        "Quality": "Second full-gate failure/census sealed; one bounded read-only pre-work cProfile mirror authorized, result pending, no public retry/source/cap change.",
+        "Platform": "Prior scoped reviews retained; independent total-ingress timer/source diagnosis.",
+        "Research": "Sealed second full-gate progress reconciled; primary released, available for final independent review, no runtime/environment use.",
+        "Project lead": "Own primary progress/integration after handoff and review diagnostic evidence before any source change/required checks; delivery held and parents open."
       },
-      "handoff": "Bounded 36c9595 50/four evidence and its failed full run remain separate and intact. Lead/Platform accepted verifier repair 50b1118; formatting-only 336d91b passed 16 focused cases. Quality runs the new configured batch; full results and delivery pending. Research released primary progress to Lead; original 12a8a43 failure/unknown costs retained.",
+      "handoff": "Accepted selected36c 50/four evidence, failed36c full gate and16 focused336 cases remain distinct. Full336 run stopped1061 passed/1 failed at entry9/ticket8 before seventh prediction reservation. Failure/census sealed with18 records/eight closures/two setup-control holds. Quality runs only the authorized bounded read-only diagnostic; result pending. Research released primary progress to Lead; original12a failure/unknown costs preserved.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Complete the new configured run and exact PR/main/candidate delivery; publisher authority handoff, full-study allocation/census and parent acceptance remain separate. No later scientific implementation is assigned by this checkpoint.",
+      "next_units": "Exact second full-gate diagnosis and required checks before PR/main/candidate delivery; publisher authority handoff, full-study allocation/census and parent acceptance remain separate. No later scientific implementation is assigned.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "bounded_integration_and_verifier_source_accepted_focused_pass_configured_successor_running",
+        "status": "bounded_integration_and_focused_verifier_accepted_second_full_gate_failed",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14579,7 +14579,7 @@
         "proposed_full_specimen_calls_before_extra_faults": 45,
         "runtime_profile": "both_admitted36c_fixtures_completed_scope_qualified",
         "new_allocation": false,
-        "next_gate": "Complete the new 336d91b configured run and exact PR/main/candidate delivery.",
+        "next_gate": "Exact second full-gate diagnosis, required checks and exact PR/main/candidate delivery.",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -14794,14 +14794,51 @@
           "configured_checks": {
             "source": "336d91b2009ccfac0480c0b10f64b036f53bf500",
             "planned_commands": 15,
-            "status": "running_results_pending",
+            "status": "failed_incomplete",
             "lint": "passed",
             "format": "passed",
             "strict_type": "passed",
-            "full_pytest": "result_pending"
+            "full_pytest": "failed",
+            "passed_tests": 1061,
+            "failed_tests": 1,
+            "pytest_seconds": 475.99,
+            "remaining_commands_not_executed": 11,
+            "failure": {
+              "test": "tests/test_measured_native_stages.py::test_one_ledger_candidate_preparation_24_predictions_score_and_paid_replays",
+              "signal": "SIGPROF (27)",
+              "location": "Prediction ingress verify_native_installation line266 -> _installed_bytes line116 os.open",
+              "prior_classical_fit_and_outcome_variants_passed": true,
+              "source_install_dependency_unchanged": true,
+              "further_retry_or_cap_increase": false,
+              "author_index_sha256": "a81a80b5f0935d8b1ebdaf678d7b7d6da76caafbe24ddfde41e749806ef703b5",
+              "public_entry_ordinal": 9,
+              "ticket": 8,
+              "prediction_ordinal": 7,
+              "records": 18,
+              "closures": 8,
+              "unresolved_holds": 2,
+              "new_prediction_reservation_input_output_present": false,
+              "control_cpu_seconds": 5,
+              "control_wall_seconds": 30,
+              "work_cpu_seconds_not_started": 12,
+              "qualification": "Signal location does not apportion total pre-work CPU; original closures and unresolved setup/control holds retained."
+            }
           },
-          "delivery": "pending",
-          "prior_failure_and_profile_preserved": true
+          "delivery": "held",
+          "prior_failure_and_profile_preserved": true,
+          "pending_diagnostic": {
+            "kind": "One bounded read-only cProfile mirror of retained complete pre-work",
+            "cpu_seconds": 30,
+            "wall_seconds": 60,
+            "output_ceiling_bytes": 1048576,
+            "omitted_operations": [
+              "durable ticket write/fsync",
+              "CandidateStore"
+            ],
+            "public_stage_or_producer_or_mutation": false,
+            "status": "authorized_result_pending",
+            "source_or_cap_change_authorized": false
+          }
         }
       }
     },

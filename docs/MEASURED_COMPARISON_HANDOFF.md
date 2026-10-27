@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: repaired source 36c9595 passed 20 synthetic cases, the 50-call successor and the separate four-call guard fixture. Both peers and Lead accepted the bounded 50-call evidence; Platform/Lead accepted the separate boundary fixture. The failed 36c9595 full gate is preserved. Lead/Platform accepted verifier repair 50b1118; formatting-only successor 336d91b passed 16 focused cases in 17.29 seconds. Its new configured run is underway; full-suite results and delivery remain pending. Failed 12a8a43 and its unknown costs are preserved.
+Status: repaired source 36c9595 passed 20 synthetic cases, the 50-call successor and the separate four-call guard fixture. Both peers and Lead accepted the bounded 50-call evidence; Platform/Lead accepted the separate boundary fixture. The failed 36c9595 full gate is preserved. Lead/Platform accepted verifier repair 50b1118; formatting-only successor 336d91b passed 16 focused cases in 17.29 seconds. Its subsequent full run stopped at 1,061 passed/one failed during prediction-ingress installation verification; full verification is failed/incomplete and delivery held. Failed 12a8a43 and its unknown costs are preserved.
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Run the configured suite at 336d91b after accepted verifier source and 16 focused passes |
-| Platform | Bounded and verifier source reviews accepted; final verification and delivery review next |
-| Research | Focused verifier progress reconciled; primary released, available for final independent review |
+| Quality | Failure sealed; one bounded read-only pre-work profile authorized, result pending; no public retry |
+| Platform | Preserve prior scoped reviews; independently diagnose prediction-ingress timer/source behavior |
+| Research | Sealed second full-gate progress reconciled; primary released, available for independent review |
 | Project lead | Primary progress and integration after handoff; independent progress review and exact delivery |
 
-The two existing cloud checkouts are reused. Quality owns frozen 336d91b in identity for the new configured batch after accepted source review and focused checks. Research has released the six primary progress documents without environment use. Lead owns primary progress/integration after handoff and reviews/publishes this checkpoint. No additional checkout is needed.
+The two existing cloud checkouts are reused. Quality retains unchanged source/environment in identity for the authorized bounded read-only diagnosis. Research has released the six primary progress documents without environment use. Lead owns primary progress/integration after handoff and reviews/publishes this checkpoint. No additional checkout is needed.
 
 ## Scope and acceptance
 
@@ -38,7 +38,7 @@ Lightweight source/pure-contract output is bounded to 256 MiB across this slice.
 
 The original source proposal used one PR with two immutable checkpoints: strict payloads/retained bindings, then measured integration/proof. Its provisional 45-call profile uses the existing 1 MiB database parameter, totaling 978,165,760 artifact bytes and 1,247 CPU seconds; the 2 MiB alternative exceeds 1 GiB. Those original 45-call bounds were conditional. The later 50-call evidence and its separate resource review govern observed fit and headroom.
 
-Remaining gates: complete the new configured run and exact PR/main/candidate delivery. Historical estimates are not a new completion date. The approved backlog graph, caps and first-result forecast remain unchanged pending evidence-based re-estimation.
+Remaining gates: diagnose the new full-gate failure, complete required checks and verify exact PR/main/candidate delivery. Historical estimates are not a new completion date. The approved backlog graph, caps and first-result forecast remain unchanged pending evidence-based re-estimation.
 
 
 ## Accepted first checkpoint
@@ -79,4 +79,4 @@ The separate four-call guard fixture passed in 22.85 seconds with two exact deni
 
 ## Current verifier checks
 
-Lead/Platform accepted repair 50b1118; 336d91b changes only test formatting, preserving runtime/build/lock bytes and test AST. Fifteen new verifier cases and the exact previously failing classical [fit] case passed together (16 cases, 17.29 seconds), with offline archives/installed records matching 89 package files and unchanged dependencies/interpreter/lock. The new 15-command configured batch is running: lint/format/type passed; full-suite results and remaining gates are pending. The failed 36c full run and earlier source-specific fixture evidence remain intact; no final delivery or study admission is claimed.
+Lead/Platform accepted repair 50b1118; 336d91b changes only test formatting, preserving runtime/build/lock bytes and test AST. Fifteen new verifier cases and the exact previously failing classical [fit] case passed together (16 cases, 17.29 seconds), with offline archives/installed records matching 89 package files and unchanged dependencies/interpreter/lock. The subsequent full run stopped at 1,061 passed/one failed in 475.99 seconds: prediction ingress received SIGPROF (27) in installation verification before producer dispatch. The prior classical [fit]/outcome cases passed; 11 later commands were not run. Sealed readback confirms unchanged source/install/dependencies, entry nine/ticket 8, 18 records/eight closures and only setup/control holds. No seventh-prediction reservation/input/output or child was reached. The five-second control allowance covers total ingress; the 12-second work allowance was not started, and the signal location does not apportion CPU. One read-only pre-work profile is authorized at 30 CPU/60 wall seconds and 1 MiB output, omitting ticket write/fsync and CandidateStore with no public call/producer or mutation; result pending. Full verification is failed/incomplete and delivery held; no source/cap change or further public retry is authorized. The failed 36c full run, 16 focused passes and earlier fixture evidence remain distinct; lexical repair sufficiency, final delivery and study admission are not claimed.

@@ -12,10 +12,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Run the configured suite at 336d91b after accepted verifier repair and 16 focused passes | Lint/format/type passed; full-suite result and remaining gates pending |
-| Platform | Bounded and verifier source reviews accepted | Exact final verification and delivery review next |
-| Research | Verifier focused-check progress reconciled against sealed evidence | Primary released; available for final independent review |
-| Project lead | Own primary progress/integration after handoff; verifier source accepted | Full configured results precede delivery; prior evidence preserved |
+| Quality | Sealed 336d91b failure; one bounded read-only pre-work profile authorized | Diagnostic result pending; no public retry, source/cap change or delivery |
+| Platform | Prior scoped reviews retained; independent prediction-ingress timer/source diagnosis | Separate observed failure from proposed cause |
+| Research | Reconciled sealed second full-gate failure in six progress documents | Primary released; no runtime/environment use |
+| Project lead | Review the new failure evidence and diagnosis; preserve prior scoped results | Required checks and delivery held; parents remain open |
 
 ## Assignment history
 
@@ -1111,4 +1111,4 @@ Both specimens retain their declared bounds. The successor's 600-second lifetime
 
 Lead and Platform accepted lexical verifier repair 50b1118. Formatting-only successor [336d91b](https://github.com/spei04/strange-physics/commit/336d91b2009ccfac0480c0b10f64b036f53bf500) preserves runtime/build/lock bytes and test AST. Its 16 focused cases passed in 17.29 seconds: 15 new verifier cases plus the exact previously failing classical [fit] case. Offline wheel/sdist and installed records match 89 source package files; 4,689 dependencies, nine project metadata files, interpreter and lock remained unchanged across the focused run. The initial formatting diagnostic is retained.
 
-A new 15-command configured batch is running at 336d91b; lint, format and type checks passed, but the full-suite result and remaining gates are pending. This does not replace the failed 36c9595 full run (1,041 passed/one failed), its separate instrumented profile, the accepted selected 50/four fixtures, or the earlier 12a8a43 failure. No cap increase, full-pass, delivery, parent-closure or study claim follows from the focused result.
+The subsequent configured run at 336d91b stopped with 1,061 tests passed/one failed in 475.99 seconds. The existing test_one_ledger_candidate_preparation_24_predictions_score_and_paid_replays received SIGPROF (27) during prediction-ingress installation verification, at _installed_bytes opening a file. The prior classical [fit] case and its outcome variants passed. Lint/format/type passed; the later 11 configured commands were not executed. Sealed readback confirms unchanged source/install/dependencies: this was entry nine/ticket 8, the seventh prediction, after candidate, preparation and six predictions had closed. Eighteen ledger records/eight closures and unresolved setup/control holds survive; no prediction-8 reservation, retained input/output or child was reached. The five-second control timer covers total ingress, not verification alone; the 12-second work reservation was not started. Quality is authorized one read-only cProfile mirror of retained pre-work, bounded to 30 CPU/60 wall seconds and 1 MiB output. It omits durable ticket write/fsync and CandidateStore, performs no public stage/producer or mutation, and has no result yet. Platform independently reviews source/timer behavior; no further retry or source/cap change is authorized. Full verification is failed/incomplete and delivery held. The 16 focused passes, failed 36c9595 full run, accepted selected 50/four fixtures and earlier 12a8a43 failure remain distinct; the lexical repair is not established as sufficient.
