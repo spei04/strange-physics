@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: repaired source 36c9595 passed 20 synthetic cases, the 50-call successor and the separate four-call guard fixture. Both peers and Lead accepted the bounded 50-call evidence; Platform/Lead accepted the separate boundary fixture. The failed 36c9595 full gate is preserved. Lead/Platform accepted verifier repair 50b1118; formatting-only successor 336d91b passed 16 focused cases in 17.29 seconds. Its subsequent full run stopped at 1,061 passed/one failed during prediction-ingress installation verification; full verification is failed/incomplete and delivery held. Two bounded 30-call diagnostics passed; the later normal full-suite observation failed after 2,389 passes on paid original-score replay despite all 33 watched calls returning. Deadline propagation is accepted at 97f4d55 with source-qualified 13+4 focused passes. The read-only computational mirror validates the retained score but does not prove four-second fit. Same-invocation parsed-input reuse is accepted at 1dee2c5: 29 focused cases passed in 16.82 seconds and one actual 50-call specimen passed in 250.90 seconds, retaining 103 records, 43 closures and four unresolved holds. Base score replay used 3.609307376 seconds within the existing four-second work limit in this run only. A disabled full-check runner is being prepared for review; full verification and delivery remain held. Failed 12a8a43 and its unknown costs are preserved.
+Status: exact source 1cc9408 passed all 15 local configured commands, including 4,421 tests in 1,850.02 seconds in normal complete order. Runtime/test bytes remain accepted 1dee2c5. Both full-context score replays returned; the four-call and 50-call traces retain their intended denials. Passing physical fixtures were removed under the approved failed-only policy, so this full run does not retain per-call CPU/receipt artifacts. Separate selected-run measurements and historical failures remain source-specific. Exact PR/main/candidate delivery is pending; no timing, MAP, accuracy, study or publisher-authority claim follows.
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Finalize the author handoff for accepted 1dee2c5 source and bounded evidence |
-| Platform | Prepare a disabled full-check runner, then submit it for review; retain caps and unknown costs |
-| Research | Reconcile the six progress files; release primary to Lead for review |
-| Project lead | Review progress, author handoff and runner before verification/integration |
+| Quality | Full local verification complete at 1cc9408; source/environment released |
+| Platform | Independently review full-gate evidence and prepare exact delivery verification |
+| Research | Complete scientific readback and release this six-file reconciliation to Lead |
+| Project lead | Own released checkouts; review progress and integrate for PR/main/candidate delivery |
 
-The two existing cloud checkouts are reused. Exact 1dee2c5 source and bounded outcome evidence are frozen and accepted; Quality prepares the author handoff, while Platform prepares a disabled full-check runner for review. Research releases these six primary progress documents without environment use for Lead review/publication. No new full run or additional checkout is implied.
+The two existing cloud checkouts are reused. Exact 1cc9408 source/environment and all runtime holds are released after local verification. Research releases these six primary progress documents without environment use to Lead for review/integration. Platform reviews delivery evidence; no new implementation or additional checkout is assigned.
 
 The corrected actual-run host guard counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
 
@@ -40,7 +40,7 @@ Lightweight source/pure-contract output is bounded to 256 MiB across this slice.
 
 The original source proposal used one PR with two immutable checkpoints: strict payloads/retained bindings, then measured integration/proof. Its provisional 45-call profile uses the existing 1 MiB database parameter, totaling 978,165,760 artifact bytes and 1,247 CPU seconds; the 2 MiB alternative exceeds 1 GiB. Those original 45-call bounds were conditional. The later 50-call evidence and its separate resource review govern observed fit and headroom.
 
-Remaining gates: review the disabled full-check runner, complete required checks and verify exact PR/main/candidate delivery. Historical estimates are not a new completion date. The approved backlog graph, caps and first-result forecast remain unchanged pending evidence-based re-estimation.
+Remaining delivery gates: required hosted PR/main checks on both Python runtimes and exact candidate verification. The local full-suite duration does not establish hosted timing fit. Historical estimates are not a new completion date; the approved graph, caps and first-result forecast remain unchanged. [Full verification evidence and limits](EXECUTION_LOG.md#2026-10-27--retained-comparison-local-full-verification-passed).
 
 
 ## Accepted first checkpoint
