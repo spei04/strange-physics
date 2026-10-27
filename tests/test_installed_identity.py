@@ -106,9 +106,7 @@ def test_file_or_ancestor_symlink_is_denied(tmp_path: Path, position: str) -> No
         identity._installed_bytes(path, 64)
 
 
-def test_root_symlink_check_is_not_skipped(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_root_symlink_check_is_not_skipped(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     path = tmp_path / "file"
     private(path)
     original = Path.is_symlink
