@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research prepared six progress documents from b3992c3 and released primary to Lead for final review/publication; primary environment unused.",
-      "identity": "Lead owns released source/environment after PR124 main/candidate acceptance; no new implementation author assigned in this checkpoint.",
+      "scientific": "Lead owns primary progress at80a4d1f; no Research writer or environment use.",
+      "identity": "Clean9c8ebae; Quality is intended sole author after Platform consumer/capacity audit and Lead handoff; initial work read-only.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused; both clean and no consumers before handoff; free bytes 93668601856 at 2026-10-26T04:31:31Z. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "bounded_purchase_pr124_delivered_parents_open",
+      "status": "retained_journal_comparison_binding_preparation_capacity_review_pending",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Source/environment released; bounded purchase slice delivered; next implementation remains unassigned.",
-        "Platform": "Protected-main run 40277055513 and exact unpublished candidate accepted; read hold released.",
-        "Research": "Final delivery update prepared and released to Lead; next-work recommendation remains preparation only.",
-        "Project lead": "Delivery and progress reconciled; next implementation handoff unassigned; parents remain open."
+        "Quality": "Read-only finite comparison binding plan; sole intended author after handoff.",
+        "Platform": "Shared disk growth/consumer audit, then independent resource/recovery review.",
+        "Research": "Read-only scientific identity/failure/scoring acceptance review.",
+        "Project lead": "Ownership reconciliation, primary progress and staged implementation handoff."
       },
-      "handoff": "PR124/main dfda60f and its exact unpublished candidate are accepted. Lead owns both released checkouts; no active source/runtime consumers or new implementation assignment.",
+      "handoff": "No comparison writer found; two clean existing cloud checkouts reused. Initial immutable source preparation only; author checkout/runtime not yet granted.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Prepare retained-Journal comparison preparation/prediction/scoring bindings before one-way scored publisher authority handoff; early-only transfer is a separate limited option. Full-study allocation/census, parent audits and first-result re-estimation remain open. Next work is unassigned preparation; no new scope/caps or implementation in this checkpoint.",
+      "next_units": "Accept capacity/consumer recommendation and finite comparison binding/test profile, then grant sole-writer source handoff. Publisher authority handoff and full-study admission remain separate.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14561,6 +14561,27 @@
           "sequence": "Retained comparison preparation/prediction/scoring bindings, then one-way publisher handoff; early-only transfer remains a limited option",
           "scope_limit": "Supplied-material pre-freeze wrappers are accepted, comparison-phase bindings are not. No MAP/N04, full-study allocation or parent-completion claim."
         }
+      },
+      "comparison_integration_handoff": {
+        "status": "assigned_read_only_preparation",
+        "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
+        "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
+        "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
+        "author": "Quality",
+        "reviewers": [
+          "Platform",
+          "Research"
+        ],
+        "scope": "Retained purchased-history preparation, prediction and scoring with failed rows, exact identities, cumulative holds and paid recovery",
+        "initial_free_bytes": 63166316544,
+        "prior_delivery_free_bytes": 93518716928,
+        "capacity_review": "pending",
+        "proposed_full_specimen_calls_before_extra_faults": 45,
+        "runtime_profile": "not_derived_or_admitted",
+        "new_allocation": false,
+        "next_gate": "Capacity/consumer recommendation plus feasible finite implementation/test plan; explicit author handoff",
+        "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
+        "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98"
       }
     },
     "certificate_trust_update": {

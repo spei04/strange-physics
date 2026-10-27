@@ -1495,3 +1495,8 @@ Pure contracts/binder 3df6dc3 is accepted and published on the source branch; ac
 ## 2026-10-26 — First measured purchase checkpoint accepted
 
 Source 2c43f97 is accepted and published for the first-purchase and bounded recovery checkpoint, including qualified failure/replay evidence. The five selected 075c733 cases and retained bounded full path are independently accepted, with repeated-action calibration/menu limitations. PR124/main dfda60f is delivered: all five jobs in run 40277055513 and exact unpublished candidate 12630997569 are accepted. Next is retained comparison preparation/prediction/scoring binding, then publisher handoff; implementation is unassigned. V3, cumulative caps and parent issues #105/#106 are unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-26--first-measured-purchase-checkpoint-accepted).
+
+
+## 2026-10-27 — Retained-Journal comparison bindings assigned
+
+Quality prepares the retained-Journal preparation/prediction/scoring slice, with independent Platform resource/recovery review and Research scientific review. Platform first audits shared disk growth and consumers; the author checkout and numerical work await explicit handoff and a feasible finite profile. Failed rows, exact identities, cumulative holds and paid recovery are required. Publisher handoff and full-study admission remain separate; no caps, graph or grid/Laplace sequence changed. [Assignment and next gate](EXECUTION_LOG.md#2026-10-27--retained-journal-comparison-bindings-assigned).
