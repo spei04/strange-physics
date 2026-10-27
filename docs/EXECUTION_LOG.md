@@ -12,10 +12,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Retain the observed full-suite failure; propose narrow deadline propagation repair | Separate replay performance analysis; no implementation or new gate pass yet |
-| Platform | Review deadline propagation and replay resource evidence | Preserve original caps, failed runs and unresolved costs |
-| Research | Reconciled score-replay failure and source-bound diagnosis | Primary released to Lead; no runtime/environment use |
-| Project lead | Review progress, repair proposal and required verification | Full verification and delivery held; parents remain open |
+| Quality | Implement same-invocation parsed comparison-input reuse after accepted deadline repair | Immutable source review and required checks next; no timing-fit claim |
+| Platform | Review reuse/resource invariants and unchanged caps | Preserve failed runs, original receipts and unresolved costs |
+| Research | Reconcile accepted propagation checks and read-only replay profile | Primary released after this checkpoint; next independent semantic review |
+| Project lead | Review progress and narrow optimization before verification/delivery | Full verification and delivery held; parents remain open |
 
 ## Assignment history
 
@@ -1128,3 +1128,11 @@ The normal full-suite run at unchanged 336d91b, with minimal observation of the 
 Read-only scientific diagnosis found exact agreement in the original score's six material hashes, all 24 ordered submissions, raw input/result/receipt and original ledger prefix. Source proves a masking path: the deadline handler raises StudyLedgerError, a ValueError subclass; scoring's semantic ValueError handlers can turn it into a preparation/prediction mismatch. The failed replay retained 4.001664812 CPU seconds against a four-second parent-work timer. That supports masked expiry as an inference, but the signal and caught exception were not recorded. No numerical or float/order discrepancy is established, and score validation must not be weakened.
 
 The next work is a narrow deadline-propagation repair proposal and separate replay-performance analysis, not an implemented fix or gate pass. The two earlier full-suite failures, bounded diagnostic passes, accepted 36c selected 50/four fixtures and failed 12a attempt remain source-specific. Original receipts and unknown-cost holds remain retained. No cap, study, accuracy, publisher-handoff or parent-completion claim follows; #105/#106 remain open.
+
+## 2026-10-27 — Deadline propagation repaired; replay work profiled
+
+Lead/Platform accepted deadline-propagation production source 20eb11a; final test-only source [97f4d55](https://github.com/spei04/strange-physics/commit/97f4d55b0282becf8c2ba8e4050d8e3030d3e13c) preserves those runtime bytes. Focused evidence is 13 unchanged passing cases at 1b5697f plus four final passing cases at 97f4d55 (4.34 seconds), not one 17-case run. Scoped Ruff/format/type checks pass; 89 package blobs match the installed/archive source, with dependencies/interpreter/lock unchanged. The initial test-note expectation diagnostic is retained. The private interruption now bypasses semantic ValueError handlers and translates at the public boundary after cleanup/settlement; the tests retain ordinary semantic errors and known-cost unknown holds. Handler invocation and mocked child transport do not establish actual elapsed expiry or PID/reap behavior.
+
+One separately bounded read-only computational replay profile completed at 97f4d55, with no public commit, numerical producer or authority mutation. Final score validation returned successfully; 192 retained files, three untraversed pytest aliases, 89 installed package files and dependencies/interpreter/lock were unchanged. Instrumented work used 10.0385 CPU seconds: retained binding dominated at 7.2497 seconds and final score validation used 0.8724 seconds. Repeated canonical JSON traversal is the observed hotspot. This fresh-process cProfile mirror omits the real four-second timer and persistence, so it proves neither the historical cause nor timing fit.
+
+Quality is assigned only same-invocation reuse of the binder's already parsed, raw-bound comparison input in final supervision. All authority, original-prefix, engine/config, result and witness checks remain required; immutable source review and verification are next. The latest full suite remains failed/incomplete at 2,389 passed/one failed in 1,127.69 seconds, with 11 later commands unrun. Earlier failed runs and accepted selected 50/four evidence remain distinct. No cap, forecast, study, accuracy, publisher-handoff, PR/main/candidate delivery or #105/#106 completion claim follows.

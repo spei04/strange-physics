@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research released the six primary progress documents after observed full-suite failure reconciliation; no environment use. Lead owns primary progress/integration after handoff.",
-      "identity": "Quality retains unchanged 336d91b source/environment after the failed observed full run. Narrow deadline propagation remains a repair proposal; replay performance is separate. No implementation or new gate pass yet.",
+      "scientific": "Research releases six-doc progress checkpoint to Lead; no environment use. Lead owns primary progress/integration after handoff; Research next independent semantic review.",
+      "identity": "Quality owns narrowly scoped same-invocation parsed-input reuse implementation after accepted97 deadline repair and read-only replay profile; source/runtime handoffs remain coordinated. No full verification or delivery pass.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "retained_journal_comparison_observed_full_gate_failed_delivery_held",
+      "status": "retained_comparison_deadline_repair_accepted_parsed_input_reuse_implementation_delivery_held",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Preserve observed full-run failure; prepare narrow deadline propagation repair proposal and separate replay-performance analysis. No implementation or new gate pass yet.",
-        "Platform": "Review deadline propagation and replay resource evidence, preserving original caps and unknown holds.",
-        "Research": "Read-only scientific diagnosis and six-doc failure reconciliation complete; primary released to Lead, no runtime/environment use.",
-        "Project lead": "Own progress/integration after handoff; review repair proposal and required verification. Delivery held and parents open."
+        "Quality": "Implement only same-invocation parsed comparison-input reuse after accepted deadline propagation and read-only replay profile; immutable review and verification next.",
+        "Platform": "Review reuse/resource invariants with original caps, receipts and unknown holds preserved.",
+        "Research": "Accepted scientific profile readback and six-doc reconciliation complete; release primary to Lead, then independent semantic source review. No environment use.",
+        "Project lead": "Own primary progress/integration after handoff; review immutable optimization and required verification. Delivery held; parents open."
       },
-      "handoff": "Accepted selected 36c 50/four, 16 focused checks and two bounded 30-call observations remain source-specific. Observed full suite at unchanged 336d91b stopped at 2389 passed/1 failed in 1127.69s on original score replay; all 33 watched calls passed and 11 later commands did not run. Retained score material matches. Source proves a deadline-to-semantic-error masking path; 4.001664812s work CPU against 4s supports expiry inference, not direct signal proof. Propagation proposal and replay performance are separate next work; Research released primary and delivery remains held.",
+      "handoff": "Deadline source20eb/final97 accepted; focused lineage13 unchanged passes at1b5697f plus4 at97, not17 in one run. Read-only profile final score validates; canonical traversal dominates and4s fit is not established. Quality implements only same-invocation parsed-input reuse. Latest fullsuite336 remains2389pass/1fail/1127.69s;11commands unrun. Original failures, accepted36c scoped fixtures, receipts and unknown holds preserved.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Review narrow deadline propagation repair proposal and separate replay-performance analysis, then required checks before PR/main/candidate delivery. Publisher handoff, full-study allocation/census and parent acceptance remain separate; no later scientific implementation assigned.",
+      "next_units": "Review exact parsed-input reuse source preserving final validators/witnesses, then required verification before PR/main/candidate delivery. Publisher handoff, full-study allocation/census and parent acceptance remain separate; no study or later scientific implementation assigned.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "bounded_integration_accepted_observed_full_gate_failed",
+        "status": "bounded_integration_accepted_deadline_fixed_parsed_input_reuse_pending_full_verification",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14579,7 +14579,7 @@
         "proposed_full_specimen_calls_before_extra_faults": 45,
         "runtime_profile": "both_admitted36c_fixtures_completed_scope_qualified",
         "new_allocation": false,
-        "next_gate": "Narrow deadline propagation proposal and separate replay-performance analysis; required configured/PR/main/candidate checks remain pending. No implementation or new gate pass yet.",
+        "next_gate": "Immutable review of same-invocation parsed StageInput reuse, then required verification under unchanged caps. Full suite and PR/main/candidate delivery remain pending.",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -14924,6 +14924,51 @@
             ],
             "temporal_extension_reached": false
           }
+        },
+        "deadline_propagation": {
+          "source": "97f4d55b0282becf8c2ba8e4050d8e3030d3e13c",
+          "tree": "e22691f520655f39c313f9aa72add02e581de168",
+          "production_source": "20eb11aed4e9b0bb7a48b161ebbabe120ec6866e",
+          "status": "Lead/Platform source accepted; focused lineage accepted",
+          "author_index_sha256": "fd168d7815f9386090ee0a784f824afd032343946911c873298ed9a1d263f3ed",
+          "focused_lineage": [
+            {
+              "source": "1b5697fb87618c1d5639503e25e9a4babffd4f19",
+              "passed": 13,
+              "qualification": "Case definitions/helpers AST unchanged at final source"
+            },
+            {
+              "source": "97f4d55b0282becf8c2ba8e4050d8e3030d3e13c",
+              "passed": 4,
+              "seconds": 4.34
+            }
+          ],
+          "single_17_case_run": false,
+          "scoped_static_checks": "Ruff/format/type pass",
+          "installed_archive_source": "1b5697fb87618c1d5639503e25e9a4babffd4f19",
+          "runtime_package_blobs_equal": 89,
+          "dependencies_interpreter_lock_unchanged": true,
+          "initial_test_note_diagnostic_preserved": true,
+          "qualification": "Synchronous actual handler and mocked child transport; no elapsed expiry, actual PID/reap, or4s score-work-fit proof."
+        },
+        "replay_work_profile": {
+          "source": "97f4d55b0282becf8c2ba8e4050d8e3030d3e13c",
+          "historical_retained_source": "336d91b2009ccfac0480c0b10f64b036f53bf500",
+          "lead_index_sha256": "99199411303a053457f0b60ed08fa722f61f9d00f63e9c4816e47e0218a37f71",
+          "research_readback_sha256": "16faee58b8cbad010d129e18c65e6ef75b06e0bffc79c6c5dc42ffd81cbd6e86",
+          "status": "one_read_only_computational_mirror_returned",
+          "final_score_validation": "passed",
+          "public_calls": 0,
+          "numerical_entries": 0,
+          "instrumented_work_cpu_ns": 10038504024,
+          "binding_cpu_ns": 7249671584,
+          "final_validation_cpu_ns": 872392014,
+          "retained_regular_files": 192,
+          "untraversed_aliases": 3,
+          "installed_files": 89,
+          "before_after_equal": true,
+          "qualification": "cProfile/fresh-process/immutable-SQLite mirror omits real4s timer, admission and persistence; no historical-cause or timing-fit claim.",
+          "next_optimization": "Quality implements only invocation-local already-parsed raw-bound StageInput reuse; all authority/original-prefix/engine/config/result/witness checks remain required; source review pending."
         }
       }
     },
