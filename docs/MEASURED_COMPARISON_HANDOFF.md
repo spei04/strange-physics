@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: 22 primitive tests and the actual 44-call handoff/replay specimen are independently accepted. The caller-fault cases have separate passing evidence at ca9ee869 and corrected test source 1b43838; the original assertion failure remains retained. The API guide and bounded parent audit are complete. Final configured checks, exact PR/main/candidate delivery and explicit parent acceptance remain pending.
+Status: PR #128/main e587f47 and unpublished candidate 12758851671 are accepted after exact-source local checks, both hosted full suites and independent package review. RA-02/#105 and RA-N01/#106 are explicitly complete for the approved bounded native implementation. Source-specific primitive, actual handoff/replay and caller-fault evidence is retained. Full-study authority/allocation and numerical inference remain pending. [Delivery and limits](EXECUTION_LOG.md#2026-10-27--publisher-handoff-delivered-and-native-parents-accepted).
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Prepare final ten local checks and exact hosted candidate verification |
-| Platform | Parent audit and API guide complete; review final progress/delivery |
-| Research | Targeted caller cases complete; source/runtime released |
-| Project lead | Own primary progress and coordinate final source/delivery |
+| Quality | Candidate verification complete; next independent contract review |
+| Platform | Delivery/parent review complete; next numerical and resource contract review |
+| Research | Next parameterized finite-grid contracts; numerical profile not accepted |
+| Project lead | Publish bounded acceptance/progress and maintain the assignment log |
 
-The two existing cloud checkouts are reused. After Quality released the passing 44-call run, Lead integrated only the new ca9ee869 test file in identity. All 92 installed package files and locked dependencies remain unchanged; no refresh was needed. Primary holds this documentation update without using its environment. Reviewers inspect immutable source and retained evidence.
+The two existing cloud checkouts remain available for sequential reuse. Identity holds reviewed head 6c75368, with all 92 installed package files and locked dependencies unchanged. Primary retains its own unused environment and holds only this progress update after candidate-review consumers released it. No checkout or dependency environment was created.
 
 The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
 

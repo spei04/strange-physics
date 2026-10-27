@@ -12,15 +12,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Final ten local checks and exact hosted candidate verification | Frozen final source; hosted full suites remain required |
-| Platform | Parent exit audit and API guide complete; review final progress/delivery | Preserve source-specific evidence and global-budget limits |
-| Research | Targeted caller recovery complete; released for next dependency-ready work | First case at ca9; corrected lost-ack case at 1b43838 |
-| Project lead | Compose reviewed code and seven docs; own GitHub delivery | Reuse both checkouts; parents #105/#106 remain open |
+| Quality | Candidate verification complete; next review of N02.a contracts | Exact source/package accepted; no numerical runtime assigned |
+| Platform | Independent delivery and bounded parent review complete; next N02.a review | Grid proposal challenged; numerical settings remain unaccepted |
+| Research | Next: parameterized finite-grid belief contracts | Preserve original candidate/prefix/cost identities; justify numerical profile separately |
+| Project lead | Record bounded parent acceptance and publish consistent progress | Two cloud checkouts retained for reuse; full-study admission remains separate |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Quality + Platform + Project lead | PR128/main e587f47 candidate verification and bounded parent acceptance | Delivered; RA-02/N01 accepted; next Research contract slice, numerical profile unaccepted |
 | 2026-10-27 | Research + Quality + Project lead | Caller unknown/protected retry and committed-seal lost acknowledgement | First case passed at ca9; corrected second case passed at 1b43838; original failed assertion retained |
 | 2026-10-27 | Platform + Project lead | Bounded parent audit and actual publication API guide | No additional production blocker identified; explicit final evidence/delivery acceptance remains |
 | 2026-10-27 | Quality + Platform + Project lead | Exact 6d42 caller/activation primitive verification | 22 primitives and one actual 44-call specimen passed; independently accepted; final checks pending |
@@ -1213,3 +1214,19 @@ These fault cases use synthetic typed ancestry and an opaque observation capture
 Platform's bounded parent audit found no additional algorithm or multi-cell coordinator prerequisite for RA-02/RA-N01 interface closure. The updated [publication API guide](MEASURED_PUBLICATION.md) documents the irreversible one-cell seal, original trusted-file lifetime, paid activation/replay, exact supported cold recovery cuts, preserved global charges and later multi-cell integration owner. Exact future algorithm cadence and a feasible global profile remain required before RA-07.b, after those algorithms exist.
 
 Quality owns the final ten local static/schema/security/package checks and candidate verification; Platform reviews the final evidence and progress; Research has completed the targeted caller cases; Lead owns source composition and GitHub delivery. Hosted full suites on Python 3.12/3.14, PR/main/candidate verification and explicit parent acceptance remain pending. Parents #105/#106 stay open. Full-study authority/capacity, global caps and grid-first/Laplace-later sequencing are unchanged.
+
+## 2026-10-27 — Publisher handoff delivered and native parents accepted
+
+[PR #128](https://github.com/spei04/strange-physics/pull/128) delivered the reviewed handoff as main `e587f479cd24813697ed62cefff9b3beb9474baa`, tree `dd651443c8230915e8d86574f8798dbad21d2d0f`, identical to reviewed head `6c7536818552d4a239a1105045a8a37c2e699b49`. All ten local configured static/schema/security/package checks passed at that head. PR run `40555742083` passed 4,502 tests on Python 3.12/3.14 in 505.46/630.77 seconds; [protected-main run `40557832195`](https://github.com/spei04/strange-physics/actions/runs/40557832195) passed all five jobs, with 4,502 tests in 705.10/791.43 seconds. The skipped PR candidate job is expected; it passed on main.
+
+Quality verified unpublished candidate `12758851671` (570,836 bytes; ZIP SHA-256 `f3d2eebf2e311cc72cac5ee7b1477c74401ae8924f310c0edb91d58df54293d7`) against immutable source, provenance, lock and reviewed author archives. Platform independently reviewed the retained evidence. All 92 package files and 57 pinned profile inputs matched; the raw logs support 13 interpreter-copy observations and two certificate-store checks. Verification index: `3906c8369d65ce485d9c0c659dd91b90d78db0ade08d4f37d9eaabf84c611f1d`; independent review: `b67002254ace59aac7ba0ab6931cf7cf06eb6038ec4beddf64a3aef7eee482a8`. The requirements-export bytes were not independently regenerated, and copied Python executables still use base shared libraries. This is package delivery, not deployment or production-readiness proof.
+
+The Lead explicitly accepts RA-02/#105 and RA-N01/#106 for the approved bounded native implementation after the independent parent mapping and final delivery review. The implemented contracts preserve actual candidates and purchased-history identities, independent scoring, cumulative costs, charged recovery and the one-way publication handoff. MAP inference belongs to N02; this acceptance does not imply it has run. The 22 primitive cases, actual 44-call handoff/replay specimen, first caller-fault case at `ca9ee869` and corrected lost-acknowledgement case at `1b43838` retain their original sources and limits. The original four-call attempt remains one pass/one assertion failure; the corrective run is separate. Earlier Ruff and mypy delivery failures are also retained. Explicit bounded acceptance record: `489882248c85537563b34c9fac80b5715ac8113410ba8ec002bb0647ae33e1ce`.
+
+The next dependency-ready slice is RA-N02.a's parameterized belief contracts, independently reviewed by Quality and Platform. Research's proposed 1,024-cell midpoint grid and discrepancy scale `1e-6` are **not accepted or frozen**. Platform's analytic synthetic boundary case has a local likelihood scale of about `4.8e-7`, compared with grid spacing `0.00390625`; exact finite-pool normalization does not establish adequate uncertainty or predictive resolution. Revisit the numerical profile, likelihood assumptions, predictive/ranking checks and full work census on disjoint development cases before any measured comparison. This is design reasoning, not a hidden-world observation.
+
+Grid-first sequencing aims to hold inference constant while comparing selectors, then use accepted frozen development fixtures to audit Laplace. Laplace remains required; its comparative acceptance follows those fixtures. Shared interface preparation and analytic unit design can overlap when their inputs are stable, without claiming early approximation validity or changing the approved dependency graph. If no useful grid reference fits the accepted limits, reconsider the inference plan rather than force a passing profile.
+
+Full-study global authority/allocation, resource fit and admission remain open before RA-07.b: the retained 36-publication reservation floor alone is 1,168 MiB, above the 1 GiB study cap. Caps remain 36 episodes/432 purchases, 8 CPU-core-hours, 1 GiB and zero providers/provisioning. No study has run. Both existing cloud checkouts are retained for sequential reuse; no new checkout or environment was created. The reuse census observed 61,704,564,736 free bytes and no visible checkout cwd consumers (235 inaccessible/raced process entries). Candidate verification removed 2,071,460 bytes of its own temporary exports; both durable checkout environments remain independently owned.
+
+Private evidence remains on the cloud with owner-readable records and a 2026-11-26 diagnostic review date. Candidate review and acceptance hashes above identify the retained records without publishing logs or credentials.
