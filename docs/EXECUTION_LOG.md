@@ -12,15 +12,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Implement same-invocation parsed comparison-input reuse after accepted deadline repair | Immutable source review and required checks next; no timing-fit claim |
-| Platform | Review reuse/resource invariants and unchanged caps | Preserve failed runs, original receipts and unresolved costs |
-| Research | Reconcile accepted propagation checks and read-only replay profile | Primary released after this checkpoint; next independent semantic review |
-| Project lead | Review progress and narrow optimization before verification/delivery | Full verification and delivery held; parents remain open |
+| Quality | Finalize the author handoff document for accepted parsed-input reuse | Preserve exact source and focused/selected evidence; no full-suite pass |
+| Platform | Prepare a disabled full-check runner, then submit it for review | No new full run started; retain caps and historical failures |
+| Research | Reconcile the accepted focused and actual 50-call evidence in six progress files | Release primary to Lead for independent review |
+| Project lead | Review progress, author handoff and proposed full-check runner | Integration and delivery held; parents #105/#106 remain open |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Quality + Platform + Research | Parsed-input reuse at 1dee2c5: focused 29 and one actual 50-call specimen accepted | Author handoff and disabled full-check runner preparation; full verification still pending |
 | 2026-10-27 | Quality | Repaired source 36c9595: 20 synthetic cases and both admitted fixtures passed | Full configured checks running; exact evidence retained |
 | 2026-10-27 | Research | Independent retained 50-call scientific/temporal readback | Accepted within fixed-selection conformance scope; no numerical rerun |
 | 2026-10-27 | Platform + Research | Exact-view reuse and prefix-head repair independently reviewed | Bounded successor evidence accepted; earlier failure preserved |
@@ -1136,3 +1137,11 @@ Lead/Platform accepted deadline-propagation production source 20eb11a; final tes
 One separately bounded read-only computational replay profile completed at 97f4d55, with no public commit, numerical producer or authority mutation. Final score validation returned successfully; 192 retained files, three untraversed pytest aliases, 89 installed package files and dependencies/interpreter/lock were unchanged. Instrumented work used 10.0385 CPU seconds: retained binding dominated at 7.2497 seconds and final score validation used 0.8724 seconds. Repeated canonical JSON traversal is the observed hotspot. This fresh-process cProfile mirror omits the real four-second timer and persistence, so it proves neither the historical cause nor timing fit.
 
 Quality is assigned only same-invocation reuse of the binder's already parsed, raw-bound comparison input in final supervision. All authority, original-prefix, engine/config, result and witness checks remain required; immutable source review and verification are next. The latest full suite remains failed/incomplete at 2,389 passed/one failed in 1,127.69 seconds, with 11 later commands unrun. Earlier failed runs and accepted selected 50/four evidence remain distinct. No cap, forecast, study, accuracy, publisher-handoff, PR/main/candidate delivery or #105/#106 completion claim follows.
+
+## 2026-10-27 — Parsed-input reuse and one measured 50-call run accepted
+
+Same-invocation parsed-input reuse is accepted at production source 010fc64 and test successor 1dee2c5. The binder passes its strict-parser-owned inner input to final supervision; authority, engine/config, result and closure-time witness checks remain. Exact 1dee2c5 focused verification passed 29 cases in 16.82 seconds: nine new handoff cases plus 20 existing synthetic resolver cases. Public dispatch, numerical producers and child work were poisoned. Both archives and installed records match 89 source files, with focused pre/post identities unchanged. This supplements the separate deadline-fix lineage of 13 unchanged cases at 1b5697f plus four at 97f4d55; it is not a replacement full-suite pass.
+
+One admitted, unchanged 50-call specimen passed at 1dee2c5 in 250.90 seconds, with 50 entries, 48 returns and two intended failures. Independent scientific and resource readbacks verified 103 ledger records, 43 closures and four unresolved holds; all 187 retained files and two aliases were unchanged. Twelve ordered paid purchases preserve 11 completed rows and the declared failed last row. Fixed pre-feedback selection, 24 ordered predictions and the same-history classical result bind to their original material. Missing prediction A remains unknown; its unscorable score completes, retry B closes later, paid replay preserves the original score bytes/view, and fresh stale-A scoring is denied. The base score replay used 3.609307376 parent CPU seconds within its existing four-second work limit; historical unscorable replay used 2.330999255 seconds. These are single-run observations, not timing guarantees or proof of the historical cause. Repeated calibration, a one-action menu and fixed index 1 remain conformance evidence, not MAP, accuracy or study results.
+
+The host guard was corrected from a comparison-owned subset to all RA02 regular files without following symlinks, with 64 MiB active and 4 MiB diagnostic headroom under the unchanged 2 GiB ceiling. No scientific cap was raised. Final control tail remains reserved/unresolved; a missing holder measurement is not zero, and final setup proof CPU is not separately serialized. Quality prepares the author handoff; Platform prepares a disabled full-check runner for review; Research reconciles these six files and releases primary to Lead. No new full run has started. The latest full-suite result remains the source-specific 336d91b failure: 2,389 passed/one failed in 1,127.69 seconds, with 11 later commands unrun. Earlier 12a/36c/336 failures, accepted selected evidence and unknown holds remain intact. Full verification, PR/main/candidate delivery, publisher authority, study allocation and parents #105/#106 remain open.

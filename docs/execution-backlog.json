@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research releases six-doc progress checkpoint to Lead; no environment use. Lead owns primary progress/integration after handoff; Research next independent semantic review.",
-      "identity": "Quality owns narrowly scoped same-invocation parsed-input reuse implementation after accepted97 deadline repair and read-only replay profile; source/runtime handoffs remain coordinated. No full verification or delivery pass.",
+      "scientific": "Research completes six-doc reconciliation without environment use and releases primary to Lead for independent review/publication.",
+      "identity": "Exact 1dee2c5 source and selected outcome are frozen/accepted. Quality prepares the author handoff; Platform prepares a disabled full-check runner for review. No new full run or delivery pass.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "retained_comparison_deadline_repair_accepted_parsed_input_reuse_implementation_delivery_held",
+      "status": "retained_comparison_parsed_input_and_selected_fifty_accepted_full_verification_delivery_held",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Implement only same-invocation parsed comparison-input reuse after accepted deadline propagation and read-only replay profile; immutable review and verification next.",
-        "Platform": "Review reuse/resource invariants with original caps, receipts and unknown holds preserved.",
-        "Research": "Accepted scientific profile readback and six-doc reconciliation complete; release primary to Lead, then independent semantic source review. No environment use.",
-        "Project lead": "Own primary progress/integration after handoff; review immutable optimization and required verification. Delivery held; parents open."
+        "Quality": "Finalize author handoff for accepted 1dee2c5 source and focused/selected evidence.",
+        "Platform": "Prepare a disabled full-check runner and submit it for review; no new full run started.",
+        "Research": "Reconcile these six progress files, then release primary to Lead for independent review. No environment use.",
+        "Project lead": "Review progress, author handoff and runner; integrate only after required verification. Delivery held; parents open."
       },
-      "handoff": "Deadline source20eb/final97 accepted; focused lineage13 unchanged passes at1b5697f plus4 at97, not17 in one run. Read-only profile final score validates; canonical traversal dominates and4s fit is not established. Quality implements only same-invocation parsed-input reuse. Latest fullsuite336 remains2389pass/1fail/1127.69s;11commands unrun. Original failures, accepted36c scoped fixtures, receipts and unknown holds preserved.",
+      "handoff": "Same-invocation parsed-input reuse is accepted at 010fc64/1dee2c5. Exact 29 focused cases (9 new plus 20 existing) passed in 16.82 seconds; one admitted actual 50-call specimen passed in 250.90 seconds with 103 records, 43 closures, four holds and original/historical replay invariants. Deadline repair 97f4d55 remains separate 13+4 lineage. The whole-RA02 host census replaces the subset. Latest full suite 336d91b remains 2,389 passed/one failed in 1,127.69 seconds; 11 commands were unrun. Source-specific failures and unknown holds are preserved; no timing guarantee.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Review exact parsed-input reuse source preserving final validators/witnesses, then required verification before PR/main/candidate delivery. Publisher handoff, full-study allocation/census and parent acceptance remain separate; no study or later scientific implementation assigned.",
+      "next_units": "Quality author handoff and Platform disabled full-check runner preparation/review, then required exact-source full/PR/main/candidate verification. Publisher authority handoff, full-study allocation/census and parent acceptance remain separate; grid first, Laplace later. No study or new scientific allocation.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "bounded_integration_accepted_deadline_fixed_parsed_input_reuse_pending_full_verification",
+        "status": "parsed_input_reuse_and_one_selected_fifty_accepted_disabled_fullgate_preparation",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14577,9 +14577,9 @@
         "prior_delivery_free_bytes": 93518716928,
         "capacity_review": "accepted_for_lightweight_source_only",
         "proposed_full_specimen_calls_before_extra_faults": 45,
-        "runtime_profile": "both_admitted36c_fixtures_completed_scope_qualified",
+        "runtime_profile": "Source-specific 36c9595 selected 50/four outcomes remain accepted; current 1dee2c5 selected 50-call outcome independently accepted under unchanged scientific caps.",
         "new_allocation": false,
-        "next_gate": "Immutable review of same-invocation parsed StageInput reuse, then required verification under unchanged caps. Full suite and PR/main/candidate delivery remain pending.",
+        "next_gate": "Review the disabled full-check runner before required verification; no new full suite started. Full/PR/main/candidate delivery remains pending; parents #105/#106 remain open.",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -14969,6 +14969,59 @@
           "before_after_equal": true,
           "qualification": "cProfile/fresh-process/immutable-SQLite mirror omits real4s timer, admission and persistence; no historical-cause or timing-fit claim.",
           "next_optimization": "Quality implements only invocation-local already-parsed raw-bound StageInput reuse; all authority/original-prefix/engine/config/result/witness checks remain required; source review pending."
+        },
+        "parsed_input_reuse": {
+          "source": "1dee2c5f79a8ae05b2f4e7fcdc6bcd42e1b868c9",
+          "tree": "f5330b45b704362348288eb0b7442a368376a446",
+          "production_source": "010fc64dcad6284873828caaf3bdf0957e60b272",
+          "status": "source and focused evidence accepted",
+          "focused_passed": 29,
+          "focused_seconds": 16.82,
+          "new_cases": 9,
+          "existing_cases": 20,
+          "archive_source_installed_files": 89,
+          "pre_post_identity_equal": true,
+          "scope": "Strict same-invocation parsed input reuse; all final authority/result/witness checks retained. Synthetic focused tests poison public/child/numerical execution; separate actual run below."
+        },
+        "parsed_input_fifty": {
+          "source": "1dee2c5f79a8ae05b2f4e7fcdc6bcd42e1b868c9",
+          "status": "single_selected_outcome_independently_accepted",
+          "passed": 1,
+          "pytest_seconds": 250.9,
+          "public_entries": 50,
+          "public_returns": 48,
+          "declared_failures": 2,
+          "ledger_records": 103,
+          "closures": 43,
+          "unresolved_holds": 4,
+          "unknown_attempts": [
+            "setup",
+            "control",
+            "prediction-41",
+            "scoring-44"
+          ],
+          "retained_files": 187,
+          "retained_bytes": 5990667,
+          "aliases": 2,
+          "paid_rows": 12,
+          "completed_rows": 11,
+          "failed_rows": 1,
+          "selected_candidate_index": 1,
+          "ordered_predictions": 24,
+          "base_score_replay_parent_cpu_ns": 3609307376,
+          "historical_score_replay_parent_cpu_ns": 2330999255,
+          "parent_replay_work_limit_ns": 4000000000,
+          "temporal_result": "A remains unknown; unscorable score completes; same-logical retry B closes; original score replay preserves original bytes/view; fresh stale-A scoring is denied.",
+          "host_guard": {
+            "scope": "All RA02 regular files, without symlink following; the earlier comparison-owned subtotal was not the shared census.",
+            "shared_limit_bytes": 2147483648,
+            "active_headroom_bytes": 67108864,
+            "diagnostic_headroom_bytes": 4194304,
+            "actual_preflight_regular_bytes": 1384181490,
+            "actual_preflight_shared_upper_bytes": 1455484658,
+            "scientific_caps_unchanged": true
+          },
+          "qualification": "One fixed-selection/repeated-calibration/one-action-menu conformance specimen, no accuracy/MAP/study/publisher claim or timing guarantee. Final control tail remains reserved; holder None is not zero; setup final proof CPU not separately serialized. Prior full failures remain source-specific; full configured and hosted gates pending."
         }
       }
     },
