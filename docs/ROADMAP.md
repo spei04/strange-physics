@@ -1500,3 +1500,8 @@ Source 2c43f97 is accepted and published for the first-purchase and bounded reco
 ## 2026-10-27 — Retained-Journal comparison bindings assigned
 
 Quality owns the existing identity checkout for strict retained-Journal preparation/prediction/scoring contracts and bindings, with independent Platform and Research review. The capacity/consumer audit supports lightweight work; the first immutable source checkpoint and complete finite resource profile precede measured runtime. Failed rows, exact identities, cumulative holds and paid recovery are required. Publisher handoff and full-study admission remain separate; no caps, graph or grid/Laplace sequence changed. [Assignment and next gate](EXECUTION_LOG.md#2026-10-27--retained-journal-comparison-bindings-assigned).
+
+
+## 2026-10-27 — Pure comparison bindings accepted
+
+Pure payloads and material bindings at bdfed5d are independently accepted and published. The exact-source addendum passed 19 pure tests in 23.14 seconds; 88 source/package/installed files match. The initial test-inventory gap is preserved and closed by that addendum. Quality is implementing the measured supervisor adapter, with Platform and Research reviewing the next immutable source and concrete resource profile before measured calls. This is not actual Journal authority, numerical comparison or parent completion. Caps, graph and grid-first/Laplace-later sequencing remain unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-27--pure-comparison-bindings-accepted).

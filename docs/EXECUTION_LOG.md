@@ -12,15 +12,18 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Implement strict comparison payloads and retained bindings in identity | First immutable checkpoint and pure tests; measured runtime not admitted |
-| Platform | Capacity audit complete; review resource profile and immutable source | Host guards accepted; scientific runtime profile remains provisional |
-| Research | Scientific checklist complete; review first frozen source next | Preserve all 12 rows, 24 probes, truthful failures and paid recovery |
-| Project lead | Granted sole author handoff; maintain progress and independent review | First source checkpoint, then feasible runtime profile and bounded proof |
+| Quality | Pure checkpoint bdfed5d accepted; implement measured supervisor integration in identity | Freeze concrete adapter and finite profile before measured calls |
+| Platform | Pure source/package review accepted; review next adapter, copies and resource profile | Actual database fit and runtime admission remain pending |
+| Research | Pure scientific review accepted; review retained authority and outcome/recovery path next | Preserve all 12 rows, 24 probes, truthful failures and paid recovery |
+| Project lead | Publish accepted source and progress; coordinate next independent review | No measured comparison run, PR or merge yet |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Quality | Pure comparison checkpoint bdfed5d accepted and published | Reassigned to measured adapter and concrete bounded fixture; source work only |
+| 2026-10-27 | Platform + Research | Independent pure source/package/scientific reviews | Accepted within supplied-material scope; next authority/profile review pending |
+| 2026-10-27 | Project lead | Exact-source verification and assignment reconciliation | Test provenance addendum accepted; source/environment returned to sole author |
 | 2026-10-26 | Quality | First executable purchase checkpoint | Four selected cases passed at 2c43f97; five selected full-path/boundary cases passed at test-only 075c733, awaiting independent review |
 | 2026-10-26 | Platform + Research | Independent first-purchase and recovery review | Scoped runtime accepted; all peer consumers released before author handback |
 | 2026-10-26 | Research | Six-document checkpoint reconciliation | Primary docs only; release to Lead for review and publication |
@@ -1041,3 +1044,14 @@ See the [implementation handoff](MEASURED_COMPARISON_HANDOFF.md). Next gate: an 
 Platform's audit measured 63,060,946,944 bytes available, about 30.46 GB below the prior delivery. Current project checkouts and evidence occupy about 1.58 GB; coarse shared-volume scans do not establish the cause of growth without historical directory baselines. No observable checkout consumer was found, with process visibility limitations retained. No cleanup or new capacity was used. Lightweight work has a shared 256 MiB new-output ceiling. A later runtime batch must separately fit the scientific caps and the proposed 2 GiB host-output ceiling, start with at least 50 GiB available, and stop new dispatch below 45 GiB or before exceeding that shared output ceiling. Already-started child cleanup and cost settlement must complete. The host allowance adds no scientific budget.
 
 Quality proposes one PR with two review checkpoints: contracts/retained bindings, then measured integration and bounded proof. Its provisional 45-call profile uses the existing 1 MiB database option and totals 978,165,760 artifact bytes and 1,247 CPU seconds. The 2 MiB database alternative exceeds 1 GiB. Arithmetic fit is not storage or runtime acceptance; full copy, store-fit, unresolved-cost and recovery/finalization checks remain required.
+
+
+## 2026-10-27 — Pure comparison bindings accepted
+
+[Source bdfed5d](https://github.com/spei04/strange-physics/commit/bdfed5d5f91c4653ff4414f50fbece0c0c2a80fe), tree a0705d57, is accepted and published for strict comparison payloads and pure retained-material bindings. Platform and Research independently accepted the five-file change; existing request/receipt classes, supervisor and dispatcher remain unchanged. All 88 package files match source, wheel, sdist and the author's frozen installation. This establishes supplied-material consistency, not actual Journal or retained-store authority.
+
+The exact-source verification passed 19 pure cases in 23.14 seconds, with numerical producers disabled and before/after test, source/install, dependency, metadata, interpreter and lock identity preserved. Earlier 35.12-second evidence remains retained; its test inventory described the initial failed fixture, so it alone did not bind the final test bytes. A separate immutable addendum closes that gap without changing source. Focused Ruff, formatting, strict mypy and package checks passed; full integration checks remain later.
+
+Quality now owns the same identity checkout for the small measured-supervisor adapter and concrete bounded fixture. Platform reviews retained authority, copies and resource accounting; Research reviews full purchased history, outcome semantics and recovery. Lead verified the author 29-child/5-reference index, the separate 6-child/2-reference verification addendum, both independent reviews and exact 88-file package parity. No new checkout or dependency environment was created.
+
+The 45-call profile is conditionally accepted arithmetic: 978,165,760 bytes and 1,247 CPU seconds, including the exact 50,331,648-byte setup hold. Actual 1 MiB store fit, cumulative setup/copy guards, raw and reconstructed inputs, finalization/publication/recovery headroom and a finite fault-case census must be reviewed before measured calls. The shared source/output guards and scientific caps are unchanged. Publisher authority handoff, full-study admission, parent closure and grid/Laplace work remain separate.

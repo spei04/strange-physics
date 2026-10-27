@@ -208,3 +208,8 @@ Pure contracts/binder 3df6dc3 is accepted and published on the source branch; ac
 ## 2026-10-26 — First measured purchase checkpoint accepted
 
 Source 2c43f97 is accepted and published for the first-purchase and bounded recovery checkpoint, including qualified failure/replay evidence. The five selected 075c733 cases and retained bounded full path are independently accepted, with repeated-action calibration/menu limitations. PR124/main dfda60f is delivered: all five jobs in run 40277055513 and exact unpublished candidate 12630997569 are accepted. Next is retained comparison preparation/prediction/scoring binding, then publisher handoff; implementation is unassigned. V3, cumulative caps and parent issues #105/#106 are unchanged. [Evidence and assignments](../EXECUTION_LOG.md#2026-10-26--first-measured-purchase-checkpoint-accepted).
+
+
+## 2026-10-27 — Pure comparison bindings accepted
+
+Pure payloads and material bindings at bdfed5d are independently accepted and published. The exact-source addendum passed 19 pure tests in 23.14 seconds; 88 source/package/installed files match. The initial test-inventory gap is preserved and closed by that addendum. Quality is implementing the measured supervisor adapter, with Platform and Research reviewing the next immutable source and concrete resource profile before measured calls. This is not actual Journal authority, numerical comparison or parent completion. Caps, graph and grid-first/Laplace-later sequencing remain unchanged. [Evidence and assignments](../EXECUTION_LOG.md#2026-10-27--pure-comparison-bindings-accepted).

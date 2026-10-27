@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "retained_journal_comparison_pure_checkpoint_in_progress",
+      "status": "retained_journal_comparison_adapter_in_implementation",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Implement strict comparison payloads/retained bindings and pure tests; freeze first checkpoint.",
-        "Platform": "Capacity audit complete; independent source/resource/recovery review.",
-        "Research": "Scientific checklist complete; independent frozen-source review next.",
-        "Project lead": "Source handoff granted; progress, review coordination and integration."
+        "Quality": "Pure checkpoint accepted; implement measured adapter and concrete bounded fixture; no measured calls yet.",
+        "Platform": "Pure source/package review accepted; next retained authority/copy/resource review.",
+        "Research": "Pure scientific review accepted; next full-history/outcome/recovery review.",
+        "Project lead": "Publish accepted checkpoint, maintain progress and coordinate next review."
       },
-      "handoff": "Two existing cloud checkouts reused; Quality owns identity at dfda60f for lightweight source work, Lead owns primary progress. No measured runtime admitted.",
+      "handoff": "Two existing cloud checkouts reused; Quality exclusively owns identity after accepted bdfed5 pure checkpoint, Lead owns primary progress. No measured runtime admitted.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Review first immutable binding checkpoint and derive/accept a complete finite resource profile before measured integration proof. Publisher handoff and full-study admission remain separate.",
+      "next_units": "Freeze concrete measured adapter and finite resource/fault profile for independent review before bounded numerical proof; publisher handoff/full-study gates separate.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "pure_source_checkpoint_in_progress",
+        "status": "pure_checkpoint_accepted_measured_adapter_in_implementation",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14577,9 +14577,9 @@
         "prior_delivery_free_bytes": 93518716928,
         "capacity_review": "accepted_for_lightweight_source_only",
         "proposed_full_specimen_calls_before_extra_faults": 45,
-        "runtime_profile": "author_arithmetic_proposal_not_independently_accepted_or_admitted",
+        "runtime_profile": "independent_arithmetic_conditionally_accepted_actual_source_and_fit_pending",
         "new_allocation": false,
-        "next_gate": "First immutable contract/binding source review; complete finite profile before measured runtime",
+        "next_gate": "Concrete measured adapter/source and complete finite profile review before any numerical dispatch",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -14592,7 +14592,29 @@
         "host_stop_new_dispatch_below_bytes": 48318382080,
         "proposed_artifact_bytes": 978165760,
         "proposed_cpu_seconds": 1247,
-        "proposed_database_bytes": 1048576
+        "proposed_database_bytes": 1048576,
+        "checkpoint1": {
+          "source": "bdfed5d5f91c4653ff4414f50fbece0c0c2a80fe",
+          "tree": "a0705d57ec4c33cc0adae35ec048c0f62e7231e1",
+          "published": true,
+          "scope": "Pure supplied-material binding only; measured authority and outcomes pending",
+          "author_index_sha256": "f3441a1cecec9f4738088cef001a95ccfd2f5762cd3eccc7122370f1b82feb88",
+          "exact_test_addendum_sha256": "842059da712795b998929a80c5ef9cf5d4946b849d7f0bac82229686760923e4",
+          "tests": 19,
+          "pytest_seconds": 23.14,
+          "source_archive_installed_files": 88,
+          "nonproject_dependency_files_unchanged": 4689,
+          "project_metadata_files": 9,
+          "platform_static_index_sha256": "40f3b14cdca3517bc76b912a5f066d68d17be3f963071012959c52e8a3e42401",
+          "research_static_index_sha256": "d1afb010df9aa5531e7124b5355a2e503c319662b81525ba3971b3e966ed802e",
+          "publication_record_sha256": "e92f4c907a9104dabcb04ab0fa2017001291b5fcd22add5da6477c7d9b600776",
+          "test_provenance": "Old inventory scoped to initial failed fixture; exact clean-source rerun closes final-test identity gap; original evidence preserved",
+          "measured_calls": 0,
+          "numerical_calls": 0,
+          "new_checkout": false
+        },
+        "profile_arithmetic_index_sha256": "0d125bc94ab1a1286801b1288368ae294dc44156c061ca2599b45f221432777c",
+        "setup_hold_bytes": 50331648
       }
     },
     "certificate_trust_update": {
