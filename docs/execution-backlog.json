@@ -17,7 +17,7 @@
       "FE",
       "QE"
     ],
-    "fractional_roles": "Product/TPM 0.5, design 0.25\u20130.5, security 0.5; independent assessment separately booked"
+    "fractional_roles": "Product/TPM 0.5, design 0.25–0.5, security 0.5; independent assessment separately booked"
   },
   "estimate": {
     "base_days": 689,
@@ -50,7 +50,7 @@
     [
       "D03",
       "Accept the revised conditional horizon",
-      "Recommended: plan pilot onboarding W38\u201350, pilot evidence exit W45\u201359 and GA W52\u201367; reforecast after two weeks, R0 and each integration checkpoint.",
+      "Recommended: plan pilot onboarding W38–50, pilot evidence exit W45–59 and GA W52–67; reforecast after two weeks, R0 and each integration checkpoint.",
       "Accepted as a conditional reference horizon, not a promise for subagent execution. Reforecast from actual throughput and external capacity."
     ],
     [
@@ -91,11 +91,11 @@
     [
       "AR04",
       "SP-01 tried to freeze all present/future interfaces in two weeks and blocked unrelated work.",
-      "Subset freezes owned by SP-01.a\u2013d, SP-17.a, SP-19.a, SP-34.a/SP-35.a; consumer dependencies explicit."
+      "Subset freezes owned by SP-01.a–d, SP-17.a, SP-19.a, SP-34.a/SP-35.a; consumer dependencies explicit."
     ],
     [
       "AR05",
-      "42 epics of 1\u20134 person-weeks were not independently assignable PR tasks.",
+      "42 epics of 1–4 person-weeks were not independently assignable PR tasks.",
       "Replace assignment unit with 168 leaf records; parent issues become rollups, not implementation tickets."
     ],
     [
@@ -111,17 +111,17 @@
     [
       "AR08",
       "Pilot delete/recovery tests needed tombstones/audit assigned to GA.",
-      "Move SP-37.a\u2013c to R3; keep audit export/enterprise retention in R8."
+      "Move SP-37.a–c to R3; keep audit export/enterprise retention in R8."
     ],
     [
       "AR09",
       "First spring slice depended on complete three-family research packages.",
-      "SP-03.b\u219204.a/b\u219206.a\u219204.e creates early independent evidence; later fitting cannot hide its failure."
+      "SP-03.b→04.a/b→06.a→04.e creates early independent evidence; later fitting cannot hide its failure."
     ],
     [
       "AR10",
       "Early integration dates and 118 PW estimate did not model reviewer capacity, missing endpoints or specialist queues.",
-      "Bottom-up 689 delivery days, confidence-weighted contingency and nine explicit resource lanes replace unverified dates; one feasible plan forecasts GA W52\u201367, pilot onboarding W38\u201350."
+      "Bottom-up 689 delivery days, confidence-weighted contingency and nine explicit resource lanes replace unverified dates; one feasible plan forecasts GA W52–67, pilot onboarding W38–50."
     ],
     [
       "AR11",
@@ -151,7 +151,7 @@
     [
       "AR16",
       "SP-01.c lists DB obligations but its freeze could precede SP-01.b acceptance.",
-      "Add SP-01.b as a prerequisite to SP-01.c; drafting may proceed earlier, but freeze waits for DB acceptance. Regenerate both reference schedules: R0 W6\u20137, spring slice W11\u201313, R1 W18\u201326; GA remains W52\u201367."
+      "Add SP-01.b as a prerequisite to SP-01.c; drafting may proceed earlier, but freeze waits for DB acceptance. Regenerate both reference schedules: R0 W6–7, spring slice W11–13, R1 W18–26; GA remains W52–67."
     ]
   ],
   "contracts": {
@@ -180,7 +180,7 @@
       "name": "Identity, membership and credential authority",
       "owner": "Backend + security",
       "freeze": "SP-01.b",
-      "source": "[roadmap sections 5\u20136 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze), [accepted control and identity contract set](IDENTITY_RUN_CONTRACT.md) (SP-01.b bounded freeze complete; live producers remain later tasks)",
+      "source": "[roadmap sections 5–6 and 8](ROADMAP.md#5-api-sdk-events-and-interface-freeze), [accepted control and identity contract set](IDENTITY_RUN_CONTRACT.md) (SP-01.b bounded freeze complete; live producers remain later tasks)",
       "obligations": "Issuer/subject identity, explicit workspace roles/invitations, scoped machine and run credentials, revocation and secure browser session semantics. Enterprise federation refined by SP-34.a; SCIM frozen by SP-35.a before those consumers."
     },
     "DB": {
@@ -1026,7 +1026,7 @@
         "SP-37.c"
       ],
       "exit": "Real staged remote recovery and hostile build/runtime/network evidence; immutable artifacts/checkpoints; basic audit/delete/tombstone replay; signed deploy/rollback/telemetry.",
-      "risk": "SP-37.a\u2013c moved here; managed runtime fail-closed and no missing committed artifacts are nonwaivable.",
+      "risk": "SP-37.a–c moved here; managed runtime fail-closed and no missing committed artifacts are nonwaivable.",
       "effortDays": 119,
       "reserveDays": 41.75,
       "startWeek": 2,
@@ -1063,7 +1063,7 @@
         "SP-25.e",
         "SP-26.d"
       ],
-      "exit": "Accessible author\u2192run\u2192inspect\u2192export; durable SSE/resync; offline replay; supported fresh install/upgrade with explicit trust limitations.",
+      "exit": "Accessible author→run→inspect→export; durable SSE/resync; offline replay; supported fresh install/upgrade with explicit trust limitations.",
       "risk": "World/provider/publication/SSE backend tasks precede consumers; internal install is not external adoption.",
       "effortDays": 97,
       "reserveDays": 26.75,
@@ -1081,7 +1081,7 @@
         "SP-30.d",
         "SP-31.e"
       ],
-      "exit": "R1\u2013R5 integrated at exact candidate; 100-run hold/soak/fairness, real failover/restore, negative security, deletion, migration and complete journeys pass.",
+      "exit": "R1–R5 integrated at exact candidate; 100-run hold/soak/fairness, real failover/restore, negative security, deletion, migration and complete journeys pass.",
       "risk": "Any lost acknowledged state, duplicate logical debit, critical/high exploit, leak or failed restore blocks pilot.",
       "effortDays": 71,
       "reserveDays": 27.75,
@@ -1158,7 +1158,7 @@
       "contracts": [
         "GOV"
       ],
-      "scope": "Record D01\u2013D06 dispositions, current execution lane owners, reviewer availability and start conditions. Preserve the nine-person forecast as a reference until human staffing exists.",
+      "scope": "Record D01–D06 dispositions, current execution lane owners, reviewer availability and start conditions. Preserve the nine-person forecast as a reference until human staffing exists.",
       "accept": "Each current execution lane has a responsible owner and assignments obey the three-engineer concurrency limit; external human staffing remains an explicit release dependency.",
       "tests": "Validate decision IDs, accountable execution roles, three-engineer concurrency, independent review and approval evidence.",
       "risk": "No implied infrastructure-spend authority; private staffing evidence.",
@@ -1574,7 +1574,7 @@
       ],
       "execution_owner": "Engineer Platform",
       "issue": "https://github.com/spei04/strange-physics/issues/49",
-      "evidence": "Priced proposal saved in STAGING_PROPOSAL.md at 0eba987; approximately $450\u2013550/month low traffic, proposed seven-day $250 operational envelope, neither approved. Target project/credit/IAM/quota facts, exact IaC and concrete authorization remain gates; no provisioning."
+      "evidence": "Priced proposal saved in STAGING_PROPOSAL.md at 0eba987; approximately $450–550/month low traffic, proposed seven-day $250 operational envelope, neither approved. Target project/credit/IAM/quota facts, exact IaC and concrete authorization remain gates; no provisioning."
     },
     {
       "id": "SP-03.a",
@@ -1629,7 +1629,7 @@
         "SCI"
       ],
       "scope": "Calibrate excitation/mass cases, timestep refinements and conditioning.",
-      "accept": "Ratify or justify \u22641% coefficient error and \u22640.001 position RMSE over two seconds before fit acceptance.",
+      "accept": "Ratify or justify ≤1% coefficient error and ≤0.001 position RMSE over two seconds before fit acceptance.",
       "tests": "Analytic convergence, zero excitation and mass/order boundary fixtures.",
       "risk": "Failed tests require numerical justification, not arbitrary loosening.",
       "out": "Full-family calibration.",
@@ -2237,8 +2237,8 @@
         "SCI",
         "OPS"
       ],
-      "scope": "Measure snapshots\u00d7probes\u00d7ensemble workload, failures and limits; update compute model.",
-      "accept": "40\u00d764 rollout count and ensemble multiplier explicit.",
+      "scope": "Measure snapshots×probes×ensemble workload, failures and limits; update compute model.",
+      "accept": "40×64 rollout count and ensemble multiplier explicit.",
       "tests": "Repeatable count, timeout, memory and estimator checks.",
       "risk": "Do not size from simulator-only timing.",
       "out": "Production capacity or GPU training.",
@@ -2840,7 +2840,7 @@
         "WEB"
       ],
       "scope": "Check current membership/credential status on requests and before every SSE payload batch; reauthorize idle connections at most 30 seconds apart.",
-      "accept": "Revoked caller denied new work; current authoritative checks before every payload batch; idle reauthorization \u226430 seconds.",
+      "accept": "Revoked caller denied new work; current authoritative checks before every payload batch; idle reauthorization ≤30 seconds.",
       "tests": "Revocation races, stale token, sole-owner and safe audit/redaction tests.",
       "risk": "No stale membership cache bypass.",
       "out": "SCIM provisioning.",
@@ -3578,7 +3578,7 @@
         "OPS"
       ],
       "scope": "Revoke launch/broker access, terminate attempts, reconcile held allowances and preserve accepted results.",
-      "accept": "New work revoked \u22645s; controlled workers terminate \u226460s or explicit fault recorded.",
+      "accept": "New work revoked ≤5s; controlled workers terminate ≤60s or explicit fault recorded.",
       "tests": "Cancel/complete races, uncooperative agent, deadline and orphan reconciliation.",
       "risk": "Do not refund pending usage before settlement.",
       "out": "Excludes SP-16.a coordinate one remote investigation; SP-16.b resume an agent from committed checkpoints; SP-16.d prove end-to-end interruption invariants; SP-16.e instrument remote execution and recovery. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -4671,7 +4671,7 @@
         "ID"
       ],
       "scope": "Support Last-Event-ID, cursor expiry, authoritative snapshot and archived history pagination with reauthorization.",
-      "accept": "Reconnect has no silent committed-event gaps; current authoritative checks before every payload batch; revoked idle stream closes \u226430s.",
+      "accept": "Reconnect has no silent committed-event gaps; current authoritative checks before every payload batch; revoked idle stream closes ≤30s.",
       "tests": "Duplicate/gap/expired cursor, archive outage and membership revocation tests.",
       "risk": "Archive and snapshot use same tenant/privacy policy.",
       "out": "Excludes SP-23.a publish committed event and replay endpoints; SP-23.c render live investigation timeline; SP-23.d integrate reconnect and cancellation ux. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -4779,7 +4779,7 @@
         "ART"
       ],
       "scope": "Load bounded immutable frame chunks; interpolate server data with play/pause/scrub/speed controls.",
-      "accept": "Reference frames exact at timestamps; reference-device interaction \u2264100ms and \u226530fps target measured.",
+      "accept": "Reference frames exact at timestamps; reference-device interaction ≤100ms and ≥30fps target measured.",
       "tests": "Frame alignment, seek/end boundaries, malformed chunk and performance fixtures.",
       "risk": "No second physics solver; bound memory and sanitize content.",
       "out": "Excludes SP-24.b overlay prediction and uncertainty diagnostics; SP-24.c compare recorded strategies and failures; SP-24.d verify accessible diagnostic journeys. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -5546,7 +5546,7 @@
       "contracts": [
         "OPS"
       ],
-      "scope": "Run 10\u219225\u219250\u2192100 investigations, 100 viewers and declared API mix; measure DB/queue/event budgets.",
+      "scope": "Run 10→25→50→100 investigations, 100 viewers and declared API mix; measure DB/queue/event budgets.",
       "accept": "Two-hour target hold meets section 7 envelope or fails with bottleneck evidence.",
       "tests": "Automated latency, throughput, integrity and zero-duplicate budget assertions.",
       "risk": "Do not equate offered load or connected sockets with completed capacity.",
@@ -5581,7 +5581,7 @@
         "OPS",
         "EXEC"
       ],
-      "scope": "Execute 24-hour soak and 300 offered-run/5\u00d7 burst with slow and malicious workloads.",
+      "scope": "Execute 24-hour soak and 300 offered-run/5× burst with slow and malicious workloads.",
       "accept": "Bounded queue/memory growth; fair rejection and evaluator backlog <24h within supported envelope.",
       "tests": "Long-run leak, overload rejection, backlog and persistence integrity checks.",
       "risk": "300 offered is stress, not capacity promise; stop on corruption.",
@@ -5698,7 +5698,7 @@
         "DB"
       ],
       "scope": "Restore into isolation, fence old leases/tokens and reapply deletion/revocation records before access.",
-      "accept": "Pilot \u226415min RPO/\u22644h RTO measured; no deleted object resurrected to users.",
+      "accept": "Pilot ≤15min RPO/≤4h RTO measured; no deleted object resurrected to users.",
       "tests": "Timed restore, corrupt object, interrupted replay and revoked identity tests.",
       "risk": "No production data exposed during drill; preserve private evidence.",
       "out": "Excludes SP-29.a implement backup and recovery-set manifests; SP-29.c exercise worker loss and database failover; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -5738,7 +5738,7 @@
         "EXEC"
       ],
       "scope": "Force worker/process loss and real HA failover; validate reconnection, epochs, artifact and budget integrity.",
-      "accept": "Worker p95 recovery \u22645min; DB failover \u226415min target with committed-state validation.",
+      "accept": "Worker p95 recovery ≤5min; DB failover ≤15min target with committed-state validation.",
       "tests": "Fault matrix, stale worker, pool exhaustion and no-duplicate invariants.",
       "risk": "Targets measured in deployed configuration, not assumed from service SLA.",
       "out": "Excludes SP-29.a implement backup and recovery-set manifests; SP-29.b restore sql and objects with tombstone replay; SP-29.d rehearse deployment rollback under load. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -6620,7 +6620,7 @@
         "WEB"
       ],
       "scope": "Revoke account/service/run access, close streams and stop unauthorized new work; reconcile active jobs.",
-      "accept": "Disabled principal denied new calls immediately; current authoritative checks before every stream payload batch; idle stream closure \u226430s and job launch \u22645s revocation targets.",
+      "accept": "Disabled principal denied new calls immediately; current authoritative checks before every stream payload batch; idle stream closure ≤30s and job launch ≤5s revocation targets.",
       "tests": "Active session/token/job/SSE disable races and sole-owner exceptions.",
       "risk": "No stale authorization caches or forgotten machine keys.",
       "out": "Excludes SP-35.a freeze scim mapping and lifecycle semantics; SP-35.b implement bounded provisioning and reconciliation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -6847,7 +6847,7 @@
         "DB"
       ],
       "scope": "Add owner delete/retention configuration, immediate access tombstone and bounded background active-object removal.",
-      "accept": "Interactive access revoked on accepted delete; removal target \u22647 days with retriable state.",
+      "accept": "Interactive access revoked on accepted delete; removal target ≤7 days with retriable state.",
       "tests": "Concurrent read/delete, shared artifact refs, legal-hold flag and repeated job tests.",
       "risk": "Keep minimum tombstone identity; no silent auto-expiry.",
       "out": "Excludes SP-37.a persist basic security audit events; SP-37.c preserve deletion and revocation across recovery; SP-37.d export tamper-evident enterprise audit history; SP-37.e verify enterprise retention and privacy operations; SP-37.f review customer data and support documentation. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -7044,7 +7044,7 @@
         "DB"
       ],
       "scope": "Copy recoverable DB/object generations and suppression ledger into approved secondary US location with independent access.",
-      "accept": "Copy completion and consistency measured; recovery set age \u226424h.",
+      "accept": "Copy completion and consistency measured; recovery set age ≤24h.",
       "tests": "Missing-generation, key/IAM denial and lag/copy integrity tests.",
       "risk": "Residency/key requirements reviewed before replication.",
       "out": "Excludes SP-38.b perform timed secondary-region recovery; SP-38.c resolve and repeat failed recovery steps. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -7083,7 +7083,7 @@
         "EXEC"
       ],
       "scope": "Restore isolated services, fence former region, reapply tombstones/credentials and rehearse endpoint cutover.",
-      "accept": "Measured regional RPO/RTO \u226424h with tenant/integrity suite passing.",
+      "accept": "Measured regional RPO/RTO ≤24h with tenant/integrity suite passing.",
       "tests": "Timed failover, stale worker, DNS/cutover and duplicate-launch tests.",
       "risk": "No active-active claim; preserve original incident evidence.",
       "out": "Excludes SP-38.a create an independent regional recovery set; SP-38.c resolve and repeat failed recovery steps. Also excludes release authorization and expansion beyond the accepted law/deployment scope.",
@@ -7231,7 +7231,7 @@
         "GOV",
         "OPS"
       ],
-      "scope": "Reserve assessor window, scope APIs/build/runtime/evaluator and appoint \u22654 trained responders with explicit coverage.",
+      "scope": "Reserve assessor window, scope APIs/build/runtime/evaluator and appoint ≥4 trained responders with explicit coverage.",
       "accept": "External assessment slot and actual on-call plan confirmed before GA window.",
       "tests": "Checklist validates trained primary/secondary and escalation coverage.",
       "risk": "No unsupported 24/7 commitment; lead time external.",
@@ -7421,7 +7421,7 @@
         "GOV",
         "OPS"
       ],
-      "scope": "Reconcile REQ01\u201316, support/data terms, release identity, residual risks and signed gate owners.",
+      "scope": "Reconcile REQ01–16, support/data terms, release identity, residual risks and signed gate owners.",
       "accept": "No blocking requirement unresolved; product/security/research/platform sign exact candidate.",
       "tests": "Traceability, artifact hash, required-gate and exception-expiry checks.",
       "risk": "GA approval is separate from backlog approval.",
@@ -7660,7 +7660,7 @@
       "I1",
       "First independent learning slice",
       "SP-04.e",
-      "Observe\u2192fit\u2192predict\u2192independent development score; analytic accuracy, explicit failure and provenance. Stop research expansion if architecture fails."
+      "Observe→fit→predict→independent development score; analytic accuracy, explicit failure and provenance. Stop research expansion if architecture fails."
     ],
     [
       "I2",
@@ -7684,7 +7684,7 @@
       "I5",
       "Production pilot release candidate",
       "SP-30.d SP-32.a",
-      "R1\u2013R6 gates, security specialist and actual support/partner/data readiness; explicit pilot release authorization."
+      "R1–R6 gates, security specialist and actual support/partner/data readiness; explicit pilot release authorization."
     ],
     [
       "I6",
@@ -10738,7 +10738,7 @@
         ],
         "confidence": "medium to medium-low",
         "status": "provisional_after_ID-B_acceptance",
-        "note": "Provisional remaining ID-C human effort: C1 service/key lifecycle 3\u20135 engineer-days (medium); C2 run credentials/composition 2\u20134 (medium-low); shared final composition review/integration 1\u20132, counted once. Total6\u201311 engineer-days includes uncertainty; no additional reserve is added. This supersedes the original two-day ID-C expectation for current execution only; the nine-human reference forecast remains historical and agent elapsed time is not human effort evidence."
+        "note": "Provisional remaining ID-C human effort: C1 service/key lifecycle 3–5 engineer-days (medium); C2 run credentials/composition 2–4 (medium-low); shared final composition review/integration 1–2, counted once. Total6–11 engineer-days includes uncertainty; no additional reserve is added. This supersedes the original two-day ID-C expectation for current execution only; the nine-human reference forecast remains historical and agent elapsed time is not human effort evidence."
       }
     ],
     "additional_work": [
@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research released primary clean at ec726e7 after boundary source delivery; Lead reuses docs/native-stage-delivery-progress for progress only, no environment use.",
-      "identity": "Quality owns source/environment repair and synthetic checks after first50 runtime release at12a8a43; no new measured attempt admitted.",
+      "scientific": "Research owns only the six progress documents in primary from f948b147 for current-result reconciliation; no environment use. Lead independently reviews and publishes.",
+      "identity": "Quality owns frozen 36c9595 in identity and runs authorized configured checks; both admitted fixtures ended and no reviewer runtime consumer remains.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12113,7 +12113,7 @@
             "id": "RA-N01",
             "title": "Bind native spring candidates to prediction and independent scoring",
             "objective": "Give fixed-grid candidates honest, independently scoreable native identities.",
-            "scope": "Add bounded pool/config/candidate receipt and prediction types. Produce real LinearSpringModel artifacts from each arm\u2019s actual purchased ObservationBundle with a distinct native producer/config, full-prefix hash, through_index and completed-record selection. Separate the common immutable pool hash from prefix-dependent model hashes. Add a separate prediction profile that shares the reviewed analytic kernel and accepted domain/work limits while preserving existing v1 bytes and rejection behavior. Add a journal/prefix/model/config/protocol/submission adapter into the unchanged independent evaluator, with disjoint probes. Keep the classical fitter as an honestly labeled same-prefix diagnostic.",
+            "scope": "Add bounded pool/config/candidate receipt and prediction types. Produce real LinearSpringModel artifacts from each arm’s actual purchased ObservationBundle with a distinct native producer/config, full-prefix hash, through_index and completed-record selection. Separate the common immutable pool hash from prefix-dependent model hashes. Add a separate prediction profile that shares the reviewed analytic kernel and accepted domain/work limits while preserving existing v1 bytes and rejection behavior. Add a journal/prefix/model/config/protocol/submission adapter into the unchanged independent evaluator, with disjoint probes. Keep the classical fitter as an honestly labeled same-prefix diagnostic.",
             "out": "No new law families, symbolic DAGs, executable models, mixtures under linear IDs, hosted registration, CORE/SCI changes, broadened v1 predictor acceptance, fake SpringFitArtifact or paired-Simpson provenance.",
             "deps": [
               "RA-01",
@@ -12126,7 +12126,7 @@
               "STUDY",
               "COST"
             ],
-            "accept": "Native candidates predict and score with their actual hashes; original v1 rejects their distinct producer/config. Pool identity is shared while each model binds its own arm\u2019s prefix. No completed observations yields a typed failure without invented indices. A primary MAP output names one actual candidate. Preparation rejects changed raw journal or canonical prefix/model/config, wrong requests/responses/protocols and overlapping probes. Missing/invalid predictions and evaluator arithmetic failure remain distinct.",
+            "accept": "Native candidates predict and score with their actual hashes; original v1 rejects their distinct producer/config. Pool identity is shared while each model binds its own arm’s prefix. No completed observations yields a typed failure without invented indices. A primary MAP output names one actual candidate. Preparation rejects changed raw journal or canonical prefix/model/config, wrong requests/responses/protocols and overlapping probes. Missing/invalid predictions and evaluator arithmetic failure remain distinct.",
             "tests": "Producer/config rejection; changed-prefix/hash and signed-zero cases; missing/failed selections; analytic domain/boundary cases; poisoned private inputs; raw/canonical journal and request/probe joins; disjointness; complete failure counts; old/new profile separation.",
             "risk": "Strict byte/count/domain/compute bounds; no eval, dynamic imports, plugins or network; private world/reference labels cannot enter public candidate inputs. Local conformance is not hostile-process isolation.",
             "effort_days": [
@@ -12380,7 +12380,7 @@
               "Actual predictor and workflow producer/provenance seam verified.",
               "All proposed dependencies resolve; graph acyclic; 23 tasks and69 fixed plus6 conditional edges.",
               "RA-07.b closure21:12 accepted,8 proposed research tasks, pendingRA_EXEC.",
-              "Effort12\u201319 new,19\u201329 unfinished,23.75\u201336.25 with25% reserve.",
+              "Effort12–19 new,19–29 unfinished,23.75–36.25 with25% reserve.",
               "Baseline tasks/gates/forecast and active research amendment unchanged."
             ],
             "activation": "Dependency amendment, RA_EXEC and bounded comparison run scope still require explicit decision.",
@@ -12499,7 +12499,7 @@
             20,
             31
           ],
-          "scope": "Provisional engineering effort, not calendar duration or the full research programme. N03 retains its full 3\u20135 days. The later Laplace implementation includes its transferred audit. Broader programme scope is unchanged; no total-programme or calendar saving is established. Re-estimate at each gate and before later assignment; GA forecast unchanged."
+          "scope": "Provisional engineering effort, not calendar duration or the full research programme. N03 retains its full 3–5 days. The later Laplace implementation includes its transferred audit. Broader programme scope is unchanged; no total-programme or calendar saving is established. Re-estimate at each gate and before later assignment; GA forecast unchanged."
         }
       },
       "proposal_document": "docs/research/NATIVE_COMPARISON_PROPOSAL.md",
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "retained_journal_comparison_adapter_in_implementation",
+      "status": "retained_journal_comparison_bounded_integration_accepted_configured_checks_running",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Repair repeated ledger validation and integrate reviewed boundary fixture in identity; source/synthetic checks only.",
-        "Platform": "Failed50 evidence and boundary source accepted; next independent repaired source/resource review.",
-        "Research": "Boundary source and diagnosis delivered/released; next repaired-source scientific review.",
-        "Project lead": "Primary progress and failed-evidence reconciliation; coordinate exact repair review before another attempt."
+        "Quality": "Run the authorized 15-command configured batch at exact 36c9595; final results pending.",
+        "Platform": "Observed accounting, capacity and boundary reviews accepted; prepare exact delivery verification.",
+        "Research": "Scientific/temporal 50-call readback accepted; complete six-document primary reconciliation for Lead review.",
+        "Project lead": "Both bounded fixtures accepted; independently review progress and own integration/delivery; parents remain open."
       },
-      "handoff": "Quality owns validation-cost repair and reviewed boundary integration in identity. First50 evidence is preserved; further measured execution requires exact repaired-source/profile review. Research released primary; Lead owns progress there.",
+      "handoff": "Bounded 36c9595 50-call evidence accepted by both peers and Lead; separate four-call fixture independently accepted by Platform and Lead. Quality runs configured checks in identity. Research releases the six primary progress docs for Lead review at this checkpoint. Original 12a8a43 failure and unknown costs remain intact.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Freeze concrete measured adapter and finite resource/fault profile for independent review before bounded numerical proof; publisher handoff/full-study gates separate.",
+      "next_units": "Complete configured checks and exact PR/main/candidate delivery for retained comparison bindings; publisher authority handoff, full-study allocation/census and parent acceptance remain separate. No subsequent implementation is assigned by this checkpoint.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "first50_failed_validation_cost_repair_in_progress",
+        "status": "bounded_integration_scoped_accepted_configured_checks_running_delivery_pending",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14577,9 +14577,9 @@
         "prior_delivery_free_bytes": 93518716928,
         "capacity_review": "accepted_for_lightweight_source_only",
         "proposed_full_specimen_calls_before_extra_faults": 45,
-        "runtime_profile": "first50_attempt_failed_repaired_source_review_required_before_next_attempt",
+        "runtime_profile": "both_admitted36c_fixtures_completed_scope_qualified",
         "new_allocation": false,
-        "next_gate": "Immutable validation-cost repair, scoped checks and complete exact profile review before another measured attempt",
+        "next_gate": "Complete full configured checks and exact PR/main/candidate delivery.",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -14669,8 +14669,18 @@
           "next_fixture_initial_lifetime_seconds": 600,
           "old_fixture_lifetime_seconds": 180,
           "per_call_and_scientific_caps_unchanged": true,
-          "status": "source_only_no_further_measured_attempt_admitted",
-          "research_diagnosis_sha256": "1bbfce62bf4c3b9a6ccb419e9f43280c631d63e13bb4ba8fbfedc921f57e75ff"
+          "status": "independent_static_and_synthetic_accepted",
+          "research_diagnosis_sha256": "1bbfce62bf4c3b9a6ccb419e9f43280c631d63e13bb4ba8fbfedc921f57e75ff",
+          "source": "36c9595e133b6c876c7847e09d0dc714968e59e4",
+          "tree": "9ebbace57ea2bfb3900c751b2559b7ed037ab3c5",
+          "author_index_sha256": "607ebe77c71d929f72c39f31c18cb5b84cbfef59bda9440cf5b72c7a9a25351e",
+          "research_review_sha256": "94f7e643066f37173731892d45cea866fcf637d76ea2ad28568d46f8e38531d6",
+          "synthetic_tests": 20,
+          "synthetic_seconds": 12.17,
+          "strict_mypy_files": 6,
+          "source_archive_installed_files": 89,
+          "dependency_files_unchanged": 4689,
+          "project_metadata_files": 9
         },
         "boundary_fixture": {
           "source": "ec726e7a7c4028475334b2a6faa697aaf8d455d9",
@@ -14683,9 +14693,56 @@
           "artifact_bytes": 337289216,
           "cpu_seconds": 371,
           "qualification": "Separate synthetic injected-history guard fixture, not paid-purchase authority",
-          "status": "source_reviewed_runtime_pending",
+          "status": "independent_platform_and_lead_scoped_accepted",
           "author_index_sha256": "4a1592c35f48aef1af14d1025d8926477d84b44d6b46476f85aecb3192f57eb4",
-          "platform_review_sha256": "336de63411964e329c484d0af16f4311c676c14cb63eb3b2c4491fb16118ffeb"
+          "platform_review_sha256": "336de63411964e329c484d0af16f4311c676c14cb63eb3b2c4491fb16118ffeb",
+          "integrated_source": "36c9595e133b6c876c7847e09d0dc714968e59e4",
+          "author_runtime_index_sha256": "e749a2f7646da064d69647516657ed7d5b0b078b040b8c958ee26f65f4b5c04d",
+          "public_calls_entered": 4,
+          "public_calls_returned": 2,
+          "pytest_seconds": 22.85,
+          "records": 23,
+          "closures": 2,
+          "unresolved_holds": 16,
+          "original_capture_restored": true,
+          "guard_removal_runtime": false,
+          "platform_runtime_index_sha256": "4db50a93df42ec1dac1be44a83610109812af078da5a9e77caa81a44d429eeaf",
+          "lead_acceptance_sha256": "d1d284137795a6e553150a1542a7e3905c7ab124e799adb4373d1adf2ebb13bd"
+        },
+        "successor_attempt": {
+          "source": "36c9595e133b6c876c7847e09d0dc714968e59e4",
+          "status": "lead_and_both_peers_scoped_accepted",
+          "planned_public_calls": 50,
+          "initial_fixture_lifetime_seconds": 600,
+          "independent_observed_result_review": "scientific and resource accepted",
+          "author_index_sha256": "710aedfd41f4e4008ecb2e54c6b2d9ca0d75ede33798b292cd1d5964a45698e9",
+          "research_index_sha256": "cea10ab3cc36655ca7ca39ad72784669fc7b4b83e2da00512bde93c5fe877cdf",
+          "public_calls_entered": 50,
+          "public_calls_returned": 48,
+          "pytest_seconds": 166.2,
+          "records": 103,
+          "closures": 43,
+          "unresolved_holds": 4,
+          "qualification": "One repeated-action calibration/single-action-menu specimen, fixed selected candidate1; no MAP/accuracy/study claim.",
+          "measurement_limits": "Five recoveries childCPU0; purchase replay holderNone not measuredzero; final controltails reserved; postproofsetupCPU not separately serialized.",
+          "platform_index_sha256": "0e6daaab8b6d4e9e2a87ae3d2e2fa97fa5b33951fbceb5ea5d91160ba90a98fa",
+          "lead_acceptance_sha256": "abb98446e5e114129a64fc239d55bbd8ad6f0e85b7590219b6120d1578fb4b80",
+          "charged_artifact_bytes": 824171148,
+          "charged_cpu_ns": 540223317148,
+          "remaining_artifact_bytes": 249570676,
+          "publication_protected_bytes": 83886080,
+          "store_bytes": 344064,
+          "ledger_bytes": 90912
+        },
+        "configured_checks": {
+          "source": "36c9595e133b6c876c7847e09d0dc714968e59e4",
+          "status": "running_final_results_pending",
+          "planned_commands": 15,
+          "ruff": "passed",
+          "format": "passed",
+          "strict_mypy": "passed",
+          "full_pytest": "running",
+          "delivery": "PR/main/candidate pending"
         }
       }
     },
@@ -15524,7 +15581,7 @@
         "out": "Richer DAG scoring, new symbolic adapters, provider calls, hosted deployment, population superiority, adaptation claims, official scores or new machines.",
         "accept": "Within8 CPU-core-hours and1GiB new artifacts on the existing machine, independent scoring and world-paired descriptive results reproduce or a cap-limited incomplete result is recorded. Aggregate policy seeds within each world. Use actual native model/request hashes; no dummy linear identity or cross-arm data. No provider/network invocation.",
         "tests": "Analytic ranking equivalence, independent scoring, arm-history separation, absent-provider/network spy, cap/interrupt/replay and failure accounting.",
-        "risk": "Development-only12-slot budget; sealed labels cannot affect selection. No SP-18/20, RA-04.a/b or RA-09\u201312 dependency. Richer profiles separately bind actual MODEL identities to the reviewed SP-19/20 evaluator interface.",
+        "risk": "Development-only12-slot budget; sealed labels cannot affect selection. No SP-18/20, RA-04.a/b or RA-09–12 dependency. Richer profiles separately bind actual MODEL identities to the reviewed SP-19/20 evaluator interface.",
         "confidence": "medium",
         "owner": "Quality + Research",
         "status": "approved_pending_prerequisites",
@@ -15788,7 +15845,7 @@
         "id": "RA-N01",
         "title": "Bind native spring candidates to prediction and independent scoring",
         "objective": "Give fixed-grid candidates honest, independently scoreable native identities.",
-        "scope": "Add bounded pool/config/candidate receipt and prediction types. Produce real LinearSpringModel artifacts from each arm\u2019s actual purchased ObservationBundle with a distinct native producer/config, full-prefix hash, through_index and completed-record selection. Separate the common immutable pool hash from prefix-dependent model hashes. Add a separate prediction profile that shares the reviewed analytic kernel and accepted domain/work limits while preserving existing v1 bytes and rejection behavior. Add a journal/prefix/model/config/protocol/submission adapter into the unchanged independent evaluator, with disjoint probes. Keep the classical fitter as an honestly labeled same-prefix diagnostic.",
+        "scope": "Add bounded pool/config/candidate receipt and prediction types. Produce real LinearSpringModel artifacts from each arm’s actual purchased ObservationBundle with a distinct native producer/config, full-prefix hash, through_index and completed-record selection. Separate the common immutable pool hash from prefix-dependent model hashes. Add a separate prediction profile that shares the reviewed analytic kernel and accepted domain/work limits while preserving existing v1 bytes and rejection behavior. Add a journal/prefix/model/config/protocol/submission adapter into the unchanged independent evaluator, with disjoint probes. Keep the classical fitter as an honestly labeled same-prefix diagnostic.",
         "out": "No new law families, symbolic DAGs, executable models, mixtures under linear IDs, hosted registration, CORE/SCI changes, broadened v1 predictor acceptance, fake SpringFitArtifact or paired-Simpson provenance.",
         "deps": [
           "RA-01",
@@ -15801,7 +15858,7 @@
           "STUDY",
           "COST"
         ],
-        "accept": "Native candidates predict and score with their actual hashes; original v1 rejects their distinct producer/config. Pool identity is shared while each model binds its own arm\u2019s prefix. No completed observations yields a typed failure without invented indices. A primary MAP output names one actual candidate. Preparation rejects changed raw journal or canonical prefix/model/config, wrong requests/responses/protocols and overlapping probes. Missing/invalid predictions and evaluator arithmetic failure remain distinct.",
+        "accept": "Native candidates predict and score with their actual hashes; original v1 rejects their distinct producer/config. Pool identity is shared while each model binds its own arm’s prefix. No completed observations yields a typed failure without invented indices. A primary MAP output names one actual candidate. Preparation rejects changed raw journal or canonical prefix/model/config, wrong requests/responses/protocols and overlapping probes. Missing/invalid predictions and evaluator arithmetic failure remain distinct.",
         "tests": "Producer/config rejection; changed-prefix/hash and signed-zero cases; missing/failed selections; analytic domain/boundary cases; poisoned private inputs; raw/canonical journal and request/probe joins; disjointness; complete failure counts; old/new profile separation.",
         "risk": "Strict byte/count/domain/compute bounds; no eval, dynamic imports, plugins or network; private world/reference labels cannot enter public candidate inputs. Local conformance is not hostile-process isolation.",
         "effort_days": [
@@ -16299,6 +16356,6 @@
       "recorded_at": "2026-10-21T16:54:34.164854+00:00",
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
-    "effort_scope": "Arithmetic envelope for all23 retained research tasks (61\u201399 plus25% reserve), not authorization for the whole programme or a calendar forecast. Approved first-result effort remains17\u201326 (21.25\u201332.5 reserved); later Laplace3\u20135 (3.75\u20136.25 reserved). Baseline forecast unchanged."
+    "effort_scope": "Arithmetic envelope for all23 retained research tasks (61–99 plus25% reserve), not authorization for the whole programme or a calendar forecast. Approved first-result effort remains17–26 (21.25–32.5 reserved); later Laplace3–5 (3.75–6.25 reserved). Baseline forecast unchanged."
   }
 }

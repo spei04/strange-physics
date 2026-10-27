@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Remove repeated ledger validation and integrate reviewed boundary tests in identity | Source and synthetic checks; no further measured run admitted |
-| Platform | First failed run and boundary source independently reviewed | Review repaired source, resource bounds and subsequent observed accounting |
-| Research | Boundary fixture delivered; repeated-validation diagnosis complete | Review repaired scientific identity and replay behavior |
-| Project lead | Preserve failed evidence and maintain progress in primary | Approve exact repaired source/profile before a new bounded attempt |
+| Quality | Run 15 configured checks at accepted bounded source 36c9595 | Ruff/format/mypy passed; full pytest running, final results pending |
+| Platform | Observed accounting, capacity and boundary reviews accepted | Prepare exact delivery verification after configured checks |
+| Research | Scientific/temporal readback accepted; complete six-document reconciliation | Release primary for independent Lead review |
+| Project lead | Both bounded fixtures accepted; review current progress and integrate | Final configured results and PR/main/candidate delivery remain pending |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Quality | Repaired source 36c9595: 20 synthetic cases and both admitted fixtures passed | Full configured checks running; exact evidence retained |
+| 2026-10-27 | Research | Independent retained 50-call scientific/temporal readback | Accepted within fixed-selection conformance scope; no numerical rerun |
+| 2026-10-27 | Platform + Research | Exact-view reuse and prefix-head repair independently reviewed | Bounded successor evidence accepted; earlier failure preserved |
+| 2026-10-27 | Research | Current progress reconciliation in primary | Lead reviews documentation; Platform/Lead independently accepted the authored boundary fixture |
 | 2026-10-27 | Quality | First 50-call attempt stopped at call 40; 39 calls returned | Reassigned to invocation-local validation reuse; original failure and cost holds preserved |
 | 2026-10-27 | Platform + Research | Independent deadline and repeated-validation diagnosis | Same ledger scanned at least 48 times in a full score path; no measured speedup claimed |
 | 2026-10-27 | Research | Four-call boundary fixture ec726e7 delivered | Lead and Platform source review accepted; runtime and configured checks pending |
@@ -1092,3 +1096,13 @@ Source review found two full-ledger scans per retained prediction, at least 48 s
 A separate timing issue is the fixture's absolute setup lifetime: the first 39 public calls alone took 174.63 seconds, almost the entire 180-second window. The next source profile will declare a 600-second lifetime before initialization, preserving the existing setup CPU allowances, per-call timers, 1 GiB storage cap and eight CPU-hour cap. This is distinct from the immediate score failure. No further measured attempt is admitted before immutable repaired-source/profile review.
 
 Research delivered the separate four-call guard fixture ec726e7. Lead and Platform accepted its source and conditional 337,289,216-byte/371-second profile: an altered failed-row action must be denied after reservation, and a retained-file change immediately before commit must roll back the closure while preserving unknown costs. It uses explicitly injected test intents and is not paid-purchase evidence. Its runtime is pending. The same two checkouts are reused; parent issues, publisher handoff, full-study admission and grid/Laplace work remain open.
+
+## 2026-10-27 — Retained comparison conformance; final checks pending
+
+[Source 36c9595](https://github.com/spei04/strange-physics/tree/36c9595e133b6c876c7847e09d0dc714968e59e4) passed independent static review of invocation-local validation reuse and equivalent prefix-head checks, preserving original receipt digests and all frozen/latest-state/raw-witness joins. Twenty poisoned synthetic cases passed in 12.17 seconds, alongside scoped formatting, lint and six-file strict type checks. The source-bound archives and installed record match 89 package files; 4,689 dependencies and nine project metadata files were unchanged. Earlier diagnostics remain retained.
+
+The successor fixture passed in 166.20 seconds: 50 public entries, 48 returns and the two declared unavailable-prediction/fresh-stale denials. Its 45-call positive prefix reached native and independent same-prefix classical scoring plus four paid recoveries. The temporal extension retained unknown prediction A, completed an unscorable score, closed retry B, replayed the original score after live-input removal and denied a fresh score using stale A. Final state is 103 records, 43 closures and four unresolved setup/control/A/stale-score holds. Research independently checked the actual 12-row history (11 completed and the explicit final fault), all 24 prediction joins, frozen provenance, original receipt prefixes and temporal outcomes. Platform independently accepted the retained resource readback, and Lead accepted the bounded 50-call specimen. Charged artifacts are 824,171,148 bytes, including retained holds; 249,570,676 bytes remain with 80 MiB publication protection. These are cumulative ledger charges, not a claim that unknown tails were measured.
+
+The separate injected-history guard fixture passed in 22.85 seconds: four entries, two returns, exact preparation-material and final retained-file-change denials, 23 records, two closures and 16 unresolved holds. The original capture was restored and known costs retained. Platform and Lead independently accepted this evidence; Research authored that fixture. It is not public-purchase evidence and no public guard-removal run is claimed.
+
+Both specimens retain their declared bounds. The successor's 600-second lifetime was set before initialization; default 180-second behavior and CPU/copy/per-call/scientific caps are unchanged. Five recoveries report child CPU zero; the purchase replay holder field is absent, not measured zero. Final control tails remain reserved, and post-proof setup CPU is not separately serialized. The repeated-action calibration, single-action menu and selected candidate index 1 demonstrate conformance only, not MAP, accuracy or a study. Failed source 12a8a43 and its unknown holds remain intact. The 15-command configured batch is running at 36c9595: Ruff, format and strict mypy passed; full pytest is running. Final configured results and PR/main/candidate delivery remain pending; parents #105/#106, publisher handoff, full-study allocation and grid/Laplace work remain open.

@@ -1515,3 +1515,7 @@ Independent reviews found no static blocker in c427d39. Research delivered the s
 ## 2026-10-27 — Comparison runtime repair
 
 The first bounded integration attempt returned from 39 calls, then stopped during retained-history validation before the first score ran. Its original cost holds and failure evidence are preserved. Quality is removing repeated ledger validation and making the next fixture's overall lifetime explicit; per-call and scientific caps remain unchanged. The independently reviewed four-call boundary fixture is ready for integration. Repaired source/profile review is required before another measured attempt. [Evidence and assignments](EXECUTION_LOG.md#2026-10-27--first-comparison-run-exposed-validation-cost).
+
+## 2026-10-27 — Retained comparison conformance; final checks pending
+
+Source 36c9595 passed 20 synthetic checks, the 50-call successor and the separate four-call boundary fixture. Both peers and Lead accepted the bounded 50-call evidence, and Platform/Lead accepted the separate boundary fixture. Full configured checks are running; final results and delivery remain pending. The failed first attempt, unknown costs and fixed-selection conformance limits are preserved. [Evidence and assignments](EXECUTION_LOG.md#2026-10-27--retained-comparison-conformance-final-checks-pending).

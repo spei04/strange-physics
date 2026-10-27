@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: first bounded attempt at 12a8a43 stopped before scoring after 39 successful public returns. Quality owns a narrow validation-cost repair and reviewed boundary-test integration. Further measured execution requires repaired-source/profile review.
+Status: repaired source 36c9595 passed 20 synthetic cases, the 50-call successor and the separate four-call guard fixture. Both peers and Lead accepted the bounded 50-call evidence; Platform/Lead accepted the separate boundary fixture. Full configured checks are running; final results and delivery remain pending. Failed 12a8a43 and its unknown costs are preserved.
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. The current supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Repair repeated ledger validation and integrate reviewed boundary fixture in identity |
-| Platform | Failed-run evidence and boundary source reviewed; next repaired-source/resource review |
-| Research | Boundary fixture and source diagnosis delivered; next independent repaired-source review |
-| Project lead | Checkout ownership, progress consistency, integration and exact delivery |
+| Quality | Run the authorized 15-command configured batch in identity; retain both accepted fixture outcomes |
+| Platform | Observed accounting, capacity and boundary reviews accepted; delivery verification next |
+| Research | Scientific/temporal readback accepted; progress-only primary reconciliation |
+| Project lead | Bounded-run coordination, independent progress review, integration and exact delivery |
 
-The two existing cloud checkouts are reused. Quality owns source/environment in identity. Research released primary after delivering fixture 4a5c84a; Lead now uses it for progress-only edits. No additional dependency installation or checkout is needed.
+The two existing cloud checkouts are reused. Quality owns the frozen source/environment and authorized configured checks in identity. Research owns only the six progress documents in primary for this update; its environment is unused. Lead reviews and publishes the resulting checkpoint. No additional checkout is needed.
 
 ## Scope and acceptance
 
@@ -36,9 +36,9 @@ A preliminary source-based count adds preparation, 24 predictions and scoring (2
 
 Lightweight source/pure-contract output is bounded to 256 MiB across this slice. A later runtime batch has a proposed shared 2 GiB host-output ceiling inclusive of builds, scratch, retained fixtures and reviewer output, starts only with at least 50 GiB available, and stops new dispatch below 45 GiB or before exceeding that ceiling. These operational guards do not enlarge the scientific caps.
 
-The author proposes one PR with two immutable checkpoints: strict payloads/retained bindings, then measured integration/proof. Its provisional 45-call profile uses the existing 1 MiB database parameter, totaling 978,165,760 artifact bytes and 1,247 CPU seconds; the 2 MiB alternative exceeds 1 GiB. These are proposed bounds only. Actual store fit, complete copies and recovery/finalization headroom remain unproved.
+The original source proposal used one PR with two immutable checkpoints: strict payloads/retained bindings, then measured integration/proof. Its provisional 45-call profile uses the existing 1 MiB database parameter, totaling 978,165,760 artifact bytes and 1,247 CPU seconds; the 2 MiB alternative exceeds 1 GiB. Those original 45-call bounds were conditional. The later 50-call evidence and its separate resource review govern observed fit and headroom.
 
-Next gates: concrete measured-adapter source and complete finite profile review; admitted bounded evidence; configured checks and delivery. Historical estimates are not a new completion date. The approved backlog graph, caps and first-result forecast remain unchanged pending evidence-based re-estimation.
+Remaining gates: complete full configured checks and exact PR/main/candidate delivery. Historical estimates are not a new completion date. The approved backlog graph, caps and first-result forecast remain unchanged pending evidence-based re-estimation.
 
 
 ## Accepted first checkpoint
@@ -49,12 +49,12 @@ Actual retained-store authentication, latest terminal-state resolution, source/i
 
 The 45-call arithmetic has independent conditional acceptance, not runtime admission. Setup retains its exact 50,331,648-byte hold (48 MiB); prediction's 1 MiB allowance requires at most one 512 KiB retained input and one 512 KiB output. Additional persisted material needs pre-write accounting. Raw ledger is bounded to 256 KiB, with 16 records/64 KiB finalization and protected publication/recovery capacity. The concrete adapter and fixture must prove these assumptions before measured dispatch.
 
-The fixture authoring split retains the same two cloud checkouts and source-output guard. Research owns the declared positive/recovery sequence and minimal database-size helper option; Quality owns adapter code and authority/transport negatives. Lead and Platform review the independently authored fixture before integration and measured admission.
+The initial fixture authoring split retained the same two cloud checkouts and source-output guard. Research delivered the positive/recovery sequence and minimal database-size helper option; Quality integrated it with adapter code and authority/transport cases. Lead and Platform reviewed the independently authored fixture before integration and measured admission.
 
 
 ## Reviewed adapter and next finite proof
 
-Adapter c427d39 passed independent static review for retained authority and scientific identity. The source-only fixture 4a5c84a is accepted for integration. Quality now owns its 50-call successor; Lead and Platform review the final fixture and profile before measured execution.
+Adapter c427d39 passed independent static review for retained authority and scientific identity. Source-only fixture 4a5c84a was accepted for integration into the 50-call successor, subject to Lead/Platform profile review. The later repair and observed outcome are recorded below.
 
 The successor must retain the successful 45-call prefix and add one unavailable prediction, an unscorable score, a valid retry under the same logical prediction, paid replay of the earlier score and denial of a fresh score that uses the stale unavailable reference. Replay must succeed after deleting its live input; stale denial must reach retained-state validation. Unknown original work remains charged, and replay adds its own cost.
 
@@ -68,3 +68,11 @@ Exact 12a8a43 entered 40 calls and returned from 39, retaining 82 records/39 clo
 Quality's repair scope is per-invocation validated-manifest reuse and equivalent head-only prefix checks. Original-prefix canonical digests, every request/receipt/ticket/latest-state join and raw witnesses remain mandatory. The next source profile declares the fixture lifetime as 600 seconds initially because the first 39 public intervals alone used 174.63 seconds; setup CPU, per-call limits and scientific caps remain unchanged. Runtime requires independent review of that exact repair.
 
 The separate four-call source ec726e7 is accepted for integration at a conditional 337,289,216 bytes/371 CPU seconds. Its injected-history qualification and prepaid mutation/restoration remain explicit. Mutation runs under the retained control tail; restoration is setup work. No additional calls are appended to or authorized by the failed 50-call authority.
+
+## Accepted repair and observed conformance
+
+Exact 36c9595 passed independent static review and 20 synthetic cases (12.17 seconds); the source-bound archives/installed record match 89 package files. The successor's initial 600-second setup lifetime preserves default 180-second behavior and every CPU/copy/per-call/scientific cap.
+
+The successor passed in 166.20 seconds with 50 entries/48 returns and two intended denials. Its final 103 records/43 closures/four unresolved holds retain the completed native and same-history classical scores, original unscorable-score replay after a retry, and fresh stale-reference denial. Research independently verified the actual mixed 12-row history, 24 ordered predictions and original authority/receipt joins; Platform verified resource accounting and Lead accepted the bounded specimen. Fixed selection and repeated actions are conformance evidence only.
+
+The separate four-call guard fixture passed in 22.85 seconds with two exact denials, 23 records/two closures/16 holds and restored capture. Its injected-intent origin remains explicit. Platform and Lead independently accepted the fixture; Research's authorship remains separate from that review. Five recoveries have recorded child CPU zero, but the purchase holder field is absent; control tails remain reserved and final setup CPU is not fully serialized. The configured batch is running: Ruff/format/mypy passed, full pytest is running, and final results and PR/main/candidate delivery remain pending. The failed first authority, parent issues and all later study/publication gates are preserved.
