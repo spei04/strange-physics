@@ -12597,7 +12597,7 @@
         "Research": "Fixture delivered and primary released; independent adapter review complete; identify remaining finite boundary coverage.",
         "Project lead": "Progress-only edits in released primary; review integration, resource admission and exact evidence."
       },
-      "handoff": "Quality owns identity adapter/negative cases; Research receives primary sequentially for source-only45-call fixture after verified handoff. Lead retains progress branch and private assignment log. No measured runtime admitted.",
+      "handoff": "Research delivered source-only fixture4a5c84a and released primary. Quality integrates the reviewed fixture and explicit50 successor in identity; Lead maintains progress in primary. Both static adapter reviews are accepted; concrete source/profile review precedes measured runtime.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
