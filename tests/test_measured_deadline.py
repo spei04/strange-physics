@@ -134,7 +134,7 @@ def test_synchronous_deadlines_keep_existing_public_code(boundary: str) -> None:
 
 def test_deadline_translates_after_unwind_preserving_notes_and_restoring_handlers() -> None:
     handlers = {s: signal.getsignal(s) for s in (signal.SIGALRM, signal.SIGPROF)}
-    with pytest.raises(StudyLedgerError, match="^publication_deadline$") as caught:
+    with pytest.raises(StudyLedgerError) as caught:
         with publisher._deadline(
             BUDGET_NS, BUDGET_NS, BUDGET_NS, BUDGET_NS, time.process_time_ns()
         ) as clock:
@@ -148,6 +148,7 @@ def test_deadline_translates_after_unwind_preserving_notes_and_restoring_handler
                 assert clock.tail()
                 assert not clock.exhausted
                 raise
+    assert str(caught.value) == "publication_deadline"
     assert caught.value.__notes__ == ["Synthetic settlement diagnostic"]
     assert isinstance(caught.value.__cause__, publisher._DeadlineInterrupt)
     assert caught.value.__cause__.__notes__ == caught.value.__notes__
@@ -222,8 +223,9 @@ def test_supervisor_deadline_retains_known_cost_unknown_hold_and_cleanup_note(
     monkeypatch.setattr(executor, "_run_child", feed)
     monkeypatch.setattr(executor, "_validate", fail_validation)
     monkeypatch.setattr(CandidateStore, "close", fail_close)
-    with pytest.raises(StudyLedgerError, match="^publication_deadline$") as caught:
+    with pytest.raises(StudyLedgerError) as caught:
         executor.commit_native_candidates(root, request)
+    assert str(caught.value) == "publication_deadline"
     assert isinstance(caught.value.__cause__, publisher._DeadlineInterrupt)
     assert any("Final store close failed" in note for note in caught.value.__notes__)
     ledger = current(root)
