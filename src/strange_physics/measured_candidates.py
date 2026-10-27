@@ -27,7 +27,11 @@ from strange_physics.candidate_execution_contracts import (
     CandidateRequest,
 )
 from strange_physics.candidate_store import CandidateStore
-from strange_physics.comparison_stage_resolver import RetainedStageWitness, bind_retained_stage
+from strange_physics.comparison_stage_resolver import (
+    BoundRetainedStage,
+    RetainedStageWitness,
+    bind_retained_stage,
+)
 from strange_physics.installed_identity import TrustedInstallation, verify_native_installation
 from strange_physics.measured_publication import _deadline
 from strange_physics.native_candidates import produce_native_candidates
@@ -1391,6 +1395,7 @@ def _commit_native_execution(
                 captured_journal: (
                     _ComparisonCapture | _PurchaseCapture | RetainedStageWitness | None
                 ) = None
+                bound_stage: BoundRetainedStage | None = None
                 clock.work()
                 work_start = meter.total
                 if closure:
@@ -1432,9 +1437,10 @@ def _commit_native_execution(
                         request,
                         (NativePreparationRequest, NativePredictionRequest, NativeScoreRequest),
                     ):
-                        captured_journal = bind_retained_stage(
+                        bound_stage = bind_retained_stage(
                             store, request, input_raw, original, meter, journal_scope, replayed=True
                         )
+                        captured_journal = bound_stage.witness
                 else:
                     input_raw = read_bytes(Path(request.input_path), limit=_input_limit(request))
                     if (len(input_raw), digest(input_raw)) != (
@@ -1462,9 +1468,10 @@ def _commit_native_execution(
                         request,
                         (NativePreparationRequest, NativePredictionRequest, NativeScoreRequest),
                     ):
-                        captured_journal = bind_retained_stage(
+                        bound_stage = bind_retained_stage(
                             store, request, input_raw, current, meter, journal_scope, replayed=False
                         )
+                        captured_journal = bound_stage.witness
                     produced: bytes | None
                     if isinstance(actual, NativePurchaseInput):
                         assert isinstance(request, NativePurchaseRequest)
@@ -1623,7 +1630,10 @@ def _commit_native_execution(
                                 "operation": request.operation,
                             }
                         )
-                actual = _input(input_raw, request)
+                # Only this invocation's fully bound wrapper can supply the parsed input.
+                actual = (
+                    bound_stage.actual if bound_stage is not None else _input(input_raw, request)
+                )
                 _check_engine(actual, observed.engine_fingerprint)
                 _validate(result, actual, receipt.original_attempt_id)
                 if (message_sha256(actual), _config(actual)) != (

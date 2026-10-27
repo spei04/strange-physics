@@ -64,6 +64,7 @@ if TYPE_CHECKING:
         ExecutionRequest,
         ExecutionResult,
     )
+    from strange_physics.native_stage_dispatch import StageInput
 
 type ComparisonStageRequest = (
     NativePreparationRequest | NativePredictionRequest | NativeScoreRequest
@@ -99,6 +100,14 @@ class RetainedStageWitness:
                 value = read_bytes(path, limit=length)
                 if (len(value), digest(value)) != (length, sha256):
                     raise StudyLedgerError("comparison_retained_changed")
+
+
+@dataclass(frozen=True)
+class BoundRetainedStage:
+    """One invocation's parsed inner input and authenticated raw witnesses."""
+
+    actual: StageInput
+    witness: RetainedStageWitness
 
 
 @dataclass(frozen=True)
@@ -442,16 +451,20 @@ def bind_retained_stage(
     scope: ExitStack,
     *,
     replayed: bool,
-) -> RetainedStageWitness:
+) -> BoundRetainedStage:
     """Resolve concrete original authorities within the caller's charged work clock."""
     if request.phase != "comparison" or request.cell_id is None:
         raise StudyLedgerError("comparison_stage_scope")
     resolver = _Resolver(store, view, request.cell_id, meter, scope)
+    actual: StageInput
     if isinstance(request, NativePreparationRequest):
         _before_feedback(view, request.cell_id)
-        resolver.preparation_context(parse_comparison_preparation_input(input_raw))
+        preparation_material = parse_comparison_preparation_input(input_raw)
+        resolver.preparation_context(preparation_material)
+        actual = preparation_material.context
     elif isinstance(request, NativePredictionRequest):
         material = parse_comparison_prediction_input(input_raw)
+        actual = material.prediction
         parent, preparation, attempt_id, _ = resolver.preparation(
             material.preparation_logical_id, material.preparation_receipt_sha256
         )
@@ -464,6 +477,7 @@ def bind_retained_stage(
         )
     else:
         scoring = parse_comparison_score_input(input_raw)
+        actual = scoring.scoring
         parent, preparation, attempt_id, frozen = resolver.preparation(
             scoring.preparation_logical_id, scoring.preparation_receipt_sha256
         )
@@ -506,4 +520,4 @@ def bind_retained_stage(
             scoring_attempt_id=request.attempt_id,
         )
     resolver.witness.recheck()
-    return resolver.witness
+    return BoundRetainedStage(actual, resolver.witness)
