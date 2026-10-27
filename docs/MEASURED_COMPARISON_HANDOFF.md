@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: exact source 1cc9408 passed all 15 local configured commands, including 4,421 tests in 1,850.02 seconds in normal complete order. Runtime/test bytes remain accepted 1dee2c5. Both full-context score replays returned; the four-call and 50-call traces retain their intended denials. Passing physical fixtures were removed under the approved failed-only policy, so this full run does not retain per-call CPU/receipt artifacts. Separate selected-run measurements and historical failures remain source-specific. Exact PR/main/candidate delivery is pending; no timing, MAP, accuracy, study or publisher-authority claim follows.
+Status: retained-comparison delivery is accepted through PR127/main 5897f97 and unpublished candidate 12715816385. Both PR and main runtimes passed 4,421 tests; all five main jobs and exact 89-file archive/source checks passed. Local 1cc9408 and selected 1dee2c5 evidence remain separate, including failed-only retention limits and historical failures. Quality is assigned the V2 one-way publisher handoff; design acceptance does not prove resource fit or crash recovery. No scientific comparison, MAP, accuracy, full-study or parent-closure claim follows.
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Full local verification complete at 1cc9408; source/environment released |
-| Platform | Independently review full-gate evidence and prepare exact delivery verification |
-| Research | Complete scientific readback and release this six-file reconciliation to Lead |
-| Project lead | Own released checkouts; review progress and integrate for PR/main/candidate delivery |
+| Quality | Implement V2 one-way publisher handoff in reused identity; first immutable checkpoint pending |
+| Platform | Delivery accepted; independently review next accounting, activation/recovery and capacity boundaries |
+| Research | Release delivery reconciliation; independently review next material/identity checkpoint |
+| Project lead | Own primary progress/integration after release and coordinate Quality source handoff |
 
-The two existing cloud checkouts are reused. Exact 1cc9408 source/environment and all runtime holds are released after local verification. Research releases these six primary progress documents without environment use to Lead for review/integration. Platform reviews delivery evidence; no new implementation or additional checkout is assigned.
+The two existing cloud checkouts are reused. Quality is assigned the next implementation in identity from accepted main 5897f97, with Lead coordinating its source handoff. Research releases this six-file primary reconciliation to Lead for review/publication. Platform and Research independently review the first immutable store/contracts checkpoint; no extra checkout is required.
 
 The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
 
@@ -42,7 +42,7 @@ Lightweight source/pure-contract output is bounded to 256 MiB across this slice.
 
 The original source proposal used one PR with two immutable checkpoints: strict payloads/retained bindings, then measured integration/proof. Its provisional 45-call profile uses the existing 1 MiB database parameter, totaling 978,165,760 artifact bytes and 1,247 CPU seconds; the 2 MiB alternative exceeds 1 GiB. Those original 45-call bounds were conditional. The later 50-call evidence and its separate resource review govern observed fit and headroom.
 
-Remaining delivery gates: required hosted PR/main checks on both Python runtimes and exact candidate verification. The local full-suite duration does not establish hosted timing fit. Historical estimates are not a new completion date; the approved graph, caps and first-result forecast remain unchanged. [Full verification evidence and limits](EXECUTION_LOG.md#2026-10-27--retained-comparison-local-full-verification-passed).
+Retained-comparison PR/main/candidate delivery is accepted; [exact evidence and limits](EXECUTION_LOG.md#2026-10-27--retained-comparison-delivery-accepted) remain source-specific. The next unit is the assigned V2 one-way execution-to-publisher handoff, followed separately by full-study allocation/census and explicit parent audits before finite-grid admission. The conditional 44-call design totals 1,026,908,160 artifact bytes and 1,356 CPU seconds within existing caps; no measured fit or runtime admission follows. Its original inner score and selected=None classical inputs, failed rows and unknown holds must retain their identities. Fresh target installation verification runs inside each paid ticket; durable owner-private lock/archive/provenance references must exist before seed/admission, with initial copies charged and no post-seal path rebasing. The existing forecast, caps and grid-first/Laplace-later order remain unchanged.
 
 
 ## Accepted first checkpoint
@@ -81,7 +81,7 @@ The successor passed in 166.20 seconds with 50 entries/48 returns and two intend
 
 The separate four-call guard fixture passed in 22.85 seconds with two exact denials, 23 records/two closures/16 holds and restored capture. Its injected-intent origin remains explicit. Platform and Lead independently accepted the fixture; Research's authorship remains separate from that review. Five recoveries have recorded child CPU zero, but the purchase holder field is absent; control tails remain reserved and final setup CPU is not fully serialized. The configured batch stopped after 1,041 passed/one failed in 476.55 seconds: the existing classical [fit] case received SIGPROF (27) inside installation verification during comparison-candidate admission, before producer dispatch. Ruff/format/mypy passed, but full verification is failed/incomplete. Source/environment were unchanged; no retry or cap increase was made. The retained root has 17 records/14 unresolved holds and consumed ticket 1, with no candidate reservation or producer. The separate fresh verifier profile measured 5.074 CPU/5.075 wall seconds with exact 4,698-file membership; it does not establish the failed timer's exact cost attribution. Quality's lexical repair 50b1118 awaits Lead/Platform static review before refresh/tests. Required checks and PR/main/candidate delivery remain pending. The failed first authority, parent issues and all later study/publication gates are preserved.
 
-## Current verifier checks
+## Verifier failure and repair history
 
 Lead/Platform accepted repair 50b1118; 336d91b changes only test formatting, preserving runtime/build/lock bytes and test AST. Fifteen new verifier cases and the exact previously failing classical [fit] case passed together (16 cases, 17.29 seconds), with offline archives/installed records matching 89 package files and unchanged dependencies/interpreter/lock. The subsequent full run stopped at 1,061 passed/one failed in 475.99 seconds: prediction ingress received SIGPROF (27) in installation verification before producer dispatch. The prior classical [fit]/outcome cases passed; 11 later commands were not run. Sealed readback confirms unchanged source/install/dependencies, entry nine/ticket 8, 18 records/eight closures and only setup/control holds. No seventh-prediction reservation/input/output or child was reached. The five-second control allowance covers total ingress; the 12-second work allowance was not started, and the signal location does not apportion CPU. The subsequent read-only pre-work mirror completed in 3.03 instrumented CPU seconds, omitting ticket write/fsync and CandidateStore with no public stage/producer or mutation. It is not a reproduction. Full verification remains failed/incomplete and delivery held. The failed 36c full run, 16 focused passes and earlier fixture evidence remain distinct; lexical repair sufficiency, final delivery and study admission are not claimed.
 

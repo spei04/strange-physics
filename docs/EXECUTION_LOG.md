@@ -12,15 +12,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Exact 1cc9408 author verification complete; source and environment released | All 15 local checks passed; PR/main/candidate delivery remains pending |
-| Platform | Independently review full-gate evidence and prepare delivery verification | Actual hosted checks and exact candidate identity remain required |
-| Research | Full-gate scientific readback complete; six progress files reconciled | Release primary to Lead for independent review; available for delivery consistency |
-| Project lead | Own released checkouts, review progress and integrate for delivery | PR/main/candidate pending; parents #105/#106 remain open |
+| Quality | Implement the V2 one-way execution-to-publisher handoff in reused identity | First immutable store/contracts checkpoint goes to independent review; profile fit remains unproved |
+| Platform | Retained-comparison delivery verification complete; review next handoff boundaries | Accounting, activation/recovery and finite resource fit |
+| Research | Delivery reconciliation complete; release primary to Lead | Independent material/identity review at the first handoff checkpoint |
+| Project lead | Accept PR127/main candidate and coordinate the next source handoff | Review/publish progress; parents #105/#106 remain open |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Project lead + Platform + Research | PR127/main 5897f97 and exact candidate delivery accepted | Quality assigned V2 publication handoff; first immutable checkpoint goes to independent review |
 | 2026-10-27 | Quality + Platform + Research | Exact 1cc9408 local full verification and independent evidence review | All 15 commands and 4,421 tests passed; Lead owns integration, hosted delivery pending |
 | 2026-10-27 | Quality + Platform + Research | Parsed-input reuse at 1dee2c5: focused 29 and one actual 50-call specimen accepted | Author handoff and disabled full-check runner preparation; full verification still pending |
 | 2026-10-27 | Quality | Repaired source 36c9595: 20 synthetic cases and both admitted fixtures passed | Full configured checks running; exact evidence retained |
@@ -1155,3 +1156,13 @@ Exact [1cc9408](https://github.com/spei04/strange-physics/commit/1cc94080d4860cb
 The 108-row scoped trace pairs four calls with two returns/two intended preparation denials, and 50 calls with 48 returns/two intended unavailable-prediction/stale-score denials. Original-score replay at call 45 and historical unscorable-score replay at call 49 both returned. The unchanged test assertions preserve the mixed 12-row history, fixed pre-feedback selection, 24 ordered predictions, same-history classical comparison and original unknown holds after retry/replay. Passing physical fixtures were removed by the approved failed-only retention policy: this full run retains ordered outcomes and passing assertions, not per-call CPU or receipt artifacts. The separately retained 1dee2c5 selected-run measurements remain distinct.
 
 An earlier preflight stopped before any configured command on two preserved FIFOs; the reviewed census-only correction left them untouched. Historical 12a/36c/336 failures and their unknown costs remain preserved. This local pass proves neither their complete cause nor a general timing guarantee; the existing 15-minute hosted job limit and both Python-runtime PR/main checks remain unchanged and unverified for this delivery. Quality released source/environment; Research releases this progress checkpoint to Lead, with Platform reviewing delivery evidence. Exact PR/main/candidate delivery is next. Publisher authority handoff, full-study allocation/census and explicit parent audits remain separate, unassigned implementation work. No MAP, accuracy, study or parent #105/#106 closure claim follows; grid remains first and Laplace later.
+
+## 2026-10-27 — Retained comparison delivery accepted
+
+[PR127](https://github.com/spei04/strange-physics/pull/127) merged as [main 5897f97](https://github.com/spei04/strange-physics/commit/5897f97b2bda7f76600b0590680d51f5a3936ac0), preserving the reviewed head's tree fa4d7c761a3cf8f5242e801b229e5e7c29337796. Exact-head [PR run 40462284706](https://github.com/spei04/strange-physics/actions/runs/40462284706) passed all four applicable jobs: Python 3.12 passed 4,421 tests in 681.69 seconds and Python 3.14 passed 4,421 in 593.73 seconds; the protected-main candidate job was correctly skipped on the PR event.
+
+All five jobs in [main run 40463652713](https://github.com/spei04/strange-physics/actions/runs/40463652713) passed. Main Python 3.12 passed 4,421 tests in 386.90 seconds and Python 3.14 passed 4,421 in 468.88 seconds. Candidate 12715816385 (543,189-byte ZIP) is independently accepted as an unpublished candidate: both distribution archives match the reviewed author archives, all 89 package files match exact source, and provenance/checksums match source, run and lock. Runtime requirements bytes are absent from the artifact and were not independently recomputed; copied Python executables still share base libraries. This is no deployment or signing claim.
+
+The local 1cc9408 15-command result and separately retained selected 1dee2c5 measurements remain distinct. Passing local full-suite fixtures were removed under the approved failed-only policy; historical failures and unknown holds are preserved. Fixed selection, repeated calibration and bounded history/replay evidence establish conformance, not MAP, model accuracy, a scientific comparison, guaranteed timing or full-study admission.
+
+Quality is assigned the V2 one-way execution-to-publisher handoff in the reused identity checkout; Platform and Research review the first immutable store/contracts checkpoint. V2 is accepted design only: actual resource fit and supported crash recovery remain unproved. Durable owner-private lock, archive and provenance references must be established before seed/admission, with any copies charged to setup and no post-seal path rebasing. The transfer must preserve the original inner score input, independent selected=None classical input, failed rows and unknown holds. Full-study allocation/census and explicit parent #105/#106 audits remain open; finite grid stays first and Laplace later.

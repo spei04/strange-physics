@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research releases this six-doc reconciliation without environment use to Lead for independent review/integration; available for delivery consistency.",
-      "identity": "Exact 1cc9408 local all15 checks passed; Quality released source/environment/runtime holds to Lead. PR/main/candidate delivery remains pending.",
+      "scientific": "Research releases this six-doc delivery reconciliation without environment use to Lead for review/publication; independent material/identity review at the next handoff checkpoint.",
+      "identity": "PR127/main 5897f97 and exact candidate 12715816385 accepted. Quality assigned V2 one-way publisher handoff implementation in reused identity; Lead coordinates clean source handoff and first immutable review.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "retained_comparison_local_all15_passed_hosted_delivery_pending",
+      "status": "retained_comparison_delivered_publisher_handoff_implementation_assigned",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Exact 1cc9408 local verification complete; source/environment released. No new implementation assigned.",
-        "Platform": "Independently review full-gate evidence and prepare exact PR/main/candidate verification.",
-        "Research": "Independent scientific full-gate readback complete; release six progress files to Lead for review, available for delivery consistency.",
-        "Project lead": "Own released checkouts, review progress and integrate for required hosted delivery. Parents remain open."
+        "Quality": "Implement V2 one-way execution-to-publisher handoff in reused identity; first immutable store/contracts checkpoint goes to independent review. Design fit remains unproved.",
+        "Platform": "Retained-comparison delivery accepted; independent next accounting, activation/recovery and finite-capacity review.",
+        "Research": "Delivery reconciliation complete; release primary to Lead and review next immutable material/identity checkpoint.",
+        "Project lead": "Own primary progress/integration after release; accepted main/candidate delivery and coordinate Quality source handoff. Parents remain open."
       },
-      "handoff": "Exact 1cc9408 differs from accepted 1dee2c5 by seven docs only. All 15 local commands passed; normal complete pytest passed 4,421 in 1,850.02 seconds. Scoped trace confirms original/historical score replays returned and all four expected denials. Passing physical fixtures removed under failed-only retention; selected 1dee per-call measurements remain separate. Source/install/dependencies unchanged. Earlier failures and unknown holds preserved; no timing guarantee. PR/main/candidate pending.",
+      "handoff": "PR127 merged as main 5897f97 with the exact reviewed tree; both PR and main runtimes passed 4,421 tests and candidate 12715816385 is accepted unpublished. Local 1cc9408 all-15 checks and selected 1dee2c5 measurements remain separate; historical failures and unknown holds are preserved. Quality is assigned V2 publisher handoff implementation; the first immutable store/contracts checkpoint awaits independent review. No scientific comparison, timing guarantee, MAP/accuracy, full-study or parent closure.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Required hosted PR/main checks and exact candidate verification. After retained-comparison delivery, one-way publisher authority handoff, full-study allocation/census and explicit parent acceptance remain separate, unassigned implementation work; grid first, Laplace later. No study or new scientific allocation.",
+      "next_units": "Assigned V2 one-way publisher authority handoff, with independent first immutable store/contracts review and future measured resource/crash proof. Full-study allocation/census and explicit parent acceptance remain separate before finite-grid admission; grid first, Laplace later. No new scientific allocation.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "local_all15_commands_passed_hosted_delivery_pending",
+        "status": "delivered_main_5897f97_candidate_12715816385",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14579,7 +14579,7 @@
         "proposed_full_specimen_calls_before_extra_faults": 45,
         "runtime_profile": "Source-specific 36c9595 selected 50/four outcomes remain accepted; current 1dee2c5 selected 50-call outcome independently accepted under unchanged scientific caps.",
         "new_allocation": false,
-        "next_gate": "Required dual-runtime PR/main checks and exact candidate verification. Local full-suite duration is not hosted timing proof; parents #105/#106 remain open.",
+        "next_gate": "This slice is delivered. The assigned V2 publisher handoff requires first immutable store/contracts review and bounded executable proof; parents #105/#106 and full-study admission remain open.",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -15069,7 +15069,73 @@
           "retention": "Approved failed-only policy removed passing physical fixtures and per-call CPU/receipt artifacts; immutable passing assertions and ordered outcomes remain. Separately retained selected1dee measurements are not full-run measurements.",
           "preflight_history": "Two preserved FIFOs stopped the initial preflight before any configured command; reviewed census-only correction left them untouched.",
           "qualification": "No historical-cause or fixed-control timing guarantee, MAP/accuracy/full-study/publisher-authority or parent closure. Existing15-minute hosted job limit unchanged; both hosted runtimes and candidate still pending. Runtime export is not isolated runtime-only validation."
+        },
+        "delivery_127": {
+          "pull_request": 127,
+          "pr_head": "7d69c51796a3d873c4b15ab768f07270853f64a9",
+          "base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
+          "main": "5897f97b2bda7f76600b0590680d51f5a3936ac0",
+          "tree": "fa4d7c761a3cf8f5242e801b229e5e7c29337796",
+          "pr_run": 40462284706,
+          "applicable_pr_jobs_passed": 4,
+          "protected_main_job_on_pr": "skipped_by_design",
+          "pr_pytest": {
+            "3.12": {
+              "passed": 4421,
+              "seconds": 681.69
+            },
+            "3.14": {
+              "passed": 4421,
+              "seconds": 593.73
+            }
+          },
+          "main_run": 40463652713,
+          "main_jobs_passed": 5,
+          "main_pytest": {
+            "3.12": {
+              "passed": 4421,
+              "seconds": 386.9
+            },
+            "3.14": {
+              "passed": 4421,
+              "seconds": 468.88
+            }
+          },
+          "candidate": 12715816385,
+          "candidate_zip_bytes": 543189,
+          "candidate_zip_sha256": "10de83c7efafc405aa22118aca67e050bcfa57ffc38fbe3292a94cf13d303838",
+          "status": "accepted_unpublished_candidate",
+          "package_source_files": 89,
+          "both_archives_equal_reviewed_author": true,
+          "source_run_lock_provenance_verified": true,
+          "limits": "Exported runtime requirements bytes absent and not independently recomputed; copied Python uses base libraries. Local failed-only retention removed passing fixtures/per-call artifacts; selected measurements remain separate. No deployment/signing, timing reliability, MAP/accuracy, scientific comparison/full-study or parent closure."
         }
+      },
+      "publisher_authority_handoff": {
+        "status": "implementation_assigned_design_only_runtime_fit_unproved",
+        "source_base": "5897f97b2bda7f76600b0590680d51f5a3936ac0",
+        "proposal_source": "7d69c51796a3d873c4b15ab768f07270853f64a9",
+        "proposal_version": 2,
+        "author": "Quality",
+        "reviewers": [
+          "Platform",
+          "Research"
+        ],
+        "first_checkpoint": "Immutable store/contracts before caller integration",
+        "conditional_selected_calls": 44,
+        "conditional_artifact_bytes": 1026908160,
+        "conditional_cpu_seconds": 1356,
+        "trusted_build_prerequisite": "Durable owner-private exact lock/archive/provenance references before seed/admission; initial copies charged to setup, no post-seal path rebasing. Fresh actual target installation verification inside every paid ticket.",
+        "material_scope": "Original inner scoring input and independent selected=None classical input, full failed-row history and original unknown holds. No receipt relabeling.",
+        "activation": "First publication ticket includes activation; one recovery spare only, exhaustion fails closed with source sealed.",
+        "not_proved": [
+          "resource fit",
+          "supported crash cuts",
+          "publisher authority implementation",
+          "full-study allocation/admission",
+          "parent completion"
+        ],
+        "new_allocation": false
       }
     },
     "certificate_trust_update": {
