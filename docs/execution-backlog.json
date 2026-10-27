@@ -10924,10 +10924,10 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Lead owns primary progress at80a4d1f; no Research writer or environment use.",
-      "identity": "Quality exclusive lightweight source writer on feat/retained-comparison-stages at dfda60f after Lead handoff; no measured runtime admission.",
+      "scientific": "Lead owns primary progress; e81d221 pure-checkpoint update is under review with narrow current-status corrections. No Research writer or environment use.",
+      "identity": "Quality exclusively owns checkpoint2 source/environment work on feat/retained-comparison-stages after accepted and published bdfed5d; no measured runtime admission.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
-      "storage": "Two existing cloud checkouts reused; both clean and no consumers before handoff; free bytes 93668601856 at 2026-10-26T04:31:31Z. No new checkout.",
+      "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
     },
     "spring_calibration_evidence": {
@@ -14611,7 +14611,8 @@
           "test_provenance": "Old inventory scoped to initial failed fixture; exact clean-source rerun closes final-test identity gap; original evidence preserved",
           "measured_calls": 0,
           "numerical_calls": 0,
-          "new_checkout": false
+          "new_checkout": false,
+          "platform_test_provenance_closure_sha256": "a024e228541de73f7199879899395e8dfe9912b4e27ac4d7f8afc20a12c89306"
         },
         "profile_arithmetic_index_sha256": "0d125bc94ab1a1286801b1288368ae294dc44156c061ca2599b45f221432777c",
         "setup_hold_bytes": 50331648
