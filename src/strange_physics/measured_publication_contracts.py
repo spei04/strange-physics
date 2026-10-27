@@ -80,6 +80,7 @@ class NativePublicationRequest(Message):
         elif extra not in (
             {"scoring_input", "scoring_result"},
             {"scoring_input", "scoring_result", "diagnostic_result"},
+            {"scoring_input", "scoring_result", "diagnostic_input", "diagnostic_result"},
         ):
             raise ValueError("Scored publication requires its fixed scoring inputs")
         if ("diagnostic_result" in names) and self.diagnostic_attempt_id is None:
