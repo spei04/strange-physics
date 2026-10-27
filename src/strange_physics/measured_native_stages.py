@@ -1,8 +1,8 @@
-"""Measured pre-freeze native stages over the candidate store's one ledger.
+"""Fixed measured native preparation, prediction and scoring.
 
-Only fixed operations are exposed. Results bind supplied material and measured
-execution identity; comparison and historical Journal authenticity are absent.
-Integrated lineage requires actual retained prior-stage materials to join.
+Pre-freeze calls bind supplied material. Comparison calls additionally resolve
+strict wrapper references against this store's retained paid authorities and
+original Journal capture; selection is fixed material, not a selector claim.
 """
 
 from __future__ import annotations

@@ -10924,10 +10924,10 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research owns only the six progress documents from 8827e03 for this final local-gate update, then releases clean primary to Lead; primary environment unused.",
-      "identity": "Quality released clean source 2e63b50 and environment to Lead after all 15 configured gates at e3bafeb; no active consumers. Final source differs only by implementation prose.",
+      "scientific": "Research releases this six-doc reconciliation without environment use to Lead for independent review/integration; available for delivery consistency.",
+      "identity": "Exact 1cc9408 local all15 checks passed; Quality released source/environment/runtime holds to Lead. PR/main/candidate delivery remains pending.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
-      "storage": "Two existing cloud checkouts reused; both clean and no consumers before handoff; free bytes 93668601856 at 2026-10-26T04:31:31Z. No new checkout.",
+      "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
     },
     "spring_calibration_evidence": {
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "bounded_full_purchase_path_and_local_gates_accepted_delivery_pending_parents_open",
+      "status": "retained_comparison_local_all15_passed_hosted_delivery_pending",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Final source 2e63b50 and environment released to Lead; all 15 local configured checks passed at e3bafeb.",
-        "Platform": "Delivery verification ready for coherent final source and main candidate; scoped peer acceptance complete.",
-        "Research": "Reconcile final local gates in six progress documents, then release primary to Lead.",
-        "Project lead": "Integrate final source with exact reviewed progress files and perform PR/main/candidate delivery."
+        "Quality": "Exact 1cc9408 local verification complete; source/environment released. No new implementation assigned.",
+        "Platform": "Independently review full-gate evidence and prepare exact PR/main/candidate verification.",
+        "Research": "Independent scientific full-gate readback complete; release six progress files to Lead for review, available for delivery consistency.",
+        "Project lead": "Own released checkouts, review progress and integrate for required hosted delivery. Parents remain open."
       },
-      "handoff": "Full 075c retained evidence and final local gates accepted. Quality released source 2e63b50/environment; Research owns only this six-document follow-up until release. Lead owns source integration and delivery; no purchase PR or merge yet.",
+      "handoff": "Exact 1cc9408 differs from accepted 1dee2c5 by seven docs only. All 15 local commands passed; normal complete pytest passed 4,421 in 1,850.02 seconds. Scoped trace confirms original/historical score replays returned and all four expected denials. Passing physical fixtures removed under failed-only retention; selected 1dee per-call measurements remain separate. Source/install/dependencies unchanged. Earlier failures and unknown holds preserved; no timing guarantee. PR/main/candidate pending.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Compose final source with reviewed progress, then PR/main/candidate delivery. Preserve scoped repeated-action limits, cumulative caps and unknown holds; publisher handoff, full-study capacity, parent audits and first-result re-estimation remain open.",
+      "next_units": "Required hosted PR/main checks and exact candidate verification. After retained-comparison delivery, one-way publisher authority handoff, full-study allocation/census and explicit parent acceptance remain separate, unassigned implementation work; grid first, Laplace later. No study or new scientific allocation.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -14297,16 +14297,16 @@
         }
       },
       "purchase_integration_handoff": {
-        "status": "bounded_full_path_and_local_gates_accepted_delivery_pending",
+        "status": "pr124_delivered_candidate_accepted_unpublished",
         "source_base": "c784f15dd91dfed169a5af0847dbd31445bcad88",
         "planning_base": "aeca99b3e865937d8e89e6b41afb77a1999174e0",
         "document": "docs/MEASURED_PURCHASE_HANDOFF.md",
-        "code_implementation": "bounded_purchase_history_retry_downstream_and_local_gates_accepted_delivery_pending",
+        "code_implementation": "bounded_purchase_pr124_delivered",
         "current_private_evidence_rehashed": true,
         "fresh_cloud_disk_and_ownership_verified": true,
         "runtime_execution": "bounded_075c_full_path_accepted_as_synthetic_conformance",
         "initial_checkpoint": "Accepted at 2c43f97 within source-qualified first purchase, known settlement, failure/replay and terminal-reconciliation evidence",
-        "full_path_gate": "Declared bounded 12-slot mixed history, same-slot retry and downstream evidence independently accepted; all 15 local configured checks passed; PR/main/candidate pending",
+        "full_path_gate": "Bounded 12-slot history/retry/downstream, local gates, required PR CI and protected-main/candidate accepted; broader study admission remains open",
         "v3": "bounded single-cell synthetic usability accepted; no new allocation, full-study capacity or publisher-handoff admission",
         "reestimate_before_study_admission": true,
         "published_handoff": "f6c58bf40139e6fb88349a0c461e3ea8dd004855",
@@ -14321,7 +14321,7 @@
         "source_tree": "864fd38638ca530c44c12e14a796af63a1db5ec4",
         "source_checkpoint_published": true,
         "checkpoint_assignment_snapshot_sha256": "dcbbe3f76d1b6cf462e0e3907e07ee9138402b8356c30354e49d7e98b1797a2b",
-        "delivery": "Exact 2c43f97 source branch published and remotely verified; no purchase PR or merge",
+        "delivery": "PR124/main dfda60f delivered with exact unpublished candidate acceptance; source-specific checkpoint history retained below.",
         "pure_contracts_checkpoint": {
           "source": "3df6dc34d1467b94e84db6c72af40a6af4f69edf",
           "tree": "86871c4007f14e35b1b7a426fbbaf59016cc610e",
@@ -14503,6 +14503,572 @@
             "own_metadata_unchanged": 9
           },
           "author_release": "Clean source and environment released to Lead; no active consumers"
+        },
+        "delivery_checkpoint": {
+          "pull_request": 124,
+          "head": "9c8ebae594166245544820416480fd184ad0d285",
+          "main": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
+          "tree": "1f55dc197c38a839f958f2b1e3e4840fde9ed72b",
+          "tree_matches_reviewed_head": true,
+          "pr_ci": 40275683045,
+          "pr_applicable_jobs": 4,
+          "pr_status": "accepted",
+          "pr_python": {
+            "3.12": {
+              "tests": 4339,
+              "seconds": 652.99
+            },
+            "3.14": {
+              "tests": 4339,
+              "seconds": 358.07
+            }
+          },
+          "pr_ci_index_sha256": "f8eb8c490322fc3059914724fe67c6ef820bb8d90e65ececc587b7537dd2a8de",
+          "merge_record_sha256": "ddbc809ef629edfbc2a91d4407e87e151d76069f6740f2dc972f8fccf1478494",
+          "main_ci": 40277055513,
+          "main_ci_status": "accepted",
+          "candidate_status": "accepted_unpublished",
+          "main_applicable_jobs": 5,
+          "main_python": {
+            "3.12": {
+              "tests": 4339,
+              "seconds": 406.85
+            },
+            "3.14": {
+              "tests": 4339,
+              "seconds": 543.61
+            }
+          },
+          "candidate_artifact_id": 12630997569,
+          "candidate_zip_bytes": 525619,
+          "candidate_zip_sha256": "ff0ccae6090fa9008de023f371ab41264dcf5bc16578790f655abaef3337d04c",
+          "package_files_equal_source": 87,
+          "both_archives_byte_equal_author": true,
+          "hosted_interpreter_observations": 13,
+          "ca_guard_observations": 2,
+          "main_acceptance_index_sha256": "a2614f44fbc937cff817d4fe45bfb6cfd641b23e236375116fb1f0d4ba8cefe4",
+          "verification_limits": [
+            "Exported requirements bytes absent; not independently recomputed",
+            "Owned copied interpreter still uses shared standard library; no hermeticity claim",
+            "Unpublished candidate acceptance is not a production release, study admission or parent closure"
+          ],
+          "verifier_read_hold_released": true
+        },
+        "next_work_recommendation": {
+          "source": "9c8ebae594166245544820416480fd184ad0d285",
+          "index_sha256": "cefc91893bf1f7fa26dafd6c6b8e797e8aad529fc2542d292174e057612181b6",
+          "status": "read_only_preparation_not_implementation",
+          "sequence": "Retained comparison preparation/prediction/scoring bindings, then one-way publisher handoff; early-only transfer remains a limited option",
+          "scope_limit": "Supplied-material pre-freeze wrappers are accepted, comparison-phase bindings are not. No MAP/N04, full-study allocation or parent-completion claim."
+        }
+      },
+      "comparison_integration_handoff": {
+        "status": "local_all15_commands_passed_hosted_delivery_pending",
+        "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
+        "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
+        "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
+        "author": "Quality",
+        "reviewers": [
+          "Platform",
+          "Research"
+        ],
+        "scope": "Retained purchased-history preparation, prediction and scoring with failed rows, exact identities, cumulative holds and paid recovery",
+        "initial_free_bytes": 63166316544,
+        "prior_delivery_free_bytes": 93518716928,
+        "capacity_review": "accepted_for_lightweight_source_only",
+        "proposed_full_specimen_calls_before_extra_faults": 45,
+        "runtime_profile": "Source-specific 36c9595 selected 50/four outcomes remain accepted; current 1dee2c5 selected 50-call outcome independently accepted under unchanged scientific caps.",
+        "new_allocation": false,
+        "next_gate": "Required dual-runtime PR/main checks and exact candidate verification. Local full-suite duration is not hosted timing proof; parents #105/#106 remain open.",
+        "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
+        "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
+        "branch": "feat/retained-comparison-stages",
+        "capacity_index_sha256": "f1d9f7c4645f626b314589ff70ef7cb09ab38b468e15cdad2c4bdc0021cbc1b6",
+        "audit_available_bytes": 63060946944,
+        "source_handoff_sha256": "b4162fb9f959af86a1746749a0c74ec71a337d1e2127784642bf4d61eda6c8a7",
+        "host_source_output_ceiling_bytes": 268435456,
+        "host_runtime_ceiling_bytes": 2147483648,
+        "host_runtime_start_free_bytes": 53687091200,
+        "host_stop_new_dispatch_below_bytes": 48318382080,
+        "proposed_artifact_bytes": 978165760,
+        "proposed_cpu_seconds": 1247,
+        "proposed_database_bytes": 1048576,
+        "checkpoint1": {
+          "source": "bdfed5d5f91c4653ff4414f50fbece0c0c2a80fe",
+          "tree": "a0705d57ec4c33cc0adae35ec048c0f62e7231e1",
+          "published": true,
+          "scope": "Pure supplied-material binding only; measured authority and outcomes pending",
+          "author_index_sha256": "f3441a1cecec9f4738088cef001a95ccfd2f5762cd3eccc7122370f1b82feb88",
+          "exact_test_addendum_sha256": "842059da712795b998929a80c5ef9cf5d4946b849d7f0bac82229686760923e4",
+          "tests": 19,
+          "pytest_seconds": 23.14,
+          "source_archive_installed_files": 88,
+          "nonproject_dependency_files_unchanged": 4689,
+          "project_metadata_files": 9,
+          "platform_static_index_sha256": "40f3b14cdca3517bc76b912a5f066d68d17be3f963071012959c52e8a3e42401",
+          "research_static_index_sha256": "d1afb010df9aa5531e7124b5355a2e503c319662b81525ba3971b3e966ed802e",
+          "publication_record_sha256": "e92f4c907a9104dabcb04ab0fa2017001291b5fcd22add5da6477c7d9b600776",
+          "test_provenance": "Old inventory scoped to initial failed fixture; exact clean-source rerun closes final-test identity gap; original evidence preserved",
+          "measured_calls": 0,
+          "numerical_calls": 0,
+          "new_checkout": false,
+          "platform_test_provenance_closure_sha256": "a024e228541de73f7199879899395e8dfe9912b4e27ac4d7f8afc20a12c89306"
+        },
+        "profile_arithmetic_index_sha256": "0d125bc94ab1a1286801b1288368ae294dc44156c061ca2599b45f221432777c",
+        "setup_hold_bytes": 50331648,
+        "fixture_author": "Research delivered4a5c84a and released primary; Quality integrates and extends explicit50",
+        "fixture_reviewers": [
+          "Project lead",
+          "Platform"
+        ],
+        "adapter_reviewers": [
+          "Platform",
+          "Research"
+        ],
+        "checkpoint2": {
+          "source": "c427d39a475fa7ea398f764d35a2dcc6db310f1f",
+          "tree": "eaad55b7619d8eb12f231a6efbcff4f46b9ef4f6",
+          "status": "independent_static_reviews_no_blocker_runtime_pending",
+          "platform_review_sha256": "07af2ded633151ce759f362a62128a20257d49a6b37586d593f6c251592de4f9",
+          "research_review_sha256": "f0f4ef855219f3279d50cbfb668e9bfcf7f1461bfcf55ea2cbadd217ebfbd7f6",
+          "lead_acceptance_sha256": "9f36ab996028d5fda856ce2dfaf3b4ac1a6515c9530c1b13ae2cb959d9c55c7d",
+          "fixture_source": "4a5c84a23ffb595797df9b73cd6992eebb2bee5c",
+          "measured_calls": 40,
+          "first_attempt": {
+            "source": "12a8a43bbd489ba998e9c6d9011260c9b6e8fb92",
+            "public_calls_entered": 40,
+            "public_calls_returned": 39,
+            "records": 82,
+            "closures": 39,
+            "unresolved_holds": 3,
+            "status": "publication_deadline_before_score_dispatch",
+            "known_cost_recording": "Secondary failure; original full score hold retained",
+            "final_setup_child_counters": "Unavailable; surviving files are not substitutes",
+            "author_index_sha256": "b5b03d7e82abf109fc9cca4a767546ae0aa42f70bac09eea858e3fa9e0e30217",
+            "platform_review_sha256": "db018869d162d70336cdff76a2ab78534aeff34974f4e70690a65d209c8ca9e8",
+            "source_install_equal": true
+          }
+        },
+        "temporal_profile": {
+          "calls": 50,
+          "recoveries": 5,
+          "artifact_bytes": 1066811392,
+          "cpu_seconds": 1338,
+          "artifact_margin_bytes": 6930432,
+          "setup_hold_bytes": 50331648,
+          "database_bytes": 1048576,
+          "finalization_records": 18,
+          "finalization_bytes": 73728,
+          "raw_ledger_cap_bytes": 229376,
+          "status": "conditional_arithmetic_only_concrete_source_and_runtime_pending",
+          "review_sha256": "e71dd00b374a20d072285dd5d3413f676aceaf06ff849945b49b5b914d4ee223"
+        },
+        "repair": {
+          "owner": "Quality",
+          "scope": "Invocation-local validated manifest and equivalent head-only prefix checks; all original digests and authority/witness checks retained",
+          "next_fixture_initial_lifetime_seconds": 600,
+          "old_fixture_lifetime_seconds": 180,
+          "per_call_and_scientific_caps_unchanged": true,
+          "status": "independent_static_and_synthetic_accepted",
+          "research_diagnosis_sha256": "1bbfce62bf4c3b9a6ccb419e9f43280c631d63e13bb4ba8fbfedc921f57e75ff",
+          "source": "36c9595e133b6c876c7847e09d0dc714968e59e4",
+          "tree": "9ebbace57ea2bfb3900c751b2559b7ed037ab3c5",
+          "author_index_sha256": "607ebe77c71d929f72c39f31c18cb5b84cbfef59bda9440cf5b72c7a9a25351e",
+          "research_review_sha256": "94f7e643066f37173731892d45cea866fcf637d76ea2ad28568d46f8e38531d6",
+          "synthetic_tests": 20,
+          "synthetic_seconds": 12.17,
+          "strict_mypy_files": 6,
+          "source_archive_installed_files": 89,
+          "dependency_files_unchanged": 4689,
+          "project_metadata_files": 9
+        },
+        "boundary_fixture": {
+          "source": "ec726e7a7c4028475334b2a6faa697aaf8d455d9",
+          "author": "Research",
+          "reviewers": [
+            "Project lead",
+            "Platform"
+          ],
+          "calls": 4,
+          "artifact_bytes": 337289216,
+          "cpu_seconds": 371,
+          "qualification": "Separate synthetic injected-history guard fixture, not paid-purchase authority",
+          "status": "independent_platform_and_lead_scoped_accepted",
+          "author_index_sha256": "4a1592c35f48aef1af14d1025d8926477d84b44d6b46476f85aecb3192f57eb4",
+          "platform_review_sha256": "336de63411964e329c484d0af16f4311c676c14cb63eb3b2c4491fb16118ffeb",
+          "integrated_source": "36c9595e133b6c876c7847e09d0dc714968e59e4",
+          "author_runtime_index_sha256": "e749a2f7646da064d69647516657ed7d5b0b078b040b8c958ee26f65f4b5c04d",
+          "public_calls_entered": 4,
+          "public_calls_returned": 2,
+          "pytest_seconds": 22.85,
+          "records": 23,
+          "closures": 2,
+          "unresolved_holds": 16,
+          "original_capture_restored": true,
+          "guard_removal_runtime": false,
+          "platform_runtime_index_sha256": "4db50a93df42ec1dac1be44a83610109812af078da5a9e77caa81a44d429eeaf",
+          "lead_acceptance_sha256": "d1d284137795a6e553150a1542a7e3905c7ab124e799adb4373d1adf2ebb13bd"
+        },
+        "successor_attempt": {
+          "source": "36c9595e133b6c876c7847e09d0dc714968e59e4",
+          "status": "lead_and_both_peers_scoped_accepted",
+          "planned_public_calls": 50,
+          "initial_fixture_lifetime_seconds": 600,
+          "independent_observed_result_review": "scientific and resource accepted",
+          "author_index_sha256": "710aedfd41f4e4008ecb2e54c6b2d9ca0d75ede33798b292cd1d5964a45698e9",
+          "research_index_sha256": "cea10ab3cc36655ca7ca39ad72784669fc7b4b83e2da00512bde93c5fe877cdf",
+          "public_calls_entered": 50,
+          "public_calls_returned": 48,
+          "pytest_seconds": 166.2,
+          "records": 103,
+          "closures": 43,
+          "unresolved_holds": 4,
+          "qualification": "One repeated-action calibration/single-action-menu specimen, fixed selected candidate1; no MAP/accuracy/study claim.",
+          "measurement_limits": "Five recoveries childCPU0; purchase replay holderNone not measuredzero; final controltails reserved; postproofsetupCPU not separately serialized.",
+          "platform_index_sha256": "0e6daaab8b6d4e9e2a87ae3d2e2fa97fa5b33951fbceb5ea5d91160ba90a98fa",
+          "lead_acceptance_sha256": "abb98446e5e114129a64fc239d55bbd8ad6f0e85b7590219b6120d1578fb4b80",
+          "charged_artifact_bytes": 824171148,
+          "charged_cpu_ns": 540223317148,
+          "remaining_artifact_bytes": 249570676,
+          "publication_protected_bytes": 83886080,
+          "store_bytes": 344064,
+          "ledger_bytes": 90912
+        },
+        "configured_checks": {
+          "source": "36c9595e133b6c876c7847e09d0dc714968e59e4",
+          "status": "failed_incomplete",
+          "planned_commands": 15,
+          "ruff": "passed",
+          "format": "passed",
+          "strict_mypy": "passed",
+          "full_pytest": "failed",
+          "delivery": "held",
+          "failure": {
+            "source": "36c9595e133b6c876c7847e09d0dc714968e59e4",
+            "passed": 1041,
+            "failed": 1,
+            "pytest_seconds": 476.55,
+            "test": "test_measured_classical_scientific_outcomes_remain_distinct[fit]",
+            "signal": "SIGPROF (27)",
+            "location": "verify_native_installation during comparison_candidate admission before producer dispatch",
+            "source_environment_unchanged": true,
+            "retry_or_cap_increase": false,
+            "author_index_sha256": "d943d5591d31a5173bc0f499225a77a735dc399662633d8190ac82056eb44664",
+            "control_cpu_seconds": 5,
+            "records": 17,
+            "unresolved_holds": 14,
+            "consumed_candidate_ticket": 1,
+            "candidate_work_reservation_present": false,
+            "original_holds_preserved": true
+          },
+          "remaining_commands_not_run": 11,
+          "separate_verifier_profile": {
+            "cpu_ns": 5073745942,
+            "wall_ns": 5074704419,
+            "dependency_metadata_files": 4698,
+            "unexpected_files": 0,
+            "qualification": "One fresh instrumented read-only process; profiler overhead and different state prevent exact attribution of the failed control timer. No public stage or numerical dispatch."
+          },
+          "repair": {
+            "source": "50b11183124a2f43eae599c77bb551d220e2af74",
+            "tree": "ec3c13096e612e7e8a6e600d61e49b03e0f505d5",
+            "scope": "Lexical dependency traversal optimization; fresh file/hash/stat/ancestry checks preserved, no cache or cap increase",
+            "status": "Lead/Platform static review pending before refresh/tests"
+          }
+        },
+        "verifier_successor": {
+          "source": "336d91b2009ccfac0480c0b10f64b036f53bf500",
+          "tree": "b1bd47d420711a2fcbb312117f3f0212437516a9",
+          "runtime_source": "50b11183124a2f43eae599c77bb551d220e2af74",
+          "source_review": "Lead and Platform accepted",
+          "delta": "Test formatting only; runtime/build/lock and test AST unchanged",
+          "author_focused_index_sha256": "9aae97f579f2665b08a0e69af57f3dc582fa0de5d644e968c71caae97d9c1c80",
+          "focused_cases": 16,
+          "new_verifier_cases": 15,
+          "exact_prior_failed_fit_case_passed": true,
+          "focused_seconds": 17.29,
+          "source_archive_installed_package_files": 89,
+          "nonproject_dependency_files_unchanged": 4689,
+          "project_metadata_files": 9,
+          "interpreter_lock_unchanged": true,
+          "configured_checks": {
+            "source": "336d91b2009ccfac0480c0b10f64b036f53bf500",
+            "planned_commands": 15,
+            "status": "failed_incomplete",
+            "lint": "passed",
+            "format": "passed",
+            "strict_type": "passed",
+            "full_pytest": "failed",
+            "passed_tests": 1061,
+            "failed_tests": 1,
+            "pytest_seconds": 475.99,
+            "remaining_commands_not_executed": 11,
+            "failure": {
+              "test": "tests/test_measured_native_stages.py::test_one_ledger_candidate_preparation_24_predictions_score_and_paid_replays",
+              "signal": "SIGPROF (27)",
+              "location": "Prediction ingress verify_native_installation line266 -> _installed_bytes line116 os.open",
+              "prior_classical_fit_and_outcome_variants_passed": true,
+              "source_install_dependency_unchanged": true,
+              "further_retry_or_cap_increase": false,
+              "author_index_sha256": "a81a80b5f0935d8b1ebdaf678d7b7d6da76caafbe24ddfde41e749806ef703b5",
+              "public_entry_ordinal": 9,
+              "ticket": 8,
+              "prediction_ordinal": 7,
+              "records": 18,
+              "closures": 8,
+              "unresolved_holds": 2,
+              "new_prediction_reservation_input_output_present": false,
+              "control_cpu_seconds": 5,
+              "control_wall_seconds": 30,
+              "work_cpu_seconds_not_started": 12,
+              "qualification": "Signal location does not apportion total pre-work CPU; original closures and unresolved setup/control holds retained."
+            }
+          },
+          "delivery": "held",
+          "prior_failure_and_profile_preserved": true,
+          "pending_diagnostic": {
+            "kind": "One bounded read-only cProfile mirror of retained complete pre-work",
+            "cpu_seconds": 30,
+            "wall_seconds": 60,
+            "output_ceiling_bytes": 1048576,
+            "omitted_operations": [
+              "durable ticket write/fsync",
+              "CandidateStore"
+            ],
+            "public_stage_or_producer_or_mutation": false,
+            "status": "completed_not_reproduction",
+            "source_or_cap_change_authorized": false,
+            "instrumented_cpu_seconds": 3.028,
+            "author_index_sha256": "7c6525943de9cbfd4252af67921ddbc47f61dafe65ad9295d92f1a5ea2a616ac",
+            "qualification": "Fresh-process mirror omits durable writes/store and original timer; no attribution of historical failed control time or five-second guarantee."
+          },
+          "bounded_ingress_observations": {
+            "source": "336d91b2009ccfac0480c0b10f64b036f53bf500",
+            "original_caps_and_source_install_dependency_interpreter_lock_unchanged": true,
+            "selected_test": {
+              "author_index_sha256": "57a6cc76af49598ddf88ca20ef81cd0d86aa27eeafe1f6ef87118cbbcbc46b4c",
+              "platform_outcome_sha256": "a1ddc778f1daec2b99837dcd1617046e4a0a78efb78ba2d1e78d4fbba099d054",
+              "passed_tests": 1,
+              "seconds": 88.46
+            },
+            "collection_context": {
+              "author_index_sha256": "4683f9190cf48e5d23eb6e8725459a0ea1a00d13008d9c17919fef5c835f4a44",
+              "lead_plan_sha256": "367dc3f15b363c3619f8d6c35f3b0a10fd611b29531b04e06ce1b2b4750bdb3d",
+              "collected_and_retained_items": 4395,
+              "deselected_tests": 4394,
+              "passed_tests": 1,
+              "seconds": 91.76,
+              "preceding_tests_executed": false
+            },
+            "each_run": {
+              "public_calls_returned": 30,
+              "executions": 27,
+              "paid_recoveries": 3,
+              "ledger_records": 62,
+              "closures": 27,
+              "unresolved_setup_control_holds": 2,
+              "paid_replay_child_cpu_ns": [
+                0,
+                0,
+                0
+              ]
+            },
+            "qualification": "Neither bounded run reproduces the historical full-suite timeout. Collection alone was insufficient here; no causal attribution, portability guarantee or full-suite pass. GC counts are not GC time, sampled threads do not exclude transient activity, and final control tails remain reserved.",
+            "original_full_suite_failures_preserved": true,
+            "next_context_observation": "Proposed real-full-suite-execution context under plan review; not yet admitted",
+            "delivery": "held"
+          }
+        },
+        "observed_full_gate": {
+          "source": "336d91b2009ccfac0480c0b10f64b036f53bf500",
+          "status": "failed_incomplete",
+          "passed_tests": 2389,
+          "failed_tests": 1,
+          "pytest_seconds": 1127.69,
+          "watched_calls_returned": 33,
+          "remaining_commands_not_executed": 11,
+          "source_install_dependency_unchanged": true,
+          "failure": {
+            "test": "tests/test_retained_comparison_stages.py::test_fifty_call_retained_comparison_and_historical_score_replay",
+            "public_entry": 45,
+            "ticket": 48,
+            "original_score_ticket": 39,
+            "error": "Score differs from actual private inputs or derived submissions",
+            "original_score_and_classical_returned": true,
+            "known_work_cpu_ns": 4001664812,
+            "parent_work_limit_ns": 4000000000,
+            "signal_or_caught_exception_recorded": false
+          },
+          "diagnosis": {
+            "research_index_sha256": "0a9b1d895339b6a4bed3ab3c4f1723ec36c22591faf8697e6678f898823609c0",
+            "six_material_hashes_and_24_ordered_submissions_match": true,
+            "original_raw_input_result_receipt_ledger_prefix_match": true,
+            "deadline_masking_path_source_proven": true,
+            "actual_expiry": "Supported inference, not recorded signal proof",
+            "numerical_float_or_order_discrepancy_established": false
+          },
+          "next_work": "Narrow deadline propagation repair proposal; replay performance analyzed separately. No implementation or gate pass yet.",
+          "delivery": "held",
+          "prior_failures_and_accepted_scoped_evidence_preserved": true,
+          "author_index_sha256": "78504ec8b852d386bc42496f477f6fcec7414623583f62c4da9b1ff141da09c1",
+          "specimen": {
+            "public_entries": 45,
+            "public_returns": 44,
+            "ledger_records": 93,
+            "closures": 41,
+            "unresolved_holds": 3,
+            "held_attempts": [
+              "setup",
+              "control",
+              "recovery-48"
+            ],
+            "temporal_extension_reached": false
+          }
+        },
+        "deadline_propagation": {
+          "source": "97f4d55b0282becf8c2ba8e4050d8e3030d3e13c",
+          "tree": "e22691f520655f39c313f9aa72add02e581de168",
+          "production_source": "20eb11aed4e9b0bb7a48b161ebbabe120ec6866e",
+          "status": "Lead/Platform source accepted; focused lineage accepted",
+          "author_index_sha256": "fd168d7815f9386090ee0a784f824afd032343946911c873298ed9a1d263f3ed",
+          "focused_lineage": [
+            {
+              "source": "1b5697fb87618c1d5639503e25e9a4babffd4f19",
+              "passed": 13,
+              "qualification": "Case definitions/helpers AST unchanged at final source"
+            },
+            {
+              "source": "97f4d55b0282becf8c2ba8e4050d8e3030d3e13c",
+              "passed": 4,
+              "seconds": 4.34
+            }
+          ],
+          "single_17_case_run": false,
+          "scoped_static_checks": "Ruff/format/type pass",
+          "installed_archive_source": "1b5697fb87618c1d5639503e25e9a4babffd4f19",
+          "runtime_package_blobs_equal": 89,
+          "dependencies_interpreter_lock_unchanged": true,
+          "initial_test_note_diagnostic_preserved": true,
+          "qualification": "Synchronous actual handler and mocked child transport; no elapsed expiry, actual PID/reap, or4s score-work-fit proof."
+        },
+        "replay_work_profile": {
+          "source": "97f4d55b0282becf8c2ba8e4050d8e3030d3e13c",
+          "historical_retained_source": "336d91b2009ccfac0480c0b10f64b036f53bf500",
+          "lead_index_sha256": "99199411303a053457f0b60ed08fa722f61f9d00f63e9c4816e47e0218a37f71",
+          "research_readback_sha256": "16faee58b8cbad010d129e18c65e6ef75b06e0bffc79c6c5dc42ffd81cbd6e86",
+          "status": "one_read_only_computational_mirror_returned",
+          "final_score_validation": "passed",
+          "public_calls": 0,
+          "numerical_entries": 0,
+          "instrumented_work_cpu_ns": 10038504024,
+          "binding_cpu_ns": 7249671584,
+          "final_validation_cpu_ns": 872392014,
+          "retained_regular_files": 192,
+          "untraversed_aliases": 3,
+          "installed_files": 89,
+          "before_after_equal": true,
+          "qualification": "cProfile/fresh-process/immutable-SQLite mirror omits real4s timer, admission and persistence; no historical-cause or timing-fit claim.",
+          "next_optimization": "Quality implements only invocation-local already-parsed raw-bound StageInput reuse; all authority/original-prefix/engine/config/result/witness checks remain required; source review pending."
+        },
+        "parsed_input_reuse": {
+          "source": "1dee2c5f79a8ae05b2f4e7fcdc6bcd42e1b868c9",
+          "tree": "f5330b45b704362348288eb0b7442a368376a446",
+          "production_source": "010fc64dcad6284873828caaf3bdf0957e60b272",
+          "status": "source and focused evidence accepted",
+          "focused_passed": 29,
+          "focused_seconds": 16.82,
+          "new_cases": 9,
+          "existing_cases": 20,
+          "archive_source_installed_files": 89,
+          "pre_post_identity_equal": true,
+          "scope": "Strict same-invocation parsed input reuse; all final authority/result/witness checks retained. Synthetic focused tests poison public/child/numerical execution; separate actual run below."
+        },
+        "parsed_input_fifty": {
+          "source": "1dee2c5f79a8ae05b2f4e7fcdc6bcd42e1b868c9",
+          "status": "single_selected_outcome_independently_accepted",
+          "passed": 1,
+          "pytest_seconds": 250.9,
+          "public_entries": 50,
+          "public_returns": 48,
+          "declared_failures": 2,
+          "ledger_records": 103,
+          "closures": 43,
+          "unresolved_holds": 4,
+          "unknown_attempts": [
+            "setup",
+            "control",
+            "prediction-41",
+            "scoring-44"
+          ],
+          "retained_files": 187,
+          "retained_bytes": 5990667,
+          "aliases": 2,
+          "paid_rows": 12,
+          "completed_rows": 11,
+          "failed_rows": 1,
+          "selected_candidate_index": 1,
+          "ordered_predictions": 24,
+          "base_score_replay_parent_cpu_ns": 3609307376,
+          "historical_score_replay_parent_cpu_ns": 2330999255,
+          "parent_replay_work_limit_ns": 4000000000,
+          "temporal_result": "A remains unknown; unscorable score completes; same-logical retry B closes; original score replay preserves original bytes/view; fresh stale-A scoring is denied.",
+          "host_guard": {
+            "scope": "All RA02 regular files, without symlink following; the earlier comparison-owned subtotal was not the shared census.",
+            "shared_limit_bytes": 2147483648,
+            "active_headroom_bytes": 67108864,
+            "diagnostic_headroom_bytes": 4194304,
+            "actual_preflight_regular_bytes": 1384181490,
+            "actual_preflight_shared_upper_bytes": 1455484658,
+            "scientific_caps_unchanged": true
+          },
+          "qualification": "One fixed-selection/repeated-calibration/one-action-menu conformance specimen, no accuracy/MAP/study/publisher claim or timing guarantee. Final control tail remains reserved; holder None is not zero; setup final proof CPU not separately serialized. Prior full failures remain source-specific; full configured and hosted gates pending."
+        },
+        "full_verification_1cc9408": {
+          "source": "1cc94080d4860cb4a82c1173006b57d2b3be98c0",
+          "tree": "255ff74a8e6cfd165a03999c01219091b6ce6f36",
+          "runtime_test_source": "1dee2c5f79a8ae05b2f4e7fcdc6bcd42e1b868c9",
+          "delta_from_runtime": "seven documentation files only",
+          "status": "all15_local_commands_passed_hosted_delivery_pending",
+          "configured_commands": 15,
+          "command_failures": 0,
+          "passed_tests": 4421,
+          "pytest_seconds": 1850.02,
+          "normal_complete_collection_order": true,
+          "filtered_or_deselected": false,
+          "formatted_files": 224,
+          "typed_files": 162,
+          "schema_checks": 1522,
+          "strict_dependency_audit": "no known vulnerabilities",
+          "certificate_guards": 2,
+          "bandit_severity": {
+            "low": 88,
+            "medium": 0,
+            "high": 0
+          },
+          "archive_source_installed_files": 89,
+          "before_after_identity_equal": true,
+          "trace_rows": 108,
+          "four_call": {
+            "entries": 4,
+            "returns": 2,
+            "expected_denials": [
+              "comparison_preparation_material",
+              "comparison_retained_changed"
+            ]
+          },
+          "fifty_call": {
+            "entries": 50,
+            "returns": 48,
+            "expected_denials": [
+              "candidate_child_failed",
+              "comparison_prediction_transport"
+            ],
+            "original_score_replay_call_returned": 45,
+            "historical_score_replay_call_returned": 49
+          },
+          "retention": "Approved failed-only policy removed passing physical fixtures and per-call CPU/receipt artifacts; immutable passing assertions and ordered outcomes remain. Separately retained selected1dee measurements are not full-run measurements.",
+          "preflight_history": "Two preserved FIFOs stopped the initial preflight before any configured command; reviewed census-only correction left them untouched.",
+          "qualification": "No historical-cause or fixed-control timing guarantee, MAP/accuracy/full-study/publisher-authority or parent closure. Existing15-minute hosted job limit unchanged; both hosted runtimes and candidate still pending. Runtime export is not isolated runtime-only validation."
         }
       }
     },

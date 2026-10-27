@@ -224,9 +224,16 @@ class Fixture:
 
 
 def prepare(
-    root: Path, build: TrustedInstallation, *, classical: bool = False, purchase: bool = False
+    root: Path,
+    build: TrustedInstallation,
+    *,
+    classical: bool = False,
+    purchase: bool = False,
+    database_limit_bytes: int = 2 * MIB,
+    setup_lifetime_ns: int = 180_000_000_000,
 ) -> Fixture:
-    budget = SetupBudget(time.monotonic_ns() + 180_000_000_000)
+    assert setup_lifetime_ns > 0
+    budget = SetupBudget(time.monotonic_ns() + setup_lifetime_ns)
     with budget.phase():
         root.mkdir(mode=0o700)
         sync_directory(root.parent)
@@ -272,7 +279,7 @@ def prepare(
             ticket_artifact_bytes=6 * MIB if purchase else 8192,
             bootstrap_artifact_bytes=4 * MIB,
             bootstrap_cpu_ns=5_000_000_000,
-            database_limit_bytes=2 * MIB,
+            database_limit_bytes=database_limit_bytes,
             finalization_records=14,
             finalization_bytes=64 * 1024,
             publication=PublicationEscrow(
@@ -298,7 +305,9 @@ def prepare(
                 config_sha256=message_sha256(control),
                 input_sha256=control.plan_sha256,
                 retry_of=None,
-                cpu_reservation_ns=117_000_000_000 if purchase else 35_000_000_000,
+                cpu_reservation_ns=(
+                    control.tickets * control.ticket_cpu_ns + control.bootstrap_cpu_ns
+                ),
                 artifact_reservation_bytes=control.required_control_bytes(),
                 purchase=None,
             ),

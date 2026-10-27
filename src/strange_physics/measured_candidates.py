@@ -27,6 +27,11 @@ from strange_physics.candidate_execution_contracts import (
     CandidateRequest,
 )
 from strange_physics.candidate_store import CandidateStore
+from strange_physics.comparison_stage_resolver import (
+    BoundRetainedStage,
+    RetainedStageWitness,
+    bind_retained_stage,
+)
 from strange_physics.installed_identity import TrustedInstallation, verify_native_installation
 from strange_physics.measured_publication import _deadline
 from strange_physics.native_candidates import produce_native_candidates
@@ -102,6 +107,7 @@ from strange_physics.study_contracts import (
     MAX_STUDY_JSON_BYTES,
     ArtifactKind,
     NativeStudyLedger,
+    NativeStudyManifest,
     NativeWorkFacts,
     OperationKind,
     StudyAttemptReservation,
@@ -332,7 +338,7 @@ def _input(data: bytes, request: ExecutionRequest) -> ExecutionInput:
         return _comparison_input(data).candidate
     if request.operation == "candidate_production":
         return parse_native_candidate_input(data)
-    return parse_stage_input(request.operation, data)
+    return parse_stage_input(request.operation, data, comparison=request.phase == "comparison")
 
 
 def _result(data: bytes, request: ExecutionRequest) -> ExecutionResult:
@@ -550,32 +556,45 @@ def _bind_context(
         if any(isinstance(r.event, StudyManifestFreeze) for r in ledger.records):
             raise StudyLedgerError("freeze_already_committed")
     if request.phase == "comparison":
-        if request.operation not in (
-            "candidate_production",
-            "comparison_candidate",
-            "classical_diagnostic",
-            "purchase",
-        ):
-            raise StudyLedgerError("native_stage_comparison_not_available")
-        manifest = study_manifest(ledger)
-        role: ArtifactKind = (
-            "classical_diagnostic_config"
-            if request.operation == "classical_diagnostic"
-            else "candidate_config"
-        )
-        if isinstance(request, NativePurchaseRequest):
-            role = "calibration" if request.purchase.calibration else "menu"
-        artifact = next((a for a in manifest.artifacts if a.kind == role), None)
-        if (
-            (manifest.source_commit, manifest.uv_lock_sha256, manifest.engine_fingerprint)
-            != (c.source_commit, c.uv_lock_sha256, c.engine_fingerprint)
-            or artifact is None
-            or artifact.sha256 != request.config_sha256
-        ):
-            raise StudyLedgerError("candidate_frozen_identity")
-        if request.operation == "candidate_production":
-            # The old supplied-bundle interface does not acquire Journal authority.
-            raise StudyLedgerError("candidate_comparison_not_available")
+        _bind_frozen_context(study_manifest(ledger), request, c)
+
+
+def _bind_frozen_context(
+    manifest: NativeStudyManifest, request: ExecutionRequest, c: CandidateControl
+) -> None:
+    """Apply unchanged per-request checks to a validated invocation-local freeze."""
+    if request.operation not in (
+        "candidate_production",
+        "comparison_candidate",
+        "classical_diagnostic",
+        "purchase",
+        "preparation",
+        "prediction",
+        "scoring",
+    ):
+        raise StudyLedgerError("native_stage_comparison_not_available")
+    role: ArtifactKind = (
+        "classical_diagnostic_config"
+        if request.operation == "classical_diagnostic"
+        else "candidate_config"
+    )
+    if request.operation in ("preparation", "scoring"):
+        role = "scoring_policy"
+    elif request.operation == "prediction":
+        role = "prediction_config"
+    if isinstance(request, NativePurchaseRequest):
+        role = "calibration" if request.purchase.calibration else "menu"
+    artifact = next((a for a in manifest.artifacts if a.kind == role), None)
+    if (
+        (manifest.source_commit, manifest.uv_lock_sha256, manifest.engine_fingerprint)
+        != (c.source_commit, c.uv_lock_sha256, c.engine_fingerprint)
+        or artifact is None
+        or artifact.sha256 != request.config_sha256
+    ):
+        raise StudyLedgerError("candidate_frozen_identity")
+    if request.operation == "candidate_production":
+        # The old supplied-bundle interface does not acquire Journal authority.
+        raise StudyLedgerError("candidate_comparison_not_available")
 
 
 def _run_child(
@@ -623,7 +642,12 @@ def _run_child(
                 operation = request.operation
                 if operation not in ("preparation", "prediction", "scoring"):
                     os._exit(70)
-                result = produce_stage(operation, actual_raw, request.attempt_id)
+                result = produce_stage(
+                    operation,
+                    actual_raw,
+                    request.attempt_id,
+                    comparison=request.phase == "comparison",
+                )
             if len(result) > limit:
                 os._exit(2)
             fd = os.open(output, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
@@ -724,7 +748,8 @@ def _closure(
         receipt.original_ledger_sha256,
     ):
         raise StudyLedgerError("candidate_closure_corrupt")
-    before = NativeStudyLedger(plan=current.plan, records=original.records[:-1])
+    # original was fully chain-validated above; this is exactly head(original[:-1]).
+    before_head = original.records[-1].previous_sha256
     reservation = original.records[-1].event
     expected_reservation = StudyAttemptReservation(
         attempt_id=saved.attempt_id,
@@ -744,7 +769,7 @@ def _closure(
         if isinstance(saved, NativePurchaseRequest) and saved.purpose == "execution"
         else None,
     )
-    if head(before) != saved.expected_head_sha256 or reservation != expected_reservation:
+    if before_head != saved.expected_head_sha256 or reservation != expected_reservation:
         raise StudyLedgerError("candidate_closure_corrupt")
     updates = [
         r.event
@@ -1367,7 +1392,10 @@ def _commit_native_execution(
                     store.replace(current, proposed)
                 current = proposed
                 frozen_ledger: NativeStudyLedger | None = None
-                captured_journal: _ComparisonCapture | _PurchaseCapture | None = None
+                captured_journal: (
+                    _ComparisonCapture | _PurchaseCapture | RetainedStageWitness | None
+                ) = None
+                bound_stage: BoundRetainedStage | None = None
                 clock.work()
                 work_start = meter.total
                 if closure:
@@ -1405,6 +1433,14 @@ def _commit_native_execution(
                         captured_journal = _bind_classical(
                             store, request, input_raw, original, meter, journal_scope
                         )
+                    elif request.phase == "comparison" and isinstance(
+                        request,
+                        (NativePreparationRequest, NativePredictionRequest, NativeScoreRequest),
+                    ):
+                        bound_stage = bind_retained_stage(
+                            store, request, input_raw, original, meter, journal_scope, replayed=True
+                        )
+                        captured_journal = bound_stage.witness
                 else:
                     input_raw = read_bytes(Path(request.input_path), limit=_input_limit(request))
                     if (len(input_raw), digest(input_raw)) != (
@@ -1428,6 +1464,14 @@ def _commit_native_execution(
                         captured_journal = _bind_classical(
                             store, request, input_raw, current, meter, journal_scope
                         )
+                    elif request.phase == "comparison" and isinstance(
+                        request,
+                        (NativePreparationRequest, NativePredictionRequest, NativeScoreRequest),
+                    ):
+                        bound_stage = bind_retained_stage(
+                            store, request, input_raw, current, meter, journal_scope, replayed=False
+                        )
+                        captured_journal = bound_stage.witness
                     produced: bytes | None
                     if isinstance(actual, NativePurchaseInput):
                         assert isinstance(request, NativePurchaseRequest)
@@ -1586,7 +1630,10 @@ def _commit_native_execution(
                                 "operation": request.operation,
                             }
                         )
-                actual = _input(input_raw, request)
+                # Only this invocation's fully bound wrapper can supply the parsed input.
+                actual = (
+                    bound_stage.actual if bound_stage is not None else _input(input_raw, request)
+                )
                 _check_engine(actual, observed.engine_fingerprint)
                 _validate(result, actual, receipt.original_attempt_id)
                 if (message_sha256(actual), _config(actual)) != (
