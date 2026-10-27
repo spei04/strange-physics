@@ -10924,7 +10924,7 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Lead owns primary progress; e81d221 pure-checkpoint update is under review with narrow current-status corrections. No Research writer or environment use.",
+      "scientific": "Primary progress4d3b3ad is published; Lead is preparing a clean source-only fixture handoff to Research at acceptedbdfed5. No environment/runtime handoff.",
       "identity": "Quality exclusively owns checkpoint2 source/environment work on feat/retained-comparison-stages after accepted and published bdfed5d; no measured runtime admission.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
@@ -12594,10 +12594,10 @@
       "assignments": {
         "Quality": "Pure checkpoint accepted; implement measured adapter and concrete bounded fixture; no measured calls yet.",
         "Platform": "Pure source/package review accepted; next retained authority/copy/resource review.",
-        "Research": "Pure scientific review accepted; next full-history/outcome/recovery review.",
-        "Project lead": "Publish accepted checkpoint, maintain progress and coordinate next review."
+        "Research": "Prepare source-only45-call integration fixture in reused primary after explicit handoff; independently review Quality adapter.",
+        "Project lead": "Publish assignment, hand off primary, review/transfer fixture patch and coordinate combined source/profile review."
       },
-      "handoff": "Two existing cloud checkouts reused; Quality exclusively owns identity after accepted bdfed5 pure checkpoint, Lead owns primary progress. No measured runtime admitted.",
+      "handoff": "Quality owns identity adapter/negative cases; Research receives primary sequentially for source-only45-call fixture after verified handoff. Lead retains progress branch and private assignment log. No measured runtime admitted.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
@@ -14615,7 +14615,16 @@
           "platform_test_provenance_closure_sha256": "a024e228541de73f7199879899395e8dfe9912b4e27ac4d7f8afc20a12c89306"
         },
         "profile_arithmetic_index_sha256": "0d125bc94ab1a1286801b1288368ae294dc44156c061ca2599b45f221432777c",
-        "setup_hold_bytes": 50331648
+        "setup_hold_bytes": 50331648,
+        "fixture_author": "Research, source-only separate primary checkout after explicit handoff",
+        "fixture_reviewers": [
+          "Project lead",
+          "Platform"
+        ],
+        "adapter_reviewers": [
+          "Platform",
+          "Research"
+        ]
       }
     },
     "certificate_trust_update": {

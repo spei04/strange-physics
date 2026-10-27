@@ -10,10 +10,10 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 | --- | --- |
 | Quality | Sole implementation author; pure checkpoint accepted, measured adapter and concrete fixture next |
 | Platform | Capacity audit complete; independent resource, durability and recovery review |
-| Research | Independent scientific identity, failed-row and scoring-semantics review |
+| Research | Source-only 45-call fixture in separate primary checkout; scientific review of Quality's adapter |
 | Project lead | Checkout ownership, progress consistency, integration and exact delivery |
 
-The two existing cloud checkouts are reused. Lead granted identity to Quality after the capacity/consumer review and ownership reconciliation; primary belongs to Lead for progress only. No new dependency installation or measured runtime is part of the first checkpoint.
+The two existing cloud checkouts are reused. Lead granted identity to Quality after the capacity/consumer review and ownership reconciliation; primary is handed off sequentially to Research for the independent source-only fixture after progress publication. No new dependency installation or measured runtime is part of the first checkpoint.
 
 ## Scope and acceptance
 
@@ -48,3 +48,5 @@ Source bdfed5d/tree a0705d57 adds pure contracts/bindings only. Both independent
 Actual retained-store authentication, latest terminal-state resolution, source/install/freeze/capture ancestry, observed transport status and measured outcomes remain the adapter's responsibilities. Pure signed-zero coverage changes a selected coefficient; purchased-action signed-zero identity and original-byte recovery still need integrated proof. Valid stored predictions cannot be relabelled missing or invalid.
 
 The 45-call arithmetic has independent conditional acceptance, not runtime admission. Setup retains its exact 50,331,648-byte hold (48 MiB); prediction's 1 MiB allowance requires at most one 512 KiB retained input and one 512 KiB output. Additional persisted material needs pre-write accounting. Raw ledger is bounded to 256 KiB, with 16 records/64 KiB finalization and protected publication/recovery capacity. The concrete adapter and fixture must prove these assumptions before measured dispatch.
+
+The fixture authoring split retains the same two cloud checkouts and source-output guard. Research owns the declared positive/recovery sequence and minimal database-size helper option; Quality owns adapter code and authority/transport negatives. Lead and Platform review the independently authored fixture before integration and measured admission.

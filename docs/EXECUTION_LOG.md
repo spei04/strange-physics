@@ -14,13 +14,14 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 | --- | --- | --- |
 | Quality | Pure checkpoint bdfed5d accepted; implement measured supervisor integration in identity | Freeze concrete adapter and finite profile before measured calls |
 | Platform | Pure source/package review accepted; review next adapter, copies and resource profile | Actual database fit and runtime admission remain pending |
-| Research | Pure scientific review accepted; review retained authority and outcome/recovery path next | Preserve all 12 rows, 24 probes, truthful failures and paid recovery |
-| Project lead | Publish accepted source and progress; coordinate next independent review | No measured comparison run, PR or merge yet |
+| Research | Prepare the source-only 45-call integration fixture in primary after explicit handoff | Separate checkout from Quality; no imports, numerical calls or environment changes |
+| Project lead | Hand off reused primary for fixture authoring; review and integrate the patch | Concrete adapter/profile review still precedes measured execution |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Research | Independent 45-call fixture source patch | Reuse primary after clean handoff; Quality retains adapter and negative cases in identity; no runtime |
 | 2026-10-27 | Quality | Pure comparison checkpoint bdfed5d accepted and published | Reassigned to measured adapter and concrete bounded fixture; source work only |
 | 2026-10-27 | Platform + Research | Independent pure source/package/scientific reviews | Accepted within supplied-material scope; next authority/profile review pending |
 | 2026-10-27 | Project lead | Exact-source verification and assignment reconciliation | Test provenance addendum accepted; source/environment returned to sole author |
@@ -1055,3 +1056,6 @@ The exact-source verification passed 19 pure cases in 23.14 seconds, with numeri
 Quality now owns the same identity checkout for the small measured-supervisor adapter and concrete bounded fixture. Platform reviews retained authority, copies and resource accounting; Research reviews full purchased history, outcome semantics and recovery. Lead verified the author 29-child/5-reference index, the separate 6-child/2-reference verification addendum, both independent reviews and exact 88-file package parity. No new checkout or dependency environment was created.
 
 The 45-call profile is conditionally accepted arithmetic: 978,165,760 bytes and 1,247 CPU seconds, including the exact 50,331,648-byte setup hold. Actual 1 MiB store fit, cumulative setup/copy guards, raw and reconstructed inputs, finalization/publication/recovery headroom and a finite fault-case census must be reviewed before measured calls. The shared source/output guards and scientific caps are unchanged. Publisher authority handoff, full-study admission, parent closure and grid/Laplace work remain separate.
+
+
+The next authoring split uses both existing checkouts: Quality implements the retained resolver and supervisor integration in identity; Research prepares the 45-call positive/recovery fixture in primary after Lead verifies its handoff. Research may add the declared 1 MiB control-database option to the existing fixture helper. This is source-only work with no imports, test execution, numerical calls or dependency changes. Lead reviews and transfers the immutable patch; Platform independently reviews the combined resource profile before runtime. Research can independently review Quality's adapter; Lead and Platform review Research's fixture.
