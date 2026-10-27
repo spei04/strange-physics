@@ -785,8 +785,9 @@ def test_public_committed_seal_lost_ack_never_appends_unknown_fallback(
     monkeypatch.setattr(CandidateStore, "seal", arm_after_real_seal)
     monkeypatch.setattr(store_module, "durable_directory", lose_ack)
     request = case.request(0, "lost-ack-transfer")
-    with pytest.raises(OSError, match="^injected_committed_seal_ack$") as failure:
+    with pytest.raises(OSError) as failure:
         case.call(request)
+    assert str(failure.value) == "injected_committed_seal_ack"
     assert case.calls == [0]
     assert len(armed) == 1
     assert any("already sealed" in note for note in getattr(failure.value, "__notes__", ()))
