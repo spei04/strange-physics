@@ -14,9 +14,7 @@ from typing import Any
 
 import freeze_journal_fixture as fixture_module
 import pytest
-import strange_physics.publication_activation as activation
 from freeze_journal_fixture import classical_request, comparison_request, prepare, sync_directory
-from strange_physics.execution_publication_handoff import commit_publication_handoff
 from test_measured_candidates import actual_build, current, last_update
 from test_measured_purchase import forbidden, purchase_request
 from test_native_spring_contracts import selection
@@ -29,6 +27,7 @@ import strange_physics.native_candidates as native_candidates
 import strange_physics.native_classical as native_classical
 import strange_physics.native_prediction as native_prediction
 import strange_physics.native_scoring as native_scoring
+import strange_physics.publication_activation as activation
 import strange_physics.purchase_execution as purchase_producer
 from strange_physics.candidate_execution_contracts import (
     MIB,
@@ -36,6 +35,7 @@ from strange_physics.candidate_execution_contracts import (
     CandidateControl,
     PublicationEscrow,
 )
+from strange_physics.execution_publication_handoff import commit_publication_handoff
 from strange_physics.installed_identity import TrustedInstallation
 from strange_physics.measured_publication_contracts import (
     NativePublicationRequest,
