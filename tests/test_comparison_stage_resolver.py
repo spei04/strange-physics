@@ -16,6 +16,7 @@ import pytest
 from test_comparison_stage_binding import failed_prediction, fixture, preparation
 from test_study_ledger import LOCK, append, empty, reserve
 
+from strange_physics import comparison_stage_resolver as retained
 from strange_physics import measured_candidates as measured
 from strange_physics.candidate_execution_contracts import (
     MIB,
@@ -45,11 +46,17 @@ from strange_physics.publication_store import Extents, digest, head, raw
 from strange_physics.research_contracts import message_sha256
 from strange_physics.study_contracts import (
     NativeStudyLedger,
+    NativeStudyManifest,
     NativeWorkFacts,
     StudyAttemptReservation,
     StudyAttemptUpdate,
 )
-from strange_physics.study_ledger import StudyLedgerError, freeze_native_study, summarize_study
+from strange_physics.study_ledger import (
+    StudyLedgerError,
+    freeze_native_study,
+    study_manifest,
+    summarize_study,
+)
 
 
 @pytest.fixture(autouse=True)
@@ -425,8 +432,6 @@ def test_selection_is_fixed_before_any_possible_evaluator_feedback(tmp_path: Pat
             config_sha256=e.store.admission.control.plan_sha256,
         )
         # Admission validates role identity. Use the actual frozen policy digest.
-        from strange_physics.study_ledger import study_manifest
-
         scoring = scoring.model_copy(
             update={"config_sha256": study_manifest(e.ledger).artifact("scoring_policy").sha256}
         )
@@ -477,3 +482,85 @@ def test_comparison_unwrap_keeps_existing_plain_stage_parsing() -> None:
         parse_stage_input("preparation", raw(prep))
     with pytest.raises(ValueError):
         parse_stage_input("scoring", raw(prediction), comparison=True)
+
+
+def test_manifest_reused_only_for_the_same_validated_view(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    calls: list[NativeStudyLedger] = []
+    original = study_manifest
+
+    def counted(view: NativeStudyLedger) -> NativeStudyManifest:
+        calls.append(view)
+        return original(view)
+
+    monkeypatch.setattr(retained, "study_manifest", counted)
+    with evidence(tmp_path / "store") as e:
+        assert e.resolve().result == e.result
+        assert e.resolve().result == e.result
+        assert len(calls) == 1
+        # A different, valid historical view must undergo its own semantic scan.
+        e.resolver.view = NativeStudyLedger(plan=e.ledger.plan, records=e.ledger.records[:1])
+        assert e.resolver.manifest() == original(e.ledger)
+        assert len(calls) == 2
+        e.resolver.view = NativeStudyLedger(plan=e.ledger.plan)
+        with pytest.raises(StudyLedgerError, match="manifest_missing"):
+            e.resolver.manifest()
+        assert len(calls) == 3
+        # Failure cannot leave the previous manifest authoritative for this view.
+        with pytest.raises(StudyLedgerError, match="manifest_missing"):
+            e.resolver.manifest()
+        assert len(calls) == 4
+        e.resolver.view = e.ledger
+        assert e.resolve().result == e.result
+        assert len(calls) == 5
+
+
+def test_replaced_view_revalidates_the_full_hash_chain(tmp_path: Path) -> None:
+    with evidence(tmp_path / "store") as e:
+        assert e.resolve().result == e.result
+        bad = e.ledger.records[0].model_copy(update={"previous_sha256": "f" * 64})
+        # Deliberately bypass validation only in adversarial synthetic input.
+        e.resolver.view = e.ledger.model_copy(update={"records": (bad, *e.ledger.records[1:])})
+        with pytest.raises(ValueError, match="canonical hash chain is broken"):
+            e.resolve()
+
+
+def test_validated_prefix_heads_preserve_empty_normal_and_historical_identity(
+    tmp_path: Path,
+) -> None:
+    with evidence(tmp_path / "store") as e:
+        for length in range(len(e.ledger.records)):
+            prefix = NativeStudyLedger(plan=e.ledger.plan, records=e.ledger.records[:length])
+            assert e.ledger.records[length].previous_sha256 == head(prefix)
+        assert e.ledger.records[0].previous_sha256 == message_sha256(e.ledger.plan)
+        assert e.ledger.records[e.request.expected_revision].previous_sha256 == (
+            e.request.expected_head_sha256
+        )
+        # The same original receipt/prefix survives a later unrelated reservation.
+        original = measured._closure(e.store, e.request, e.ledger)
+        assert original is not None and original[3] == e.original
+        later = append(e.ledger, reserve("later-reference"))
+        replay = measured._closure(e.store, e.request, later)
+        assert replay == original
+        wrong_head = e.request.model_copy(update={"expected_head_sha256": "f" * 64})
+        private(e.store.root / "candidate-ticket-0", raw(wrong_head))
+        e.store.db.execute(
+            "UPDATE closures SET request=? WHERE logical_id=?",
+            (raw(wrong_head), e.request.logical_id),
+        )
+        with pytest.raises(StudyLedgerError, match="candidate_closure_corrupt"):
+            measured._closure(e.store, wrong_head, later)
+
+
+def test_original_receipt_ledger_digest_is_still_checked(tmp_path: Path) -> None:
+    with evidence(tmp_path / "store") as e:
+        assert e.resolve().result == e.result
+        changed = e.receipt.model_copy(update={"original_ledger_sha256": "f" * 64})
+        e.store.db.execute(
+            "UPDATE closures SET receipt=?,receipt_digest=? WHERE logical_id=?",
+            (raw(changed), digest(raw(changed)), e.request.logical_id),
+        )
+        e.reference = e.reference.model_copy(update={"receipt_sha256": digest(raw(changed))})
+        with pytest.raises(StudyLedgerError, match="candidate_closure_corrupt"):
+            e.resolve()

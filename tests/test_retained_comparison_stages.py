@@ -199,6 +199,7 @@ def test_fifty_call_retained_comparison_and_historical_score_replay(
             classical=True,
             purchase=True,
             database_limit_bytes=MIB,
+            setup_lifetime_ns=600_000_000_000,
         )
     assert f.budget.copies <= MIB
     assert f.control.tickets == 50 and f.control.recovery_tickets == 5
@@ -753,6 +754,7 @@ def test_fifty_call_retained_comparison_and_historical_score_replay(
             "store_bytes": (f.root / "candidate.sqlite3").stat().st_size,
             "setup_copy_bytes_before_proof": f.budget.copies,
             "setup_export_ceiling_bytes": SETUP_EXPORT_CEILING,
+            "setup_declared_lifetime_ns": 600_000_000_000,
             "setup_parent_cpu_before_proof_ns": f.budget.parent_cpu,
             "declared_artifact_bytes": DECLARED_BYTES,
             "declared_cpu_ns": DECLARED_CPU_NS,

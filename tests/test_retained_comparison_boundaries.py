@@ -71,9 +71,7 @@ def boundary_control(**values: Any) -> CandidateControl:
 def closure_hashes(fixture: Fixture) -> dict[str, str]:
     """Read closed metadata without creating another writable store connection."""
     with fixture.budget.phase():
-        with sqlite3.connect(
-            f"file:{fixture.root / 'candidate.sqlite3'}?mode=ro", uri=True
-        ) as db:
+        with sqlite3.connect(f"file:{fixture.root / 'candidate.sqlite3'}?mode=ro", uri=True) as db:
             return dict(db.execute("SELECT logical_id,receipt_digest FROM closures").fetchall())
 
 
@@ -243,7 +241,8 @@ def test_four_call_history_substitution_and_final_witness_rollback(
         )
     )
     # Reserve both deliberate overwrite and restoration before the measured call.
-    # Their execution CPU belongs to the active work clock or the later setup phase.
+    # Mutation CPU belongs to the retained control tail after clock.tail();
+    # restoration CPU belongs to the later bounded setup phase.
     with f.budget.phase():
         assert f.budget.copies + 1 + len(original_capture) + PROOF_LIMIT <= COPY_LIMIT
         f.budget.copies += 1 + len(original_capture)

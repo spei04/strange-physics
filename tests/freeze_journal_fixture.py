@@ -230,8 +230,10 @@ def prepare(
     classical: bool = False,
     purchase: bool = False,
     database_limit_bytes: int = 2 * MIB,
+    setup_lifetime_ns: int = 180_000_000_000,
 ) -> Fixture:
-    budget = SetupBudget(time.monotonic_ns() + 180_000_000_000)
+    assert setup_lifetime_ns > 0
+    budget = SetupBudget(time.monotonic_ns() + setup_lifetime_ns)
     with budget.phase():
         root.mkdir(mode=0o700)
         sync_directory(root.parent)

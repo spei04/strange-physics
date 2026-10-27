@@ -103,6 +103,7 @@ from strange_physics.study_contracts import (
     MAX_STUDY_JSON_BYTES,
     ArtifactKind,
     NativeStudyLedger,
+    NativeStudyManifest,
     NativeWorkFacts,
     OperationKind,
     StudyAttemptReservation,
@@ -551,39 +552,45 @@ def _bind_context(
         if any(isinstance(r.event, StudyManifestFreeze) for r in ledger.records):
             raise StudyLedgerError("freeze_already_committed")
     if request.phase == "comparison":
-        if request.operation not in (
-            "candidate_production",
-            "comparison_candidate",
-            "classical_diagnostic",
-            "purchase",
-            "preparation",
-            "prediction",
-            "scoring",
-        ):
-            raise StudyLedgerError("native_stage_comparison_not_available")
-        manifest = study_manifest(ledger)
-        role: ArtifactKind = (
-            "classical_diagnostic_config"
-            if request.operation == "classical_diagnostic"
-            else "candidate_config"
-        )
-        if request.operation in ("preparation", "scoring"):
-            role = "scoring_policy"
-        elif request.operation == "prediction":
-            role = "prediction_config"
-        if isinstance(request, NativePurchaseRequest):
-            role = "calibration" if request.purchase.calibration else "menu"
-        artifact = next((a for a in manifest.artifacts if a.kind == role), None)
-        if (
-            (manifest.source_commit, manifest.uv_lock_sha256, manifest.engine_fingerprint)
-            != (c.source_commit, c.uv_lock_sha256, c.engine_fingerprint)
-            or artifact is None
-            or artifact.sha256 != request.config_sha256
-        ):
-            raise StudyLedgerError("candidate_frozen_identity")
-        if request.operation == "candidate_production":
-            # The old supplied-bundle interface does not acquire Journal authority.
-            raise StudyLedgerError("candidate_comparison_not_available")
+        _bind_frozen_context(study_manifest(ledger), request, c)
+
+
+def _bind_frozen_context(
+    manifest: NativeStudyManifest, request: ExecutionRequest, c: CandidateControl
+) -> None:
+    """Apply unchanged per-request checks to a validated invocation-local freeze."""
+    if request.operation not in (
+        "candidate_production",
+        "comparison_candidate",
+        "classical_diagnostic",
+        "purchase",
+        "preparation",
+        "prediction",
+        "scoring",
+    ):
+        raise StudyLedgerError("native_stage_comparison_not_available")
+    role: ArtifactKind = (
+        "classical_diagnostic_config"
+        if request.operation == "classical_diagnostic"
+        else "candidate_config"
+    )
+    if request.operation in ("preparation", "scoring"):
+        role = "scoring_policy"
+    elif request.operation == "prediction":
+        role = "prediction_config"
+    if isinstance(request, NativePurchaseRequest):
+        role = "calibration" if request.purchase.calibration else "menu"
+    artifact = next((a for a in manifest.artifacts if a.kind == role), None)
+    if (
+        (manifest.source_commit, manifest.uv_lock_sha256, manifest.engine_fingerprint)
+        != (c.source_commit, c.uv_lock_sha256, c.engine_fingerprint)
+        or artifact is None
+        or artifact.sha256 != request.config_sha256
+    ):
+        raise StudyLedgerError("candidate_frozen_identity")
+    if request.operation == "candidate_production":
+        # The old supplied-bundle interface does not acquire Journal authority.
+        raise StudyLedgerError("candidate_comparison_not_available")
 
 
 def _run_child(
@@ -737,7 +744,8 @@ def _closure(
         receipt.original_ledger_sha256,
     ):
         raise StudyLedgerError("candidate_closure_corrupt")
-    before = NativeStudyLedger(plan=current.plan, records=original.records[:-1])
+    # original was fully chain-validated above; this is exactly head(original[:-1]).
+    before_head = original.records[-1].previous_sha256
     reservation = original.records[-1].event
     expected_reservation = StudyAttemptReservation(
         attempt_id=saved.attempt_id,
@@ -757,7 +765,7 @@ def _closure(
         if isinstance(saved, NativePurchaseRequest) and saved.purpose == "execution"
         else None,
     )
-    if head(before) != saved.expected_head_sha256 or reservation != expected_reservation:
+    if before_head != saved.expected_head_sha256 or reservation != expected_reservation:
         raise StudyLedgerError("candidate_closure_corrupt")
     updates = [
         r.event

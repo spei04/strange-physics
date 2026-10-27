@@ -42,10 +42,11 @@ from strange_physics.native_stage_execution_contracts import (
     parse_comparison_preparation_input,
     parse_comparison_score_input,
 )
-from strange_physics.publication_store import Extents, digest, head, raw, regular
+from strange_physics.publication_store import Extents, digest, raw, regular
 from strange_physics.research_contracts import message_sha256
 from strange_physics.study_contracts import (
     NativeStudyLedger,
+    NativeStudyManifest,
     StudyAttemptReservation,
     StudyAttemptUpdate,
 )
@@ -53,7 +54,7 @@ from strange_physics.study_execution_contracts import (
     NativeComparisonCandidateRequest,
     NativeFreezeInput,
 )
-from strange_physics.study_ledger import StudyLedgerError
+from strange_physics.study_ledger import StudyLedgerError, study_manifest
 from strange_physics.workflow_io import read_bytes
 
 if TYPE_CHECKING:
@@ -118,6 +119,20 @@ class _Resolver:
     meter: Extents
     scope: ExitStack
     witness: RetainedStageWitness = field(default_factory=RetainedStageWitness)
+    _validated_view: NativeStudyLedger | None = field(default=None, init=False, repr=False)
+    _manifest: NativeStudyManifest | None = field(default=None, init=False, repr=False)
+
+    def manifest(self) -> NativeStudyManifest:
+        """Validate this immutable view once; replacing the view invalidates reuse."""
+        if self._validated_view is not self.view:
+            # Never use model_construct: later prefix-head joins rely on this full
+            # canonical chain validation as well as the semantic manifest scan.
+            validated = NativeStudyLedger(plan=self.view.plan, records=self.view.records)
+            manifest = study_manifest(validated)
+            self._validated_view = self.view
+            self._manifest = manifest
+        assert self._manifest is not None
+        return self._manifest
 
     def closed(self, logical_id: str, receipt_sha256: str, operation: ParentOperation) -> _Closed:
         # The measured supervisor owns the concrete closure format and validators.
@@ -148,7 +163,7 @@ class _Resolver:
         if ticket != saved_raw:
             raise StudyLedgerError("comparison_ticket_identity")
         if operation != "freeze":
-            measured._bind_context(self.view, saved, self.store.admission.control)
+            measured._bind_frozen_context(self.manifest(), saved, self.store.admission.control)
         retained = measured._closure(self.store, saved, self.view)
         if retained is None:
             raise StudyLedgerError("comparison_parent_missing")
@@ -268,7 +283,7 @@ class _Resolver:
             self.cell_id,
         ):
             raise StudyLedgerError("comparison_prediction_ticket")
-        measured._bind_context(self.view, saved, control)
+        measured._bind_frozen_context(self.manifest(), saved, control)
         if (saved.input_sha256, saved.config_sha256) != (
             message_sha256(expected),
             message_sha256(expected.config),
@@ -323,9 +338,8 @@ class _Resolver:
         """A consumed ticket alone proves neither admitted work nor its original input."""
         if saved.expected_revision >= len(self.view.records):
             raise StudyLedgerError("comparison_prediction_reservation")
-        before = NativeStudyLedger(
-            plan=self.view.plan, records=self.view.records[: saved.expected_revision]
-        )
+        self.manifest()  # Validate the full exact view before reusing its chain link.
+        before_head = self.view.records[saved.expected_revision].previous_sha256
         expected = StudyAttemptReservation(
             attempt_id=saved.attempt_id,
             phase=saved.phase,
@@ -345,7 +359,7 @@ class _Resolver:
             and r.event.attempt_id == saved.attempt_id
         ]
         if (
-            head(before) != saved.expected_head_sha256
+            before_head != saved.expected_head_sha256
             or self.view.records[saved.expected_revision].event != expected
             or reservations != [expected]
         ):
