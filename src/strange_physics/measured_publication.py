@@ -99,6 +99,14 @@ def _identity(request: NativePublicationRequest) -> str:
     )
 
 
+class _DeadlineInterrupt(Exception):
+    """Keep resource exhaustion out of semantic ValueError classification."""
+
+    def __init__(self, code: str) -> None:
+        super().__init__(code)
+        self.code = code
+
+
 class _Clock:
     """Disjoint parent control/work CPU budgets; settling work cannot fund cleanup."""
 
@@ -124,7 +132,7 @@ class _Clock:
         wall = min(wall, self.wall_deadline - time.monotonic_ns())
         if amount <= 0 or wall <= 0:
             self.exhausted = True
-            raise StudyLedgerError("publication_control_deadline")
+            raise _DeadlineInterrupt("publication_control_deadline")
         signal.setitimer(signal.ITIMER_PROF, amount / 1e9)
         signal.setitimer(signal.ITIMER_REAL, wall / 1e9)
 
@@ -139,7 +147,7 @@ class _Clock:
         self.control_used = now - self.phase_started
         self.control_wall_used = time.monotonic_ns() - self.phase_wall_started
         if self.control_used >= self.control_limit:
-            raise StudyLedgerError("publication_control_deadline")
+            raise _DeadlineInterrupt("publication_control_deadline")
         self.phase = "work"
         self.phase_started = now
         self.work_started_wall = time.monotonic_ns()
@@ -175,13 +183,20 @@ def _deadline(
 
     def expired(signum: int, frame: object) -> None:
         clock.exhausted = True
-        raise StudyLedgerError("publication_deadline")
+        raise _DeadlineInterrupt("publication_deadline")
 
     try:
         signal.signal(signal.SIGALRM, expired)
         signal.signal(signal.SIGPROF, expired)
         clock.start()
         yield clock
+    except _DeadlineInterrupt as error:
+        # The supervisor has already unwound its settlement/cleanup paths.
+        # Preserve their notes and the interruption cause at the public boundary.
+        public = StudyLedgerError(error.code)
+        for note in getattr(error, "__notes__", ()):
+            public.add_note(note)
+        raise public from error
     finally:
         signal.setitimer(signal.ITIMER_REAL, 0)
         signal.setitimer(signal.ITIMER_PROF, 0)
