@@ -1505,3 +1505,8 @@ Quality owns the existing identity checkout for strict retained-Journal preparat
 ## 2026-10-27 — Pure comparison bindings accepted
 
 Pure payloads and material bindings at bdfed5d are independently accepted and published. The exact-source addendum passed 19 pure tests in 23.14 seconds; 88 source/package/installed files match. The initial test-inventory gap is preserved and closed by that addendum. Quality is implementing the measured supervisor adapter, with Platform and Research reviewing the next immutable source and concrete resource profile before measured calls. This is not actual Journal authority, numerical comparison or parent completion. Caps, graph and grid-first/Laplace-later sequencing remain unchanged. [Evidence and assignments](EXECUTION_LOG.md#2026-10-27--pure-comparison-bindings-accepted).
+
+
+## 2026-10-27 — Comparison adapter source reviewed
+
+Independent reviews found no static blocker in c427d39. Research delivered the source-only 45-call fixture at 4a5c84a; Quality is integrating it and implementing the explicit 50-call sequence for successful scoring and recovery after a missing prediction is retried. Its proposed bounds are 1,066,811,392 bytes and 1,338 CPU seconds under unchanged caps, conditional on smaller copy bounds and actual store fit. No measured runtime is admitted or observed. Lead owns progress in released primary; Quality retains identity. [Evidence and assignments](EXECUTION_LOG.md#2026-10-27--comparison-adapter-source-reviewed).

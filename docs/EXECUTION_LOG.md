@@ -12,15 +12,19 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Pure checkpoint bdfed5d accepted; implement measured supervisor integration in identity | Freeze concrete adapter and finite profile before measured calls |
-| Platform | Pure source/package review accepted; review next adapter, copies and resource profile | Actual database fit and runtime admission remain pending |
-| Research | Prepare the source-only 45-call integration fixture in primary after explicit handoff | Separate checkout from Quality; no imports, numerical calls or environment changes |
-| Project lead | Hand off reused primary for fixture authoring; review and integrate the patch | Concrete adapter/profile review still precedes measured execution |
+| Quality | Integrate reviewed fixture and implement the 50-call recovery sequence in identity | Freeze source, copy bounds and complete profile before measured calls |
+| Platform | Independent adapter and fixture source reviews complete | Review concrete 50-call resource bounds and observed accounting |
+| Research | Independent fixture authored; adapter source review complete; primary released | Identify remaining finite public-boundary coverage |
+| Project lead | Compose progress in reused primary; review integration and exact evidence | Runtime remains pending concrete source/profile acceptance |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Quality | Integrate Research fixture and extend it to 50 declared calls | Source work only; two synthetic test expectations corrected; measured runtime pending |
+| 2026-10-27 | Platform + Research | Independent c427d39 retained-authority review | No static blocker found; actual purchased-history and temporal replay still require integration proof |
+| 2026-10-27 | Research | Source-only fixture 4a5c84a delivered and primary released | Lead accepted integration; Platform reviewed resource boundaries |
+| 2026-10-27 | Project lead | Reuse primary for progress after fixture handoff | No additional checkout or dependency environment |
 | 2026-10-27 | Research | Independent 45-call fixture source patch | Reuse primary after clean handoff; Quality retains adapter and negative cases in identity; no runtime |
 | 2026-10-27 | Quality | Pure comparison checkpoint bdfed5d accepted and published | Reassigned to measured adapter and concrete bounded fixture; source work only |
 | 2026-10-27 | Platform + Research | Independent pure source/package/scientific reviews | Accepted within supplied-material scope; next authority/profile review pending |
@@ -1059,3 +1063,16 @@ The 45-call profile is conditionally accepted arithmetic: 978,165,760 bytes and 
 
 
 The next authoring split uses both existing checkouts: Quality implements the retained resolver and supervisor integration in identity; Research prepares the 45-call positive/recovery fixture in primary after Lead verifies its handoff. Research may add the declared 1 MiB control-database option to the existing fixture helper. This is source-only work with no imports, test execution, numerical calls or dependency changes. Lead reviews and transfers the immutable patch; Platform independently reviews the combined resource profile before runtime. Research can independently review Quality's adapter; Lead and Platform review Research's fixture.
+
+
+## 2026-10-27 — Comparison adapter source reviewed
+
+Platform and Research found no static blocker in adapter c427d39, tree eaad55b7. It resolves the retained candidate, preparation and prediction authorities before measured preparation, prediction or scoring, and checks original ticket, reservation, receipt, source/install and raw-material identities. Existing request/receipt models and numerical recipes remain unchanged. Historical paid score replay uses the original recorded view; fresh scoring cannot hide a later valid retry behind an older missing label.
+
+Research authored the separate 45-call fixture at 4a5c84a without running it, then released primary. Lead accepted the patch for integration after reading the full sequence and verifying its evidence; Platform independently reviewed its setup and copy boundaries. Quality is integrating it in identity and extending the initial authority to 50 calls. The extension preserves the successful path and adds a missing prediction, an unscorable score, a successful retry, paid historical-score replay and fresh stale-reference denial. This is source work, not observed behavior.
+
+The first synthetic resolver run passed 14 cases and failed two test expectations; the code rejected the evidence earlier than those tests expected. Quality reports the two corrected cases passing at test-only 35aec90, with unchanged production and installation. Initial diagnostics remain retained; final combined-source checks and exact evidence readback are pending.
+
+The proposed 50-call profile totals 1,066,811,392 bytes and 1,338 CPU seconds, leaving 6,930,432 bytes under the unchanged 1 GiB cap. It requires tighter original wrapper exports, 4 MiB total copy allowances for the added scores, 18 finalization records/72 KiB, and a 224 KiB raw-ledger bound. Setup remains 48 MiB. Arithmetic is conditionally accepted; concrete source, actual database fit, output sizes, cumulative costs and recovery behavior still need proof before runtime acceptance.
+
+Lead rehashed both independent review indices and their referenced evidence. The same two cloud checkouts remain assigned: Quality owns source/environment in identity, Lead owns progress-only edits in released primary. No measured comparison calls, provider calls or numerical comparison have run in this slice. Publisher authority handoff, full-study admission, grid/Laplace work and parent closure remain separate.

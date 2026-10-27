@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Primary progress4d3b3ad is published; Lead is preparing a clean source-only fixture handoff to Research at acceptedbdfed5. No environment/runtime handoff.",
-      "identity": "Quality exclusively owns checkpoint2 source/environment work on feat/retained-comparison-stages after accepted and published bdfed5d; no measured runtime admission.",
+      "scientific": "Research released primary clean at4a5c84a; Lead reuses it on docs/native-stage-delivery-progress for progress-only edits, without environment use.",
+      "identity": "Quality exclusively owns adapter/50-fixture source and environment on feat/retained-comparison-stages; measured runtime not admitted.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12592,10 +12592,10 @@
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Pure checkpoint accepted; implement measured adapter and concrete bounded fixture; no measured calls yet.",
-        "Platform": "Pure source/package review accepted; next retained authority/copy/resource review.",
-        "Research": "Prepare source-only45-call integration fixture in reused primary after explicit handoff; independently review Quality adapter.",
-        "Project lead": "Publish assignment, hand off primary, review/transfer fixture patch and coordinate combined source/profile review."
+        "Quality": "Integrate reviewed fixture and implement explicit50 successor in identity; no measured calls yet.",
+        "Platform": "Static source reviews complete; next concrete50 resource/copy and observed accounting review.",
+        "Research": "Fixture delivered and primary released; independent adapter review complete; identify remaining finite boundary coverage.",
+        "Project lead": "Progress-only edits in released primary; review integration, resource admission and exact evidence."
       },
       "handoff": "Quality owns identity adapter/negative cases; Research receives primary sequentially for source-only45-call fixture after verified handoff. Lead retains progress branch and private assignment log. No measured runtime admitted.",
       "interface_decisions": [
@@ -14563,7 +14563,7 @@
         }
       },
       "comparison_integration_handoff": {
-        "status": "pure_checkpoint_accepted_measured_adapter_in_implementation",
+        "status": "adapter_static_reviews_accepted_concrete50_source_in_progress",
         "source_base": "dfda60f0bb425897bd4b80431e1d7d3851d8392e",
         "progress_base": "80a4d1f5de7e2a776c31ac5bdbd377f6ecec7d91",
         "document": "docs/MEASURED_COMPARISON_HANDOFF.md",
@@ -14577,9 +14577,9 @@
         "prior_delivery_free_bytes": 93518716928,
         "capacity_review": "accepted_for_lightweight_source_only",
         "proposed_full_specimen_calls_before_extra_faults": 45,
-        "runtime_profile": "independent_arithmetic_conditionally_accepted_actual_source_and_fit_pending",
+        "runtime_profile": "concrete50_source_pending_runtime_not_admitted",
         "new_allocation": false,
-        "next_gate": "Concrete measured adapter/source and complete finite profile review before any numerical dispatch",
+        "next_gate": "Concrete50 source/copy/resource review before any numerical dispatch",
         "reconciliation_sha256": "00465704f00d755ab795de4b6535d609ff13279d32c7ca9ad6f341c7fe063baf",
         "research_preparation_sha256": "3103d13af9de02677a2feab73ca2bc798d0159e06e129d4cd65a739a47865d98",
         "branch": "feat/retained-comparison-stages",
@@ -14616,7 +14616,7 @@
         },
         "profile_arithmetic_index_sha256": "0d125bc94ab1a1286801b1288368ae294dc44156c061ca2599b45f221432777c",
         "setup_hold_bytes": 50331648,
-        "fixture_author": "Research, source-only separate primary checkout after explicit handoff",
+        "fixture_author": "Research delivered4a5c84a and released primary; Quality integrates and extends explicit50",
         "fixture_reviewers": [
           "Project lead",
           "Platform"
@@ -14624,7 +14624,31 @@
         "adapter_reviewers": [
           "Platform",
           "Research"
-        ]
+        ],
+        "checkpoint2": {
+          "source": "c427d39a475fa7ea398f764d35a2dcc6db310f1f",
+          "tree": "eaad55b7619d8eb12f231a6efbcff4f46b9ef4f6",
+          "status": "independent_static_reviews_no_blocker_runtime_pending",
+          "platform_review_sha256": "07af2ded633151ce759f362a62128a20257d49a6b37586d593f6c251592de4f9",
+          "research_review_sha256": "f0f4ef855219f3279d50cbfb668e9bfcf7f1461bfcf55ea2cbadd217ebfbd7f6",
+          "lead_acceptance_sha256": "9f36ab996028d5fda856ce2dfaf3b4ac1a6515c9530c1b13ae2cb959d9c55c7d",
+          "fixture_source": "4a5c84a23ffb595797df9b73cd6992eebb2bee5c",
+          "measured_calls": 0
+        },
+        "temporal_profile": {
+          "calls": 50,
+          "recoveries": 5,
+          "artifact_bytes": 1066811392,
+          "cpu_seconds": 1338,
+          "artifact_margin_bytes": 6930432,
+          "setup_hold_bytes": 50331648,
+          "database_bytes": 1048576,
+          "finalization_records": 18,
+          "finalization_bytes": 73728,
+          "raw_ledger_cap_bytes": 229376,
+          "status": "conditional_arithmetic_only_concrete_source_and_runtime_pending",
+          "review_sha256": "e71dd00b374a20d072285dd5d3413f676aceaf06ff849945b49b5b914d4ee223"
+        }
       }
     },
     "certificate_trust_update": {
