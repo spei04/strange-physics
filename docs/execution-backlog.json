@@ -10924,10 +10924,10 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Lead owns primary progress/integration after Research documentation handoff; the primary environment remains unused.",
-      "identity": "Lead owns source 32a9f7d on feat/native-endpoint-beliefs for integration/hosted delivery after independently accepted focused validation. Exact 96-file installed/archive parity retained; no new checkout/environment.",
+      "scientific": "Quality completed the six-document progress handoff on docs/bounded-demo-progress based on preserved 50e0f27; Lead owns primary integration after release.",
+      "identity": "Lead owns integrated demo source fab69a4 after the admitted local continuation; existing project-only installation passed96-file parity with frozen nonproject dependencies. No new checkout/environment.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
-      "storage": "Two existing cloud checkouts retained for sequential reuse. Reviewed retirement of two reproducible caches removed 37,876,218 regular-file bytes; candidate verifier removed 2,102,836 temporary export bytes. Required release/failure evidence and durable environments remain. Earlier free-space observations are historical; these file totals do not establish physical filesystem savings. Subsequent failed #131 type-check cache retirement removed 19,325,198 regular bytes; observed free-space increase 19,345,408 bytes is subject to concurrent host activity. Both checkouts/environments and unique evidence retained.",
+      "storage": "Two existing cloud checkouts retained for sequential reuse. Reviewed retirement of two reproducible caches removed 37,876,218 regular-file bytes; candidate verifier removed 2,102,836 temporary export bytes. Required release/failure evidence and durable environments remain. Earlier free-space observations are historical; these file totals do not establish physical filesystem savings. Subsequent failed #131 type-check cache retirement removed 19,325,198 regular bytes; observed free-space increase 19,345,408 bytes is subject to concurrent host activity. Both checkouts/environments and unique evidence retained. Endpoint main51356f2 verification removed2,141,713 temporary export bytes after readback; both checkouts/environments and required evidence remain.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
     },
     "spring_calibration_evidence": {
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "normalizer_delivered_endpoint_focused_accepted_hosted_delivery_pending",
+      "status": "normalizer_and_endpoint_delivered_scientific_profile_unaccepted",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Research": "Source/reference/count work complete; reconcile accepted focused outcome and release progress for review.",
-        "Quality": "Independent focused numerical/reference outcome accepted; available for hosted delivery review.",
-        "Platform": "Independent focused resource/identity outcome accepted; ready for CI/candidate review.",
-        "Project lead": "Coordinate integration and PR/main/candidate delivery under existing approval."
+        "Research": "Endpoint source/reference unit delivered; private 24-case/eight-vector Laplace source draft prepared without execution; progress handoff.",
+        "Quality": "Endpoint numerical/delivery reviews accepted; independent parallel reference-source review next.",
+        "Platform": "Endpoint resource/candidate reviews accepted; finite reference resource review next.",
+        "Project lead": "Integrate exact delivery/progress and coordinate the next bounded source review; scientific/full-study gates unchanged."
       },
-      "handoff": "PR #128 bounded RA-02/#105 and RA-N01/#106 acceptance remains complete. PR #130/main 620c0f0 delivers normalizer subunit #129, which is closed; failed 6f and focused 346 remain source-specific. Endpoint schema 4883acb is accepted, with both style failures and the first focused type-check failure retained. Corrected 32a9f7d focused validation is independently accepted: eight commands, 32 tests/13.55s, 1,547 schemas and 96-file package parity. PR #132 is open with CI queued; main/candidate delivery and scientific acceptance remain separate. RA-N02.a is in progress; full-study allocation remains closed.",
+      "handoff": "PR #128 bounded RA-02/#105 and RA-N01/#106 acceptance and PR #130 normalizer #129 delivery remain complete. Endpoint subunit #131 is delivered through PR #132/main 51356f2 with all five main jobs, 4,574 tests per Python runtime and exact96-file candidate acceptance. Focused32a reference evidence and all earlier failures remain source-specific. RA-N02.a stays in progress; scientific-profile and full-study acceptance remain unresolved.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Integrate #131 and complete unchanged PR/main/candidate delivery checks for the accepted focused source. Preserve source-specific failures and cumulative holds. Scientific-profile/finite-resolution acceptance remains unresolved; Laplace analytic test preparation stays parallel, not a prerequisite. Existing scoped owner approval remains active; full-study allocation stays closed.",
+      "next_units": "Review the private unexecuted Laplace analytic-reference source draft and its finite validation proposal in parallel. Comparative acceptance requires validated shared scientific definitions/fixtures; no grid ground-truth assumption, new prerequisite or automatic runtime admission. Resolve the remaining scientific profile and finite-resolution requirements under existing scoped approval; preserve all cumulative holds and full-study allocation limits.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -15332,7 +15332,7 @@
         }
       },
       "next_grid_preparation": {
-        "status": "normalizer_delivered_endpoint_focused_accepted_science_unaccepted",
+        "status": "normalizer_and_endpoint_delivered_scientific_profile_unaccepted",
         "owner": "Research",
         "independent_reviewers": [
           "Quality",
@@ -15348,7 +15348,7 @@
         ],
         "laplace_sequence": "Analytic/interface preparation may overlap without changing the graph. Comparative Laplace acceptance follows accepted shared scientific definitions and frozen N03 fixtures; first-result sequencing holds inference constant for selector comparison. It is not a mathematical requirement to delay all preparation, and an unvalidated grid is not ground truth.",
         "experiment_execution": "not_started",
-        "assignment_stage": "focused_outcome_accepted_hosted_delivery_pending",
+        "assignment_stage": "endpoint_delivered_parallel_reference_source_review",
         "normalizer": {
           "issue": 129,
           "parent_task": "RA-N02.a",
@@ -15439,23 +15439,28 @@
           "issue_status": "closed"
         },
         "laplace_parallel_preparation": {
-          "status": "accepted_design_only",
+          "status": "accepted_design_private_source_draft_unexecuted",
           "analytic_case_v2_index_sha256": "0b11fe7d283bbc3f62ed1e87bd48480ba929b3e03ca998c9b3cdf2407e526547",
           "finite_reference_method_v2_index_sha256": "94bd0d765c72f7f37869e113d2f7514fd6cf1c240a80d424419032253672d48b",
-          "implementation_or_execution_started": false,
+          "implementation_or_execution_started": true,
           "scientific_settings_selected": false,
           "remaining": [
-            "Concrete source and preallocation/intermediate/GCD bounds",
-            "Practical CPU/memory/evaluation/output fit and finite validation",
+            "Independent source/preallocation/intermediate/GCD bound review",
+            "Separately bounded formatting/type/finite validation and practical CPU/memory fit",
             "Shared accepted scientific definitions and frozen fixtures before comparative audit"
           ],
           "limits": "Restricted test-only reference domain; no deep-tail coverage, optimizer, inference or N02.b completion.",
-          "source_readiness": "Test-only analytic/reference pack ready for a separately scoped source checkpoint; integer/GCD bounds and runtime fit remain unproved. No native integration or comparative acceptance."
+          "source_readiness": "Private 24-case/eight-vector analytic/reference draft prepared; no imports, collection, tests or numerical execution. No native integration, scientific setting selection or comparative acceptance.",
+          "source_implementation_scope": "Private three-file test-only draft; no checkout application or merge.",
+          "execution_started": false,
+          "source_merged": false,
+          "planned_cases": 24,
+          "planned_vectors": 8
         },
         "profile_resolution_checkpoint": {
           "id": "RA-N02.a.profile-resolution",
           "issue": 131,
-          "status": "focused_accepted_hosted_delivery_pending",
+          "status": "delivered_scoped_software_reference_unit",
           "source_base": "620c0f0bd3c6f2cadc00e0f132c4fc5d93945b17",
           "first_production_checkpoint": "df2cd1e8a727d90a872f93c9258ad355be8880f0",
           "owner": "Research",
@@ -15555,7 +15560,7 @@
             }
           },
           "focused_validation": {
-            "status": "accepted_bounded_focused_hosted_delivery_pending",
+            "status": "accepted_bounded_focused",
             "retained_first_attempt": {
               "status": "failed_before_build_numerics_corrected_runner_pending",
               "failed_source": "4883acb62eb94f58ad6ba5473dd8b04f5db8535a",
@@ -15628,18 +15633,64 @@
             "post_install_equal_terminal": true,
             "numerical_outcome": "bounded_focused_accepted",
             "build_package_outcome": "exact96_file_parity_accepted",
-            "hosted_delivery": "pending"
+            "hosted_delivery": "delivered_separate_main_checkpoint"
           },
-          "current_source_checkpoint": "32a9f7d2a4d299e2d993cefe7132bfb3b1e1c62a",
-          "current_source_tree": "83a2c99b9c25ec7a9f14a8cbf093995155da5b10",
+          "current_source_checkpoint": "51356f2ff7e1f49c2105bca38225f340e815cdb9",
+          "current_source_tree": "0463a6927b4531b823f3a17728b78c7bcd8e1999",
           "delivery": {
+            "status": "accepted",
             "pull_request": 132,
             "url": "https://github.com/spei04/strange-physics/pull/132",
-            "head": "32a9f7d2a4d299e2d993cefe7132bfb3b1e1c62a",
-            "base": "620c0f0bd3c6f2cadc00e0f132c4fc5d93945b17",
-            "pr_ci_run": 40648525110,
-            "pr_ci_status": "queued_at_checkpoint",
-            "main_candidate": "pending"
+            "reviewed_pr_head": "49b0ccd7abdaaf01a9cdcad6ecf466bf48918967",
+            "main": "51356f2ff7e1f49c2105bca38225f340e815cdb9",
+            "tree": "0463a6927b4531b823f3a17728b78c7bcd8e1999",
+            "main_ci_run": 40651095177,
+            "main_ci_attempt": 1,
+            "main_jobs_passed": 5,
+            "main_tests": {
+              "3.12": {
+                "passed": 4574,
+                "seconds": 622.96
+              },
+              "3.14": {
+                "passed": 4574,
+                "seconds": 507.51
+              }
+            },
+            "candidate": 12799114826,
+            "candidate_bytes": 592656,
+            "candidate_zip_sha256": "08b50334951fd2b3ff345a26b6056b3c8d16a574d692a382d169921f498c01bb",
+            "package_files_exact": 96,
+            "reviewed_profile_blobs": 72,
+            "checksums_verified": 3,
+            "hosted_interpreter_observations": 13,
+            "certificate_guards": 2,
+            "wheel_sdist_equal_focused_32a": true,
+            "independent_outcome_reviews": "Quality and Platform accepted",
+            "final_client_active_wall_seconds": 9.608578708,
+            "tracked_children_reaped": 15,
+            "api_calls": 8,
+            "primary_unchanged": true,
+            "temporary_export_bytes_removed": 2141713,
+            "permanent_cumulative_holds": {
+              "cpu_seconds": 1200,
+              "active_wall_seconds": 3600,
+              "prior_failures_and_unmeasured_preparation_retained": true
+            },
+            "scope": "Unpublished candidate; bounded software/reference delivery only. Scientific-profile/full-study acceptance and timing guarantees are not claimed.",
+            "initial_pr_checkpoint": {
+              "pull_request": 132,
+              "url": "https://github.com/spei04/strange-physics/pull/132",
+              "head": "32a9f7d2a4d299e2d993cefe7132bfb3b1e1c62a",
+              "base": "620c0f0bd3c6f2cadc00e0f132c4fc5d93945b17",
+              "pr_ci_run": 40648525110,
+              "pr_ci_status": "queued_at_checkpoint",
+              "main_candidate": "pending"
+            },
+            "combined_known_cpu_seconds": 3.829303397,
+            "local_client_known_cpu_seconds": 0.091678,
+            "pr_ci_run": 40649320587,
+            "pr_ci_status": "success"
           }
         }
       }
@@ -15679,6 +15730,72 @@
         "alert_dismissed_by": null,
         "alert_readback_index_sha256": "a42eac1458887e94eace1227053ec267165e01f8b5270f2225f4d99ad4bf8410",
         "previous_alert_observation": "Open on older requirement at earlier checkpoints; retained history."
+      }
+    },
+    "bounded_scientific_demo": {
+      "issue": 133,
+      "status": "local_and_independent_reviews_passed_hosted_delivery_pending",
+      "source": "fab69a44e14e86b76476333ae98d4687034b5769",
+      "tree": "d7aae8c95ca6588916e8d9269ecbebf62bf36632",
+      "assignments": {
+        "Research": "Scientific outcome review accepted; released",
+        "Quality": "CLI repairs/source review and progress handoff complete; released",
+        "Platform": "Resource/package outcome review accepted; released",
+        "Project lead": "Publish exact-source delivery and private report"
+      },
+      "first_attempt": {
+        "source": "4b2ba018157c66a0281b5752837039ae4328284f",
+        "format": "passed",
+        "ruff": "passed",
+        "mypy": "failed_two_new_test_import_errors",
+        "build_refresh_tests_numerics": "not_run",
+        "preserved": true
+      },
+      "local_continuation": {
+        "commands_passed": 8,
+        "focused_cases": 20,
+        "passing_phases": 60,
+        "strict_mypy_files": 179,
+        "package_files": 96,
+        "wheel_sdist_installed_equal": true,
+        "nonproject_dependencies_unchanged": true,
+        "result_sha256": "5b49174fdf93e009bb44153009926b12d7e466b10d9f5a62f0a8836d14465964"
+      },
+      "cli_regression_purchases": 6,
+      "demo_purchases": 4,
+      "held_out_probes": 24,
+      "target_rmse": 0.001,
+      "target_passed": true,
+      "fitted_coefficient": 0.6750572721112501,
+      "maximum_position_rmse": 3.154199886178306e-08,
+      "illustrative_cells": 16,
+      "illustrative_discrepancy": 0.25,
+      "belief_status": "normalized",
+      "demo_output_files": 28,
+      "demo_output_bytes": 742139,
+      "demo_child_cpu_seconds": 2.329644,
+      "demo_wall_seconds": 2.198229,
+      "cumulative": {
+        "known_cpu_seconds": 41.158175489,
+        "known_active_wall_seconds": 43.908578329,
+        "charged_cpu_with_preparation_hold": 50.641415823,
+        "charged_wall_with_preparation_hold": 73.44605584116653,
+        "cpu_ceiling": 120,
+        "active_wall_ceiling": 360,
+        "owned_output_ceiling_bytes": 67108864,
+        "account_sha256": "76d9abd13ccc98430a935860a1396f3c1f9b580171ac35364d66857b9a1d9040",
+        "original_failure_and_costs_retained": true
+      },
+      "scope": "Existing five-stage I1 development workflow plus same-observation native endpoint diagnostic; no selector/adaptation, MAP, scientific calibration or full-study acceptance.",
+      "next_gate": "Exact-source PR/main delivery remains pending; independent scientific and resource outcome reviews passed.",
+      "parent_status": "RA-N02.a remains in progress; endpoint #131 delivered; 1,168 MiB publication floor exceeds the 1 GiB full-study cap.",
+      "log": "EXECUTION_LOG.md#2026-10-28--bounded-demo-integration-and-validation",
+      "independent_reviews": {
+        "scientific": "accepted_all24_endpoints_scores_all16_weights_and_actual4_purchases",
+        "resources": "accepted_package_environment_cumulative_accounting",
+        "resource_index_sha256": "e3c7bef537d47821219e3b28ca0dd5e4924e8313536da7d8351d1c8d062cb5d8",
+        "report_sha256": "a09d6375fd66c073d9f17bd7df0992badb72ad92627538bf075718a8505f8aec",
+        "completion_sha256": "bf6bd94ab5fe6d4200a3b3bb30d3f0b95d196d7a1d4efef58837be9a2f8c6111"
       }
     }
   },
