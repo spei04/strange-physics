@@ -12,15 +12,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Independent normalizer and Laplace preparation reviews complete | Review the next assigned immutable source; no scientific-profile acceptance |
-| Platform | PR/main CI and exact candidate review complete | #129 delivered; future resource/source admission remains separate |
-| Research | Normalizer and parallel Laplace preparation complete; progress released | RA-N02.a remains in progress; next source checkpoint unassigned |
-| Project lead | Own integration, primary progress and next assignment | Re-estimate concrete next scope; no automatic execution admission |
+| Quality | Review #131's independent numerical references and immutable source | Check likelihood, prior measure, resolution and future prediction; no study-profile acceptance |
+| Platform | Review #131's cumulative source and validation bounds | Count all work, failures, outputs and later scientific reuse; full-study capacity remains closed |
+| Research | Implement restricted endpoint-x evaluator and reference cases for #131 | Own existing identity checkout; freeze source and exact census before numerical validation |
+| Project lead | Own #131 scope, source/validation admission, integration and progress | Existing owner approval remains active; ordinary review of concrete bounds |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-28 | Research / Quality / Platform / Project lead | RA-N02.a.profile-resolution (#131): restricted endpoint-x beliefs and finite-resolution evidence | Source implementation assigned; independent references and cumulative bounds under review; no numerical validation yet |
 | 2026-10-28 | Research + Quality + Platform + Project lead | PR #130 normalizer delivery and #129 closure | Main 620c0f0/all five jobs/exact candidate accepted; RA-N02.a remains in progress |
 | 2026-10-28 | Research + Quality | Parallel Laplace analytic-case and finite-reference V2 preparation | Design accepted; no source implementation, numerical execution or scientific settings selected |
 | 2026-10-28 | Research + Quality + Platform + Project lead | Bounded finite-log-weight normalizer #129 | 6f type-check failure retained; narrow 346 repair passed eight focused commands and 40 tests, independently accepted |
@@ -1255,3 +1256,18 @@ Issue #129 is closed for this subunit. The original 6f type-check failure and ex
 Research's analytic-case V2 and finite-reference-method V2 received independent design acceptance; neither has been implemented or executed. Integer preallocation, intermediate/GCD bounds and practical CPU fit remain unproved, and deep tails are excluded. Analytic/interface preparation can overlap. The later comparative-validation sequence holds inference constant for selector comparison and uses accepted shared fixtures; it is not a mathematical necessity to delay all Laplace preparation. An unvalidated grid is not ground truth. Shared scientific-profile and finite-resolution acceptance remain the next critical work; Laplace reference implementation is prepared parallel work, not a new prerequisite. The next source checkpoint is unassigned, with scope/effort re-estimation and explicit execution admission still required.
 
 Full-study global authority/allocation and capacity remain unresolved: the retained 36-publication reservation floor is 1,168 MiB against the unchanged 1 GiB cap. The 36 episodes/432 purchases/8 CPU-core-hours/zero-provider limits, baseline 168 tasks/369 edges/ten gates, 23-task research graph and forecasts are unchanged. Two existing cloud checkouts remain for sequential reuse, with no new environment. Reviewed retirement of two reproducible caches removed 37,876,218 regular-file bytes; candidate verification removed 2,102,836 temporary export bytes. Required evidence and durable environments remain; these totals do not establish physical filesystem savings. Private diagnostic retention review remains 2026-11-27.
+
+
+## 2026-10-27 — Endpoint-x belief and resolution checkpoint assigned
+
+[Issue #131](https://github.com/spei04/strange-physics/issues/131) is the next RA-N02.a subunit, based on accepted main 620c0f0. Research owns source implementation in the reused identity checkout on feat/native-endpoint-beliefs; Quality reviews independent numerical/reference behavior; Platform reviews resource and boundary behavior; the lead owns admission, integration and this assignment log. Existing owner-approved scoped implementation remains in force. No third checkout, environment, dependency, service or CI-limit change is assigned.
+
+The slice is one pure terminal-x Gaussian model-belief evaluator with explicit physical-k support/cells, uniform-k prior cell masses, positive discrepancy and complete likelihood constants. It joins actual native candidate and observation inputs, preserves failed rows and uses the delivered normalizer. Bounded raw-byte computation/binding entry points avoid treating constructed typed objects as trusted ingress. It initially rejects nonzero declared observation noise. Ignored coordinates and the working cross-record independence assumption are explicit. No MAP selector, covariance matrix, optimizer, measured wrapper, scientific profile or shorter-prefix Journal authority is supplied.
+
+Independent tests cover ODE-series propagation, likelihood/scale arithmetic, prior measure and unexcited data, separate future-probe predictive moments, conditional sensitivity bounds and a genuine off-grid underresolution counterexample. A sensitivity bound that exceeds its allowance means unresolved; an independent analytic argument must demonstrate actual grid error. The rejected [0,4]/1,024-midpoint/sigma=1e-6 profile remains a negative case, never a chosen study setting.
+
+Before any numerical outcome, ordinary refinement grids were reduced to 16/64/256 while preserving all 32 proposed cases and the separate 1,024-node failure case. The reviewed draft census is 2,388 successful fit likelihoods, 1,344 future predictions and two injected predictor failures: at most 3,734 predictor entries / 7,468 requested frames, 22 normalizer calls and 2,415 producer-node requests. Immutable source must derive all counts, references, error criteria and repeated validation work before a test run. First production/contracts source df2cd1e is under independent review; tests, documentation and registry integration remain in progress. No numerical validation has run.
+
+The proposed cumulative local validation envelope is 64 MiB of new owned output (including relevant source/Git/build/copy growth), 1,200 CPU-seconds and 3,600 active-command wall-seconds across setup, validation, retained failures and any explicitly reviewed repair remainder. An initial conservative preparation hold of 60 CPU-seconds / 300 active-wall-seconds leaves 1,140 / 3,300; this is not measured timing. Keep 32 MiB next-command headroom and 50/45 GiB start/later free-space floors. Human/agent design time and hosted-CI waiting are not active-command wall time. Exact runtime admission follows source/census review; no automatic retry or reset is granted.
+
+Provisional effort is 2–4 engineer-days across implementation, independent review, finite validation and delivery, with low confidence until source and timings exist. This is a subunit estimate, not an added top-level task or calendar forecast. Hosted CI is recorded separately and must pass unchanged checks. Any reference/calibration evidence reused scientifically retains its cumulative cost under the approved 8 CPU-core-hour / 1 GiB limits. The 1,168 MiB publication floor and global-allocation gap still block the full study. Laplace preparation remains parallel when useful and bounded; it adds no prerequisite. Parent RA-N02.a remains in progress.

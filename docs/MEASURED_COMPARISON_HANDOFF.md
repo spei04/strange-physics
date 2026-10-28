@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: The finite-log-weight normalizer (#129) is delivered through PR #130/main 620c0f0 and its independently accepted unpublished candidate. All five main jobs passed, including 4,542 tests on each Python runtime. RA-N02.a remains in progress; its scientific profile is unaccepted. Laplace analytic preparation is design-only, and the next source checkpoint is unassigned. No study has run. [Delivery and limits](EXECUTION_LOG.md#2026-10-27--normalizer-delivered-laplace-preparation-remains-design-only).
+Status: The finite-log-weight normalizer (#129) is delivered through PR #130/main 620c0f0 and its independently accepted unpublished candidate. All five main jobs passed, including 4,542 tests on each Python runtime. RA-N02.a remains in progress; its scientific profile is unaccepted. Research is implementing the restricted endpoint-x belief/resolution checkpoint (#131), with independent Quality and Platform review. Numerical validation awaits immutable source/census review; the scientific profile remains unaccepted and no study has run. [Delivery and limits](EXECUTION_LOG.md#2026-10-27--endpoint-x-belief-and-resolution-checkpoint-assigned).
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Independent normalizer and Laplace preparation reviews complete |
-| Platform | CI/main/candidate delivery review complete |
-| Research | Normalizer and analytic preparation complete; next source unassigned |
-| Project lead | Integration, primary progress and next scoped assignment |
+| Quality | Review #131's independent numerical references and immutable source |
+| Platform | Review #131's cumulative source and validation bounds |
+| Research | Implement restricted endpoint-x evaluator and reference cases for #131 |
+| Project lead | Own #131 scope, source/validation admission, integration and progress |
 
-The two existing cloud checkouts remain for sequential reuse. Lead owns integration and primary after this documentation handoff; identity is clean at accepted main 620c0f0 and unused. No new environment was created. Exact 346 focused evidence and the earlier 6f failure remain retained; accepted main/candidate verification confirms 94 package files and both unchanged author archives. Current source handoff is unassigned; no numerical or study work is automatically admitted.
+The two existing cloud checkouts remain for sequential reuse. Lead owns integration and primary after this documentation handoff; identity is clean at accepted main 620c0f0 and unused. No new environment was created. Exact 346 focused evidence and the earlier 6f failure remain retained; accepted main/candidate verification confirms 94 package files and both unchanged author archives. Research owns the existing identity checkout for #131 source implementation. Exact source/census and ordinary Lead validation review precede numerical work; full-study admission remains closed.
 
 The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
 

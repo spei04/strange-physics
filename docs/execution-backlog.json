@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Research completed the seven-document delivery update and released clean primary to Lead for independent review; primary environment unused.",
-      "identity": "Identity is clean at accepted main 620c0f0 and unused; Lead owns subsequent integration. Exact 94-file source/archive parity is retained in the accepted candidate record; no new environment created.",
+      "scientific": "Lead owns primary progress; existing checkout and environment retained, environment unused.",
+      "identity": "Research owns base620c0f0 on feat/native-endpoint-beliefs for source-only #131 implementation. Existing copy-mode environment remains unused until reviewed refresh/validation; no new checkout or environment.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts retained for sequential reuse. Reviewed retirement of two reproducible caches removed 37,876,218 regular-file bytes; candidate verifier removed 2,102,836 temporary export bytes. Required release/failure evidence and durable environments remain. Earlier free-space observations are historical; these file totals do not establish physical filesystem savings.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,14 +12588,14 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "bounded_native_parents_and_normalizer_delivered_grid_in_progress",
+      "status": "normalizer_delivered_endpoint_profile_source_implementation",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Independent normalizer and Laplace preparation reviews complete; next immutable source review follows assignment.",
-        "Platform": "PR/main/candidate delivery independently accepted; next resource/source review follows assignment.",
-        "Research": "Normalizer and parallel Laplace analytic preparation complete; seven-document progress handoff released to Lead.",
-        "Project lead": "Own integration and primary progress; next source checkpoint unassigned pending concrete scope/effort re-estimation, no automatic execution admission."
+        "Research": "Implement restricted terminal-x beliefs and reference tests for #131 in reused identity checkout.",
+        "Quality": "Review independent ODE/likelihood/prior/resolution/predictive cases and immutable source.",
+        "Platform": "Review cumulative source/validation costs, ingress boundaries and exact operation census.",
+        "Project lead": "Own source and validation admission, integration and progress under existing scoped owner approval."
       },
       "handoff": "PR #128 bounded RA-02/#105 and RA-N01/#106 acceptance remains complete. PR #130/main 620c0f0 and exact candidate now deliver normalizer subunit #129, which is closed. Failed 6f and focused 346 records remain source-specific. RA-N02.a stays in progress; scientific profile, full inference and global study authority/capacity remain unaccepted.",
       "interface_decisions": [
@@ -12604,7 +12604,7 @@
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Shared scientific-profile and finite-resolution acceptance remain the next critical work. Re-estimate and assign the next independently reviewable source checkpoint. Laplace analytic-case V2 and finite-reference-method V2 are accepted design only; reference implementation is prepared parallel work, not a new prerequisite. These Laplace designs do not allocate execution or select scientific settings. Existing owner-approved scoped implementation remains in force; concrete source and runtime bounds remain subject to Lead review. Preserve the full-study authority/capacity gate and all graph, cap and forecast values.",
+      "next_units": "Source implementation of #131 is assigned to Research, with Quality and Platform review. Freeze exact code/census/reference error criteria before numerical validation. Scientific profile and finite-resolution acceptance remain unresolved; Laplace stays useful bounded parallel preparation, not a new prerequisite. Existing owner approval remains in force. Full-study capacity/allocation stays closed.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -15332,8 +15332,8 @@
         }
       },
       "next_grid_preparation": {
-        "status": "normalizer_delivered_parent_in_progress_scientific_profile_unaccepted",
-        "owner": "Next source checkpoint unassigned",
+        "status": "normalizer_delivered_endpoint_profile_source_implementation_science_unaccepted",
+        "owner": "Research",
         "independent_reviewers": [
           "Quality",
           "Platform"
@@ -15348,7 +15348,7 @@
         ],
         "laplace_sequence": "Analytic/interface preparation may overlap without changing the graph. Comparative Laplace acceptance follows accepted shared scientific definitions and frozen N03 fixtures; first-result sequencing holds inference constant for selector comparison. It is not a mathematical requirement to delay all preparation, and an unvalidated grid is not ground truth.",
         "experiment_execution": "not_started",
-        "assignment_stage": "delivery_complete_next_source_scope_and_effort_reestimate_pending",
+        "assignment_stage": "source_implementation_and_independent_design_review",
         "normalizer": {
           "issue": 129,
           "parent_task": "RA-N02.a",
@@ -15450,6 +15450,71 @@
             "Shared accepted scientific definitions and frozen fixtures before comparative audit"
           ],
           "limits": "Restricted test-only reference domain; no deep-tail coverage, optimizer, inference or N02.b completion."
+        },
+        "profile_resolution_checkpoint": {
+          "id": "RA-N02.a.profile-resolution",
+          "issue": 131,
+          "status": "source_implementation_assigned",
+          "source_base": "620c0f0bd3c6f2cadc00e0f132c4fc5d93945b17",
+          "first_production_checkpoint": "df2cd1e8a727d90a872f93c9258ad355be8880f0",
+          "owner": "Research",
+          "reviewers": [
+            "Quality",
+            "Platform"
+          ],
+          "checkout_branch": "feat/native-endpoint-beliefs",
+          "scope": "Restricted terminal-x Gaussian model beliefs, explicit physical-k support/cell prior measure/positive discrepancy, complete likelihood constants and native input identities; independent reference/resolution/predictive cases.",
+          "out_of_scope": [
+            "MAP selector",
+            "covariance or optimizer",
+            "new dependencies/services",
+            "measured or shorter-prefix Journal authority",
+            "scientific profile freeze",
+            "full-study admission"
+          ],
+          "entrypoint": "Bounded raw-byte computation/binding; typed models are construction helpers, not trusted ingress.",
+          "proposed_census": {
+            "cases": 32,
+            "fit_likelihoods": 2388,
+            "future_predictions": 1344,
+            "injected_predictor_failures": 2,
+            "prediction_entries": 3734,
+            "max_requested_frames": 7468,
+            "normalizer_calls": 22,
+            "max_producer_nodes": 2415,
+            "ordinary_grid_sizes": [
+              16,
+              64,
+              256
+            ],
+            "negative_grid_size": 1024,
+            "source_derived_counts_pending": true
+          },
+          "proposed_cumulative_local_envelope": {
+            "new_owned_bytes": 67108864,
+            "cpu_seconds": 1200,
+            "active_command_wall_seconds": 3600,
+            "initial_unmeasured_preparation_hold_cpu": 60,
+            "initial_unmeasured_preparation_hold_active_wall": 300,
+            "remaining_cpu_seconds": 1140,
+            "remaining_active_command_wall_seconds": 3300,
+            "next_command_headroom_bytes": 33554432,
+            "start_free_bytes": 53687091200,
+            "later_free_bytes": 48318382080,
+            "failures_and_repeats_count": true,
+            "automatic_retry": false,
+            "runtime_admitted": false
+          },
+          "effort_engineer_days": [
+            2,
+            4
+          ],
+          "confidence": "low; re-estimate after immutable source and measured validation",
+          "independent_acceptance": "Actual-binary-input ODE and likelihood references; physical-k prior/cell semantics; separate future predictive moments; conditional bounds distinguish unresolved from analytically demonstrated underresolution; all failures and costs retained.",
+          "scientific_budget_rule": "Reference/calibration work reused scientifically retains cumulative cost under approved8CPUh/1GiB; pytest and hosted CI are not a waiver.",
+          "parent_status": "in_progress",
+          "study_admission": "closed:1168MiB publication floor exceeds1GiB and global allocator unresolved",
+          "laplace": "Parallel only when useful/bounded; no new prerequisite"
         }
       }
     },
