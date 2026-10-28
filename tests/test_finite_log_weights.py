@@ -12,6 +12,7 @@ from typing import NoReturn
 import pytest
 from pydantic import ValidationError
 
+import strange_physics.bounded_json as bounded_json
 import strange_physics.finite_log_weight_contracts as contracts
 import strange_physics.finite_log_weights as runtime
 from strange_physics.control_contracts import ContractViolation
@@ -383,10 +384,14 @@ def test_entry_status_and_value_are_inseparable() -> None:
 
 
 def test_malformed_and_nonfinite_raw_json_rejects() -> None:
+    valid = _input((0.0,)).model_dump_json().encode()
+    assert parse_finite_log_weight_input(valid).entries[0].log_weight == 0.0
+    assert b'"log_weight":0.0' in valid
+    duplicate = valid.replace(b'"log_weight":0.0', b'"log_weight":-1.0,"log_weight":0.0')
     for raw in (
         b"",
         b"{",
-        b'{"x":0,"x":1}',
+        duplicate,
         b'{"x":NaN}',
         b'{"x":Infinity}',
         b'{"x":1e9999}',
@@ -402,19 +407,22 @@ def test_typed_nonfinite_values_reject() -> None:
             FiniteLogWeight(item_sha256="0" * 64, kind="finite", log_weight=value)
 
 
-def test_raw_byte_ceiling_is_checked_before_decode() -> None:
+def test_raw_byte_ceiling_is_checked_before_decode(monkeypatch: pytest.MonkeyPatch) -> None:
     raw = _input((0.0,)).model_dump_json().encode()
     at_limit = raw + b" " * (MAX_INPUT_BYTES - len(raw))
     assert parse_finite_log_weight_input(at_limit).entries[0].log_weight == 0.0
+    monkeypatch.setattr(bounded_json.json, "loads", _forbidden)
     with pytest.raises(ContractViolation):
         parse_finite_log_weight_input(at_limit + b" ")
 
 
-def test_raw_depth_and_node_budgets_reject() -> None:
-    for raw in (
+def test_raw_depth_and_node_budgets_reject(monkeypatch: pytest.MonkeyPatch) -> None:
+    raws = (
         b"[" * (MAX_JSON_DEPTH + 1) + b"0" + b"]" * (MAX_JSON_DEPTH + 1),
         b"[" + b"0," * MAX_JSON_NODES + b"0]",
-    ):
+    )
+    monkeypatch.setattr(bounded_json.json, "loads", _forbidden)
+    for raw in raws:
         with pytest.raises(ContractViolation):
             parse_finite_log_weight_input(raw)
 
