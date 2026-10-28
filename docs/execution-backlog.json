@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Lead owns primary progress; existing checkout and environment retained, environment unused.",
-      "identity": "Research owns base620c0f0 on feat/native-endpoint-beliefs for source-only #131 implementation. Existing copy-mode environment remains unused until reviewed refresh/validation; no new checkout or environment.",
+      "scientific": "Lead owns primary progress/integration after Research documentation handoff; the primary environment remains unused.",
+      "identity": "Lead owns frozen source/schema4883acb on feat/native-endpoint-beliefs for coordinated focused validation. No new checkout/environment; numerical/build/package validation remains pending.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts retained for sequential reuse. Reviewed retirement of two reproducible caches removed 37,876,218 regular-file bytes; candidate verifier removed 2,102,836 temporary export bytes. Required release/failure evidence and durable environments remain. Earlier free-space observations are historical; these file totals do not establish physical filesystem savings.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "normalizer_delivered_endpoint_profile_source_implementation",
+      "status": "normalizer_delivered_endpoint_source_schema_accepted_validation_pending",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Research": "Implement restricted terminal-x beliefs and reference tests for #131 in reused identity checkout.",
-        "Quality": "Review independent ODE/likelihood/prior/resolution/predictive cases and immutable source.",
-        "Platform": "Review cumulative source/validation costs, ingress boundaries and exact operation census.",
-        "Project lead": "Own source and validation admission, integration and progress under existing scoped owner approval."
+        "Research": "Source/reference/count work complete for #131; available for review after progress handoff.",
+        "Quality": "Prepare final source-pinned focused validation runner; retain exact per-node counts and reference diagnostics.",
+        "Platform": "Independently review focused outcome, cumulative resources and identities.",
+        "Project lead": "Coordinate runtime, integration and progress under existing scoped owner approval."
       },
-      "handoff": "PR #128 bounded RA-02/#105 and RA-N01/#106 acceptance remains complete. PR #130/main 620c0f0 and exact candidate now deliver normalizer subunit #129, which is closed. Failed 6f and focused 346 records remain source-specific. RA-N02.a stays in progress; scientific profile, full inference and global study authority/capacity remain unaccepted.",
+      "handoff": "PR #128 bounded RA-02/#105 and RA-N01/#106 acceptance remains complete. PR #130/main 620c0f0 and exact candidate now deliver normalizer subunit #129, which is closed. Failed 6f and focused 346 records remain source-specific. RA-N02.a stays in progress; scientific profile, full inference and global study authority/capacity remain unaccepted. Endpoint source/schema4883acb is accepted; both style failures are preserved, and numerical/build/package/hosted validation remains pending.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Source implementation of #131 is assigned to Research, with Quality and Platform review. Freeze exact code/census/reference error criteria before numerical validation. Scientific profile and finite-resolution acceptance remain unresolved; Laplace stays useful bounded parallel preparation, not a new prerequisite. Existing owner approval remains in force. Full-study capacity/allocation stays closed.",
+      "next_units": "Complete the bounded #131 focused numerical/build/package validation at the reviewed source/schema, then independent outcome review and normal hosted delivery checks. Scientific-profile and finite-resolution acceptance remain unresolved. The Laplace test-only analytic pack can proceed as separately scoped parallel source work, not a prerequisite. Existing owner approval remains in force; full-study capacity/allocation stays closed.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -15332,7 +15332,7 @@
         }
       },
       "next_grid_preparation": {
-        "status": "normalizer_delivered_endpoint_profile_source_implementation_science_unaccepted",
+        "status": "normalizer_delivered_endpoint_source_schema_accepted_science_unaccepted",
         "owner": "Research",
         "independent_reviewers": [
           "Quality",
@@ -15348,7 +15348,7 @@
         ],
         "laplace_sequence": "Analytic/interface preparation may overlap without changing the graph. Comparative Laplace acceptance follows accepted shared scientific definitions and frozen N03 fixtures; first-result sequencing holds inference constant for selector comparison. It is not a mathematical requirement to delay all preparation, and an unvalidated grid is not ground truth.",
         "experiment_execution": "not_started",
-        "assignment_stage": "source_implementation_and_independent_design_review",
+        "assignment_stage": "focused_validation_preparation_source_reference_census_complete",
         "normalizer": {
           "issue": 129,
           "parent_task": "RA-N02.a",
@@ -15449,12 +15449,13 @@
             "Practical CPU/memory/evaluation/output fit and finite validation",
             "Shared accepted scientific definitions and frozen fixtures before comparative audit"
           ],
-          "limits": "Restricted test-only reference domain; no deep-tail coverage, optimizer, inference or N02.b completion."
+          "limits": "Restricted test-only reference domain; no deep-tail coverage, optimizer, inference or N02.b completion.",
+          "source_readiness": "Test-only analytic/reference pack ready for a separately scoped source checkpoint; integer/GCD bounds and runtime fit remain unproved. No native integration or comparative acceptance."
         },
         "profile_resolution_checkpoint": {
           "id": "RA-N02.a.profile-resolution",
           "issue": 131,
-          "status": "source_implementation_assigned",
+          "status": "source_schema_accepted_focused_validation_pending",
           "source_base": "620c0f0bd3c6f2cadc00e0f132c4fc5d93945b17",
           "first_production_checkpoint": "df2cd1e8a727d90a872f93c9258ad355be8880f0",
           "owner": "Research",
@@ -15488,7 +15489,16 @@
               256
             ],
             "negative_grid_size": 1024,
-            "source_derived_counts_pending": true
+            "source_derived_counts_pending": false,
+            "source": "50201d604290cf4af01286d2aad0f724d941944f",
+            "fit_prediction_entries_including_faults": 2390,
+            "candidate_producer_entries": 32,
+            "belief_entries": 32,
+            "reference_series_values": 1452,
+            "reference_position_lookups": 7834,
+            "reference_decimal_exp": 1361,
+            "reference_decimal_ln": 1427,
+            "qualification": "Static expected32 per-node rows and aggregates; actual collection/measurements pending. max_forward_error remains observed diagnostic, never an expected constant."
           },
           "proposed_cumulative_local_envelope": {
             "new_owned_bytes": 67108864,
@@ -15503,7 +15513,8 @@
             "later_free_bytes": 48318382080,
             "failures_and_repeats_count": true,
             "automatic_retry": false,
-            "runtime_admitted": false
+            "runtime_admitted": false,
+            "snapshot_qualification": "Initial proposal and preparation hold retained for history. Current cumulative preparation holds appear separately; final runner must use actual retained accounting, with no reset."
           },
           "effort_engineer_days": [
             2,
@@ -15514,7 +15525,41 @@
           "scientific_budget_rule": "Reference/calibration work reused scientifically retains cumulative cost under approved8CPUh/1GiB; pytest and hosted CI are not a waiver.",
           "parent_status": "in_progress",
           "study_admission": "closed:1168MiB publication floor exceeds1GiB and global allocator unresolved",
-          "laplace": "Parallel only when useful/bounded; no new prerequisite"
+          "laplace": "Parallel only when useful/bounded; no new prerequisite",
+          "source_checkpoint": "4883acb62eb94f58ad6ba5473dd8b04f5db8535a",
+          "source_tree": "01342db56e5a6ce42c2d1c759e6ff5f7ae1dbe89",
+          "source_preparation": {
+            "handwritten_checkpoint": "746ce75186c9f1eaaa9de8af93ed2892c44c98d3",
+            "retained_style_failures": [
+              {
+                "source": "746ce75186c9f1eaaa9de8af93ed2892c44c98d3",
+                "outcome": "Formatter passed; Ruff rejected two E501 diagnostic strings; no schema/build/install/tests."
+              },
+              {
+                "source": "0c57e3f3c2278c730e908f0a6558657a04f7d253",
+                "outcome": "Ruff passed; format-check requested one literal-layout correction; no numerical validation."
+              }
+            ],
+            "ast_identical_repair": "50201d604290cf4af01286d2aad0f724d941944f",
+            "full_base_diff_check": "passed at50201d6; original746 EOF diagnostic retained",
+            "schema": {
+              "bytes": 52271,
+              "sha256": "cb29e2570ed1988c3d33e674ea4c680763e337ec227ec766ecfc3a0a781c9d7c",
+              "status": "independently_accepted",
+              "scope": "Contract construction only; no forward/likelihood/reference tests/build/refresh"
+            },
+            "cumulative_preparation_holds": {
+              "cpu_seconds": 320,
+              "active_wall_seconds": 900,
+              "qualification": "Conservative retained holds through schema generation; not measured execution totals or a budget reset."
+            }
+          },
+          "focused_validation": {
+            "status": "pending",
+            "numerical_outcome": null,
+            "build_package_outcome": null,
+            "hosted_delivery": "pending"
+          }
         }
       }
     },

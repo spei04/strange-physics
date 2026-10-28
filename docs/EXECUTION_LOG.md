@@ -12,15 +12,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Review #131's independent numerical references and immutable source | Check likelihood, prior measure, resolution and future prediction; no study-profile acceptance |
-| Platform | Review #131's cumulative source and validation bounds | Count all work, failures, outputs and later scientific reuse; full-study capacity remains closed |
-| Research | Implement restricted endpoint-x evaluator and reference cases for #131 | Own existing identity checkout; freeze source and exact census before numerical validation |
-| Project lead | Own #131 scope, source/validation admission, integration and progress | Existing owner approval remains active; ordinary review of concrete bounds |
+| Quality | Prepare the final #131 focused validation runner | Exact source/schema, finite census and retained diagnostics; outcome pending |
+| Platform | Independently review the forthcoming #131 outcome | Cumulative resources, identity and failure accounting; full-study capacity remains closed |
+| Research | Source, independent references and exact #131 census complete | Available for review after this progress handoff; no numerical result claimed |
+| Project lead | Coordinate #131 runtime, integration and progress | Existing owner approval remains active; focused and delivery gates remain |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-28 | Research / Quality / Platform / Project lead | #131 source/schema checkpoint 4883acb | Source/reference/census complete; two style failures retained; schema accepted; focused numerical/package validation pending |
 | 2026-10-28 | Research / Quality / Platform / Project lead | RA-N02.a.profile-resolution (#131): restricted endpoint-x beliefs and finite-resolution evidence | Source implementation assigned; independent references and cumulative bounds under review; no numerical validation yet |
 | 2026-10-28 | Research + Quality + Platform + Project lead | PR #130 normalizer delivery and #129 closure | Main 620c0f0/all five jobs/exact candidate accepted; RA-N02.a remains in progress |
 | 2026-10-28 | Research + Quality | Parallel Laplace analytic-case and finite-reference V2 preparation | Design accepted; no source implementation, numerical execution or scientific settings selected |
@@ -1271,3 +1272,11 @@ Before any numerical outcome, ordinary refinement grids were reduced to 16/64/25
 The proposed cumulative local validation envelope is 64 MiB of new owned output (including relevant source/Git/build/copy growth), 1,200 CPU-seconds and 3,600 active-command wall-seconds across setup, validation, retained failures and any explicitly reviewed repair remainder. An initial conservative preparation hold of 60 CPU-seconds / 300 active-wall-seconds leaves 1,140 / 3,300; this is not measured timing. Keep 32 MiB next-command headroom and 50/45 GiB start/later free-space floors. Human/agent design time and hosted-CI waiting are not active-command wall time. Exact runtime admission follows source/census review; no automatic retry or reset is granted.
 
 Provisional effort is 2–4 engineer-days across implementation, independent review, finite validation and delivery, with low confidence until source and timings exist. This is a subunit estimate, not an added top-level task or calendar forecast. Hosted CI is recorded separately and must pass unchanged checks. Any reference/calibration evidence reused scientifically retains its cumulative cost under the approved 8 CPU-core-hour / 1 GiB limits. The 1,168 MiB publication floor and global-allocation gap still block the full study. Laplace preparation remains parallel when useful and bounded; it adds no prerequisite. Parent RA-N02.a remains in progress.
+
+## 2026-10-27 — Endpoint source and schema accepted; focused validation pending
+
+Checkpoint 4883acb (tree 01342db5) combines the independently reviewed endpoint implementation/reference tests with the generated 52,271-byte schema, SHA256 cb29e2570ed1988c3d33e674ea4c680763e337ec227ec766ecfc3a0a781c9d7c. Schema generation was a bounded contract-only command; it ran no scientific forward, likelihood, reference test, build or package refresh. The generated artifact and source-only scope received independent review.
+
+The two earlier style phases remain failed records: 746ce75 formatted successfully but Ruff rejected two long diagnostic strings; 0c57e3f passed Ruff but format-check requested one literal-layout correction. Successor 50201d6 preserves all five Python ASTs relative to 746ce75 and passes the full base diff check. These source repairs changed no numerical formula, tolerance, diagnostic value or case count; they do not stand in for the pending final checks.
+
+The exact proposed collection has 32 cases, with 32 belief and candidate-producer entries, 2,415 requested candidate nodes, 2,390 fit predictor entries including two injected faults, 1,344 future predictions and 22 normalizations. Independent reference work is bounded and counted separately. These are static expectations, not observed results. Quality prepares the final runner; Platform reviews the eventual outcome; Research's source/reference/count work is complete; Lead owns the coordinated runtime and integration. Mandatory numerical/build/package and PR/main checks remain pending. The scientific profile, full-study capacity gate and task/forecast/cap boundaries are unchanged. The Laplace test-only analytic pack is ready for a separately scoped source checkpoint in parallel, without becoming a prerequisite or a scientific-profile acceptance.

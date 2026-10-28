@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: The finite-log-weight normalizer (#129) is delivered through PR #130/main 620c0f0 and its independently accepted unpublished candidate. All five main jobs passed, including 4,542 tests on each Python runtime. RA-N02.a remains in progress; its scientific profile is unaccepted. Research is implementing the restricted endpoint-x belief/resolution checkpoint (#131), with independent Quality and Platform review. Numerical validation awaits immutable source/census review; the scientific profile remains unaccepted and no study has run. [Delivery and limits](EXECUTION_LOG.md#2026-10-27--endpoint-x-belief-and-resolution-checkpoint-assigned).
+Status: The finite-log-weight normalizer (#129) remains delivered through PR #130/main 620c0f0. The restricted endpoint-x checkpoint (#131) now has independently reviewed source and an accepted generated schema at 4883acb. Its 32-case source/reference census is complete; numerical, build/package and hosted delivery validation remain pending. Both earlier style-check failures are retained, and their fixes preserve the Python ASTs. RA-N02.a remains in progress, the scientific profile is unaccepted, and full-study admission remains closed. [Current evidence and limits](EXECUTION_LOG.md#2026-10-27--endpoint-source-and-schema-accepted-focused-validation-pending).
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Review #131's independent numerical references and immutable source |
-| Platform | Review #131's cumulative source and validation bounds |
-| Research | Implement restricted endpoint-x evaluator and reference cases for #131 |
-| Project lead | Own #131 scope, source/validation admission, integration and progress |
+| Quality | Prepare the final #131 focused validation runner |
+| Platform | Independently review the forthcoming #131 outcome |
+| Research | Source/reference/count work complete; available for review |
+| Project lead | Coordinate #131 runtime, integration and progress |
 
-The two existing cloud checkouts remain for sequential reuse. Lead owns integration and the primary checkout; Research owns the identity checkout on feat/native-endpoint-beliefs, based on accepted main 620c0f0. No new environment was created. Exact 346 focused evidence and the earlier 6f failure remain retained; accepted main/candidate verification confirms 94 package files and both unchanged author archives. Research owns the existing identity checkout for #131 source implementation. Exact source/census and ordinary Lead validation review precede numerical work; full-study admission remains closed.
+The two existing cloud checkouts remain for sequential reuse. Lead owns the frozen identity checkout for coordinated #131 validation and resumes primary progress/integration after Research's documentation handoff. No new environment was created. Source/schema checkpoint 4883acb is accepted; the two prior style-check failures remain retained, and repairs through 50201d6 preserve the Python ASTs. The pending numerical/build/package run must establish its own exact installed identity and outcomes. Earlier normalizer delivery evidence remains source-specific; full-study admission stays closed.
 
 The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
 
