@@ -2,13 +2,26 @@
 
 from __future__ import annotations
 
+import hashlib
 import math
+import os
+from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
 
 from examples import bounded_scientific_demo as demo
 from examples.bounded_scientific_demo import _target_met, _write
+
+
+@pytest.fixture(autouse=True)
+def restore_process_umask() -> Iterator[None]:
+    original = os.umask(0o077)
+    os.umask(original)
+    try:
+        yield
+    finally:
+        os.umask(original)
 
 
 @pytest.mark.parametrize(
@@ -82,3 +95,39 @@ def test_cli_failure_retains_partial_run_and_stops(
     assert not (output / "command-1.json").exists()
     assert not (output / "belief").exists()
     assert not (output / "completion.json").exists()
+
+
+def test_installed_identity_includes_typing_marker(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    source = tmp_path / "source"
+    source.mkdir()
+    (source / "uv.lock").write_bytes(b"test lock")
+    environment = tmp_path / "environment"
+    package = environment / "strange_physics"
+    package.mkdir(parents=True)
+    files = {"__init__.py": b"", "py.typed": b""}
+    entries = []
+    for name, data in files.items():
+        (package / name).write_bytes(data)
+        blob = hashlib.sha1(
+            b"blob " + str(len(data)).encode() + b"\0" + data, usedforsecurity=False
+        ).hexdigest()
+        entries.append(f"100644 blob {blob}\tsrc/strange_physics/{name}")
+
+    def git(*args: str) -> str:
+        if args[0] == "rev-parse":
+            return "a" * 40 + "\n" + "b" * 40 + "\n"
+        if args[0] == "status":
+            return ""
+        assert args == ("ls-tree", "-r", "HEAD", "src/strange_physics")
+        return "\n".join(entries) + "\n"
+
+    monkeypatch.setattr(demo, "SOURCE_ROOT", source)
+    monkeypatch.setattr(demo, "_git", git)
+    monkeypatch.setattr(demo.strange_physics, "__file__", str(package / "__init__.py"))
+    monkeypatch.setattr(demo.sys, "prefix", str(environment))
+    result = demo._identity("a" * 40)
+    assert result["installed_package_sha256"] == {
+        name: hashlib.sha256(data).hexdigest() for name, data in files.items()
+    }

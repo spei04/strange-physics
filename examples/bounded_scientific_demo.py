@@ -76,7 +76,7 @@ def _git(*args: str) -> str:
 
 
 def _identity(expected_commit: str) -> dict[str, object]:
-    """Bind actual installed Python files to this clean source, without installation."""
+    """Bind actual installed package files to this clean source, without installation."""
     head, tree = _git("rev-parse", "HEAD", "HEAD^{tree}").splitlines()
     if head != expected_commit or _git("status", "--porcelain"):
         raise ValueError("demo_source_mismatch_or_dirty")
@@ -108,7 +108,7 @@ def _identity(expected_commit: str) -> dict[str, object]:
         if blob != expected:
             raise ValueError("demo_installed_package_mismatch")
         hashes[str(relative)] = hashlib.sha256(data).hexdigest()
-    if {p.name for p in package.iterdir() if p.is_file() and p.suffix == ".py"} != set(hashes):
+    if {p.name for p in package.iterdir() if p.is_file()} != set(hashes):
         raise ValueError("demo_installed_package_inventory")
     interpreter = Path(sys.executable).resolve()
     if interpreter.stat().st_size > 32 * MIB:
@@ -244,7 +244,8 @@ def _run(output: Path, cells: int, discrepancy: float, source_commit: str) -> in
     _json(output / "summary.json", {
         "claim": "Fixed development walkthrough, not a study or accepted belief calibration.",
         "observation_sha256": message_sha256(observations),
-        "engine_fingerprint": observations.engine_version, "purchased_records": 4,
+        "engine_fingerprint": observations.engine_fingerprint,
+        "engine_version": observations.engine_version, "purchased_records": 4,
         "fitted_coefficient": fit.model.linear, "fitted_model_sha256": message_sha256(fit.model),
         "scientific_target_met": passed, "maximum_position_rmse": score.maximum_position_rmse,
         "probe_scores": [p.model_dump(mode="json") for p in score.probes],

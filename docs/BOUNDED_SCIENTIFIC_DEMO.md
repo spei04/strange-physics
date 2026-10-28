@@ -79,8 +79,9 @@ scientific/diagnostic outcome; exit 2 retains a stopped partial run where possib
 The older installed-wheel I1 record at source 1bec364 reported seed-7 fitted
 k=0.6750572721112501 and worst held-out RMSE=3.154199886178306e-8, with four
 purchases and all 24 probes passing. Those are historical observations,
-not promised output of this new example. Main 51356f2 includes the complete
-CLI regression, but this new combined example has not yet been executed.
+not promised output of this new example. Main 51356f2 includes the existing
+I1 workflow regression. The new CLI error-path repairs and this combined
+example await validation at their integrated source commit.
 
 The terminal-x component's accepted software tests include exact finite-sum
 references and unexcited continuous predictive moments. They also show a
@@ -103,7 +104,7 @@ perform their own native binding plus the endpoint's explicit binding; the
 final raw endpoint binder does not rerun them. Three read-only Git processes
 check source identity; there are no product child processes.
 
-Eight small guard tests are nonnumerical and do not run this workflow.
+Nine small guard tests are nonnumerical and do not run this workflow.
 The combined example requires its own finite one-run validation. It is outside
 the measured 12-row study/publisher path. Existing 36-episode / 432-purchase /
 8 CPU-hour / 1 GiB / zero-provider study limits stay unchanged; a future study
