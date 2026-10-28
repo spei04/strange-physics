@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Primary reused for this reviewed documentation checkpoint after candidate consumers released; existing environment remains unused.",
-      "identity": "Reused after delivery at byte-identical main e587f47 on feat/native-belief-contracts; Research owns contract design.92 installed package files and locked dependencies unchanged; no refresh.",
+      "scientific": "Primary six-document reconciliation completed and released by Research to Lead; primary environment unused.",
+      "identity": "Lead owns source integration after focused346f3fe validation;94 package/source/archive/installed files matched and post-test environment equals post-install in the sealed outcome. Later API documentation is separately reviewed; no runtime change is inferred.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts retained for reuse; no checkout created or removed. Latest owner census: 61704564736 free bytes; 235 inaccessible/raced proc cwd entries; no observed checkout cwd consumers. Candidate verifier removed2071460 bytes of its temporary exports; no filesystem savings claim inferred from concurrent free-space changes.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "bounded_native_parents_accepted_grid_contracts_ready",
+      "status": "bounded_native_parents_accepted_normalizer_focused_accepted_delivery_pending",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Candidate verification complete; independent N02.a contract design review from immutable Git, no mutable identity/env access.",
-        "Platform": "Independent delivery/parent review complete; next contract review; numerical proposal remains unaccepted.",
-        "Research": "Design the smallest parameterized RA-N02.a contract unit in reused identity; no implementation/runtime admission yet and numerical choices remain unaccepted.",
-        "Project lead": "Bounded parent acceptance, consistent progress publication and dependency/cap enforcement."
+        "Quality": "Normalizer source and numerical outcome independently accepted; available for final review.",
+        "Platform": "Normalizer resource/package outcome independently accepted; hosted delivery pending.",
+        "Research": "Six-document progress reconciliation complete; primary released to Lead, available for final review.",
+        "Project lead": "Own source integration and primary progress; hosted checks and delivery remain pending."
       },
-      "handoff": "Caller recovery now has passing evidence across two source-specific runs: the unknown/protected-retry case passed at ca9ee869, and the corrected lost-acknowledgement case passed at 1b43838 in 14.14 seconds. The initial four-call run remains recorded as one pass and one test-assertion failure; it is not relabelled a complete pass. Production package bytes are unchanged. The public handoff API and supported recovery limits are documented. Quality owns the final ten local static/schema/security/package checks and candidate verification; Platform reviews the final evidence and progress; Research has completed the targeted caller cases; Lead owns source composition and GitHub delivery. Hosted full suites on Python 3.12/3.14, PR/main/candidate verification and explicit parent acceptance remain pending. Parents #105/#106 stay open. Full-study authority/capacity, global caps and grid-first/Laplace-later sequencing are unchanged.",
+      "handoff": "PR128/main e587f47 and exact candidate are delivered; RA-02/#105 and RA-N01/#106 are accepted for the bounded native implementation. RA-N02.a now proceeds through the bounded normalizer subunit. Initial6f validation stopped at mypy before build/install/tests; repaired346 passed all eight focused commands and40 tests in0.81 pytest seconds. Full inference, scientific profile, global study authority/capacity and hosted normalizer delivery remain pending.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "RA-N02.a parameterized contracts follow accepted bounded parents. Justify and review numerical profile before freeze or measured execution; current proposal is unaccepted. Global multi-cell authority/cadence/resource fit precede RA-07.b after algorithms. No cap, graph or estimate change.",
+      "next_units": "Complete hosted checks and delivery after independently accepted focused normalizer validation. Continue RA-N02.a only within accepted subunit scope; scientific nodes/prior/likelihood/covariance/discrepancy/tolerances remain unaccepted. Global multi-cell authority/cadence/resource fit precede RA-07.b. No cap, graph or estimate change.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -15332,7 +15332,7 @@
         }
       },
       "next_grid_preparation": {
-        "status": "parameterized_contracts_ready_numerical_profile_unaccepted",
+        "status": "normalizer_subunit_in_progress_scientific_profile_unaccepted",
         "owner": "Research",
         "independent_reviewers": [
           "Quality",
@@ -15348,7 +15348,62 @@
         ],
         "laplace_sequence": "Comparative Laplace acceptance follows frozen N03 fixtures; shared interface and analytic unit design may overlap stable contracts. No graph change.",
         "experiment_execution": "not_started",
-        "assignment_stage": "read_only_contract_design_and_independent_review"
+        "assignment_stage": "normalizer_focused_accepted_hosted_delivery_pending",
+        "normalizer": {
+          "issue": 129,
+          "parent_task": "RA-N02.a",
+          "parent_status": "in_progress",
+          "status": "focused_validation_independently_accepted_delivery_pending",
+          "source": "346f3fe19718e1f56a8695685fc9545764c15d92",
+          "tree": "762a88b0e5d8624ea44b0fc663f1e9eee7d745ea",
+          "scope": "Bounded pure finite-log-weight normalization; no scientific profile, candidate authentication, MAP, inference or study claim.",
+          "failed_validation": {
+            "source": "6f79454d7aefd9c48236733ef3caa5b3a4c70120",
+            "stage": "mypy",
+            "errors": 20,
+            "ruff_and_format_passed": true,
+            "build_install_tests_started": false,
+            "source_site_unchanged": true,
+            "index_sha256": "ccef6fb38cfea25cff043f2aa8714940086b541ab86a6646e88ca96c6c3e0a4a"
+          },
+          "repair": "Distinct metadata/count loop variables; direct standard-library monkeypatch targets. Numerical algorithm, schema and test census unchanged.",
+          "planned_focused_census": {
+            "cases": 40,
+            "normalizer_calls": 37,
+            "decimal_vectors": 11,
+            "scientific_forward_calls": 0,
+            "public_measured_calls": 0
+          },
+          "result": {
+            "commands_passed": 8,
+            "tests_passed": 40,
+            "pytest_seconds": 0.81,
+            "passing_phases": 120,
+            "normalizer_calls": 37,
+            "decimal_vectors": 11,
+            "decimal_precision": 700,
+            "maximum_observed_centered_log_normalizer_absolute_error": "4.047676254554e-16",
+            "maximum_observed_normalized_log_absolute_error": "4.047676254554e-16",
+            "centered_log_normalizer_absolute_tolerance": "1e-12",
+            "normalized_log_tolerance": "1e-12 + 4 reference ULPs",
+            "positive_absorbed_tail_references": {
+              "log_weight_minus_500": "approximately7.12457641e-218",
+              "log_weight_minus_1000": "approximately5.07595890e-435"
+            },
+            "schema_checks": 1537,
+            "source_archive_installed_files": 94,
+            "post_test_environment_equals_post_install": true,
+            "scientific_forward_likelihood_simulation_public_calls": 0,
+            "product_children": 0,
+            "index_sha256": "59516084cd0b8e2989bfbca7aa730fa0f40efea2b63e5f359f0686bebecbd245",
+            "claim_limit": "Observed finite-vector software checks only; no scientific calibration, MAP, inference, full study, universal error or timing claim."
+          },
+          "delivery": "pending",
+          "peer_reviews": {
+            "Quality": "d0a7111b5c0eaf01e1466586809c79300cf15efdf95fd1030ecd343acda9c35e",
+            "Platform": "90b029968031b5621662625fe77b67aead09aa6dccdb289113edfb29220ad436"
+          }
+        }
       }
     },
     "certificate_trust_update": {
@@ -16655,7 +16710,7 @@
         "confidence": "low",
         "owner": "Research; independent Quality and Platform review",
         "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates.",
-        "status": "ready_for_parameterized_contracts",
+        "status": "in_progress",
         "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
         "role": "RS1",
         "readiness_scope": "RA-02 and RA-N01 accepted for approved bounded native implementation. Parameterized contract work is ready; numeric grid/likelihood/tolerances remain unaccepted. No measured run or freeze implied."

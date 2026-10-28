@@ -12,15 +12,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Candidate verification complete; independent N02.a contract design review | Immutable Git only; no numerical runtime assigned |
-| Platform | Independent delivery and bounded parent review complete; next N02.a review | Grid proposal challenged; numerical settings remain unaccepted |
-| Research | Design the smallest parameterized finite-grid belief contract unit | Reused identity at e587f47; no source implementation or numerical run admitted yet |
-| Project lead | Record bounded parent acceptance and publish consistent progress | Two cloud checkouts retained for reuse; full-study admission remains separate |
+| Quality | Normalizer source and numerical outcome review complete | Focused evidence accepted; no scientific-profile acceptance |
+| Platform | Normalizer input/resource/package review complete | Focused evidence accepted; hosted delivery pending |
+| Research | Progress reconciliation complete; available for final review | Primary released to Lead; RA-N02.a remains in progress |
+| Project lead | Own primary progress, hosted verification and integration | Focused outcome independently accepted; delivery pending |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-27 | Research + Quality + Platform + Project lead | Bounded finite-log-weight normalizer #129 | 6f type-check failure retained; narrow 346 repair passed eight focused commands and 40 tests, independently accepted |
 | 2026-10-27 | Research + Quality | Smallest N02.a contract design and independent interface review | Existing identity reused at e587f47; numerical settings unaccepted; no runtime |
 | 2026-10-27 | Quality + Platform + Project lead | PR128/main e587f47 candidate verification and bounded parent acceptance | Delivered; RA-02/N01 accepted; next Research contract slice, numerical profile unaccepted |
 | 2026-10-27 | Research + Quality + Project lead | Caller unknown/protected retry and committed-seal lost acknowledgement | First case passed at ca9; corrected second case passed at 1b43838; original failed assertion retained |
@@ -1231,3 +1232,14 @@ Grid-first sequencing aims to hold inference constant while comparing selectors,
 Full-study global authority/allocation, resource fit and admission remain open before RA-07.b: the retained 36-publication reservation floor alone is 1,168 MiB, above the 1 GiB study cap. Caps remain 36 episodes/432 purchases, 8 CPU-core-hours, 1 GiB and zero providers/provisioning. No study has run. Both existing cloud checkouts are retained for sequential reuse; no new checkout or environment was created. The reuse census observed 61,704,564,736 free bytes and no visible checkout cwd consumers (235 inaccessible/raced process entries). Candidate verification removed 2,071,460 bytes of its own temporary exports; both durable checkout environments remain independently owned.
 
 Private evidence remains on the cloud with owner-readable records and a 2026-11-26 diagnostic review date. Candidate review and acceptance hashes above identify the retained records without publishing logs or credentials.
+
+
+## 2026-10-27 — Finite log-weight normalizer validation
+
+The independently reviewed normalizer subunit (#129) adds bounded log-only normalization with explicit exact-zero and upstream-failure states, full-input binding, ordered diagnostics and no partial success. It selects no grid, prior, likelihood, covariance, discrepancy scale or scientific tolerance. Opaque correlation labels and structural validation do not authenticate candidate production.
+
+The first validation at 6f79454 passed Ruff/format and stopped at 20 mypy errors before build, install or tests. Source and installed identities remained unchanged. Repair 346f3fe only separates string/count loop variables and points test monkeypatches at the directly imported standard-library modules. Static AST equivalence preserves numerical behavior, schema bytes and the declared 40 cases / 37 normalizer calls / 11 Decimal reference vectors. The original failed result is retained.
+
+The separately admitted focused validation at 346f3fe passed all eight commands: Ruff/format, strict mypy for three files, offline build/archive validation and project refresh, 1,537 external schema checks, and 40 tests in 0.81 pytest seconds. The 120 passing phases retain exactly 37 normalizer calls and 11 independent 700-digit Decimal vectors. All 94 package files match source, wheel, sdist and installed bytes; the post-test environment matches post-install. No scientific forward model, likelihood, simulator, public measured operation or product child ran.
+
+Across those vectors, the largest absolute error for both the centered log normalizer and normalized logs was about 4.048e-16, below the predeclared software criteria of 1e-12 and 1e-12 plus four reference ULPs respectively. For [0,-500] and [0,-1000], the positive Decimal centered-log sums were about 7.125e-218 and 5.076e-435; the binary64 centered log normalizer was zero in both cases while finite normalized logs were retained. These are observed software-reference checks, not a scientific calibration or universal rounding bound. Independent outcome review is accepted; hosted checks and delivery remain pending. RA-N02.a remains in progress and the scientific profile remains unaccepted. Existing study caps, task/dependency graphs, forecasts and parent acceptance are unchanged.
