@@ -27,7 +27,12 @@ from strange_physics.native_scoring_contracts import (
     parse_native_score_result,
     parse_native_scoring_input,
 )
-from strange_physics.native_stage_execution_contracts import StageOperation
+from strange_physics.native_stage_execution_contracts import (
+    StageOperation,
+    parse_comparison_prediction_input,
+    parse_comparison_preparation_input,
+    parse_comparison_score_input,
+)
 from strange_physics.publication_store import raw
 from strange_physics.research_contracts import message_sha256
 
@@ -35,7 +40,19 @@ type StageInput = NativeEvaluationInput | NativePredictionInput | NativeScoringI
 type StageResult = NativePreparationResult | NativePredictionResult | NativeScoreResult
 
 
-def parse_stage_input(operation: StageOperation, data: bytes) -> StageInput:
+def parse_stage_input(
+    operation: StageOperation, data: bytes, *, comparison: bool = False
+) -> StageInput:
+    if comparison:
+        # The whole wrapper has its own canonical/raw bound. These inner models
+        # retain the producer's existing bounds; reconstruction never writes a copy.
+        if operation == "preparation":
+            return parse_comparison_preparation_input(data).context
+        if operation == "prediction":
+            return parse_comparison_prediction_input(data).prediction
+        if operation == "scoring":
+            return parse_comparison_score_input(data).scoring
+        raise ValueError("Unknown fixed native stage")
     if operation == "preparation":
         return parse_native_evaluation_input(data)
     if operation == "prediction":
@@ -61,8 +78,10 @@ def parse_stage_result(operation: StageOperation, data: bytes) -> StageResult:
     raise ValueError("Unknown fixed native stage")
 
 
-def produce_stage(operation: StageOperation, data: bytes, attempt_id: str) -> bytes:
-    actual = parse_stage_input(operation, data)
+def produce_stage(
+    operation: StageOperation, data: bytes, attempt_id: str, *, comparison: bool = False
+) -> bytes:
+    actual = parse_stage_input(operation, data, comparison=comparison)
     if isinstance(actual, NativeEvaluationInput):
         return raw(prepare_native_evaluation(actual, attempt_id=attempt_id))
     if isinstance(actual, NativePredictionInput):

@@ -48,6 +48,19 @@ def main() -> None:
             raise ValueError(f"Unexpected schema result for {reference}: {errors[:1]}")
         count += 1
 
+    finite_weights = json.loads((ROOT / "finite-log-weight.examples.json").read_text())
+    for name, fixture in finite_weights["valid"].items():
+        check(f"finite-log-weight.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in finite_weights[group]:
+            value = copy.deepcopy(finite_weights["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"finite-log-weight.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     native = json.loads((ROOT / "native-spring.examples.json").read_text())
     for name, fixture in native["valid"].items():
         check(f"native-spring.schema.json#/$defs/{name}", fixture)

@@ -105,9 +105,14 @@ class _ReleaseProvenance(Message):
 
 
 def _installed_bytes(path: Path, limit: int, *, system: bool = False) -> bytes:
-    for p in (path, *path.parents):
-        if p.is_symlink():
+    ancestor = path
+    while True:
+        if ancestor.is_symlink():
             raise StudyLedgerError("installed_identity_path")
+        parent = ancestor.parent
+        if parent == ancestor:
+            break
+        ancestor = parent
     fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
     try:
         s = os.fstat(fd)
@@ -137,6 +142,25 @@ def _installed_bytes(path: Path, limit: int, *, system: bool = False) -> bytes:
         return b"".join(chunks)
     finally:
         os.close(fd)
+
+
+def _dependency_names(site: Path) -> set[str]:
+    """Enumerate fresh membership without constructing each path's ancestors."""
+    depth = len(site.parts)
+    names: set[str] = set()
+    for path in site.rglob("*"):
+        if not path.is_file():
+            continue
+        parts = path.parts
+        if "__pycache__" in parts:
+            continue
+        # rglob yields lexical descendants. Only the actual project subtree is
+        # excluded; another dependency may itself contain a strange_physics dir.
+        relative = parts[depth:]
+        if len(relative) > 1 and relative[0] == "strange_physics":
+            continue
+        names.add(os.sep.join(relative))
+    return names
 
 
 def verify_native_installation(build: TrustedInstallation) -> ObservedInstallation:
@@ -235,11 +259,7 @@ def verify_native_installation(build: TrustedInstallation) -> ObservedInstallati
                 f.sha256,
             ) or data != installed:
                 raise StudyLedgerError("installed_identity_package")
-    actual_dependencies = {
-        str(p.relative_to(site))
-        for p in site.rglob("*")
-        if p.is_file() and "__pycache__" not in p.parts and package not in p.parents
-    }
+    actual_dependencies = _dependency_names(site)
     if actual_dependencies != {f.path for f in build.dependency_files}:
         raise StudyLedgerError("installed_identity_dependency_set")
     for f in build.dependency_files:

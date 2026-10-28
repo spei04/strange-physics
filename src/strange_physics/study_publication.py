@@ -13,6 +13,7 @@ from strange_physics.native_classical import validate_classical_diagnostic_resul
 from strange_physics.native_classical_contracts import (
     ClassicalDiagnosticConfig,
     ClassicalDiagnosticInput,
+    parse_classical_diagnostic_input,
     parse_classical_diagnostic_result,
 )
 from strange_physics.native_scoring_contracts import parse_native_scoring_input
@@ -106,16 +107,22 @@ def reconcile_study_publication(
     scoring_result_raw: bytes,
     diagnostic_attempt_id: str | None,
     diagnostic_result_raw: bytes | None,
+    diagnostic_input_raw: bytes | None = None,
 ) -> StudyPublicationEvidence:
     """Bind actual closed native purchases and a separate classical diagnostic.
 
     A missing/unresolved diagnostic retains an incomplete primary result and
     accounting holds. No caller readiness flag or numerical producer is used.
-    Earlier unavailable selection/preparation remains outside this boundary.
+    Earlier unavailable native selection/preparation remains outside this boundary.
+    An explicit original diagnostic input may independently omit native selection.
     """
     supplied = (ledger_raw, scoring_input_raw, scoring_result_raw, *materials.values())
     if diagnostic_result_raw is not None:
         supplied += (diagnostic_result_raw,)
+    if diagnostic_input_raw is not None:
+        if diagnostic_result_raw is None or diagnostic_attempt_id is None:
+            raise StudyLedgerError("diagnostic_input_witness_missing")
+        supplied += (diagnostic_input_raw,)
     if any(not isinstance(raw, bytes) for raw in supplied) or sum(map(len, supplied)) > (
         MAX_PUBLICATION_INPUT_BYTES
     ):
@@ -139,9 +146,23 @@ def reconcile_study_publication(
         scoring_result_raw=scoring_result_raw,
     )
     actual_native = parse_native_scoring_input(scoring_input_raw)
-    actual = ClassicalDiagnosticInput(
+    expected = ClassicalDiagnosticInput(
         context=actual_native.context, config=config, world=actual_native.world
     )
+    actual = expected
+    if diagnostic_input_raw is not None:
+        actual = parse_classical_diagnostic_input(diagnostic_input_raw)
+        if actual.context.selected is None:
+            # Classical evaluation may omit the native selection, but shares every
+            # other original context field, frozen configuration and private world.
+            expected = ClassicalDiagnosticInput(
+                context=actual_native.context.model_copy(update={"selected": None}),
+                config=config,
+                world=actual_native.world,
+            )
+        # Model equality erases signed-zero distinctions; canonical identity does not.
+        if message_sha256(actual) != message_sha256(expected):
+            raise StudyLedgerError("diagnostic_input_mismatch")
     if message_sha256(config.scoring_policy) != message_sha256(actual.context.policy):
         raise StudyLedgerError("diagnostic_policy_mismatch")
     snapshots = study_cell_attempts(ledger, cell_id)
@@ -232,6 +253,7 @@ def propose_study_publication(
     scoring_result_raw: bytes,
     diagnostic_attempt_id: str | None,
     diagnostic_result_raw: bytes | None,
+    diagnostic_input_raw: bytes | None = None,
     original_ledger_raw: bytes | None = None,
     original_evidence_raw: bytes | None = None,
 ) -> StudyPublicationProposal:
@@ -259,6 +281,7 @@ def propose_study_publication(
                 scoring_result_raw=scoring_result_raw,
                 diagnostic_attempt_id=diagnostic_attempt_id,
                 diagnostic_result_raw=diagnostic_result_raw,
+                diagnostic_input_raw=diagnostic_input_raw,
             ),
             ledger_identity=lambda evidence: evidence.native.ledger_identity,
             outcome=lambda evidence: evidence.outcome,
