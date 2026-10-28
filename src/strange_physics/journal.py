@@ -101,12 +101,19 @@ class Journal:
                 except BaseException:
                     self._db.close()
                     raise
-        elif (
-            self._db.execute("PRAGMA application_id").fetchone()[0] != APPLICATION_ID
-            or self._db.execute("PRAGMA user_version").fetchone()[0] != 1
-        ):
-            self.close()
-            raise IncompatibleRun("unrecognized journal format")
+        else:
+            try:
+                if (
+                    self._db.execute("PRAGMA application_id").fetchone()[0] != APPLICATION_ID
+                    or self._db.execute("PRAGMA user_version").fetchone()[0] != 1
+                ):
+                    raise IncompatibleRun("unrecognized journal format")
+            except BaseException as error:
+                try:
+                    self.close()
+                except BaseException:
+                    error.add_note("Run journal close failed after its format check failed.")
+                raise
         os.chmod(path, 0o600)
         self._db.execute("PRAGMA synchronous = FULL")
 

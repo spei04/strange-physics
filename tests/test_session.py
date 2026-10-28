@@ -115,6 +115,36 @@ def test_an_unrelated_database_is_not_modified(tmp_path: Path) -> None:
     assert path.read_bytes() == before
 
 
+def test_malformed_journal_closes_its_connection_on_open_failure(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = tmp_path / "malformed.sqlite"
+    original = b"not a SQLite database"
+    path.write_bytes(original)
+    connections: list[sqlite3.Connection] = []
+    original_connect = sqlite3.connect
+
+    def track_connection(
+        database: Path, *, isolation_level: None, timeout: float
+    ) -> sqlite3.Connection:
+        connection = original_connect(database, isolation_level=isolation_level, timeout=timeout)
+        connections.append(connection)
+        return connection
+
+    monkeypatch.setattr(sqlite3, "connect", track_connection)
+    try:
+        with pytest.raises(sqlite3.DatabaseError) as caught:
+            LocalSession.open(path)
+        assert caught.value.sqlite_errorcode == sqlite3.SQLITE_NOTADB
+        assert len(connections) == 1
+        with pytest.raises(sqlite3.ProgrammingError, match="closed"):
+            connections[0].execute("SELECT 1")
+        assert path.read_bytes() == original
+    finally:
+        for connection in connections:
+            connection.close()
+
+
 def test_reserved_experiment_survives_crash_before_simulation(
     tmp_path: Path,
     world: WorldDefinition,

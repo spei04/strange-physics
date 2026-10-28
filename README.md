@@ -24,6 +24,9 @@ The bounded local spring workflow also fits a coefficient from purchased
 observations, predicts 24 fixed unseen conditions and scores them independently.
 It retains failures and checks every probe against a development target. See the
 [SDK/CLI workflow and evidence](docs/LOCAL_SCIENTIFIC_WORKFLOW.md).
+The [bounded scientific demo](docs/BOUNDED_SCIENTIFIC_DEMO.md) connects those
+stages to an inspectable report and a separate, illustrative terminal-position
+belief diagnostic over the same observations.
 
 **This is not yet a production service or a scored discovery benchmark.**
 Adaptive investigation, LLM integration, hosted isolation/authentication, the
