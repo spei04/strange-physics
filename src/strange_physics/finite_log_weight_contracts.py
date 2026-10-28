@@ -91,7 +91,7 @@ class FiniteLogWeightResult(Message):
     @model_validator(mode="after")
     def complete_outcome(self) -> Self:
         for indices in (self.upstream_failed_indices, self.exp_underflow_indices):
-            if tuple(sorted(set(indices))) != indices or (
+            if any(a >= b for a, b in zip(indices, indices[1:], strict=False)) or (
                 indices and indices[-1] >= self.input_count
             ):
                 raise ValueError("Diagnostic indices must be ordered, unique and in range")
@@ -168,10 +168,15 @@ def validate_finite_log_weight_input(actual: FiniteLogWeightInput) -> FiniteLogW
     This covers ordinary instances and Pydantic construction/copy bypasses. It is
     not a sandbox for arbitrary hostile Python objects or monkeypatched classes.
     """
-    if type(actual) is not FiniteLogWeightInput or set(actual.__dict__) != {
-        "schema_version",
-        "entries",
-    }:
+    if (
+        type(actual) is not FiniteLogWeightInput
+        or len(actual.__dict__) != 2
+        or set(actual.__dict__)
+        != {
+            "schema_version",
+            "entries",
+        }
+    ):
         raise ValueError("Expected a complete finite log-weight input")
     if (
         type(actual.schema_version) is not str
@@ -181,11 +186,16 @@ def validate_finite_log_weight_input(actual: FiniteLogWeightInput) -> FiniteLogW
     ):
         raise ValueError("Typed input exceeds its structural bounds")
     for entry in actual.entries:
-        if type(entry) is not FiniteLogWeight or set(entry.__dict__) != {
-            "item_sha256",
-            "kind",
-            "log_weight",
-        }:
+        if (
+            type(entry) is not FiniteLogWeight
+            or len(entry.__dict__) != 3
+            or set(entry.__dict__)
+            != {
+                "item_sha256",
+                "kind",
+                "log_weight",
+            }
+        ):
             raise ValueError("Expected complete typed log-weight entries")
         if (
             type(entry.item_sha256) is not str
@@ -201,11 +211,104 @@ def validate_finite_log_weight_input(actual: FiniteLogWeightInput) -> FiniteLogW
     return FiniteLogWeightInput.model_validate(actual.model_dump(mode="python"))
 
 
+def validate_finite_log_weight_result(result: FiniteLogWeightResult) -> FiniteLogWeightResult:
+    """Bound supported typed result instances before serialization and revalidation."""
+    fields = (
+        "schema_version",
+        "algorithm",
+        "input_sha256",
+        "status",
+        "input_count",
+        "finite_count",
+        "exact_zero_count",
+        "upstream_failed_indices",
+        "exp_underflow_indices",
+        "exp_evaluations",
+        "fsum_evaluations",
+        "log_evaluations",
+        "failure_stage",
+        "failure_index",
+        "normalizer",
+        "entries",
+    )
+    if (
+        type(result) is not FiniteLogWeightResult
+        or len(result.__dict__) != len(fields)
+        or set(result.__dict__) != set(fields)
+    ):
+        raise ValueError("Expected a complete finite log-weight result")
+    for value in (result.schema_version, result.algorithm, result.input_sha256, result.status):
+        if type(value) is not str or len(value) > 128:
+            raise ValueError("Typed result metadata exceeds its structural bounds")
+    for value in (
+        result.input_count,
+        result.finite_count,
+        result.exact_zero_count,
+        result.exp_evaluations,
+        result.fsum_evaluations,
+        result.log_evaluations,
+    ):
+        if type(value) is not int or not 0 <= value <= MAX_ENTRIES:
+            raise ValueError("Typed result count exceeds its structural bounds")
+    for indices in (result.upstream_failed_indices, result.exp_underflow_indices):
+        if (
+            type(indices) is not tuple
+            or len(indices) > MAX_ENTRIES
+            or any(type(i) is not int or not 0 <= i < MAX_ENTRIES for i in indices)
+        ):
+            raise ValueError("Typed result diagnostics exceed their structural bounds")
+    if (
+        result.failure_stage is not None
+        and (type(result.failure_stage) is not str or len(result.failure_stage) > 32)
+    ) or (
+        result.failure_index is not None
+        and (type(result.failure_index) is not int or not 0 <= result.failure_index < MAX_ENTRIES)
+    ):
+        raise ValueError("Typed failure metadata exceeds its structural bounds")
+    if result.normalizer is not None:
+        normalizer = result.normalizer
+        if (
+            type(normalizer) is not ShiftedLogNormalizer
+            or len(normalizer.__dict__) != 2
+            or set(normalizer.__dict__) != {"maximum_log_weight", "log_scaled_sum"}
+            or any(
+                type(value) is not float or not math.isfinite(value)
+                for value in (normalizer.maximum_log_weight, normalizer.log_scaled_sum)
+            )
+        ):
+            raise ValueError("Expected a bounded typed shifted normalizer")
+    if type(result.entries) is not tuple or len(result.entries) > MAX_ENTRIES:
+        raise ValueError("Typed result entries exceed their structural bounds")
+    for entry in result.entries:
+        if (
+            type(entry) is not NormalizedLogWeight
+            or len(entry.__dict__) != 3
+            or set(entry.__dict__) != {"item_sha256", "kind", "log_probability"}
+        ):
+            raise ValueError("Expected complete typed normalized entries")
+        if (
+            type(entry.item_sha256) is not str
+            or len(entry.item_sha256) != 64
+            or type(entry.kind) is not str
+            or len(entry.kind) > 16
+            or (
+                entry.log_probability is not None
+                and (
+                    type(entry.log_probability) is not float
+                    or not math.isfinite(entry.log_probability)
+                )
+            )
+        ):
+            raise ValueError("Typed normalized entry exceeds its structural bounds")
+    return FiniteLogWeightResult.model_validate(result.model_dump(mode="python"))
+
+
 def bind_finite_log_weight_result(
     result: FiniteLogWeightResult, actual: FiniteLogWeightInput
 ) -> None:
     """Bind actual supplied inputs, not numerical correctness or item authenticity."""
     actual = validate_finite_log_weight_input(actual)
+    result = validate_finite_log_weight_result(result)
     failed = tuple(i for i, entry in enumerate(actual.entries) if entry.kind == "upstream_failed")
     finite = tuple(i for i, entry in enumerate(actual.entries) if entry.kind == "finite")
     finite_indices = frozenset(finite)
@@ -219,6 +322,15 @@ def bind_finite_log_weight_result(
         or (result.failure_index is not None and result.failure_index not in finite_indices)
     ):
         raise ValueError("Result differs from the complete actual input")
+    if result.status == "arithmetic_failure" and result.failure_stage == "exponential":
+        # An exponential failure is the last attempted finite entry. Underflow
+        # diagnostics can only describe successful calls preceding that failure.
+        if (
+            result.failure_index is None
+            or result.exp_evaluations != finite.index(result.failure_index) + 1
+            or any(i >= result.failure_index for i in result.exp_underflow_indices)
+        ):
+            raise ValueError("Failure diagnostics differ from the ordered exponential work")
     if result.status == "normalized":
         for entry, output in zip(actual.entries, result.entries, strict=True):
             if (entry.item_sha256, entry.kind) != (output.item_sha256, output.kind):
