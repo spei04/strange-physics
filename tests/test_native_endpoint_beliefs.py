@@ -30,6 +30,7 @@ from strange_physics.contracts import (
     Trajectory,
 )
 from strange_physics.control_contracts import ContractViolation
+from strange_physics.finite_log_weights import normalize_finite_log_weights
 from strange_physics.native_candidates import produce_native_candidates
 from strange_physics.native_endpoint_belief_contracts import (
     MAX_INPUT_BYTES,
@@ -118,8 +119,8 @@ def audit(
     oracle: EndpointOracle, monkeypatch: pytest.MonkeyPatch, record_property: RecordProperty
 ) -> Iterator[Audit]:
     value = Audit(oracle)
-    original_predict = endpoint.predict_native_spring
-    original_normalize = endpoint.normalize_finite_log_weights
+    original_predict = predict_native_spring
+    original_normalize = normalize_finite_log_weights
 
     def counted_predict(actual: NativePredictionInput, *, attempt_id: str) -> Any:
         value.fit += 1
