@@ -12,15 +12,17 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Prepare protected-main candidate verification after accepted numerical review | Final delivery pins pending; no scientific-profile acceptance |
-| Platform | Normalizer input/resource/package review complete | Focused evidence accepted; hosted delivery pending |
-| Research | Progress reconciliation complete; available for final review | Primary released to Lead; RA-N02.a remains in progress |
-| Project lead | Own primary progress, hosted verification and integration | Focused outcome independently accepted; delivery pending |
+| Quality | Independent normalizer and Laplace preparation reviews complete | Review the next assigned immutable source; no scientific-profile acceptance |
+| Platform | PR/main CI and exact candidate review complete | #129 delivered; future resource/source admission remains separate |
+| Research | Normalizer and parallel Laplace preparation complete; progress released | RA-N02.a remains in progress; next source checkpoint unassigned |
+| Project lead | Own integration, primary progress and next assignment | Re-estimate concrete next scope; no automatic execution admission |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-28 | Research + Quality + Platform + Project lead | PR #130 normalizer delivery and #129 closure | Main 620c0f0/all five jobs/exact candidate accepted; RA-N02.a remains in progress |
+| 2026-10-28 | Research + Quality | Parallel Laplace analytic-case and finite-reference V2 preparation | Design accepted; no source implementation, numerical execution or scientific settings selected |
 | 2026-10-28 | Research + Quality + Platform + Project lead | Bounded finite-log-weight normalizer #129 | 6f type-check failure retained; narrow 346 repair passed eight focused commands and 40 tests, independently accepted |
 | 2026-10-27 | Research + Quality | Smallest N02.a contract design and independent interface review | Existing identity reused at e587f47; numerical settings unaccepted; no runtime |
 | 2026-10-27 | Quality + Platform + Project lead | PR128/main e587f47 candidate verification and bounded parent acceptance | Delivered; RA-02/N01 accepted; next Research contract slice, numerical profile unaccepted |
@@ -1243,3 +1245,13 @@ The first validation at 6f79454 passed Ruff/format and stopped at 20 mypy errors
 The separately admitted focused validation at 346f3fe passed all eight commands: Ruff/format, strict mypy for three files, offline build/archive validation and project refresh, 1,537 external schema checks, and 40 tests in 0.81 pytest seconds. The 120 passing phases retain exactly 37 normalizer calls and 11 independent 700-digit Decimal vectors. All 94 package files match source, wheel, sdist and installed bytes; the post-test environment matches post-install. No scientific forward model, likelihood, simulator, public measured operation or product child ran.
 
 Across those vectors, the largest absolute error for both the centered log normalizer and normalized logs was about 4.048e-16, below the predeclared software criteria of 1e-12 and 1e-12 plus four reference ULPs respectively. For [0,-500] and [0,-1000], the positive Decimal centered-log sums were about 7.125e-218 and 5.076e-435; the binary64 centered log normalizer was zero in both cases while finite normalized logs were retained. These are observed software-reference checks, not a scientific calibration or universal rounding bound. Independent outcome review is accepted; hosted checks and delivery remain pending. RA-N02.a remains in progress and the scientific profile remains unaccepted. Existing study caps, task/dependency graphs, forecasts and parent acceptance are unchanged.
+
+## 2026-10-27 — Normalizer delivered; Laplace preparation remains design-only
+
+[PR #130](https://github.com/spei04/strange-physics/pull/130), reviewed head 32faca0, is merged as main 620c0f0 (tree d431603d). Protected-main run 40615567728, attempt 1, passed all five jobs. Python 3.12 passed 4,542 tests in 771.95 seconds and Python 3.14 passed 4,542 in 795.25 seconds; 1,537 schema checks passed. Candidate 12786130458 is accepted unpublished: 580,417 ZIP bytes, SHA256 bd51a9f0fa46e5dff6879438e52bf571f1989df3905a3cc1cb0856b977fd84fe. Independent verification matched 94 package files, 64 profile hashes and both archives to source; the archives equal the reviewed 346 focused build. The 13 hosted interpreter observations and two CA guards are retained. Exported runtime-requirements bytes were not included or independently recomputed. This is software delivery; signing, deployment and study acceptance remain separate.
+
+Issue #129 is closed for this subunit. The original 6f type-check failure and exact 346 focused 40-test/37-call/11-Decimal-vector evidence above remain source-specific and unchanged. RA-N02.a remains in progress; scientific grid, prior, likelihood, covariance, discrepancy and tolerance choices remain unaccepted. Normalization correctness does not establish posterior/MAP accuracy or full-study fit.
+
+Research's analytic-case V2 and finite-reference-method V2 received independent design acceptance; neither has been implemented or executed. Integer preallocation, intermediate/GCD bounds and practical CPU fit remain unproved, and deep tails are excluded. Analytic/interface preparation can overlap. The later comparative-validation sequence holds inference constant for selector comparison and uses accepted shared fixtures; it is not a mathematical necessity to delay all Laplace preparation. An unvalidated grid is not ground truth. Shared scientific-profile and finite-resolution acceptance remain the next critical work; Laplace reference implementation is prepared parallel work, not a new prerequisite. The next source checkpoint is unassigned, with scope/effort re-estimation and explicit execution admission still required.
+
+Full-study global authority/allocation and capacity remain unresolved: the retained 36-publication reservation floor is 1,168 MiB against the unchanged 1 GiB cap. The 36 episodes/432 purchases/8 CPU-core-hours/zero-provider limits, baseline 168 tasks/369 edges/ten gates, 23-task research graph and forecasts are unchanged. Two existing cloud checkouts remain for sequential reuse, with no new environment. Reviewed retirement of two reproducible caches removed 37,876,218 regular-file bytes; candidate verification removed 2,102,836 temporary export bytes. Required evidence and durable environments remain; these totals do not establish physical filesystem savings. Private diagnostic retention review remains 2026-11-27.

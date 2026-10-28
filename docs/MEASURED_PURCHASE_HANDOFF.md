@@ -2,6 +2,8 @@
 
 Status: first-execution source 2c43f97 is accepted and published on 2026-10-26 for bounded purchase, failure/replay and terminal-reconciliation evidence. The retained bounded 075c733 full path from five selected cases (72.30 seconds) is independently accepted. All 15 local configured checks passed at e3bafeb; final source 2e63b50 adds only implementation prose. PR124/main dfda60f is delivered after required PR checks, all five main jobs in run 40277055513 and exact unpublished candidate 12630997569 were accepted. V3 stays conditional; no research comparison is claimed.
 
+Current cross-reference (2026-10-27): PR124 purchase delivery records below remain historical and unchanged. Subsequent bounded parents are accepted; normalizer #129 is now delivered through PR #130/main 620c0f0 while RA-N02.a remains in progress. See the [current assignment board](EXECUTION_LOG.md#current-assignment-board) and [latest delivery/limits](EXECUTION_LOG.md#2026-10-27--normalizer-delivered-laplace-preparation-remains-design-only). This purchase handoff grants no new implementation or study admission.
+
 This handoff is pinned to [main c784f15](https://github.com/spei04/strange-physics/tree/c784f15dd91dfed169a5af0847dbd31445bcad88), with the existing plan and delivery record at [aeca99b](https://github.com/spei04/strange-physics/blob/aeca99b3e865937d8e89e6b41afb77a1999174e0/docs/EXECUTION_LOG.md). PR #123 supplies the bounded Journal primitive; it does not supply durable purchase authority or cost settlement.
 
 ## Ownership and execution prerequisite
