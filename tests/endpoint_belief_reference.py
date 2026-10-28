@@ -1,4 +1,11 @@
-"""Finite independent test references; no production oscillator or integrator imports."""
+"""Finite independent test references; no production oscillator/integrator imports.
+
+The named fixture domain and the 1e-60 combined truncation/rounding allowance
+are derived in docs/NATIVE_ENDPOINT_BELIEFS.md. The 80-coefficient ODE tails
+start at 4**40/80! and 4**40/81!; 100-digit recurrence/Horner rounding is
+bounded separately. Machin64 and trig80 have their own remainder bounds.
+This allowance is not a universal certificate for the binary64 predictor.
+"""
 
 from __future__ import annotations
 
@@ -41,6 +48,7 @@ class EndpointOracle:
             assert 0 <= k <= 4 and Decimal("0.5") <= mass <= 2 and 0 < time <= 2
             assert k * time * time / mass <= 4
             assert abs(initial - anchor) <= 1 and abs(speed * time) <= 1
+            assert abs(anchor) <= 1 and abs(speed) <= 2
             # Independent x''=-(k/m)(x-a) coefficient recurrence, no sqrt/cos/sinc.
             coefficients = [initial - anchor, speed]
             for n in range(COEFFICIENTS - 2):

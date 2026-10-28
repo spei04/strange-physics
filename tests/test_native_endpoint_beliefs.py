@@ -6,6 +6,7 @@ import math
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 from decimal import Decimal, localcontext
+from pathlib import Path
 from typing import Any, cast
 
 import pytest
@@ -32,12 +33,12 @@ from strange_physics.control_contracts import ContractViolation
 from strange_physics.native_candidates import produce_native_candidates
 from strange_physics.native_endpoint_belief_contracts import (
     MAX_INPUT_BYTES,
-    MAX_RESULT_BYTES,
     EndpointBeliefProfile,
     EndpointCell,
     NativeEndpointBeliefInput,
     NativeEndpointBeliefResult,
     bind_native_endpoint_belief_result,
+    native_endpoint_belief_json_schema,
     parse_native_endpoint_belief_input,
     parse_native_endpoint_belief_result,
 )
@@ -120,7 +121,11 @@ def audit(
             )
             observed = result.payload.response.trajectory.frames[-1].positions[0][0]
             reference = oracle.position(key)
-            value.max_forward_error = max(value.max_forward_error, abs(binary(observed) - reference))
+            with localcontext() as context:
+                context.prec = 100
+                value.max_forward_error = max(
+                    value.max_forward_error, abs(binary(observed) - reference)
+                )
             value.fitted_values[key] = observed
         return result
 
@@ -335,6 +340,10 @@ def test_scalar_native_likelihood(case: str, audit: Audit, record_property: Reco
     with pytest.raises(ContractViolation):
         parse_native_endpoint_belief_input(cast(bytes, actual.model_copy(update={"extra": 1})))
     if case == "zero":
+        schema_path = Path(__file__).resolve().parents[1] / (
+            "contracts/native-endpoint-belief.schema.json"
+        )
+        assert json.loads(schema_path.read_text()) == native_endpoint_belief_json_schema()
         # Isolate eligibility: coherent raw/canonical input replacement, same genuine
         # candidate and numerical payload, now with insufficient forward allowance.
         replacement = actual.model_copy(update={"prediction_budget": 0})
@@ -384,18 +393,20 @@ def comparisons() -> Iterator[dict[tuple[int, float], dict[str, Any]]]:
     if len(results) != 9:
         print("ENDPOINT_COMPARISONS incomplete " + str(len(results)))
         return
-    diagnostics = []
+    log_two = math.log(2.0)
     for count in GRIDS:
         for sigma in (0.125, 0.25):
             first, doubled = results[(count, sigma)], results[(count, 2*sigma)]
             expected = tuple(
-                -math.log(2.0) + 3*sse/(8*sigma*sigma) for sse in first["sse"]
+                -log_two + 3*sse/(8*sigma*sigma) for sse in first["sse"]
             )
             difference = tuple(
                 b-a for a, b in zip(first["likelihoods"], doubled["likelihoods"], strict=True)
             )
             error = max(abs(a-b) for a, b in zip(difference, expected, strict=True))
-            diagnostics.append({"nodes": count, "sigma": sigma, "double_scale_error": error})
+            print("ENDPOINT_SCALE_SENSITIVITY " + json.dumps({
+                "nodes": count, "sigma": sigma, "double_scale_error": error,
+            }, sort_keys=True))
             assert error <= 1e-9
     for sigma in SCALES:
         for coarse, fine in ((16, 64), (64, 256)):
@@ -405,10 +416,11 @@ def comparisons() -> Iterator[dict[tuple[int, float], dict[str, Any]]]:
             # Conditional exact-oscillator cell variation plus observed finite-node
             # arithmetic checks; not a continuum certificate for arbitrary inputs.
             bound = math.tanh(a["variation"]) + math.tanh(b["variation"]) + 1e-8
-            diagnostics.append({"coarse": coarse, "fine": fine, "sigma": sigma,
-                                "coarsened_tv": tv, "conditional_bound": bound})
+            print("ENDPOINT_REFINEMENT " + json.dumps({
+                "coarse": coarse, "fine": fine, "sigma": sigma,
+                "coarsened_tv": tv, "conditional_bound": bound,
+            }, sort_keys=True))
             assert tv <= bound
-    print("ENDPOINT_REFINEMENT_SENSITIVITY " + json.dumps(diagnostics, sort_keys=True))
 
 
 @pytest.mark.parametrize("count", GRIDS)

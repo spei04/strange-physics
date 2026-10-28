@@ -314,16 +314,6 @@ def _bind_result(
     elif result.status == "rejected":
         raise ValueError("Eligible input cannot claim a preflight rejection")
     reason = result.reason
-    if reason == "no_completed_records" and completed:
-        raise ValueError("Usable observations cannot be reported absent")
-    if reason == "candidate_unavailable" and actual.candidate_result.payload.status == "produced":
-        raise ValueError("A complete candidate result cannot be reported unavailable")
-    if reason == "unsupported_observation_noise":
-        sampling = observations.space.sampling
-        if sampling.position_noise == 0.0 and sampling.velocity_noise == 0.0:
-            raise ValueError("Zero observation noise cannot be reported unsupported")
-    if reason == "prediction_budget" and actual.prediction_budget >= result.predictions_requested:
-        raise ValueError("A sufficient forward allowance cannot be reported exhausted")
     if reason == "prediction_failure":
         if result.failed_node_index is None or result.failed_record_index is None:
             raise ValueError("Prediction failure requires the first failed node and record")

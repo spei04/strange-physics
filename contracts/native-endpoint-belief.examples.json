@@ -1,0 +1,70 @@
+{
+  "runtime_negative": [
+    {
+      "field": "right",
+      "model": "EndpointCell",
+      "value": 0.0
+    },
+    {
+      "field": "cells",
+      "model": "EndpointBeliefProfile",
+      "value": [
+        {
+          "left": 0.0,
+          "right": 0.25
+        },
+        {
+          "left": 0.5,
+          "right": 1.0
+        }
+      ]
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "left",
+      "model": "EndpointCell",
+      "value": -1.0
+    },
+    {
+      "field": "right",
+      "model": "EndpointCell",
+      "value": "1"
+    },
+    {
+      "field": "discrepancy",
+      "model": "EndpointBeliefProfile",
+      "value": 0.0
+    },
+    {
+      "field": "cells",
+      "model": "EndpointBeliefProfile",
+      "value": []
+    },
+    {
+      "field": "log_prior_mass",
+      "model": "EndpointNodeEvaluation",
+      "value": 1.0
+    }
+  ],
+  "valid": {
+    "EndpointBeliefProfile": {
+      "cells": [
+        {
+          "left": 0.0,
+          "right": 1.0
+        }
+      ],
+      "discrepancy": 0.25
+    },
+    "EndpointCell": {
+      "left": 0.0,
+      "right": 1.0
+    },
+    "EndpointNodeEvaluation": {
+      "log_likelihood": -1.0,
+      "log_prior_mass": 0.0,
+      "model_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  }
+}
