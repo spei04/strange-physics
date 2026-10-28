@@ -173,6 +173,10 @@ class NativeEndpointBeliefResult(Message):
             or self.completed_nodes > self.candidate_count
         ):
             raise ValueError("Work counts must retain every attempted and unassessed unit")
+        extra_frames = (self.frames_completed - 2 * self.predictions_completed, self.frames_failed)
+        allowed_frames = {(0, 0), (0, 1), (1, 1)} if self.predictions_failed else {(0, 0)}
+        if extra_frames not in allowed_frames:
+            raise ValueError("Failed two-frame prediction must retain a reachable frame prefix")
         paired = self.normalizer_input is not None and self.normalization is not None
         if (self.normalizer_input is None) != (self.normalization is None):
             raise ValueError("Normalization requires its complete actual log-weight input")
@@ -198,6 +202,23 @@ class NativeEndpointBeliefResult(Message):
             bind_finite_log_weight_result(self.normalization, self.normalizer_input)
         elif self.nodes:
             raise ValueError("An interrupted node pass cannot expose a partial node set")
+        rejection_reasons = {
+            "no_completed_records", "candidate_unavailable",
+            "unsupported_observation_noise", "prediction_budget",
+        }
+        if (self.status == "rejected") != (self.reason in rejection_reasons):
+            raise ValueError("Status and deterministic failure stage must agree")
+        if self.reason in {"prior_arithmetic", "likelihood_arithmetic"} and (
+            self.failed_node_index is None
+        ):
+            if (
+                self.predictions_completed or self.predictions_failed
+                or self.likelihood_evaluations or self.completed_nodes or paired
+                or self.failed_record_index is not None
+            ):
+                raise ValueError("Preflight arithmetic failure must precede all forward work")
+        if self.reason == "prior_arithmetic" and self.failed_node_index is not None:
+            raise ValueError("Prior arithmetic is checked before the node loop")
         if self.status == "normalized":
             if (
                 not paired
@@ -277,6 +298,21 @@ def _bind_result(
         raise ValueError("Failed node is outside the declared pool")
     if result.failed_record_index is not None and result.failed_record_index not in completed:
         raise ValueError("A failed computation must refer to a completed scientific record")
+    sampling = observations.space.sampling
+    expected_rejection: Reason | None = None
+    if not completed:
+        expected_rejection = "no_completed_records"
+    elif actual.candidate_result.payload.status != "produced":
+        expected_rejection = "candidate_unavailable"
+    elif sampling.position_noise != 0.0 or sampling.velocity_noise != 0.0:
+        expected_rejection = "unsupported_observation_noise"
+    elif actual.prediction_budget < result.predictions_requested:
+        expected_rejection = "prediction_budget"
+    if expected_rejection is not None:
+        if result.status != "rejected" or result.reason != expected_rejection:
+            raise ValueError("Ineligible input cannot claim forward work or normalization")
+    elif result.status == "rejected":
+        raise ValueError("Eligible input cannot claim a preflight rejection")
     reason = result.reason
     if reason == "no_completed_records" and completed:
         raise ValueError("Usable observations cannot be reported absent")
