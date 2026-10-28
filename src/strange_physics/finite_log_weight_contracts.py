@@ -237,10 +237,15 @@ def validate_finite_log_weight_result(result: FiniteLogWeightResult) -> FiniteLo
         or set(result.__dict__) != set(fields)
     ):
         raise ValueError("Expected a complete finite log-weight result")
-    for value in (result.schema_version, result.algorithm, result.input_sha256, result.status):
-        if type(value) is not str or len(value) > 128:
+    for metadata_value in (
+        result.schema_version,
+        result.algorithm,
+        result.input_sha256,
+        result.status,
+    ):
+        if type(metadata_value) is not str or len(metadata_value) > 128:
             raise ValueError("Typed result metadata exceeds its structural bounds")
-    for value in (
+    for count_value in (
         result.input_count,
         result.finite_count,
         result.exact_zero_count,
@@ -248,7 +253,7 @@ def validate_finite_log_weight_result(result: FiniteLogWeightResult) -> FiniteLo
         result.fsum_evaluations,
         result.log_evaluations,
     ):
-        if type(value) is not int or not 0 <= value <= MAX_ENTRIES:
+        if type(count_value) is not int or not 0 <= count_value <= MAX_ENTRIES:
             raise ValueError("Typed result count exceeds its structural bounds")
     for indices in (result.upstream_failed_indices, result.exp_underflow_indices):
         if (

@@ -12,7 +12,6 @@ from typing import NoReturn
 import pytest
 from pydantic import ValidationError
 
-import strange_physics.bounded_json as bounded_json
 import strange_physics.finite_log_weight_contracts as contracts
 import strange_physics.finite_log_weights as runtime
 from strange_physics.control_contracts import ContractViolation
@@ -235,9 +234,9 @@ def test_huge_common_offset_keeps_normalizer_components_separate() -> None:
 
 
 def test_all_zero_is_distinct_and_does_no_numerical_work(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(runtime.math, "exp", _forbidden)
-    monkeypatch.setattr(runtime.math, "fsum", _forbidden)
-    monkeypatch.setattr(runtime.math, "log", _forbidden)
+    monkeypatch.setattr(math, "exp", _forbidden)
+    monkeypatch.setattr(math, "fsum", _forbidden)
+    monkeypatch.setattr(math, "log", _forbidden)
     result = _normalize(_input((None, None)))
     assert result.status == "all_zero"
     assert result.entries == () and result.normalizer is None
@@ -245,9 +244,9 @@ def test_all_zero_is_distinct_and_does_no_numerical_work(monkeypatch: pytest.Mon
 
 
 def test_all_upstream_failures_are_retained_before_work(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(runtime.math, "exp", _forbidden)
-    monkeypatch.setattr(runtime.math, "fsum", _forbidden)
-    monkeypatch.setattr(runtime.math, "log", _forbidden)
+    monkeypatch.setattr(math, "exp", _forbidden)
+    monkeypatch.setattr(math, "fsum", _forbidden)
+    monkeypatch.setattr(math, "log", _forbidden)
     result = _normalize(_input((0.0, None, -3.0, None), failed=(1, 3)))
     assert result.status == "upstream_failure"
     assert result.upstream_failed_indices == (1, 3)
@@ -271,7 +270,7 @@ def test_exp_arithmetic_error_has_no_partial_output(monkeypatch: pytest.MonkeyPa
             return 0.0
         raise OverflowError("injected arithmetic failure")
 
-    monkeypatch.setattr(runtime.math, "exp", underflow_then_fail)
+    monkeypatch.setattr(math, "exp", underflow_then_fail)
     actual = _input((0.0, -1.0, -2.0))
     result = _normalize(actual)
     _assert_failure(result, "exponential")
@@ -286,32 +285,32 @@ def test_exp_arithmetic_error_has_no_partial_output(monkeypatch: pytest.MonkeyPa
 
 
 def test_nonfinite_exp_has_no_partial_output(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(runtime.math, "exp", lambda value: math.nan)
+    monkeypatch.setattr(math, "exp", lambda value: math.nan)
     result = _normalize(_input((0.0, -1.0)))
     _assert_failure(result, "exponential")
 
 
 def test_sum_arithmetic_error_is_classified(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(runtime.math, "fsum", _overflow)
+    monkeypatch.setattr(math, "fsum", _overflow)
     result = _normalize(_input((0.0, -1.0)))
     _assert_failure(result, "summation")
     assert (result.exp_evaluations, result.fsum_evaluations, result.log_evaluations) == (2, 1, 0)
 
 
 def test_invalid_sum_is_not_normalized(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(runtime.math, "fsum", lambda values: 0.0)
+    monkeypatch.setattr(math, "fsum", lambda values: 0.0)
     _assert_failure(_normalize(_input((0.0, -1.0))), "summation")
 
 
 def test_log_arithmetic_error_is_classified(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(runtime.math, "log", _overflow)
+    monkeypatch.setattr(math, "log", _overflow)
     result = _normalize(_input((0.0, -1.0)))
     _assert_failure(result, "log_normalizer")
     assert result.log_evaluations == 1
 
 
 def test_nonfinite_log_is_not_a_success(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(runtime.math, "log", lambda value: math.inf)
+    monkeypatch.setattr(math, "log", lambda value: math.inf)
     _assert_failure(_normalize(_input((0.0, -1.0))), "log_normalizer")
 
 
@@ -322,7 +321,7 @@ def test_unrelated_interruption_propagates(monkeypatch: pytest.MonkeyPatch) -> N
     def interrupted(value: float) -> NoReturn:
         raise Interruption("not a numerical failure")
 
-    monkeypatch.setattr(runtime.math, "exp", interrupted)
+    monkeypatch.setattr(math, "exp", interrupted)
     with pytest.raises(Interruption, match="not a numerical failure"):
         _normalize(_input((0.0, -1.0)))
 
@@ -411,7 +410,7 @@ def test_raw_byte_ceiling_is_checked_before_decode(monkeypatch: pytest.MonkeyPat
     raw = _input((0.0,)).model_dump_json().encode()
     at_limit = raw + b" " * (MAX_INPUT_BYTES - len(raw))
     assert parse_finite_log_weight_input(at_limit).entries[0].log_weight == 0.0
-    monkeypatch.setattr(bounded_json.json, "loads", _forbidden)
+    monkeypatch.setattr(json, "loads", _forbidden)
     with pytest.raises(ContractViolation):
         parse_finite_log_weight_input(at_limit + b" ")
 
@@ -421,7 +420,7 @@ def test_raw_depth_and_node_budgets_reject(monkeypatch: pytest.MonkeyPatch) -> N
         b"[" * (MAX_JSON_DEPTH + 1) + b"0" + b"]" * (MAX_JSON_DEPTH + 1),
         b"[" + b"0," * MAX_JSON_NODES + b"0]",
     )
-    monkeypatch.setattr(bounded_json.json, "loads", _forbidden)
+    monkeypatch.setattr(json, "loads", _forbidden)
     for raw in raws:
         with pytest.raises(ContractViolation):
             parse_finite_log_weight_input(raw)
@@ -516,9 +515,9 @@ def test_operation_counts_match_real_math_calls(monkeypatch: pytest.MonkeyPatch)
         counts["log"] += 1
         return original_log(value)
 
-    monkeypatch.setattr(runtime.math, "exp", counted_exp)
-    monkeypatch.setattr(runtime.math, "fsum", counted_fsum)
-    monkeypatch.setattr(runtime.math, "log", counted_log)
+    monkeypatch.setattr(math, "exp", counted_exp)
+    monkeypatch.setattr(math, "fsum", counted_fsum)
+    monkeypatch.setattr(math, "log", counted_log)
     result = _normalize(_input((0.0, None, -1000.0)))
     assert counts == {"exp": 2, "fsum": 1, "log": 1}
     assert (result.exp_evaluations, result.fsum_evaluations, result.log_evaluations) == (2, 1, 1)
