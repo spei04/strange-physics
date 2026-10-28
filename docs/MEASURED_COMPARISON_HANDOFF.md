@@ -8,7 +8,7 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Normalizer source and numerical evidence accepted |
+| Quality | Prepare candidate verification after accepted numerical evidence |
 | Platform | Normalizer resource/package evidence accepted |
 | Research | Progress complete; available for final review |
 | Project lead | Primary progress, hosted verification and integration |

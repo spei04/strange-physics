@@ -12,7 +12,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Normalizer source and numerical outcome review complete | Focused evidence accepted; no scientific-profile acceptance |
+| Quality | Prepare protected-main candidate verification after accepted numerical review | Final delivery pins pending; no scientific-profile acceptance |
 | Platform | Normalizer input/resource/package review complete | Focused evidence accepted; hosted delivery pending |
 | Research | Progress reconciliation complete; available for final review | Primary released to Lead; RA-N02.a remains in progress |
 | Project lead | Own primary progress, hosted verification and integration | Focused outcome independently accepted; delivery pending |
@@ -21,7 +21,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
-| 2026-10-27 | Research + Quality + Platform + Project lead | Bounded finite-log-weight normalizer #129 | 6f type-check failure retained; narrow 346 repair passed eight focused commands and 40 tests, independently accepted |
+| 2026-10-28 | Research + Quality + Platform + Project lead | Bounded finite-log-weight normalizer #129 | 6f type-check failure retained; narrow 346 repair passed eight focused commands and 40 tests, independently accepted |
 | 2026-10-27 | Research + Quality | Smallest N02.a contract design and independent interface review | Existing identity reused at e587f47; numerical settings unaccepted; no runtime |
 | 2026-10-27 | Quality + Platform + Project lead | PR128/main e587f47 candidate verification and bounded parent acceptance | Delivered; RA-02/N01 accepted; next Research contract slice, numerical profile unaccepted |
 | 2026-10-27 | Research + Quality + Project lead | Caller unknown/protected retry and committed-seal lost acknowledgement | First case passed at ca9; corrected second case passed at 1b43838; original failed assertion retained |

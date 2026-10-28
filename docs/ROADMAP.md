@@ -72,7 +72,7 @@ A checked box means its stated scope passed, not that the whole product is produ
 
 The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. The primary checkout and one separate identity checkout are retained for independently active writers. Existing migration archives and other experiments are not disposable build caches.
 
-Current execution roster: Quality and Platform accepted the focused normalizer outcome; Research completed this progress reconciliation; Lead owns hosted checks and integration. The initial type-check failure is retained; focused validation at 346f3fe passed. PR128 and bounded parent acceptance remain complete; full N02.a inference, scientific calibration and study admission remain separate. See the [current assignment board](EXECUTION_LOG.md#current-assignment-board).
+Current execution roster: Quality prepares candidate verification after Quality and Platform accepted the focused normalizer outcome; Research completed this progress reconciliation; Lead owns hosted checks and integration. The initial type-check failure is retained; focused validation at 346f3fe passed. PR128 and bounded parent acceptance remain complete; full N02.a inference, scientific calibration and study admission remain separate. See the [current assignment board](EXECUTION_LOG.md#current-assignment-board).
 
 ### 0.3 Update procedure for every implementation change
 

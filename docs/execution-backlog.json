@@ -10927,7 +10927,7 @@
       "scientific": "Primary six-document reconciliation completed and released by Research to Lead; primary environment unused.",
       "identity": "Lead owns source integration after focused346f3fe validation;94 package/source/archive/installed files matched and post-test environment equals post-install in the sealed outcome. Later API documentation is separately reviewed; no runtime change is inferred.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
-      "storage": "Two existing cloud checkouts retained for reuse; no checkout created or removed. Latest owner census: 61704564736 free bytes; 235 inaccessible/raced proc cwd entries; no observed checkout cwd consumers. Candidate verifier removed2071460 bytes of its temporary exports; no filesystem savings claim inferred from concurrent free-space changes.",
+      "storage": "Two existing cloud checkouts retained for reuse; no checkout created or removed. Latest focused-validation guard observed 57,483,067,392 free bytes. The earlier full owner census (61,704,564,736 free bytes, 235 inaccessible/raced proc entries) is historical. Only the reproducible failed-run mypy cache (18,940,157 bytes) was retired in this unit; durable environments and required evidence remain. Shared filesystem free-space changes are not attributed solely to this task.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
     },
     "spring_calibration_evidence": {
@@ -12592,7 +12592,7 @@
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Normalizer source and numerical outcome independently accepted; available for final review.",
+        "Quality": "Prepare protected-main candidate verification after accepted normalizer source/numerical review; final delivery pins pending.",
         "Platform": "Normalizer resource/package outcome independently accepted; hosted delivery pending.",
         "Research": "Six-document progress reconciliation complete; primary released to Lead, available for final review.",
         "Project lead": "Own source integration and primary progress; hosted checks and delivery remain pending."
@@ -15364,7 +15364,9 @@
             "ruff_and_format_passed": true,
             "build_install_tests_started": false,
             "source_site_unchanged": true,
-            "index_sha256": "ccef6fb38cfea25cff043f2aa8714940086b541ab86a6646e88ca96c6c3e0a4a"
+            "index_sha256": "ccef6fb38cfea25cff043f2aa8714940086b541ab86a6646e88ca96c6c3e0a4a",
+            "retained_index_sha256": "3d7cdbfdd9d990c6be0d539de4f79aeb0228cc9b62fb3361ec2e1a8460ba6652",
+            "retention": "Original index remains a historical hash manifest; only four reproducible mypy cache files (18,940,157 bytes) were retired after independent review and a no-consumer check. Raw failure, source/environment, process and admission records remain."
           },
           "repair": "Distinct metadata/count loop variables; direct standard-library monkeypatch targets. Numerical algorithm, schema and test census unchanged.",
           "planned_focused_census": {
