@@ -12,15 +12,17 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Focused numerical/reference outcome review complete | Available for hosted delivery review; scientific profile remains unaccepted |
-| Platform | Focused resource/identity outcome review complete | Ready for independent CI/candidate review; cumulative holds retained |
-| Research | Source/reference work complete; reconcile accepted focused outcome | Available for review after progress handoff; no study-profile claim |
-| Project lead | Integrate #131 and coordinate hosted delivery | PR/main/candidate gates pending; existing approval and caps unchanged |
+| Quality | Endpoint numerical and delivery reviews complete | Review parallel Laplace reference source; no scientific-profile acceptance |
+| Platform | Endpoint resource and candidate reviews complete | Review finite reference bounds; cumulative holds retained |
+| Research | Endpoint subunit delivered; private Laplace source draft prepared | Progress handoff; draft remains unexecuted and unmerged |
+| Project lead | Integrate delivery record and coordinate next bounded source review | RA-N02.a stays in progress; scientific/full-study gates unchanged |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-28 | Research / Quality / Platform / Project lead | #131 delivery through PR #132/main 51356f2 | All five main jobs, both 4,574-test suites and exact candidate accepted; scientific profile remains open |
+| 2026-10-28 | Research | Parallel Laplace analytic-reference source draft | Private 24-case/eight-vector patch only; no collection, execution or merge |
 | 2026-10-28 | Research / Quality / Platform / Project lead | #131 focused outcome at 32a9f7d | All eight commands/32 cases passed; both independent reviews accepted; hosted delivery pending |
 | 2026-10-28 | Research / Quality / Platform / Project lead | #131 focused type-check failure at 4883acb; test repair 32a9f7d | Ruff/format passed; no build/refresh/numerics; corrected runner in preparation |
 | 2026-10-28 | Research / Quality / Platform / Project lead | #131 source/schema checkpoint 4883acb | Source/reference/census complete; two style failures retained; schema accepted; focused numerical/package validation pending |
@@ -1298,3 +1300,13 @@ Exact 32a9f7d passed all eight bounded commands: scoped Ruff/format/mypy, offlin
 Observed calls matched the declared census: 32 belief/producer entries, 2,415 requested models, 2,390 fit entries including two faults, 1,344 future predictions and 22 normalizations. Independent reference diagnostics covered 1,452 series values and retained all failure paths. The narrow 1,024-node / sigma 1e-6 counterexample returned normalized weights while the independent continuous-versus-grid log-evidence gap exceeded 52,967. This demonstrates that normalization alone does not establish resolution; it is not a product-request rejection. The continuous predictive reference covers the unexcited uniform-prior future moments only. Finite-grid refinement and conditional bounds do not establish general continuous-posterior or study calibration.
 
 Known cumulative measurements are 71.409551124 CPU-seconds and 87.5759022599 active-wall-seconds. Permanent holds remain 1,180 / 3,540 within the unchanged 1,200 / 3,600 envelope, including prior failures and unmeasured preparation; no allowance resets. All 123 tracked child processes were reaped with no remaining groups or alarms, and the post-install environment matched terminal readback. [PR #132](https://github.com/spei04/strange-physics/pull/132) is open at 32a9f7d against main 620c0f0, with exact-head CI run 40648525110 queued. Main/candidate delivery remains pending. RA-N02.a is in progress; scientific settings and full-study admission remain unaccepted. Laplace stays parallel analytic/test preparation, with no implementation or comparative-acceptance claim.
+
+## 2026-10-28 — Endpoint delivery accepted; scientific profile remains open
+
+Endpoint subunit [#131](https://github.com/spei04/strange-physics/issues/131) is delivered through [PR #132](https://github.com/spei04/strange-physics/pull/132). Reviewed author 49b0ccd merged as main 51356f2ff7e1f49c2105bca38225f340e815cdb9, tree 0463a6927b4531b823f3a17728b78c7bcd8e1999. Main run 40651095177 attempt 1 passed all five jobs: Python 3.12 passed 4,574 tests in 622.96 seconds and Python 3.14 passed 4,574 in 507.51 seconds. Independent delivery reviews accepted the exact source/package evidence. The earlier queued PR checkpoint remains dated history.
+
+Unpublished candidate 12799114826 is 592,656 bytes, SHA256 08b50334951fd2b3ff345a26b6056b3c8d16a574d692a382d169921f498c01bb. Verification matched all 96 package files, 72 reviewed profile blobs and three checksums, with 13 hosted interpreter observations and two certificate-trust guards. Wheel and sdist bytes equal the focused 32a9f7d archives. The accepted 32-case reference outcome and all earlier style/type-check failures remain unchanged; hosted suite success does not turn them into general scientific calibration.
+
+The final delivery record contains 3.829303397 combined known local/cloud CPU-seconds and 9.608578708 end-to-end client wall-seconds, eight GitHub API invocations and 15 cleanly reaped cloud children. The final PR CI run 40649320587 also passed; the initial queued run was superseded and cancelled. Primary stayed unchanged during verification; 2,141,713 bytes of temporary exports were removed. The full 1,200 CPU/3,600 active-wall conservative holds remain charged, with no reset. Both existing cloud checkouts and their environments remain for sequential reuse; unique evidence is retained.
+
+Research also prepared a private, unmerged Laplace analytic-reference patch with 24 cases/eight fixed Gaussian vectors. It has not been imported, collected or executed; integer/GCD bounds and practical resource fit still require review and finite validation. This is parallel reference preparation, not an endpoint dependency or N02.b completion. Comparative acceptance later requires validated shared scientific definitions and fixtures; an unvalidated grid is not ground truth. The normalized-but-inadequate narrow-grid counterexample remains a limitation, not a rejected product request or a frozen study profile. RA-N02.a stays in progress; scientific-profile acceptance, the 1,168 MiB publication floor above the 1 GiB cap, and full-study global allocation remain unresolved. This progress branch supersedes the historical pre-delivery snapshot preserved in main; graph, effort, forecasts and caps are unchanged.
