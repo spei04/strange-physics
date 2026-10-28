@@ -30,7 +30,6 @@ from strange_physics.native_prediction_contracts import (
 from strange_physics.native_spring_contracts import validate_native_candidate_result
 from strange_physics.research_contracts import PredictionRequest, message_sha256
 
-
 LiteralStatus = Literal["normalized", "rejected", "failed"]
 
 
@@ -45,9 +44,7 @@ def compute_native_endpoint_belief(raw: bytes) -> NativeEndpointBeliefResult:
     actual = parse_native_endpoint_belief_input(raw)
     source = actual.candidate_input
     candidate = actual.candidate_result
-    validate_native_candidate_result(
-        candidate, source, attempt_id=actual.candidate_attempt_id
-    )
+    validate_native_candidate_result(candidate, source, attempt_id=actual.candidate_attempt_id)
     observations = source.observations
     completed = tuple(r.index for r in observations.records if r.status == "completed")
     failed = tuple(r.index for r in observations.records if r.status == "failed")
@@ -196,4 +193,3 @@ def compute_native_endpoint_belief(raw: bytes) -> NativeEndpointBeliefResult:
     if normalized.status != "normalized":
         return finish("failed", "normalization_failure")
     return finish("normalized")
-

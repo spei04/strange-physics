@@ -203,8 +203,10 @@ class NativeEndpointBeliefResult(Message):
         elif self.nodes:
             raise ValueError("An interrupted node pass cannot expose a partial node set")
         rejection_reasons = {
-            "no_completed_records", "candidate_unavailable",
-            "unsupported_observation_noise", "prediction_budget",
+            "no_completed_records",
+            "candidate_unavailable",
+            "unsupported_observation_noise",
+            "prediction_budget",
         }
         if (self.status == "rejected") != (self.reason in rejection_reasons):
             raise ValueError("Status and deterministic failure stage must agree")
@@ -212,8 +214,11 @@ class NativeEndpointBeliefResult(Message):
             self.failed_node_index is None
         ):
             if (
-                self.predictions_completed or self.predictions_failed
-                or self.likelihood_evaluations or self.completed_nodes or paired
+                self.predictions_completed
+                or self.predictions_failed
+                or self.likelihood_evaluations
+                or self.completed_nodes
+                or paired
                 or self.failed_record_index is not None
             ):
                 raise ValueError("Preflight arithmetic failure must precede all forward work")
@@ -241,9 +246,7 @@ class NativeEndpointBeliefResult(Message):
             or self.failed_record_index is not None
         ):
             raise ValueError("Rejection precedes cost-bearing forward and likelihood work")
-        if self.reason == "normalization_failure" and (
-            self.status != "failed" or not paired
-        ):
+        if self.reason == "normalization_failure" and (self.status != "failed" or not paired):
             raise ValueError("Normalization failure needs its complete failed algebraic result")
         bounded_canonical(self, MAX_RESULT_BYTES)
         return self
@@ -283,8 +286,7 @@ def _bind_result(
         or result.profile_sha256 != message_sha256(actual.profile)
         or result.candidate_result_sha256
         != bounded_canonical(actual.candidate_result, MAX_RESULT_BYTES)[0]
-        or result.observation_sha256
-        != bounded_canonical(observations, MAX_INPUT_BYTES)[0]
+        or result.observation_sha256 != bounded_canonical(observations, MAX_INPUT_BYTES)[0]
         or result.candidate_count != len(actual.candidate_input.pool.coefficients)
         or result.completed_record_indices != completed
         or result.failed_record_indices != failed
@@ -330,9 +332,11 @@ def _bind_result(
     if reason == "likelihood_arithmetic" and result.failed_node_index is not None:
         if result.failed_record_index is None:
             raise ValueError("A record likelihood failure requires its actual record")
-        attempted = result.failed_node_index * len(completed) + completed.index(
-            result.failed_record_index
-        ) + 1
+        attempted = (
+            result.failed_node_index * len(completed)
+            + completed.index(result.failed_record_index)
+            + 1
+        )
         if (
             result.predictions_completed != attempted
             or result.predictions_failed

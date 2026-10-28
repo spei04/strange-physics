@@ -9,7 +9,9 @@ from strange_physics.native_endpoint_belief_contracts import native_endpoint_bel
 
 
 def main() -> None:
-    destination = Path(__file__).resolve().parents[1] / "contracts/native-endpoint-belief.schema.json"
+    destination = (
+        Path(__file__).resolve().parents[1] / "contracts/native-endpoint-belief.schema.json"
+    )
     content = json.dumps(native_endpoint_belief_json_schema(), indent=2, sort_keys=True) + "\n"
     if len(content.encode()) > 128 * 1024:
         raise ValueError("Endpoint schema exceeds the declared generation bound")

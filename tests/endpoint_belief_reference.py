@@ -52,9 +52,7 @@ class EndpointOracle:
             # Independent x''=-(k/m)(x-a) coefficient recurrence, no sqrt/cos/sinc.
             coefficients = [initial - anchor, speed]
             for n in range(COEFFICIENTS - 2):
-                coefficients.append(
-                    -(k / mass) * coefficients[n] / Decimal((n + 2) * (n + 1))
-                )
+                coefficients.append(-(k / mass) * coefficients[n] / Decimal((n + 2) * (n + 1)))
             value = coefficients[-1]
             for coefficient in reversed(coefficients[:-1]):
                 value = value * time + coefficient
