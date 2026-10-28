@@ -31,6 +31,8 @@ MODULES = frozenset(
         "credential_authority.py",
         "evaluation.py",
         "evaluation_contracts.py",
+        "finite_log_weight_contracts.py",
+        "finite_log_weights.py",
         "fitting_contracts.py",
         "fitting.py",
         "invitation_contracts.py",

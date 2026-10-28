@@ -1,0 +1,120 @@
+{
+  "runtime_negative": [
+    {
+      "field": "kind",
+      "model": "FiniteLogWeight",
+      "value": "exact_zero"
+    },
+    {
+      "field": "entries",
+      "model": "FiniteLogWeightInput",
+      "value": [
+        {
+          "item_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "kind": "finite",
+          "log_weight": 0.0
+        },
+        {
+          "item_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "kind": "finite",
+          "log_weight": 0.0
+        }
+      ]
+    },
+    {
+      "field": "kind",
+      "model": "NormalizedLogWeight",
+      "value": "exact_zero"
+    },
+    {
+      "field": "status",
+      "model": "FiniteLogWeightResult",
+      "value": "all_zero"
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "kind",
+      "model": "FiniteLogWeight",
+      "value": "missing"
+    },
+    {
+      "field": "item_sha256",
+      "model": "FiniteLogWeight",
+      "value": "bad"
+    },
+    {
+      "field": "log_weight",
+      "model": "FiniteLogWeight",
+      "value": "0"
+    },
+    {
+      "field": "entries",
+      "model": "FiniteLogWeightInput",
+      "value": []
+    },
+    {
+      "field": "log_scaled_sum",
+      "model": "ShiftedLogNormalizer",
+      "value": 7.1
+    },
+    {
+      "field": "input_count",
+      "model": "FiniteLogWeightResult",
+      "value": 0
+    }
+  ],
+  "valid": {
+    "FiniteLogWeight": {
+      "item_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "kind": "finite",
+      "log_weight": 0.0
+    },
+    "FiniteLogWeightInput": {
+      "entries": [
+        {
+          "item_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "kind": "finite",
+          "log_weight": 0.0
+        }
+      ],
+      "schema_version": "strange-physics.finite-log-weight-input.v1"
+    },
+    "FiniteLogWeightResult": {
+      "algorithm": "maximum-shift-fsum-log.v1",
+      "entries": [
+        {
+          "item_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "kind": "finite",
+          "log_probability": 0.0
+        }
+      ],
+      "exact_zero_count": 0,
+      "exp_evaluations": 1,
+      "exp_underflow_indices": [],
+      "failure_index": null,
+      "failure_stage": null,
+      "finite_count": 1,
+      "fsum_evaluations": 1,
+      "input_count": 1,
+      "input_sha256": "80be7f355b7b5464964b45403f311e39ae8b75a2c4ca4009aca923425218b870",
+      "log_evaluations": 1,
+      "normalizer": {
+        "log_scaled_sum": 0.0,
+        "maximum_log_weight": 0.0
+      },
+      "schema_version": "strange-physics.finite-log-weight-result.v1",
+      "status": "normalized",
+      "upstream_failed_indices": []
+    },
+    "NormalizedLogWeight": {
+      "item_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "kind": "finite",
+      "log_probability": 0.0
+    },
+    "ShiftedLogNormalizer": {
+      "log_scaled_sum": 0.0,
+      "maximum_log_weight": 0.0
+    }
+  }
+}

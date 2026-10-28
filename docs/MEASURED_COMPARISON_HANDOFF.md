@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status: 22 primitive tests and the actual 44-call handoff/replay specimen are independently accepted. The caller-fault cases have separate passing evidence at ca9ee869 and corrected test source 1b43838; the original assertion failure remains retained. The API guide and bounded parent audit are complete. Final configured checks, exact PR/main/candidate delivery and explicit parent acceptance remain pending.
+Status: RA-02/#105 and RA-N01/#106 remain accepted at PR #128/main e587f47. The bounded finite-log-weight normalizer (#129) at 346f3fe passed all eight focused commands and 40 tests in 0.81 seconds; the initial 6f79454 type-check failure is retained. RA-N02.a remains in progress; its scientific profile is unaccepted. Independent outcome review is accepted; hosted checks and delivery remain pending; no study has run. [Evidence and limits](EXECUTION_LOG.md#2026-10-27--finite-log-weight-normalizer-validation).
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Prepare final ten local checks and exact hosted candidate verification |
-| Platform | Parent audit and API guide complete; review final progress/delivery |
-| Research | Targeted caller cases complete; source/runtime released |
-| Project lead | Own primary progress and coordinate final source/delivery |
+| Quality | Prepare candidate verification after accepted numerical evidence |
+| Platform | Normalizer resource/package evidence accepted |
+| Research | Progress complete; available for final review |
+| Project lead | Primary progress, hosted verification and integration |
 
-The two existing cloud checkouts are reused. After Quality released the passing 44-call run, Lead integrated only the new ca9ee869 test file in identity. All 92 installed package files and locked dependencies remain unchanged; no refresh was needed. Primary holds this documentation update without using its environment. Reviewers inspect immutable source and retained evidence.
+The two existing cloud checkouts are reused. Lead owns source integration and primary after Research released the six-document update; primary environment remains unused. Focused validation is pinned to source 346f3fe. The initial 6f79454 type-check failure preceded build/install/tests; its original evidence is retained. The tested 94 package files match source and both archives; post-test environment matches post-install. No checkout or dependency environment was created.
 
 The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
 

@@ -2,7 +2,7 @@
   "schema_version": "strange-physics.execution-plan.v1",
   "status": "approved_execution_in_progress",
   "baseline_commit": "28a4c19e8f9c92b83d886be6b96667d834784f9e",
-  "updated": "2026-10-24",
+  "updated": "2026-10-27",
   "staffing": {
     "engineers": 9,
     "delivery_fraction": 0.7,
@@ -10924,10 +10924,10 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Primary reused for reviewed API/progress documentation; its existing environment remains unused and unchanged.",
-      "identity": "Corrected test source1b43838;92 installed package files unchanged. Targeted runtime complete; final source composition/checks next.",
+      "scientific": "Primary six-document reconciliation completed and released by Research to Lead; primary environment unused.",
+      "identity": "Lead owns source integration after focused346f3fe validation;94 package/source/archive/installed files matched and post-test environment equals post-install in the sealed outcome. Later API documentation is separately reviewed; no runtime change is inferred.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
-      "storage": "Two existing cloud checkouts reused. Current comparison handoff free bytes63169773568; exact pure-verification after-observation63192657920. Earlier93668601856 observation belongs to the2026-10-26purchase handoff, not current capacity. No new checkout. Latest primary reuse observed 62,242,344,960 free bytes on 2026-10-27; both existing checkouts remain needed. No checkout removed or new one created. Primary reuse for this update observed62,066,012,160 free bytes and no visible cwd consumers (248 inaccessible/raced proc entries); no checkout created or removed.",
+      "storage": "Two existing cloud checkouts retained for reuse; no checkout created or removed. Latest focused-validation guard observed 57,483,067,392 free bytes. The earlier full owner census (61,704,564,736 free bytes, 235 inaccessible/raced proc entries) is historical. Only the reproducible failed-run mypy cache (18,940,157 bytes) was retired in this unit; durable environments and required evidence remain. Shared filesystem free-space changes are not attributed solely to this task.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
     },
     "spring_calibration_evidence": {
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "handoff_recovery_verified_final_delivery_pending",
+      "status": "bounded_native_parents_accepted_normalizer_focused_accepted_delivery_pending",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Final10 local static/schema/security/package checks and exact hosted candidate verification.",
-        "Platform": "Parent audit/API guide complete; review final progress and delivery evidence.",
-        "Research": "Caller cases complete with source-qualified passes; released for next dependency-ready work.",
-        "Project lead": "Compose reviewed source and seven docs; GitHub delivery and explicit bounded parent acceptance."
+        "Quality": "Prepare protected-main candidate verification after accepted normalizer source/numerical review; final delivery pins pending.",
+        "Platform": "Normalizer resource/package outcome independently accepted; hosted delivery pending.",
+        "Research": "Six-document progress reconciliation complete; primary released to Lead, available for final review.",
+        "Project lead": "Own source integration and primary progress; hosted checks and delivery remain pending."
       },
-      "handoff": "Caller recovery now has passing evidence across two source-specific runs: the unknown/protected-retry case passed at ca9ee869, and the corrected lost-acknowledgement case passed at 1b43838 in 14.14 seconds. The initial four-call run remains recorded as one pass and one test-assertion failure; it is not relabelled a complete pass. Production package bytes are unchanged. The public handoff API and supported recovery limits are documented. Quality owns the final ten local static/schema/security/package checks and candidate verification; Platform reviews the final evidence and progress; Research has completed the targeted caller cases; Lead owns source composition and GitHub delivery. Hosted full suites on Python 3.12/3.14, PR/main/candidate verification and explicit parent acceptance remain pending. Parents #105/#106 stay open. Full-study authority/capacity, global caps and grid-first/Laplace-later sequencing are unchanged.",
+      "handoff": "PR128/main e587f47 and exact candidate are delivered; RA-02/#105 and RA-N01/#106 are accepted for the bounded native implementation. RA-N02.a now proceeds through the bounded normalizer subunit. Initial6f validation stopped at mypy before build/install/tests; repaired346 passed all eight focused commands and40 tests in0.81 pytest seconds. Full inference, scientific profile, global study authority/capacity and hosted normalizer delivery remain pending.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Freeze reviewed source/docs, run final10, then exact hosted full suites/PR/main/candidate verification and explicit parent acceptance. N02.a follows bounded parents. Global multi-cell authority/cadence/fit precede RA-07.b after algorithms; no cap/graph change.",
+      "next_units": "Complete hosted checks and delivery after independently accepted focused normalizer validation. Continue RA-N02.a only within accepted subunit scope; scientific nodes/prior/likelihood/covariance/discrepancy/tolerances remain unaccepted. Global multi-cell authority/cadence/resource fit precede RA-07.b. No cap, graph or estimate change.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -15112,7 +15112,7 @@
         }
       },
       "publisher_authority_handoff": {
-        "status": "targeted_handoff_recovery_checked_final_delivery_pending",
+        "status": "delivered_bounded_native_parents_accepted",
         "source_base": "5897f97b2bda7f76600b0590680d51f5a3936ac0",
         "proposal_source": "7d69c51796a3d873c4b15ab768f07270853f64a9",
         "proposal_version": 2,
@@ -15129,9 +15129,9 @@
         "material_scope": "Original inner scoring input and independent selected=None classical input, full failed-row history and original unknown holds. No receipt relabeling.",
         "activation": "First publication ticket includes activation; one recovery spare only, exhaustion fails closed with source sealed.",
         "not_proved": [
-          "final configured and PR/main/package delivery",
-          "full-study global authority/allocation/admission",
-          "explicit parent completion"
+          "Full-study global authority/allocation, resource fit and admission",
+          "MAP inference, grid calibration, Laplace validity or speedup, selector comparison or scientific result",
+          "General crash-matrix coverage, timing guarantee, hostile-process isolation or enterprise production readiness"
         ],
         "new_allocation": false,
         "contract_checkpoint": "71c4a4a0cc41a203e24f6e49e622e96b343440ec",
@@ -15251,9 +15251,160 @@
         },
         "parent_exit_audit": {
           "index_sha256": "613e1c4c8090df4539bf4bae3b63e7c3aa3bcde017141364b2a79f8d131c638e",
-          "scope": "Bounded parent interface; no additional algorithm or multi-cell implementation prerequisite. Final evidence/delivery acceptance pending.",
+          "scope": "Independent mapping and exact delivery accepted for approved bounded native interfaces; explicit Lead acceptance recorded separately. No full-study, MAP or numerical-profile claim.",
           "api_documentation": "docs/MEASURED_PUBLICATION.md",
-          "full_study_owner": "Lead allocation/coordination decision; Quality assigned integration; Platform/Research independent reviews before RA-07.b."
+          "full_study_owner": "Lead allocation/coordination decision; Quality assigned integration; Platform/Research independent reviews before RA-07.b.",
+          "parent_acceptance": {
+            "at": "2026-10-27T18:36:11.574465+00:00",
+            "owner": "Project lead",
+            "status": "accepted",
+            "scope": "Approved bounded owner-local Linux native interfaces, candidate/prefix identity, actual-Journal scoring, cumulative measurement, charged recovery and one-way publisher authority. This completes RA-02 and RA-N01 implementation acceptance only; full-study global allocation, resource fit/admission and numerical inference remain separate.",
+            "limits": [
+              "No 36-cell/global allocator or executable full-study capacity proof",
+              "No MAP/grid calibration, Laplace validity/speedup or scientific comparison result",
+              "Supported single-cell authority and recorded crash cuts only; no whole crash matrix, timing reliability or hostile-process isolation",
+              "No hosted deployment, signing, official study or enterprise production readiness"
+            ],
+            "source": "e587f479cd24813697ed62cefff9b3beb9474baa",
+            "pull_request": 128,
+            "record_sha256": "489882248c85537563b34c9fac80b5715ac8113410ba8ec002bb0647ae33e1ce",
+            "candidate_review_sha256": "b67002254ace59aac7ba0ab6931cf7cf06eb6038ec4beddf64a3aef7eee482a8",
+            "next_unit": "RA-N02.a parameterized contracts; numerical profile unaccepted"
+          }
+        },
+        "delivery": {
+          "acquisition_sha256": "0de8bd14a4bfff549924fbf0db73462c3e49f3a9924c4ad998aa6f76c24cae1c",
+          "author_packages": [
+            {
+              "bytes": 321919,
+              "filename": "strange_physics-0.1.0a1-py3-none-any.whl",
+              "sha256": "272f289cfc862e7433350e44e4d83ac87eafbdc80adf428a2d61091bf6b139b0"
+            },
+            {
+              "bytes": 256055,
+              "filename": "strange_physics-0.1.0a1.tar.gz",
+              "sha256": "165942c63b20936b29832df35c1516e3b2cf446189df558b5b772a987dc6c610"
+            }
+          ],
+          "candidate": 12758851671,
+          "candidate_bytes": 570836,
+          "candidate_independent_review_sha256": "b67002254ace59aac7ba0ab6931cf7cf06eb6038ec4beddf64a3aef7eee482a8",
+          "candidate_verification_index_sha256": "3906c8369d65ce485d9c0c659dd91b90d78db0ade08d4f37d9eaabf84c611f1d",
+          "candidate_zip_sha256": "f3d2eebf2e311cc72cac5ee7b1477c74401ae8924f310c0edb91d58df54293d7",
+          "certificate_checks": 2,
+          "hosted_interpreter_observations": 13,
+          "local_final_ten_index_sha256": "8609952426e2d2adc1fb17eafb5789f1c1094103098dd468de9a5283b4ae50ad",
+          "local_final_ten_review_sha256": "fe25f4e688f382113d4b577a494d5c679603dead6369271e5a29fbe0c8f8015b",
+          "main": "e587f479cd24813697ed62cefff9b3beb9474baa",
+          "main_ci": 40557832195,
+          "main_ci_attempt": 1,
+          "main_jobs_passed": 5,
+          "main_tests": {
+            "3.12": {
+              "passed": 4502,
+              "seconds": 705.1
+            },
+            "3.14": {
+              "passed": 4502,
+              "seconds": 791.43
+            }
+          },
+          "package_files_verified": 92,
+          "pr_ci": 40555742083,
+          "pr_ci_attempt": 1,
+          "pr_tests": {
+            "3.12": {
+              "passed": 4502,
+              "seconds": 505.46
+            },
+            "3.14": {
+              "passed": 4502,
+              "seconds": 630.77
+            }
+          },
+          "profile_inputs_verified": 57,
+          "pull_request": 128,
+          "reviewed_pr_head": "6c7536818552d4a239a1105045a8a37c2e699b49",
+          "same_bytes_as_reviewed_author_archives": true,
+          "scope": "Unpublished candidate. Runtime export bytes not independently regenerated; copied executables use base shared libraries. No timing, full-study or production-readiness claim.",
+          "status": "accepted",
+          "tree": "dd651443c8230915e8d86574f8798dbad21d2d0f"
+        }
+      },
+      "next_grid_preparation": {
+        "status": "normalizer_subunit_in_progress_scientific_profile_unaccepted",
+        "owner": "Research",
+        "independent_reviewers": [
+          "Quality",
+          "Platform"
+        ],
+        "proposal": "1024 equal midpoint cells on [0,4] and discrepancy sigma=1e-6 were proposed, not frozen or measured.",
+        "review_finding": "An allowed synthetic k=0 boundary case has local likelihood scale sigma*sqrt(3/13), about4.8e-7; proposed spacing0.00390625 is over8000 times larger. Finite-sum correctness does not establish continuous/predictive adequacy.",
+        "required_before_measurement": [
+          "Justify likelihood features, covariance and record-independence assumptions",
+          "Validate predictive and acquisition-ranking behavior on disjoint development fixtures",
+          "Separate normalization, likelihood arithmetic and discretization errors",
+          "Account for sensitivity/refinement/oracle work and all retained outputs"
+        ],
+        "laplace_sequence": "Comparative Laplace acceptance follows frozen N03 fixtures; shared interface and analytic unit design may overlap stable contracts. No graph change.",
+        "experiment_execution": "not_started",
+        "assignment_stage": "normalizer_focused_accepted_hosted_delivery_pending",
+        "normalizer": {
+          "issue": 129,
+          "parent_task": "RA-N02.a",
+          "parent_status": "in_progress",
+          "status": "focused_validation_independently_accepted_delivery_pending",
+          "source": "346f3fe19718e1f56a8695685fc9545764c15d92",
+          "tree": "762a88b0e5d8624ea44b0fc663f1e9eee7d745ea",
+          "scope": "Bounded pure finite-log-weight normalization; no scientific profile, candidate authentication, MAP, inference or study claim.",
+          "failed_validation": {
+            "source": "6f79454d7aefd9c48236733ef3caa5b3a4c70120",
+            "stage": "mypy",
+            "errors": 20,
+            "ruff_and_format_passed": true,
+            "build_install_tests_started": false,
+            "source_site_unchanged": true,
+            "index_sha256": "ccef6fb38cfea25cff043f2aa8714940086b541ab86a6646e88ca96c6c3e0a4a",
+            "retained_index_sha256": "3d7cdbfdd9d990c6be0d539de4f79aeb0228cc9b62fb3361ec2e1a8460ba6652",
+            "retention": "Original index remains a historical hash manifest; only four reproducible mypy cache files (18,940,157 bytes) were retired after independent review and a no-consumer check. Raw failure, source/environment, process and admission records remain."
+          },
+          "repair": "Distinct metadata/count loop variables; direct standard-library monkeypatch targets. Numerical algorithm, schema and test census unchanged.",
+          "planned_focused_census": {
+            "cases": 40,
+            "normalizer_calls": 37,
+            "decimal_vectors": 11,
+            "scientific_forward_calls": 0,
+            "public_measured_calls": 0
+          },
+          "result": {
+            "commands_passed": 8,
+            "tests_passed": 40,
+            "pytest_seconds": 0.81,
+            "passing_phases": 120,
+            "normalizer_calls": 37,
+            "decimal_vectors": 11,
+            "decimal_precision": 700,
+            "maximum_observed_centered_log_normalizer_absolute_error": "4.047676254554e-16",
+            "maximum_observed_normalized_log_absolute_error": "4.047676254554e-16",
+            "centered_log_normalizer_absolute_tolerance": "1e-12",
+            "normalized_log_tolerance": "1e-12 + 4 reference ULPs",
+            "positive_absorbed_tail_references": {
+              "log_weight_minus_500": "approximately7.12457641e-218",
+              "log_weight_minus_1000": "approximately5.07595890e-435"
+            },
+            "schema_checks": 1537,
+            "source_archive_installed_files": 94,
+            "post_test_environment_equals_post_install": true,
+            "scientific_forward_likelihood_simulation_public_calls": 0,
+            "product_children": 0,
+            "index_sha256": "59516084cd0b8e2989bfbca7aa730fa0f40efea2b63e5f359f0686bebecbd245",
+            "claim_limit": "Observed finite-vector software checks only; no scientific calibration, MAP, inference, full study, universal error or timing claim."
+          },
+          "delivery": "pending",
+          "peer_reviews": {
+            "Quality": "d0a7111b5c0eaf01e1466586809c79300cf15efdf95fd1030ecd343acda9c35e",
+            "Platform": "90b029968031b5621662625fe77b67aead09aa6dccdb289113edfb29220ad436"
+          }
         }
       }
     },
@@ -15386,12 +15537,12 @@
         "risk": "No provider secrets in provenance; monotonic accounting, no resume double charging or free retry.",
         "confidence": "medium",
         "owner": "Engineer Quality; Research and Platform review",
-        "status": "in_progress",
+        "status": "complete",
         "dod": "One independently reviewable PR; declared acceptance and meaningful automated tests pass at the exact source/config; peer review, schema/API documentation, safe metrics and failure evidence are recorded. Required hosted checks pass before merge. Runtime/paid/release gates are not implied by merging code.",
         "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
         "issue": "https://github.com/spei04/strange-physics/issues/105",
         "checkpoint": {
-          "status": "accounting_journal_measured_publication_delivered_parent_in_progress",
+          "status": "historical_component_delivery_record",
           "runtime_source": "78b3be9510c71c4c5a60a7e69080c3989f3cb27b",
           "final_author": "c3502f7f1f318ca01ef24bb80172d21cb5004e57",
           "author_full_tests": 3331,
@@ -15401,7 +15552,7 @@
           "platform_extra_checks": 35,
           "platform_mutants": 8,
           "author_index_sha256": "75258c03042c2e98d347ba1df05c9dcadb20a55855db1be21fe097228b46ae54",
-          "scope": "Accounting, material freeze, Journal reconciliation, pure scored/early composition and measured atomic publication/recovery delivered. Numerical/purchased-simulation measurement wrappers and explicit parent audit remain required.",
+          "scope": "Historical component snapshot; current bounded acceptance is in parent_acceptance. Accounting, material freeze, Journal reconciliation, pure scored/early composition and measured atomic publication/recovery delivered. Numerical/purchased-simulation measurement wrappers and explicit parent audit remain required.",
           "pull_request": 110,
           "reviewed_head": "5b839d4b2582f05b2e871ab72b5257f25d4c5c05",
           "merge": "f9f450b51b9b5c7a79a30817b6deacb070bda23e",
@@ -15873,6 +16024,23 @@
               "handoff_sha256": "f1935cdc0896fead3dda2efc793f2ca9fe0d26ce604b34243234a08ddb493090"
             }
           }
+        },
+        "parent_acceptance": {
+          "at": "2026-10-27T18:36:11.574465+00:00",
+          "owner": "Project lead",
+          "status": "accepted",
+          "scope": "Approved bounded owner-local Linux native interfaces, candidate/prefix identity, actual-Journal scoring, cumulative measurement, charged recovery and one-way publisher authority. This completes RA-02 and RA-N01 implementation acceptance only; full-study global allocation, resource fit/admission and numerical inference remain separate.",
+          "limits": [
+            "No 36-cell/global allocator or executable full-study capacity proof",
+            "No MAP/grid calibration, Laplace validity/speedup or scientific comparison result",
+            "Supported single-cell authority and recorded crash cuts only; no whole crash matrix, timing reliability or hostile-process isolation",
+            "No hosted deployment, signing, official study or enterprise production readiness"
+          ],
+          "source": "e587f479cd24813697ed62cefff9b3beb9474baa",
+          "pull_request": 128,
+          "record_sha256": "489882248c85537563b34c9fac80b5715ac8113410ba8ec002bb0647ae33e1ce",
+          "candidate_review_sha256": "b67002254ace59aac7ba0ab6931cf7cf06eb6038ec4beddf64a3aef7eee482a8",
+          "next_unit": "RA-N02.a parameterized contracts; numerical profile unaccepted"
         }
       },
       {
@@ -16379,12 +16547,12 @@
         "confidence": "medium",
         "owner": "Engineer Platform; Research and Quality review",
         "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates.",
-        "status": "in_progress",
+        "status": "complete",
         "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
         "role": "PL1",
         "issue": "https://github.com/spei04/strange-physics/issues/106",
         "checkpoint": {
-          "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
+          "status": "historical_component_delivery_record",
           "source": "5cbf85d0c5d90899c68d788973dbb637b6474603",
           "tree": "903d1eed6e7720c99b648a3c353c91914aa5de3e",
           "pull_request": 109,
@@ -16394,7 +16562,7 @@
           "candidate": 12402495332,
           "candidate_zip_sha256": "a2274778adf34e793c43f40fc67714e22b8f6e8b92207c64e088605659c66494",
           "main_acceptance_index_sha256": "1cfdc8fd444234009d3f5953cfded7dcf1ed574e71200ff05cfdb5f7c205d271",
-          "scope": "Candidate production, preparation, native prediction/scoring, classical diagnostic and actual-Journal scored/early composition delivered throughPR116/main2800188. Actual publication measurement is assigned separately; durable reservations and OS-measured wrappers for existing numerical/simulation operations remain explicit parent obligations.",
+          "scope": "Historical component snapshot; current bounded acceptance is in parent_acceptance. Candidate production, preparation, native prediction/scoring, classical diagnostic and actual-Journal scored/early composition delivered throughPR116/main2800188. Actual publication measurement is assigned separately; durable reservations and OS-measured wrappers for existing numerical/simulation operations remain explicit parent obligations.",
           "prediction_runtime": {
             "status": "delivered",
             "source": "c3988d9356e47965dea33746c9fac3268099912a",
@@ -16499,6 +16667,23 @@
             "candidate_zip_sha256": "09e6ed7e3f1fd327854f0d60716b08e05799e6ce23e3ecc831fea372e5ce7221",
             "main_acceptance_index_sha256": "afcf47ae49a80dbdf36972fe6e87d47b3da58d70da894df5c715f48d5ecb89c9"
           }
+        },
+        "parent_acceptance": {
+          "at": "2026-10-27T18:36:11.574465+00:00",
+          "owner": "Project lead",
+          "status": "accepted",
+          "scope": "Approved bounded owner-local Linux native interfaces, candidate/prefix identity, actual-Journal scoring, cumulative measurement, charged recovery and one-way publisher authority. This completes RA-02 and RA-N01 implementation acceptance only; full-study global allocation, resource fit/admission and numerical inference remain separate.",
+          "limits": [
+            "No 36-cell/global allocator or executable full-study capacity proof",
+            "No MAP/grid calibration, Laplace validity/speedup or scientific comparison result",
+            "Supported single-cell authority and recorded crash cuts only; no whole crash matrix, timing reliability or hostile-process isolation",
+            "No hosted deployment, signing, official study or enterprise production readiness"
+          ],
+          "source": "e587f479cd24813697ed62cefff9b3beb9474baa",
+          "pull_request": 128,
+          "record_sha256": "489882248c85537563b34c9fac80b5715ac8113410ba8ec002bb0647ae33e1ce",
+          "candidate_review_sha256": "b67002254ace59aac7ba0ab6931cf7cf06eb6038ec4beddf64a3aef7eee482a8",
+          "next_unit": "RA-N02.a parameterized contracts; numerical profile unaccepted"
         }
       },
       {
@@ -16527,9 +16712,10 @@
         "confidence": "low",
         "owner": "Research; independent Quality and Platform review",
         "dod": "One independently reviewable PR with exact source/config identities, meaningful acceptance and failure tests, peer review, schemas/examples and documentation, configured formatting/type/security/package checks, and required PR/main CI. Merging code does not waive study, paid, official or release gates.",
-        "status": "approved_pending_prerequisites",
+        "status": "in_progress",
         "approval_id": "NATIVE_COMPARISON_APPROVAL_2026_10_21",
-        "role": "RS1"
+        "role": "RS1",
+        "readiness_scope": "RA-02 and RA-N01 accepted for approved bounded native implementation. Parameterized contract work is ready; numeric grid/likelihood/tolerances remain unaccepted. No measured run or freeze implied."
       },
       {
         "id": "RA-N02.b",

@@ -1,0 +1,289 @@
+{
+  "$defs": {
+    "FiniteLogWeight": {
+      "additionalProperties": false,
+      "properties": {
+        "item_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Item Sha256",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "finite",
+            "exact_zero",
+            "upstream_failed"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "log_weight": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Log Weight"
+        }
+      },
+      "required": [
+        "item_sha256",
+        "kind",
+        "log_weight"
+      ],
+      "title": "FiniteLogWeight",
+      "type": "object"
+    },
+    "FiniteLogWeightInput": {
+      "additionalProperties": false,
+      "properties": {
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/FiniteLogWeight"
+          },
+          "maxItems": 1025,
+          "minItems": 1,
+          "title": "Entries",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "strange-physics.finite-log-weight-input.v1",
+          "default": "strange-physics.finite-log-weight-input.v1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entries"
+      ],
+      "title": "FiniteLogWeightInput",
+      "type": "object"
+    },
+    "FiniteLogWeightResult": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {
+          "const": "maximum-shift-fsum-log.v1",
+          "default": "maximum-shift-fsum-log.v1",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/NormalizedLogWeight"
+          },
+          "maxItems": 1025,
+          "title": "Entries",
+          "type": "array"
+        },
+        "exact_zero_count": {
+          "maximum": 1025,
+          "minimum": 0,
+          "title": "Exact Zero Count",
+          "type": "integer"
+        },
+        "exp_evaluations": {
+          "maximum": 1025,
+          "minimum": 0,
+          "title": "Exp Evaluations",
+          "type": "integer"
+        },
+        "exp_underflow_indices": {
+          "items": {
+            "maximum": 1024,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 1025,
+          "title": "Exp Underflow Indices",
+          "type": "array"
+        },
+        "failure_index": {
+          "anyOf": [
+            {
+              "maximum": 1024,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Failure Index"
+        },
+        "failure_stage": {
+          "anyOf": [
+            {
+              "enum": [
+                "centering",
+                "exponential",
+                "summation",
+                "log_normalizer",
+                "normalization"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Failure Stage"
+        },
+        "finite_count": {
+          "maximum": 1025,
+          "minimum": 0,
+          "title": "Finite Count",
+          "type": "integer"
+        },
+        "fsum_evaluations": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Fsum Evaluations",
+          "type": "integer"
+        },
+        "input_count": {
+          "maximum": 1025,
+          "minimum": 1,
+          "title": "Input Count",
+          "type": "integer"
+        },
+        "input_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Input Sha256",
+          "type": "string"
+        },
+        "log_evaluations": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Log Evaluations",
+          "type": "integer"
+        },
+        "normalizer": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ShiftedLogNormalizer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schema_version": {
+          "const": "strange-physics.finite-log-weight-result.v1",
+          "default": "strange-physics.finite-log-weight-result.v1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "normalized",
+            "upstream_failure",
+            "all_zero",
+            "arithmetic_failure"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "upstream_failed_indices": {
+          "items": {
+            "maximum": 1024,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 1025,
+          "title": "Upstream Failed Indices",
+          "type": "array"
+        }
+      },
+      "required": [
+        "input_sha256",
+        "status",
+        "input_count",
+        "finite_count",
+        "exact_zero_count",
+        "upstream_failed_indices",
+        "exp_underflow_indices",
+        "exp_evaluations",
+        "fsum_evaluations",
+        "log_evaluations",
+        "failure_stage",
+        "failure_index",
+        "normalizer",
+        "entries"
+      ],
+      "title": "FiniteLogWeightResult",
+      "type": "object"
+    },
+    "NormalizedLogWeight": {
+      "additionalProperties": false,
+      "properties": {
+        "item_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Item Sha256",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "finite",
+            "exact_zero"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "log_probability": {
+          "anyOf": [
+            {
+              "maximum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Log Probability"
+        }
+      },
+      "required": [
+        "item_sha256",
+        "kind",
+        "log_probability"
+      ],
+      "title": "NormalizedLogWeight",
+      "type": "object"
+    },
+    "ShiftedLogNormalizer": {
+      "additionalProperties": false,
+      "properties": {
+        "log_scaled_sum": {
+          "maximum": 7.0,
+          "minimum": 0.0,
+          "title": "Log Scaled Sum",
+          "type": "number"
+        },
+        "maximum_log_weight": {
+          "title": "Maximum Log Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "maximum_log_weight",
+        "log_scaled_sum"
+      ],
+      "title": "ShiftedLogNormalizer",
+      "type": "object"
+    }
+  },
+  "$id": "https://strange-physics.dev/contracts/finite-log-weight.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Bounded algebraic normalization of supplied log weights. Structural validity and input binding do not authenticate production, candidate provenance or numerical correctness. No scientific profile, posterior, MAP or marginal-evidence claim.",
+  "title": "Strange Physics finite log-weight normalization v1"
+}
