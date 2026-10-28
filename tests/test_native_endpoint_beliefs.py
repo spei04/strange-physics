@@ -565,8 +565,7 @@ def test_excited_refinement_and_discrepancy(
                     "mean_error": str(mean_error),
                     "variance_error": str(variance_error),
                     "interpretation": (
-                        "conditional diagnostic; excess is unresolved, "
-                        "not proof of actual error"
+                        "conditional diagnostic; excess is unresolved, not proof of actual error"
                     ),
                 },
                 sort_keys=True,
