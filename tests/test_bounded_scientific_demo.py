@@ -5,11 +5,13 @@ from __future__ import annotations
 import hashlib
 import math
 import os
+import sys
 from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
 
+import strange_physics
 from examples import bounded_scientific_demo as demo
 from examples.bounded_scientific_demo import _target_met, _write
 
@@ -147,8 +149,8 @@ def test_installed_identity_includes_typing_marker(
 
     monkeypatch.setattr(demo, "SOURCE_ROOT", source)
     monkeypatch.setattr(demo, "_git", git)
-    monkeypatch.setattr(demo.strange_physics, "__file__", str(package / "__init__.py"))
-    monkeypatch.setattr(demo.sys, "prefix", str(environment))
+    monkeypatch.setattr(strange_physics, "__file__", str(package / "__init__.py"))
+    monkeypatch.setattr(sys, "prefix", str(environment))
     result = demo._identity("a" * 40)
     assert result["installed_package_sha256"] == {
         name: hashlib.sha256(data).hexdigest() for name, data in files.items()
