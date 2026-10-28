@@ -69,7 +69,7 @@ diagnostic only; on these bounded outputs its extra interval width is below
 formulas; it is compared against the rational enclosures, never used to
 construct them.
 
-## Planned validation and limits
+## Validation and limits
 
 The handwritten source declares 24 cases: eight fixed vectors, five exact
 relations, four plausible-defect checks, five closed-domain/work failures,
@@ -80,14 +80,32 @@ and GCD exhaustion without constructing a maximal-sized integer.
 
 Each vector records its input digest, exact-enclosure width, directed
 normalizer bounds, and binary64 error before numerical assertions. The fixed
-software comparison criterion is `2e-12` absolute error; this is a proposed
+software comparison criterion is `2e-12` absolute error; this is a predeclared
 test criterion, not a universal standard-library guarantee or scientific
 tolerance. Jacobian, density-versus-cell, support clipping and omitted
 remainder defects have explicit sensitivity checks.
 
-This source-only checkpoint has not been imported, collected or executed.
-Formatting, typing, actual work counters, CPU/memory fit and numerical outcomes
-remain to be verified under a separately bounded run. No endpoint package,
+On 2026-10-28, source `479896f95b9a6dbb761d494547fbce3ab9111411`
+passed all 24 cases and 72 phases on CPython 3.12.3 / pytest 9.1.1. All eight
+vectors passed the unchanged exact-Fraction comparisons. The largest observed
+binary64 error was `3.1624509165526476e-15`; the largest reported enclosure
+width was `2.1906444477876626e-55`. Actual core counts were 32,694 checked
+operations and 2,117 charged GCD/normalizations, with the planned 21 integrals,
+44 endpoint logs, 4,074 coefficient visits, 2,880 logarithm terms and 128 Machin
+terms. All five expected rejection reasons were retained. Independent numerical
+and accounting reviews accepted the saved result without repeating it.
+
+The single numerical process used 101.677477 CPU seconds and 101.895227 wall
+seconds, with a peak RSS of 47,388 KiB. A preceding permission preflight ran no
+numerical process; its failure and cost remain recorded. The complete engineering
+unit retained its 180 CPU-second / 420 active-wall-second allowance and stayed
+within its 8 MiB output ceiling. No previous allowance was reopened. The numerical
+receipt SHA256 is `77e6026ae382077e0592960226ac5911be2c41b53716356704ac77069f56dd9b`.
+
+Full repository and hosted CI for this additive pack remain pending. The roughly
+102-second module needs a separate required CI job on both supported Python
+versions: adding it to the observed 826–832-second suites risks their existing
+15-minute limit. This local result is not a hosted-runtime timing guarantee. No endpoint package,
 schema, production code, dependency, study allocation or task graph changes
 are part of this pack. Later comparative Laplace acceptance still requires
 shared accepted continuous prior/likelihood semantics, derivative and boundary
