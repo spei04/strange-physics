@@ -12604,7 +12604,7 @@
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Shared scientific-profile and finite-resolution acceptance remain the next critical work. Re-estimate and assign the next independently reviewable source checkpoint. Laplace analytic-case V2 and finite-reference-method V2 are accepted design only; reference implementation is prepared parallel work, not a new prerequisite. No implementation, execution or scientific settings are admitted. Preserve the full-study authority/capacity gate and all graph, cap and forecast values.",
+      "next_units": "Shared scientific-profile and finite-resolution acceptance remain the next critical work. Re-estimate and assign the next independently reviewable source checkpoint. Laplace analytic-case V2 and finite-reference-method V2 are accepted design only; reference implementation is prepared parallel work, not a new prerequisite. These Laplace designs do not allocate execution or select scientific settings. Existing owner-approved scoped implementation remains in force; concrete source and runtime bounds remain subject to Lead review. Preserve the full-study authority/capacity gate and all graph, cap and forecast values.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
