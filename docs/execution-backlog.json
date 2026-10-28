@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Lead owns primary progress/integration after delivery review; Research prepared this six-document patch privately without checkout writes.",
-      "identity": "Lead coordinates the existing identity checkout after exact main51356f2 delivery; focused32a production/package evidence remains source-specific. No new checkout/environment.",
+      "scientific": "Quality completed the six-document progress handoff on docs/bounded-demo-progress based on preserved 50e0f27; Lead owns primary integration after release.",
+      "identity": "Lead owns integrated demo source fab69a4 after the admitted local continuation; existing project-only installation passed96-file parity with frozen nonproject dependencies. No new checkout/environment.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts retained for sequential reuse. Reviewed retirement of two reproducible caches removed 37,876,218 regular-file bytes; candidate verifier removed 2,102,836 temporary export bytes. Required release/failure evidence and durable environments remain. Earlier free-space observations are historical; these file totals do not establish physical filesystem savings. Subsequent failed #131 type-check cache retirement removed 19,325,198 regular bytes; observed free-space increase 19,345,408 bytes is subject to concurrent host activity. Both checkouts/environments and unique evidence retained. Endpoint main51356f2 verification removed2,141,713 temporary export bytes after readback; both checkouts/environments and required evidence remain.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -15731,6 +15731,65 @@
         "alert_readback_index_sha256": "a42eac1458887e94eace1227053ec267165e01f8b5270f2225f4d99ad4bf8410",
         "previous_alert_observation": "Open on older requirement at earlier checkpoints; retained history."
       }
+    },
+    "bounded_scientific_demo": {
+      "issue": 133,
+      "status": "local_continuation_passed_peer_and_hosted_delivery_pending",
+      "source": "fab69a44e14e86b76476333ae98d4687034b5769",
+      "tree": "d7aae8c95ca6588916e8d9269ecbebf62bf36632",
+      "assignments": {
+        "Research": "Demo and test repair complete; independent scientific outcome review",
+        "Quality": "CLI repairs/source review complete; progress handoff and retained outcome review",
+        "Platform": "Independent resource/package outcome review",
+        "Project lead": "Integrate progress; complete peer review and exact-source hosted delivery"
+      },
+      "first_attempt": {
+        "source": "4b2ba018157c66a0281b5752837039ae4328284f",
+        "format": "passed",
+        "ruff": "passed",
+        "mypy": "failed_two_new_test_import_errors",
+        "build_refresh_tests_numerics": "not_run",
+        "preserved": true
+      },
+      "local_continuation": {
+        "commands_passed": 8,
+        "focused_cases": 20,
+        "passing_phases": 60,
+        "strict_mypy_files": 179,
+        "package_files": 96,
+        "wheel_sdist_installed_equal": true,
+        "nonproject_dependencies_unchanged": true,
+        "result_sha256": "5b49174fdf93e009bb44153009926b12d7e466b10d9f5a62f0a8836d14465964"
+      },
+      "cli_regression_purchases": 6,
+      "demo_purchases": 4,
+      "held_out_probes": 24,
+      "target_rmse": 0.001,
+      "target_passed": true,
+      "fitted_coefficient": 0.6750572721112501,
+      "maximum_position_rmse": 3.154199886178306e-08,
+      "illustrative_cells": 16,
+      "illustrative_discrepancy": 0.25,
+      "belief_status": "normalized",
+      "demo_output_files": 28,
+      "demo_output_bytes": 742139,
+      "demo_child_cpu_seconds": 2.329644,
+      "demo_wall_seconds": 2.198229,
+      "cumulative": {
+        "known_cpu_seconds": 41.158175489,
+        "known_active_wall_seconds": 43.908578329,
+        "charged_cpu_with_preparation_hold": 50.641415823,
+        "charged_wall_with_preparation_hold": 73.44605584116653,
+        "cpu_ceiling": 120,
+        "active_wall_ceiling": 360,
+        "owned_output_ceiling_bytes": 67108864,
+        "account_sha256": "76d9abd13ccc98430a935860a1396f3c1f9b580171ac35364d66857b9a1d9040",
+        "original_failure_and_costs_retained": true
+      },
+      "scope": "Existing five-stage I1 development workflow plus same-observation native endpoint diagnostic; no selector/adaptation, MAP, scientific calibration or full-study acceptance.",
+      "next_gate": "Independent outcome reviews and exact-source PR/main delivery remain pending.",
+      "parent_status": "RA-N02.a remains in progress; endpoint #131 delivered; 1,168 MiB publication floor exceeds the 1 GiB full-study cap.",
+      "log": "EXECUTION_LOG.md#2026-10-28--bounded-demo-integration-and-validation"
     }
   },
   "research_amendment": {

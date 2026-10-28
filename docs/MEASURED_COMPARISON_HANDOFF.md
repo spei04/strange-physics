@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status (2026-10-28): Endpoint subunit #131 is delivered through [PR #132](https://github.com/spei04/strange-physics/pull/132)/main 51356f2. All five main jobs passed, including 4,574 tests on each Python runtime, and the exact 96-file candidate matches the focused 32a9f7d archives. The 32-case focused reference outcome and earlier failures remain source-specific. RA-N02.a remains in progress: the scientific profile is unaccepted and full-study admission stays closed. A private Laplace reference source draft has 24 cases/eight vectors; it is unmerged and unexecuted parallel preparation, with comparative acceptance still requiring validated shared definitions. [Current evidence and assignments](EXECUTION_LOG.md#2026-10-28--endpoint-delivery-accepted-scientific-profile-remains-open).
+Status (2026-10-28): Bounded demo [#133](https://github.com/spei04/strange-physics/issues/133) passed its local continuation at fab69a4: all eight commands and 20 focused cases passed, with 96 package files equal across wheel, sdist and installation. Four actual observations produced fitted k=0.6750572721112501 and all 24 held-out probes passed the 0.001 RMSE target; the maximum was 3.154199886178306e-8. The separate 16-cell / discrepancy 0.25 terminal-x belief normalized and remains illustrative only. The first type-check failure is retained; independent outcome reviews and PR/main delivery are pending. Endpoint #131/PR #132 delivery remains accepted. RA-N02.a is still in progress, the scientific profile is unaccepted, and the 1,168 MiB publication floor still exceeds the 1 GiB full-study cap. Laplace remains private, unmerged and unexecuted parallel source work. [Current evidence and assignments](EXECUTION_LOG.md#2026-10-28--bounded-demo-integration-and-validation).
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Endpoint numerical/delivery reviews complete; parallel reference review next |
-| Platform | Endpoint resource/candidate reviews complete; finite reference bounds next |
-| Research | Endpoint delivered; private Laplace source draft unexecuted; progress handoff |
-| Project lead | Integrate accepted delivery and coordinate next bounded source review |
+| Quality | CLI repairs and source review complete; finalize progress and review retained demo outcome |
+| Platform | Review local continuation resources, package identity and original failure retention |
+| Research | Demo and test repair complete; independent scientific outcome review |
+| Project lead | Integrate progress, complete peer review and coordinate exact-source hosted delivery |
 
-The two existing cloud checkouts remain under Lead coordination for integration and sequential reuse; no new environment was created. Endpoint PR #132/main 51356f2 and its exact candidate are accepted, while focused 32a9f7d reference/package evidence and the earlier style/type-check failures retain their original scope. The progress branch supersedes main's historical pre-delivery documentation snapshot. Research's parallel Laplace reference patch is private, unmerged and unexecuted. Neither delivery nor that draft accepts a scientific profile or opens full-study admission.
+The two existing cloud checkouts remain under Lead coordination for integration and sequential reuse. The first integrated demo gate stopped at strict typing before package refresh or numerical work; the separately admitted fab69a4 continuation passed all eight local commands and the bounded demo. Quality releases primary after this six-document handoff, and Lead owns integration and hosted delivery. Existing environments were reused, with project-only copy installation and frozen nonproject dependencies; no new environment was created. Endpoint PR #132/main 51356f2 and its exact candidate are accepted, while focused 32a9f7d reference/package evidence and the earlier style/type-check failures retain their original scope. The progress branch supersedes main's historical pre-delivery documentation snapshot. Research's parallel Laplace reference patch is private, unmerged and unexecuted. Neither delivery nor that draft accepts a scientific profile or opens full-study admission.
 
 The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
 
