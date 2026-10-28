@@ -58,13 +58,19 @@ limits remain unchanged.
 
 ## Reference tests and implementation checkpoint
 
-The focused source declares 40 tests and, for a complete successful run,
-37 normalizer invocations and 11 independent Decimal reference vectors.
-Scientific forward, likelihood, simulator, public measured and product-child
-calls are all zero. The test module reports actual invocation counts on teardown.
-Per-vector diagnostics record input identity, size, independent positive tails,
-observed errors and applicable tolerances before numerical assertions. The
-source census is not a claim that tests have executed.
+At source `346f3fe`, all 40 focused tests passed in 0.81 seconds, with
+37 normalizer invocations, 11 independent Decimal reference vectors and all
+120 test phases passing. Scientific forward, likelihood, simulator, public
+measured and product-child calls were zero. Per-vector diagnostics retain
+input identity, size, independent positive tails, observed errors and applicable
+tolerances before numerical assertions.
+
+The largest observed centered-log-normalizer error and normalized-log error
+were both approximately `4.047676254554e-16`. The centered log normalizer rounded
+to zero for both `[0, -500]` and `[0, -1000]`; their independent positive
+references were approximately `7.12457641e-218` and `5.07595890e-435`.
+Those finite log weights remain represented. A passing absolute-error check
+does not mean these tiny contributions survived the floating-point sum.
 
 The independent oracle uses exact input floats, a direct unshifted Decimal
 finite sum and precision 700. It preserves the positive centered logarithms in
@@ -79,6 +85,15 @@ calibration values or universal accuracy guarantees. Tests also retain typed
 failures, unrelated interruptions, malformed raw inputs, maximum cardinality,
 signed-zero identity and pre-serialization rejection.
 
-The schema generator is `finite_log_weight_json_schema()`. Generated schema
-output and all runtime checks are pending separate validation at this initial
-source checkpoint. Synthetic examples contain no scientific profile.
+The schema generator is `finite_log_weight_json_schema()`. The generated
+schema and examples are registered with the external validator; all 1,537
+registered fixture checks passed at this checkpoint. Scoped lint, formatting
+and strict type checks, offline archive build/inspection and exact parity of
+all 94 source, wheel, source-archive and installed package files also passed.
+The first type-check attempt at `6f79454` stopped before any build or tests;
+`346f3fe` repaired local variable typing and test patch targets without changing
+the numerical algorithm, schema or assertions. Its passing evidence is separate
+from that retained failure.
+
+Repository-wide hosted checks and delivery remain separate gates. Synthetic
+examples contain no accepted scientific profile.
