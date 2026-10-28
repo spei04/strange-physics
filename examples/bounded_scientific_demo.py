@@ -116,12 +116,15 @@ def _identity(expected_commit: str) -> dict[str, object]:
     with interpreter.open("rb") as stream:
         interpreter_sha = hashlib.file_digest(stream, "sha256").hexdigest()
     return {
-        "source_commit": head, "source_tree": tree,
+        "source_commit": head,
+        "source_tree": tree,
         "example_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "uv_lock_sha256": hashlib.sha256((SOURCE_ROOT / "uv.lock").read_bytes()).hexdigest(),
-        "python": sys.version, "executable": sys.executable,
+        "python": sys.version,
+        "executable": sys.executable,
         "interpreter_sha256": interpreter_sha,
-        "installed_package_path": str(package), "installed_package_sha256": hashes,
+        "installed_package_path": str(package),
+        "installed_package_sha256": hashes,
         "qualification": "Source/package equality; not a sandbox or full dependency audit.",
     }
 
@@ -141,33 +144,82 @@ def _inventory(root: Path) -> list[dict[str, object]]:
         total += len(data)
         if total > 64 * MIB:
             raise ValueError("demo_output_limit")
-        files.append({
-            "path": str(path.relative_to(root)), "bytes": len(data),
-            "sha256": hashlib.sha256(data).hexdigest(),
-        })
+        files.append(
+            {
+                "path": str(path.relative_to(root)),
+                "bytes": len(data),
+                "sha256": hashlib.sha256(data).hexdigest(),
+            }
+        )
     return files
 
 
 def _target_met(rmses: tuple[float | None, ...], claimed: bool) -> bool:
-    return claimed and len(rmses) == 24 and all(
-        value is not None and math.isfinite(value) and 0 <= value <= 0.001 for value in rmses
+    return (
+        claimed
+        and len(rmses) == 24
+        and all(
+            value is not None and math.isfinite(value) and 0 <= value <= 0.001 for value in rmses
+        )
     )
 
 
 def _commands(run: Path) -> tuple[list[str], ...]:
     return (
-        ["investigate", "--family", "spring", "--particles", "1", "--budget", "4",
-         "--stationary", "--noise", "0", "--seed", "7", "--directory", str(run)],
-        ["fit-spring", "--observations", str(run / "observations.json"),
-         "--output", str(run / "fit")],
-        ["prepare-spring-evaluation", "--journal", str(run / "session.sqlite"),
-         "--fit", str(run / "fit"), "--output", str(run / "evaluation")],
-        ["predict-spring", "--model", str(run / "fit/model.json"),
-         "--manifest", str(run / "evaluation/protocol.json"),
-         "--output", str(run / "predictions")],
-        ["score-spring", "--journal", str(run / "session.sqlite"),
-         "--fit", str(run / "fit"), "--evaluation", str(run / "evaluation"),
-         "--predictions", str(run / "predictions"), "--output", str(run / "score")],
+        [
+            "investigate",
+            "--family",
+            "spring",
+            "--particles",
+            "1",
+            "--budget",
+            "4",
+            "--stationary",
+            "--noise",
+            "0",
+            "--seed",
+            "7",
+            "--directory",
+            str(run),
+        ],
+        [
+            "fit-spring",
+            "--observations",
+            str(run / "observations.json"),
+            "--output",
+            str(run / "fit"),
+        ],
+        [
+            "prepare-spring-evaluation",
+            "--journal",
+            str(run / "session.sqlite"),
+            "--fit",
+            str(run / "fit"),
+            "--output",
+            str(run / "evaluation"),
+        ],
+        [
+            "predict-spring",
+            "--model",
+            str(run / "fit/model.json"),
+            "--manifest",
+            str(run / "evaluation/protocol.json"),
+            "--output",
+            str(run / "predictions"),
+        ],
+        [
+            "score-spring",
+            "--journal",
+            str(run / "session.sqlite"),
+            "--fit",
+            str(run / "fit"),
+            "--evaluation",
+            str(run / "evaluation"),
+            "--predictions",
+            str(run / "predictions"),
+            "--output",
+            str(run / "score"),
+        ],
     )
 
 
@@ -180,11 +232,17 @@ def _run(output: Path, cells: int, discrepancy: float, source_commit: str) -> in
             code = physics_main(command)
         if len((stdout.getvalue() + stderr.getvalue()).encode()) > 64 * 1024:
             raise ValueError("demo_cli_log_limit")
-        _json(output / f"command-{index}.json", {
-            "argv": command, "exit_code": code,
-            "cpu_ns": time.process_time_ns() - cpu, "wall_ns": time.monotonic_ns() - wall,
-            "stdout": stdout.getvalue(), "stderr": stderr.getvalue(),
-        })
+        _json(
+            output / f"command-{index}.json",
+            {
+                "argv": command,
+                "exit_code": code,
+                "cpu_ns": time.process_time_ns() - cpu,
+                "wall_ns": time.monotonic_ns() - wall,
+                "stdout": stdout.getvalue(),
+                "stderr": stderr.getvalue(),
+            },
+        )
         print(stdout.getvalue(), end="", flush=True)
         _inventory(output)
         if code:
@@ -205,29 +263,37 @@ def _run(output: Path, cells: int, discrepancy: float, source_commit: str) -> in
         score.fit_artifact_sha256 != message_sha256(fit)
         or score.preparation_sha256 != message_sha256(preparation)
         or score.prediction_artifact_sha256 != message_sha256(predictions)
-        or predictions.model != fit.model or predictions.protocol != preparation.protocol
+        or predictions.model != fit.model
+        or predictions.protocol != preparation.protocol
     ):
         raise ValueError("demo_retained_stage_identity_mismatch")
     if (
-        fit.model is None or score.result.status != "scored"
-        or fit.observations != observations or len(score.probes) != 24
+        fit.model is None
+        or score.result.status != "scored"
+        or fit.observations != observations
+        or len(score.probes) != 24
     ):
         raise ValueError("demo_incomplete_or_mismatched_scientific_outcome")
 
     # Enumerate native candidates from purchased data; never relabel the fitted model.
     candidate_input = NativeCandidateInput(
         pool=NativeSpringPool(coefficients=tuple((i + 0.5) * 4.0 / cells for i in range(cells))),
-        config=NativeCandidateConfig(), observations=observations,
+        config=NativeCandidateConfig(),
+        observations=observations,
     )
     candidates = produce_native_candidates(candidate_input, attempt_id="demo-candidates")
     actual = NativeEndpointBeliefInput(
-        attempt_id="demo-endpoint", candidate_attempt_id="demo-candidates",
-        candidate_input=candidate_input, candidate_result=candidates,
+        attempt_id="demo-endpoint",
+        candidate_attempt_id="demo-candidates",
+        candidate_input=candidate_input,
+        candidate_result=candidates,
         prediction_config=NativePredictionConfig(),
         profile=EndpointBeliefProfile(
             discrepancy=discrepancy,
-            cells=tuple(EndpointCell(left=i * 4.0 / cells, right=(i + 1) * 4.0 / cells)
-                        for i in range(cells)),
+            cells=tuple(
+                EndpointCell(left=i * 4.0 / cells, right=(i + 1) * 4.0 / cells)
+                for i in range(cells)
+            ),
         ),
         prediction_budget=4 * cells,
     )
@@ -241,26 +307,33 @@ def _run(output: Path, cells: int, discrepancy: float, source_commit: str) -> in
     _write(belief_dir / "result.json", raw_result)
     bind_native_endpoint_belief_result(raw_result, raw_input)
     passed = _target_met(tuple(p.position_rmse for p in score.probes), score.target_passed)
-    _json(output / "summary.json", {
-        "claim": "Fixed development walkthrough, not a study or accepted belief calibration.",
-        "observation_sha256": message_sha256(observations),
-        "engine_fingerprint": observations.engine_fingerprint,
-        "engine_version": observations.engine_version, "purchased_records": 4,
-        "fitted_coefficient": fit.model.linear, "fitted_model_sha256": message_sha256(fit.model),
-        "scientific_target_met": passed, "maximum_position_rmse": score.maximum_position_rmse,
-        "probe_scores": [p.model_dump(mode="json") for p in score.probes],
-        "belief_status": belief.status, "belief_reason": belief.reason,
-        "belief_profile_sha256": belief.profile_sha256,
-        "belief_input_raw_sha256": belief.input_raw_sha256,
-        "belief_input_canonical_sha256": belief.input_sha256,
-        "belief_cpu_ns": time.process_time_ns() - cpu,
-        "belief_wall_ns": time.monotonic_ns() - wall,
-        "belief_caveat": (
-            "16 midpoint cells on [0,4], discrepancy 0.25: illustrative only. "
-            "Normalization does not establish resolution, calibration, MAP or accuracy. "
-            "The diagnostic neither selects nor replaces the legacy fitted model."
-        ),
-    })
+    _json(
+        output / "summary.json",
+        {
+            "claim": "Fixed development walkthrough, not a study or accepted belief calibration.",
+            "observation_sha256": message_sha256(observations),
+            "engine_fingerprint": observations.engine_fingerprint,
+            "engine_version": observations.engine_version,
+            "purchased_records": 4,
+            "fitted_coefficient": fit.model.linear,
+            "fitted_model_sha256": message_sha256(fit.model),
+            "scientific_target_met": passed,
+            "maximum_position_rmse": score.maximum_position_rmse,
+            "probe_scores": [p.model_dump(mode="json") for p in score.probes],
+            "belief_status": belief.status,
+            "belief_reason": belief.reason,
+            "belief_profile_sha256": belief.profile_sha256,
+            "belief_input_raw_sha256": belief.input_raw_sha256,
+            "belief_input_canonical_sha256": belief.input_sha256,
+            "belief_cpu_ns": time.process_time_ns() - cpu,
+            "belief_wall_ns": time.monotonic_ns() - wall,
+            "belief_caveat": (
+                "16 midpoint cells on [0,4], discrepancy 0.25: illustrative only. "
+                "Normalization does not establish resolution, calibration, MAP or accuracy. "
+                "The diagnostic neither selects nor replaces the legacy fitted model."
+            ),
+        },
+    )
     prediction_rows = []
     for probe, result, metric in zip(
         predictions.protocol.probes, predictions.results, score.probes, strict=True
@@ -273,38 +346,53 @@ def _run(output: Path, cells: int, discrepancy: float, source_commit: str) -> in
             f"{endpoint[0]:.9g}, {endpoint[1]:.9g} | {metric.position_rmse} |"
         )
     lines = [
-        "# Bounded scientific walkthrough", "",
+        "# Bounded scientific walkthrough",
+        "",
         f"Source: {source_commit}.",
         "Stationary noiseless one-particle spring; world seed 7; four seed-0 calibration actions.",
         f"Purchased records: 4. Learned k: {fit.model.linear:.17g}.",
         f"target_passed: {passed}. Worst per-probe RMSE: {score.maximum_position_rmse}.",
         "The fitted model predicts all 24 fixed held-out conditions at masses 0.5, 1 and 2.",
         "Each prediction has 41 times from 0 to 2 seconds; endpoints below are predictions.",
-        "Every RMSE uses the independent scorer, with no surviving-probe average.", "",
+        "Every RMSE uses the independent scorer, with no surviving-probe average.",
+        "",
         "| Probe | Mass | Predicted endpoint (x, y) | Position RMSE |",
         "| --- | ---: | --- | ---: |",
-        *prediction_rows, "",
-        "## Separate illustrative terminal-x diagnostic", "",
+        *prediction_rows,
+        "",
+        "## Separate illustrative terminal-x diagnostic",
+        "",
         f"Status: {belief.status}; reason: {belief.reason}.",
         "16 midpoint cells on [0,4]; discrepancy 0.25. No calibrated profile or MAP claim.",
-        "These weights do not choose the fitted model above.", "",
+        "These weights do not choose the fitted model above.",
+        "",
     ]
     if belief.normalization is not None and belief.normalization.status == "normalized":
-        lines.extend([
-            f"Exponential-underflow indices: {belief.normalization.exp_underflow_indices}.",
-            "Finite log weights remain retained; underflow is not declared exact-zero mass.", "",
-            "| k | Normalized log weight |", "| ---: | ---: |",
-        ])
+        lines.extend(
+            [
+                f"Exponential-underflow indices: {belief.normalization.exp_underflow_indices}.",
+                "Finite log weights remain retained; underflow is not declared exact-zero mass.",
+                "",
+                "| k | Normalized log weight |",
+                "| ---: | ---: |",
+            ]
+        )
         lines.extend(
             f"| {k} | {entry.log_probability} |"
-            for k, entry in zip(candidate_input.pool.coefficients,
-                                belief.normalization.entries, strict=True)
+            for k, entry in zip(
+                candidate_input.pool.coefficients, belief.normalization.entries, strict=True
+            )
         )
     _write(output / "REPORT.md", ("\n".join(lines) + "\n").encode())
-    _json(output / ".completion-pending", {
-        "files": _inventory(output), "artifact_complete": True,
-        "scientific_target_met": passed, "belief_normalized": belief.status == "normalized",
-    })
+    _json(
+        output / ".completion-pending",
+        {
+            "files": _inventory(output),
+            "artifact_complete": True,
+            "scientific_target_met": passed,
+            "belief_normalized": belief.status == "normalized",
+        },
+    )
     published = False
     try:
         os.link(output / ".completion-pending", output / "completion.json")
@@ -349,9 +437,13 @@ def main(argv: list[str] | None = None) -> int:
         return _run(output, args.cells, args.discrepancy, args.source_commit)
     except Exception as error:
         # Preserve partial outputs; no retry, resume, replacement probes or survivor averages.
-        _json(output / "failure.json", {
-            "error_type": type(error).__name__, "message": str(error)[:2048],
-        })
+        _json(
+            output / "failure.json",
+            {
+                "error_type": type(error).__name__,
+                "message": str(error)[:2048],
+            },
+        )
         print(f"Demo stopped; retained partial outputs in {output}", file=sys.stderr)
         return 2
 

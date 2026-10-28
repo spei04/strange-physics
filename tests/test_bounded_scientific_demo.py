@@ -62,10 +62,21 @@ def test_existing_demo_directory_rejects_before_any_commands(
 
     monkeypatch.setattr(demo, "_identity", forbidden)
     monkeypatch.setattr(demo, "_run", forbidden)
-    assert demo.main([
-        "--output", str(output), "--source-commit", "0" * 40,
-        "--cells", "16", "--discrepancy", "0.25",
-    ]) == 2
+    assert (
+        demo.main(
+            [
+                "--output",
+                str(output),
+                "--source-commit",
+                "0" * 40,
+                "--cells",
+                "16",
+                "--discrepancy",
+                "0.25",
+            ]
+        )
+        == 2
+    )
     assert retained.read_bytes() == b"original"
     assert sorted(p.name for p in output.iterdir()) == ["keep"]
 
@@ -85,10 +96,21 @@ def test_cli_failure_retains_partial_run_and_stops(
 
     monkeypatch.setattr(demo, "_identity", identity)
     monkeypatch.setattr(demo, "physics_main", fail)
-    assert demo.main([
-        "--output", str(output), "--source-commit", "0" * 40,
-        "--cells", "16", "--discrepancy", "0.25",
-    ]) == 2
+    assert (
+        demo.main(
+            [
+                "--output",
+                str(output),
+                "--source-commit",
+                "0" * 40,
+                "--cells",
+                "16",
+                "--discrepancy",
+                "0.25",
+            ]
+        )
+        == 2
+    )
     assert len(calls) == 1 and calls[0][0] == "investigate"
     assert (output / "command-0.json").is_file()
     assert (output / "failure.json").is_file()
