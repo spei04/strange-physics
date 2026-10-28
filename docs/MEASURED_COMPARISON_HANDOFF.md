@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status (2026-10-28): Bounded demo [#133](https://github.com/spei04/strange-physics/issues/133) passed its local continuation at fab69a4: all eight commands and 20 focused cases passed, with 96 package files equal across wheel, sdist and installation. Four actual observations produced fitted k=0.6750572721112501 and all 24 held-out probes passed the 0.001 RMSE target; the maximum was 3.154199886178306e-8. The separate 16-cell / discrepancy 0.25 terminal-x belief normalized and remains illustrative only. The first type-check failure is retained; independent outcome reviews and PR/main delivery are pending. Endpoint #131/PR #132 delivery remains accepted. RA-N02.a is still in progress, the scientific profile is unaccepted, and the 1,168 MiB publication floor still exceeds the 1 GiB full-study cap. Laplace remains private, unmerged and unexecuted parallel source work. [Current evidence and assignments](EXECUTION_LOG.md#2026-10-28--bounded-demo-integration-and-validation).
+**Current checkpoint (2026-10-28):** The bounded spring workflow is delivered through [PR #134](https://github.com/spei04/strange-physics/pull/134), main 1b611e76f424498ecb7d29a59bba805021140a61. All five main CI jobs passed; Python 3.12 and 3.14 each passed 4,591 tests and 1,547 schema checks. Candidate 12842519538 was verified against the tested wheel, sdist and all 96 package files. The retained local run used four observations, fitted k=0.6750572721112501 and passed all 24 held-out probes at the 0.001 RMSE target; maximum RMSE was 3.154199886178306e-8. The separate 16-cell / discrepancy 0.25 belief remains illustrative. The original type-check failure and all charges are preserved. A private report includes playback of the saved predictions. RA-N02.a and scientific calibration remain open; the 1,168 MiB publication floor still exceeds the 1 GiB full-study cap. Laplace source V2 passed independent review, but remains private, unmerged and unexecuted. [Delivery evidence and assignments](EXECUTION_LOG.md#2026-10-28--bounded-workflow-delivery-accepted).
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,10 +8,10 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | CLI repairs and source review complete; finalize progress and review retained demo outcome |
-| Platform | Review local continuation resources, package identity and original failure retention |
-| Research | Demo and test repair complete; independent scientific outcome review |
-| Project lead | Integrate progress, complete peer review and coordinate exact-source hosted delivery |
+| Quality | Source and Laplace V2 reviews complete; numerical validation remains separate |
+| Platform | Main CI and package verified; retained evidence review |
+| Research | Bounded scientific result and private Laplace V2 source complete |
+| Project lead | Final delivery and progress reconciliation |
 
 The two existing cloud checkouts remain under Lead coordination for integration and sequential reuse. The first integrated demo gate stopped at strict typing before package refresh or numerical work; the separately admitted fab69a4 continuation passed all eight local commands and the bounded demo. Quality releases primary after this six-document handoff, and Lead owns integration and hosted delivery. Existing environments were reused, with project-only copy installation and frozen nonproject dependencies; no new environment was created. Endpoint PR #132/main 51356f2 and its exact candidate are accepted, while focused 32a9f7d reference/package evidence and the earlier style/type-check failures retain their original scope. The progress branch supersedes main's historical pre-delivery documentation snapshot. Research's parallel Laplace reference patch is private, unmerged and unexecuted. Neither delivery nor that draft accepts a scientific profile or opens full-study admission.
 

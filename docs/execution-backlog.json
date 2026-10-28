@@ -15734,14 +15734,14 @@
     },
     "bounded_scientific_demo": {
       "issue": 133,
-      "status": "local_continuation_passed_peer_and_hosted_delivery_pending",
+      "status": "delivered_main_and_candidate_verified",
       "source": "fab69a44e14e86b76476333ae98d4687034b5769",
       "tree": "d7aae8c95ca6588916e8d9269ecbebf62bf36632",
       "assignments": {
-        "Research": "Demo and test repair complete; independent scientific outcome review",
-        "Quality": "CLI repairs/source review complete; progress handoff and retained outcome review",
-        "Platform": "Independent resource/package outcome review",
-        "Project lead": "Integrate progress; complete peer review and exact-source hosted delivery"
+        "Research": "Scientific outcome and Laplace V2 source complete; released",
+        "Quality": "Source, scientific guards and Laplace V2 review complete; released",
+        "Platform": "Main package outcome verification; final independent review",
+        "Project lead": "Final progress and private report delivery"
       },
       "first_attempt": {
         "source": "4b2ba018157c66a0281b5752837039ae4328284f",
@@ -15787,9 +15787,52 @@
         "original_failure_and_costs_retained": true
       },
       "scope": "Existing five-stage I1 development workflow plus same-observation native endpoint diagnostic; no selector/adaptation, MAP, scientific calibration or full-study acceptance.",
-      "next_gate": "Independent outcome reviews and exact-source PR/main delivery remain pending.",
+      "next_gate": "Bounded workflow delivered; separate Laplace numerical validation and grid calibration remain before benchmark integration.",
       "parent_status": "RA-N02.a remains in progress; endpoint #131 delivered; 1,168 MiB publication floor exceeds the 1 GiB full-study cap.",
-      "log": "EXECUTION_LOG.md#2026-10-28--bounded-demo-integration-and-validation"
+      "log": "EXECUTION_LOG.md#2026-10-28--bounded-workflow-delivery-accepted",
+      "independent_reviews": {
+        "scientific": "accepted_all24_endpoints_scores_all16_weights_and_actual4_purchases",
+        "resources": "accepted_package_environment_cumulative_accounting",
+        "resource_index_sha256": "e3c7bef537d47821219e3b28ca0dd5e4924e8313536da7d8351d1c8d062cb5d8",
+        "report_sha256": "a09d6375fd66c073d9f17bd7df0992badb72ad92627538bf075718a8505f8aec",
+        "completion_sha256": "bf6bd94ab5fe6d4200a3b3bb30d3f0b95d196d7a1d4efef58837be9a2f8c6111"
+      },
+      "delivery": {
+        "pull_request": 134,
+        "source": "1b611e76f424498ecb7d29a59bba805021140a61",
+        "tree": "a800413bb27a39499718d2d2fb2d45d4c8f85a7b",
+        "author": "7d297e8f45f5ba2282671ce11a105ac4326953e8",
+        "main_ci": 40748304535,
+        "candidate": 12842519538,
+        "candidate_bytes": 593586,
+        "candidate_sha256": "6ef9f66286d412e3c7b5d869e9c5868c3ff4bf2b92a7717beb539c4782accc7f",
+        "pytest_passed_per_runtime": 4591,
+        "schema_checks_per_runtime": 1547,
+        "package_files": 96,
+        "profile_blobs": 79,
+        "verification_sha256": "cf24aa3eb30d6d41da086bf65f4d8ca023ad323b53c34c4c290c0319e76e0802",
+        "outcome_index_sha256": "4a5492185538c60e4092b123ca6ccde5b63a6b74089cbcd0c20a2b575d47ab56",
+        "final_account_sha256": "577860da96e926cddf1364ac817d646c39684888f410148a095771d5467b71d3",
+        "client_combined_cpu": 2.89493114,
+        "client_active_wall": 8.409640999976546,
+        "permanent_cumulative_cpu_charge": 72.212389109,
+        "permanent_cumulative_wall_charge": 143.22948437696323,
+        "held_delivery_cpu": 20,
+        "held_delivery_wall": 60,
+        "private_saved_results_report": true,
+        "additional_numerical_runs": 0,
+        "deployed": false
+      },
+      "parallel_laplace": {
+        "status": "private_source_v2_review_accepted_runtime_pending",
+        "index_sha256": "d5957280b251e72735daa92826b9b974c3ff9a68f18338ae9c52ba15bed49b51",
+        "cases": 24,
+        "vectors": 8,
+        "integrals": 21,
+        "endpoint_logs": 44,
+        "merged": false,
+        "executed": false
+      }
     }
   },
   "research_amendment": {
