@@ -2,7 +2,7 @@
   "schema_version": "strange-physics.execution-plan.v1",
   "status": "approved_execution_in_progress",
   "baseline_commit": "28a4c19e8f9c92b83d886be6b96667d834784f9e",
-  "updated": "2026-10-27",
+  "updated": "2026-10-28",
   "staffing": {
     "engineers": 9,
     "delivery_fraction": 0.7,
@@ -10924,10 +10924,10 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Primary six-document reconciliation completed and released by Research to Lead; primary environment unused.",
-      "identity": "Lead owns source integration after focused346f3fe validation;94 package/source/archive/installed files matched and post-test environment equals post-install in the sealed outcome. Later API documentation is separately reviewed; no runtime change is inferred.",
+      "scientific": "Lead owns primary progress/integration after Research documentation handoff; the primary environment remains unused.",
+      "identity": "Lead owns source 32a9f7d on feat/native-endpoint-beliefs for integration/hosted delivery after independently accepted focused validation. Exact 96-file installed/archive parity retained; no new checkout/environment.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
-      "storage": "Two existing cloud checkouts retained for reuse; no checkout created or removed. Latest focused-validation guard observed 57,483,067,392 free bytes. The earlier full owner census (61,704,564,736 free bytes, 235 inaccessible/raced proc entries) is historical. Only the reproducible failed-run mypy cache (18,940,157 bytes) was retired in this unit; durable environments and required evidence remain. Shared filesystem free-space changes are not attributed solely to this task.",
+      "storage": "Two existing cloud checkouts retained for sequential reuse. Reviewed retirement of two reproducible caches removed 37,876,218 regular-file bytes; candidate verifier removed 2,102,836 temporary export bytes. Required release/failure evidence and durable environments remain. Earlier free-space observations are historical; these file totals do not establish physical filesystem savings. Subsequent failed #131 type-check cache retirement removed 19,325,198 regular bytes; observed free-space increase 19,345,408 bytes is subject to concurrent host activity. Both checkouts/environments and unique evidence retained.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
     },
     "spring_calibration_evidence": {
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "bounded_native_parents_accepted_normalizer_focused_accepted_delivery_pending",
+      "status": "normalizer_delivered_endpoint_focused_accepted_hosted_delivery_pending",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Quality": "Prepare protected-main candidate verification after accepted normalizer source/numerical review; final delivery pins pending.",
-        "Platform": "Normalizer resource/package outcome independently accepted; hosted delivery pending.",
-        "Research": "Six-document progress reconciliation complete; primary released to Lead, available for final review.",
-        "Project lead": "Own source integration and primary progress; hosted checks and delivery remain pending."
+        "Research": "Source/reference/count work complete; reconcile accepted focused outcome and release progress for review.",
+        "Quality": "Independent focused numerical/reference outcome accepted; available for hosted delivery review.",
+        "Platform": "Independent focused resource/identity outcome accepted; ready for CI/candidate review.",
+        "Project lead": "Coordinate integration and PR/main/candidate delivery under existing approval."
       },
-      "handoff": "PR128/main e587f47 and exact candidate are delivered; RA-02/#105 and RA-N01/#106 are accepted for the bounded native implementation. RA-N02.a now proceeds through the bounded normalizer subunit. Initial6f validation stopped at mypy before build/install/tests; repaired346 passed all eight focused commands and40 tests in0.81 pytest seconds. Full inference, scientific profile, global study authority/capacity and hosted normalizer delivery remain pending.",
+      "handoff": "PR #128 bounded RA-02/#105 and RA-N01/#106 acceptance remains complete. PR #130/main 620c0f0 delivers normalizer subunit #129, which is closed; failed 6f and focused 346 remain source-specific. Endpoint schema 4883acb is accepted, with both style failures and the first focused type-check failure retained. Corrected 32a9f7d focused validation is independently accepted: eight commands, 32 tests/13.55s, 1,547 schemas and 96-file package parity. PR #132 is open with CI queued; main/candidate delivery and scientific acceptance remain separate. RA-N02.a is in progress; full-study allocation remains closed.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Complete hosted checks and delivery after independently accepted focused normalizer validation. Continue RA-N02.a only within accepted subunit scope; scientific nodes/prior/likelihood/covariance/discrepancy/tolerances remain unaccepted. Global multi-cell authority/cadence/resource fit precede RA-07.b. No cap, graph or estimate change.",
+      "next_units": "Integrate #131 and complete unchanged PR/main/candidate delivery checks for the accepted focused source. Preserve source-specific failures and cumulative holds. Scientific-profile/finite-resolution acceptance remains unresolved; Laplace analytic test preparation stays parallel, not a prerequisite. Existing scoped owner approval remains active; full-study allocation stays closed.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -15332,7 +15332,7 @@
         }
       },
       "next_grid_preparation": {
-        "status": "normalizer_subunit_in_progress_scientific_profile_unaccepted",
+        "status": "normalizer_delivered_endpoint_focused_accepted_science_unaccepted",
         "owner": "Research",
         "independent_reviewers": [
           "Quality",
@@ -15346,14 +15346,14 @@
           "Separate normalization, likelihood arithmetic and discretization errors",
           "Account for sensitivity/refinement/oracle work and all retained outputs"
         ],
-        "laplace_sequence": "Comparative Laplace acceptance follows frozen N03 fixtures; shared interface and analytic unit design may overlap stable contracts. No graph change.",
+        "laplace_sequence": "Analytic/interface preparation may overlap without changing the graph. Comparative Laplace acceptance follows accepted shared scientific definitions and frozen N03 fixtures; first-result sequencing holds inference constant for selector comparison. It is not a mathematical requirement to delay all preparation, and an unvalidated grid is not ground truth.",
         "experiment_execution": "not_started",
-        "assignment_stage": "normalizer_focused_accepted_hosted_delivery_pending",
+        "assignment_stage": "focused_outcome_accepted_hosted_delivery_pending",
         "normalizer": {
           "issue": 129,
           "parent_task": "RA-N02.a",
           "parent_status": "in_progress",
-          "status": "focused_validation_independently_accepted_delivery_pending",
+          "status": "delivered_unit_closed",
           "source": "346f3fe19718e1f56a8695685fc9545764c15d92",
           "tree": "762a88b0e5d8624ea44b0fc663f1e9eee7d745ea",
           "scope": "Bounded pure finite-log-weight normalization; no scientific profile, candidate authentication, MAP, inference or study claim.",
@@ -15400,10 +15400,246 @@
             "index_sha256": "59516084cd0b8e2989bfbca7aa730fa0f40efea2b63e5f359f0686bebecbd245",
             "claim_limit": "Observed finite-vector software checks only; no scientific calibration, MAP, inference, full study, universal error or timing claim."
           },
-          "delivery": "pending",
+          "delivery": {
+            "status": "accepted_unpublished_candidate",
+            "pull_request": 130,
+            "reviewed_head": "32faca0ada3772a47e9fd6a39e443b2f42654e5c",
+            "main": "620c0f0bd3c6f2cadc00e0f132c4fc5d93945b17",
+            "tree": "d431603d5219708b1159dba0f202060bc14d92bd",
+            "run": 40615567728,
+            "attempt": 1,
+            "all_five_jobs_passed": true,
+            "full_tests_each": 4542,
+            "pytest_seconds": {
+              "3.12": 771.95,
+              "3.14": 795.25
+            },
+            "schema_checks": 1537,
+            "artifact_id": 12786130458,
+            "artifact_bytes": 580417,
+            "artifact_sha256": "bd51a9f0fa46e5dff6879438e52bf571f1989df3905a3cc1cb0856b977fd84fe",
+            "package_files": 94,
+            "profile_hashes": 64,
+            "hosted_interpreter_observations": 13,
+            "ca_guards": 2,
+            "archives_byte_equal_focused_346": true,
+            "outcome_index_sha256": "99334173b99391f259efd62d5828237cb85761669f11de22df4f01b26db3d1b5",
+            "independent_review_sha256": "b9d416c9c6a12c7e582c44244e573d79abe4775a444a5a5613152845b4bcd9e5",
+            "lead_acceptance_sha256": "335140120a2cbfbda2c3d0b897575a7dfd9f133fd03937db6da033ae7aac0d0f",
+            "limitations": [
+              "Unpublished candidate; no signing/deployment/production-readiness or study claim.",
+              "Runtime requirements digest retained, exported bytes absent and not independently recomputed.",
+              "RA-N02.a remains in progress; normalization does not establish a scientific profile, posterior/MAP, grid/Laplace validity or full-study fit."
+            ]
+          },
           "peer_reviews": {
             "Quality": "d0a7111b5c0eaf01e1466586809c79300cf15efdf95fd1030ecd343acda9c35e",
             "Platform": "90b029968031b5621662625fe77b67aead09aa6dccdb289113edfb29220ad436"
+          },
+          "issue_status": "closed"
+        },
+        "laplace_parallel_preparation": {
+          "status": "accepted_design_only",
+          "analytic_case_v2_index_sha256": "0b11fe7d283bbc3f62ed1e87bd48480ba929b3e03ca998c9b3cdf2407e526547",
+          "finite_reference_method_v2_index_sha256": "94bd0d765c72f7f37869e113d2f7514fd6cf1c240a80d424419032253672d48b",
+          "implementation_or_execution_started": false,
+          "scientific_settings_selected": false,
+          "remaining": [
+            "Concrete source and preallocation/intermediate/GCD bounds",
+            "Practical CPU/memory/evaluation/output fit and finite validation",
+            "Shared accepted scientific definitions and frozen fixtures before comparative audit"
+          ],
+          "limits": "Restricted test-only reference domain; no deep-tail coverage, optimizer, inference or N02.b completion.",
+          "source_readiness": "Test-only analytic/reference pack ready for a separately scoped source checkpoint; integer/GCD bounds and runtime fit remain unproved. No native integration or comparative acceptance."
+        },
+        "profile_resolution_checkpoint": {
+          "id": "RA-N02.a.profile-resolution",
+          "issue": 131,
+          "status": "focused_accepted_hosted_delivery_pending",
+          "source_base": "620c0f0bd3c6f2cadc00e0f132c4fc5d93945b17",
+          "first_production_checkpoint": "df2cd1e8a727d90a872f93c9258ad355be8880f0",
+          "owner": "Research",
+          "reviewers": [
+            "Quality",
+            "Platform"
+          ],
+          "checkout_branch": "feat/native-endpoint-beliefs",
+          "scope": "Restricted terminal-x Gaussian model beliefs, explicit physical-k support/cell prior measure/positive discrepancy, complete likelihood constants and native input identities; independent reference/resolution/predictive cases.",
+          "out_of_scope": [
+            "MAP selector",
+            "covariance or optimizer",
+            "new dependencies/services",
+            "measured or shorter-prefix Journal authority",
+            "scientific profile freeze",
+            "full-study admission"
+          ],
+          "entrypoint": "Bounded raw-byte computation/binding; typed models are construction helpers, not trusted ingress.",
+          "proposed_census": {
+            "cases": 32,
+            "fit_likelihoods": 2388,
+            "future_predictions": 1344,
+            "injected_predictor_failures": 2,
+            "prediction_entries": 3734,
+            "max_requested_frames": 7468,
+            "normalizer_calls": 22,
+            "max_producer_nodes": 2415,
+            "ordinary_grid_sizes": [
+              16,
+              64,
+              256
+            ],
+            "negative_grid_size": 1024,
+            "source_derived_counts_pending": false,
+            "source": "50201d604290cf4af01286d2aad0f724d941944f",
+            "fit_prediction_entries_including_faults": 2390,
+            "candidate_producer_entries": 32,
+            "belief_entries": 32,
+            "reference_series_values": 1452,
+            "reference_position_lookups": 7834,
+            "reference_decimal_exp": 1361,
+            "reference_decimal_ln": 1427,
+            "qualification": "Original static expected per-node rows and aggregates retained; actual focused32a9f7d census matched. max_forward_error is an observed diagnostic, not an expected constant."
+          },
+          "proposed_cumulative_local_envelope": {
+            "new_owned_bytes": 67108864,
+            "cpu_seconds": 1200,
+            "active_command_wall_seconds": 3600,
+            "initial_unmeasured_preparation_hold_cpu": 60,
+            "initial_unmeasured_preparation_hold_active_wall": 300,
+            "remaining_cpu_seconds": 1140,
+            "remaining_active_command_wall_seconds": 3300,
+            "next_command_headroom_bytes": 33554432,
+            "start_free_bytes": 53687091200,
+            "later_free_bytes": 48318382080,
+            "failures_and_repeats_count": true,
+            "automatic_retry": false,
+            "runtime_admitted": false,
+            "snapshot_qualification": "Initial proposal and preparation hold retained for history. Current cumulative preparation holds appear separately; final runner must use actual retained accounting, with no reset."
+          },
+          "effort_engineer_days": [
+            2,
+            4
+          ],
+          "confidence": "low; re-estimate after immutable source and measured validation",
+          "independent_acceptance": "Actual-binary-input ODE and likelihood references; physical-k prior/cell semantics; separate future predictive moments; conditional bounds distinguish unresolved from analytically demonstrated underresolution; all failures and costs retained.",
+          "scientific_budget_rule": "Reference/calibration work reused scientifically retains cumulative cost under approved8CPUh/1GiB; pytest and hosted CI are not a waiver.",
+          "parent_status": "in_progress",
+          "study_admission": "closed:1168MiB publication floor exceeds1GiB and global allocator unresolved",
+          "laplace": "Parallel only when useful/bounded; no new prerequisite",
+          "source_checkpoint": "4883acb62eb94f58ad6ba5473dd8b04f5db8535a",
+          "source_tree": "01342db56e5a6ce42c2d1c759e6ff5f7ae1dbe89",
+          "source_preparation": {
+            "handwritten_checkpoint": "746ce75186c9f1eaaa9de8af93ed2892c44c98d3",
+            "retained_style_failures": [
+              {
+                "source": "746ce75186c9f1eaaa9de8af93ed2892c44c98d3",
+                "outcome": "Formatter passed; Ruff rejected two E501 diagnostic strings; no schema/build/install/tests."
+              },
+              {
+                "source": "0c57e3f3c2278c730e908f0a6558657a04f7d253",
+                "outcome": "Ruff passed; format-check requested one literal-layout correction; no numerical validation."
+              }
+            ],
+            "ast_identical_repair": "50201d604290cf4af01286d2aad0f724d941944f",
+            "full_base_diff_check": "passed at50201d6; original746 EOF diagnostic retained",
+            "schema": {
+              "bytes": 52271,
+              "sha256": "cb29e2570ed1988c3d33e674ea4c680763e337ec227ec766ecfc3a0a781c9d7c",
+              "status": "independently_accepted",
+              "scope": "Contract construction only; no forward/likelihood/reference tests/build/refresh"
+            },
+            "cumulative_preparation_holds": {
+              "cpu_seconds": 320,
+              "active_wall_seconds": 900,
+              "qualification": "Conservative retained holds through schema generation; not measured execution totals or a budget reset."
+            }
+          },
+          "focused_validation": {
+            "status": "accepted_bounded_focused_hosted_delivery_pending",
+            "retained_first_attempt": {
+              "status": "failed_before_build_numerics_corrected_runner_pending",
+              "failed_source": "4883acb62eb94f58ad6ba5473dd8b04f5db8535a",
+              "completed_checks": [
+                "Ruff passed",
+                "Format check passed"
+              ],
+              "failure": "mypy: two test attr-defined errors plus pre-existing untyped jsonschema import from a focused script scope broader than configured CI",
+              "build_refresh_numerics_executed": false,
+              "tracked_processes_clean": 15,
+              "source_environment_unchanged": true,
+              "test_repair": {
+                "source": "32a9f7d2a4d299e2d993cefe7132bfb3b1e1c62a",
+                "scope": "Direct public predictor/normalizer captures; same endpoint monkeypatch targets",
+                "production_schema_census_unchanged": true
+              },
+              "runner_correction": "Match configured src/tests/examples type scope; keep external schema validation separate. No new dependency, ignore, reexport or workflow change.",
+              "known_cumulative_cpu_seconds": 30.530715093,
+              "known_cumulative_active_wall_seconds": 40.9480643226,
+              "permanent_conservative_holds": {
+                "cpu_seconds": 500,
+                "active_wall_seconds": 1500
+              },
+              "corrected_sequence_proposal": {
+                "cumulative_cpu_seconds": 1180,
+                "cumulative_active_wall_seconds": 3540,
+                "executed": false,
+                "admitted": false,
+                "qualification": "Planned cumulative reservations within unchanged 1200/3600; failures/holds not reset"
+              },
+              "numerical_outcome": null,
+              "build_package_outcome": null,
+              "hosted_delivery": "pending"
+            },
+            "accepted_source": "32a9f7d2a4d299e2d993cefe7132bfb3b1e1c62a",
+            "commands_passed": 8,
+            "cases_passed": 32,
+            "pytest_seconds": 13.55,
+            "phase_reports_passed": 96,
+            "schema_checks_passed": 1547,
+            "package_files_exact": 96,
+            "independent_reviews": {
+              "Quality": "accepted numerical/reference outcome",
+              "Platform": "accepted resource/identity outcome"
+            },
+            "actual_calls": {
+              "belief": 32,
+              "producer": 32,
+              "requested_models": 2415,
+              "fit_predictions_including_two_faults": 2390,
+              "future_predictions": 1344,
+              "normalizers": 22
+            },
+            "actual_reference": {
+              "series_values": 1452,
+              "position_lookups": 7834,
+              "decimal_exp": 1361,
+              "decimal_ln": 1427,
+              "precision": 100
+            },
+            "scientific_limits": "Restricted software/reference conformance only. Narrow 1024-node/sigma1e-6 request normalizes but an independent log-evidence gap above 52967 proves underresolution. Continuous predictive reference is unexcited uniform-prior future moments only; no general calibration or accepted study profile.",
+            "known_cumulative_cpu_seconds": 71.409551124,
+            "known_cumulative_active_wall_seconds": 87.5759022599,
+            "permanent_conservative_holds": {
+              "cpu_seconds": 1180,
+              "active_wall_seconds": 3540,
+              "qualification": "Prior failures and 60 CPU/300 wall unmeasured preparation retained; no reset or new allowance"
+            },
+            "tracked_children_reaped": 123,
+            "post_install_equal_terminal": true,
+            "numerical_outcome": "bounded_focused_accepted",
+            "build_package_outcome": "exact96_file_parity_accepted",
+            "hosted_delivery": "pending"
+          },
+          "current_source_checkpoint": "32a9f7d2a4d299e2d993cefe7132bfb3b1e1c62a",
+          "current_source_tree": "83a2c99b9c25ec7a9f14a8cbf093995155da5b10",
+          "delivery": {
+            "pull_request": 132,
+            "url": "https://github.com/spei04/strange-physics/pull/132",
+            "head": "32a9f7d2a4d299e2d993cefe7132bfb3b1e1c62a",
+            "base": "620c0f0bd3c6f2cadc00e0f132c4fc5d93945b17",
+            "pr_ci_run": 40648525110,
+            "pr_ci_status": "queued_at_checkpoint",
+            "main_candidate": "pending"
           }
         }
       }

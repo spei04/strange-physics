@@ -61,6 +61,19 @@ def main() -> None:
                 group == "runtime_negative",
             )
 
+    endpoint = json.loads((ROOT / "native-endpoint-belief.examples.json").read_text())
+    for name, fixture in endpoint["valid"].items():
+        check(f"native-endpoint-belief.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in endpoint[group]:
+            value = copy.deepcopy(endpoint["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"native-endpoint-belief.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     native = json.loads((ROOT / "native-spring.examples.json").read_text())
     for name, fixture in native["valid"].items():
         check(f"native-spring.schema.json#/$defs/{name}", fixture)
