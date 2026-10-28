@@ -12,15 +12,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Prepare the corrected #131 validation runner at 32a9f7d | Match configured type-check scope; numerical/package outcome pending |
-| Platform | Review the corrected runner and eventual #131 outcome | Preserve cumulative holds, failure evidence and exact identities |
-| Research | Test-only import/capture repair complete; reconcile progress | Production/schema/census unchanged; available for review after handoff |
-| Project lead | Coordinate corrected validation, accounting and integration | Existing approval remains active; no retry, scientific or delivery acceptance inferred |
+| Quality | Focused numerical/reference outcome review complete | Available for hosted delivery review; scientific profile remains unaccepted |
+| Platform | Focused resource/identity outcome review complete | Ready for independent CI/candidate review; cumulative holds retained |
+| Research | Source/reference work complete; reconcile accepted focused outcome | Available for review after progress handoff; no study-profile claim |
+| Project lead | Integrate #131 and coordinate hosted delivery | PR/main/candidate gates pending; existing approval and caps unchanged |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-28 | Research / Quality / Platform / Project lead | #131 focused outcome at 32a9f7d | All eight commands/32 cases passed; both independent reviews accepted; hosted delivery pending |
 | 2026-10-28 | Research / Quality / Platform / Project lead | #131 focused type-check failure at 4883acb; test repair 32a9f7d | Ruff/format passed; no build/refresh/numerics; corrected runner in preparation |
 | 2026-10-28 | Research / Quality / Platform / Project lead | #131 source/schema checkpoint 4883acb | Source/reference/census complete; two style failures retained; schema accepted; focused numerical/package validation pending |
 | 2026-10-28 | Research / Quality / Platform / Project lead | RA-N02.a.profile-resolution (#131): restricted endpoint-x beliefs and finite-resolution evidence | Source implementation assigned; independent references and cumulative bounds under review; no numerical validation yet |
@@ -1289,3 +1290,11 @@ The first focused validation at 4883acb passed Ruff and format checks, then fail
 Test-only successor 32a9f7d captures the public predictor and normalizer from their defining modules while preserving the endpoint monkeypatch targets. Production, schema, test semantics and the proposed 32-case census are unchanged. The corrected runner will follow configured CI's src/tests/examples type-check scope and retain separate external schema validation, without new dependencies or ignores. Quality is preparing it; Platform reviews it; Lead coordinates validation and integration. It has not been executed or admitted.
 
 Known cumulative measurements are 30.530715093 CPU-seconds and 40.9480643226 active-wall-seconds; the permanent conservative holds remain 500 / 1,500 seconds. The proposed corrected sequence totals 1,180 / 3,540 reserved seconds within the unchanged 1,200 / 3,600 envelope, without resetting failures. Lead removed only 19,325,198 bytes of reproducible cache files after preserving the failure record; observed free space rose 19,345,408 bytes, subject to concurrent host activity. Both checkouts, environments and unique evidence remain retained. Numerical, build/package and hosted delivery gates remain pending; no scientific acceptance, cap, estimate or graph change follows.
+
+## 2026-10-28 — Endpoint focused validation accepted; hosted delivery pending
+
+Exact 32a9f7d passed all eight bounded commands: scoped Ruff/format/mypy, offline build/archive checks and copy-mode refresh, external schema validation, and 32 tests in 13.55 pytest seconds with 96 passing phase reports. All 1,547 external schema checks passed; 96 package files matched Git, wheel, sdist and the retained installation. Quality accepted numerical/reference evidence and Platform accepted resources/identity. The earlier two style failures and first focused type-check failure remain separate retained records.
+
+Observed calls matched the declared census: 32 belief/producer entries, 2,415 requested models, 2,390 fit entries including two faults, 1,344 future predictions and 22 normalizations. Independent reference diagnostics covered 1,452 series values and retained all failure paths. The narrow 1,024-node / sigma 1e-6 counterexample returned normalized weights while the independent continuous-versus-grid log-evidence gap exceeded 52,967. This demonstrates that normalization alone does not establish resolution; it is not a product-request rejection. The continuous predictive reference covers the unexcited uniform-prior future moments only. Finite-grid refinement and conditional bounds do not establish general continuous-posterior or study calibration.
+
+Known cumulative measurements are 71.409551124 CPU-seconds and 87.5759022599 active-wall-seconds. Permanent holds remain 1,180 / 3,540 within the unchanged 1,200 / 3,600 envelope, including prior failures and unmeasured preparation; no allowance resets. All 123 tracked child processes were reaped with no remaining groups or alarms, and the post-install environment matched terminal readback. [PR #132](https://github.com/spei04/strange-physics/pull/132) is open at 32a9f7d against main 620c0f0, with exact-head CI run 40648525110 queued. Main/candidate delivery remains pending. RA-N02.a is in progress; scientific settings and full-study admission remain unaccepted. Laplace stays parallel analytic/test preparation, with no implementation or comparative-acceptance claim.

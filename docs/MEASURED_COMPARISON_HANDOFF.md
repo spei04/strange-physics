@@ -1,6 +1,6 @@
 # Retained Journal comparison integration
 
-Status (2026-10-28): The finite-log-weight normalizer (#129) remains delivered through PR #130/main 620c0f0. Endpoint checkpoint #131 passed Ruff and format checks at 4883acb, then stopped at mypy before build, package refresh or numerical tests. Test-only repair 32a9f7d preserves production, schema and the proposed census; the corrected validation runner is in preparation. Earlier style failures and the accepted schema remain retained. Numerical/package and hosted outcomes are pending. RA-N02.a remains in progress, the scientific profile is unaccepted, and full-study admission stays closed. [Current evidence and assignments](EXECUTION_LOG.md#2026-10-28--endpoint-focused-typecheck-failure-retained-test-repair-ready).
+Status (2026-10-28): The finite-log-weight normalizer (#129) remains delivered through PR #130/main 620c0f0. Endpoint checkpoint #131 has independently accepted focused validation at 32a9f7d: all eight commands passed, including 32 tests in 13.55 seconds, 1,547 external schema checks and exact 96-file package parity. Earlier style/type-check failures remain retained. [PR #132](https://github.com/spei04/strange-physics/pull/132) is open with CI queued; main/candidate delivery is pending. RA-N02.a remains in progress, the scientific profile is unaccepted, and full-study admission stays closed. [Current evidence and assignments](EXECUTION_LOG.md#2026-10-28--endpoint-focused-validation-accepted-hosted-delivery-pending).
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
@@ -8,12 +8,12 @@ Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfd
 
 | Owner | Assignment |
 | --- | --- |
-| Quality | Prepare the corrected #131 validation runner at 32a9f7d |
-| Platform | Review corrected runner, cumulative bounds and eventual outcome |
-| Research | Test-only capture repair complete; progress handoff and independent review |
-| Project lead | Coordinate corrected validation, accounting and integration |
+| Quality | Focused numerical/reference review accepted; ready for delivery review |
+| Platform | Focused resource/identity review accepted; ready for CI/candidate review |
+| Research | Source/reference work complete; accepted-outcome progress handoff |
+| Project lead | Integrate #131 and coordinate pending hosted delivery |
 
-The two existing cloud checkouts remain for sequential reuse. Lead owns the frozen identity checkout for coordinated #131 validation and resumes primary progress/integration after Research's documentation handoff. No new environment was created. Source/schema checkpoint 4883acb is accepted; the two prior style failures and the focused type-check failure remain retained. Test-only repair 32a9f7d preserves production/schema/census and monkeypatch behavior. The corrected runner and later numerical/build/package outcome still require their own review. Earlier normalizer delivery evidence remains source-specific; full-study admission stays closed.
+The two existing cloud checkouts remain for sequential reuse. Lead owns the frozen identity checkout for coordinated #131 validation and resumes primary progress/integration after Research's documentation handoff. No new environment was created. Focused source 32a9f7d has passed all eight commands and both independent reviews, with exact 96-file archive/installed parity. The two style failures and first focused type-check failure remain retained. PR/main/candidate delivery still requires its own exact evidence; this bounded software/reference result does not accept a scientific profile. Earlier normalizer delivery evidence remains source-specific; full-study admission stays closed.
 
 The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
 
