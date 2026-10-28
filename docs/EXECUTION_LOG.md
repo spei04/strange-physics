@@ -12,15 +12,16 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | Engineer | Current / next work | Review and gate |
 | --- | --- | --- |
-| Quality | Prepare the final #131 focused validation runner | Exact source/schema, finite census and retained diagnostics; outcome pending |
-| Platform | Independently review the forthcoming #131 outcome | Cumulative resources, identity and failure accounting; full-study capacity remains closed |
-| Research | Source, independent references and exact #131 census complete | Available for review after this progress handoff; no numerical result claimed |
-| Project lead | Coordinate #131 runtime, integration and progress | Existing owner approval remains active; focused and delivery gates remain |
+| Quality | Prepare the corrected #131 validation runner at 32a9f7d | Match configured type-check scope; numerical/package outcome pending |
+| Platform | Review the corrected runner and eventual #131 outcome | Preserve cumulative holds, failure evidence and exact identities |
+| Research | Test-only import/capture repair complete; reconcile progress | Production/schema/census unchanged; available for review after handoff |
+| Project lead | Coordinate corrected validation, accounting and integration | Existing approval remains active; no retry, scientific or delivery acceptance inferred |
 
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-28 | Research / Quality / Platform / Project lead | #131 focused type-check failure at 4883acb; test repair 32a9f7d | Ruff/format passed; no build/refresh/numerics; corrected runner in preparation |
 | 2026-10-28 | Research / Quality / Platform / Project lead | #131 source/schema checkpoint 4883acb | Source/reference/census complete; two style failures retained; schema accepted; focused numerical/package validation pending |
 | 2026-10-28 | Research / Quality / Platform / Project lead | RA-N02.a.profile-resolution (#131): restricted endpoint-x beliefs and finite-resolution evidence | Source implementation assigned; independent references and cumulative bounds under review; no numerical validation yet |
 | 2026-10-28 | Research + Quality + Platform + Project lead | PR #130 normalizer delivery and #129 closure | Main 620c0f0/all five jobs/exact candidate accepted; RA-N02.a remains in progress |
@@ -1280,3 +1281,11 @@ Checkpoint 4883acb (tree 01342db5) combines the independently reviewed endpoint 
 The two earlier style phases remain failed records: 746ce75 formatted successfully but Ruff rejected two long diagnostic strings; 0c57e3f passed Ruff but format-check requested one literal-layout correction. Successor 50201d6 preserves all five Python ASTs relative to 746ce75 and passes the full base diff check. These source repairs changed no numerical formula, tolerance, diagnostic value or case count; they do not stand in for the pending final checks.
 
 The exact proposed collection has 32 cases, with 32 belief and candidate-producer entries, 2,415 requested candidate nodes, 2,390 fit predictor entries including two injected faults, 1,344 future predictions and 22 normalizations. Independent reference work is bounded and counted separately. These are static expectations, not observed results. Quality prepares the final runner; Platform reviews the eventual outcome; Research's source/reference/count work is complete; Lead owns the coordinated runtime and integration. Mandatory numerical/build/package and PR/main checks remain pending. The scientific profile, full-study capacity gate and task/forecast/cap boundaries are unchanged. The Laplace test-only analytic pack is ready for a separately scoped source checkpoint in parallel, without becoming a prerequisite or a scientific-profile acceptance.
+
+## 2026-10-28 — Endpoint focused typecheck failure retained; test repair ready
+
+The first focused validation at 4883acb passed Ruff and format checks, then failed mypy with two test attribute-export errors and the existing untyped jsonschema import in the external schema-validator script. No build, package refresh or numerical tests ran. All 15 tracked processes ended cleanly; source and environment identities were unchanged. This failure remains separate from the two earlier style failures and accepted schema.
+
+Test-only successor 32a9f7d captures the public predictor and normalizer from their defining modules while preserving the endpoint monkeypatch targets. Production, schema, test semantics and the proposed 32-case census are unchanged. The corrected runner will follow configured CI's src/tests/examples type-check scope and retain separate external schema validation, without new dependencies or ignores. Quality is preparing it; Platform reviews it; Lead coordinates validation and integration. It has not been executed or admitted.
+
+Known cumulative measurements are 30.530715093 CPU-seconds and 40.9480643226 active-wall-seconds; the permanent conservative holds remain 500 / 1,500 seconds. The proposed corrected sequence totals 1,180 / 3,540 reserved seconds within the unchanged 1,200 / 3,600 envelope, without resetting failures. Lead removed only 19,325,198 bytes of reproducible cache files after preserving the failure record; observed free space rose 19,345,408 bytes, subject to concurrent host activity. Both checkouts, environments and unique evidence remain retained. Numerical, build/package and hosted delivery gates remain pending; no scientific acceptance, cap, estimate or graph change follows.

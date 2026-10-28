@@ -2,7 +2,7 @@
   "schema_version": "strange-physics.execution-plan.v1",
   "status": "approved_execution_in_progress",
   "baseline_commit": "28a4c19e8f9c92b83d886be6b96667d834784f9e",
-  "updated": "2026-10-27",
+  "updated": "2026-10-28",
   "staffing": {
     "engineers": 9,
     "delivery_fraction": 0.7,
@@ -10925,9 +10925,9 @@
     },
     "checkout_ownership": {
       "scientific": "Lead owns primary progress/integration after Research documentation handoff; the primary environment remains unused.",
-      "identity": "Lead owns frozen source/schema4883acb on feat/native-endpoint-beliefs for coordinated focused validation. No new checkout/environment; numerical/build/package validation remains pending.",
+      "identity": "Lead owns frozen 32a9f7d on feat/native-endpoint-beliefs after test-only capture repair. Corrected validation runner is in preparation; no build/refresh/numerical outcome or new environment.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
-      "storage": "Two existing cloud checkouts retained for sequential reuse. Reviewed retirement of two reproducible caches removed 37,876,218 regular-file bytes; candidate verifier removed 2,102,836 temporary export bytes. Required release/failure evidence and durable environments remain. Earlier free-space observations are historical; these file totals do not establish physical filesystem savings.",
+      "storage": "Two existing cloud checkouts retained for sequential reuse. Reviewed retirement of two reproducible caches removed 37,876,218 regular-file bytes; candidate verifier removed 2,102,836 temporary export bytes. Required release/failure evidence and durable environments remain. Earlier free-space observations are historical; these file totals do not establish physical filesystem savings. Subsequent failed #131 type-check cache retirement removed 19,325,198 regular bytes; observed free-space increase 19,345,408 bytes is subject to concurrent host activity. Both checkouts/environments and unique evidence retained.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
     },
     "spring_calibration_evidence": {
@@ -12588,23 +12588,23 @@
       "private_evidence_sha256": "7fbb41abdc81e291284de8e82d8be3ae0f62cf7d8fb926c8ac6aa1c79b56f66d"
     },
     "native_comparison_execution": {
-      "status": "normalizer_delivered_endpoint_source_schema_accepted_validation_pending",
+      "status": "normalizer_delivered_endpoint_typecheck_failed_repair_validation_pending",
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Research": "Source/reference/count work complete for #131; available for review after progress handoff.",
-        "Quality": "Prepare final source-pinned focused validation runner; retain exact per-node counts and reference diagnostics.",
-        "Platform": "Independently review focused outcome, cumulative resources and identities.",
-        "Project lead": "Coordinate runtime, integration and progress under existing scoped owner approval."
+        "Research": "Test-only 32a9f7d repair complete; progress reconciliation and independent review after handoff.",
+        "Quality": "Prepare corrected source-pinned focused runner with configured CI type scope; execution pending.",
+        "Platform": "Review corrected runner, cumulative holds/identities and eventual outcome.",
+        "Project lead": "Coordinate validation accounting, runtime review and integration under existing approval."
       },
-      "handoff": "PR #128 bounded RA-02/#105 and RA-N01/#106 acceptance remains complete. PR #130/main 620c0f0 and exact candidate now deliver normalizer subunit #129, which is closed. Failed 6f and focused 346 records remain source-specific. RA-N02.a stays in progress; scientific profile, full inference and global study authority/capacity remain unaccepted. Endpoint source/schema4883acb is accepted; both style failures are preserved, and numerical/build/package/hosted validation remains pending.",
+      "handoff": "PR #128 bounded RA-02/#105 and RA-N01/#106 acceptance remains complete. PR #130/main 620c0f0 and exact candidate now deliver normalizer subunit #129, which is closed. Failed 6f and focused 346 records remain source-specific. RA-N02.a stays in progress; scientific profile, full inference and global study authority/capacity remain unaccepted. Endpoint source/schema4883acb is accepted; both style failures are preserved, and numerical/build/package/hosted validation remains pending. Focused 4883acb Ruff/format passed, mypy failed before build/refresh/numerics; test-only 32a9f7d repair retains production/schema/census. Corrected validation is pending.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Complete the bounded #131 focused numerical/build/package validation at the reviewed source/schema, then independent outcome review and normal hosted delivery checks. Scientific-profile and finite-resolution acceptance remain unresolved. The Laplace test-only analytic pack can proceed as separately scoped parallel source work, not a prerequisite. Existing owner approval remains in force; full-study capacity/allocation stays closed.",
+      "next_units": "Review the corrected #131 focused runner at 32a9f7d, then complete bounded numerical/build/package validation, independent outcome review and unchanged hosted delivery checks. Preserve all failed attempts and cumulative holds. Scientific-profile/finite-resolution acceptance remains unresolved; the Laplace analytic test pack remains parallel preparation, not a prerequisite. Existing scoped owner approval remains active; full-study allocation stays closed.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -15332,7 +15332,7 @@
         }
       },
       "next_grid_preparation": {
-        "status": "normalizer_delivered_endpoint_source_schema_accepted_science_unaccepted",
+        "status": "normalizer_delivered_endpoint_typecheck_repair_pending_science_unaccepted",
         "owner": "Research",
         "independent_reviewers": [
           "Quality",
@@ -15348,7 +15348,7 @@
         ],
         "laplace_sequence": "Analytic/interface preparation may overlap without changing the graph. Comparative Laplace acceptance follows accepted shared scientific definitions and frozen N03 fixtures; first-result sequencing holds inference constant for selector comparison. It is not a mathematical requirement to delay all preparation, and an unvalidated grid is not ground truth.",
         "experiment_execution": "not_started",
-        "assignment_stage": "focused_validation_preparation_source_reference_census_complete",
+        "assignment_stage": "focused_typecheck_failure_preserved_corrected_runner_preparation",
         "normalizer": {
           "issue": 129,
           "parent_task": "RA-N02.a",
@@ -15455,7 +15455,7 @@
         "profile_resolution_checkpoint": {
           "id": "RA-N02.a.profile-resolution",
           "issue": 131,
-          "status": "source_schema_accepted_focused_validation_pending",
+          "status": "typecheck_failed_test_repair_pending_validation",
           "source_base": "620c0f0bd3c6f2cadc00e0f132c4fc5d93945b17",
           "first_production_checkpoint": "df2cd1e8a727d90a872f93c9258ad355be8880f0",
           "owner": "Research",
@@ -15555,11 +15555,41 @@
             }
           },
           "focused_validation": {
-            "status": "pending",
+            "status": "failed_before_build_numerics_corrected_runner_pending",
+            "failed_source": "4883acb62eb94f58ad6ba5473dd8b04f5db8535a",
+            "completed_checks": [
+              "Ruff passed",
+              "Format check passed"
+            ],
+            "failure": "mypy: two test attr-defined errors plus pre-existing untyped jsonschema import from a focused script scope broader than configured CI",
+            "build_refresh_numerics_executed": false,
+            "tracked_processes_clean": 15,
+            "source_environment_unchanged": true,
+            "test_repair": {
+              "source": "32a9f7d2a4d299e2d993cefe7132bfb3b1e1c62a",
+              "scope": "Direct public predictor/normalizer captures; same endpoint monkeypatch targets",
+              "production_schema_census_unchanged": true
+            },
+            "runner_correction": "Match configured src/tests/examples type scope; keep external schema validation separate. No new dependency, ignore, reexport or workflow change.",
+            "known_cumulative_cpu_seconds": 30.530715093,
+            "known_cumulative_active_wall_seconds": 40.9480643226,
+            "permanent_conservative_holds": {
+              "cpu_seconds": 500,
+              "active_wall_seconds": 1500
+            },
+            "corrected_sequence_proposal": {
+              "cumulative_cpu_seconds": 1180,
+              "cumulative_active_wall_seconds": 3540,
+              "executed": false,
+              "admitted": false,
+              "qualification": "Planned cumulative reservations within unchanged 1200/3600; failures/holds not reset"
+            },
             "numerical_outcome": null,
             "build_package_outcome": null,
             "hosted_delivery": "pending"
-          }
+          },
+          "current_source_checkpoint": "32a9f7d2a4d299e2d993cefe7132bfb3b1e1c62a",
+          "current_source_tree": "83a2c99b9c25ec7a9f14a8cbf093995155da5b10"
         }
       }
     },
