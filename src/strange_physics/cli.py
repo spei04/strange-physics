@@ -5,6 +5,8 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sqlite3
+import stat
 import sys
 import tempfile
 from pathlib import Path
@@ -21,6 +23,23 @@ from strange_physics.sdk import RandomAgent, run_agent
 from strange_physics.session import LocalSession
 from strange_physics.workflow_cli import COMMANDS, add_commands, run_workflow
 from strange_physics.worlds import reference_world
+
+_INSPECTION_LIMIT = 64 * 1024 * 1024
+
+
+def _read_observations(path: Path) -> ObservationBundle:
+    # Nonblocking open allows rejecting a FIFO before any read can wait for a writer.
+    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    with os.fdopen(descriptor, "rb") as stream:
+        info = os.fstat(stream.fileno())
+        if not stat.S_ISREG(info.st_mode):
+            raise ValueError("observation bundle must be a regular file")
+        if info.st_size > _INSPECTION_LIMIT:
+            raise ValueError("observation bundle exceeds the 64 MiB local inspection limit")
+        raw = stream.read(_INSPECTION_LIMIT + 1)
+        if len(raw) > _INSPECTION_LIMIT:
+            raise ValueError("observation bundle exceeds the 64 MiB local inspection limit")
+    return ObservationBundle.model_validate_json(raw)
 
 
 def write_private(path: Path, content: str) -> None:
@@ -79,9 +98,7 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(models[args.contract].model_json_schema(), indent=2))
             return 0
         if args.command == "inspect":
-            if args.path.stat().st_size > 64 * 1024 * 1024:
-                raise ValueError("observation bundle exceeds the 64 MiB local inspection limit")
-            bundle = ObservationBundle.model_validate_json(args.path.read_bytes())
+            bundle = _read_observations(args.path)
         else:
             agent = RandomAgent(args.agent_seed)
             if args.max_new_experiments is not None and args.max_new_experiments < 0:
@@ -97,7 +114,16 @@ def main(argv: list[str] | None = None) -> int:
                 )
                 session = LocalSession.create(args.directory / "session.sqlite", uuid4().hex, world)
             else:
-                session = LocalSession.open(args.directory / "session.sqlite")
+                try:
+                    session = LocalSession.open(args.directory / "session.sqlite")
+                except sqlite3.DatabaseError as error:
+                    code: object = getattr(error, "sqlite_errorcode", None)
+                    if not isinstance(code, int) or code & 0xFF not in (
+                        sqlite3.SQLITE_CORRUPT,
+                        sqlite3.SQLITE_NOTADB,
+                    ):
+                        raise
+                    raise ValueError("invalid SQLite run journal") from None
             with session:
                 bundle = run_agent(session, agent, max_new_experiments=args.max_new_experiments)
             write_private(args.directory / "observations.json", bundle.model_dump_json(indent=2))
