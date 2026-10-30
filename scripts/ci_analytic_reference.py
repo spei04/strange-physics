@@ -11,6 +11,7 @@ import resource
 import subprocess
 import sys
 import time
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 from xml.parsers import expat
@@ -283,6 +284,12 @@ def validate_reports(root: Path) -> dict[str, Any]:
                     or any(not isinstance(v, str) or len(v) > 256 for v in bounds)
                 ):
                     raise ValueError("Missing normalizer diagnostics")
+                try:
+                    lower, upper = (Decimal(value) for value in bounds)
+                except InvalidOperation as error:
+                    raise ValueError("Invalid normalizer decimal diagnostics") from error
+                if not lower.is_finite() or not upper.is_finite() or lower > upper:
+                    raise ValueError("Normalizer diagnostics must be finite and ordered")
                 vectors.append(data)
             elif key == "laplace_rejection":
                 kind = data.get("kind")

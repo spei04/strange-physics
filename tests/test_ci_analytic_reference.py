@@ -105,6 +105,9 @@ def test_reference_reports_accept_complete_evidence(tmp_path: Path, console_pref
         "missing_metric",
         "nan_metric",
         "criterion",
+        "bounds_malformed",
+        "bounds_nan",
+        "bounds_reversed",
         "denial_reason",
         "missing_census",
         "duplicate_census",
@@ -143,6 +146,14 @@ def test_reference_reports_reject_incomplete_or_changed_evidence(
             value["max_absolute_binary64_error"] = "NaN"
         else:
             value["software_criterion"] = "1e-6"
+        rows[2]["properties"][0][1] = json.dumps(value)
+    elif mutation in ("bounds_malformed", "bounds_nan", "bounds_reversed"):
+        value = json.loads(rows[2]["properties"][0][1])
+        value["shifted_log_normalizer_directed_decimal"] = {
+            "bounds_malformed": ["not-a-number", "0.2"],
+            "bounds_nan": ["NaN", "0.2"],
+            "bounds_reversed": ["0.2", "0.1"],
+        }[mutation]
         rows[2]["properties"][0][1] = json.dumps(value)
     elif mutation == "denial_reason":
         row = next(
