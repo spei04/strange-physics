@@ -5,6 +5,7 @@ import hashlib
 import json
 import subprocess
 import sys
+import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
@@ -240,7 +241,7 @@ def test_reference_child_lifecycle(
 
     monkeypatch.setattr(subprocess, "Popen", launch)
     times = iter([0.0, float(ci.WALL_LIMIT + 1) if state == "late_zero" else 1.0])
-    monkeypatch.setattr(ci.time, "monotonic", lambda: next(times))
+    monkeypatch.setattr(time, "monotonic", lambda: next(times))
     result = ci.run_child(tmp_path)
     assert result["success"] is (state == "success")
     assert result["reaped"] is (state != "unreaped")
