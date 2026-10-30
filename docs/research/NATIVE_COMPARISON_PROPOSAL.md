@@ -4,9 +4,9 @@ Source-only next-step proposal: [finite-grid calibration handoff](../FINITE_GRID
 
 **Current checkpoint (2026-10-30)**
 
-- **Verified:** The spring demo, saved playback, local reference checks and CI guard tests pass.
-- **Next — Lead + Quality:** Finish hosted reference-CI verification and review the proposed grid calibration.
-- **Blocked:** Discrepancy meaning and scientific balance remain unresolved; full-study storage is insufficient and the selector comparison has not run. [Detailed evidence and limits](../EXECUTION_LOG.md#2026-10-30--reference-ci-and-grid-calibration-handoff).
+- **Verified:** The spring demo and saved playback work; required reference CI and package verification pass.
+- **Next — Quality + Research:** Finish grid qualification and reconcile cumulative research costs.
+- **Blocked:** Calibration assumptions and runtime storage remain unresolved; selector and law-change comparisons have not run. [Demo, measured result and limits](../EXECUTION_LOG.md#2026-10-30--reference-ci-delivered-and-grid-foundation).
 
 Status: **owner-approved for scoped implementation and the bounded comparison on2026-10-21**. Accepted plan source33ddfbf74837dde29e0f1db3b1b4263e7031ddc2, PR #100. The reviewed native dependency amendment and scoped RA_EXEC are active; scientific/implementation entry gates and all caps remain. See [approval record](APPROVALS.md#native-comparison-2026-10-21).
 

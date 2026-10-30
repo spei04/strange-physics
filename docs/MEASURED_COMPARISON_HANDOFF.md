@@ -2,15 +2,15 @@
 
 **Current checkpoint (2026-10-30)**
 
-- **Verified:** The spring demo, saved playback, local reference checks and CI guard tests pass.
-- **Next — Lead + Quality:** Finish hosted reference-CI verification and review the proposed grid calibration.
-- **Blocked:** Discrepancy meaning and scientific balance remain unresolved; full-study storage is insufficient and the selector comparison has not run. [Detailed evidence and limits](EXECUTION_LOG.md#2026-10-30--reference-ci-and-grid-calibration-handoff).
+- **Verified:** The spring demo and saved playback work; required reference CI and package verification pass.
+- **Next — Quality + Research:** Finish grid qualification and reconcile cumulative research costs.
+- **Blocked:** Calibration assumptions and runtime storage remain unresolved; selector and law-change comparisons have not run. [Demo, measured result and limits](EXECUTION_LOG.md#2026-10-30--reference-ci-delivered-and-grid-foundation).
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
 ## Owners
 
-- Lead owns hosted CI verification and integration. Quality completed the CI guard implementation and local validation; Research independently accepted the retained outcome and supplied the proposed grid handoff. Quality releases this progress checkout to Lead after the documentation checkpoint. See the [current board](EXECUTION_LOG.md#current-assignment-board) and [preserved handoff limits](EXECUTION_LOG.md#2026-10-28--progress-view-consolidation).
+- Lead completed hosted CI and candidate integration. Quality owns the grid foundation and qualification driver; Research owns independent review and cumulative-account reconciliation. See the [current board](EXECUTION_LOG.md#current-assignment-board) and [preserved handoff limits](EXECUTION_LOG.md#2026-10-28--progress-view-consolidation).
 
 ## Scope and acceptance
 

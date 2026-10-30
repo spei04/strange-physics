@@ -1,5 +1,8 @@
 # Finite-grid calibration handoff — proposed GRID-Q1
 
+The sequencing is deliberate: the initial one-parameter experiment makes an explicitly checked grid practical. Laplace approximates the posterior around a fitted mode; accurate Gaussian integrals alone do not establish that the approximation captures a boundary, a flat likelihood or multiple explanations. Grid qualification establishes the reference and shared inference keeps the selector comparison focused on experiment choice. Laplace's mathematical validation proceeds in parallel; comparative adoption follows a measured accuracy check against the qualified reference.
+
+
 Status: source-only proposal, 2026-10-30. Parent: [approved native comparison](research/NATIVE_COMPARISON_PROPOSAL.md), RA-N02.a followed by RA-N03. This document freezes a reviewable proposal, not an admitted run or an accepted scientific profile. Observed errors, elapsed time, coverage and outcomes are all **null / not run**.
 
 ## Decision and scope
@@ -162,3 +165,9 @@ The highest-risk decision is discrepancy meaning. The proposed dyadic scales mak
 A strict solver-error-sized discrepancy may be incompatible with the existing full-support finite pool; the known 1024-node/sigma-1e-6 counterexample already demonstrates that this can occur. If the independently justified scale fails this fixed candidate, record the failed gate and seek a scoped protocol decision. Do not silently expand the pool, shrink the support, change the observation action or reinterpret an unvalidated grid as ground truth.
 
 A second decision is whether the proposed resolution/predictive margins are useful enough for the later selector comparison. They bound this diagnostic, not the I1 threshold. Review them before outcomes. Remaining unknowns are exact integrated source/runtime identity, final source-derived resource census, admissible scientific balance, scientific scale/correlation justification, untouched fixture separation and actual errors/timing. None is filled with a fabricated measurement.
+
+## Source audit follow-up
+
+The first implementation checkpoint corrects the fixture shape: explicit duration/sample interval 1/2 and dt 1/64, complete public-shaped records, external history labels and canonical space digests. Identical physical spaces share a digest; there is no space_id field. Terminal velocities are explicitly unused zero placeholders, so these synthetic records are terminal-x diagnostics rather than full observed trajectories.
+
+The accepted old EndpointOracle remains unchanged. Its single-instance 16,000-lookup / 1,728-series guards cannot cover the proposed 16,129 / 2,689 aggregate. The foundation proposes six fixed, non-resetting named instances with explicit aggregate exp/log/trig counts. This source has not established numerical acceptance. The complete disabled driver, outward reference/error bounds, persisted attempts/results, exact cost ledger and numerical admission remain pending. No new publisher is required for this synthetic diagnostic.

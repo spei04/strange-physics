@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** The spring demo, saved playback, local reference checks and CI guard tests pass.
-- **Next — Lead + Quality:** Finish hosted reference-CI verification and review the proposed grid calibration.
-- **Blocked:** Discrepancy meaning and scientific balance remain unresolved; full-study storage is insufficient and the selector comparison has not run. [Detailed evidence and limits](EXECUTION_LOG.md#2026-10-30--reference-ci-and-grid-calibration-handoff).
+- **Verified:** The spring demo and saved playback work; required reference CI and package verification pass.
+- **Next — Quality + Research:** Finish grid qualification and reconcile cumulative research costs.
+- **Blocked:** Calibration assumptions and runtime storage remain unresolved; selector and law-change comparisons have not run. [Demo, measured result and limits](EXECUTION_LOG.md#2026-10-30--reference-ci-delivered-and-grid-foundation).
 
 ## Approval and execution capacity
 
@@ -1573,3 +1573,20 @@ The repairs used 0.436901118 / 1.029257447 and 0.093534663 / 0.591996913 CPU / a
 Roles: Research authored GRID-Q1 and independently reviewed the CI source/outcome; Quality authored the CI guards, retained local failures and validation, and reconciled this progress entry; Lead reviewed the exact source/costs, owns PR/hosted verification and the next integration. Released review consumers do not imply an additional execution allocation.
 
 General source readiness remains separate from the historical 50 GiB start / 45 GiB runtime reserves; those runtime guards are not waived. Existing numerical units stay closed, and no scientific remaining balance is inferred from this engineering allowance. The full-study reservation floor of 1,168 MiB still exceeds the unchanged 1 GiB cap. Task IDs, DAG, estimates, approvals and the 36-episode / 432-purchase / 8 CPU-hour / zero-provider limits are unchanged. Grid calibration remains the next scientific prerequisite; the illustrative demo and analytic fixtures do not establish it.
+
+
+## 2026-10-30 — Reference CI delivered and grid foundation
+
+**Usable demo and measured result.** The [reproducible spring workflow](https://github.com/spei04/strange-physics/blob/5819563bbef4b94c75aadb3c495c798dc7926876/docs/BOUNDED_SCIENTIFIC_DEMO.md) and private saved-prediction playback remain verified. The retained development case used four observations, fitted k=0.6750572721112501 and passed all 24 held-out probes at the fixed 0.001 RMSE target; maximum RMSE was 3.154199886178306e-8. Evidence is limited to that controlled spring case. Selector performance, uncertainty calibration and change recovery remain unmeasured.
+
+**CI delivery.** [PR #135](https://github.com/spei04/strange-physics/pull/135) merged normally as main 5819563bbef4b94c75aadb3c495c798dc7926876, with the exact reviewed tree 5732455a5ea48b72942df94e1e409bd43a0782e6. PR run 41119034874 passed six required jobs; protected-main run 41121754233 passed all seven. Each ordinary suite passed 4,632 tests. Main Python 3.12/3.14 took 650.39/831.90 pytest seconds. The separate reference jobs each passed the fixed 24 cases / 72 phases, eight vectors and five denials. Their numerical helper/test bytes remain unchanged. GitHub briefly reported a nonterminal PR job after its test steps completed; the merge waited for the actual successful required gate.
+
+**Candidate evidence.** Unpublished candidate 13009766437 is 593,587 bytes, SHA256 af3031d48cc58d838542b146e56ee56440f6ee0fe970d277c17cf554e8ba7891. Cloud-only verification matched all 96 package files, archive checksums, provenance, source and lock identities, both raw reference bundles, 17 copied-interpreter observations and two certificate-trust records. Research independently accepted the exact inputs and output. Verification result SHA-256: 29df7c83902dba9605b445d480edc0bd4ff3a721a52bea53b05e5fd53ccc9b98; index: 2428ddf76310bb9d5733747d28ed81e3d8ec517aeb11d2e8c11328f3976e21b7. Runtime-export bytes were not independently regenerated; their digest and the successful hosted locked install/smoke are retained. This is an unpublished package verification, with no deployment or production-readiness claim.
+
+The separate artifact-verification allowance was 20 CPU seconds / 60 active-wall seconds / 4 MiB output. Its inner measurement was 0.794798027 CPU seconds / 6.670644764 wall seconds; inclusive outer child plus controller CPU was 0.894427332 seconds with 6.811508621 wall seconds. Do not add inner CPU again to the inclusive outer receipt. All 118 direct Git children closed, and 2,247,948 temporary source/archive/report bytes were removed. The complete allowance remains charged to this engineering unit; it creates no scientific credit. All four hosted reference executions remain separately identified. No numerical experiment or local reference pack was rerun.
+
+**Next evidence gate.** Quality prepared fixed GRID-Q1 fixture/reference source and is validating its synthetic failure tests. The complete qualification driver and persisted result still need implementation and review. The API audit requires explicit half-second sampling, canonical common-space digests with external fixture labels, and a separately declared finite reference allocation because the old single-oracle guards are too small. The diagnostic performs no purchased experiment or measured publication operation; a new publisher is not a prerequisite. Its unused synthetic velocity fields must never be represented as observed trajectories.
+
+Research recovered 54.803988 CPU seconds across 314 unique normalizer child records; the command summaries duplicate those records and must not be added again. Original native-reference and some controller/preparation costs remain unbounded by the inspected receipts. Neither remaining scientific balance nor new execution authority is inferred. The latest source-only capacity observation was 46,237,298,688 free bytes, 7,449,792,512 below the retained 50 GiB start guard. No shared cache was removed and no capacity was purchased. The full-study 1,168 MiB publication floor versus the unchanged 1 GiB cap is a separate future gate.
+
+Assignments: Quality owns the grid foundation and next qualification driver; Research owns independent source review and cumulative-account reconciliation; Lead owns integration, artifact verification and concrete admission decisions. The order remains finite-grid qualification, shared-inference selector comparison, then comparative Laplace and law-change work under their applicable approvals. Enterprise work that does not support these evidence milestones is deferred. Existing task IDs, dependency graphs, estimates, approvals, failed attempts and scientific caps remain unchanged.

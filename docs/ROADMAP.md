@@ -2,9 +2,9 @@
 
 **Current checkpoint (2026-10-30)**
 
-- **Verified:** The spring demo, saved playback, local reference checks and CI guard tests pass.
-- **Next — Lead + Quality:** Finish hosted reference-CI verification and review the proposed grid calibration.
-- **Blocked:** Discrepancy meaning and scientific balance remain unresolved; full-study storage is insufficient and the selector comparison has not run. [Detailed evidence and limits](EXECUTION_LOG.md#2026-10-30--reference-ci-and-grid-calibration-handoff).
+- **Verified:** The spring demo and saved playback work; required reference CI and package verification pass.
+- **Next — Quality + Research:** Finish grid qualification and reconcile cumulative research costs.
+- **Blocked:** Calibration assumptions and runtime storage remain unresolved; selector and law-change comparisons have not run. [Demo, measured result and limits](EXECUTION_LOG.md#2026-10-30--reference-ci-delivered-and-grid-foundation).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 

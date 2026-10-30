@@ -10924,8 +10924,8 @@
       "main_ci": 39357223876
     },
     "checkout_ownership": {
-      "scientific": "Quality completed the concise progress update on docs/finite-grid-calibration-handoff; released to Lead for review and publication.",
-      "identity": "Lead owns the clean reviewed CI source and guide successor on feat/laplace-reference-pack-v2; local engineering validation complete, hosted PR verification pending.",
+      "scientific": "Lead owns primary progress updates after accepted main candidate verification; no numerical execution.",
+      "identity": "Quality owns GRID-Q1 source and bounded synthetic-test validation in the reused identity checkout.",
       "dependencies": "Each checkout owns its pinned copy-mode Linux environment; cache outside checkouts, no mutable dependency sharing.",
       "storage": "Two existing cloud checkouts retained for sequential reuse. Reviewed retirement of two reproducible caches removed 37,876,218 regular-file bytes; candidate verifier removed 2,102,836 temporary export bytes. Required release/failure evidence and durable environments remain. Earlier free-space observations are historical; these file totals do not establish physical filesystem savings. Subsequent failed #131 type-check cache retirement removed 19,325,198 regular bytes; observed free-space increase 19,345,408 bytes is subject to concurrent host activity. Both checkouts/environments and unique evidence retained. Endpoint main51356f2 verification removed2,141,713 temporary export bytes after readback; both checkouts/environments and required evidence remain.",
       "managed_tool_boundary": "Managed creation on this local chat cannot target the remote cloud host; the additional remote worktree is ordinary unmanaged Git and has a private owner/task index."
@@ -12592,19 +12592,19 @@
       "source_admission_merge": "e7ba8d4b86fa196d309dfb2d4c9303e8c5828508",
       "experiment_execution": "not_started",
       "assignments": {
-        "Research": "GRID-Q1 proposal and independent CI source/outcome review accepted; released.",
-        "Quality": "CI guards and local synthetic validation complete; progress handoff to Lead.",
-        "Platform": "Earlier numerical validation controls reviewed; no new execution allocation.",
-        "Project lead": "Verify PR #135 hosted results and integrate reviewed progress; reconcile GRID-Q1 scientific use and remaining balance before numerical admission."
+        "Research": "Independent GRID-Q1 source review and cumulative-account reconciliation.",
+        "Quality": "GRID-Q1 foundation validation, then complete disabled qualification driver.",
+        "Platform": "Earlier controls accepted; no new capacity allocation.",
+        "Project lead": "Reference CI and main candidate delivered; integrate source/progress and prepare concrete numerical admission."
       },
-      "handoff": "Local CI implementation and synthetic validation independently accepted; PR #135 hosted verification pending. GRID-Q1 remains proposed and unrun, with discrepancy meaning and scientific remaining balance unresolved. See execution.current_summary.",
+      "handoff": "Required reference CI and main candidate delivered. GRID-Q1 remains unrun; complete source, cumulative accounting and governing storage admission are next.",
       "interface_decisions": [
         "N01 reuses the existing pure analytic kernel internally while preserving old predictor source/contract behavior.",
         "N01 proves selected real candidate identity; N02.a later proves posterior MAP weights/argmax/ties.",
         "N01 reports operation-local work facts and opaque ledger-issued attempt IDs; RA-02 owns study/cell identity, reservations and aggregate caps. No import cycle.",
         "RA-02 freezes interfaces/synthetic fixtures first; actual study values wait for N01/N02.a/N03/N04 acceptance."
       ],
-      "next_units": "Finish hosted reference-CI verification, then review GRID-Q1 scientific meaning and cost reconciliation. Historical runtime guards remain; full-study allocation is still insufficient.",
+      "next_units": "Finish GRID-Q1 qualification and reconcile historical costs, then perform the next admitted bounded numerical diagnostic. Shared-model selector comparisons precede comparative Laplace; no study or allocation reset.",
       "partial_checkpoints": {
         "RA-N01": {
           "status": "candidate_prediction_scoring_classical_delivered_parent_in_progress",
@@ -15835,9 +15835,9 @@
       }
     },
     "current_summary": {
-      "verified": "The spring demo, saved playback, local reference checks and CI guard tests pass.",
-      "next": "Lead + Quality: Finish hosted reference-CI verification and review the proposed grid calibration.",
-      "blocker": "Discrepancy meaning and scientific balance remain unresolved; full-study storage is insufficient and the selector comparison has not run. Detailed evidence and limits: EXECUTION_LOG.md#2026-10-30--reference-ci-and-grid-calibration-handoff."
+      "verified": "The spring demo and saved playback work; required reference CI and package verification pass.",
+      "next": "Quality + Research: Finish grid qualification and reconcile cumulative research costs.",
+      "blocker": "Calibration assumptions and runtime storage remain unresolved; selector and law-change comparisons have not run. Demo, measured result and limits: EXECUTION_LOG.md#2026-10-30--reference-ci-delivered-and-grid-foundation."
     },
     "laplace_reference_validation": {
       "status": "local_software_validation_independently_accepted",
@@ -15868,13 +15868,13 @@
       "account_sha256": "811a1c606c43375a3bdaf637f2da0298d09a4b1c8863ae0644a94ecac9be4c17",
       "numerical_review": "Research accepted retained evidence; no recomputation",
       "accounting_review": "Quality accepted cumulative receipts; no rerun",
-      "merged": false,
-      "hosted_ci": "pending_separate_required_job",
+      "merged": true,
+      "hosted_ci": "delivered_required_reference_jobs_pr_and_main",
       "scientific_use_admitted": false,
       "log": "EXECUTION_LOG.md#2026-10-28--analytic-reference-validation"
     },
     "finite_grid_calibration_handoff": {
-      "status": "proposed_unrun",
+      "status": "source_foundation_prepared_qualification_driver_and_execution_pending",
       "proposal_source": "b190602dcaba2ee953ee2ff80f5cbab442436d56",
       "cost_reconciliation_source": "64e9702c23250b21e6d7219a46e6aa4c2c41bac8",
       "record": "docs/FINITE_GRID_CALIBRATION_HANDOFF.md",
@@ -15889,13 +15889,13 @@
       "historical_runtime_reserves_waived": false
     },
     "laplace_reference_ci": {
-      "status": "local_engineering_accepted_hosted_pending",
+      "status": "delivered_main_candidate_verified",
       "runtime_source": "9b4e701fb59f3023917d391e7643c172ffe5652a",
       "guide_successor": "0e356fa7ef5f5c34f7fa1c1a87fddcd643279cc3",
       "pull_request": 135,
       "hosted_run": 41119034874,
-      "hosted_status_at_checkpoint": "reference_jobs_passed_ordinary_checks_and_aggregate_pending",
-      "merged": false,
+      "hosted_status_at_checkpoint": "pr_and_main_required_jobs_passed_candidate_independently_verified",
+      "merged": true,
       "synthetic_cases": 60,
       "case_groups": {
         "policy": 27,
@@ -15928,8 +15928,36 @@
       "independent_review": "Research accepted exact retained source, coverage, identities and accounting without rerun.",
       "original_numerical_files_unchanged": true,
       "scientific_reuse_admitted": false,
-      "record": "EXECUTION_LOG.md#2026-10-30--reference-ci-and-grid-calibration-handoff",
-      "hosted_reference_review": "Research independently verified raw reports for both Python 3.12 and 3.14 jobs."
+      "record": "EXECUTION_LOG.md#2026-10-30--reference-ci-delivered-and-grid-foundation",
+      "hosted_reference_review": "Research independently verified raw reports for both Python 3.12 and 3.14 jobs.",
+      "main_source": "5819563bbef4b94c75aadb3c495c798dc7926876",
+      "main_run": 41121754233,
+      "candidate_artifact": 13009766437,
+      "candidate_bytes": 593587,
+      "candidate_sha256": "af3031d48cc58d838542b146e56ee56440f6ee0fe970d277c17cf554e8ba7891",
+      "main_package_files": 96,
+      "ordinary_passed_per_runtime": 4632,
+      "main_verification_index_sha256": "2428ddf76310bb9d5733747d28ed81e3d8ec517aeb11d2e8c11328f3976e21b7",
+      "main_verification_result_sha256": "29df7c83902dba9605b445d480edc0bd4ff3a721a52bea53b05e5fd53ccc9b98"
+    },
+    "grid_q1_foundation": {
+      "source": "ed329474dfdb955db433b6539c535e63c88f0c50",
+      "status": "source_only_focused_engineering_validation_in_progress",
+      "new_files": 4,
+      "synthetic_tests_authored": 24,
+      "real_oracle_executions": 0,
+      "qualification_driver_implemented": false,
+      "scientific_acceptance": false,
+      "legacy_oracle_limits_unchanged": true,
+      "reference_allocation": {
+        "lookups": 16129,
+        "series": 2689,
+        "exp": 12096,
+        "log": 34,
+        "trig": 4,
+        "machin_terms": 128
+      },
+      "unused_velocity_fields": "Explicit zero placeholders, not observed trajectory evidence."
     }
   },
   "research_amendment": {
