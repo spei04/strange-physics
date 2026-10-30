@@ -154,7 +154,7 @@ cover the original primary-fault plus cleanup PermissionError regression, a
 command timeout plus fsync error, missing receipts/accounting/quota, stale
 negative output, changed InvocationID, finite deadlines, duplicate authority
 and provisional pass/negative classification. All 324 final test phases passed;
-25 guarded processes in the final engineering sequence closed. No dependencies
+30 guarded processes in the engineering sequence closed. No dependencies
 were installed. Earlier failed check attempts remain retained. These results do
 not establish live systemd behavior or numerical validity.
 
@@ -195,7 +195,7 @@ separate gates; a passing mock suite does not establish those outcomes.
 ## Final source and decision
 
 The [complete decision](GRID_Q1_SUPERVISED_RUN_DECISION.md) pins repair source
-5b84a69c69bd47ee5c467e58eddc8904980191df and the final108-case acceptance.
+8b16c7eba1da547f9594d620d9dae6e12173ffcd and the final108-case acceptance.
 The [fixed operator](GRID_Q1_LIVE_QUALIFICATION.md) covers qualification,
 one dispatch, failure-aware closeout and observed handback in one invocation.
 The scientific source remains cec936a2. No live service or diagnostic ran.

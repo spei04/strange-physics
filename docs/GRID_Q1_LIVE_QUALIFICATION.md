@@ -297,3 +297,9 @@ attempt. The complete operator additionally reads that sealed ledger and returns
 nonzero unless it is provisional_complete and final server boot, CPU and observed
 time conditions hold. Neither zero exit nor a provisional ledger replaces the
 external client/server witness review.
+
+The first hosted Python 3.14 job exposed three test-teardown errors after all
+4,890 bodies passed. The corrected tests restore shared file/select mocks at
+the worker-call boundary; cleanup and behavioral assertions are preserved.
+That failed run remains historical evidence. Fresh required CI on the corrected
+source is mandatory before the combined approval handoff.

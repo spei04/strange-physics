@@ -25,7 +25,7 @@ or create a fresh eight-hour research balance.
 
 ## Concrete reviewed implementation
 
-[Repair source 5b84a69](https://github.com/spei04/strange-physics/commit/5b84a69c69bd47ee5c467e58eddc8904980191df)
+[Repair source 8b16c7e](https://github.com/spei04/strange-physics/commit/8b16c7eba1da547f9594d620d9dae6e12173ffcd)
 contains the disabled supervisor, three fixed service fixtures, complete
 operator, frozen manifest and regression tests. The
 [incident and repair guide](GRID_Q1_CONTROL_REPAIR.md) and
@@ -37,9 +37,17 @@ Formatting, lint, the configured 193-file type check and final focused type
 check passed. The operator passed shell syntax and disabled-entry checks;
 all three embedded Python blocks compiled, and five mocked cases exercised its
 actual final-observation code. The first typing diagnostics and an intermediate
-CPU-limit stop remain retained. Twenty-five guarded checking processes closed.
+CPU-limit stop remain retained. Thirty guarded checking processes closed.
 Private engineering acceptance:
-`968a2a2b05f5fff8ae27ec0d6a51b531c31345ca1d93d8193df7cfe1a3a186b0`.
+`491cf0643e5b7653b0d82ee1e16d277cec9b3e66afaaca31712dcc20c47b5f0f`.
+
+The initial hosted Python 3.14 job at a4f4b4e passed 4,890 test bodies but
+failed three temporary-directory teardowns. Shared file-operation mocks outlived
+the worker call. The test-only successor scopes and restores those mocks before
+cleanup, preserves the release assertions, and passed fresh local checks. The
+failed run remains retained; required hosted checks must pass on this corrected
+source before this decision is handed over for approval. Operational and
+scientific bytes are unchanged by that correction.
 
 Independent review closed faults in error retention, failed-service cleanup,
 owner/source bindings, acyclic admission construction, failure closeout and

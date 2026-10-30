@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** The reviewed control repair passed 108 isolated regression cases and configured checks. Live qualification and GRID have not run.
+- **Verified:** The corrected test source passed 108 isolated cases. The initial Python 3.14 CI teardown failure is retained; fresh required checks are pending. Live qualification and GRID have not run.
 - **Original attempt:** Preparation ended incomplete; unknown usage and the full reservation remain retained. Its one-run storage exception did not relax other runs' guards.
-- **Next — Lead, with Quality, Research and Platform reviews complete:** Obtain one decision on the [complete bounded attempt](GRID_Q1_SUPERVISED_RUN_DECISION.md), then qualify, run once and close the evidence. No automatic retry.
+- **Next — Lead, with Quality, Research and Platform reviews complete:** Verify corrected CI, then obtain one decision on the [complete bounded attempt](GRID_Q1_SUPERVISED_RUN_DECISION.md), then qualify, run once and close the evidence. No automatic retry.
 
 ## Approval and execution capacity
 
@@ -1720,3 +1720,13 @@ is historical and does not establish acceptance of the successor.
 [Repair and incident](GRID_Q1_CONTROL_REPAIR.md) · [One complete bounded decision](GRID_Q1_SUPERVISED_RUN_DECISION.md).
 The approved DAG, estimates, full-study caps and other storage guards are unchanged.
 No merge, deployment, new checkout or dependency installation occurred.
+
+## 2026-10-30 — Hosted teardown failure retained; test isolation repaired
+
+Initial PR137 run41142868684 reported4,890 passed and3 teardown errors on Python
+3.14: shared os.open mocks leaked into shutil.rmtree cleanup. Quality scoped the
+two worker-mock blocks, Research independently accepted the exact delta, and
+Lead verified108 cases/324 phases plus focused types and lint on the successor.
+No test/cleanup was skipped or weakened; runtime/scientific bytes are unchanged.
+Source8b16c7e and its new engineering acceptance supersede the earlier test
+checkpoint. Fresh required hosted checks must pass before approval handoff.
