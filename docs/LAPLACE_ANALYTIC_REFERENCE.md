@@ -141,6 +141,21 @@ These controls cover the audited single child, not arbitrary descendants
 or indefinite kernel stalls. They are prospective ceilings, not measured
 performance promises, and do not reopen the closed local 180/420 allowance.
 
-The workflow and its synthetic policy tests still require exact-source
-validation and hosted execution. This partition adds no scientific
-calibration, study balance, or native Laplace implementation claim.
+On 2026-10-30, source 9b4e701fb59f3023917d391e7643c172ffe5652a
+passed scoped formatting, lint, strict typing and all 60 synthetic policy/report
+cases. Independent source review verified the unchanged numerical files and
+the report checks. Validation retained its initial formatting failure, mypy
+namespace-mapping failure and test-only import failure. The final two corrections
+used explicit namespace mapping and a direct standard-library import; no checks
+or assertions were weakened. The final pytest selection took 0.34 seconds and
+constructed no numerical reference pack.
+
+The cumulative local verification charge, including its retained preparation
+hold and prior attempts, is 28.749847867 CPU seconds and 40.132602115 active-wall
+seconds within the 60/120 engineering limits. The retained unit occupied
+1,368,374 bytes at sealing, below 8 MiB. Its outcome index SHA-256 is
+fc9c3b1f17f72c417f1cff4dba2cb8164b9032abd416f28d45d0b4dd372770b9.
+
+Hosted execution on both Python versions remains a separate integration gate.
+This partition adds no scientific calibration, available study balance, or
+native Laplace implementation claim.
