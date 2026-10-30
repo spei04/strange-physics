@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** The spring demo, saved playback and reference checks work; engineering checks for the grid implementation passed.
-- **Next — Lead + Quality:** Resolve allocation and storage requirements for one numerical qualification run.
-- **Blocked:** Research-cost reconciliation and runtime storage remain unresolved. Selector and law-change comparisons have not run. [Detailed checkpoint](EXECUTION_LOG.md#2026-10-30--grid-qualification-implementation-and-engineering-checks).
+- **Verified:** The corrected test source passed 108 isolated cases. The initial Python 3.14 CI teardown failure is retained; fresh required checks are pending. Live qualification and GRID have not run.
+- **Original attempt:** Preparation ended incomplete; unknown usage and the full reservation remain retained. Its one-run storage exception did not relax other runs' guards.
+- **Next — Lead, with Quality, Research and Platform reviews complete:** Verify corrected CI, then obtain one decision on the [complete bounded attempt](GRID_Q1_SUPERVISED_RUN_DECISION.md), then qualify, run once and close the evidence. No automatic retry.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-30 | Quality / Research / Platform / Project lead | GRID-Q1 preparation incident and control repair | Quality authors fixtures/runbook; Research reviews identity and failure contracts; Platform reviews service/lease/output accounting; Lead tests, integrates and publishes. Final108-case integrated suite and independent reviews passed; complete bounded proposal awaiting decision; no live qualification or numerical run. |
 | 2026-10-30 | Quality / Research / Project lead | RA-N02.a GRID-Q1 qualification implementation and independent review | Engineering checks independently accepted; canonical source/docs delivery pending; numerical qualification remains disabled |
 | 2026-10-28 | Project lead / Platform / Quality / Research | #133 / PR #134 bounded workflow delivery | Merged main 1b611e7; both 4,591-test suites, all five jobs and exact candidate 12842519538 verified; private saved-results report available |
 | 2026-10-28 | Research / Quality | Laplace reference source V2 | Two fixture gaps repaired; independent source review accepted; 24 cases/eight vectors preserved; numerical execution remains separate |
@@ -1704,3 +1705,28 @@ contained the older demo-delivery-pending wording. This entry records the
 reconciliation prepared for normal protected delivery; publishing a planning
 branch alone did not update main. Existing task IDs, DAG edges, estimates,
 approvals, budgets and dated failure records are unchanged.
+
+## 2026-10-30 — Control repair complete; replacement attempt proposed
+
+The earlier approved GRID-Q1 preparation ended incomplete before controller or
+numerical entry invocation. Unknown usage and the original reservation remain
+retained. Quality implemented service supervision and fixtures; Research repaired
+source/owner joins and failure closeout; Platform reviewed systemd semantics,
+lease/output bounds and the complete operator; Lead integrated, checked and
+prepared the result for publication. The final108-case/324-phase suite passed, with no real
+process or scientific attempts from the isolated tests. Earlier102-case evidence
+is historical and does not establish acceptance of the successor.
+
+[Repair and incident](GRID_Q1_CONTROL_REPAIR.md) · [One complete bounded decision](GRID_Q1_SUPERVISED_RUN_DECISION.md).
+The approved DAG, estimates, full-study caps and other storage guards are unchanged.
+No merge, deployment, new checkout or dependency installation occurred.
+
+## 2026-10-30 — Hosted teardown failure retained; test isolation repaired
+
+Initial PR137 run41142868684 reported4,890 passed and3 teardown errors on Python
+3.14: shared os.open mocks leaked into shutil.rmtree cleanup. Quality scoped the
+two worker-mock blocks, Research independently accepted the exact delta, and
+Lead verified108 cases/324 phases plus focused types and lint on the successor.
+No test/cleanup was skipped or weakened; runtime/scientific bytes are unchanged.
+Source8b16c7e and its new engineering acceptance supersede the earlier test
+checkpoint. Fresh required hosted checks must pass before approval handoff.

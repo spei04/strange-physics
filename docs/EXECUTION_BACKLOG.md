@@ -1,10 +1,6 @@
 # Strange Physics — execution backlog
 
-**Current checkpoint (2026-10-30)**
-
-- **Verified:** The spring demo, saved playback and reference checks work; engineering checks for the grid implementation passed.
-- **Next — Lead + Quality:** Resolve allocation and storage requirements for one numerical qualification run.
-- **Blocked:** Research-cost reconciliation and runtime storage remain unresolved. Selector and law-change comparisons have not run. [Detailed checkpoint](EXECUTION_LOG.md#2026-10-30--grid-qualification-implementation-and-engineering-checks).
+**Current checkpoint:** [Canonical progress and next action](EXECUTION_LOG.md#current-assignment-board).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 
