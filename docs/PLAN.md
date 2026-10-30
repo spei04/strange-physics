@@ -1,6 +1,6 @@
 # Implementation plan
 
-Status: accepted architecture and historical M0–M5 design. M0 local core exists on PR #1; later implementation is pending. The [roadmap](ROADMAP.md) owns the current enterprise scope and the [execution backlog](EXECUTION_BACKLOG.md) owns approved PR tasks, effort, dependencies and the conditional reference schedule. Initial execution was approved on 2026-10-19; concrete paid and release actions retain their separate gates. The original milestones below are retained only as mappings; they do not authorize implementation. See the [decision record](DESIGN_DECISIONS.md) and [core implementation](CORE.md).
+- This is the historical M0–M5 architecture reference. Use the [roadmap](ROADMAP.md), [approved backlog](EXECUTION_BACKLOG.md) and [current assignment board](EXECUTION_LOG.md#current-assignment-board) for execution; the [archived status](EXECUTION_LOG.md#2026-10-28--progress-view-consolidation) preserves its original approval and scope.
 
 ## Objective
 

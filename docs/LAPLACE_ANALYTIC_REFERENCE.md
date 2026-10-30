@@ -102,9 +102,9 @@ unit retained its 180 CPU-second / 420 active-wall-second allowance and stayed
 within its 8 MiB output ceiling. No previous allowance was reopened. The numerical
 receipt SHA256 is `77e6026ae382077e0592960226ac5911be2c41b53716356704ac77069f56dd9b`.
 
-Full repository and hosted CI for this additive pack remain pending. The roughly
-102-second module needs a separate required CI job on both supported Python
-versions: adding it to the observed 826–832-second suites risks their existing
+At the local checkpoint, full repository and hosted CI for this additive pack
+remained pending. The roughly 102-second module needed a separate required CI job
+on both supported Python versions: adding it to the observed 826–832-second suites risked their existing
 15-minute limit. This local result is not a hosted-runtime timing guarantee. No endpoint package,
 schema, production code, dependency, study allocation or task graph changes
 are part of this pack. Later comparative Laplace acceptance still requires
@@ -156,6 +156,11 @@ seconds within the 60/120 engineering limits. The retained unit occupied
 1,368,374 bytes at sealing, below 8 MiB. Its outcome index SHA-256 is
 fc9c3b1f17f72c417f1cff4dba2cb8164b9032abd416f28d45d0b4dd372770b9.
 
-Hosted execution on both Python versions remains a separate integration gate.
+At that checkpoint, hosted execution on both Python versions remained a separate
+integration gate.
 This partition adds no scientific calibration, available study balance, or
 native Laplace implementation claim.
+
+## Hosted delivery
+
+PR #135 is merged as main 5819563bbef4b94c75aadb3c495c798dc7926876. Its PR and protected-main required checks passed, including the separate fixed reference jobs on both supported Python versions. Cloud-only candidate/source and raw-report verification was independently accepted; [delivery evidence](EXECUTION_LOG.md#2026-10-30--reference-ci-delivered-and-grid-foundation) retains exact identities and limits. This verifies the software reference. Native Laplace inference, grid calibration and selector performance remain separate work.
