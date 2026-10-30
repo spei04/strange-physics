@@ -1,5 +1,11 @@
 # Execution assignment log
 
+## Current assignment board
+
+- **Verified:** The spring demo, saved playback, local reference checks and CI guard tests pass.
+- **Next — Lead + Quality:** Finish hosted reference-CI verification and review the proposed grid calibration.
+- **Blocked:** Discrepancy meaning and scientific balance remain unresolved; full-study storage is insufficient and the selector comparison has not run. [Detailed evidence and limits](EXECUTION_LOG.md#2026-10-30--reference-ci-and-grid-calibration-handoff).
+
 ## Approval and execution capacity
 
 2026-10-19 — Product owner approved execution baseline `2d78e3598252e211110883b164854b64c356eeda` and requested independent engineer subagents, reassignment on completion and this short log.
@@ -8,19 +14,12 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 **Execution location (2026-10-23):** All project checkouts, dependencies, builds, tests, datasets, media, logs, run outputs and private evidence stay in the existing studio-agent cloud workspace or hosted CI. The Mac is an SSH/control channel only; do not clone, install, build, run research, download artifacts or stage media there. Reuse the two existing cloud checkouts, preserve active writers and retained evidence, and keep cumulative budgets and review gates. No new capacity purchase or changes to other teams or the separate local computer-use project.
 
-## Current assignment board
-
-| Engineer | Current / next work | Review and gate |
-| --- | --- | --- |
-| Quality | CLI repairs and source review complete; finalize progress and review retained outcome | Local source and outcome accepted; progress handoff complete |
-| Platform | Continuation resource/package evidence accepted | Preserve failed first gate and cumulative costs; no automatic retry |
-| Research | Demo and test repair complete; scientific outcome accepted | Four-observation development result and illustrative belief only |
-| Project lead | Integrate accepted reviews and coordinate hosted delivery | RA-N02.a stays in progress; scientific/full-study gates unchanged |
-
 ## Assignment history
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-28 | Project lead / Platform / Quality / Research | #133 / PR #134 bounded workflow delivery | Merged main 1b611e7; both 4,591-test suites, all five jobs and exact candidate 12842519538 verified; private saved-results report available |
+| 2026-10-28 | Research / Quality | Laplace reference source V2 | Two fixture gaps repaired; independent source review accepted; 24 cases/eight vectors preserved; numerical execution remains separate |
 | 2026-10-28 | Research / Quality / Platform / Project lead | #133 bounded demo and CLI error-path repairs | First 4b2ba01 type gate failed before numerics; repaired fab69a4 local continuation passed eight commands/20 cases and demo; peer outcome accepted; hosted delivery pending |
 | 2026-10-28 | Research / Quality / Platform / Project lead | #131 delivery through PR #132/main 51356f2 | All five main jobs, both 4,574-test suites and exact candidate accepted; scientific profile remains open |
 | 2026-10-28 | Research | Parallel Laplace analytic-reference source draft | Private 24-case/eight-vector patch only; no collection, execution or merge |
@@ -312,14 +311,7 @@ action is approved and complete; it grants no additional staging or release auth
 
 ## Current blockers and rules
 
-- Capacity stop resolved: independent SP-02.b acceptance preserved source and dependencies; PR #74/main f197687 records recovery, and PR #76/main 8510243 records accepted SP-03.a. One additional ordinary cloud worktree was necessary for independent B3 authoring while Research owned the primary checkout. Its own locked copy-mode environment occupies about 179 MiB; 103,889,854,464 bytes remained free at creation. Managed creation cannot target this remote host from the local chat, so the remote worktree is unmanaged and indexed privately. Both checkouts remain active and must be reused, not archived or removed. No local project copy or shared mutable dependency links. Maintain >=20 GiB readiness separately from the 100 MiB emergency stop floor.
-- Final SP-01.b review is accepted for issuer/tenant/subject identity, purpose-bound proof ownership, composed current authority and per-payload stream checks. The <=30-second interval applies only to idle connections. Live producer implementation and operational evidence remain later tasks.
-- Cloud filesystem had 215 MiB free at execution start; accepted SP-02.b recovery now permits scoped development. Continue preserving migration archives and other active projects.
-- Baseline and SP-01.b contract integration are accepted. SP-01.c now has its actual SP-00.b/SP-01.b prerequisites; later consumers still wait for their remaining freezes.
-- Root coordinates every checkout write; independent writers get separate cloud checkouts. No local project copies.
-- Partner/assessor/human operations availability is unconfirmed. No outreach or contractual commitment is implied.
-- No priced staging, provider trial, official sweep or production release is approved yet.
-- A completed assignment includes source identity, tests, reviewer outcome and limitations. Review findings become bounded repair assignments before acceptance.
+- Current blockers are on the [assignment board](#current-assignment-board). [Operating rules](#approval-and-execution-capacity) and the [archived rule snapshot](#2026-10-28--progress-view-consolidation) retain cloud-only work, checkout ownership, review and approval requirements.
 
 ## Independent scorer acceptance
 
@@ -1324,3 +1316,260 @@ The actual demo retained four observations and fitted k=0.6750572721112501. Ever
 The demo retained 28 files totaling 742,139 bytes. Its command used 2.329644 child CPU-seconds and 2.198229 wall-seconds. Whole-checkpoint known measurements, including the failed type gate, were 41.158175489 CPU-seconds and 43.908578329 active-wall-seconds. Charges including the conservative preparation hold were 50.641415823 CPU-seconds and 73.44605584116653 active-wall-seconds within the unchanged 120 / 360 second and 64 MiB demo envelope. These are scoped observations and acceptance checks, not hard process isolation or a full-study budget balance. The retained result SHA256 is 5b49174fdf93e009bb44153009926b12d7e466b10d9f5a62f0a8836d14465964; the cumulative account SHA256 is 76d9abd13ccc98430a935860a1396f3c1f9b580171ac35364d66857b9a1d9040. Independent scientific and resource outcome reviews passed: all 27 completion-indexed files, all 24 endpoints/scores and all 16 belief weights matched their retained sources. Resource review index SHA256 e3c7bef537d47821219e3b28ca0dd5e4924e8313536da7d8351d1c8d062cb5d8 confirms package/environment and cumulative accounting. Exact-source PR/main delivery remains pending.
 
 Both existing cloud checkouts and environments are retained for sequential reuse; Quality releases primary after this six-document handoff and Lead owns integration. Original failures and private outputs remain retained. Parent tasks, dependency graphs, forecasts, estimates and approved caps are unchanged. Endpoint #131 delivery remains accepted, RA-N02.a remains in progress, and the 1,168 MiB publication floor above the 1 GiB study limit still blocks full-study admission. Laplace remains parallel private source preparation, not a demo prerequisite or an executed comparison.
+
+
+## 2026-10-28 — Bounded workflow delivery accepted
+
+[PR #134](https://github.com/spei04/strange-physics/pull/134) merged as 1b611e76f424498ecb7d29a59bba805021140a61, tree a800413bb27a39499718d2d2fb2d45d4c8f85a7b. The protected-main run 40748304535 passed all five jobs. Python 3.12 passed 4,591 tests in 826.30 seconds; Python 3.14 passed 4,591 tests in 831.80 seconds. Each also passed 1,547 schema checks. Required format, lint, typing, security and installed-wheel checks passed.
+
+Unpublished candidate 12842519538 is 593,586 bytes, SHA256 6ef9f66286d412e3c7b5d869e9c5868c3ff4bf2b92a7717beb539c4782accc7f. All 96 package files and 79 reviewed source/profile blobs matched, the three archive checksums passed, and wheel/sdist bytes equal the locally tested fab69a4 archives. Author 7d297e8 differs from that runtime source only in seven reviewed documents; merged main has the same tree as the author. The retained verification result SHA256 is cf24aa3eb30d6d41da086bf65f4d8ca023ad323b53c34c4c290c0319e76e0802. The copied interpreter still uses its base standard/shared libraries; this is not a hermetic-runtime claim.
+
+One fresh delivery connection used 2.89493114 combined known CPU-seconds and 8.409641 elapsed seconds. The full 20 CPU / 60 active-wall allowance remains charged, without refund; cumulative permanent charges are 72.212389109 CPU-seconds and 143.229484377 active-wall-seconds within the existing 120 / 360 envelope. Transport residual CPU is separately labeled and checked conservatively against both sublimits; overlapping cloud wall was not counted twice. Original failed checks and all retained outputs remain intact. Final account SHA256 is 577860da96e926cddf1364ac817d646c39684888f410148a095771d5467b71d3; outcome index SHA256 is 4a5492185538c60e4092b123ca6ccde5b63a6b74089cbcd0c20a2b575d47ab56.
+
+The private report displays all 24 saved predictions/scores, all 16 illustrative belief weights and trajectory playback. Playback uses saved frames and adds no simulator calls. This is the completed bounded workflow checkpoint, not a deployed service or evidence of selector performance, change adaptation, calibration or full-study readiness.
+
+Research repaired positive partial-overlap coverage and the shared bump coefficient/integral assertion in private Laplace source V2. Quality accepted the source with 24 cases, eight vectors, 21 integrals and 44 endpoint-log references unchanged. The pack is unmerged and unexecuted; no completed numerical allowance is reused. Laplace benchmark integration follows numerical validation and an audit against accepted grid fixtures so experiment-selection comparisons share a checked inference method.
+
+Only the two existing cloud checkouts were reused. The verifier removed 2,144,275 bytes of owned temporary source/archive exports; final observed free space was 56,386,625,536 bytes. Both checkouts remain available for sequential work with independent dependencies, and unique private evidence remains outside them. No Mac checkout, environment or artifact copy was created. Parent task states, dependency graphs, estimates and original 36-episode / 432-purchase / 8 CPU-hour / 1 GiB / zero-provider scientific limits are unchanged. RA-N02.a remains in progress and the 1,168 MiB publication floor prevents full-study admission.
+
+## 2026-10-28 — Progress view consolidation
+
+Current views now contain at most three short bullets and fewer than 100 words. The [assignment board](#current-assignment-board) is authoritative for next ownership. This documentation-only consolidation preserves task IDs, dependency graphs, estimates, approvals, cumulative budgets and failed attempts; it authorizes no execution or publication.
+
+The bounded workflow’s [delivery evidence](#2026-10-28--bounded-workflow-delivery-accepted) remains source-specific. Laplace source `479896f95b9a6dbb761d494547fbce3ab9111411` / tree `42f66dce8ab69c9965da20a615940c70f41203e3` passed scoped static checks and independent source review. Numerical execution has **NOT RUN**. Lead and Quality are reviewing a proposed engineering test unit capped at 180 CPU seconds, 420 active-wall seconds and 8 MiB; admission is pending. Grid scientific calibration and full-study allocation remain open: the 1,168 MiB reservation floor exceeds the 1 GiB cap. Engineering CI does not establish scientific calibration or a completed study.
+
+### Preserved prior views
+
+The snapshots below are historical, not current assignments or new authorization. Duplicate text is stored once with its source locations. Relative links from the research subdirectory are rebased for this log. Dated audit entries already in each document remain unchanged.
+
+#### Snapshot 1: docs/ROADMAP.md — Current checkpoint (2026-10-28), docs/EXECUTION_BACKLOG.md — Current checkpoint (2026-10-28), docs/MEASURED_COMPARISON_HANDOFF.md — Current checkpoint (2026-10-28), docs/research/NATIVE_COMPARISON_PROPOSAL.md — Current checkpoint (2026-10-28)
+
+**Current checkpoint (2026-10-28):** The bounded spring workflow is delivered through [PR #134](https://github.com/spei04/strange-physics/pull/134), main 1b611e76f424498ecb7d29a59bba805021140a61. All five main CI jobs passed; Python 3.12 and 3.14 each passed 4,591 tests and 1,547 schema checks. Candidate 12842519538 was verified against the tested wheel, sdist and all 96 package files. The retained local run used four observations, fitted k=0.6750572721112501 and passed all 24 held-out probes at the 0.001 RMSE target; maximum RMSE was 3.154199886178306e-8. The separate 16-cell / discrepancy 0.25 belief remains illustrative. The original type-check failure and all charges are preserved. A private report includes playback of the saved predictions. RA-N02.a and scientific calibration remain open; the 1,168 MiB publication floor still exceeds the 1 GiB full-study cap. Laplace source V2 passed independent review, but remains private, unmerged and unexecuted. [Delivery evidence and assignments](EXECUTION_LOG.md#2026-10-28--bounded-workflow-delivery-accepted).
+
+#### Snapshot 2: docs/ROADMAP.md — 2026-10-21 execution decision
+
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts are integrated through PR #109; RA-02 accounting and Journal reconciliation are integrated through PR #110/main f9f450b with verified CI and package evidence. Native candidate production and prediction are delivered through PR #111/main c0e4c86, with all five CI jobs and candidate 12413204172 verified. Pure scoring is delivered through PR #112/main 73d07b6, with all five CI jobs and candidate 12425889219 verified. Classical diagnostic is delivered through PR #113/main 95f1735, with all five CI jobs and candidate 12458927169 verified against the reviewed author archives. The actual-Journal/classical union is delivered through PR #114/main9cb6e58:3,958 tests, both independent reviews, all five main CI jobs and candidate12459573763 accepted. Private publication composition is delivered through PR #115/main4eea1de:4,003 tests, both independent source reviews, all five main CI jobs and exact68-file candidate12485382723 accepted. The complete early no-score composer is delivered through PR #116/main2800188:4,088 tests,1,522 schema cases, both independent reviews, all five main CI jobs and exact70-file candidate12504965031 accepted. PR #117 measured publication is delivered as main fb537d34 with verified CI and candidate 12541505445. Candidate-only pre-freeze execution is delivered through PR #118/main 9818ca0: both Python runtimes passed 4,213 tests in PR and main CI, all five main jobs passed, and candidate 12556446152 was independently accepted. Earlier source-specific checks and delivery failures remain preserved. Those measured wrappers and the publisher handoff are now delivered through PR #128/main e587f47. Final source/package verification and the independent parent audit support bounded acceptance of #105/#106; N02.a implementation is in progress through the bounded normalizer subunit, with scientific settings unaccepted and full-study authority/allocation still pending before RA-07.b. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
+
+#### Snapshot 3: docs/ROADMAP.md — Execution location (2026-10-23), docs/EXECUTION_BACKLOG.md — Execution location (2026-10-23)
+
+**Execution location (2026-10-23):** All project checkouts, dependencies, builds, tests, datasets, media, logs, run outputs and private evidence stay in the existing studio-agent cloud workspace or hosted CI. The Mac is an SSH/control channel only; do not clone, install, build, run research, download artifacts or stage media there. Reuse the two existing cloud checkouts, preserve active writers and retained evidence, and keep cumulative budgets and review gates. No new capacity purchase or changes to other teams or the separate local computer-use project.
+
+#### Snapshot 4: docs/EXECUTION_BACKLOG.md — 2026-10-21 execution decision
+
+**2026-10-21 execution decision:** The owner approved the [reviewed native comparison plan](research/NATIVE_COMPARISON_PROPOSAL.md) and its bounded run. Scoped RA_EXEC covers eight enumerated units; the five native tasks and RA-07.b replacement dependencies are active. The23-task research graph has69 fixed plus six conditional edges; the approved baseline graph and GA forecast are unchanged. [Approval and limits](research/APPROVALS.md) govern execution. RA-01 is accepted in PR #107. N01 candidate contracts are integrated through PR #109; RA-02 accounting and Journal reconciliation are integrated through PR #110/main f9f450b with verified CI and package evidence. Native candidate production and prediction are delivered through PR #111/main c0e4c86, with all five CI jobs and candidate 12413204172 verified. Pure scoring is delivered through PR #112/main 73d07b6, with all five CI jobs and candidate 12425889219 verified. Classical diagnostic is delivered through PR #113/main 95f1735, with all five CI jobs and candidate 12458927169 verified against the reviewed author archives. The actual-Journal/classical union is delivered through PR #114/main9cb6e58:3,958 tests, both independent reviews, all five main CI jobs and candidate12459573763 accepted. Private publication composition is delivered through PR #115/main4eea1de:4,003 tests, both independent source reviews, all five main CI jobs and exact68-file candidate12485382723 accepted. The complete early no-score composer is delivered through PR #116/main2800188:4,088 tests, 1,522 schema cases, both independent reviews, all five main CI jobs and exact70-file candidate12504965031 accepted. PR #117 measured publication is delivered as main fb537d34 with verified CI and candidate 12541505445. [Delivery and proposed execution design](EXECUTION_LOG.md#2026-10-24--measured-publisher-delivery-accepted-execution-design-reviewed) retain the earlier source-specific failure/repair evidence; candidate-only pre-freeze execution is delivered through PR #118/main 9818ca0: both Python runtimes passed 4,213 tests in PR and main CI, all five main jobs passed, and candidate 12556446152 was independently accepted. Earlier source-specific checks and delivery failures remain preserved. Those measured wrappers and the publisher handoff are now delivered through PR #128/main e587f47. Final source/package verification and the independent parent audit support bounded acceptance of #105/#106; N02.a implementation is in progress through the bounded normalizer subunit, with scientific settings unaccepted and full-study authority/allocation still pending before RA-07.b. VAL1 generator work remains deferred with draftPR101 preserved. No comparison has run.
+
+#### Snapshot 5: docs/ROADMAP.md — Status
+
+**Status:** Execution backlog approved on 2026-10-19; baseline integration is verified, cloud preflight is complete with a deployment NO-GO, and workspace headroom is restored after the approved snapshot and online disk expansion. [Assignment log](EXECUTION_LOG.md) records engineer ownership and reassignment.
+**Implementation baseline:** original core 428b5a698b6f5654a9b91f547c9d4e7c196d3aa9; [PR #1](https://github.com/spei04/strange-physics/pull/1) merged to main as 7117060d03d4e0f843d7dddc53c3e5b580b8ef3f on 2026-10-19, with tree identity verified against reviewed head 5cb1895c280af1ac0ad16bdc954d596089e91b70.
+
+#### Snapshot 6: docs/EXECUTION_BACKLOG.md — Status
+
+**Status:** Approved by the product owner on 2026-10-19. Initial execution is in progress; concrete paid/release gates remain pending. See [assignment log](EXECUTION_LOG.md).
+**Owner:** technical lead and product owner. **Audited:** 2026-10-19. **Source baseline:** 28a4c19e8f9c92b83d886be6b96667d834784f9e.
+
+#### Snapshot 7: docs/ROADMAP.md — 0.2 Current progress ledger
+
+| Work item | Status at this checkpoint | Evidence / remaining gate |
+| --- | --- | --- |
+| Personal public repository and established architecture | Verified | Repository is spei04/strange-physics; accepted decisions recorded in DESIGN_DECISIONS.md |
+| Three force families, 2D, 1–8 particles, public contracts, SDK and CLI | Verified and integrated | Baseline commit above; src/strange_physics and numerical/contract tests |
+| Local transactional reservations, checkpoints, replay after interruption | Verified locally | journal.py, session.py, sdk.py; failure and concurrency tests; not distributed durability |
+| External custom agent and law example | Verified locally | examples/custom_extension.py and tests/test_extensions.py; not outside-team adoption |
+| Current code and delivery checks | Bounded native interfaces, normalizer and endpoint subunit delivered | PR #132/main 51356f2 passed all five jobs, both 4,574-test suites and exact 96-file candidate verification. Prior #105/#106 and #129 acceptance stays scoped; RA-N02.a remains in progress. Scientific-profile and full-study admission remain unresolved. [Current assignments](EXECUTION_LOG.md#current-assignment-board). |
+| Existing GitHub CI | Verified at reviewed integration head | All four Python 3.12/3.14 PR and push checks passed at 5cb1895; 55 tests, Ruff, strict mypy, package build and CLI smoke. Merge tree matches this reviewed head; [merge-main CI](https://github.com/spei04/strange-physics/actions/runs/39341809891) also passed at 7117060 |
+| Baseline integration to main | Verified | PR #1 merged as 7117060; Quality/Research peer reviews passed and git diff confirms tree identity with 5cb1895. This is not a product release |
+| Stage 2 execution backlog | Approved 2026-10-19 | 168 PR tasks across 42 epic issues; 369 task/gate prerequisites; scope, exclusions, contracts, tests, confidence and done criteria; dependency/resource audit passed |
+| First local scientific contract subset | Verified and integrated | SP-01.a merged by PR #51 at cc24aef; reviewed tree and four matching-head CI checks passed, as did merge-main CI. 147 tests; no fitter or benchmark claim |
+| First control-contract subset | Verified and integrated; parent complete | PR #53/main d6204aa passed matching-tree PR/main checks and independent review. All later identity subsets and final SP-01.b composition are integrated through PR #88; later consumers retain their other prerequisites |
+| Workspace/membership contract subset | Verified and integrated; identity parent complete | PR #67/main 1ec45aa matches reviewed b9c4754 and passed CI. Subsequent credentials/composition are integrated; hosted handlers and SQL concurrency/recovery remain later tasks |
+| Invitation contract subset | Verified and integrated; identity parent complete | PR #69/main 89e6117 matches reviewed 8267865 and all PR/main checks passed. Tenant-bound recipient evidence, issuing-grant revision and metadata-only retries remain contractual; live provider/HTTP/SQL/throttling remains later work |
+| Explicit linking contract subset | Integrated; ID-B complete | PR #79/main24c8796 and its PR/main checks passed; subsequent C1/C2 and final SP-01.b composition are now integrated |
+| Identity, artifact and viewer contract freeze | SP-01.b/c/d complete | WORLD1 PR #95 and WEB1 PR #97 accepted. VAL1 manifest accepted in draftPR101; generator deferred for the native comparison; hosted enforcement remains later work |
+| Scientific checkpoint — I1 | Complete for bounded local spring workflow | PR #90/main d931158 accepted with matching reviewed tree and PR/main CI. Installed-wheel CLI and SDK each score24/24 fixed probes, worst RMSE3.1542e-8 and1.0098e-7 respectively; every probe is below0.001 |
+| Researcher journeys | Design reviewed; product acceptance pending | WORKSPACE_JOURNEYS.md and inventory: seven journeys, 28 scenarios, three passing consistency tests; no UI/accessibility claim |
+| Priced staging configuration | Proposed; not authorized | STAGING_PROPOSAL.md: low-traffic $450–550/month; proposed seven-day $250 envelope. Target facts, exact IaC and authorization remain open |
+| Repository CI/CD hardening | Complete for current package | PR #56 merged 256b409; protected-main run 39347053265 delivered verified artifact 12231636153. Exact source/lock/checksum evidence in DELIVERY_RECORD.md; no publishing/deployment and no SP-27.a waiver |
+| Expanded enterprise execution baseline | Approved with concrete gates retained | Backlog D01–D06 cover initial scope, staffing, revised schedule, release boundary, provisional targets and later concrete paid/release gates |
+| Broader sparse fitting, active selector, calibrated uncertainty and held-out benchmark | Planned | Bounded linear-spring fit/predict/independent development scoring is integrated; broader R1 research and recovery evaluation remain |
+| Authenticated HTTP service, tenant database, remote execution | Planned | R2–R3; local SQLite is not a hosted security boundary |
+| Provider gateway, LLM selector, executable predictor evaluation | Planned | R4; no provider sweep or live model calls established |
+| Browser world builder, investigation viewer, supported self-hosting | Planned | R5 |
+| Load, adversarial, restore, migration and outside-team validation | Planned | R6–R8 |
+| Production infrastructure and actual credit eligibility | Preflight complete; deployment NO-GO | Shared project/billing readbacks verified; credits/expiry, dedicated target project permissions and quotas remain unknown. Platform owns remediation; no provisioning performed |
+| Development workspace capacity | SP-02.b complete; independently accepted | Approved recovery snapshot and online 200→300 GiB expansion; ~96.96 GiB free, source/dependencies/consumers preserved. Snapshot review 2026-10-27; no restore rehearsal claim |
+
+The cloud development VM is an existing workspace, not the hosted product deployment. Authoritative source is studio-agent:/home/serenapei/experiments/strange-physics. Reuse it; do not recreate the project or dependencies on the Mac. The primary checkout and one separate identity checkout are retained for independently active writers. Existing migration archives and other experiments are not disposable build caches.
+
+Current execution roster: Research completed #131 source/reference work and a private, unexecuted Laplace reference patch; Quality and Platform completed independent endpoint delivery reviews; Lead owns progress integration and the next bounded source review. Prior failures remain retained. The 24-case/eight-vector Laplace draft is parallel preparation, with no merge, runtime or comparative-acceptance claim. The provisional 2–4-engineer-day estimate and low confidence remain historical estimates, not a changed forecast. Scientific settings and full-study admission remain unresolved. See the [current assignment board](EXECUTION_LOG.md#current-assignment-board).
+
+#### Snapshot 8: docs/EXECUTION_BACKLOG.md — Current execution refinements
+
+SP-01.b is complete through the independently reviewed control, ID-A, ID-B/B1–B3 and ID-C/C1–C2 units plus final composition. PR #88/main 92320173ff0d3278c65cfc251983d57fab9960b1 matches accepted b8d3e5ee96b3b07da53eccbabddebc5a73223ba3 and tree 515e27ebbb594a15ce439b24a14463ed7a4cf9a7; PR CI39367180231 and all protected-main CI39367439199 jobs passed. Integrated 1,692 tests, Ruff/format92, strict mypy57,613 schema checks, configured security checks and offline package validation passed. The earlier 3–6-day remaining identity estimate is historical and no longer an outstanding assignment. Agent elapsed time is not human effort evidence. Full-contract consumers may use this bounded freeze once their other actual prerequisites pass; no live enforcement or release claim follows.
+
+SP-01.c/#89 is complete through three sequential reviewed units: ART1 immutable artifact/checkpoint identity, EXEC1 package/build/worker authority, and COMP1 native-model provenance and recovery. Exact PR/main checks passed. SP-01.d/#94 is complete through WORLD1 PR #95 and WEB1 PR #97; Quality now owns SP-01.e/#98 VAL1. CORE/SCI bytes and the integrated local I1 workflow stay unchanged. These pure contracts do not establish live producers or deployment.
+
+The coordinated [CI-01 request](https://github.com/spei04/strange-physics/issues/54) adds bounded repository CI/CD maintenance. It does not waive the cloud storage/provisioning gates or complete SP-27.a. Repository-settings coordination owns branch protection; candidate delivery requires protected main and successful required checks. Publication/deployment remain separately gated.
+
+Execution checkpoint 2026-10-20: SP-01.b/c/d and bounded I1 are complete. Quality owns SP-01.e/#98 VAL1; Research and Platform review, and lead integrates. SP-02.b capacity is complete after the approved recovery snapshot and expansion; staging remains NO-GO. Capacity acceptance is not a restore rehearsal or production-readiness claim. Journey/staging documentation does not approve UI or provisioning.
+
+
+Scientific execution checkpoint 2026-10-20: Research's read-only dependency review
+confirms SP-02.b → SP-03.a → SP-03.b → SP-04.a → SP-04.b → SP-06.a → SP-04.e/I1,
+with the additional approved joins and accepted predecessors recorded in
+[EXECUTION_LOG.md](EXECUTION_LOG.md#scientific-acceptance-checkpoint--i1-complete).
+SP-06.a/#83 and SP-04.e/#87 are integrated; bounded I1 is complete through PR #90.
+SP-01.b/c/d are integrated; Quality owns SP-01.e/#98 VAL1 after accepted WEB1 integration. The six scientific tasks retain
+19 reference engineering days plus 4.75 reserve, not a subagent schedule promise.
+No unfinished identity contract or whole-R0 gate is a prerequisite for this local
+slice. Enterprise work and its actual consumer gates remain unchanged. I1 has
+purchased-prefix-only fitting, unseen-condition predictions and independent
+analytic scoring with explicit failures through the installed SDK/CLI;
+all24 preregistered probes satisfy the fixed per-probe error gate. The concrete disk/snapshot action is approved and complete;
+SP-03.a is integrated through PR #76/main 8510243 with matching tree and passing
+PR/main CI. SP-03.b/#75 is integrated through PR #78/main db182788 with matching reviewed tree
+and passing PR/main CI, including 817 tests. SP-04.a/#77 is integrated through PR #80/main e5a3c8d with a matching
+reviewed tree and passing PR/main CI, including 1,006 tests. SP-04.b/#81 is integrated through PR #82/main 9c341f8 with passing PR/main CI,
+1,320 tests and all 1,680 unseen predictions inside the fixed per-probe limit. Noise sensitivity failures remain explicit; no
+thresholds or manifests were relaxed.
+
+ART1 integration checkpoint: lead owns primary integration of accepted7a90e96 with accepted SDK/I1 progress8cf6fea at5ad0ef3. Both schema-validator additions and the exact36-entry package allowlist survived independent union review. Platform released identity clean for sequential reuse after main acceptance; no new checkout. EXEC1 and COMP1 remain separate dependent review units, and full SP-01.c freeze remains open.
+
+Historical ART1 completion and EXEC1 API assignment (superseded by the current board): PR #91/main95bdd85e6163147b6b1e29e6f59648a02e8c3d59 matches reviewed8c282eb2072e59c43290ea10991e09adc990d5b6 and treecb539fa21f89ffc5562a66f2c1fa42cb5acdec07; PR CI39370833204 and all five protected-main CI39370975462 jobs passed. Platform receives the reused identity checkout for EXEC1 API contracts/fixtures after this record’s review and explicit handoff; independent API review precedes predicates. Research reviews runtime provenance and SCI boundaries; Quality reviews authorization/lifecycle. Lead maintains primary progress and integration. Full SP-01.c freeze, live enforcement and paid/release gates remain open.
+
+Historical EXEC1 runtime assignment (superseded by accepted runtime and integration preparation below): the API at57f2f303a5fec4b65b1df022b4239a64f537f6bc is accepted by lead, Quality and Research after chronology, lookup-uniqueness, normal-completion and aggregate-configuration repairs. Platform retains exclusive identity source ownership for bounded current-authority/replay/broker/termination predicates. Independent runtime review and exact PR/main checks remain; COMP1 and the full SP-01.c freeze are not complete. The four delivery plus one reserve days and all baseline dependency/gate records remain unchanged.
+
+Production ledger measurement: one schema-valid maximum-shape Operation at57f2f303 serialized to1,757,976 bytes; a10,000-operation history extrapolates to17,579,767,781 bytes (about16.37GiB). No giant history was allocated. Count limits and pure conformance predicates do not prove bounded database reads. Exact existing producer owners and acceptance evidence are added above at SP-09.d, SP-12.a, SP-13.c and SP-16.b; SP-11 retains authorization. COMP1 must preserve actual canonical prefix identity with an explicit byte bound or verified streaming producer. Baseline task graph and estimates remain unchanged.
+
+Historical EXEC1 integration preparation (completed by the acceptance below): EXEC1 runtime fe3b0088d4bca0623459f9024eceb42036e8d491 and doc-only author c66b6a0d6bc82a81195797c742353718bc155136 are independently accepted. All2,281 tests,615 focused cases,722 schemas,Ruff/format112,full mypy74,configured Bandit and offline archive checks passed. Three related lifecycle/history defects were repaired; Quality independently checked84 state/instance combinations,65 receipt histories and6 chronology cases. Research and lead each passed12 additional cases. Pure predicates remain distinct from live producers. Final PR #92 and protected-main checks are pending; COMP1 and full SP-01.c remain open.
+
+EXEC1 completion and COMP1 assignment: EXEC1 is complete through PR #92/main750db15810f4a58a4a8d34776cb3708dc310ef5a, matching reviewed671f10930a743acfb9da888a0eb2c97c6e7f471f/tree13894d9c09bdde0ae8278a5a331c56b377a485fc. All four PR CI39375391014 and all five main CI39375611645 jobs passed. Local2,281 tests,722 schemas,full typing/static/security/package checks and independent lifecycle/provenance review are accepted. The verified candidate artifact12242708007 is retained privately outside checkouts; this is not a published release or live hosted readiness claim. Research receives the reused identity checkout after this record’s review, with an early API checkpoint before runtime. Platform reviews provenance/build/persistence, Quality reviews authorization/recovery, and lead owns progress/integration.
+
+COMP1 runtime assignment: API21cb20146bea3ff42aa15dafe43136ff24ff6081/tree d3e0b3417dfc518215e19123a7fb5c185268e420 is independently accepted;422 focused cases,764 schemas,static/type checks and independent boundary/mutation reviews passed. Research retains exclusive identity ownership for runtime. Platform reviews bounded bytes, actual SCI prefix/original engine and native approval renewal; Quality reviews broker authority, current-state replay and async recovery; lead owns primary progress/integration. The repaired pairwise worker-revision chronology and private actual PredictorVersion compatibility do not change CORE/SCI, public worker contracts, baseline task dependencies, estimates or gates. Full SP-01.c remains in progress.
+
+Draft COMP1 API CI: PR #93/a629729 passed all four applicable CI39377520114 jobs, preserving accepted API21cb201 and reviewed progress. Runtime and full SP-01.c acceptance remain pending; this is early API evidence, not final runtime or hosted-production evidence.
+
+COMP1 runtime integration checkpoint: runtimeb7c944c and finalauthor3ceb846 are independently accepted.2,423 tests,141 focused COMP1 cases,764 schemas,static/type/security/offline package checks passed; independent authorization, prefix, renewal and recovery reviews are recorded in EXECUTION_LOG.md. Combined60a8ac5 preserves accepted source and status annotations. Lead integrates through draft PR #93; exact final PR/main CI remains before SP-01.c completion. Research/Platform prepare SP-01.d read-only; source waits the accepted parent and writer handoff. Hosted production and paid/release gates remain open.
+
+Final integrated60a8ac581fcfed2df9f9381ce116b6d905064242 checks passed2,423 tests,Ruff/format117,mypy78 and764 external schema cases. The private integrated-check index SHA256989c28e24c32236165b6351f1c031a5d7385d188921d55816e2a69c1318e0100 binds the immutable source and captured results; subsequent changes are progress-only. Exact final PR #93 and protected-main CI remain before merge/parent acceptance.
+
+COMP1 completion and SP-01.d handoff: COMP1 and SP-01.c are complete through PR #93/main11e200253347dc05973e5d7969a3abd145f285e2, matching revieweda75ac1b7099aa8d38d62577d14315dfeb5009f49/treeec01b963f20e95f682ef06a04bcebcd4350db862. All four PR CI39379345399 and all five protected-main CI39379544409 jobs passed. The exact integrated source passed 2,423 tests, 764 schema cases, Ruff/format and strict typing; independent boundary, recovery and composition reviews are accepted. Candidate artifact12245465046 was checksum/provenance verified and retained privately outside checkouts. These are pure contracts and predicates; live SQL/storage/HTTP/build/controller/isolation producers remain later tasks.
+
+Research is assigned SP-01.d/#94 in the existing identity checkout after this record is reviewed and the lead explicitly hands off the writer. WORLD1 covers immutable world/version views, browser-only current authorization, explicit preview grants and exact selected-world/run binding. WEB1 follows in a separate PR for streams, snapshots, cursors, replay and large-artifact retrieval. Each unit requires an API/fixture checkpoint before pure runtime predicates. Platform reviews preview/provenance and producer boundaries; Quality reviews authority/recovery/schema consistency and retains read-only SP-01.e preparation. Lead owns primary integration and progress. No dependency, estimate, paid, research-amendment or release gate changes.
+
+WORLD1 source assignment began 2026-10-20 06:23 UTC after Quality accepted handoffc74975b. Research owns the reused identity checkout; Platform/Quality review, lead integrates. The four delivery plus one reserve days, dependencies and gates are unchanged.
+
+WORLD1 API fd6bac2 is independently accepted with 2,600 tests and 1,201 external schema checks. Research is assigned runtime; Platform reviews transition/provenance and Quality current authority/recovery. The accepted types do not establish live storage, HTTP or UI, and SP-01.d remains open through WORLD1 runtime and WEB1.
+
+SP-01.d consumer preparation: one accepted synthetic maximum-count scientific record measured 1,779,612 canonical bytes and needs 28 batches at 64 KiB, supporting the existing 4 MiB raw-body reference bound without proving a global maximum or load behavior. Preserve explicit raw caps and incomplete/oversized failure semantics. Draft WORLD1 PR #95 has passing API-only CI; runtime and WEB1 acceptance still precede full freeze.
+
+WORLD1 runtime 8555602 passed 2,732 full tests and 1,201 schema cases; test-only abdf849 repairs explicit shared-helper imports and passes full strict typing. Independent review found three retained-predecessor consistency gaps in version/grant retry histories. Research owns bounded repairs; Platform and Quality verify the replacement, and lead holds integration. Shared authorization/parser extraction is independently accepted. WEB1 and complete SP-01.d remain pending.
+
+Historical checkpoint (subsequently qualified below): WORLD1 runtime 9267733 was accepted by lead, Platform and Quality after 2,768 full tests, 345 WORLD1 cases, 542 broader focused cases, 1,201 schema checks, Ruff/format127 and strict mypy87. Retained predecessor/ancestor ID and chronology checks, grant renewal-distance consistency and safe head reads were repaired and regression-tested. Exact final PR #95 and protected-main CI remain before integration acceptance. WEB1 and the SP-01.d parent freeze remain open.
+
+Final composition qualified the earlier 9267733 acceptance: the original receipt parent/version pair also needs validation. Research repaired that supplied pair at6abdb3 and retains the identity writer while Platform checks visible version-ID reuse at fresh append allocation; Quality verifies all six supplied-record pairs. Publication and full final acceptance remain held for the replacement. Existing full-test evidence stays attached to its original source.
+
+2026-10-20 08:04 UTC — Final WORLD1 runtime2b882fe is accepted by lead, Platform and Quality after 2,783 full tests, 360 WORLD1 cases, 557 broader focused cases, 1,201 schemas, Ruff/format127, strict mypy87, static security and offline package/installed-callable checks. Final composition repairs validate all six supplied historical/current version pairs and prevent fresh allocation from reusing a visible version ID; valid retries still ignore unused allocation inputs. Final authorf7b1cb1 changes documentation only. This supersedes the qualified9267733 acceptance. Exact final PR #95/main checks remain before integration acceptance; WEB1 and full SP-01.d remain open.
+
+#### Snapshot 9: docs/EXECUTION_LOG.md — Current assignment board
+
+| Engineer | Current / next work | Review and gate |
+| --- | --- | --- |
+| Quality | CLI fixes, source review and Laplace V2 review complete | Laplace runtime validation remains a separate unit |
+| Platform | Main CI and exact package verification complete; final evidence review | No numerical rerun or environment changes |
+| Research | Four-observation scientific result and Laplace V2 source complete | Laplace stays private and unexecuted |
+| Project lead | Final delivery, report and progress reconciliation | RA-N02.a and full-study gates remain open |
+
+#### Snapshot 10: docs/EXECUTION_LOG.md — Current blockers and rules
+
+- Capacity stop resolved: independent SP-02.b acceptance preserved source and dependencies; PR #74/main f197687 records recovery, and PR #76/main 8510243 records accepted SP-03.a. One additional ordinary cloud worktree was necessary for independent B3 authoring while Research owned the primary checkout. Its own locked copy-mode environment occupies about 179 MiB; 103,889,854,464 bytes remained free at creation. Managed creation cannot target this remote host from the local chat, so the remote worktree is unmanaged and indexed privately. Both checkouts remain active and must be reused, not archived or removed. No local project copy or shared mutable dependency links. Maintain >=20 GiB readiness separately from the 100 MiB emergency stop floor.
+- Final SP-01.b review is accepted for issuer/tenant/subject identity, purpose-bound proof ownership, composed current authority and per-payload stream checks. The <=30-second interval applies only to idle connections. Live producer implementation and operational evidence remain later tasks.
+- Cloud filesystem had 215 MiB free at execution start; accepted SP-02.b recovery now permits scoped development. Continue preserving migration archives and other active projects.
+- Baseline and SP-01.b contract integration are accepted. SP-01.c now has its actual SP-00.b/SP-01.b prerequisites; later consumers still wait for their remaining freezes.
+- Root coordinates every checkout write; independent writers get separate cloud checkouts. No local project copies.
+- Partner/assessor/human operations availability is unconfirmed. No outreach or contractual commitment is implied.
+- No priced staging, provider trial, official sweep or production release is approved yet.
+- A completed assignment includes source identity, tests, reviewer outcome and limitations. Review findings become bounded repair assignments before acceptance.
+
+#### Snapshot 11: docs/MEASURED_COMPARISON_HANDOFF.md — Owners
+
+| Owner | Assignment |
+| --- | --- |
+| Quality | Source and Laplace V2 reviews complete; numerical validation remains separate |
+| Platform | Main CI and package verified; retained evidence review |
+| Research | Bounded scientific result and private Laplace V2 source complete |
+| Project lead | Final delivery and progress reconciliation |
+
+The two existing cloud checkouts remain under Lead coordination for integration and sequential reuse. The first integrated demo gate stopped at strict typing before package refresh or numerical work; the separately admitted fab69a4 continuation passed all eight local commands and the bounded demo. Quality releases primary after this six-document handoff, and Lead owns integration and hosted delivery. Existing environments were reused, with project-only copy installation and frozen nonproject dependencies; no new environment was created. Endpoint PR #132/main 51356f2 and its exact candidate are accepted, while focused 32a9f7d reference/package evidence and the earlier style/type-check failures retain their original scope. The progress branch supersedes main's historical pre-delivery documentation snapshot. Research's parallel Laplace reference patch is private, unmerged and unexecuted. Neither delivery nor that draft accepts a scientific profile or opens full-study admission.
+
+The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
+
+The full configured run used 256 MiB whole-test/command headroom and 64 MiB scoped setup/public-call headroom, with the same 4 MiB diagnostic reserve and 2 GiB shared ceiling.
+
+#### Snapshot 12: docs/research/NATIVE_COMPARISON_PROPOSAL.md — Current assignment
+
+PR #128/main e587f47 and unpublished candidate 12758851671 are accepted, including all five main jobs, 4,502 tests on both supported Python runtimes and exact 92-file archive/source verification. Quality completed candidate verification; Platform completed independent delivery and bounded parent review; Lead records RA-02/#105 and RA-N01/#106 acceptance. Source-specific selected-run evidence and failed attempts remain separate in the [delivery record](EXECUTION_LOG.md#2026-10-27--publisher-handoff-delivered-and-native-parents-accepted).
+
+Research delivered the normalizer subunit (#129) through PR #130/main 620c0f0 and endpoint subunit #131 through PR #132/main 51356f2. Both Python main suites passed 4,574 tests and exact candidate verification is accepted. The independently accepted 32-case focused reference evidence and earlier failures stay source-specific. The narrow-grid counterexample confirms that normalization alone does not establish resolution; no scientific profile is frozen. The parallel Laplace V2 designs now have a private, unmerged 24-case/eight-vector source draft; collection, numerical execution, bound review and practical CPU fit remain pending, with no deep-tail or comparative-acceptance claim. RA-N02.a remains in progress. Existing owner-approved scoped implementation, the historical 2–4-engineer-day estimate and graph remain unchanged. Validated shared definitions and fixtures are required for comparative Laplace acceptance; parallel reference preparation is not a prerequisite for endpoint delivery. Full-study global authority/allocation and resource fit remain required before RA-07.b; the retained 36-publication reservation floor alone is 1,168 MiB, above the 1 GiB cap.
+
+RA-01 and SP-04.e remain accepted. The earlier 15–23-engineer-day remainder is historical, not a current forecast; the approved 17–26-day full-path baseline includes completed work. Re-estimate upcoming numerical and allocation work from concrete scope rather than infer a completion date. VAL1 draft PR #101 remains deferred. No comparison has run; broader/paid/official/release gates remain separate.
+
+#### Snapshot 13: docs/PLAN.md — Status
+
+Status: accepted architecture and historical M0–M5 design. M0 local core exists on PR #1; later implementation is pending. The [roadmap](ROADMAP.md) owns the current enterprise scope and the [execution backlog](EXECUTION_BACKLOG.md) owns approved PR tasks, effort, dependencies and the conditional reference schedule. Initial execution was approved on 2026-10-19; concrete paid and release actions retain their separate gates. The original milestones below are retained only as mappings; they do not authorize implementation. See the [decision record](DESIGN_DECISIONS.md) and [core implementation](CORE.md).
+
+#### Snapshot 14: docs/execution-backlog.json — superseded current fields
+
+```json
+{
+  "execution.checkout_ownership.scientific": "Quality completed the six-document progress handoff on docs/bounded-demo-progress based on preserved 50e0f27; Lead owns primary integration after release.",
+  "execution.checkout_ownership.identity": "Lead owns integrated demo source fab69a4 after the admitted local continuation; existing project-only installation passed96-file parity with frozen nonproject dependencies. No new checkout/environment.",
+  "execution.native_comparison_execution.assignments": {
+    "Research": "Endpoint source/reference unit delivered; private 24-case/eight-vector Laplace source draft prepared without execution; progress handoff.",
+    "Quality": "Endpoint numerical/delivery reviews accepted; independent parallel reference-source review next.",
+    "Platform": "Endpoint resource/candidate reviews accepted; finite reference resource review next.",
+    "Project lead": "Integrate exact delivery/progress and coordinate the next bounded source review; scientific/full-study gates unchanged."
+  },
+  "execution.bounded_scientific_demo.assignments": {
+    "Research": "Scientific outcome and Laplace V2 source complete; released",
+    "Quality": "Source, scientific guards and Laplace V2 review complete; released",
+    "Platform": "Main package outcome verification; final independent review",
+    "Project lead": "Final progress and private report delivery"
+  },
+  "execution.native_comparison_execution.handoff": "PR #128 bounded RA-02/#105 and RA-N01/#106 acceptance and PR #130 normalizer #129 delivery remain complete. Endpoint subunit #131 is delivered through PR #132/main 51356f2 with all five main jobs, 4,574 tests per Python runtime and exact96-file candidate acceptance. Focused32a reference evidence and all earlier failures remain source-specific. RA-N02.a stays in progress; scientific-profile and full-study acceptance remain unresolved.",
+  "execution.native_comparison_execution.next_units": "Review the private unexecuted Laplace analytic-reference source draft and its finite validation proposal in parallel. Comparative acceptance requires validated shared scientific definitions/fixtures; no grid ground-truth assumption, new prerequisite or automatic runtime admission. Resolve the remaining scientific profile and finite-resolution requirements under existing scoped approval; preserve all cumulative holds and full-study allocation limits.",
+  "execution.bounded_scientific_demo.next_gate": "Bounded workflow delivered; separate Laplace numerical validation and grid calibration remain before benchmark integration."
+}
+```
+
+
+## 2026-10-28 — Analytic reference validation
+
+Test-only source `479896f95b9a6dbb761d494547fbce3ab9111411` passed 24 cases and 72 phases across eight fixed analytic vectors. The independent closed-form comparison had maximum absolute error 3.1624509165526476e-15 against the predeclared 2e-12 criterion; the maximum reported enclosure width was 2.1906444477876626e-55, below 2^-170. All five rejection reasons and the exact source-derived census matched. Research independently reviewed the retained numerical result; Quality independently reconciled the resource account. Neither repeated the numerical work.
+
+The one numerical process used 101.677477 CPU seconds, 101.895227 wall seconds and 47,388 KiB peak RSS. A permissions preflight failed before numerical launch; its evidence and 0.25389308 CPU / 1.624946333 wall cost remain preserved. Both attempts together used 102.503050829 known runtime/control CPU seconds and 105.506305833 nonoverlapping wall seconds. The full engineering allowance of 180 CPU seconds / 420 active-wall seconds remains charged; 292,152 retained bytes plus reserved source/terminal growth fit the 8 MiB ceiling. Prior endpoint and demo allowances remain closed. Outcome index SHA256: 52a32b1ad72ba85d531678f2e0bac5e9be04e48ada7f43f853793a496e3df944. Final account SHA256: 811a1c606c43375a3bdaf637f2da0298d09a4b1c8863ae0644a94ecac9be4c17.
+
+This is a local software-reference checkpoint, not grid calibration, an implemented native Laplace agent, a selector result or scientific reuse approval. The source pack is unmerged and its full repository/hosted CI is pending. The approximately 102-second module needs a separate required CI job on both supported Python versions; adding it to the previous 826–832-second suites risks their existing 15-minute limit. No new CI run was launched for this checkpoint.
+
+Finite-grid calibration stays on the critical path. Before any scientific reference reuse, reconcile these costs with the original cumulative study account. Full-study publication still needs at least 1,168 MiB against the unchanged 1 GiB cap. The 36-episode / 432-purchase / 8 CPU-hour / zero-provider limits, task graph, estimates and approvals are unchanged.
+
+
+## 2026-10-30 — Reference CI and grid calibration handoff
+
+Research's GRID-Q1 proposal `b190602dcaba2ee953ee2ff80f5cbab442436d56` and Lead's cost-reconciliation addendum `64e9702c23250b21e6d7219a46e6aa4c2c41bac8` are retained in [the finite-grid handoff](FINITE_GRID_CALIBRATION_HANDOFF.md). The profile is proposed and unrun. Its discrepancy meaning, untouched fixture separation and admissible scientific remaining balance are unresolved; no observed calibration errors or scientific acceptance are claimed.
+
+Quality implemented the separate required analytic-reference CI partition in six files, preserving the original numerical helper/test bytes and existing pinned dependencies. Local runtime source `9b4e701fb59f3023917d391e7643c172ffe5652a` passed changed-file format/lint, strict four-file mypy and exactly 60 synthetic cases (27 policy, 33 report) in 0.34 pytest seconds. Earlier unchanged-file style passes remain source-qualified. Research independently rehashed the retained outcome and accepted coverage, identities and accounting. The guide-only successor is `0e356fa7ef5f5c34f7fa1c1a87fddcd643279cc3`; [PR #135](https://github.com/spei04/strange-physics/pull/135) has hosted run `41119034874` in progress. Both dedicated Python 3.12/3.14 reference jobs passed, with raw reports independently verified by Research. Ordinary repository checks and the aggregate gate remain pending; no overall hosted acceptance or merge is claimed.
+
+Three local failure classes remain preserved; every failed attempt stopped before pytest:
+
+| Failure | Correction | Known attempt CPU / active-wall seconds | Private outcome index SHA-256 |
+| --- | --- | ---: | --- |
+| Format check required two file layouts | Style-only `a79d60e`, normalized AST unchanged | 5.300180102 / 8.933364167 | `a8248c82a9d72c1c122c7ac38badc2b770bcaf5a0e033137d8f79f76df0f75d8` |
+| Mypy saw `ci_gate` and `scripts.ci_gate` as duplicate modules | Same targets with `--explicit-package-bases`; no source change | 1.017052020 / 1.650864411 | `815731124f5e8a839a6f3ac916dfe57434957543e2bdb1c48bdb137092c17c72` |
+| Synthetic test accessed the non-exported `ci.time` import | Direct stdlib `time` import and same-object monkeypatch in `9b4e701` | 8.379799733 / 8.721286454 | `de38a48f9245bb6263accc4d852207f2b2ff2a62b6315aab6d5d644309b91dbe` |
+
+The repairs used 0.436901118 / 1.029257447 and 0.093534663 / 0.591996913 CPU / active-wall seconds; the passing batch used 8.522380231 / 9.205832723. Including the single retained preparation hold, cumulative engineering charges are 28.749847867 CPU seconds / 40.132602115 active-wall seconds within the unchanged 60 / 120 allowance. At the local outcome checkpoint, the retained unit had 1,368,374 regular-file bytes under its 8 MiB ceiling. All ten passing-batch direct children closed; source and selected runtime pins were unchanged. Full initial dependency evidence was reused without installation or package changes. Final outcome index: `fc9c3b1f17f72c417f1cff4dba2cb8164b9032abd416f28d45d0b4dd372770b9`; account: `8440261eeedebcd2a75748453bab3beae966b1e37b38554e6035eebaf09569ac`. These and the failed receipts are retained privately under `ra-laplace-ci-20261030`; no local calibration or analytic-reference computation was repeated.
+
+Roles: Research authored GRID-Q1 and independently reviewed the CI source/outcome; Quality authored the CI guards, retained local failures and validation, and reconciled this progress entry; Lead reviewed the exact source/costs, owns PR/hosted verification and the next integration. Released review consumers do not imply an additional execution allocation.
+
+General source readiness remains separate from the historical 50 GiB start / 45 GiB runtime reserves; those runtime guards are not waived. Existing numerical units stay closed, and no scientific remaining balance is inferred from this engineering allowance. The full-study reservation floor of 1,168 MiB still exceeds the unchanged 1 GiB cap. Task IDs, DAG, estimates, approvals and the 36-episode / 432-purchase / 8 CPU-hour / zero-provider limits are unchanged. Grid calibration remains the next scientific prerequisite; the illustrative demo and analytic fixtures do not establish it.

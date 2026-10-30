@@ -1,23 +1,16 @@
 # Retained Journal comparison integration
 
-Status (2026-10-28): Bounded demo [#133](https://github.com/spei04/strange-physics/issues/133) passed its local continuation at fab69a4: all eight commands and 20 focused cases passed, with 96 package files equal across wheel, sdist and installation. Four actual observations produced fitted k=0.6750572721112501 and all 24 held-out probes passed the 0.001 RMSE target; the maximum was 3.154199886178306e-8. The separate 16-cell / discrepancy 0.25 terminal-x belief normalized and remains illustrative only. The first type-check failure is retained; independent scientific and resource outcome reviews passed; PR/main delivery is pending. Endpoint #131/PR #132 delivery remains accepted. RA-N02.a is still in progress, the scientific profile is unaccepted, and the 1,168 MiB publication floor still exceeds the 1 GiB full-study cap. Laplace remains private, unmerged and unexecuted parallel source work. [Current evidence and assignments](EXECUTION_LOG.md#2026-10-28--bounded-demo-integration-and-validation).
+**Current checkpoint (2026-10-30)**
+
+- **Verified:** The spring demo, saved playback, local reference checks and CI guard tests pass.
+- **Next — Lead + Quality:** Finish hosted reference-CI verification and review the proposed grid calibration.
+- **Blocked:** Discrepancy meaning and scientific balance remain unresolved; full-study storage is insufficient and the selector comparison has not run. [Detailed evidence and limits](EXECUTION_LOG.md#2026-10-30--reference-ci-and-grid-calibration-handoff).
 
 Base: [accepted main dfda60f](https://github.com/spei04/strange-physics/tree/dfda60f0bb425897bd4b80431e1d7d3851d8392e), delivered through PR124. At that base, supplied-material preparation/prediction/scoring wrappers do not establish authority over actual retained Journal history.
 
 ## Owners
 
-| Owner | Assignment |
-| --- | --- |
-| Quality | CLI repairs and source review complete; finalize progress and review retained demo outcome |
-| Platform | Local continuation resources, package identity and failure retention accepted |
-| Research | Demo and test repair complete; independent scientific outcome accepted |
-| Project lead | Integrate accepted outcome and coordinate exact-source hosted delivery |
-
-The two existing cloud checkouts remain under Lead coordination for integration and sequential reuse. The first integrated demo gate stopped at strict typing before package refresh or numerical work; the separately admitted fab69a4 continuation passed all eight local commands and the bounded demo. Quality releases primary after this six-document handoff, and Lead owns integration and hosted delivery. Existing environments were reused, with project-only copy installation and frozen nonproject dependencies; no new environment was created. Endpoint PR #132/main 51356f2 and its exact candidate are accepted, while focused 32a9f7d reference/package evidence and the earlier style/type-check failures retain their original scope. The progress branch supersedes main's historical pre-delivery documentation snapshot. Research's parallel Laplace reference patch is private, unmerged and unexecuted. Neither delivery nor that draft accepts a scientific profile or opens full-study admission.
-
-The corrected host guard for the selected 50-call run counts all RA02 regular files without following symlinks, plus 64 MiB active and 4 MiB diagnostic headroom under the existing 2 GiB ceiling. The earlier comparison-owned subtotal is not a shared-output census. [Current accepted evidence and limits](EXECUTION_LOG.md#2026-10-27--parsed-input-reuse-and-one-measured-50-call-run-accepted).
-
-The full configured run used 256 MiB whole-test/command headroom and 64 MiB scoped setup/public-call headroom, with the same 4 MiB diagnostic reserve and 2 GiB shared ceiling.
+- Lead owns hosted CI verification and integration. Quality completed the CI guard implementation and local validation; Research independently accepted the retained outcome and supplied the proposed grid handoff. Quality releases this progress checkout to Lead after the documentation checkpoint. See the [current board](EXECUTION_LOG.md#current-assignment-board) and [preserved handoff limits](EXECUTION_LOG.md#2026-10-28--progress-view-consolidation).
 
 ## Scope and acceptance
 

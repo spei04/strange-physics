@@ -1,6 +1,12 @@
 # Native spring comparison execution plan
 
-**Current checkpoint (2026-10-28):** Bounded demo [#133](https://github.com/spei04/strange-physics/issues/133) passed its local continuation at fab69a4: all eight commands and 20 focused cases passed, with 96 package files equal across wheel, sdist and installation. Four actual observations produced fitted k=0.6750572721112501 and all 24 held-out probes passed the 0.001 RMSE target; the maximum was 3.154199886178306e-8. The separate 16-cell / discrepancy 0.25 terminal-x belief normalized and remains illustrative only. The first type-check failure is retained; independent scientific and resource outcome reviews passed; PR/main delivery is pending. Endpoint #131/PR #132 delivery remains accepted. RA-N02.a is still in progress, the scientific profile is unaccepted, and the 1,168 MiB publication floor still exceeds the 1 GiB full-study cap. Laplace remains private, unmerged and unexecuted parallel source work. [Current evidence and assignments](../EXECUTION_LOG.md#2026-10-28--bounded-demo-integration-and-validation).
+Source-only next-step proposal: [finite-grid calibration handoff](../FINITE_GRID_CALIBRATION_HANDOFF.md). Numerical admission and scientific acceptance remain separate.
+
+**Current checkpoint (2026-10-30)**
+
+- **Verified:** The spring demo, saved playback, local reference checks and CI guard tests pass.
+- **Next — Lead + Quality:** Finish hosted reference-CI verification and review the proposed grid calibration.
+- **Blocked:** Discrepancy meaning and scientific balance remain unresolved; full-study storage is insufficient and the selector comparison has not run. [Detailed evidence and limits](../EXECUTION_LOG.md#2026-10-30--reference-ci-and-grid-calibration-handoff).
 
 Status: **owner-approved for scoped implementation and the bounded comparison on2026-10-21**. Accepted plan source33ddfbf74837dde29e0f1db3b1b4263e7031ddc2, PR #100. The reviewed native dependency amendment and scoped RA_EXEC are active; scientific/implementation entry gates and all caps remain. See [approval record](APPROVALS.md#native-comparison-2026-10-21).
 
@@ -133,11 +139,7 @@ Use the existing machine, at most8 CPU-core-hours and1GiB new artifacts, with ze
 
 ## Current assignment
 
-PR #128/main e587f47 and unpublished candidate 12758851671 are accepted, including all five main jobs, 4,502 tests on both supported Python runtimes and exact 92-file archive/source verification. Quality completed candidate verification; Platform completed independent delivery and bounded parent review; Lead records RA-02/#105 and RA-N01/#106 acceptance. Source-specific selected-run evidence and failed attempts remain separate in the [delivery record](../EXECUTION_LOG.md#2026-10-27--publisher-handoff-delivered-and-native-parents-accepted).
-
-Research delivered the normalizer subunit (#129) through PR #130/main 620c0f0 and endpoint subunit #131 through PR #132/main 51356f2. Both Python main suites passed 4,574 tests and exact candidate verification is accepted. The independently accepted 32-case focused reference evidence and earlier failures stay source-specific. The narrow-grid counterexample confirms that normalization alone does not establish resolution; no scientific profile is frozen. The parallel Laplace V2 designs now have a private, unmerged 24-case/eight-vector source draft; collection, numerical execution, bound review and practical CPU fit remain pending, with no deep-tail or comparative-acceptance claim. RA-N02.a remains in progress. Existing owner-approved scoped implementation, the historical 2–4-engineer-day estimate and graph remain unchanged. Validated shared definitions and fixtures are required for comparative Laplace acceptance; parallel reference preparation is not a prerequisite for endpoint delivery. Full-study global authority/allocation and resource fit remain required before RA-07.b; the retained 36-publication reservation floor alone is 1,168 MiB, above the 1 GiB cap.
-
-RA-01 and SP-04.e remain accepted. The earlier 15–23-engineer-day remainder is historical, not a current forecast; the approved 17–26-day full-path baseline includes completed work. Re-estimate upcoming numerical and allocation work from concrete scope rather than infer a completion date. VAL1 draft PR #101 remains deferred. No comparison has run; broader/paid/official/release gates remain separate.
+- Follow the [current assignment board](../EXECUTION_LOG.md#current-assignment-board). [Historical assignments](../EXECUTION_LOG.md#2026-10-28--progress-view-consolidation) retain source-specific evidence, failed attempts, estimates and approval boundaries.
 
 ## 2026-10-24 — Native stages independently reviewed; trust-store repair delivered
 
