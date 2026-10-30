@@ -6,7 +6,7 @@ import json
 import os
 from typing import Any
 
-REQUIRED_JOBS = frozenset({"checks", "security"})
+REQUIRED_JOBS = frozenset({"checks", "analytic_reference", "security"})
 
 
 def require_success(needs: Any) -> None:

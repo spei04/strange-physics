@@ -111,3 +111,36 @@ are part of this pack. Later comparative Laplace acceptance still requires
 shared accepted continuous prior/likelihood semantics, derivative and boundary
 policies, independent fixtures and justified grid resolution. An unvalidated
 grid is not ground truth.
+
+## Required CI partition
+
+The proposed CI integration runs this exact module in a separate required
+`analytic_reference` matrix on Python 3.12 and 3.14. The ordinary matrix
+excludes only `tests/test_laplace_analytic_reference.py`; its other tests,
+formatting, typing, schema, security, package and CLI gates are unchanged.
+The aggregate gate requires both matrices and security to succeed, including
+rejecting skipped, cancelled, missing and unknown results.
+
+`scripts/ci_analytic_reference.py` invokes the module once with an owned
+interpreter, `-I -B`, no shared conftest or plugin autoload, and the fixed test
+selection. It preserves JUnit and 72 phase reports, eight vector identities
+and error/enclosure diagnostics, five rejection reasons and the exact work
+census. It requires 2,117 core GCD charges and fewer than 40,000 checked core
+operations. Missing, skipped, changed or incomplete evidence fails even if
+pytest returns zero. Synthetic CI-policy tests exercise these report and
+process-failure checks without constructing a reference pack.
+
+The prospective hosted engineering bounds are a 15-minute job, one child
+with CPU soft/hard limits of 295/300 seconds, a 512 MiB address-space limit,
+and a 360-second monotonic parent wait followed by at most five seconds
+waiting for the killed child. Each output file is limited to 128 KiB and
+combined reports/logs to 1 MiB. Standard output and error go directly to the
+bounded log file; no unbounded pipe buffer is retained. Failure keeps
+available diagnostics and exits unsuccessfully, with no automatic retry.
+These controls cover the audited single child, not arbitrary descendants
+or indefinite kernel stalls. They are prospective ceilings, not measured
+performance promises, and do not reopen the closed local 180/420 allowance.
+
+The workflow and its synthetic policy tests still require exact-source
+validation and hosted execution. This partition adds no scientific
+calibration, study balance, or native Laplace implementation claim.

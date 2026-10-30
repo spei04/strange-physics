@@ -17,9 +17,9 @@ STEM = "strange_physics-0.1.0a1"
 
 
 @pytest.mark.parametrize("status", ["failure", "cancelled", "skipped", "neutral", "", None])
-@pytest.mark.parametrize("job", ["checks", "security"])
+@pytest.mark.parametrize("job", ["checks", "analytic_reference", "security"])
 def test_ci_gate_rejects_any_required_job_without_success(job: str, status: Any) -> None:
-    needs = {"checks": {"result": "success"}, "security": {"result": "success"}}
+    needs = {name: {"result": "success"} for name in ("checks", "analytic_reference", "security")}
     needs[job] = {"result": status}
     with pytest.raises(ValueError, match="did not succeed"):
         require_success(needs)
@@ -32,8 +32,18 @@ def test_ci_gate_rejects_any_required_job_without_success(job: str, status: Any)
         [],
         {},
         {"checks": {"result": "success"}},
-        {"checks": {"result": "success"}, "security": None},
-        {"checks": {"result": "success"}, "security": {"result": "success"}, "extra": {}},
+        {
+            "checks": {"result": "success"},
+            "analytic_reference": {"result": "success"},
+            "security": None,
+        },
+        {
+            "checks": {"result": "success"},
+            "analytic_reference": {"result": "success"},
+            "security": {"result": "success"},
+            "extra": {},
+        },
+        {"checks": {"result": "success"}, "security": {"result": "success"}},
     ],
 )
 def test_ci_gate_rejects_missing_unknown_or_malformed_results(needs: Any) -> None:
@@ -42,7 +52,9 @@ def test_ci_gate_rejects_missing_unknown_or_malformed_results(needs: Any) -> Non
 
 
 def test_ci_gate_accepts_only_complete_success() -> None:
-    require_success({"checks": {"result": "success"}, "security": {"result": "success"}})
+    require_success(
+        {name: {"result": "success"} for name in ("checks", "analytic_reference", "security")}
+    )
 
 
 def make_source(root: Path) -> None:
@@ -231,3 +243,21 @@ def test_source_archive_gitignore_must_match_reviewed_bytes(tmp_path: Path) -> N
     write_archives(tmp_path / "dist", wheel, sdist)
     with pytest.raises(ValueError, match="Source archive differs from reviewed source"):
         validate_archives(tmp_path / "dist", root)
+
+
+def test_workflow_requires_the_reference_partition() -> None:
+    workflow = Path(".github/workflows/ci.yml").read_text()
+    checks = workflow.split("  checks:\n", 1)[1].split("  analytic_reference:\n", 1)[0]
+    reference = workflow.split("  analytic_reference:\n", 1)[1].split("  security:\n", 1)[0]
+    gate = workflow.split("  gate:\n", 1)[1].split("  candidate:\n", 1)[0]
+    pytest_lines = [line.strip() for line in checks.splitlines() if "pytest " in line]
+    assert pytest_lines == [
+        "- run: uv run --no-sync pytest -p no:cacheprovider "
+        "--ignore=tests/test_laplace_analytic_reference.py"
+    ]
+    assert 'python: ["3.12", "3.14"]' in reference
+    assert "timeout-minutes: 15" in checks and "timeout-minutes: 15" in reference
+    assert reference.count(".venv/bin/python -I -B scripts/ci_analytic_reference.py ") == 1
+    assert 'PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"' in reference
+    assert "needs: [checks, analytic_reference, security]" in gate
+    assert "needs: [gate]" in workflow.split("  candidate:\n", 1)[1]
