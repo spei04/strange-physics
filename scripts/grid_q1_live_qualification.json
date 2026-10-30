@@ -295,7 +295,7 @@
     "disabled_path": "source/scripts/grid_q1_service_fixture.py",
     "disabled_sha256": "be0d313499b576a08fdcdbe66cbd846294d94e8a4b7fbba56c75cfbc80ccaf95",
     "qualification_copy_name": "run.py",
-    "tests_sha256": "afde790b03d911924f4f4753f21049de62dfbfcc52dc14d07adc3411a023a1c6"
+    "tests_sha256": "f5c1ddf96908f8ab53e8a1fb69a2147a6d402dd8eb02b7e392f24cf318d0c82e"
   },
   "fixture_argv": [
     "/usr/bin/python3",
@@ -365,12 +365,20 @@
     "retain_and_recheck": true
   },
   "integrated_engineering": {
-    "acceptance_sha256": "968a2a2b05f5fff8ae27ec0d6a51b531c31345ca1d93d8193df7cfe1a3a186b0",
+    "acceptance_sha256": "491cf0643e5b7653b0d82ee1e16d277cec9b3e66afaaca31712dcc20c47b5f0f",
     "cases": 108,
     "core_cases": 52,
     "fixture_operator_cases": 56,
     "phases": 324,
+    "previous_acceptance_sha256": "968a2a2b05f5fff8ae27ec0d6a51b531c31345ca1d93d8193df7cfe1a3a186b0",
     "real_process_attempts": 0,
+    "retained_initial_ci_failure": {
+      "correction": "Scoped shared worker mocks; freshrequiredCIpending",
+      "passed": 4890,
+      "run": 41142868684,
+      "runtime": "Python3.14",
+      "teardown_errors": 3
+    },
     "scientific_calls": 0
   },
   "lease_observation_fields": [

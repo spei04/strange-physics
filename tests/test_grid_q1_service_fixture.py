@@ -287,12 +287,13 @@ def test_worker_requires_exact_release_before_exit(
     monkeypatch.setenv("INVOCATION_ID", invocation)
     monkeypatch.setattr(fixture, "read", lambda *_: b"pinned-fixture")
     monkeypatch.setattr(fixture, "write", retained)
-    monkeypatch.setattr(os, "mkfifo", lambda *_: None)
-    monkeypatch.setattr(os, "open", lambda *_: 17)
-    monkeypatch.setattr(os, "close", lambda *_: None)
-    monkeypatch.setattr(os, "read", lambda *_: json.dumps(token).encode())
-    monkeypatch.setattr(select, "select", lambda *_: ([17], [], []))
-    assert fixture.worker(data, spec_sha) == code
+    with monkeypatch.context() as worker_mocks:
+        worker_mocks.setattr(os, "mkfifo", lambda *_: None)
+        worker_mocks.setattr(os, "open", lambda *_: 17)
+        worker_mocks.setattr(os, "close", lambda *_: None)
+        worker_mocks.setattr(os, "read", lambda *_: json.dumps(token).encode())
+        worker_mocks.setattr(select, "select", lambda *_: ([17], [], []))
+        assert fixture.worker(data, spec_sha) == code
     assert [name for name, _ in rows] == ["worker-ready.json", "worker-released.json"]
     assert rows[-1][1] == token
 
@@ -313,13 +314,14 @@ def test_wrong_release_does_not_complete(
     monkeypatch.setenv("INVOCATION_ID", "b" * 32)
     monkeypatch.setattr(fixture, "read", lambda *_: b"pinned-fixture")
     monkeypatch.setattr(fixture, "write", retained)
-    monkeypatch.setattr(os, "mkfifo", lambda *_: None)
-    monkeypatch.setattr(os, "open", lambda *_: 17)
-    monkeypatch.setattr(os, "close", lambda *_: None)
-    monkeypatch.setattr(os, "read", lambda *_: b'{"invocation_id":"wrong"}')
-    monkeypatch.setattr(select, "select", lambda *_: ([17], [], []))
-    with pytest.raises(ValueError, match="Release identity"):
-        fixture.worker(data, "a" * 64)
+    with monkeypatch.context() as worker_mocks:
+        worker_mocks.setattr(os, "mkfifo", lambda *_: None)
+        worker_mocks.setattr(os, "open", lambda *_: 17)
+        worker_mocks.setattr(os, "close", lambda *_: None)
+        worker_mocks.setattr(os, "read", lambda *_: b'{"invocation_id":"wrong"}')
+        worker_mocks.setattr(select, "select", lambda *_: ([17], [], []))
+        with pytest.raises(ValueError, match="Release identity"):
+            fixture.worker(data, "a" * 64)
     assert names == ["worker-ready.json"]
 
 
