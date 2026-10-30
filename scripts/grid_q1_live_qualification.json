@@ -1,0 +1,510 @@
+{
+  "approved_plan_sha256": null,
+  "authored_fake_case_census": {
+    "cases": 108,
+    "executed": true,
+    "nodes": [
+      {
+        "cases": 1,
+        "name": "test_activation_changes_only_anchored_entry_assignment"
+      },
+      {
+        "cases": 1,
+        "name": "test_bound_cgroup_disappearance_with_cached_terminal_is_closure"
+      },
+      {
+        "cases": 1,
+        "name": "test_changed_invocation_is_never_cleaned_as_ours"
+      },
+      {
+        "cases": 1,
+        "name": "test_cleanup_failure_retains_first_receipt_and_final_failure"
+      },
+      {
+        "cases": 1,
+        "name": "test_closed_lease_is_accepted"
+      },
+      {
+        "cases": 1,
+        "name": "test_closeout_collects_lease_census_and_capacity_faults"
+      },
+      {
+        "cases": 1,
+        "name": "test_closeout_failed_grid_preserves_fallback_and_fault_references"
+      },
+      {
+        "cases": 1,
+        "name": "test_closeout_missing_final_retains_real_supervisor_fault"
+      },
+      {
+        "cases": 1,
+        "name": "test_closeout_missing_phase_status_cannot_be_complete"
+      },
+      {
+        "cases": 1,
+        "name": "test_closeout_qualification_failure_without_grid_still_inventories"
+      },
+      {
+        "cases": 1,
+        "name": "test_closeout_repeat_never_overwrites_earlier_ledger"
+      },
+      {
+        "cases": 2,
+        "name": "test_closeout_retains_provisional_positive_and_negative"
+      },
+      {
+        "cases": 1,
+        "name": "test_closeout_terminal_failure_leaves_durable_ledger_provisional"
+      },
+      {
+        "cases": 2,
+        "name": "test_closeout_unreadable_record_does_not_skip_summary"
+      },
+      {
+        "cases": 2,
+        "name": "test_closeout_write_failure_retains_first_fault_and_terminal_fallback"
+      },
+      {
+        "cases": 2,
+        "name": "test_command_and_fsync_failure_preserve_both"
+      },
+      {
+        "cases": 1,
+        "name": "test_complete_negative_accepts_same_retained_failed_unit"
+      },
+      {
+        "cases": 1,
+        "name": "test_complete_negative_is_preserved"
+      },
+      {
+        "cases": 1,
+        "name": "test_cpu_accounting_must_not_decrease"
+      },
+      {
+        "cases": 1,
+        "name": "test_cpu_fault_remains_authoritative_after_clean_sigterm"
+      },
+      {
+        "cases": 1,
+        "name": "test_default_cli_is_disabled"
+      },
+      {
+        "cases": 4,
+        "name": "test_duration_sentinels_rejected"
+      },
+      {
+        "cases": 1,
+        "name": "test_entry_remains_disabled"
+      },
+      {
+        "cases": 8,
+        "name": "test_exact_terminal_outcomes"
+      },
+      {
+        "cases": 1,
+        "name": "test_exclusive_intent_prevents_second_dispatch"
+      },
+      {
+        "cases": 1,
+        "name": "test_existing_combined_fault_blocks_dispatch"
+      },
+      {
+        "cases": 1,
+        "name": "test_existing_unit_is_not_dispatched"
+      },
+      {
+        "cases": 1,
+        "name": "test_failed_barrier_cannot_exec_grid"
+      },
+      {
+        "cases": 2,
+        "name": "test_failed_stage_cannot_reopen"
+      },
+      {
+        "cases": 1,
+        "name": "test_files_receipt_is_exclusive_and_syncs_file_before_directory"
+      },
+      {
+        "cases": 1,
+        "name": "test_first_fault_survives_cleanup_fault"
+      },
+      {
+        "cases": 1,
+        "name": "test_first_fault_survives_cleanup_permission_error"
+      },
+      {
+        "cases": 8,
+        "name": "test_lease_rejects_unknown_or_out_of_contract"
+      },
+      {
+        "cases": 4,
+        "name": "test_load_plan_requires_exact_qualified_admission"
+      },
+      {
+        "cases": 1,
+        "name": "test_lost_ack_inspects_same_unit_without_resubmission"
+      },
+      {
+        "cases": 1,
+        "name": "test_manager_timeout_cannot_be_reported_as_pass"
+      },
+      {
+        "cases": 1,
+        "name": "test_missing_both_terminal_receipts_stays_unknown"
+      },
+      {
+        "cases": 3,
+        "name": "test_missing_or_sentinel_usage_is_incomplete"
+      },
+      {
+        "cases": 1,
+        "name": "test_one_start_intent_prevents_second_submission"
+      },
+      {
+        "cases": 5,
+        "name": "test_operator_final_observation_rejects_incomplete_ledger"
+      },
+      {
+        "cases": 1,
+        "name": "test_output_census_rejects_alias"
+      },
+      {
+        "cases": 1,
+        "name": "test_output_census_rejects_unlisted_root"
+      },
+      {
+        "cases": 1,
+        "name": "test_owner_projection_binds_exact_source_and_roots"
+      },
+      {
+        "cases": 4,
+        "name": "test_owner_rejects_inactive_or_changed_plan"
+      },
+      {
+        "cases": 1,
+        "name": "test_pass_is_provisional_and_accounting_saved_before_stop"
+      },
+      {
+        "cases": 6,
+        "name": "test_prior_receipt_cannot_support_new_negative"
+      },
+      {
+        "cases": 1,
+        "name": "test_quota_proof_is_mandatory_before_cached_closure"
+      },
+      {
+        "cases": 1,
+        "name": "test_receipt_exclusive_and_private"
+      },
+      {
+        "cases": 3,
+        "name": "test_receipt_failure_cannot_become_success"
+      },
+      {
+        "cases": 4,
+        "name": "test_retained_failed_cleanup_rejects_changed_evidence"
+      },
+      {
+        "cases": 1,
+        "name": "test_snapshot_and_sleep_share_observation_deadline"
+      },
+      {
+        "cases": 1,
+        "name": "test_submission_uses_detached_retained_exact_unit"
+      },
+      {
+        "cases": 1,
+        "name": "test_survivor_escalation_then_unknown_closure"
+      },
+      {
+        "cases": 4,
+        "name": "test_systemd_duration_readback"
+      },
+      {
+        "cases": 1,
+        "name": "test_three_automatic_handshakes_reach_barrier_without_processes"
+      },
+      {
+        "cases": 1,
+        "name": "test_three_live_qualification_receipts_are_required"
+      },
+      {
+        "cases": 1,
+        "name": "test_uncaptured_disappeared_cgroup_is_not_closure"
+      },
+      {
+        "cases": 1,
+        "name": "test_unexpected_timeout_stays_incomplete_with_retained_failed_cleanup"
+      },
+      {
+        "cases": 2,
+        "name": "test_worker_requires_exact_release_before_exit"
+      },
+      {
+        "cases": 1,
+        "name": "test_wrong_release_does_not_complete"
+      }
+    ],
+    "phases_if_all_collected": 324
+  },
+  "combined_id": "grid-q1-cec936a2-supervised-v1",
+  "combined_manifest_fields": [
+    "binding_id",
+    "owner_admitted",
+    "owner",
+    "combined_id",
+    "source",
+    "contract",
+    "owned_roots",
+    "control_root",
+    "adapter",
+    "fixture_disabled_sha256",
+    "fixtures",
+    "engineering",
+    "grid",
+    "leases",
+    "output_pools",
+    "operator"
+  ],
+  "contract": {
+    "client_max_cpus": 10,
+    "later_free_bytes": 21474836480,
+    "lease_seconds": 2400,
+    "logical_bytes": 109051904,
+    "server_max_cpus": 4,
+    "start_free_bytes": 21592276992,
+    "whole_host_cpu_upper_seconds": 33600
+  },
+  "core": {
+    "accepted_fake_cases": 52,
+    "accepted_fake_phases": 156,
+    "active_path": "source/scripts/grid_q1_supervisor_active.py",
+    "active_rule": "Exactly one newline-anchored assignment ENABLED = False -> ENABLED = True; all other bytes identical",
+    "active_sha256": "ca43cde57b64f1a9101453c0cd15319671023947b36419d370118a51deab96f1",
+    "disabled_path": "source/scripts/grid_q1_supervisor.py",
+    "disabled_sha256": "7ba2e695558de6adee9643cf98831efbdd42d750d7da871ced7a147600718ce8",
+    "prior_acceptance_sha256": "d83e8d9e1141b37c560fda460b72cab6a9a63c15af71a661681b411fcc5448a9",
+    "tests_sha256": "f079f3c27a13823663beec5abd798a15b9525929ee5bf971c8641d1e8f7ed892"
+  },
+  "enabled": false,
+  "final_witness_contract": "All owned files sealed with pending_external_witness; emit observed post-write server marker and exit. Existing healthy transport is handed back with no queued unit work, not claimed terminated. Client post-drain handback marker and trusted tool post-exit completion close the same2400-second interval. No further unit files after final witness; later summaries are separate admin work. Projected endpoints forbidden.",
+  "fixture": {
+    "activation_rule": "Exactly one newline-anchored assignment ENABLED = False -> ENABLED = True; all other bytes identical",
+    "active_path": "source/scripts/grid_q1_service_fixture_active.py",
+    "active_sha256": "912d9dc32bcb54881ac7ef129469245604b9a977f05c5a54ef060feea7ec3cb2",
+    "disabled_path": "source/scripts/grid_q1_service_fixture.py",
+    "disabled_sha256": "be0d313499b576a08fdcdbe66cbd846294d94e8a4b7fbba56c75cfbc80ccaf95",
+    "qualification_copy_name": "run.py",
+    "tests_sha256": "afde790b03d911924f4f4753f21049de62dfbfcc52dc14d07adc3411a023a1c6"
+  },
+  "fixture_argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "<qualification-root>/run.py",
+    "<qualification-root>/admission.json",
+    "<spec-sha256>"
+  ],
+  "fixture_spec_fields": [
+    "binding_id",
+    "owner_admitted",
+    "owner",
+    "combined_id",
+    "source",
+    "contract",
+    "owned_roots",
+    "kind",
+    "root",
+    "control_root",
+    "profile",
+    "adapter",
+    "fixture_active_sha256"
+  ],
+  "fixtures": [
+    "normal",
+    "nonzero",
+    "timeout"
+  ],
+  "grid_argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "<source>/scripts/grid_q1_supervisor_active.py",
+    "--admission",
+    "<new-grid-root>/admission.json",
+    "--sha256",
+    "<materialized-admission-sha256>"
+  ],
+  "grid_materialization": "Only supervisor.qualification_accepted false->true plus qualification_barrier_sha256; all other reviewed admission bytes represented by unchanged JSON values. Actual digest binds deterministic unit ID and controller invocation.",
+  "grid_profile": {
+    "command_seconds": 5,
+    "cpu_quota_percent": 50,
+    "cpu_watch_ns": 580000000000,
+    "observations": 58,
+    "poll_seconds": 30,
+    "quota_period_us": 100000,
+    "runtime_seconds": 1710,
+    "service_file_bytes": 16777216,
+    "start_timeout_seconds": 10,
+    "stop_timeout_seconds": 10,
+    "term_grace_seconds": 2,
+    "terminal_seconds": 1740
+  },
+  "grid_root_layout": "Direct child of the preserved GRID evidence parent, named qualification-run-q1-cec936a2-supervised-v1; sibling -control; separate from combined source/fixture/control roots",
+  "inner_capacity_policy": "one_run_20_plus_80MiB",
+  "inner_helpers": {
+    "controller_disabled_sha256": "0257e7fb42dda974d73725d24cc2f644cc449c55ce7018811d82980bb109cd28",
+    "controller_flag_only_active_sha256": "8c4cc7f10436d76fc1958546814919fb20cc24ca2626f5ad0dc444da22159b4a",
+    "entry_active_sha256": "af9070dec412e20df5a425cec6954b1c0b54d3872c02c22530723d2737ea6367",
+    "entry_child_sha256": "2522baf92328126e744795f9ed3bc451a6596cf2c6addb2a3c4a94fb6568f812",
+    "process_guard_sha256": "edfef49728f6d5965cf2d5ac75aa74830678343639690499ca14611950501ddd"
+  },
+  "inner_preparation_precharge": {
+    "files": 24,
+    "logical_bytes": 150673,
+    "retain_and_recheck": true
+  },
+  "integrated_engineering": {
+    "acceptance_sha256": "968a2a2b05f5fff8ae27ec0d6a51b531c31345ca1d93d8193df7cfe1a3a186b0",
+    "cases": 108,
+    "core_cases": 52,
+    "fixture_operator_cases": 56,
+    "phases": 324,
+    "real_process_attempts": 0,
+    "scientific_calls": 0
+  },
+  "lease_observation_fields": [
+    "combined_id",
+    "source",
+    "start_monotonic_ns",
+    "observed_monotonic_ns",
+    "maximum_cpu_count",
+    "boot_start",
+    "boot_observed",
+    "closed=false"
+  ],
+  "lease_reference_rule": "client/server are exact {path,sha256} refs to immutable initial OPEN observations under combined control; create before owner; never replace with a later start",
+  "logical_root": "qualification-supervised-q1-cec936a2-v1",
+  "one_invocation_recipe": "scripts/grid_q1_operator.sh, disabled by default: bounded full qualification, one dispatch, failure-aware closeout and stdout-only post-driver anchor",
+  "operator": {
+    "activation_rule": "One newline-anchored EXECUTION_ENABLED=false assignment -> true; no other bytes change",
+    "active_path": "source/scripts/grid_q1_operator_active.sh",
+    "active_sha256": "e022ab1209cb961928ac479267129bbd12969fcdb324005b2ec7fd3c709b20da",
+    "argument_count": 10,
+    "disabled_path": "source/scripts/grid_q1_operator.sh",
+    "disabled_sha256": "196fa7def7a439d55df7aadc86673d44a5abc3d39665caaf0b3029ce6c0b1b6a",
+    "scientific_execution": false
+  },
+  "operator_argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "<source>/scripts/grid_q1_service_fixture_active.py",
+    "<start|ready|release|finish|barrier|dispatch|closeout>",
+    "--spec",
+    "<exact-private-spec>",
+    "--sha256",
+    "<exact-sha256>"
+  ],
+  "output_pools_mib": {
+    "grid_console": 16,
+    "grid_control": 2,
+    "inner": 72,
+    "qualification": 7,
+    "source": 3,
+    "transport": 4
+  },
+  "owner_admitted": false,
+  "owner_binding_rule": "Owner pins exact roots, source/contract, adapter and fixture bytes, and full GRID template digest. Fixture kind maps to an exact owner root pair. Separate inner owner-decision record is materialized first and bound into GRID template; outer owner then pins that template, avoiding any circular digest.",
+  "owner_fields": [
+    "approved",
+    "combined_id",
+    "source",
+    "contract",
+    "historical_costs",
+    "owned_roots",
+    "adapter_sha256",
+    "fixture_disabled_sha256",
+    "fixture_active_sha256",
+    "qualification_roots",
+    "combined_control_root",
+    "grid_run_root",
+    "grid_control_root",
+    "grid_template_sha256",
+    "direct_approval_reference",
+    "leases",
+    "output_pools",
+    "engineering",
+    "operator"
+  ],
+  "owner_record": null,
+  "qualification_profile": {
+    "command_seconds": 1,
+    "cpu_quota_percent": 50,
+    "cpu_watch_ns": 7000000000,
+    "observations": 8,
+    "poll_seconds": 1,
+    "quota_period_us": 100000,
+    "runtime_seconds": 8,
+    "service_file_bytes": 1048576,
+    "start_timeout_seconds": 3,
+    "stop_timeout_seconds": 2,
+    "term_grace_seconds": 1,
+    "terminal_seconds": 15
+  },
+  "schema_version": "grid-q1-live-qualification.v1",
+  "scientific_exports": {
+    "scripts/qualify_grid_q1.py": "0fc72db22f2b6b4eb912ca414fa85faf00d6efbc500a58e49a0bb8e6b4f90394",
+    "tests/endpoint_belief_reference.py": "039c212450d5cdec851c97e472d1b2fa20a590fa25bd3aa3099d5b04d4bbf4f8",
+    "tests/grid_q1_bounds.py": "dc09e5defadee75d4fd9dc1950a7553645881e22a8cda6533daadb9ab5ee5c7f",
+    "tests/grid_q1_driver.py": "700c90d4bf92805c392732fd82be513f0ef11421d208bbd8a50a5f842f270117",
+    "tests/grid_q1_evidence.py": "f9d25bf1c2824d21fa152895d8a69d1ac92bf82e3647443d30b5edb57c5e61ad",
+    "tests/grid_q1_inputs.py": "131b5528481461fd6d1fda453e919121fd5520e51a50b42b47e3379e5973546a",
+    "tests/grid_q1_reference.py": "c96f0c498520f4836c05c865b2f9e64d4ea40f4d918483572828f1acd3c8ad50"
+  },
+  "scientific_source": "cec936a2a5a6534861eb9183861c4d6fcf931f67",
+  "scientific_tree": "4a3c3623722dedfdd6f97dd7ed272fb256f350ec",
+  "scope_limits": {
+    "cloud_administrative_600_cpu_is_working_target_not_hard_cap": true,
+    "grid_failure_inclusive_service_cpu_upper_seconds": 900,
+    "inner_printed_reservation_seconds": 600,
+    "inner_runtime_cpu_acceptance_seconds": 570,
+    "legacy_marker_seconds": 30,
+    "old_historical_unknowns_preserved": true,
+    "old_unit_not_reusable": true,
+    "qualification_service_cpu_upper_seconds_each": 8,
+    "scientific_calibration_claim": false,
+    "selector_or_study_claim": false,
+    "whole_host_bound_is_not_measured_scientific_cost": true
+  },
+  "source_status": "Final108-case isolated engineering checks passed; no live qualification services or GRID numerical attempt.",
+  "unresolved_before_activation": [
+    "New direct owner approval for the entire combined contract",
+    "Fresh exact private roots and source exports, new inner/outer owner admission and storage/environment checks",
+    "Observed initial CPU/boot/lease anchors before materialization; actual live qualification and final external witnesses remain future gates"
+  ],
+  "writer_inventory": {
+    "grid_console_per_file_limit_bytes": 16777216,
+    "grid_control_logs_max_bytes": 819200,
+    "grid_control_receipts_max_bytes": 458752,
+    "inventory": "lstat only for FIFO; never open/hash it. No links/hardlinks/devices. Logical and st_blocks distinct. Failed/partial files count; no deletion/retry.",
+    "operator_phase_timeout_contract": "Sequential180+1740+240 ceilings; preparation<=180 including bounded10+2preflight; phase record<=5 and finalservermarker<=5,50seconds remaining contingency; global2400 admission/acceptance bound, no nested outer group closure claim",
+    "qualification_all_three_max_bytes": 6733824,
+    "qualification_per_unit": {
+      "cli_log_bytes_max": 8192,
+      "cli_logs_max": 100,
+      "console_bytes_max": 1048576,
+      "control_receipt_bytes_max": 16384,
+      "control_receipts_max": 16,
+      "fifo_logical_bytes": 0,
+      "fixture_copy_bytes_max": 65536,
+      "worker_and_spec_json_max": 3,
+      "worker_json_bytes_max": 16384
+    },
+    "transport_final_tail_reserve_bytes": 262144,
+    "transport_phase_logs_max_bytes": 1048576,
+    "transport_phase_status_max_bytes": 16384,
+    "transport_terminal_capture_allowance_bytes": 262144,
+    "walk_files_max": 10000
+  }
+}
