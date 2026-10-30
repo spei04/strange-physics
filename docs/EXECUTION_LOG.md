@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** The corrected test source passed 108 isolated cases. The initial Python 3.14 CI teardown failure is retained; fresh required checks are pending. Live qualification and GRID have not run.
+- **Verified:** Repair `30bc815` passed all six required CI checks: 4,890 tests and 24 analytic cases on each Python runtime, 3.12 and 3.14. The earlier teardown failure is retained. Live qualification and GRID have not run.
 - **Original attempt:** Preparation ended incomplete; unknown usage and the full reservation remain retained. Its one-run storage exception did not relax other runs' guards.
-- **Next — Lead, with Quality, Research and Platform reviews complete:** Verify corrected CI, then obtain one decision on the [complete bounded attempt](GRID_Q1_SUPERVISED_RUN_DECISION.md), then qualify, run once and close the evidence. No automatic retry.
+- **Next — Lead; Quality, Research and Platform reviews complete:** Obtain one decision on the [complete bounded attempt](GRID_Q1_SUPERVISED_RUN_DECISION.md), then qualify, run once and close the evidence. No automatic retry.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-30 | Quality / Research / Project lead | PR #137 corrected cleanup and hosted verification | Quality scoped shared mocks; Research accepted the exact test-only change; Lead verified [all six required checks](https://github.com/spei04/strange-physics/actions/runs/41144492809) at 30bc815: 4,890 tests and 24 analytic cases per runtime. Prior failed run retained; one complete run decision pending. |
 | 2026-10-30 | Quality / Research / Platform / Project lead | GRID-Q1 preparation incident and control repair | Quality authors fixtures/runbook; Research reviews identity and failure contracts; Platform reviews service/lease/output accounting; Lead tests, integrates and publishes. Final108-case integrated suite and independent reviews passed; complete bounded proposal awaiting decision; no live qualification or numerical run. |
 | 2026-10-30 | Quality / Research / Project lead | RA-N02.a GRID-Q1 qualification implementation and independent review | Engineering checks independently accepted; canonical source/docs delivery pending; numerical qualification remains disabled |
 | 2026-10-28 | Project lead / Platform / Quality / Research | #133 / PR #134 bounded workflow delivery | Merged main 1b611e7; both 4,591-test suites, all five jobs and exact candidate 12842519538 verified; private saved-results report available |
