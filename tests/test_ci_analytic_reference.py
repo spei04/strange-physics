@@ -159,8 +159,7 @@ def test_reference_reports_reject_incomplete_or_changed_evidence(
         row = next(
             r
             for r in rows
-            if r["when"] == "teardown"
-            and "test_closed_domain_and_budget_failures" in r["nodeid"]
+            if r["when"] == "teardown" and "test_closed_domain_and_budget_failures" in r["nodeid"]
         )
         value = json.loads(row["properties"][0][1])
         value["reason"] = "unexpected"
@@ -286,9 +285,7 @@ def test_reference_manifest_matches_unchanged_test_source() -> None:
         elif function.decorator_list:
             decorator = function.decorator_list[0]
             assert isinstance(decorator, ast.Call)
-            cases.extend(
-                f"{function.name}[{name}]" for name in ast.literal_eval(decorator.args[1])
-            )
+            cases.extend(f"{function.name}[{name}]" for name in ast.literal_eval(decorator.args[1]))
         else:
             cases.append(function.name)
     assert tuple(cases) == ci.CASE_NAMES

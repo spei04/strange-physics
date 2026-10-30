@@ -301,10 +301,9 @@ def validate_reports(root: Path) -> dict[str, Any]:
                 denials.append(data)
             else:
                 raise ValueError("Unexpected property")
-    if (
-        [v["vector"] for v in vectors] != list(VECTOR_HASHES)
-        or [d["kind"] for d in denials] != list(REJECTIONS)
-    ):
+    if [v["vector"] for v in vectors] != list(VECTOR_HASHES) or [
+        d["kind"] for d in denials
+    ] != list(REJECTIONS):
         raise ValueError("Missing vector or denial diagnostics")
     prefixes = ("LAPLACE_REFERENCE_CENSUS ", f"{MODULE} LAPLACE_REFERENCE_CENSUS ")
     census_rows = [
@@ -316,9 +315,8 @@ def validate_reports(root: Path) -> dict[str, Any]:
     if len(census_rows) != 1:
         raise ValueError("Expected one reference census")
     census = census_rows[0]
-    if (
-        {k: v for k, v in census.items() if k != "checked_core_operations"} != CENSUS
-        or any(type(census[k]) is not int for k in CENSUS)
+    if {k: v for k, v in census.items() if k != "checked_core_operations"} != CENSUS or any(
+        type(census[k]) is not int for k in CENSUS
     ):
         raise ValueError("Reference census mismatch")
     operations = census.get("checked_core_operations")
