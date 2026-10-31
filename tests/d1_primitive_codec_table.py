@@ -89,15 +89,21 @@ def _bindings(values: object) -> tuple[str, ...]:
 
 def _rows(bindings: tuple[str, ...]) -> tuple[Row, ...]:
     rows: list[Row] = []
-    roles = ("fixture", "strong", "weak", "future", *("arithmetic",) * 8,
-             "constants", "native_emit")
+    roles = (
+        "fixture",
+        "strong",
+        "weak",
+        "future",
+        *("arithmetic",) * 8,
+        "constants",
+        "native_emit",
+    )
     for j, role in enumerate(roles):
-        rows.append(("I", j, f"i{j:02d}", role, j - 4 if 4 <= j <= 11 else None,
-                     bindings[j]))
+        rows.append(("I", j, f"i{j:02d}", role, j - 4 if 4 <= j <= 11 else None, bindings[j]))
     profile = 0
     for case in range(8):
         for grid in range(2):
-            for scale in ((1,) if case in (4, 7) else (0, 1, 2)):
+            for scale in (1,) if case in (4, 7) else (0, 1, 2):
                 rows.append(("P", profile, case, grid, scale, 2 if case == 4 else 1))
                 profile += 1
     for ensemble in range(16):
@@ -118,19 +124,28 @@ def _rows(bindings: tuple[str, ...]) -> tuple[Row, ...]:
         ("train-W03", 13, "a0", "x1", "t0"),
     )
     rows.extend(("Q", q, *query) for q, query in enumerate(queries))
-    rows.extend(("C", c, token, 3 if c == 0 else 2)
-                for c, token in enumerate(("pi", "l2p", "s0", "s1", "s2", "g0", "g1")))
-    rows.extend(("V", v, name) for v, name in enumerate(
-        ("position", "exp", "log", "circle_constant", "native_exp")))
+    rows.extend(
+        ("C", c, token, 3 if c == 0 else 2)
+        for c, token in enumerate(("pi", "l2p", "s0", "s1", "s2", "g0", "g1"))
+    )
+    rows.extend(
+        ("V", v, name)
+        for v, name in enumerate(("position", "exp", "log", "circle_constant", "native_exp"))
+    )
     rows.extend(("S", s, token) for s, token in enumerate(("fx", "ep", "ne", "nz", "ct", "nv")))
-    rows.extend(("T", t, token, kind) for t, (token, kind) in enumerate(
-        (("p", "position_key"), ("d", "decimal"), ("b", "binary64"), ("n", "none"))))
+    rows.extend(
+        ("T", t, token, kind)
+        for t, (token, kind) in enumerate(
+            (("p", "position_key"), ("d", "decimal"), ("b", "binary64"), ("n", "none"))
+        )
+    )
     return tuple(rows)
 
 
 def _encode(value: object, *, newline: bool = True) -> bytes:
-    text = json.dumps(value, sort_keys=True, separators=(",", ":"),
-                      ensure_ascii=True, allow_nan=False)
+    text = json.dumps(
+        value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False
+    )
     return (text + ("\n" if newline else "")).encode("ascii")
 
 
@@ -185,15 +200,22 @@ def parse_table(raw: bytes) -> TableView:
         raise ValueError("Complete bounded immutable table bytes required")
     _depth(raw)
     try:
-        document: object = json.loads(raw.decode("ascii"), object_pairs_hook=_unique_pairs,
-                                      parse_int=_integer, parse_float=_reject_number,
-                                      parse_constant=_reject_number)
+        document: object = json.loads(
+            raw.decode("ascii"),
+            object_pairs_hook=_unique_pairs,
+            parse_int=_integer,
+            parse_float=_reject_number,
+            parse_constant=_reject_number,
+        )
     except (ValueError, UnicodeError, RecursionError) as error:
         raise ValueError("Invalid strict table JSON") from error
     if type(document) is not dict or set(document) != _ROOT_KEYS:
         raise ValueError("Exact table root fields required")
-    if (document["schema"] != SCHEMA or type(document["max_calls"]) is not int
-            or document["max_calls"] != MAX_CALLS):
+    if (
+        document["schema"] != SCHEMA
+        or type(document["max_calls"]) is not int
+        or document["max_calls"] != MAX_CALLS
+    ):
         raise ValueError("Fixed table schema and call plan required")
     if type(document["case_order"]) is not list or document["case_order"] != list(CASE_ORDER):
         raise ValueError("Exact frozen case order required")
@@ -238,7 +260,6 @@ def build_table(identity: TableIdentity, source_binding_refs: tuple[str, ...]) -
     checked = _identity(values)
     bindings = _bindings(source_binding_refs)
     document: dict[str, object] = {name: getattr(checked, name) for name in _ID_FIELDS}
-    document.update(schema=SCHEMA, max_calls=MAX_CALLS, case_order=CASE_ORDER,
-                    rows=_rows(bindings))
+    document.update(schema=SCHEMA, max_calls=MAX_CALLS, case_order=CASE_ORDER, rows=_rows(bindings))
     # Parsing the actual encoded bytes makes this the same boundary as receipt input.
     return parse_table(_encode(document)).raw
