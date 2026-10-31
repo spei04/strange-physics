@@ -133,6 +133,14 @@ include the actual modules `d1_primitive_recording`, `d1_primitive_sink`,
 `d1_codec_append`, `d1_table_retention`, the primitive bridge/codec, and owned-file
 observation helper. File inventory membership does not make these importable.
 
+Python 3.12's protected `typing.py` registers two namespace classes in
+`sys.modules`, `typing.io` and `typing.re`, which intentionally have no module
+specification. Only these two names are accepted by exact identity to their
+canonical `typing` module attributes. The parent must use the ordinary source
+loader and the pinned `<stdlib>/typing.py` origin. An impostor, a different
+parent origin, or any other no-specification entry remains rejected. These
+synthetic compatibility cases do not execute the target interpreter.
+
 ## Current custody and runtime blockers
 
 Read-only readiness inspection found group-writable virtual-environment
@@ -221,8 +229,8 @@ These conditions do not establish final owned-tree acceptance.
 ## Bounded engineering qualification proposal
 
 This is a proposal, not an admission. The current authored focused suite has
-**95 cases in 34 test functions**, or **285 prospective pytest phases**:
-45 controller cases and 50 bootstrap cases. It exercises synthetic file
+**101 cases in 35 test functions**, or **303 prospective pytest phases**:
+45 controller cases and 56 bootstrap cases. It exercises synthetic file
 inventories, fake `Popen` handles, fake modules and owners, negative origin/
 custody/chain cases, and direct audit-event validation. No test starts a real
 child or imports real D1 consumers to construct actual owners.
@@ -299,3 +307,8 @@ Successor source repaired an unprotected-intermediate interpreter-link gap,
 actual inactive-helper names/unmapped checkout origins, and unbounded directory
 enumeration. These were source-review findings, not runtime outcomes. The
 synthetic startup and registry tests were also expanded before qualification.
+
+A later source-only review repaired the two Python 3.12 `typing` namespace
+aliases without introducing a general no-specification exception. It also made
+the heterogeneous startup-policy test fixture type explicit. Neither change
+constitutes runtime or typing qualification.

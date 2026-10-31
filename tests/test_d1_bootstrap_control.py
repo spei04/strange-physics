@@ -360,7 +360,7 @@ def test_startup_hook_membership_is_derived_not_asserted(
     hook, source = site / "_virtualenv.pth", site / "_virtualenv.py"
     entries = [] if case == "empty" else [hook.name, source.name]
     expected = [] if case in ("empty", "omitted") else [str(hook), str(source)]
-    plan = {
+    plan: dict[str, Any] = {
         "startup_sys_path": [str(site)], "startup_hook_files": expected,
         "directories": [{"path": str(site), "entries": entries}],
         "files": [{"path": str(hook), "uid": os.getuid()}],

@@ -417,3 +417,36 @@ def test_runtime_inside_checkout_preserves_installed_source_boundary(
     else:
         with pytest.raises(bootstrap.BootstrapError, match="installed project"):
             bootstrap._check_loaded(plan)
+
+
+@pytest.mark.parametrize("namespace", ["io", "re"])
+@pytest.mark.parametrize("case", ["canonical", "impostor", "wrong_parent_origin"])
+def test_typing_namespace_alias_requires_exact_protected_parent(
+    monkeypatch: pytest.MonkeyPatch, namespace: str, case: str,
+) -> None:
+    origin = "/runtime/stdlib/typing.py"
+    parent = ModuleType("typing")
+    loader = importlib.machinery.SourceFileLoader("typing", origin)
+    parent.__spec__ = importlib.machinery.ModuleSpec("typing", loader, origin=origin)
+    parent.__file__ = origin
+    alias = type("synthetic_namespace", (), {})
+    parent.__dict__[namespace] = alias
+    observed = alias
+    if case == "impostor":
+        observed = type("synthetic_namespace", (), {})
+    elif case == "wrong_parent_origin":
+        parent.__spec__.origin = "/runtime/other/typing.py"
+        parent.__file__ = "/runtime/other/typing.py"
+    plan: dict[str, Any] = {
+        "checkout": "/owned", "site_packages": "/owned/.venv/site", "stdlib": "/runtime/stdlib",
+        "files": [{"path": origin}, {"path": "/runtime/other/typing.py"}],
+        "import_map": {}, "frozen_modules": [], "builtin_modules": [],
+    }
+    monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={
+        "typing": parent, "typing." + namespace: observed,
+    }))
+    if case == "canonical":
+        bootstrap._check_loaded(plan)
+    else:
+        with pytest.raises(bootstrap.BootstrapError, match="Typing namespace"):
+            bootstrap._check_loaded(plan)

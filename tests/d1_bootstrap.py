@@ -88,6 +88,24 @@ def _check_loaded(plan: dict[str, Any]) -> None:
             continue
         if name.startswith("tests.") or name in FORBIDDEN_HELPERS:
             raise BootstrapError("Alternate helper alias or inactive component was loaded")
+        if name in ("typing.io", "typing.re"):
+            # Python 3.12 registers these two namespace classes as module aliases.
+            # Inspect the protected parent directly, without alias attribute hooks.
+            parent = sys.modules.get("typing")
+            if type(parent) is not ModuleType:
+                raise BootstrapError("Typing alias lacks its canonical module")
+            parent_spec = parent.__dict__.get("__spec__")
+            expected = str(Path(plan["stdlib"]) / "typing.py")
+            if (
+                parent_spec is None or parent_spec.name != "typing"
+                or type(parent_spec.loader) is not importlib.machinery.SourceFileLoader
+                or parent_spec.origin != expected or parent.__dict__.get("__file__") != expected
+                or expected not in files
+                or not isinstance(module, type)
+                or module is not parent.__dict__.get(name.partition(".")[2])
+            ):
+                raise BootstrapError("Typing namespace alias or protected parent origin differs")
+            continue
         spec = getattr(module, "__spec__", None)
         if name == "__main__":
             continue
