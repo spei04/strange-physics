@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** PRs #138–#152 passed CI. Table-retention PR #153 is frozen for CI; its local qualification remains incomplete. The source-manifest design passed independent review.
-- **Assignments:** Platform audits #153; Lead publishes the reviewed manifest design and maintains the backlog. Quality completed code/evidence review. Research completed the catalog and construction-order design.
-- **Open gates:** Bounded manifest parsing and resolution, activation, installation, protected inventory, historical evidence, aggregate fit and scientific admission remain pending. The owner and exposure policy are approved; no D1 batch is running.
+- **Verified:** PRs #138–#153 passed CI. Table retention passed 5,910 tests per runtime and full typing; its private local qualification remains incomplete. The manifest design includes the reviewed lockfile correction.
+- **Next assignments:** Research: bounded S wire/catalog parser. Quality: contract/code review. Platform: verification controls. Lead: integration and progress tracking. These are the next queued tasks.
+- **Open gates:** Source resolution, activation, installation, protected inventory, historical evidence, aggregate fit and scientific admission remain pending. The owner and exposure policy are approved; no D1 batch is running.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Quality / Platform / Project lead | Table-retention CI accepted; bounded manifest parser queued | Original PR153 CI passed all six required jobs: 5,910 tests/runtime, 223-file typing, 1,567 schemas, package/reference/smoke checks and 24/72 analytic checks. Four private attempts remain incomplete with original failures/costs retained. Research audited47 current candidate source members; Quality and Lead accepted the lock-only262144-byte design correction and33,947,906 attempted-read proposal. The catalog is still incomplete and these bounds grant no allocation. Next source slice is pure bounded S/catalog comparison; actual source and object resolution follow separately. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Source-manifest design accepted; table-retention CI running | Research resolved the catalog self-reference and actual-routing construction order; Quality and Lead accepted the unchanged limits as proposed bounds. Lead integrated the design over repaired table-retention source without executing it. Platform owns original CI run41183211071 for draft PR153 at3ee39ee2. Next implementation is bounded S wire/catalog comparison; actual source resolution, fixture hook, emitter and installer remain prerequisites for usable authentication. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Conditional table retention reviewed; local qualification incomplete | Research implemented actual T retention with independent descriptors, fresh C joins and retained first faults; Quality reviewed code and narrow repairs. Platform verified four closed attempts/21 children, preserved lint and typing failures, 69.863723 CPU seconds charged and no guarded test bodies. Lead freezes 87884ac1 for one ordinary CI attempt. Source-manifest design now separates hash-free catalog policy from source pins and verifies actual routing only after S-bound C/T and real Bridge/Recorder construction. No scientific run or merge. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Table-retention design reviewed; context CI | Context PR #152 is frozen at 72ec513d in its original CI attempt. Independently reviewed [table-retention design](research/D1_TABLE_RETENTION_DESIGN.md) requires actual sibling-parent identity before creation, independent metadata descriptor ownership and fresh C reads. Review clarified sticky-failure checks both before and after final C, including swallowed close-hook reentry. Research owns the focused helper/test slice; activation and source authority remain separate. No table-retention runtime or D1 batch. |
