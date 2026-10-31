@@ -137,7 +137,9 @@ writes between checks; the accepted exclusive-custody interval remains external.
 ## Materialization order
 
 1. Verify candidate acceptance and actual M/checkout/lock joins independently.
-   Use the existing archive checks before invoking the utility.
+   Use the existing archive checks before invoking the utility. Pin the actual
+   materializer, ci_artifacts and bootstrap-control source bytes in the external
+   preparation record; these inputs do not authenticate their own execution.
 2. Call materialize_installation with actual checkout/site, resolved target
    executable, observed Python version, M, original wheel/provenance paths and
    provenance digest, and the exact hash-matching requirements file.
@@ -150,7 +152,10 @@ writes between checks; the accepted exclusive-custody interval remains external.
    reviewed native/deferred regular files.
 5. materialize_plan collects stdlib/venv membership, all fixed helper/native
    source joins, controller inputs, lock/archive/provenance and installation
-   record, then invokes the existing preflight validator. Write exclusively;
+   record, then invokes the existing preflight validator. The fixed
+   d1_capture_owner.py and d1_capture_descendant.py entry sources are mandatory
+   inputs alongside d1_owned_capture.py and grid_q1_supervisor.py; runtime_files
+   cannot substitute for or omit them. Write exclusively;
    freeze the digest; have Lead/Quality inspect the actual records and external
    custody/acceptance evidence before capture.
 

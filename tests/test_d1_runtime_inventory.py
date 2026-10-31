@@ -279,3 +279,27 @@ def test_inventory_binds_read_to_original_extent(
             (path.parent,), (), stdlib=tmp_path / "stdlib", venv=tmp_path / "venv"
         )
     assert limits == [3]
+
+
+@pytest.mark.parametrize("missing", ["d1_capture_owner.py", "d1_capture_descendant.py"])
+def test_materialization_cannot_omit_missing_fixed_entry_source(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, missing: str
+) -> None:
+    from test_d1_bootstrap_control import synthetic_plan
+
+    complete = synthetic_plan(tmp_path, monkeypatch)
+    binding = {key: value for key, value in complete.items() if key not in ("files", "directories", "links")}
+    expected = Path(binding["checkout"]) / "scripts" / missing
+
+    def census(roots: tuple[Path, ...], files: tuple[Path, ...], **kwargs: Any) -> dict[str, Any]:
+        # Perform the actual missing-file observation only for this mandatory
+        # input; other source/custody fields use the existing structural fixture.
+        for path in files:
+            if path == expected:
+                path.lstat()
+        return {key: complete[key] for key in ("files", "directories", "links")}
+
+    monkeypatch.setattr(inventory, "collect_inventory", census)
+    monkeypatch.setattr(inventory, "_bytes", lambda path, limit: inventory.control._read(path, limit, os.getuid()))
+    with pytest.raises(FileNotFoundError):
+        inventory.materialize_plan(binding, runtime_files=(Path("/reviewed/native.so"),))
