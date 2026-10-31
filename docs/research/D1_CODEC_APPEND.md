@@ -1,10 +1,10 @@
 # D1 conditional codec append bridge
 
-Source-only checkpoint implementing the [reviewed append design](D1_CODEC_APPEND_DESIGN.md).
-Only `tests/d1_codec_append.py`, `tests/test_d1_codec_append.py` and this guide belong
-to this slice. No project code was imported or executed during authoring. Tests
-are authored, not passed; source formatting, typing and runtime qualification are
-pending independent review and a separately admitted engineering unit.
+Implements the [reviewed append design](D1_CODEC_APPEND_DESIGN.md). Local bounded
+verification passed 99 synthetic cases, 297 ordered phases, formatting, lint and
+full typing across 219 files at source `1c815203bbe1519207933dd1819fbc93203e6dd5`.
+This slice consists of the pure helper, its fake-callback tests and this guide.
+Actual recorder/sink wiring and activation remain separate work.
 
 ## Conditional interfaces
 
@@ -136,9 +136,35 @@ return-error-after-cursor-advance, raw fallback without acknowledgement, ordinal
 without a prior unavailable line, original/supplemental errors, swallowed reentry,
 wrong owner, strict C joins, malformed bytes, full Intent substitution, independent
 logical/physical/fallback accounting and finish consumption. Every parametrized
-case has a short explicit ID. Static AST census is 99 authored cases across
-29 test functions, with 297 prospective setup/call/teardown phases; no tests
-were collected or run during authoring.
+case has a short explicit ID. Guarded collection confirmed the same 99 ordered
+cases across 29 test functions before and after the typing repair. The final
+check passed all 297 setup/call/teardown phases with no skips or expected failures.
+
+## Local verification record
+
+| Attempt | Result |
+| --- | --- |
+| 1 — preparation | 99 cases collected, no test phases; owned sentinel and all six process closures verified. |
+| 2 — checks | Formatting and lint passed. Full 219-file typing stopped on three errors caused by reusing an exception-target name; no test bodies ran. |
+| 3 — preparation | The three-identifier rename retained every assertion and the same 99 case IDs; source, helpers and environment matched. |
+| 4 — checks | Formatting, lint, full 219-file typing and all 99 cases / 297 phases passed; no forbidden entry attempts. |
+
+The typing repair changes only the non-None callback-result branch's local name.
+Reversing those three Name nodes gives the preceding module's exact AST; existing
+callback-result regressions are unchanged. The original failure and both prior
+admissions remain retained.
+
+Independent review confirmed all 23 child processes closed across four attempts,
+399 source files and 29 imported-source bindings matched, and the pinned
+environment remained unchanged. Retained output was 2,496,065 logical bytes.
+The cumulative charge was 96.076355 CPU seconds (76.076355 measured plus four
+five-second closeout holds) and 118.771485 active-wall seconds. External control
+and whole-operation usage remain unknown; remaining allowance is not transferred.
+
+This record establishes conditional fake-callback behavior only. It does not
+establish actual recorder/storage handoff, authenticated source, durable metadata,
+activation, a complete transcript fit or scientific qualification. Hosted CI is
+reported separately by the associated pull request.
 
 ## Remaining installation gates
 
