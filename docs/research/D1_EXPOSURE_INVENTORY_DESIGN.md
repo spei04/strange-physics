@@ -115,8 +115,14 @@ Contract IDs are opaque ASCII strings of at most 128 bytes; digests are exactly
 paths are at most 512 UTF-8 bytes, locators at most 1,024, and a diagnostic reason
 combines a fixed enum with at most 512 bytes of detail. A row is at most 32 KiB and
 contains at most eight source bindings; additional evidence must use separately
-bounded occurrence/material rows. One input has at most 32 declared reference
-edges. These are overflow failures, not permission to drop references. Parts do
+bounded occurrence/material rows. One input has at most 256 declared reference
+edges, matching the global distinct-input ceiling and accommodating the retained
+GRID report's 142 artifact references. A bounded metadata read verified that
+array length; it did not extract worlds or evaluate values. Repeated locators
+still count as reference edges even when target bytes are shared. The exact
+manifest must fit both edge and global-input limits; other inputs and headroom
+remain subject to preflight. These are overflow failures, not permission to drop
+references. Parts do
 not embed raw source artifacts, observations or comparison answers as opaque
 payloads. The implementation must enforce field limits during validation after bounded
 byte/node parsing, before downstream normalization.
