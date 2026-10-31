@@ -159,7 +159,7 @@ material obligation, not an inference from report row order.
 | `prequential/D03/{N}/record1` (2) | Same training mean/innovation checks, plus `bind.duplicate_forecast`. `duplicate_forecast` rechecks the actual M03/base one-record material and certificate, then compares exact pool/cells/config/physical action/first observation/private reference and rounding evidence. Use `DuplicateForecast.forecast` with the original qualified M03 masses/delta. Retain distinct runs/operations/models and both source identities. | The material equivalence helper exists. Durable release ordering and persisted witness codec remain pending. This is not the repeated-loss check on the later two-record D03 posterior. |
 | `refinement/{case}/{scale}/256-to-1024` (20) | `bind.refinement`, `refinement.cell_tv`, `refinement.mean`, `refinement.variance`. Exact ordered coarse/fine same-case/same-scale operands, matching truth/query/prefix physics; group four consecutive fine cell masses per coarse cell. Outward finite TV `sum(abs(p_coarse - grouped_p_fine))/2 <= 0.001`, absolute finite mean difference `<=0.0005`, absolute finite variance difference `<=0.001`. | Fixed thresholds are protocol policy. Pure comparison producer/payload/validator is not implemented in unit2/4. Use finite emitted ratios/moments, not continuous-error certificates or a survivor subset. |
 | `scale/{case}/1024/{adjacent pair}` (12) | `bind.scale` and `contrast.rebuilt`: exact M01–04/F02/F04, finest grid, half-to-base or base-to-double operands. Retain outward diagnostic differences and both qualified forecasts/scores. | Operand/count policy fixed; codec/pure contrast implementation pending. No magnitude threshold, preferred direction or winning-scale gate is authorized. |
-| `stress/D03:M03/{N}/0.25` (2) | `bind.stress`, `duplicate.loss_identity`, and rebuilt diagnostic residual/width/score/mass contrasts. Required exact repeated first record, same physical grid/prior/base loss, and the record1 equivalence witness. | The two-record identity policy is fixed; a sound numerical comparison predicate is still missing, described below. Narrower duplicate uncertainty by itself is an interpretation diagnostic, not a numerical defect. |
+| `stress/D03:M03/{N}/0.25` (2) | `bind.stress`, `duplicate.loss_identity`, and rebuilt diagnostic residual/width/score/mass contrasts. Required exact repeated first record, same physical grid/prior/base loss, and the record1 equivalence witness. | The two-record identity policy is fixed; the reviewed [reuse proposal](D1_REPORT_REUSE_PROOF.md) supplies a sufficient conditional comparison. Full actual-material binding remains pending. Narrower duplicate uncertainty by itself is an interpretation diagnostic, not a numerical defect. |
 | `stress/F02:M02` and `stress/F04:M04` (12) | `bind.stress`, `contrast.rebuilt`: exact named pair/grid/scale, matched public candidate conditions, private omitted-force construction and each world's own held-out truth. Retain signed training/future residuals and width/score/inclusion contrasts. | Diagnostic policy fixed. No equality-of-truth join across F/M and no threshold that would require the misspecified model to be accurate. Definite bias/miss is retained finite-panel inadequacy evidence. |
 | `stress/W03:M03/{N}/0.25` (2) | `bind.stress`, `contrast.rebuilt`: shared coefficient/future world/query/truth, distinct fixed training excitation and prefixes. Retain diagnostic effects; no threshold on width or improvement. | Pure contrast implementation/payload pending. Sharing future truth does not make the two training experiments identical. |
 | `primary/{M01..M04}/1024/0.25` (4) | `bind.primary`, `bind.prior_alias`, `paired_scores.rebuilt`, `primary.diagnostics_complete`. Use `PairedScores.point_difference/interval_difference` from exact continuous-dk posterior-minus-prior `ScoreEnclosure`s. Keep each world's residual, width/inclusion, squared/absolute error, literal finite scores and continuous enclosures. | Pairing algebra exists; actual-byte aliases and diagnostic codec remain pending. No requirement for each individual world to improve is added. |
@@ -218,23 +218,22 @@ Stress/scale/grid rows never increase the four-world primary denominator.
 
 ## Open implementation and policy boundaries
 
-1. **Repeated-loss comparison needs a proof, not a guessed epsilon.** Existing
-   policy is `p_D03 proportional to p_M03² / prior_mass` on the same discrete
-   physical grid and base loss. `duplicate_forecast` proves the separate earlier
-   prequential reuse, not this identity. A B2 implementation must derive and retain
-   outward independent normalized squared-weight enclosures and comparison
-   allowances from the actual reference/emitted material, without new exp/log
-   calls. Merely overlapping two arbitrary intervals is not a proof of equality.
-   The precise sufficient comparison algorithm/acceptance witness still needs
-   independent review; no new scalar tolerance is authorized here. A nonclosing
-   proof is unavailable/rejected as supported by its evidence, never passed.
-2. **Prior alias API remains unresolved implementation work.** `pair_scores`
-   currently demands equal case/grid/scale/observation/query/vector identities.
-   Forty views must point to the original16 prior contexts and prove equality of
-   all numerical material while carrying the posterior pairing identity. Do not
-   replace an original certificate identity, regenerate40 priors, or silently
-   loosen the helper. Freeze the small alias interface before coding its registry
-   validation; this changes no scientific baseline or count.
+1. **Repeated-loss design is resolved; full binding remains pending.** The
+   reviewed [reuse proof](D1_REPORT_REUSE_PROOF.md#1-a-sufficient-d03-repeated-loss-comparison)
+   derives gamma=4*c_M+c_D and a sufficient outward ratio comparison from the
+   existing inclusive error allowances, with no new exp/log calls or tolerance.
+   Its conditional kernel cannot authenticate input arrays or approve a report.
+   B2 must reconstruct actual material, join both identical D03 loss terms to M03,
+   and retain all required profile gates before using the witness. Overlap without
+   containment remains unavailable; coherent vector/certificate substitution must
+   fail against actual producer material.
+2. **Prior alias interface is proposed; implementation remains pending.** The
+   reviewed [prior-view design](D1_REPORT_REUSE_PROOF.md#2-forty-views-of-sixteen-original-prior-forecasts)
+   gives40 explicit paired views of the16 original prior contexts, keeping both
+   complete identities and introducing no new forecast/CDF calls. Existing
+   `pair_scores` identity checks remain unchanged. Full actual-byte reconstruction,
+   the narrow view adapter and its independent pass census are still required;
+   the proposal changes no scientific baseline, threshold or denominator.
 3. **Operational authenticity is external to conditional algebra.** Source/
    primitive/exposure/chronology evidence producers and the confined resolver
    are still required. The policy is already explicit; making up a boolean

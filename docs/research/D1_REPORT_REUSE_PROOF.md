@@ -4,7 +4,8 @@ Mathematical and interface proposal, 2026-10-30, against source
 `06ef7a97f3decb6925f6500e99b232f4c723630d`. This resolves two implementation
 proposals in the [gate registry](D1_REPORT_GATE_REGISTRY.md), subject to independent
 review. The [frozen protocol](RA_N03_CALIBRATION_SLICE.md), its tolerances and
-135-row denominator remain unchanged. No implementation, numerical qualification,
+135-row denominator remain unchanged. The source-stage conditional kernel below
+implements only the arithmetic comparison. No full binder, numerical qualification,
 fixture generation or run admission is supplied by this document.
 
 ## 1. A sufficient D03 repeated-loss comparison
@@ -325,3 +326,74 @@ proof of retained bytes, exact validator-pass census, durable recorder integrati
 and operational/numerical admission remain separate prerequisites. No absolute
 product tolerance, coverage criterion or scientific policy is invented to close
 them. Source authoring and algebraic derivation are not numerical qualification.
+
+
+## 5. Conditional kernel source checkpoint
+
+[tests/d1_repeated_loss.py](../../tests/d1_repeated_loss.py) implements only the
+interval recipe in section1. Its tests are authored synthetic/rational cases;
+imports, tests, typing, lint and numerical qualification have not been run for
+this checkpoint. The existing Q1 directed primitives are reused unchanged.
+
+`repeated_loss_witness(RepeatedLossInput)` takes an immutable ordered tuple of
+`RepeatedLossNode(index, one_emitted, two_probability, prior_mass)`, the declared
+count, and both original Decimal log-ratio bounds. `one_emitted` must be an exact
+positive finite binary64 value within the reused interval representation domain;
+`two_probability` is a supplied positive directed interval within[0,1]. Each
+prior mass is an exact `Fraction(1,N)`, checked before using the uniform-prior
+cancellation. Rational masses describe the fixed uniform prior, not another
+prior-normalization calculation. All node indices must match0 throughN-1.
+
+The pure kernel permits1 through1024 nodes so exact small rational surrogates can
+exercise the proof. This is not the D1 profile admission surface: the future
+binder must require precisely the two M03/D03 base-scale256/1024 pairs. It also
+must supply actual-source-bound material, all profile gates, the exact reference
+and physical-record joins, and reconstructed c_M/c_D. The kernel does not check
+those premises. Its error-domain validation[0,1] and derived gamma<1 are algebraic
+requirements, not replacements for the existing inclusive1e-9 profile ceiling.
+
+Probability feasibility uses exact rational sums of the supplied lower and upper
+endpoints, requiring `sum(lower)<=1<=sum(upper)`. A100-digit rounded sum could hide
+a tiny inconsistent point-mass residual. The reused endpoint representation
+bounds and1024-node limit bound this exact validation; it performs2N Decimal-to-
+Fraction conversions and2N rational additions, separately from interval work.
+Raw dataclass fields are revalidated, including exact scalar types, even if an
+input object was manufactured without its normal constructor.
+
+`RepeatedLossWitness` retains the complete original inputs, outward gamma,
+allowance, squared sum, and each transformed probability, observed ratio and
+relation. Inclusive containment means `contained`; strict separation means
+`disjoint`; an intersection without containment means `overlap`. All nodes are
+processed and retained; any disjoint node takes overall precedence, while the
+separate disjoint/overlap index lists preserve both findings. A touching interval
+that extends outside the allowance remains overlap. Missing/malformed/domain-
+invalid input raises `ValueError`; it cannot manufacture a discrepancy result
+or a successful report. B2 remains responsible for its unavailable/rejected/
+unrun mapping and fail-stop policy.
+
+Every returned witness exposes `material_authenticity="unchecked"` and
+`qualification="unavailable"`; there is no `passed` field. A caller can supply
+another internally consistent synthetic pair and obtain containment. That is
+expected for a conditional kernel and is **not** the coherent-substitution
+defense required at the full actual-material boundary. The later binder must
+rebuild the input arrays/allowances against raw producer outputs and reference
+returns, including a forged-vector-plus-updated-certificate regression. Persisted
+witnesses and claimed digests cannot skip that obligation.
+
+The complete recipe still uses4N+4 interval API calls per witness; both actual D1
+witnesses use5128 per construction/reconstruction pass. There are N+7 calls to
+`point` including the fixed scalar and total-initializer calls, plus bounded raw
+field checks, exact rational feasibility and prior comparisons. Internal directed
+Decimal operations, object validations, future parsing/hashing and every repeated
+binder pass are separate census categories. The output adds2N+3 interval objects
+besides its retained input references; serialized copies and actual codec fit
+remain unproved and inside the existing output allowance. No oracle, physical,
+exp/log, normalizer, CDF, quantile or score call is introduced.
+
+The companion tests poison actual reference, predictor, simulator, normalizer
+and CDF/score entrypoints. They exercise exact rational enclosure, both allowed
+endpoints, disjoint/overlap precedence, complete coverage, normalized feasibility
+below directed precision, malformed bypass objects, signed zero, finite/domain
+limits and hostile ambient Decimal settings. These are proposed software checks,
+not D1 outcomes. Prior alias implementation, the full report binder and its
+physical-byte/operational evidence remain pending.
