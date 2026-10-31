@@ -8,9 +8,11 @@ import hashlib
 import json
 import os
 import stat
+import threading
 from collections.abc import Iterator
 from dataclasses import dataclass, replace
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, NoReturn
 
 import pytest
@@ -400,6 +402,41 @@ def owned(tmp_path: Path) -> Iterator[OwnedFixture]:
 
 
 @pytest.fixture(autouse=True)
+def helper_os(monkeypatch: pytest.MonkeyPatch) -> SimpleNamespace:
+    """Patch only the helper namespace; pytest and the collector retain real OS calls."""
+    namespace = SimpleNamespace(
+        O_CLOEXEC=os.O_CLOEXEC,
+        O_DIRECTORY=os.O_DIRECTORY,
+        O_NOFOLLOW=os.O_NOFOLLOW,
+        O_NONBLOCK=os.O_NONBLOCK,
+        O_RDONLY=os.O_RDONLY,
+        close=os.close,
+        fstat=os.fstat,
+        getpid=os.getpid,
+        getuid=os.getuid,
+        open=os.open,
+        read=os.read,
+        stat=os.stat,
+        stat_result=os.stat_result,
+    )
+    for name in (
+        "O_CLOEXEC", "O_DIRECTORY", "O_NOFOLLOW", "O_NONBLOCK", "O_RDONLY",
+        "close", "fstat", "getpid", "getuid", "open", "read", "stat", "stat_result",
+    ):
+        assert getattr(namespace, name) is getattr(os, name)
+    monkeypatch.setattr("d1_source_files.os", namespace)
+    return namespace
+
+
+@pytest.fixture(autouse=True)
+def helper_threading(monkeypatch: pytest.MonkeyPatch) -> SimpleNamespace:
+    namespace = SimpleNamespace(get_ident=threading.get_ident)
+    assert namespace.get_ident is threading.get_ident
+    monkeypatch.setattr("d1_source_files.threading", namespace)
+    return namespace
+
+
+@pytest.fixture(autouse=True)
 def no_scientific_imports(monkeypatch: pytest.MonkeyPatch) -> None:
     original = builtins.__import__
 
@@ -427,11 +464,15 @@ def denied(*args: Any, **kwargs: Any) -> NoReturn:
 
 
 def assert_no_io_retry(
-    attempt: CheckoutObservationAttempt, monkeypatch: pytest.MonkeyPatch
+    attempt: CheckoutObservationAttempt, monkeypatch: pytest.MonkeyPatch,
+    helper_os: SimpleNamespace,
 ) -> None:
+    names = ("open", "read", "fstat", "stat", "close")
+    originals = tuple(getattr(os, name) for name in names)
     with monkeypatch.context() as scoped:
-        for name in ("open", "read", "fstat", "stat", "close"):
-            scoped.setattr(os, name, denied)
+        for name in names:
+            scoped.setattr(helper_os, name, denied)
+        assert all(getattr(os, name) is original for name, original in zip(names, originals, strict=True))
         with pytest.raises(SourceFilesStopped, match="consumed"):
             attempt.observe()
 
@@ -447,7 +488,8 @@ def changed_plan(owned: OwnedFixture, index: int, **changes: Any) -> ExpectedChe
 
 
 def test_complete_owned_observation_and_consumed_retry(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch,
+    helper_os: SimpleNamespace,
 ) -> None:
     attempt = owned.attempt()
     result = attempt.observe()
@@ -478,7 +520,7 @@ def test_complete_owned_observation_and_consumed_retry(
     )
     assert not snapshot.unknown_open and not snapshot.closure_uncertain
     assert os.fstat(owned.fd).st_ino == owned.identity.inode
-    assert_no_io_retry(attempt, monkeypatch)
+    assert_no_io_retry(attempt, monkeypatch, helper_os)
 
 
 @pytest.mark.parametrize(
@@ -517,7 +559,8 @@ def test_complete_owned_observation_and_consumed_retry(
     ],
 )
 def test_plan_failures_precede_owned_io(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    helper_os: SimpleNamespace,
 ) -> None:
     plan = replace(owned.plan)
     if kind == "missing":
@@ -550,13 +593,13 @@ def test_plan_failures_precede_owned_io(
         plan = replace(plan, source_tree="a" * 41)
     attempt = owned.attempt(plan=plan)
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "open", denied)
-        scoped.setattr(os, "fstat", denied)
-        scoped.setattr(os, "close", denied)
+        scoped.setattr(helper_os, "open", denied)
+        scoped.setattr(helper_os, "fstat", denied)
+        scoped.setattr(helper_os, "close", denied)
         with pytest.raises(ValueError):
             attempt.observe()
     assert attempt.snapshot().open_attempts == 0
-    assert_no_io_retry(attempt, monkeypatch)
+    assert_no_io_retry(attempt, monkeypatch, helper_os)
 
 
 @pytest.mark.parametrize(
@@ -565,7 +608,8 @@ def test_plan_failures_precede_owned_io(
     ids=["raw", "plan-type", "record-type", "root-bool", "fd-bool", "root-mode"],
 )
 def test_exact_boundaries_reject_without_opens(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    helper_os: SimpleNamespace,
 ) -> None:
     raw: Any = owned.raw
     plan = owned.plan
@@ -597,8 +641,8 @@ def test_exact_boundaries_reject_without_opens(
         identity = replace(identity, mode=65536)
     attempt = CheckoutObservationAttempt(raw, plan, root_fd=descriptor, expected_root=identity)
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "open", denied)
-        scoped.setattr(os, "fstat", denied)
+        scoped.setattr(helper_os, "open", denied)
+        scoped.setattr(helper_os, "fstat", denied)
         with pytest.raises(ValueError):
             attempt.observe()
     assert attempt.snapshot().open_attempts == 0
@@ -651,7 +695,8 @@ def test_owned_nonregular_or_unsafe_paths(owned: OwnedFixture, kind: str) -> Non
 
 @pytest.mark.parametrize("kind", ["leaf", "ancestor"], ids=["leaf", "ancestor"])
 def test_post_open_same_target_symlink_is_not_followed(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    helper_os: SimpleNamespace,
 ) -> None:
     original_open = os.open
     injected = False
@@ -670,7 +715,7 @@ def test_post_open_same_target_symlink_is_not_followed(
 
     attempt = owned.attempt()
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "open", substitute)
+        scoped.setattr(helper_os, "open", substitute)
         with pytest.raises(ValueError, match="kind"):
             attempt.observe()
     assert injected and len(attempt.snapshot().observed) == 1
@@ -683,7 +728,8 @@ def test_post_open_same_target_symlink_is_not_followed(
     ids=["extent", "mtime", "replacement", "digest"],
 )
 def test_deterministic_read_mutations(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    helper_os: SimpleNamespace,
 ) -> None:
     target = owned.root / "tests/d1_primitive_codec.py"
     old = target.stat()
@@ -710,7 +756,7 @@ def test_deterministic_read_mutations(
 
     attempt = owned.attempt()
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "read", mutate)
+        scoped.setattr(helper_os, "read", mutate)
         with pytest.raises(ValueError):
             attempt.observe()
     assert len(attempt.snapshot().observed) == 1
@@ -723,7 +769,8 @@ def test_deterministic_read_mutations(
     ids=["short", "zero", "interrupt", "error", "type", "overflow"],
 )
 def test_read_fault_is_once_only(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    helper_os: SimpleNamespace,
 ) -> None:
     original_read = os.read
     calls = 0
@@ -748,7 +795,7 @@ def test_read_fault_is_once_only(
 
     attempt = owned.attempt()
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "read", failing)
+        scoped.setattr(helper_os, "read", failing)
         with pytest.raises((ValueError, OSError)) as caught:
             attempt.observe()
     assert calls == (2 if kind == "overflow" else 1)
@@ -756,11 +803,12 @@ def test_read_fault_is_once_only(
         assert caught.value is primary
     assert attempt.snapshot().observed == ()
     assert attempt.snapshot().returned_opens == attempt.snapshot().confirmed_closes
-    assert_no_io_retry(attempt, monkeypatch)
+    assert_no_io_retry(attempt, monkeypatch, helper_os)
 
 
 def test_exact_chunk_and_eof_request_schedule(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch,
+    helper_os: SimpleNamespace,
 ) -> None:
     target = owned.root / "tests/d1_primitive_codec.py"
     data = b"a" * 131072
@@ -777,7 +825,7 @@ def test_exact_chunk_and_eof_request_schedule(
 
     attempt = owned.attempt(plan=plan)
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "read", capture)
+        scoped.setattr(helper_os, "read", capture)
         result = attempt.observe()
     assert requested == [65536, 65536, 1]
     assert result.files[1].sha256 == hashlib.sha256(data).hexdigest()
@@ -785,7 +833,8 @@ def test_exact_chunk_and_eof_request_schedule(
 
 
 def test_primary_read_fault_survives_real_close_then_error(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch,
+    helper_os: SimpleNamespace,
 ) -> None:
     original_close = os.close
     primary = OSError(errno.EIO, "read first")
@@ -806,8 +855,8 @@ def test_primary_read_fault_survives_real_close_then_error(
 
     attempt = owned.attempt()
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "read", fail_read)
-        scoped.setattr(os, "close", close_then_error)
+        scoped.setattr(helper_os, "read", fail_read)
+        scoped.setattr(helper_os, "close", close_then_error)
         with pytest.raises(OSError) as caught:
             attempt.observe()
     assert caught.value is primary and injections == 1 and target is not None
@@ -818,13 +867,14 @@ def test_primary_read_fault_survives_real_close_then_error(
     assert snapshot.confirmed_closes == snapshot.close_attempts - 1
     assert [item.exception_type for item in snapshot.faults] == ["OSError", "PermissionError"]
     assert snapshot.faults[0].phase == "read" and snapshot.faults[1].phase == "close"
-    assert_no_io_retry(attempt, monkeypatch)
+    assert_no_io_retry(attempt, monkeypatch, helper_os)
 
 
 @pytest.mark.parametrize("phase", ["read", "close"], ids=["read", "close"])
 @pytest.mark.parametrize("later_error", [False, True], ids=["swallowed", "later-error"])
 def test_sticky_reentry_blocks_work_but_keeps_cleanup(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, phase: str, later_error: bool
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, phase: str, later_error: bool,
+    helper_os: SimpleNamespace,
 ) -> None:
     original_read, original_close = os.read, os.close
     attempt = owned.attempt()
@@ -854,7 +904,7 @@ def test_sticky_reentry_blocks_work_but_keeps_cleanup(
 
     with monkeypatch.context() as scoped:
         scoped.setattr(
-            os,
+            helper_os,
             "read" if phase == "read" else "close",
             hooked_read if phase == "read" else hooked_close,
         )
@@ -870,11 +920,12 @@ def test_sticky_reentry_blocks_work_but_keeps_cleanup(
     if later_error:
         assert snapshot.faults[-1].exception_type == "OSError"
     assert os.fstat(owned.fd).st_ino == owned.identity.inode
-    assert_no_io_retry(attempt, monkeypatch)
+    assert_no_io_retry(attempt, monkeypatch, helper_os)
 
 
 def test_open_entry_failure_retains_unknown_without_fabricated_fd(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch,
+    helper_os: SimpleNamespace,
 ) -> None:
     primary = OSError(errno.EIO, "no returned descriptor")
 
@@ -883,7 +934,7 @@ def test_open_entry_failure_retains_unknown_without_fabricated_fd(
 
     attempt = owned.attempt()
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "open", fail_open)
+        scoped.setattr(helper_os, "open", fail_open)
         with pytest.raises(OSError) as caught:
             attempt.observe()
     snapshot = attempt.snapshot()
@@ -894,27 +945,28 @@ def test_open_entry_failure_retains_unknown_without_fabricated_fd(
 
 @pytest.mark.parametrize("owner", ["pid", "thread"], ids=["pid", "thread"])
 def test_wrong_owner_consumes_without_descriptor_work(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, owner: str
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, owner: str,
+    helper_os: SimpleNamespace,
+    helper_threading: SimpleNamespace,
 ) -> None:
     attempt = owned.attempt()
     with monkeypatch.context() as scoped:
         if owner == "pid":
-            scoped.setattr(os, "getpid", lambda: -1)
+            scoped.setattr(helper_os, "getpid", lambda: -1)
         else:
-            import threading
-
-            scoped.setattr(threading, "get_ident", lambda: -1)
-        scoped.setattr(os, "open", denied)
-        scoped.setattr(os, "close", denied)
+            scoped.setattr(helper_threading, "get_ident", lambda: -1)
+        scoped.setattr(helper_os, "open", denied)
+        scoped.setattr(helper_os, "close", denied)
         with pytest.raises(SourceFilesStopped, match="owner"):
             attempt.observe()
     assert attempt.snapshot().consumed and attempt.snapshot().open_attempts == 0
-    assert_no_io_retry(attempt, monkeypatch)
+    assert_no_io_retry(attempt, monkeypatch, helper_os)
 
 
 @pytest.mark.parametrize("operation", ["fstat", "stat"], ids=["fd-stat", "named-stat"])
 def test_stat_error_keeps_prior_observations_and_closes_owned_chain(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, operation: str
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, operation: str,
+    helper_os: SimpleNamespace,
 ) -> None:
     original_fstat, original_stat = os.fstat, os.stat
     inode = (owned.root / "tests/d1_primitive_codec.py").stat().st_ino
@@ -936,7 +988,7 @@ def test_stat_error_keeps_prior_observations_and_closes_owned_chain(
 
     attempt = owned.attempt()
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, operation, fail_fstat if operation == "fstat" else fail_named)
+        scoped.setattr(helper_os, operation, fail_fstat if operation == "fstat" else fail_named)
         with pytest.raises(OSError) as caught:
             attempt.observe()
     snapshot = attempt.snapshot()
@@ -944,12 +996,13 @@ def test_stat_error_keeps_prior_observations_and_closes_owned_chain(
     assert tuple(item.member_id for item in snapshot.observed) == ("m00",)
     assert snapshot.entered == ("m00", "m01") and len(snapshot.planned) == 8
     assert snapshot.returned_opens == snapshot.confirmed_closes
-    assert_no_io_retry(attempt, monkeypatch)
+    assert_no_io_retry(attempt, monkeypatch, helper_os)
 
 
 @pytest.mark.parametrize("target_name", ["catalog.json", "."], ids=["first-file", "final-root"])
 def test_close_uncertainty_alone_cannot_return_success(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, target_name: str
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, target_name: str,
+    helper_os: SimpleNamespace,
 ) -> None:
     original_open, original_close = os.open, os.close
     target: int | None = None
@@ -972,8 +1025,8 @@ def test_close_uncertainty_alone_cannot_return_success(
 
     attempt = owned.attempt()
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "open", capture)
-        scoped.setattr(os, "close", close_once)
+        scoped.setattr(helper_os, "open", capture)
+        scoped.setattr(helper_os, "close", close_once)
         with pytest.raises(OSError) as caught:
             attempt.observe()
     snapshot = attempt.snapshot()
@@ -984,7 +1037,7 @@ def test_close_uncertainty_alone_cannot_return_success(
     with pytest.raises(OSError):
         os.fstat(target)
     assert os.fstat(owned.fd).st_ino == owned.identity.inode
-    assert_no_io_retry(attempt, monkeypatch)
+    assert_no_io_retry(attempt, monkeypatch, helper_os)
 
 
 @pytest.mark.parametrize(
@@ -993,7 +1046,8 @@ def test_close_uncertainty_alone_cannot_return_success(
     ids=["members-65", "lock-cap", "id-long", "path-long", "module-long", "root-range"],
 )
 def test_declared_input_caps_precede_owned_io(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    helper_os: SimpleNamespace,
 ) -> None:
     plan = owned.plan
     identity = owned.identity
@@ -1011,15 +1065,16 @@ def test_declared_input_caps_precede_owned_io(
         identity = replace(identity, device=2**64)
     attempt = CheckoutObservationAttempt(owned.raw, plan, root_fd=owned.fd, expected_root=identity)
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "open", denied)
-        scoped.setattr(os, "fstat", denied)
+        scoped.setattr(helper_os, "open", denied)
+        scoped.setattr(helper_os, "fstat", denied)
         with pytest.raises(ValueError):
             attempt.observe()
     assert attempt.snapshot().open_attempts == 0
 
 
 def test_renamed_single_link_file_cannot_fill_two_member_rows(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch,
+    helper_os: SimpleNamespace,
 ) -> None:
     original_open, original_close = os.open, os.close
     catalog_path = owned.root / "synthetic/catalog.json"
@@ -1047,8 +1102,8 @@ def test_renamed_single_link_file_cannot_fill_two_member_rows(
 
     attempt = owned.attempt(plan=plan)
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "open", capture)
-        scoped.setattr(os, "close", rename_after_close)
+        scoped.setattr(helper_os, "open", capture)
+        scoped.setattr(helper_os, "close", rename_after_close)
         with pytest.raises(ValueError, match="same file"):
             attempt.observe()
     assert moved and target.stat().st_nlink == 1
@@ -1058,7 +1113,8 @@ def test_renamed_single_link_file_cannot_fill_two_member_rows(
 
 @pytest.mark.parametrize("window", ["first", "final"], ids=["first-guard", "final-guard"])
 def test_owner_guard_reentry_stays_latched_through_final_close(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, window: str
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, window: str,
+    helper_os: SimpleNamespace,
 ) -> None:
     original_pid, original_open, original_close = os.getpid, os.open, os.close
     attempt = owned.attempt()
@@ -1091,13 +1147,13 @@ def test_owner_guard_reentry_stays_latched_through_final_close(
         return original_pid()
 
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "getpid", swallowed_reentry)
+        scoped.setattr(helper_os, "getpid", swallowed_reentry)
         if window == "first":
             for name in ("open", "read", "fstat", "stat", "close"):
-                scoped.setattr(os, name, denied)
+                scoped.setattr(helper_os, name, denied)
         else:
-            scoped.setattr(os, "open", capture_root)
-            scoped.setattr(os, "close", close_owned)
+            scoped.setattr(helper_os, "open", capture_root)
+            scoped.setattr(helper_os, "close", close_owned)
         with pytest.raises(SourceFilesStopped, match="reentry") as caught:
             attempt.observe()
     assert injected and len(nested) == 1 and caught.value is nested[0]
@@ -1113,4 +1169,4 @@ def test_owner_guard_reentry_stays_latched_through_final_close(
         with pytest.raises(OSError):
             os.fstat(root_descriptor)
     assert os.fstat(owned.fd).st_ino == owned.identity.inode
-    assert_no_io_retry(attempt, monkeypatch)
+    assert_no_io_retry(attempt, monkeypatch, helper_os)

@@ -134,7 +134,9 @@ No allocation, historical-cost settlement or whole-science fit follows here.
 
 Static AST inspection finds **62 cases in 18 test functions**, **186 prospective
 phase reports**, and maximum node-ID length **106**. All parameterizations have
-short literal IDs. None has been collected or executed.
+short literal IDs. These are source counts, not a passing terminal runtime census;
+the later local attempt below stopped before completion, and this test-isolation
+repair has not been run.
 
 | Case group | Cases |
 | --- | ---: |
@@ -202,3 +204,25 @@ material, and their import guard rejects scientific/recorder/sink modules.
 Wrong-owner tests substitute identities without processes, threads or sleeps.
 Source review and later controls must preserve these boundaries; successful
 synthetic file tests would still not authenticate S or qualify a D1 experiment.
+
+
+## Test-isolation repair after the interrupted local attempt
+
+Lead reports local check2 stopped with exit86 during the first case, without a
+retained tripwire event receipt. Global test patches of `os.stat`/`os.open` can
+intercept the collector's own `Path.resolve` and failure-event writes. That is a
+concrete compatible mechanism; the missing receipt leaves the exact historical
+tripwire reason unknown. The failed attempt and its charges remain retained.
+Lead records the numerical ledger and execution evidence separately; this repair
+neither resets that account nor authorizes a retry.
+
+Tests now give `d1_source_files` fresh, explicitly populated `SimpleNamespace`
+OS/threading objects per case. Every untouched attribute is checked against the
+actual standard-library object. Fault patches target only those helper namespaces;
+fixture setup, captured real callbacks, descriptor assertions, pytest and the
+collector continue using actual `os`/`threading`. The no-I/O retry helper also
+asserts shared `open/read/fstat/stat/close` identities remain unchanged while its
+local functions are poisoned. Scoped mocks still restore before once-only owned
+cleanup and teardown. No helper API, scientific guard, original test assertion,
+case ID or file-payload ceiling changes. The two tiny namespace objects per case
+are in-memory test machinery, not additional fixture files or an OS sandbox.
