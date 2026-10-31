@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** PRs #138–#150 passed CI. The handoff passed eight cases, 24 phases and 220-file typing; PR #151 is frozen in CI. Context-observation design passed independent review.
-- **Assignments:** Research implements the reviewed context method and failure tests. Quality reviews source; Platform verifies CI. Lead integrates and maintains the evidence.
-- **Open gates:** Context implementation, metadata retention, source authentication, installation, protected inventory, historical evidence, complete material binding, aggregate fit and scientific admission remain pending. Owner and exposure policy are approved; no D1 batch is running.
+- **Verified:** PRs #138–#151 passed CI. Context observation passed 25 cases, 75 phases and 221-file typing; independent review checked retained faults and descriptor cleanup.
+- **Assignments:** Lead publishes the context slice. Platform owns CI; Quality reviews evidence. Research audits durable table retention and fresh context joins as the next prerequisite.
+- **Open gates:** Table/activation retention, source authentication, installation, protected inventory, historical evidence, complete material binding, aggregate fit and scientific admission remain pending. Owner and exposure policy are approved; no D1 batch is running.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Quality / Platform / Project lead | Owned context observation accepted; table-retention boundary next | Handoff #151 passed six required CI jobs with 5,850 tests per runtime. Context source 513e1740 passed 25 cases/75 phases and full 221-file typing; all 12 children closed and 51.081367 CPU seconds charged. Independent review verified 31,197 fixture bytes including deliberate link/FIFO cases and separate read-close uncertainty. Later table retention must own its descriptors and join fresh C; fixed activation still requires resolved source authority and outer admission. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Context observation design and handoff CI | Handoff PR #151 is frozen at 8e4bb12 in its original CI attempt. Independently accepted [context-observation design](research/D1_CONTEXT_OBSERVATION_DESIGN.md) requires owned idle reads, sticky failure state and separate read-fd cleanup. Research owns the small method/test slice; durable T/C joins and resolved S/source/admission authority remain later work. No next-method runtime or D1 batch. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Actual recorder, codec and file-sink handoff | Bridge #150 passed six required CI jobs with 5,842 tests per runtime. Handoff d4f3bfc passed eight cases/24 phases and full 220-file typing; all 12 children closed, 51.210102 CPU seconds charged. Independent review checked 23 payload files/11,742 bytes, partial-write retention and separate close uncertainty. Metadata context observation is the next prerequisite; activation and scientific admission remain pending. |
 | 2026-10-31 | Quality / Research / Platform / Project lead | Conditional append bridge accepted; actual handoff scoped | Codec #149 passed six required CI jobs with 5,743 tests per runtime. Bridge source 1c81520 passed 99 cases/297 phases and full 219-file typing; all 23 children closed and 96.076355 CPU seconds charged. Its original typing failure and three-identifier repair remain recorded. Research scoped eight future actual recorder/bridge/sink cases using fake primitives; metadata authority, full fit and scientific admission remain separate. |

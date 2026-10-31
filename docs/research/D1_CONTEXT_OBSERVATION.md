@@ -1,11 +1,11 @@
 # D1 owned context observation
 
-Source-only implementation of the accepted
+Implementation of the accepted
 [context observation design](D1_CONTEXT_OBSERVATION_DESIGN.md), based on
-`c8ea6092b63b65ee3ffff8caac95af39e8d6b92d`. The new tests are authored but have not
-been imported, collected or executed. Formatting, lint, configured typing and
-finite engineering validation remain pending. No scientific or operational
-qualification follows from this source checkpoint.
+`c8ea6092b63b65ee3ffff8caac95af39e8d6b92d`. The separate local engineering check
+passed 25 cases, 75 ordered phases and full typing across 221 files at
+`513e1740d0cad052dfab3f39536f445bacdcf9a1`. Its evidence and limits appear below;
+this is not scientific or operational qualification.
 
 ## Exact scope
 
@@ -48,8 +48,8 @@ claim rather than pretending to detect all historical replacement.
 ## Authored tests and work estimate
 
 The source has **25 cases in 10 test functions**, with explicit short parameter
-IDs; a future ordinary pytest run would produce 75 setup/call/teardown phases.
-These are static counts, not observed outcomes.
+IDs and 75 setup/call/teardown phases. The source estimates below preceded
+execution; the separate measured result is recorded after them.
 
 | Family | Cases | Distinct checks |
 | --- | ---: | --- |
@@ -97,6 +97,42 @@ once on failure paths and checks actual EBADF; no ambiguous close is retried.
 Wrong-owner/reentry tests separately preserve the possible unacknowledged
 terminal write. Test-body import guards exclude named scientific producers;
 future reviewed controls still supply execution boundaries, not a Python sandbox.
+
+## Local engineering verification
+
+The frozen source at `513e1740d0cad052dfab3f39536f445bacdcf9a1` passed the reviewed
+Unit15 check. Preparation collected 25 exact ordered IDs with zero test phases;
+its owned sentinel stopped before the dummy body. Import sorting and formatting
+made no source changes. The check then passed formatting, lint, full configured
+221-file typing and all 25 cases/75 ordered phases without skips or expected
+failures. All 404 source files, 31 imported project sources, 26 scientific
+defining-code bindings and the pinned environment matched before and after.
+
+Independent review verified all 12 child closures across both attempts and the
+actual retained files. The 25 owned sink roots and case parents contained 50
+regular-file names totaling 31,039 bytes, including both names of one intentional
+two-link inode. One fixture symlink contributed 158 bytes; the FIFO contributed
+zero retained payload and was never opened by the census. Thus measured fixture
+payload was 31,197 logical bytes against the conservative 819,200-byte estimate.
+Twenty-one nonempty terminal files remained `pending_external_confirmation`.
+Four empty terminal files belonged to wrong-owner/reentry failures; the passing
+source assertions separately establish their lack of acknowledgement. Presence,
+actual descriptor closure and reported close uncertainty remain distinct facts.
+
+Measured CPU across the two attempts was 41.081367 seconds. With two 5-second CPU
+and 10-second active-wall closeout holds, the retained charge is 51.081367 CPU
+seconds and 61.14687660289928 active-wall seconds. The separately sampled
+approximately 4.366-microsecond wall difference remains recorded. Final whole-unit
+logical output was 1,718,116 bytes: 1,716,528 regular-file bytes plus 1,588 symlink
+bytes, across 84 regular-file names, 11 symlinks, 53 directories and one FIFO.
+This is not physical disk use or complete operation accounting; external
+authoring/review/transport costs remain separately unknown. Earlier units,
+failures, holds and unknowns remain retained without balance transfer.
+
+Parent [PR #151](https://github.com/spei04/strange-physics/pull/151) passed its
+original CI attempt: all six required jobs, 5,850 tests per runtime, 220-file
+typing, 1,567 schema checks, package inspection and the existing smoke/reference
+checks. This local context result is separate from subsequent hosted CI.
 
 ## Still separate
 
