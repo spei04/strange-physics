@@ -1,10 +1,12 @@
-# D1 prefix adapter: source checkpoint A1
+# D1 prefix adapter: source checkpoints A1 and A2
 
 This is conditional source, with authored synthetic tests only. It neither runs
 D1 nor establishes actual source execution, exposure completeness or scientific
-qualification. The protocol and all old guards remain unchanged. A2's full
-prefix/future binder, arithmetic evidence and M03-to-D03 witness are still being
-authored and are not part of this first review checkpoint.
+qualification. The protocol and all old guards remain unchanged. A1 is preserved
+at 8e6b6a3b3d94c03a5e9a9877b150307dfbcf447c with 34 authored cases. A2 adds
+full-prefix/future evidence and the M03-to-D03 witness. All checks remain unrun
+at this source handoff; independent source review and engineering qualification
+are required.
 
 The pool constructor accepts only fixed count, public structure and physical
 queries. It builds the uniform midpoint grid before it can accept observations.
@@ -63,8 +65,11 @@ Derived absolute joint/constant/evidence/normalized-log and relative emitted/
 normalized-probability errors must fit the existing 1e-48 reference allowance.
 A wider computed enclosure fails qualification; it never enlarges a tolerance.
 The native endpoint/component gates and overlapping 3e-9 reserve are unchanged.
-The finite-domain proof, actual source/counter joins and A2 integration still need
-independent review and engineering checks.
+The finite-domain proof and actual source/counter joins still need independent
+review and engineering checks. Adjacent Decimal endpoints below exponent -256
+are coarsened outward on that representation grid; for a zero center this gives
+[-1e-256,1e-256]. This avoids an unrepresentable subnormal without shrinking an
+enclosure or changing the 1e-48 acceptance gate.
 
 ## Training forecast bound and limits
 
@@ -85,3 +90,122 @@ retained-byte census is intentionally not declared complete here. The reference
 values and native captures are actual material to retain/reconstruct, not merely
 matching supplied hashes. Source/runtime attestation, report schema, output caps,
 exposure decisions and execution allocation remain later gates.
+
+
+## A2 complete-prefix and emitted-vector binding
+
+The native belief remains the only likelihood producer. The adapter reparses its
+actual raw input/result, validates the candidate set and exact prefix, and joins
+every node-major/record-minor capture to the full request, attempt and retained
+result digest. Reversing captures, omitting a duplicate slot, changing a request
+or substituting a raw result cannot yield qualified material. Future evidence is
+bound once per ensemble and revalidated when reused. These are material joins;
+a malicious source capable of fabricating an entire coherent computation still
+requires the separate pinned-execution evidence owned by the future driver.
+
+For every node with R=1 or R=2, the independent target is exactly
+
+`log_prior + sum_r [gaussian - (recorded_r - endpoint_r)^2/(2*sigma^2)]`.
+
+The prior occurs once; D03 includes both residual terms and both Gaussian
+constants. The native-arithmetic interval holds each actual captured binary64
+endpoint fixed. Comparing the executed joint weight to that interval bounds the
+whole native arithmetic remainder separately from endpoint error. The ideal
+node interval instead uses every independently enclosed endpoint. The observed
+ideal-node error is retained separately. Neither one is substituted for the
+other. Shared constants may occur in both terms; treating their intervals
+independently is conservative and does not assert independent physical noise.
+
+The continuous target keeps the actual recorded binary64 points. It is not
+changed to interval-valued observations. Reference-center evaluation uses a
+fresh 100-digit context, while the exact formula is enclosed by the existing
+outward helpers. Endpoint references remain within the old oracle domain:
+`k<=4`, mass=1, anchor=0, q in {1,1/8}, velocity/impulse=0, t in {1/2,3/4};
+therefore `k*t^2/m<=9/4<4`. Constant/weight/reserve checks run for every node,
+including the duplicate prefix. A returned error interval wider than a frozen
+gate is an unqualified result, not permission to widen that gate or select a
+surviving subset.
+
+One positive finite binary64 exp output is retained for each normalized native
+log weight. Its exact Decimal value is divided by the outward sum of **those
+same outputs**. The resulting vector is the one consumed by moments/CDF/score
+bounds. The inclusive probability log-ratio bound uses `r/(1-r)` for r<1 against
+the independently normalized probability intervals, without another exp/log.
+Missing, zero, nonfinite or out-of-range emitted weights fail closed. A2 returns
+the whole-prefix ArithmeticEvidence for the existing unit2 certificate; A2 does
+not declare the certificate, refinement or scientific-utility gates passed.
+
+## M03 to D03 reuse
+
+The private equivalence function first calls unit3's complete material binder,
+which rechecks actual source bytes, coefficients, endpoint/rounding records and
+supplied inventories. It then joins the actual M03 and D03 public prefixes,
+shared private coefficient and training proof claims, exact first physical
+experiment/trajectory, same fixed cells/pool/configuration and sigma=1/4.
+Original run/operation/observation/model identities remain distinct. A different
+private future label is never an input to the forecast calculation.
+
+Reuse requires the actual passing M03 certificate and its source commit,
+observed point, ordered training/future allowances, arithmetic arrays, emitted
+vector and exact material digests. It produces the t=1/2 continuous-mean bound
+from that matched vector. The resulting forecast is retained before the later
+D03 two-record update; that durable ordering and the one-use row ledger remain
+slice C obligations. There is no 41st belief or extra forward. The two
+M03-to-D03 joins include two additional complete unit3 material revalidations;
+they are not new oracle evaluations and must not disappear from accounting.
+
+## Source-derived work bounds and unfinished census
+
+The existing fixed counts remain 16 ensembles, 40 beliefs, 26,880 actual native
+training calls, 10,240 native future calls, 37,120 logical reference requests,
+3,840 candidate reference misses and 13 separate fixture reference calls. The
+10,240 first-record reference requests are staged for prior forecasting, then
+consumed by their exact first-profile record0 slot; they are not requested twice.
+Reference constants/normalization still use 25,600 exp, 46 ln and 128 Machin
+terms across the fixed twelve adapter instances. The actual completed attempt
+must also match all per-instance legacy counters; no instance is reset.
+
+The following counts describe construction paths, excluding later report
+revalidation and malformed/failed branches. They are not measured timings or a
+complete retained-byte admission manifest.
+
+| Adapter work | Full fixed-matrix count / bound |
+| --- | ---: |
+| Ideal plus conditioned joint-enclosure calls | 51,200 |
+| Record terms across those two formulas | 53,760 |
+| Directed binary arithmetic inside those calls | 2,001,920 |
+| Prior plus matched-reuse training means | 18 contexts / 11,520 weighted nodes |
+| Directed binary arithmetic inside those training means | 115,740 |
+| Exact rational mass-feasibility additions for those means | 23,040 |
+| Adjacent Decimal endpoint operations for 25,600 exp +46 ln results | 51,292 |
+| Outward representation coarsenings | at most 51,292 |
+| Native emitted probability conversions | 25,600 exp, supplied by the pinned driver |
+| Additional native-prediction validation for future reuse | 25,600 in prefix qualification +1,280 in D03 witnesses |
+| Complete unit3 source/material revalidations for the D03 witness | 2 |
+
+A joint enclosure uses 16 directed binary operations for its denominator plus
+22 per record: six additions/subtractions, eight products and eight divisions.
+The two formulas therefore use `32*N +44*N*R`; summed over 25,600 nodes and
+26,880 node-record pairs this gives 2,001,920. A training mean uses `10*N+30`
+directed binary operations plus two N-term exact rational sums. Comparisons,
+copy-negation, constructors, parsing, canonical hashing and Python integer/
+rational implementation costs are separate; these counts are not a claim that
+all CPU work consists only of these operations.
+
+The module retains complete native inputs/results in memory and endpoint
+reference calls retain attempted/returned/completed/failed states plus bounded
+returned centers. The final slice B/C must retain partially completed constant/
+normalization outputs and first-fault records around every corresponding method,
+not only their completed return values or counters. A1/A2 deliberately provide
+no output writer, recovery, checkpoint, report schema or allocation. The actual
+source/runtime callback identity, complete reference call transcript, encoding/
+copy multiplicity, low-level validation counts and bounded output manifest
+remain required before execution. In particular the direct use of these helpers
+is **not** a numerical admission or a ready-to-run D1 batch.
+
+The fake tests poison every real oracle and native predictor. Constant/normalizer
+transport doubles use explicitly synthetic responses and establish joins,
+accounting and failure behavior, not correctness of the oracle or D1 forecasts.
+Rational arithmetic cases separately check duplicate terms, a single prior,
+probability/representation rejection and the training bound. No historical
+exposure or owner-custody gate is discharged by these tests.

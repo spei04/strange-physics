@@ -5,15 +5,21 @@ The later driver owns exact source/runtime pins and durable one-attempt ordering
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import math
 from collections.abc import Callable
 from dataclasses import dataclass
-from decimal import ROUND_HALF_EVEN, Context, Decimal, localcontext
+from decimal import ROUND_CEILING, ROUND_FLOOR, ROUND_HALF_EVEN, Context, Decimal, localcontext
 from fractions import Fraction
 from typing import Literal
 
+from pydantic import Field
+
 from endpoint_belief_reference import EndpointOracle, Key
-from grid_q1_bounds import Interval
+from d1_bounds import D1Certificate, certify_d1_prefix
+from d1_fixture_reference import FixtureBatch, candidate_materials
+from grid_q1_bounds import ArithmeticEvidence, EndpointEvidence, Interval
 from grid_q1_evidence import (
     absolute_upper, around, divide, minus, negative, plus, point, probabilities,
     square, times, total,
@@ -38,7 +44,7 @@ from strange_physics.native_spring_contracts import (
     NativeSpringPool, parse_native_candidate_input, parse_native_candidate_result,
     validate_native_candidate_result,
 )
-from strange_physics.research_contracts import PredictionRequest, message_sha256
+from strange_physics.research_contracts import Digest, PredictionRequest, message_sha256
 
 D = Decimal
 COUNTS = (256, 1024)
@@ -101,15 +107,15 @@ def _query(structure: Structure, experiment: Experiment, *, future: bool) -> flo
 
 
 class PoolMaterial(Message):
-    count: int
+    count: Literal[256, 1024]
     structure: Structure
     training: Experiment
     future: Experiment
     pool: NativeSpringPool
-    cells: tuple[EndpointCell, ...]
+    cells: tuple[EndpointCell, ...] = Field(min_length=256, max_length=1024)
     candidate_config: NativeCandidateConfig
     prediction_config: NativePredictionConfig
-    protocol_sha256: str = PROTOCOL_SHA256
+    protocol_sha256: Digest = PROTOCOL_SHA256
 
 
 def freeze_pool(count: int, structure: Structure, training: Experiment,
@@ -125,7 +131,7 @@ def freeze_pool(count: int, structure: Structure, training: Experiment,
     _query(structure, training, future=False)
     _query(structure, future, future=True)
     return PoolMaterial(
-        count=count, structure=structure, training=training, future=future,
+        count=256 if count == 256 else 1024, structure=structure, training=training, future=future,
         pool=NativeSpringPool(coefficients=tuple((4*i+2)/count for i in range(count))),
         cells=tuple(EndpointCell(left=4*i/count, right=4*(i+1)/count) for i in range(count)),
         candidate_config=NativeCandidateConfig(), prediction_config=NativePredictionConfig(),
@@ -451,7 +457,20 @@ def rounded_decimal(center: Decimal) -> Interval:
     c = context()
     if c.plus(center) != center:
         raise ValueError("Oracle center is not a 100-digit result")
-    return Interval(c.next_minus(center), c.next_plus(center))
+    lower, upper = c.next_minus(center), c.next_plus(center)
+    quantum = D("1e-256")
+    # Decimal.next_* around zero uses subnormals outside Q1's bounded codec.
+    # Coarsen only those endpoints outward; never shrink the true enclosure.
+    lower_exponent, upper_exponent = lower.as_tuple().exponent, upper.as_tuple().exponent
+    if not isinstance(lower_exponent, int) or not isinstance(upper_exponent, int):
+        raise ValueError("Finite adjacent Decimal values required")
+    if lower_exponent < -256:
+        c.rounding = ROUND_FLOOR
+        lower = c.quantize(lower, quantum)
+    if upper_exponent < -256:
+        c.rounding = ROUND_CEILING
+        upper = c.quantize(upper, quantum)
+    return Interval(lower, upper)
 
 
 def log_perturbation(center_argument: Decimal, true_argument: Interval,
@@ -486,8 +505,10 @@ class ReferenceNormalization:
 class ReferenceCall:
     channel: Literal["strong", "weak", "future"]
     key: Key
-    status: Literal["attempted", "completed", "failed"]
+    status: Literal["attempted", "returned", "completed", "failed"]
     value: ReferenceValue | None = None
+    returned_center: str | None = None
+    failure_type: str | None = None
 
 
 class D1Reference:
@@ -540,13 +561,16 @@ class D1Reference:
                 try:
                     with localcontext(context()):
                         center = self.channels[channel].position(key)
+                    self.calls[index] = ReferenceCall(channel, key, "returned",
+                        returned_center=str(center)[:128] if type(center) is Decimal else None)
                     if type(center) is not Decimal or not D(-2) <= center <= D(2):
                         raise ValueError("Reference endpoint outside the fixed physical envelope")
                     value = ReferenceValue(center, around(center, REFERENCE_ERROR))
-                    self.calls[index] = ReferenceCall(channel, key, "completed", value)
+                    self.calls[index] = ReferenceCall(channel, key, "completed", value, str(center))
                     self.cache[key] = value
-                except BaseException:
-                    self.calls[index] = ReferenceCall(channel, key, "failed")
+                except BaseException as error:
+                    self.calls[index] = ReferenceCall(channel, key, "failed",
+                        returned_center=self.calls[index].returned_center, failure_type=type(error).__name__[:128])
                     raise
             self.logical_completed += 1
             self.results[slot] = value
@@ -681,6 +705,341 @@ class D1Reference:
             x.lookups != 1280 or x.series_values != 1280 for x in self.channels.values()
         ):
             raise ValueError("Incomplete fixed reference work; old guards remain unchanged")
+
+
+@dataclass(frozen=True)
+class QualifiedFutureEvidence:
+    candidates: BoundCandidates
+    attempt_id: str
+    captures: tuple[CapturedPrediction, ...]
+    references: tuple[ReferenceValue, ...]
+    endpoints: EndpointEvidence
+
+
+def qualify_future(bound: BoundCandidates, attempt_id: str,
+                   captures: tuple[CapturedPrediction, ...], reference: D1Reference) -> QualifiedFutureEvidence:
+    bound = rebind(bound)
+    if len(captures) != bound.frozen.count:
+        raise ValueError("Every future node requires its exact retained request/result")
+    refs = []
+    rows = []
+    maximum = D(0)
+    for node, supplied in enumerate(captures):
+        actual = request_for(bound, node, future=True)
+        row = bind_prediction(supplied.actual, supplied.result, attempt_id=attempt_id)
+        if row.actual != actual or supplied.attempt_id != attempt_id:
+            raise ValueError("Future request/attempt differs from the bound ensemble")
+        value = reference.future(bound.case, bound.frozen.count, node)
+        refs.append(value)
+        rows.append(row)
+        maximum = max(maximum, absolute_upper(minus(point(row.endpoint()), point(value.center))))
+    coverage = tuple(range(bound.frozen.count))
+    return QualifiedFutureEvidence(bound, attempt_id, tuple(rows), tuple(refs),
+        EndpointEvidence(maximum, REFERENCE_ERROR, coverage, coverage, ()))
+
+
+def joint_enclosure(recorded: tuple[float, ...], predicted: tuple[Interval, ...],
+                    scale: float, gaussian: Interval, log_prior: Interval) -> Interval:
+    """Full exact loss, including both duplicate terms and one prior.
+
+    Holding predicted at captured binary64 points separates native arithmetic
+    error; using independent endpoint intervals encloses the ideal node weight.
+    """
+    if len(recorded) not in (1, 2) or len(recorded) != len(predicted) or scale not in SCALES:
+        raise ValueError("Complete one/two-record prefix and fixed discrepancy required")
+    result = log_prior
+    denominator = times(point(2), square(point(scale)))
+    for y, x in zip(recorded, predicted, strict=True):
+        if type(y) is not float or not math.isfinite(y) or not 0 <= y <= 1:
+            raise ValueError("Actual finite recorded point required")
+        Interval(x.lower, x.upper)
+        if not D(-2) <= x.lower <= x.upper <= D(2):
+            raise ValueError("Endpoint outside the bounded arithmetic domain")
+        result = plus(result, minus(gaussian, divide(square(minus(point(y), x)), denominator)))
+    return result
+
+
+def probability_ratio_bound(actual: tuple[Interval, ...], reference: tuple[Interval, ...]) -> Decimal:
+    if not actual or len(actual) != len(reference) or len(actual) > 1024:
+        raise ValueError("Complete identical probability coverage required")
+    worst = D(0)
+    for a, r in zip(actual, reference, strict=True):
+        if a.lower <= 0 or r.lower <= 0:
+            raise ValueError("No zero/failed probability nodes may be discarded")
+        radius = absolute_upper(minus(divide(a, r), point(1)))
+        if radius >= D(1):
+            raise ValueError("Probability log-ratio is unresolved")
+        worst = max(worst, divide(point(radius), minus(point(1), point(radius))).upper)
+    return worst
+
+
+@dataclass(frozen=True)
+class PrefixNode:
+    index: int
+    references: tuple[ReferenceValue, ...]
+    ideal_joint: ReferenceValue
+    conditioned_joint: Interval
+    native_arithmetic_error: Decimal
+
+
+@dataclass(frozen=True)
+class QualifiedPrefixEvidence:
+    bound: BoundPrefix
+    future: QualifiedFutureEvidence
+    constants: ReferenceConstants
+    nodes: tuple[PrefixNode, ...]
+    normalization: ReferenceNormalization
+    emitted: tuple[float, ...]
+    probabilities: tuple[Interval, ...]
+    training: tuple[EndpointEvidence, ...]
+    arithmetic: ArithmeticEvidence
+
+
+def bind_prefix(prefix: BoundPrefix) -> BoundPrefix:
+    bound = rebind(prefix.candidates)
+    actual = parse_native_endpoint_belief_input(prefix.input_raw)
+    bind_native_endpoint_belief_result(prefix.result_raw, prefix.input_raw)
+    result = parse_native_endpoint_belief_result(prefix.result_raw)
+    if (actual != prefix.actual or result != prefix.result or result.status != "normalized"
+            or actual.candidate_input != bound.actual or actual.candidate_result != bound.result
+            or actual.candidate_attempt_id != bound.attempt_id
+            or actual.prediction_config != bound.frozen.prediction_config
+            or actual.profile != EndpointBeliefProfile(discrepancy=actual.profile.discrepancy,
+                                                       cells=bound.frozen.cells)):
+        raise ValueError("Retained full-prefix material differs from actual bound input/result")
+    profile_key(bound.case, bound.frozen.count, actual.profile.discrepancy)
+    nrecords = len(bound.public.observations.records)
+    if len(prefix.captures) != bound.frozen.count*nrecords:
+        raise ValueError("Exact node-major record coverage required")
+    for i, supplied in enumerate(prefix.captures):
+        node, record = divmod(i, nrecords)
+        row = bind_prediction(supplied.actual, supplied.result, attempt_id=actual.attempt_id)
+        if (row.actual != request_for(bound, node, record=record)
+                or row.attempt_id != supplied.attempt_id
+                or message_sha256(row.result) != result.prediction_result_sha256[i]):
+            raise ValueError("Prefix capture differs from the retained ordered producer result")
+        row.endpoint()
+    return BoundPrefix(bound, prefix.input_raw, prefix.result_raw, actual, result, prefix.captures)
+
+
+def qualify_prefix(prefix: BoundPrefix, future: QualifiedFutureEvidence,
+                   reference: D1Reference, emit: Callable[[float], float]) -> QualifiedPrefixEvidence:
+    """One reference normalization and one emitted-exp conversion per retained node.
+
+    A result supplies conditional evidence, not a passing certificate. Incomplete
+    reference/forward work raises and remains in the caller's captured channels.
+    """
+    prefix = bind_prefix(prefix)
+    validate_future(future)
+    bound = prefix.candidates
+    if future.candidates != bound or len(future.captures) != bound.frozen.count:
+        raise ValueError("Future evidence belongs to another ensemble")
+    scale, count = prefix.actual.profile.discrepancy, bound.frozen.count
+    for node, value in enumerate(future.references):
+        slot = ("future", bound.case, count, profile_scales(bound.case)[0], node, 0)
+        if reference.results.get(slot) != value:
+            raise ValueError("Future reference must join the actual retained logical request")
+    constants = reference.constants()
+    gaussian = constants.gaussian[SCALES.index(scale)]
+    prior = constants.log_prior[COUNTS.index(count)]
+    records = bound.public.observations.records
+    recorded = []
+    for record in records:
+        if record.trajectory is None:
+            raise ValueError("Complete recorded prefix required")
+        recorded.append(record.trajectory.frames[-1].positions[0][0])
+    observations = tuple(recorded)
+    normal = prefix.result.normalization
+    log_input = prefix.result.normalizer_input
+    if normal is None or normal.normalizer is None or log_input is None:
+        raise ValueError("Complete successful normalizer material required")
+    if normal.exp_evaluations != count or normal.log_evaluations != 1 or normal.exp_underflow_indices:
+        raise ValueError("Unexpected work or missing finite normalizer node")
+    nodes = []
+    maxima = [D(0) for _ in records]
+    node_error = other_error = D(0)
+    for node in range(count):
+        captured = prefix.captures[node*len(records):(node+1)*len(records)]
+        refs = tuple(reference.take_training(bound.case, count, scale, node, record)
+                     for record in range(len(records)))
+        for i, (capture, ref) in enumerate(zip(captured, refs, strict=True)):
+            maxima[i] = max(maxima[i], absolute_upper(minus(point(capture.endpoint()), point(ref.center))))
+        ideal = joint_enclosure(observations, tuple(x.enclosure for x in refs), scale,
+                                gaussian.enclosure, prior.enclosure)
+        conditioned = joint_enclosure(observations, tuple(point(x.endpoint()) for x in captured),
+                                      scale, gaussian.enclosure, prior.enclosure)
+        with localcontext(context()):
+            center = prior.center
+            for y, ref in zip(observations, refs, strict=True):
+                residual = D.from_float(y)-ref.center
+                center += gaussian.center-residual*residual/(2*D.from_float(scale)**2)
+        target = _reference(center, ideal)
+        executed = log_input.entries[node].log_weight
+        if executed is None:
+            raise ValueError("A completed node lost its joint log weight")
+        error = absolute_upper(minus(point(executed), conditioned))
+        node_error = max(node_error, absolute_upper(minus(point(executed), target.enclosure)))
+        other_error = max(other_error, error)
+        nodes.append(PrefixNode(node, refs, target, conditioned, error))
+    normalized = reference.normalize(bound.case, count, scale, tuple(x.ideal_joint for x in nodes))
+    emitted = []
+    log_error = D(0)
+    for entry, target in zip(normal.entries, normalized.normalized_logs, strict=True):
+        value = entry.log_probability
+        if value is None:
+            raise ValueError("No successful node may lose its normalized log weight")
+        log_error = max(log_error, absolute_upper(minus(point(value), target)))
+        output = emit(value)
+        if type(output) is not float or not math.isfinite(output) or not 0 < output <= 1:
+            raise ValueError("Every actual emitted exp output must be positive finite binary64")
+        emitted.append(output)
+    masses = probabilities(tuple(emitted))
+    shifted = absolute_upper(minus(point(normal.normalizer.log_scaled_sum), normalized.centered_log_evidence))
+    ratio = probability_ratio_bound(masses, normalized.probabilities)
+    coverage = tuple(range(count))
+    return QualifiedPrefixEvidence(prefix, future, constants, tuple(nodes), normalized,
+        tuple(emitted), masses,
+        tuple(EndpointEvidence(x, REFERENCE_ERROR, coverage, coverage, ()) for x in maxima),
+        ArithmeticEvidence(node_error, other_error, shifted, log_error, ratio))
+
+
+def _digest_data(value: object) -> str:
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+
+
+def _interval_data(value: Interval) -> tuple[str, str]:
+    Interval(value.lower, value.upper)
+    return str(value.lower), str(value.upper)
+
+
+def probability_digest(values: tuple[Interval, ...]) -> str:
+    return _digest_data(tuple(_interval_data(x) for x in values))
+
+
+def future_digest(value: QualifiedFutureEvidence) -> str:
+    return _digest_data(tuple((message_sha256(x.actual), message_sha256(x.result), x.attempt_id,
+        str(ref.center), _interval_data(ref.enclosure))
+        for x, ref in zip(value.captures, value.references, strict=True)))
+
+
+def prefix_digest(value: QualifiedPrefixEvidence) -> str:
+    """Codec for the checked in-memory evidence; persistence belongs to slice B.
+
+    Digests are computed from actual bound raw bytes and numerical arrays. The
+    binder must retain that material, not replace it with these digest strings.
+    """
+    return _digest_data({
+        "input_raw": hashlib.sha256(value.bound.input_raw).hexdigest(),
+        "result_raw": hashlib.sha256(value.bound.result_raw).hexdigest(),
+        "captures": [(message_sha256(x.actual), message_sha256(x.result), x.attempt_id)
+                     for x in value.bound.captures],
+        "future": future_digest(value.future),
+        "nodes": [(x.index, [(str(r.center), _interval_data(r.enclosure)) for r in x.references],
+                   str(x.ideal_joint.center), _interval_data(x.ideal_joint.enclosure),
+                   _interval_data(x.conditioned_joint), str(x.native_arithmetic_error)) for x in value.nodes],
+        "reference_exp": [(str(x.center), _interval_data(x.enclosure)) for x in value.normalization.emitted],
+        "sum_center": str(value.normalization.sum_center),
+        "log_z": (str(value.normalization.log_evidence.center), _interval_data(value.normalization.log_evidence.enclosure)),
+        "emitted": [x.hex() for x in value.emitted],
+        "probabilities": [_interval_data(x) for x in value.probabilities],
+    })
+
+
+def validate_future(value: QualifiedFutureEvidence) -> None:
+    bound = rebind(value.candidates)
+    if len(value.captures) != bound.frozen.count or len(value.references) != bound.frozen.count:
+        raise ValueError("Incomplete future material")
+    maximum = D(0)
+    for i, (capture, ref) in enumerate(zip(value.captures, value.references, strict=True)):
+        row = bind_prediction(capture.actual, capture.result, attempt_id=value.attempt_id)
+        if row != capture or row.actual != request_for(bound, i, future=True):
+            raise ValueError("Future capture differs from the actual complete request")
+        ref.__post_init__()
+        if ref.enclosure != around(ref.center, REFERENCE_ERROR):
+            raise ValueError("Fixed endpoint reference enclosure required")
+        maximum = max(maximum, absolute_upper(minus(point(row.endpoint()), point(ref.center))))
+    coverage = tuple(range(bound.frozen.count))
+    if value.endpoints != EndpointEvidence(maximum, REFERENCE_ERROR, coverage, coverage, ()):
+        raise ValueError("Future allowance must be derived from actual retained endpoints")
+
+
+@dataclass(frozen=True)
+class DuplicateForecast:
+    matched_observation_sha256: str
+    duplicate_observation_sha256: str
+    matched_model_sha256: tuple[str, ...]
+    duplicate_model_sha256: tuple[str, ...]
+    source_sha256: str
+    reference_sha256: str
+    rounding_sha256: str
+    matched_evidence_sha256: str
+    forecast: TrainingForecast
+
+
+def duplicate_forecast(batch: FixtureBatch, matched: QualifiedPrefixEvidence,
+                       duplicate: BoundCandidates, certificate: D1Certificate) -> DuplicateForecast:
+    """Private M03-to-D03 equivalence, retaining distinct original provenance.
+
+    The complete unit3 binder rechecks actual source bytes, source/query/rounding
+    material and supplied inventories. No future label is used in the forecast.
+    This does not establish that those supplied exposure inventories are complete.
+    """
+    candidate_materials(batch)
+    left = bind_prefix(matched.bound)
+    duplicate = rebind(duplicate)
+    validate_future(matched.future)
+    if matched.future.candidates != left.candidates:
+        raise ValueError("Matched future belongs to another actual prefix")
+    if (left.candidates.case != "M03" or duplicate.case != "D03"
+            or left.actual.profile.discrepancy != 0.25
+            or left.candidates.frozen.pool != duplicate.frozen.pool
+            or left.candidates.frozen.cells != duplicate.frozen.cells
+            or left.candidates.frozen.candidate_config != duplicate.frozen.candidate_config
+            or left.candidates.frozen.prediction_config != duplicate.frozen.prediction_config
+            or left.candidates.frozen.training != duplicate.frozen.training
+            or left.candidates.frozen.structure != duplicate.frozen.structure):
+        raise ValueError("Duplicate forecast requires the same physical pool/query/base loss")
+    attempts = {a.case: a for a in batch.attempts}
+    ma, da = attempts["M03"], attempts["D03"]
+    if (ma.public != left.candidates.public or da.public != duplicate.public
+            or ma.audit.coefficient_hex != da.audit.coefficient_hex
+            or ma.audit.source_commit != da.audit.source_commit
+            or ma.audit.training_labels*2 != da.audit.training_labels):
+        raise ValueError("Matched/repeat private source/reference/rounding claims differ")
+    first = ma.public.observations.records[0]
+    if any(r.experiment != first.experiment or r.trajectory != first.trajectory
+           for r in da.public.observations.records):
+        raise ValueError("Duplicate records do not retain the same physical first observation")
+    if (ma.public.observations.run_id == da.public.observations.run_id
+            or first.operation_id in tuple(r.operation_id for r in da.public.observations.records)):
+        raise ValueError("Numeric equivalence must not rename run/operation provenance")
+    premise = certificate.prefix
+    if premise is None or not certificate.passed or certify_d1_prefix(premise) != certificate:
+        raise ValueError("A passing actual matched-prefix certificate is required")
+    identity = certificate.identity
+    if (identity.case != "M03" or identity.count != duplicate.frozen.count or identity.scale != D("0.25")
+            or identity.source_commit != batch.commit
+            or identity.observation_sha256 != message_sha256(left.candidates.actual.observations)
+            or identity.future_query_sha256 != message_sha256(left.candidates.frozen.future)
+            or identity.future_values_sha256 != future_digest(matched.future)
+            or identity.probabilities_sha256 != probability_digest(matched.probabilities)
+            or identity.evidence_sha256 != prefix_digest(matched)
+            or premise.arithmetic != matched.arithmetic or premise.training != matched.training
+            or premise.future != matched.future.endpoints
+            or first.trajectory is None
+            or premise.recorded != (point(first.trajectory.frames[-1].positions[0][0]),)
+            or probabilities(matched.emitted) != matched.probabilities):
+        raise ValueError("Matched certificate must join the actual arrays and material")
+    values = tuple(x.endpoint() for x in left.captures)
+    forecast = training_forecast(left.candidates.frozen, values, certificate.epsilon,
+        source="matched-base-posterior", masses=matched.probabilities, delta=certificate.delta_upper)
+    if batch.sources is None:
+        raise ValueError("Actual source binding required")
+    label = ma.audit.training_labels[0]
+    return DuplicateForecast(message_sha256(ma.public.observations), message_sha256(da.public.observations),
+        tuple(message_sha256(x) for x in left.candidates.result.payload.models),
+        tuple(message_sha256(x) for x in duplicate.result.payload.models), message_sha256(batch.sources),
+        label.reference_evidence_sha256, label.rounding_evidence_sha256, prefix_digest(matched), forecast)
 
 
 def require_reference_reserve(value: ReferenceNormalization) -> None:
