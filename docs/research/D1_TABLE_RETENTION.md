@@ -21,8 +21,9 @@ The frozen/slotted result has exactly six fields: actual `table_raw`,
 It carries no authentication, readiness or activation field. In-memory fault
 facts and `RetentionSnapshot` describe the single attempt; no snapshot is
 accepted as permission, input proof, serialized receipt or retry authority.
-`context_observations` counts completed observations, not failed attempts to
-read C. Creation-entered versus confirmed-created fields distinguish uncertainty
+`context_observations` counts observations returned to this helper, not failed
+attempts to read C. A hook can complete an actual C read and then raise before
+handoff; the corresponding regression records that separate observation count. Creation-entered versus confirmed-created fields distinguish uncertainty
 from absence. `metadata_close_confirmed=False` includes a constructor that
 failed without returning an anchor; it does not prove any descriptor leaked.
 
@@ -72,7 +73,11 @@ after partial or unknown delivery. Positive short writes continue that same
 file; zero progress, interruption or error stops. No temporary copy, overwrite,
 rename-over recovery, delete, reopen or retry is performed by the helper.
 
-On a primary error, remember it before supplemental close records. Clear each
+On a primary error, remember it before supplemental close records. The outer
+exception boundary re-raises that same latched first exception object after
+cleanup, even if a hook swallowed it and then raised a distinct EIO. Later
+phase/type facts remain supplemental; neither the outward exception nor the
+stored first fault is replaced. Clear each
 owned fd slot before its one close attempt. Close all remaining owned descriptors
 independently; a close confirmation lost after actual closure still blocks
 success. `_Anchor` construction can create a root before raising without returning
@@ -88,8 +93,8 @@ No process-global once-only guarantee follows from a consumed Python instance.
 
 ## Authored test census and estimates
 
-There are **33 cases in 16 test functions**, with explicit short parameter IDs;
-99 setup/call/teardown phases are prospective, not observed.
+There are **35 cases in 17 test functions**, with explicit short parameter IDs;
+105 setup/call/teardown phases are prospective, not observed.
 
 | Family | Cases |
 | --- | ---: |
@@ -106,6 +111,7 @@ There are **33 cases in 16 test functions**, with explicit short parameter IDs;
 | Intervening sink append/context change | 2 |
 | Same-parent root substitution and same-byte T inode replacement | 2 |
 | Original write error plus independent root-close error | 1 |
+| Swallowed reentry then distinct EIO at parent fsync/final C | 2 |
 
 OS fault wrappers restore before caller sink finish and pytest teardown. Lost
 close-confirmation cases call original close first for the exact owned target,
@@ -116,14 +122,14 @@ imports are blocked in test bodies, with future execution controls still needed.
 
 Each fixture asserts its valid T is at most 4,096 bytes. The one oversized input
 is only an in-memory parser negative (57,857 bytes), never a file. Reserve a
-conservative **32,768 temporary payload bytes per case**, or **1,081,344 bytes**
-over all 33 cases. This includes C/terminal, T/partial T, a transient replacement
+conservative **32,768 temporary payload bytes per case**, or **1,146,880 bytes**
+over all 35 cases. This includes C/terminal, T/partial T, a transient replacement
 copy and the tiny raw sink line in the two idle-violation cases. No full profile,
 55,100-call stream, 4 MiB shard fixture, S or A is generated.
 
-Conservative filesystem census: 33 pytest parents, 33 sink roots, at most 33
+Conservative filesystem census: 35 pytest parents, 35 sink roots, at most 35
 metadata roots, plus at most two additional roots for different-parent and
-rename/substitution cases. At most 101 retained regular-file names cover C,
+rename/substitution cases. At most 107 retained regular-file names cover C,
 terminal, T and two tiny event files; one transient replacement adds at most one
 regular-file creation. No symlink, hardlink or FIFO fixture is authored here.
 These are source upper estimates, not observed retained counts or allocation.

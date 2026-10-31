@@ -293,6 +293,7 @@ class TableRetentionAttempt:
         except BaseException as retained_error:
             if not work_error_recorded and self.first_exception is not retained_error:
                 self._remember(phase, retained_error)
-            raise
+            assert self.first_exception is not None
+            raise self.first_exception
         finally:
             self._busy = False

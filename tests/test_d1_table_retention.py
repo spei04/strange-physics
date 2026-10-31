@@ -600,3 +600,67 @@ def test_primary_write_error_survives_independent_root_close_error(
     ]
     assert case.attempt.snapshot().metadata_close_confirmed is False
     assert case.attempt.snapshot().context_observations == 1
+
+
+@pytest.mark.parametrize("when", ("parent-sync", "final-c"), ids=("parent-sync", "final-c"))
+def test_swallowed_first_fault_is_raised_instead_of_later_io_error(
+    case: Case,
+    monkeypatch: pytest.MonkeyPatch,
+    when: str,
+) -> None:
+    original_sync = os.fsync
+    original_observe = PrimitiveFileSink.observe_context
+    later = OSError(errno.EIO, "distinct error after swallowed reentry")
+    nested: list[BaseException] = []
+    sync_fds: list[int] = []
+    observed_returns = 0
+
+    def first_then_later() -> None:
+        with pytest.raises(retention.TableRetentionStopped) as first:
+            case.attempt.retain()
+        nested.append(first.value)
+        assert case.attempt._busy
+        raise later
+
+    def sync_hook(fd: int) -> None:
+        sync_fds.append(fd)
+        if when == "parent-sync":
+            first_then_later()
+        original_sync(fd)
+
+    def observe_hook(value: PrimitiveFileSink) -> ContextObservation:
+        nonlocal observed_returns
+        actual = original_observe(value)
+        observed_returns += 1
+        if when == "final-c" and observed_returns == 2:
+            first_then_later()
+        return actual
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(os, "fsync", sync_hook)
+        scoped.setattr(PrimitiveFileSink, "observe_context", observe_hook)
+        with pytest.raises(retention.TableRetentionStopped) as rejected:
+            case.attempt.retain()
+    assert len(nested) == 1 and rejected.value is nested[0]
+    assert rejected.value is not later and case.attempt.first_exception is nested[0]
+    state = case.attempt.snapshot()
+    expected_phase = "metadata_create" if when == "parent-sync" else "context_after"
+    assert [fault.phase for fault in state.faults] == ["ownership_or_reentry", expected_phase]
+    assert state.faults[1].exception_type == "builtins.OSError"
+    assert state.faults[1].exception_type_complete
+    assert state.reserved_bytes == len(case.raw) and state.context_observations == 1
+    if when == "parent-sync":
+        assert observed_returns == 1 and len(sync_fds) == 1
+        assert state.creation_entered and not state.anchor_received
+        assert state.metadata_close_confirmed is False and not state.table_creation_entered
+        assert (case.parent / "metadata").is_dir()
+    else:
+        assert observed_returns == 2 and len(sync_fds) == 3
+        assert state.table_readback_equal and state.metadata_close_confirmed is True
+        assert (case.parent / "metadata/identity-table.json").read_bytes() == case.raw
+    for fd in set(sync_fds):
+        with pytest.raises(OSError) as closed:
+            os.fstat(fd)
+        assert closed.value.errno == errno.EBADF
+    assert not case.attempt._busy and not case.sink.snapshot().stopped
+    assert_consumed(case, monkeypatch)
