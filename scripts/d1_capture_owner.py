@@ -93,6 +93,112 @@ def terminal_snapshot(value: object) -> Snapshot:
     return Snapshot(properties, populated)
 
 
+def retained_controller_state(
+    plan: owned.CapturePlan,
+    files: owned.ReceiptIO,
+    started: float,
+    deadline: float,
+) -> tuple[Snapshot, Snapshot, dict[str, object], dict[str, object]]:
+    """Rejoin fixed controller bytes before adopting any retained observation.
+
+    This relies on the reviewed controller and private receipt-root custody;
+    matching declarations alone are not evidence of execution or authenticity.
+    Missing/partial records cannot replace a fresh manager observation.
+    """
+    intent = read_record(files, "capture-intent.json")
+    request = files.read("capture-request.json", owned.REQUEST_BYTES)
+    if (
+        type(request) is not bytes
+        or request != owned.encoded(owned.request_record(plan.spec, started))
+        or set(intent) != {
+            "spec", "unit", "started", "deadline", "cpu_baseline", "no_retry", "profile"
+        }
+        or intent.get("spec") != plan.spec.record()
+        or intent.get("unit") != plan.unit
+        or intent.get("started") != started
+        or intent.get("deadline") != deadline
+        or intent.get("no_retry") is not True
+        or owned.encoded(intent.get("profile")) != owned.encoded(owned.PROFILE)
+    ):
+        raise ValueError("Retained controller request/source/profile differs")
+    live_row = read_record(files, "capture-observation-00.json")
+    terminal = read_record(files, "capture-terminal-before-stop.json")
+    result = read_record(files, "capture-final.json")
+    live = terminal_snapshot(live_row.get("snapshot"))
+    last = terminal_snapshot(terminal.get("snapshot"))
+    live.bind(plan, None)
+    if not live.cgroup or live.populated is not True or live.terminal:
+        raise ValueError("Earlier retained live group observation required")
+    last.bind(plan, live.invocation)
+    if (
+        not last.terminal
+        or last.populated is True
+        or last.cgroup not in ("", live.cgroup)
+        or last.cpu_ns < live.cpu_ns
+    ):
+        raise ValueError("Retained terminal identity/accounting differs from live observation")
+    elapsed = live_row.get("elapsed")
+    if (
+        not isinstance(elapsed, (int, float))
+        or type(elapsed) is bool
+        or not math.isfinite(elapsed)
+        or not 0 <= elapsed < owned.WORK_SECONDS
+        or type(live_row.get("cgroup_cpu_ns")) is not int
+        or live_row.get("cgroup_cpu_ns") != live.cpu_ns
+        or type(terminal.get("cgroup_cpu_ns")) is not int
+        or terminal.get("cgroup_cpu_ns") != last.cpu_ns
+        or type(result.get("terminal_cgroup_cpu_ns")) is not int
+        or result.get("terminal_cgroup_cpu_ns") != last.cpu_ns
+    ):
+        raise ValueError("Retained observation timing/accounting differs")
+    for row in (live_row, terminal, result):
+        if (
+            row.get("unit") != plan.unit
+            or row.get("invocation_id") != live.invocation
+            or row.get("cgroup") != live.cgroup
+            or row.get("scopes_not_added") is not True
+        ):
+            raise ValueError("Retained controller identity differs")
+    if (
+        result.get("spec") != plan.spec.record()
+        or result.get("status") not in ("incomplete", "provisional_complete")
+        or result.get("accepted") is not False
+        or result.get("dispatch_attempted") is not True
+        or result.get("terminal_receipt_saved") is not True
+        or result.get("cgroup_closed") is not True
+        or terminal.get("closed") is not True
+        or result.get("no_retry") is not True
+    ):
+        raise ValueError("Retained controller terminal/source join differs")
+    return live, last, result, terminal
+
+
+def cleared_terminal_matches(terminal: Snapshot, observed: Snapshot) -> bool:
+    """Match a vanished failed cgroup without inventing current quota evidence.
+
+    The caller has already independently bound the earlier live and terminal
+    snapshots with Snapshot.bind. Only the two *absent* cgroup quota readings
+    and a monotonic CPU value may differ from the retained terminal properties.
+    """
+    quota = {"ObservedCPUMax", "ObservedCPUMaxBurst"}
+    return (
+        terminal.terminal
+        and terminal.populated is not True
+        and terminal.properties.get("ActiveState") == "failed"
+        and observed.terminal
+        and observed.populated is None
+        and observed.cgroup == terminal.cgroup == ""
+        and quota <= terminal.properties.keys()
+        and set(observed.properties) == set(terminal.properties) - quota
+        and observed.cpu_ns >= terminal.cpu_ns
+        and all(
+            value == observed.properties.get(key)
+            for key, value in terminal.properties.items()
+            if key not in quota | {"CPUUsageNSec"}
+        )
+    )
+
+
 def watch(
     spec: owned.CaptureSpec,
     starter: Starter,
@@ -194,30 +300,9 @@ def watch(
         if clock() >= cutoff:
             raise TimeoutError("Controller returned at/after original work cutoff")
         if child_code != 0:
-            raise RuntimeError("Owned controller returned a failure")
-        child_result = read_record(files, "capture-final.json")
-        terminal = read_record(files, "capture-terminal-before-stop.json")
-        if (
-            child_result.get("status") != "provisional_complete"
-            or child_result.get("accepted") is not False
-            or child_result.get("spec") != spec.record()
-            or child_result.get("unit") != spec.unit
-            or child_result.get("cgroup_closed") is not True
-            or child_result.get("cleanup_confirmed") is not True
-            or child_result.get("first_fault") is not None
-            or child_result.get("supplemental") != []
-            or terminal.get("unit") != spec.unit
-            or terminal.get("closed") is not True
-        ):
-            raise ValueError("Controller completion is not an exact provisional join")
-        bind(terminal_snapshot(terminal.get("snapshot")))
-        assert invocation is not None and group is not None
-        if child_result.get("invocation_id") != invocation or child_result.get("cgroup") != group:
-            raise ValueError("Controller terminal identity differs")
-        joined = owned.join_report(plan, files, invocation, group, started, deadline)
-        if joined != child_result.get("report_join") or joined != terminal.get("report_join"):
-            raise ValueError("Controller report bytes differ from retained terminal joins")
-        successful_child = True
+            # A failed child still owns receipts that may establish closure.
+            # Record its failure first; later evidence can never promote capture.
+            fault("owner", RuntimeError("Owned controller returned a failure"))
     except BaseException as operation_error:
         fault("owner", operation_error)
     finally:
@@ -243,6 +328,44 @@ def watch(
             "no_retry": True,
         }
     assert plan is not None
+    if child_reaped:
+        try:
+            remaining()
+            live, terminal_state, child_result, terminal = retained_controller_state(
+                plan, files, started, deadline
+            )
+            bind(live)
+            bind(terminal_state)
+            if child_code == 0 and first is None:
+                if (
+                    child_result.get("status") != "provisional_complete"
+                    or child_result.get("accepted") is not False
+                    or child_result.get("spec") != spec.record()
+                    or child_result.get("unit") != spec.unit
+                    or child_result.get("cgroup_closed") is not True
+                    or child_result.get("cleanup_confirmed") is not True
+                    or child_result.get("first_fault") is not None
+                    or child_result.get("supplemental") != []
+                    or terminal.get("unit") != spec.unit
+                    or terminal.get("closed") is not True
+                ):
+                    raise ValueError("Controller completion is not an exact provisional join")
+                assert invocation is not None and group is not None
+                if (
+                    child_result.get("invocation_id") != invocation
+                    or child_result.get("cgroup") != group
+                ):
+                    raise ValueError("Controller terminal identity differs")
+                joined = owned.join_report(plan, files, invocation, group, started, deadline)
+                if (
+                    joined != child_result.get("report_join")
+                    or joined != terminal.get("report_join")
+                ):
+                    raise ValueError("Controller report bytes differ from retained terminal joins")
+                successful_child = True
+            remaining()
+        except BaseException as retained_error:
+            fault("controller_receipts", retained_error)
     # Reconcile the predetermined name even when submission acknowledgement was
     # lost. Absence without an earlier terminal binding is never proof of closure.
     try:
@@ -252,10 +375,23 @@ def watch(
             if (
                 latest is not None
                 and closed
-                and confirms_empty_unit_cleanup(plan, latest, observed)
+                and observed.properties.get("Id") in (None, plan.unit)
+                and observed.invocation in ("", invocation)
+                and observed.cgroup in ("", group)
+                and (not observed.invocation or observed.cpu_ns >= latest.cpu_ns)
+                and (
+                    cleared_terminal_matches(latest, observed)
+                    or confirms_empty_unit_cleanup(plan, latest, observed)
+                )
             ):
+                # Preserve this actual later snapshot, including absent quota
+                # readings. Earlier independently bound evidence stays on disk.
+                if observed.invocation:
+                    latest = observed
                 stopped = True
                 break
+            if latest is not None and closed:
+                raise ValueError("Current service state differs from the retained terminal")
             if observed.properties.get("LoadState") == "not-found":
                 pause(min(2.0, remaining()))
                 continue
@@ -275,6 +411,9 @@ def watch(
         if not closed:
             raise TimeoutError("Named capture closure remains unknown; claim retained")
     except BaseException as reconcile_error:
+        # A contradictory/unknown current observation must not reuse the earlier
+        # closed flag to stop or acknowledge a unit after reconciliation failed.
+        closed = False
         fault("owner_reconcile", reconcile_error)
     try:
         remaining()

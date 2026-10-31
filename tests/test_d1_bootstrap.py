@@ -921,3 +921,47 @@ def test_loaded_linux_source_aliases_require_exact_identity(
     else:
         with pytest.raises(bootstrap.BootstrapError):
             bootstrap._check_loaded(plan)
+
+
+@pytest.mark.parametrize(
+    "key,spec_name",
+    [("unreviewed.frozen", "unreviewed.frozen"), ("alias_key", "allowed")],
+    ids=("unknown-name", "unadmitted-alias"),
+)
+def test_unlisted_frozen_diagnostic_preserves_rejected_identity(
+    monkeypatch: pytest.MonkeyPatch, key: str, spec_name: str
+) -> None:
+    module = ModuleType(key)
+    module.__spec__ = importlib.machinery.ModuleSpec(
+        spec_name, importlib.machinery.FrozenImporter, origin="frozen"
+    )
+    monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={key: module}))
+    plan = {"files": [], "import_map": {}, "frozen_modules": ["allowed"], "builtin_modules": []}
+    with pytest.raises(bootstrap.BootstrapError, match="Unlisted frozen module") as caught:
+        bootstrap._check_loaded(plan)
+    details = json.loads(str(caught.value).partition(": ")[2])
+    assert details["module_key"] == key and details["spec_name"] == spec_name
+    assert details["origin"] == "frozen" and details["module_key_truncated"] is False
+    assert plan["frozen_modules"] == ["allowed"]
+
+
+def test_unlisted_frozen_diagnostic_is_bounded_and_escaped(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    key = "bad\n" + "\U0001f600" * 200
+    module = ModuleType(key)
+    module.__spec__ = importlib.machinery.ModuleSpec(
+        key, importlib.machinery.FrozenImporter, origin="frozen"
+    )
+    monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={key: module}))
+    with pytest.raises(bootstrap.BootstrapError) as caught:
+        bootstrap._check_loaded(
+            {"files": [], "import_map": {}, "frozen_modules": [], "builtin_modules": []}
+        )
+    message = str(caught.value)
+    assert message.isascii() and "\n" not in message and len(message) < 4096
+    details = json.loads(message.partition(": ")[2])
+    assert details["module_key"] == key[:128]
+    assert details["module_key_length"] == len(key)
+    assert details["module_key_truncated"] is True
+    assert details["spec_name_truncated"] is True

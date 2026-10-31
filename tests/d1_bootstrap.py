@@ -354,6 +354,24 @@ def _runtime_alias_origin(
     )
 
 
+def _unlisted_frozen(name: str, spec: object) -> BootstrapError:
+    # Diagnostic only: no module name or alias is admitted by this evidence.
+    # Read exact ModuleSpec storage, never an arbitrary diagnostic object's repr.
+    spec_name = spec.__dict__.get("name") if type(spec) is importlib.machinery.ModuleSpec else None
+    fields: dict[str, object] = {"origin": "frozen"}
+    for label, value in (("module_key", name), ("spec_name", spec_name)):
+        if type(value) is str:
+            fields[label] = value[:128]
+            fields[label + "_length"] = len(value)
+            fields[label + "_truncated"] = len(value) > 128
+        else:
+            fields[label] = None
+    return BootstrapError(
+        "Unlisted frozen module: "
+        + json.dumps(fields, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+    )
+
+
 def _check_loaded(plan: dict[str, Any]) -> None:
     files = {item["path"]: item for item in plan["files"]}
     routes = plan["import_map"]
@@ -402,7 +420,7 @@ def _check_loaded(plan: dict[str, Any]) -> None:
                 raise BootstrapError("Unlisted builtin module")
         elif origin == "frozen":
             if name not in frozen:
-                raise BootstrapError("Unlisted frozen module")
+                raise _unlisted_frozen(name, spec)
         elif origin not in files:
             if type(module) is not ModuleType or not _runtime_alias_origin(
                 name, module, plan, files
