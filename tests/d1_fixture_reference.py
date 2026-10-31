@@ -136,7 +136,10 @@ def verify_sources(root: Path, commit: str, pins: tuple[SourcePin, ...]) -> Sour
     for module, pin in zip(
         (fixture_module, core_module, json_module, research_module), pins[3:], strict=True
     ):
-        with Path(module.__file__).open("rb") as stream:
+        module_file = module.__file__
+        if module_file is None:
+            raise ValueError("Loaded production module has no source file")
+        with Path(module_file).open("rb") as stream:
             loaded = stream.read(FILE_LIMIT + 1)
         if not 0 < len(loaded) <= FILE_LIMIT or hashlib.sha256(loaded).hexdigest() != pin.sha256:
             raise ValueError("Loaded production module bytes differ from the source pins")
@@ -267,7 +270,7 @@ def fixed_plan(source: Sources, proofs: tuple[CoefficientProof, ...]) -> Plan:
     source = checked(source, Sources, FILE_LIMIT)
     if tuple(p.numerator for p in proofs) != NUMERATORS:
         raise ValueError("Four ordered coefficient proof records required")
-    values = {}
+    values: dict[int, float] = {}
     for proof in proofs:
         proof = checked(proof, CoefficientProof)
         exact = Fraction(proof.numerator, 7)

@@ -10,9 +10,9 @@ from pathlib import Path
 from typing import NoReturn
 
 import d1_fixture_reference as producer
+import endpoint_belief_reference as oracle_module
 import pytest
 from d1_fixture_reference import (
-    CASE_IDS,
     ORACLE_SHA256,
     SOURCE_PATHS,
     D1FixtureProducer,
@@ -32,7 +32,9 @@ from d1_fixture_reference import (
 )
 from endpoint_belief_reference import EndpointOracle, Key
 
+import strange_physics.calibration_fixture_contracts as fixture_module
 from strange_physics.calibration_fixture_contracts import (
+    CASE_IDS,
     D1ExposureEntry,
     D1ExposureInventory,
     physical_identity,
@@ -117,11 +119,14 @@ def run() -> FixtureBatch:
     return D1FixtureProducer(ROOT, COMMIT, pins()).run(ids(), inventories())
 
 
-def test_actual_source_bytes_and_loaded_locations_are_bound() -> None:
+def test_actual_source_bytes_and_loaded_locations_are_bound(monkeypatch: pytest.MonkeyPatch) -> None:
     value = verify_sources(ROOT, COMMIT, pins())
     assert len(value.pins) == len(value.sizes) == 7
     assert value.pins[1].sha256 == ORACLE_SHA256
     assert all(0 < x <= producer.FILE_LIMIT for x in value.sizes)
+    monkeypatch.setattr(fixture_module, "__file__", None)
+    with pytest.raises(ValueError, match="Loaded production module has no source file"):
+        verify_sources(ROOT, COMMIT, pins())
 
 
 @pytest.mark.parametrize("kind", ("digest", "order", "missing", "commit", "loaded_location"))
@@ -139,9 +144,7 @@ def test_source_pin_mismatches_fail_before_any_reference(
     elif kind == "commit":
         commit = "a" * 39
     else:
-        monkeypatch.setattr(
-            producer.oracle_module, "__file__", str(ROOT / "tests/not-the-oracle.py")
-        )
+        monkeypatch.setattr(oracle_module, "__file__", str(ROOT / "tests/not-the-oracle.py"))
     batch = D1FixtureProducer(ROOT, commit, actual).run(ids(), inventories())
     assert batch.first_fault is not None
     assert batch.outcomes.outcomes[0].status == "failed"
