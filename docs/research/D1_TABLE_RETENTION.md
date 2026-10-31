@@ -4,8 +4,8 @@ Implementation of the accepted
 [table retention design](D1_TABLE_RETENTION_DESIGN.md), based on
 `2b372fb5937eda4c53507c42425a154e83564732`. Independent source review is complete;
 local qualification closed incomplete after four attempts. Final source
-`87884ac1de70aabf7ef4bc188962bb23f9683da4` contains the reviewed fixes and awaits
-its separate ordinary CI check. Earlier context observation qualification does
+`87884ac1de70aabf7ef4bc188962bb23f9683da4` contains the reviewed fixes and passed
+its separate original hosted CI check at the documentation successor recorded below. Earlier context observation qualification does
 not qualify this new operation.
 
 ## Files and interface
@@ -209,10 +209,35 @@ original CI attempt: six required jobs, 5,875 tests per runtime, 221-file typing
 Ordinary CI includes historical physics tests; it is separate from the pending
 D1 scientific batch.
 
+## Hosted CI verification
+
+[PR #153](https://github.com/spei04/strange-physics/pull/153) passed original
+[CI attempt 1](https://github.com/spei04/strange-physics/actions/runs/41183211071)
+on frozen head `3ee39ee27053a7947e4f358bfc7a9c2d5a333cc3`. The tested merge
+`63f8167b76e14abaf20e513d0ea117dded9f0b0e` has the exact parent/head pair and
+the same source tree. All six required jobs succeeded; the protected-main
+candidate job was skipped, as expected for this draft PR.
+
+Both Python 3.12 and 3.14 passed 5,910 tests, full typing across 223 files, 1,567
+schema checks with all references resolving, the package allowlist and one
+8/8 CLI smoke run. Each separate analytic job passed 24 cases/72 phases.
+The two existing serializer warnings per main runtime and the security tool's
+flag warnings remain in the original logs. Independent review matched the
+immutable source and original logs; 17 private evidence files total 445,255 bytes.
+
+The 35 new cases are included in ordinary source selection and aggregate passing
+counts. This does not create a private ordered 35-case/105-phase execution receipt:
+the four-attempt local qualification above remains incomplete. Observed required
+job durations sum to 1,532 seconds versus 4,980 configured timeout seconds.
+Provider elapsed time was 777 seconds, a separate concurrent interval. These are
+not CPU or billed-cost measurements; external costs and previous charges remain
+retained. CI establishes engineering validation of this source, not source
+authority, production readiness or a D1 scientific result.
+
 ## Remaining work
 
-Source review is accepted; final-source ordinary CI remains pending. The local
-qualification limits above remain explicit. Qualified storage behavior, external failure
+Source review and final-source ordinary CI are accepted. The local qualification
+limits above remain explicit. Qualified storage behavior, external failure
 retention/closure, actual source bindings and aggregate science-output fit remain
 separate. Defer all candidate A construction and fixed `codec-activation.json`
 retention until the resolved/authenticated S and outer-admission slice. This
