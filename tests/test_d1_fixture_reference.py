@@ -119,7 +119,9 @@ def run() -> FixtureBatch:
     return D1FixtureProducer(ROOT, COMMIT, pins()).run(ids(), inventories())
 
 
-def test_actual_source_bytes_and_loaded_locations_are_bound(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_actual_source_bytes_and_loaded_locations_are_bound(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     value = verify_sources(ROOT, COMMIT, pins())
     assert len(value.pins) == len(value.sizes) == 7
     assert value.pins[1].sha256 == ORACLE_SHA256
