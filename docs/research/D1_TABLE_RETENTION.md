@@ -1,10 +1,12 @@
 # Conditional T retention source slice
 
-Source-only implementation of the accepted
+Implementation of the accepted
 [table retention design](D1_TABLE_RETENTION_DESIGN.md), based on
-`2b372fb5937eda4c53507c42425a154e83564732`. New code/tests have not been
-imported, collected, formatted, type-checked or executed. Earlier context
-observation qualification does not qualify this new operation.
+`2b372fb5937eda4c53507c42425a154e83564732`. Independent source review is complete;
+local qualification closed incomplete after four attempts. Final source
+`87884ac1de70aabf7ef4bc188962bb23f9683da4` contains the reviewed fixes and awaits
+its separate ordinary CI check. Earlier context observation qualification does
+not qualify this new operation.
 
 ## Files and interface
 
@@ -167,10 +169,50 @@ The proposed 16 MiB transcript partition and whole-science/logical 64 MiB limits
 supply no fresh allocation. No serialized operation receipt, S budget or claimed
 aggregate fit is added.
 
+## Local verification record
+
+The private Unit16 account closed after four attempts. Preparation collected
+35 ordered IDs with zero test phases, verified the owned sentinel and preserved
+the source/environment/guard checks. Attempt2 then stopped on lint B904 before
+typing or test execution. The reviewed fix preserves a same-object exception
+chain and explicitly suppresses a distinct later error as the cause of the
+retained first exception. Preparation3 collected the same 35 IDs at
+`70542438d2009cabfc417f9b3db2c88c96930d28`.
+
+Attempt4 passed formatting and lint, then full configured typing across 223 files
+reported one redundant disjoint-type identity comparison in the new test.
+It stopped before test bodies. The final one-line test repair removes only that
+comparison: outward first-error identity, stored first-error identity, later
+fault metadata, cleanup and all 35 cases remain. No private runtime was performed
+on the final source, and no private 35-case/105-phase pass is claimed.
+
+Independent review verified all 21 child closures across the four attempts,
+unchanged pinned helpers/environment and the before/after source identities.
+Measured CPU was 49.863723 seconds; including four retained 5-second CPU and
+10-second active-wall closeout holds, the cumulative charge is **69.863723 CPU
+seconds and 89.96028027124703 active-wall seconds**. The final unit contains
+2,401,856 logical bytes in 54 regular files and two directories, with no links,
+FIFO or executed test fixtures. Separately sampled wall differences remain in
+the private record. External authoring, review and transport costs remain
+unknown; these numbers are not complete operation accounting.
+
+No fifth local attempt is planned. Repeating source-bound preparation and full
+typing would leave an estimated 20-second typing ceiling under unchanged
+withholdings, below the observed 25.746082 typing CPU seconds, before the guarded
+tests. This is a fit forecast, not a new measurement or balance reset. One
+separately recorded ordinary hosted CI attempt will validate the frozen final
+source. Its result cannot retroactively supply the private guard census.
+
+Parent [PR #152](https://github.com/spei04/strange-physics/pull/152) passed its
+original CI attempt: six required jobs, 5,875 tests per runtime, 221-file typing,
+1,567 schema checks, package inspection and the existing reference/smoke checks.
+Ordinary CI includes historical physics tests; it is separate from the pending
+D1 scientific batch.
+
 ## Remaining work
 
-Independent source review, configured full typing/lint/format and bounded owned
-filesystem tests are pending. Qualified storage behavior, external failure
+Source review is accepted; final-source ordinary CI remains pending. The local
+qualification limits above remain explicit. Qualified storage behavior, external failure
 retention/closure, actual source bindings and aggregate science-output fit remain
 separate. Defer all candidate A construction and fixed `codec-activation.json`
 retention until the resolved/authenticated S and outer-admission slice. This
