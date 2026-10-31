@@ -965,3 +965,66 @@ def test_unlisted_frozen_diagnostic_is_bounded_and_escaped(
     assert details["module_key_length"] == len(key)
     assert details["module_key_truncated"] is True
     assert details["spec_name_truncated"] is True
+
+
+@pytest.mark.parametrize(
+    "alias,canonical",
+    [
+        ("importlib._bootstrap", "_frozen_importlib"),
+        ("importlib._bootstrap_external", "_frozen_importlib_external"),
+    ],
+    ids=("bootstrap", "external"),
+)
+@pytest.mark.parametrize(
+    "case",
+    ("joined", "distinct", "missing", "inventory", "spec", "origin", "loader", "alias-key"),
+    ids=("joined", "distinct", "missing", "inventory", "spec", "origin", "loader", "alias-key"),
+)
+def test_frozen_alias_requires_exact_canonical_join(
+    monkeypatch: pytest.MonkeyPatch, alias: str, canonical: str, case: str
+) -> None:
+    key = alias + ".unreviewed" if case == "alias-key" else alias
+    origin = "/synthetic/stdlib/bootstrap.py"
+    module = ModuleType(alias)
+    retained_spec = importlib.machinery.ModuleSpec(
+        canonical, importlib.machinery.FrozenImporter, origin="frozen"
+    )
+    module.__spec__ = retained_spec
+    # Alias first: a later canonical rejection must not mask a missing alias check.
+    registry = {key: module, canonical: module}
+    plan: dict[str, Any] = {
+        "files": [{"path": origin}],
+        "import_map": {},
+        "frozen_modules": [canonical],
+        "builtin_modules": [],
+        "checkout": "/synthetic/source",
+        "site_packages": "/synthetic/site",
+    }
+    if case == "distinct":
+        impostor = ModuleType(alias)
+        impostor.__spec__ = retained_spec
+        registry[key] = impostor
+    elif case == "missing":
+        del registry[canonical]
+    elif case == "inventory":
+        plan["frozen_modules"] = ["unrelated.frozen"]
+    elif case == "spec":
+        retained_spec.name = "unrelated.canonical"
+    elif case == "origin":
+        # Generic protected-source admission would accept this path; the exact
+        # alias rule must reject its non-frozen origin before that fallback.
+        retained_spec.origin = origin
+    elif case == "loader":
+        retained_spec.loader = importlib.machinery.SourceFileLoader(canonical, origin)
+    monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules=registry))
+    if case == "joined":
+        assert bootstrap._check_loaded(plan) is None
+        assert registry[key] is registry[canonical] is module
+        assert plan["frozen_modules"] == [canonical]
+    else:
+        with pytest.raises(
+            bootstrap.BootstrapError, match="Frozen alias identity differs|Unlisted frozen module"
+        ) as caught:
+            bootstrap._check_loaded(plan)
+        details = json.loads(str(caught.value).partition(": ")[2])
+        assert details["module_key"] == key

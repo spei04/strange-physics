@@ -45,6 +45,12 @@ SOURCE_PIN_PATHS = (
 )
 PLAN_LIMIT = 4 * 1024**2
 REPORT_LIMIT = 4096
+# Source-reviewed importlib aliases must retain their exact canonical frozen object.
+# The parent still pins the actual interpreter, stdlib bytes and startup inventory.
+_FROZEN_ALIASES = {
+    "importlib._bootstrap": "_frozen_importlib",
+    "importlib._bootstrap_external": "_frozen_importlib_external",
+}
 _DENIED_WORK: str | None = None
 _STANDARD_ATTEMPTED = False
 _PREPARED_RANDOM: ModuleType | None = None
@@ -378,6 +384,28 @@ def _check_loaded(plan: dict[str, Any]) -> None:
     frozen = set(plan["frozen_modules"])
     builtin = set(plan["builtin_modules"])
     for name, module in tuple(sys.modules.items()):
+        if name in _FROZEN_ALIASES:
+            canonical = _FROZEN_ALIASES[name]
+            alias_spec = module.__dict__.get("__spec__") if type(module) is ModuleType else None
+            if (
+                type(name) is not str
+                or type(module) is not ModuleType
+                or type(alias_spec) is not importlib.machinery.ModuleSpec
+                or type(alias_spec.name) is not str
+                or alias_spec.name != canonical
+                or type(alias_spec.origin) is not str
+                or alias_spec.origin != "frozen"
+                or alias_spec.loader is not importlib.machinery.FrozenImporter
+                or canonical not in frozen
+                or sys.modules.get(canonical) is not module
+            ):
+                raise BootstrapError(
+                    "Frozen alias identity differs: "
+                    + json.dumps(
+                        {"module_key": name if type(name) is str else None}, ensure_ascii=True
+                    )
+                )
+            continue
         if module is None:
             continue
         if name == "apport_python_hook" or name.startswith("apport_python_hook."):
