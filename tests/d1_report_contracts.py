@@ -67,7 +67,11 @@ def fixed_row_manifest() -> tuple[RowSpec, ...]:
     for c in CASES:
         for n in COUNTS:
             for scale in _scales(c):
-                deps = (f"fixture/{c}", f"prior/{c}/{n}", f"prequential/{c}/{n}/record0")
+                deps: tuple[str, ...] = (
+                    f"fixture/{c}",
+                    f"prior/{c}/{n}",
+                    f"prequential/{c}/{n}/record0",
+                )
                 if c == "D03":
                     deps += (f"prequential/D03/{n}/record1",)
                 rows.append(RowSpec(f"belief/{c}/{n}/{scale}", "belief", deps))
