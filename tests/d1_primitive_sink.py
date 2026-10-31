@@ -165,7 +165,9 @@ class SinkInspection:
 class _Anchor:
     """Pin parent/root descriptors; a private single writer remains a premise."""
 
-    def __init__(self, root: Path, *, create: bool) -> None:
+    def __init__(
+        self, root: Path, *, create: bool, expected_parent: Identity | None = None
+    ) -> None:
         if not isinstance(root, Path):
             raise ValueError("Path required")
         if not root.is_absolute() or ".." in root.parts or root.name in ("", "."):
@@ -183,6 +185,8 @@ class _Anchor:
             parent = os.fstat(self.parent)
             private_stat(parent, directory=True)
             self.parent_identity = _identity(parent)
+            if expected_parent is not None and self.parent_identity != expected_parent:
+                raise ValueError("Actual parent differs from the required pinned parent")
             if create:
                 os.mkdir(root.name, mode=0o700, dir_fd=self.parent)
                 os.fsync(self.parent)
