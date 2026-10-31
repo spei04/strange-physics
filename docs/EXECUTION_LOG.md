@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** Contracts #138, bounds #139 and fixtures #140 passed required CI. The adapter passed formatting, lint and full typing across 201 files; guarded local tests remain incomplete.
-- **Assignments:** Lead freezes the adapter PR; Platform verifies CI. Research accepted the primitive-recorder source; Quality authors fixed report contracts. Each source slice receives independent review.
-- **Open gates:** Local cutoff and charged overrun remain recorded. Exposure policy and initial owner custody are approved; protected six-world inventory and scientific admission remain open. No D1 batch is running.
+- **Verified:** PRs #138–#140 passed CI. Adapter #141 is in CI; its incomplete local run remains recorded. The recorder passed 57 cases/171 phases and full 203-file typing.
+- **Assignments:** Platform verifies #141. Lead prepares recorder delivery; Research prepares report-structure checks. Quality reviews the numerical-gate mapping. The 135-row structural source has passed independent review.
+- **Open gates:** Exposure policy and initial owner custody are approved. Protected inventory, durable recording, complete numerical binding and scientific admission remain open. No D1 batch is running.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Quality / Research / Platform / Project lead | D1 recorder and report structure | Recorder source98f55f8 passed57 synthetic cases/171 phases and203-file typing; all12 owned processes closed,46.092669 CPU seconds charged. Independent result review accepted. Report-structure source30f3cbe accepted with78 authored cases still unrun; numerical-gate mapping under review. Parent adapter PR141 CI remains pending. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | D1 adapter engineering and failure retention | Source 76a8edc independently accepted; formatting/lint/201-file typing passed. Local guarded tests hit SIGXCPU with no terminal census; six attempts and the 120.182184-second charged overrun remain recorded. One ordinary PR CI completion next. Recorder source ca928755 reviewed; Quality begins fixed report contracts. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | D1 contract CI and predictive-bound checks | PR #138 passed six required jobs on frozen 8b7704a. Unit2 exact-mass defect repaired; 69 synthetic cases/197-file typing pass at 312774c, with prior type failure retained. Research authors unit3 reference/proof joins; Quality found a trace-center consistency fix before integration. No D1 scientific batch. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | RA-N03-D1 fixture contracts and numerical-bound source | Unit1 source and regressions reviewed; 76 focused cases and strict typing pass. Full schema audit incomplete after two CPU stops; standard PR verification next. Research owns unit2 bounds/proofs in the separate reused primary checkout; no scientific batch. |
