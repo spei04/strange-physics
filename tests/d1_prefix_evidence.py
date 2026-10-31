@@ -1126,12 +1126,14 @@ def qualify_prefix(
     normalized = reference.normalize(bound.case, count, scale, tuple(x.ideal_joint for x in nodes))
     emitted = []
     log_error = D(0)
-    for entry, target in zip(normal.entries, normalized.normalized_logs, strict=True):
-        value = entry.log_probability
-        if value is None:
+    for entry, normalized_target in zip(normal.entries, normalized.normalized_logs, strict=True):
+        native_log_probability = entry.log_probability
+        if native_log_probability is None:
             raise ValueError("No successful node may lose its normalized log weight")
-        log_error = max(log_error, absolute_upper(minus(point(value), target)))
-        output = emit(value)
+        log_error = max(
+            log_error, absolute_upper(minus(point(native_log_probability), normalized_target))
+        )
+        output = emit(native_log_probability)
         if type(output) is not float or not math.isfinite(output) or not 0 < output <= 1:
             raise ValueError("Every actual emitted exp output must be positive finite binary64")
         emitted.append(output)
@@ -1338,10 +1340,14 @@ def recheck_prefix_evidence(value: QualifiedPrefixEvidence) -> QualifiedPrefixEv
             raise ValueError("Every actual emitted exp output must be positive finite binary64")
     masses = probabilities(value.emitted)
     log_error = D(0)
-    for entry, target in zip(normal.entries, value.normalization.normalized_logs, strict=True):
+    for entry, normalized_target in zip(
+        normal.entries, value.normalization.normalized_logs, strict=True
+    ):
         if entry.log_probability is None:
             raise ValueError("No successful node may lose its normalized log weight")
-        log_error = max(log_error, absolute_upper(minus(point(entry.log_probability), target)))
+        log_error = max(
+            log_error, absolute_upper(minus(point(entry.log_probability), normalized_target))
+        )
     shifted = absolute_upper(
         minus(point(normal.normalizer.log_scaled_sum), value.normalization.centered_log_evidence)
     )
