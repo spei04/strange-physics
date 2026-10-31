@@ -19,14 +19,17 @@ adding project paths, then arms the unchanged project/test prohibitions.
 That ordinary standard-library initialization may call exp; there is no
 whole-invocation zero-exp claim or protected-startup qualification.
 
-One separately admitted ordinary CI attempt is the next software-verification
-step. It cannot substitute for the unexecuted guarded 143-case/429-phase test
-window, protected runtime or scientific admission. The earlier 233-file typing
+The separately admitted original [PR #156 CI run](https://github.com/spei04/strange-physics/actions/runs/41194699505)
+is active on frozen source 838a211: Python 3.14 passed 6,240 tests and 232-file
+typing; Python 3.12 is still running. Both analytic jobs and security passed.
+This is ordinary software evidence and cannot substitute for the unexecuted
+guarded 143-case/429-phase test window, protected runtime or scientific admission. The earlier 233-file typing
 estimate below is superseded by the observed 232-file scope.
 
 The standalone controller exits 64. Final capture acceptance remains false
-even for a clean direct-child observation; the named-service integration is
-being authored separately and is not included in this checkpoint.
+even for a clean direct-child observation. The separate
+[named-service lifecycle source](D1_OWNED_CAPTURE.md) is reviewed, with 37 tests
+still unrun; it is outside the frozen PR #156 CI scope.
 The current environment is not admitted for protected startup. No child
 bootstrap, installation, environment repair or D1 scientific batch ran.
 
