@@ -8,7 +8,16 @@ premises; a passing result is not scientific qualification or historical truth.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from decimal import Decimal
+from decimal import (
+    ROUND_HALF_EVEN,
+    Context,
+    Decimal,
+    DivisionByZero,
+    Inexact,
+    InvalidOperation,
+    Overflow,
+    localcontext,
+)
 from typing import Literal
 
 from grid_q1_bounds import ArithmeticEvidence, EndpointEvidence, Interval
@@ -311,8 +320,23 @@ def enclose_cdf(
             or cell.image.lower < support.lower or cell.image.upper > support.upper
         ):
             raise ValueError("Cell mass/image is outside its certified support")
-    mass = total(tuple(c.mass for c in cells))
-    if not mass.lower <= ONE <= mass.upper:
+    # At most 1024 masses in [0,1], with exponent >= -256: 260 digits
+    # represent both sums exactly. Directed 100-digit sums can hide a tiny
+    # infeasible residual; the support-endpoint rule must not conceal it.
+    exact = Context(
+        prec=260, rounding=ROUND_HALF_EVEN, Emin=-999999, Emax=999999,
+        capitals=1, clamp=0, flags=[],
+        traps=[Inexact, InvalidOperation, DivisionByZero, Overflow],
+    )
+    try:
+        with localcontext(exact) as context:
+            lower_mass = upper_mass = ZERO
+            for cell in cells:
+                lower_mass = context.add(lower_mass, cell.mass.lower)
+                upper_mass = context.add(upper_mass, cell.mass.upper)
+    except Inexact as error:
+        raise ValueError("Exact mass feasibility precision guard failed") from error
+    if not lower_mass <= ONE <= upper_mass:
         raise ValueError("Mass intervals must admit a single normalized probability vector")
     low_events = sorted(cells, key=lambda c: (c.image.lower, c.index))
     high_events = sorted(cells, key=lambda c: (c.image.upper, c.index))

@@ -166,16 +166,27 @@ the full RA-N03 fixture freeze nor permission to run a selector comparison.
 
 Per CDF call with N<=1024:
 - two N-element sorts and one <=2N+2 breakpoint sort;
-- exactly2N mass-update additions and at most2N+2 retained knots;
-- at most7N+2 directed interval-add/subtract operations, including the mass
-  feasibility sum; no physics, log, exp, quadrature or root-finding evaluations.
+- exactly2N **exact Decimal additions** for mass feasibility, separate from
+  directed arithmetic. Since every validated mass lies in [0,1], has exponent
+  at least -256 and N<=1024, each sum has at most four integer and256 fractional
+  digits. An explicit260-digit Context represents every addition exactly;
+  its Inexact trap fails closed if this proof premise is ever violated. Require
+  exact sum(lower)<=1<=sum(upper) before any forced terminal CDF=1 rule;
+- exactly2N directed mass-update additions and at most2N+2 retained knots;
+- at most6N+2 directed interval-add/subtract operations; no physics, log, exp,
+  quadrature or root-finding evaluations.
 
 Predictive entry uses two such CDF calls. Its finite point-image CDF actually
 has at most N knots, while the continuous CDF has at most2N+2, so their combined
 retained shape is at most3N+2 knots. Mass sweeps perform exactly4N updates.
 The weighted moment, square and cell-image work is linear; a conservative
-source bound is20N+100 interval primitive calls including one certificate
-recheck. Score/panel joins deliberately recheck certificate and expression
+source bound is20N+100 arithmetic interval primitive calls including one
+certificate recheck. This counts `plus`, `minus`, `times`, `divide`, `square`,
+`around` and additions inside `total`; it does not count `point` construction,
+Interval construction/validation, comparisons, hashing or sorting. The two CDF
+calls additionally make exactly4N exact mass-feasibility additions. These
+categories must remain separate in the later complete work census.
+Score/panel joins deliberately recheck certificate and expression
 consistency; their fixed extra passes must be charged in the later driver
 census. A `cdf_at` call performs one bounded linear scan; the quantile path uses
 only the two fixed tails, never N calls to `cdf_at`.
@@ -193,7 +204,9 @@ knots/copies against the proposed output limit before numerical admission.
 Tests cover every declared prefix; whole-prefix and duplicate remainders; prior
 mass identity; malformed coverage/profile/evidence; rational uniform and atomic
 surrogates; exact cumulative-mass ties; ambiguous tails and delta>=tail;
-probability feasibility and monotone widening; finite-versus-continuous outputs;
+exact probability feasibility (including tiny positive/negative residuals,
+minimum allowed exponent and a feasible interval under hostile ambient contexts)
+and monotone widening; finite-versus-continuous outputs;
 ordered interval-score branches; signed bounds, nonfinite values and hostile
 ambient Decimal precision; strict co-primary/tie rules; actual four-row
 aggregation and incomplete denominators. No D1 truth/forecasts or reference

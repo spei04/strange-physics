@@ -258,6 +258,42 @@ def test_invalid_cdf_inputs_fail_closed(kind: str) -> None:
         enclose_cdf(cells, delta, support, S)
 
 
+@pytest.mark.parametrize("residual", ("above", "below", "minimum_exponent"))
+@pytest.mark.parametrize("ambient_precision", (3, 80))
+def test_exact_mass_feasibility_rejects_tiny_residuals(
+    residual: str, ambient_precision: int
+) -> None:
+    if residual == "above":
+        masses = (D("0.5"), D("0.5" + "0" * 108 + "1"))
+    elif residual == "below":
+        masses = (D("0.5"), D("0.4" + "9" * 109))
+    else:
+        masses = (D(1), D("1e-256"))
+    cells = tuple(PredictiveCell(i, point(m), point(0)) for i, m in enumerate(masses))
+    with localcontext() as context:
+        context.prec = ambient_precision
+        context.rounding = ROUND_DOWN
+        context.Emin, context.Emax = -9, 9
+        with pytest.raises(ValueError, match="single normalized probability vector"):
+            enclose_cdf(cells, D(0), point(0), S)
+
+
+@pytest.mark.parametrize("ambient_precision", (3, 80))
+def test_exact_mass_feasibility_preserves_tiny_feasible_interval(
+    ambient_precision: int
+) -> None:
+    second = Interval(D("0.4" + "9" * 109), D("0.5" + "0" * 108 + "1"))
+    cells = (PredictiveCell(0, point(D("0.5")), point(0)), PredictiveCell(1, second, point(0)))
+    with localcontext() as context:
+        context.prec = ambient_precision
+        context.rounding = ROUND_DOWN
+        context.Emin, context.Emax = -9, 9
+        value = enclose_cdf(cells, D(0), point(0), S)
+        assert value.knots == (CDFKnot(D(0), point(1)),)
+        assert generalized_quantile(value, D("0.05")).value == point(0)
+        assert value.mass_updates == 4
+
+
 def test_malformed_persisted_cdf_cannot_remove_support_terminal() -> None:
     value = cdf(("0", "1"), ("0.5", "0.5"))
     malformed = replace(value, knots=(*value.knots[:-1], CDFKnot(D(1), point(D("0.9")))))
