@@ -2,7 +2,7 @@
 
 Source proposal, 2026-10-30. This maps the frozen
 [RA-N03-D1 protocol](RA_N03_CALIBRATION_SLICE.md) and
-[report design](D1_REPORT_BINDING_DESIGN.md) to the existing conditional
+[report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md) to the existing conditional
 producers. It does not amend their scientific policy, admit a run, implement
 B1/B2, authenticate evidence, or prove that the payloads fit the output budget.
 
