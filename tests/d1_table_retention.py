@@ -308,6 +308,9 @@ class TableRetentionAttempt:
             if not work_error_recorded and self.first_exception is not retained_error:
                 self._remember(phase, retained_error)
             assert self.first_exception is not None
-            raise self.first_exception
+            if self.first_exception is retained_error:
+                raise
+            # Later faults are retained separately, not made causes of the first error.
+            raise self.first_exception from None
         finally:
             self._busy = False
