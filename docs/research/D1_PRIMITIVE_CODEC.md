@@ -1,6 +1,6 @@
 # D1 event codec: one-event pure conversion
 
-Source-only implementation of the successful intent/return portion of the
+Pure implementation of the successful intent/return portion of the
 [codec proposal](D1_PRIMITIVE_CODEC_CONTRACT.md), using the
 [identity-table boundary](D1_PRIMITIVE_CODEC_TABLE.md). No project helper was
 imported or executed while authoring this slice. It does not implement sink
@@ -114,8 +114,23 @@ families (including the three endpoint channels), finite binary64 boundaries,
 Decimal representation edges, full-intent substitutions, ordering, canonical
 and malformed input, terminal/unsupported outcomes and stopped-cursor behavior.
 Only tiny one-/two-call streams are constructed; there is no 55,100-call batch.
-All parameter IDs are explicit short strings. Tests, formatting and configured
-typing remain pending a separate bounded engineering unit.
+All parameter IDs are explicit short strings.
+
+At code checkpoint `de7c16f6cd0a2973117cb1a894da32efcd87f756`, bounded local
+verification passed all 96 cases and 288 ordered setup/call/teardown phases,
+formatting, configured lint and full typing across 217 source files. Independent
+review matched the exact collected identities, source/environment hashes and
+all 23 closed children across four attempts. The retained output census is
+2,479,285 logical bytes; the cumulative charge is 97.408103 CPU seconds including
+four closeout holds. The earlier typing-only failure remains recorded. Its
+repair added precise state declarations without changing method bodies; the
+existing missing-intent regression now reaches its intended guard. No allowance
+was reset or transferred.
+
+This is ordinary synthetic codec qualification, not a full transcript encoding,
+source-authentication, retention, scientific or production-readiness result.
+The table's separate incomplete local test census remains unchanged. Standard
+frozen-head PR CI is the next delivery check.
 
 S/T/C/A activation and retention, actual source/callable authentication,
 primitive/recorder installation, terminal forensic replay validation,
