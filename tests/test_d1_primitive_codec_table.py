@@ -224,9 +224,9 @@ def test_builder_copies_revalidated_identity_and_views_are_output_only() -> None
     view = table.parse_table(encoded)
     object.__setattr__(declaration, "run_id", "other")
     assert view.identity.run_id == "r0"
-    with pytest.raises(FrozenInstanceError):
-        setattr(view, "raw", b"changed")
     untrusted_view: Any = view
+    with pytest.raises(FrozenInstanceError):
+        untrusted_view.raw = b"changed"
     with pytest.raises(ValueError):
         table.parse_table(untrusted_view)
 
