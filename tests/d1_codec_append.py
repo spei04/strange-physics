@@ -490,9 +490,9 @@ class CodecAppendBridge:
         self._callback_returns += 1
         self._attempt = replace(self._attempt, callback="returned")
         if result is not None:
-            error = ValueError("Append callback must return None")
-            self._latch("callback_result", error, block=True)
-            raise error
+            callback_result_error = ValueError("Append callback must return None")
+            self._latch("callback_result", callback_result_error, block=True)
+            raise callback_result_error
         # A callback can swallow a nested bridge error. Its normal return is a
         # separate observation and must not clear that sticky consumed state.
         if self._physical_blocked:
