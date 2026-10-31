@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** [Fixture contracts, PR #138](https://github.com/spei04/strange-physics/pull/138) passed all required CI jobs. [Predictive bounds, PR #139](https://github.com/spei04/strange-physics/pull/139) passed69 local synthetic cases; Platform follows its hosted checks.
-- **Lead; Quality review:** [Fixture references](research/D1_FIXTURE_REFERENCE.md) have a reviewed strict-container repair. Local qualification remains incomplete; the planned full CI must verify it. All failed attempts remain recorded.
-- **Research:** Implement native/reference adapter source and proof joins. Exposure-history review found unresolved scope, representation and reserved-world custody. D1 scientific execution remains disabled.
+- **Verified:** Contracts #138, bounds #139 and fixtures #140 passed required CI. The adapter passed formatting, lint and full typing across 201 files; guarded local tests remain incomplete.
+- **Assignments:** Lead freezes the adapter PR; Platform verifies CI. Research accepted the primitive-recorder source; Quality authors fixed report contracts. Each source slice receives independent review.
+- **Open gates:** Local cutoff and charged overrun remain recorded. Exposure policy and initial owner custody are approved; protected six-world inventory and scientific admission remain open. No D1 batch is running.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Quality / Platform / Project lead | D1 adapter engineering and failure retention | Source 76a8edc independently accepted; formatting/lint/201-file typing passed. Local guarded tests hit SIGXCPU with no terminal census; six attempts and the 120.182184-second charged overrun remain recorded. One ordinary PR CI completion next. Recorder source ca928755 reviewed; Quality begins fixed report contracts. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | D1 contract CI and predictive-bound checks | PR #138 passed six required jobs on frozen 8b7704a. Unit2 exact-mass defect repaired; 69 synthetic cases/197-file typing pass at 312774c, with prior type failure retained. Research authors unit3 reference/proof joins; Quality found a trace-center consistency fix before integration. No D1 scientific batch. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | RA-N03-D1 fixture contracts and numerical-bound source | Unit1 source and regressions reviewed; 76 focused cases and strict typing pass. Full schema audit incomplete after two CPU stops; standard PR verification next. Research owns unit2 bounds/proofs in the separate reused primary checkout; no scientific batch. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | RA-N03-D1 protocol and predictive decision | Eight-fixture protocol independently reviewed; frozen prior comparison, co-primary scores, claim limits and prospective cost scope accepted. Research next owns fixture/audit/exposure source; numerical batch remains disabled. |

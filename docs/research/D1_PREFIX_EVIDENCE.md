@@ -217,8 +217,8 @@ Independent review found that a caller could change derived probabilities,
 training/arithmetic claims and their matching certificate/digests together while
 leaving the raw producer material unchanged. A digest join alone did not close
 that inconsistency. `duplicate_forecast` now calls `recheck_prefix_evidence`
-before any reuse. The source repair is independently reviewable and unexecuted;
-it does not retroactively qualify A1/A2.
+before any reuse. The source repair passed independent review; its engineering status appears
+below. That review does not retroactively qualify A1/A2.
 
 The recheck reparses the complete raw native input/result and ordered captures,
 revalidates future material, and derives every training maximum, ideal joint,
@@ -264,3 +264,41 @@ primitive methods during a hostile-ambient-context recheck. The valid synthetic
 binder uses a declared fake primitive log return instead of directly replacing
 a derived normalizer interval. This remains transport/consistency evidence,
 not mathematical truth or an executed D1 reference.
+
+
+## Engineering checkpoint
+
+At source 76a8edcfc5ba7b3257c98c81cae9a17825e74f2f, formatting, lint and
+full typing passed for all 201 source files. Independent source review confirmed
+that the final fixes only name an immutable Decimal default, distinguish local
+variable types and import test helpers from their defining modules; formulas,
+assertions and the 72-case authored census are unchanged.
+
+Local qualification is **incomplete**. The guarded preparation sealed the same
+72 exact test IDs with zero test phases. The final test child stopped with
+SIGXCPU after 13.007737 measured CPU seconds under its 13-second soft /
+14-second hard limit. It produced no final child receipt or JUnit result.
+Partial progress output is not a completed 72-case / 216-phase result and does
+not establish a zero-forbidden-attempt completion claim.
+
+All six local attempts and all 33 owned-process closure records are retained.
+The earlier lint failure and 69 typing errors remain recorded after their source
+repairs. Measured CPU snapshots sum to 90.182176 seconds; six retained closeout
+reservations add 30 seconds. The authoritative final charge is 120.182184
+seconds, exceeding the 120-second charged allowance by 0.182184. The eight
+microsecond difference from snapshot sum plus holds reflects separate usage
+samples. Controller work after child-limit selection is included; the evidence
+does not isolate how much arose during verification versus receipt writing.
+The measured/admitted limit is not a kernel aggregate CPU cap. Final charged
+wall time is 151.006372883 seconds and retained unit output is 2,682,187 bytes,
+within the 300-second / 8 MiB limits. External control and whole-operation costs
+remain unknown. No local retry or reservation refund is authorized.
+
+The separate completion path is one ordinary PR CI attempt on the frozen head,
+using the existing 83 configured job-minute ceiling. Its actual matrix outcomes,
+tested merge identity and required jobs must be reviewed before acceptance.
+Standard CI can qualify ordinary suite coverage; it cannot replace the missing
+private guarded-test receipt. CI remains pending at this checkpoint.
+
+No D1 scientific batch, protected-inventory acceptance, durable primitive sink,
+report binder or production-readiness claim follows from this source work.
