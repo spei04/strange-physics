@@ -129,9 +129,7 @@ class PrimitiveRecorder:
     follows from the declared labels alone.
     """
 
-    def __init__(
-        self, append: Callable[[bytes], None], *, max_calls: int, max_bytes: int
-    ) -> None:
+    def __init__(self, append: Callable[[bytes], None], *, max_calls: int, max_bytes: int) -> None:
         if type(max_calls) is not int or not 1 <= max_calls <= MAX_CALLS:
             raise ValueError("Explicit bounded call allowance required")
         if type(max_bytes) is not int or not 1 <= max_bytes <= MAX_BYTES:
@@ -150,8 +148,14 @@ class PrimitiveRecorder:
 
     def snapshot(self) -> Snapshot:
         return Snapshot(
-            self._reserved, self._invoked, self._returned, self._primitive_failed,
-            self._bytes, self._stopped, tuple(self._events), tuple(self._faults)
+            self._reserved,
+            self._invoked,
+            self._returned,
+            self._primitive_failed,
+            self._bytes,
+            self._stopped,
+            tuple(self._events),
+            tuple(self._faults),
         )
 
     def _remember(self, phase: str, error: BaseException, intent: Intent | None) -> Fault:
@@ -161,8 +165,11 @@ class PrimitiveRecorder:
         # Do not call arbitrary exception __str__, serialize args or copy a traceback.
         name = type(error).__module__ + "." + type(error).__qualname__
         fault = Fault(
-            len(self._faults), phase, name[:192], len(name) <= 192,
-            intent.call_id if intent else None
+            len(self._faults),
+            phase,
+            name[:192],
+            len(name) <= 192,
+            intent.call_id if intent else None,
         )
         self._faults.append(fault)
         return fault
@@ -179,7 +186,8 @@ class PrimitiveRecorder:
 
     def _abort(self, phase: str, error: BaseException, intent: Intent | None) -> None:
         fault = (
-            self._faults[0] if self.first_exception is error
+            self._faults[0]
+            if self.first_exception is error
             else self._remember(phase, error, intent)
         )
         try:
@@ -217,12 +225,20 @@ class PrimitiveRecorder:
             if type(scope) is not tuple or not 1 <= len(scope) <= 6:
                 raise ValueError("A bounded logical call scope is required")
             if type(primitive) is not str or primitive not in (
-                "position", "exp", "log", "circle_constant", "native_exp"
+                "position",
+                "exp",
+                "log",
+                "circle_constant",
+                "native_exp",
             ):
                 raise ValueError("Unsupported D1 primitive")
             intent = Intent(
-                self._reserved - 1, identity, _token(instance_id), primitive,
-                tuple(_token(item) for item in scope), _arguments(primitive, arguments)
+                self._reserved - 1,
+                identity,
+                _token(instance_id),
+                primitive,
+                tuple(_token(item) for item in scope),
+                _arguments(primitive, arguments),
             )
             if not callable(invoke):
                 raise ValueError("An owned primitive callback is required")
@@ -243,18 +259,24 @@ class PrimitiveRecorder:
             try:
                 value = (
                     Value("binary64", (_binary(result),))
-                    if primitive == "native_exp" else _decimal(result)
+                    if primitive == "native_exp"
+                    else _decimal(result)
                 )
             except BaseException as error:
                 # Record the fact of return without pretending invalid material was retained.
                 self._remember(phase, error, intent)
                 try:
-                    self._emit(Event(
-                        len(self._events), "returned", intent,
-                        Value("unavailable", (
-                            type(result).__module__ + "." + type(result).__qualname__,
-                        ))
-                    ))
+                    self._emit(
+                        Event(
+                            len(self._events),
+                            "returned",
+                            intent,
+                            Value(
+                                "unavailable",
+                                (type(result).__module__ + "." + type(result).__qualname__,),
+                            ),
+                        )
+                    )
                 except BaseException as supplemental:
                     self._remember("return_sink", supplemental, intent)
                 raise

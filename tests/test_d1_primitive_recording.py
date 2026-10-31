@@ -7,8 +7,6 @@ from decimal import Decimal
 from typing import NoReturn
 
 import pytest
-from endpoint_belief_reference import EndpointOracle
-
 from d1_primitive_recording import (
     MAX_BYTES,
     MAX_CALLS,
@@ -16,6 +14,7 @@ from d1_primitive_recording import (
     PrimitiveRecorder,
     RecorderStopped,
 )
+from endpoint_belief_reference import EndpointOracle
 
 D = Decimal
 KEY = (0.5, 1.0, 0.0, 1.0, 0.0, 0.0, 0.5)
@@ -50,18 +49,25 @@ def make(sink: Sink | None = None, *, calls: int = 20, size: int = 100_000) -> P
 
 def call(recorder: PrimitiveRecorder, call_id: str = "call-0") -> Decimal:
     return recorder.call(
-        call_id=call_id, instance_id="constant-0", primitive="log",
-        scope=("constants", "log-scale"), arguments=D("0.25"), invoke=lambda: D("-1.25")
+        call_id=call_id,
+        instance_id="constant-0",
+        primitive="log",
+        scope=("constants", "log-scale"),
+        arguments=D("0.25"),
+        invoke=lambda: D("-1.25"),
     )
 
 
-@pytest.mark.parametrize("primitive,arguments,result", [
-    ("position", KEY, D("0.75")),
-    ("exp", D("-2.50"), D("0.1250")),
-    ("log", D("0.25"), D("-1.25")),
-    ("circle_constant", None, D("3.125")),
-    ("native_exp", -2.5, 0.125),
-])
+@pytest.mark.parametrize(
+    "primitive,arguments,result",
+    [
+        ("position", KEY, D("0.75")),
+        ("exp", D("-2.50"), D("0.1250")),
+        ("log", D("0.25"), D("-1.25")),
+        ("circle_constant", None, D("3.125")),
+        ("native_exp", -2.5, 0.125),
+    ],
+)
 def test_exact_intent_then_return(
     primitive: Primitive, arguments: object, result: Decimal | float
 ) -> None:
@@ -76,8 +82,12 @@ def test_exact_intent_then_return(
         return result
 
     actual = recorder.call(
-        call_id="one", instance_id="owned", primitive=primitive,
-        scope=("M03", "256", "node-0"), arguments=arguments, invoke=invoke
+        call_id="one",
+        instance_id="owned",
+        primitive=primitive,
+        scope=("M03", "256", "node-0"),
+        arguments=arguments,
+        invoke=invoke,
     )
     assert actual is result and invoked == [True]
     view = recorder.snapshot()
@@ -93,8 +103,12 @@ def test_decimal_structure_survives_without_rounding(text: str) -> None:
     value = D(text)
     recorder = make()
     actual = recorder.call(
-        call_id="decimal", instance_id="owned", primitive="log", scope=("constants",),
-        arguments=value, invoke=lambda: value
+        call_id="decimal",
+        instance_id="owned",
+        primitive="log",
+        scope=("constants",),
+        arguments=value,
+        invoke=lambda: value,
     )
     assert actual is value
     encoded = recorder.snapshot().events[-1].event.returned
@@ -110,8 +124,12 @@ def test_binary64_negative_zero_and_complete_key_are_exact() -> None:
     recorder = make()
     key = (-0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.5)
     recorder.call(
-        call_id="key", instance_id="owned", primitive="position", scope=("fixture",),
-        arguments=key, invoke=lambda: D("0")
+        call_id="key",
+        instance_id="owned",
+        primitive="position",
+        scope=("fixture",),
+        arguments=key,
+        invoke=lambda: D("0"),
     )
     intent = recorder.snapshot().events[0].event.intent
     assert intent is not None and intent.arguments.parts == tuple(x.hex() for x in key)
@@ -126,6 +144,7 @@ def test_partial_constants_preserve_every_return_before_later_fault(failed_index
     values = (D("3.125"), D("1.75"), D("-1.25"))
     with pytest.raises(ValueError) as caught:
         for index, value in enumerate(values):
+
             def invoke(index: int = index, value: Decimal = value) -> Decimal:
                 calls.append(index)
                 if index == failed_index:
@@ -133,14 +152,20 @@ def test_partial_constants_preserve_every_return_before_later_fault(failed_index
                 return value
 
             recorder.call(
-                call_id=f"constant-{index}", instance_id="constants", primitive="log",
-                scope=("constants", str(index)), arguments=D("0.25"), invoke=invoke
+                call_id=f"constant-{index}",
+                instance_id="constants",
+                primitive="log",
+                scope=("constants", str(index)),
+                arguments=D("0.25"),
+                invoke=invoke,
             )
     assert caught.value is error and recorder.first_exception is error
     view = recorder.snapshot()
     assert calls == list(range(failed_index + 1))
     assert (view.invoked, view.returned, view.primitive_failed) == (
-        failed_index + 1, failed_index, 1
+        failed_index + 1,
+        failed_index,
+        1,
     )
     assert len([x for x in view.events if x.event.kind == "returned"]) == failed_index
     assert view.events[-1].event.fault == view.faults[0]
@@ -155,9 +180,12 @@ def test_partial_exp_sequence_does_not_disappear_with_failed_normalization() -> 
     error = ArithmeticError("owned fake normalization failure")
     for index in range(3):
         recorder.call(
-            call_id=f"exp-{index}", instance_id="M03-arithmetic", primitive="exp",
-            scope=("M03", "256", "0.25", str(index)), arguments=D("-1"),
-            invoke=lambda: D("0.25")
+            call_id=f"exp-{index}",
+            instance_id="M03-arithmetic",
+            primitive="exp",
+            scope=("M03", "256", "0.25", str(index)),
+            arguments=D("-1"),
+            invoke=lambda: D("0.25"),
         )
 
     def fail() -> Decimal:
@@ -165,14 +193,21 @@ def test_partial_exp_sequence_does_not_disappear_with_failed_normalization() -> 
 
     with pytest.raises(ArithmeticError) as caught:
         recorder.call(
-            call_id="log-sum", instance_id="M03-arithmetic", primitive="log",
-            scope=("M03", "256", "0.25", "normalizer"), arguments=D("0.75"), invoke=fail
+            call_id="log-sum",
+            instance_id="M03-arithmetic",
+            primitive="log",
+            scope=("M03", "256", "0.25", "normalizer"),
+            arguments=D("0.75"),
+            invoke=fail,
         )
     assert caught.value is error
     view = recorder.snapshot()
     assert (view.invoked, view.returned, view.primitive_failed) == (4, 3, 1)
-    assert [x.event.intent.call_id for x in view.events if x.event.kind == "returned"
-            and x.event.intent is not None] == ["exp-0", "exp-1", "exp-2"]
+    assert [
+        x.event.intent.call_id
+        for x in view.events
+        if x.event.kind == "returned" and x.event.intent is not None
+    ] == ["exp-0", "exp-1", "exp-2"]
 
 
 def test_failed_intent_append_prevents_invocation_and_cannot_retry() -> None:
@@ -214,8 +249,12 @@ def test_original_failure_survives_fault_sink_failure(error: BaseException) -> N
 
     with pytest.raises(type(error)) as caught:
         recorder.call(
-            call_id="failed", instance_id="owned", primitive="log", scope=("constants",),
-            arguments=D("1"), invoke=fail
+            call_id="failed",
+            instance_id="owned",
+            primitive="log",
+            scope=("constants",),
+            arguments=D("1"),
+            invoke=fail,
         )
     assert caught.value is error and recorder.first_exception is error
     view = recorder.snapshot()
@@ -225,39 +264,63 @@ def test_original_failure_survives_fault_sink_failure(error: BaseException) -> N
     assert view.primitive_failed == 1
 
 
-@pytest.mark.parametrize("primitive,argument", [
-    ("position", list(KEY)), ("position", KEY[:-1]),
-    ("position", (float("nan"), *KEY[1:])), ("exp", 1.0),
-    ("exp", D("NaN")), ("exp", D("1e129")), ("exp", D("1e-257")),
-    ("exp", D("1" * 121)), ("log", D("Infinity")),
-    ("circle_constant", 0), ("native_exp", D("1")), ("native_exp", float("inf")),
-])
+@pytest.mark.parametrize(
+    "primitive,argument",
+    [
+        ("position", list(KEY)),
+        ("position", KEY[:-1]),
+        ("position", (float("nan"), *KEY[1:])),
+        ("exp", 1.0),
+        ("exp", D("NaN")),
+        ("exp", D("1e129")),
+        ("exp", D("1e-257")),
+        ("exp", D("1" * 121)),
+        ("log", D("Infinity")),
+        ("circle_constant", 0),
+        ("native_exp", D("1")),
+        ("native_exp", float("inf")),
+    ],
+)
 def test_invalid_arguments_stop_before_invocation(primitive: Primitive, argument: object) -> None:
     recorder = make()
     with pytest.raises(ValueError):
         recorder.call(
-            call_id="invalid", instance_id="owned", primitive=primitive, scope=("scope",),
-            arguments=argument, invoke=lambda: D("1")
+            call_id="invalid",
+            instance_id="owned",
+            primitive=primitive,
+            scope=("scope",),
+            arguments=argument,
+            invoke=lambda: D("1"),
         )
     view = recorder.snapshot()
     assert view.stopped and view.invoked == 0 and view.faults[0].phase == "preflight"
     assert all(x.event.kind != "intent" for x in view.events)
 
 
-@pytest.mark.parametrize("primitive,result", [
-    ("exp", D("NaN")), ("exp", D("Infinity")), ("exp", D("1e129")),
-    ("exp", D("1" * 121)), ("exp", 1.0), ("native_exp", D("1")),
-    ("native_exp", float("inf")),
-])
+@pytest.mark.parametrize(
+    "primitive,result",
+    [
+        ("exp", D("NaN")),
+        ("exp", D("Infinity")),
+        ("exp", D("1e129")),
+        ("exp", D("1" * 121)),
+        ("exp", 1.0),
+        ("native_exp", D("1")),
+        ("native_exp", float("inf")),
+    ],
+)
 def test_invalid_return_retains_return_fact_without_claiming_value(
     primitive: Primitive, result: Decimal | float
 ) -> None:
     recorder = make()
     with pytest.raises(ValueError):
         recorder.call(
-            call_id="invalid-return", instance_id="owned", primitive=primitive,
-            scope=("scope",), arguments=1.0 if primitive == "native_exp" else D("1"),
-            invoke=lambda: result
+            call_id="invalid-return",
+            instance_id="owned",
+            primitive=primitive,
+            scope=("scope",),
+            arguments=1.0 if primitive == "native_exp" else D("1"),
+            invoke=lambda: result,
         )
     view = recorder.snapshot()
     assert (view.invoked, view.returned, view.primitive_failed) == (1, 1, 0)
@@ -271,28 +334,44 @@ def test_encoding_fault_remains_first_when_both_later_sink_attempts_fail() -> No
     recorder = make(Sink((2, 3)))
     with pytest.raises(ValueError) as caught:
         recorder.call(
-            call_id="bad-return", instance_id="owned", primitive="exp", scope=("scope",),
-            arguments=D("1"), invoke=lambda: D("NaN")
+            call_id="bad-return",
+            instance_id="owned",
+            primitive="exp",
+            scope=("scope",),
+            arguments=D("1"),
+            invoke=lambda: D("NaN"),
         )
     assert recorder.first_exception is caught.value
     assert [x.phase for x in recorder.snapshot().faults] == [
-        "return_encoding", "return_sink", "fault_retention"
+        "return_encoding",
+        "return_sink",
+        "fault_retention",
     ]
 
 
-@pytest.mark.parametrize("call_id,instance,scope", [
-    ("", "owned", ("scope",)), ("line\nbreak", "owned", ("scope",)),
-    ("call", "", ("scope",)), ("call", "owned", ()),
-    ("call", "owned", ("scope",) * 7), ("call", "owned", ("",)),
-])
+@pytest.mark.parametrize(
+    "call_id,instance,scope",
+    [
+        ("", "owned", ("scope",)),
+        ("line\nbreak", "owned", ("scope",)),
+        ("call", "", ("scope",)),
+        ("call", "owned", ()),
+        ("call", "owned", ("scope",) * 7),
+        ("call", "owned", ("",)),
+    ],
+)
 def test_bad_identity_or_scope_is_not_a_call(
     call_id: str, instance: str, scope: tuple[str, ...]
 ) -> None:
     recorder = make()
     with pytest.raises(ValueError):
         recorder.call(
-            call_id=call_id, instance_id=instance, primitive="log", scope=scope,
-            arguments=D("1"), invoke=lambda: D("0")
+            call_id=call_id,
+            instance_id=instance,
+            primitive="log",
+            scope=scope,
+            arguments=D("1"),
+            invoke=lambda: D("0"),
         )
     assert recorder.snapshot().invoked == 0
 
@@ -336,10 +415,17 @@ def test_return_byte_overflow_preserves_known_return_and_unknown_material() -> N
     assert view.faults[0].phase == "return_sink"
 
 
-@pytest.mark.parametrize("calls,size", [
-    (0, 1000), (MAX_CALLS + 1, 1000), (True, 1000),
-    (1, 0), (1, MAX_BYTES + 1), (1, True),
-])
+@pytest.mark.parametrize(
+    "calls,size",
+    [
+        (0, 1000),
+        (MAX_CALLS + 1, 1000),
+        (True, 1000),
+        (1, 0),
+        (1, MAX_BYTES + 1),
+        (1, True),
+    ],
+)
 def test_invalid_allowance_does_not_create_recorder(calls: int, size: int) -> None:
     with pytest.raises(ValueError):
         PrimitiveRecorder(Sink(), max_calls=calls, max_bytes=size)
@@ -355,8 +441,12 @@ def test_swallowed_nested_call_fault_still_stops_outer_completion() -> None:
 
     with pytest.raises(RecorderStopped) as caught:
         recorder.call(
-            call_id="outer", instance_id="owned", primitive="log", scope=("scope",),
-            arguments=D("1"), invoke=invoke
+            call_id="outer",
+            instance_id="owned",
+            primitive="log",
+            scope=("scope",),
+            arguments=D("1"),
+            invoke=invoke,
         )
     view = recorder.snapshot()
     assert view.invoked == 1 and view.returned == 1 and view.primitive_failed == 0
@@ -389,8 +479,12 @@ def test_exception_stringification_cannot_replace_primary_fault() -> None:
 
     with pytest.raises(OpaqueError) as caught:
         recorder.call(
-            call_id="opaque", instance_id="owned", primitive="log", scope=("scope",),
-            arguments=D("1"), invoke=fail
+            call_id="opaque",
+            instance_id="owned",
+            primitive="log",
+            scope=("scope",),
+            arguments=D("1"),
+            invoke=fail,
         )
     assert caught.value is error and recorder.first_exception is error
     fault = recorder.snapshot().faults[0]
