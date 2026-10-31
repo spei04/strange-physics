@@ -39,66 +39,114 @@ def structural_examples() -> dict[str, Any]:
         (13, "zero-rest-spring", 0.125, 1, (0.25,)),
     )
     blueprints = tuple(
-        D1Blueprint.model_validate(dict(
-            case_id=case, coefficient_numerator=row[0], mechanism=row[1],
-            initial_x=row[2], record_count=row[3], scales=row[4],
-        ))
+        D1Blueprint.model_validate(
+            dict(
+                case_id=case,
+                coefficient_numerator=row[0],
+                mechanism=row[1],
+                initial_x=row[2],
+                record_count=row[3],
+                scales=row[4],
+            )
+        )
         for case, row in zip(CASE_IDS, rows, strict=True)
     )
-    public = parse_d1_public(json.dumps({
-        "observations": {
-            "run_id": "d1r-" + "1" * 32,
-            "engine_version": "synthetic-ra-n03-d1.v1",
-            "engine_fingerprint": PROTOCOL_SHA256,
-            "space": {
-                "structure": {
-                    "particle_ids": ["p0"],
-                    "anchors": [{"id": "a0", "position": [0.0, 0.0]}],
-                    "connections": [{"a": "p0", "b": "a0"}],
+    public = parse_d1_public(
+        json.dumps(
+            {
+                "observations": {
+                    "run_id": "d1r-" + "1" * 32,
+                    "engine_version": "synthetic-ra-n03-d1.v1",
+                    "engine_fingerprint": PROTOCOL_SHA256,
+                    "space": {
+                        "structure": {
+                            "particle_ids": ["p0"],
+                            "anchors": [{"id": "a0", "position": [0.0, 0.0]}],
+                            "connections": [{"a": "p0", "b": "a0"}],
+                        },
+                        "sampling": {
+                            "duration": 0.5,
+                            "dt": 1 / 64,
+                            "sample_interval": 0.5,
+                            "position_noise": 0.0,
+                            "velocity_noise": 0.0,
+                        },
+                        "budget": 1,
+                        "calibration_experiments": 0,
+                    },
+                    "records": [
+                        {
+                            "operation_id": "d1o-" + "2" * 32,
+                            "index": 0,
+                            "status": "completed",
+                            "experiment": {
+                                "particles": [
+                                    {
+                                        "id": "p0",
+                                        "position": [1.0, 0.0],
+                                        "velocity": [0.0, 0.0],
+                                        "mass": 1.0,
+                                    }
+                                ],
+                                "impulse": {"particle_id": "p0", "vector": [0.0, 0.0]},
+                            },
+                            "trajectory": {
+                                "frames": [
+                                    {
+                                        "time": 0.0,
+                                        "positions": [[1.0, 0.0]],
+                                        "velocities": [[0.0, 0.0]],
+                                    },
+                                    {
+                                        "time": 0.5,
+                                        "positions": [[0.75, 0.0]],
+                                        "velocities": [[0.0, 0.0]],
+                                    },
+                                ]
+                            },
+                        }
+                    ],
                 },
-                "sampling": {
-                    "duration": 0.5, "dt": 1 / 64, "sample_interval": 0.5,
-                    "position_noise": 0.0, "velocity_noise": 0.0,
-                },
-                "budget": 1, "calibration_experiments": 0,
-            },
-            "records": [{
-                "operation_id": "d1o-" + "2" * 32, "index": 0, "status": "completed",
-                "experiment": {
-                    "particles": [{"id": "p0", "position": [1.0, 0.0],
-                                   "velocity": [0.0, 0.0], "mass": 1.0}],
-                    "impulse": {"particle_id": "p0", "vector": [0.0, 0.0]},
-                },
-                "trajectory": {"frames": [
-                    {"time": 0.0, "positions": [[1.0, 0.0]], "velocities": [[0.0, 0.0]]},
-                    {"time": 0.5, "positions": [[0.75, 0.0]], "velocities": [[0.0, 0.0]]},
-                ]},
-            }],
-        },
-    }).encode("utf-8"))
-    label = D1LabelClaim(recorded_x_hex=0.75.hex(),
-                         reference_evidence_sha256="a" * 64,
-                         rounding_evidence_sha256="b" * 64)
+            }
+        ).encode("utf-8")
+    )
+    label = D1LabelClaim(
+        recorded_x_hex=(0.75).hex(),
+        reference_evidence_sha256="a" * 64,
+        rounding_evidence_sha256="b" * 64,
+    )
     audit = D1PrivateAudit(
-        source_commit="c" * 40, blueprint=blueprints[2],
-        public_sha256=message_sha256(public), coefficient_hex=(13 / 7).hex(),
-        training_labels=(label,), future_label=D1LabelClaim(
-            recorded_x_hex=0.625.hex(), reference_evidence_sha256="a" * 64,
+        source_commit="c" * 40,
+        blueprint=blueprints[2],
+        public_sha256=message_sha256(public),
+        coefficient_hex=(13 / 7).hex(),
+        training_labels=(label,),
+        future_label=D1LabelClaim(
+            recorded_x_hex=(0.625).hex(),
+            reference_evidence_sha256="a" * 64,
             rounding_evidence_sha256="b" * 64,
         ),
     )
-    outcomes = D1FixtureOutcomes(outcomes=tuple(
-        D1FixtureOutcome(blueprint=blueprint, status="unrun",
-                        failure_stage=None, failure_evidence_sha256=None, audit=None)
-        for blueprint in blueprints
-    ))
+    outcomes = D1FixtureOutcomes(
+        outcomes=tuple(
+            D1FixtureOutcome(
+                blueprint=blueprint,
+                status="unrun",
+                failure_stage=None,
+                failure_evidence_sha256=None,
+                audit=None,
+            )
+            for blueprint in blueprints
+        )
+    )
     inventory = D1ExposureInventory(inventory_kind="exposed-development", entries=())
     finding = check_supplied_inventory(physical_identity(public, audit), inventory)
     review = D1OwnerReviewReference(
         development_inventory_sha256=message_sha256(inventory),
         comparison_inventory_sha256="d" * 64,
         fixture_outcomes_sha256=message_sha256(outcomes),
-        review_evidence_sha256="e" * 64, disposition="pending",
+        review_evidence_sha256="e" * 64,
+        disposition="pending",
     )
     valid = {
         type(model).__name__: model.model_dump(mode="json")
@@ -121,10 +169,16 @@ def structural_examples() -> dict[str, Any]:
         "runtime_negative": [
             {"model": "D1PublicFixture", "field": "observations", "value": wrong_provenance},
             {"model": "D1PrivateAudit", "field": "coefficient_hex", "value": "0x1p+9999"},
-            {"model": "D1PrivateAudit", "field": "training_labels",
-             "value": [label.model_dump(mode="json")] * 2},
-            {"model": "D1FixtureOutcomes", "field": "outcomes",
-             "value": list(reversed(valid["D1FixtureOutcomes"]["outcomes"]))},
+            {
+                "model": "D1PrivateAudit",
+                "field": "training_labels",
+                "value": [label.model_dump(mode="json")] * 2,
+            },
+            {
+                "model": "D1FixtureOutcomes",
+                "field": "outcomes",
+                "value": list(reversed(valid["D1FixtureOutcomes"]["outcomes"])),
+            },
             {"model": "D1ExposureFinding", "field": "overlapping_world_entries", "value": 1},
         ],
     }
@@ -132,8 +186,9 @@ def structural_examples() -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output-dir", type=Path,
-                        default=Path(__file__).resolve().parents[1] / "contracts")
+    parser.add_argument(
+        "--output-dir", type=Path, default=Path(__file__).resolve().parents[1] / "contracts"
+    )
     args = parser.parse_args()
     output: Path = args.output_dir
     output.mkdir(parents=True, exist_ok=True)

@@ -25,9 +25,7 @@ type CaseId = Literal["M01", "M02", "M03", "M04", "D03", "F02", "F04", "W03"]
 CASE_IDS: tuple[CaseId, ...] = ("M01", "M02", "M03", "M04", "D03", "F02", "F04", "W03")
 type Mechanism = Literal["zero-rest-spring", "spring-plus-k-over-eight-force"]
 type FailureStage = Literal["reference", "rounding", "public_binding", "exposure"]
-type ProtocolHash = Literal[
-    "657c3c74346aedb165473b4672ed18ba5671da82e4873a2a3e6f514b58387399"
-]
+type ProtocolHash = Literal["657c3c74346aedb165473b4672ed18ba5671da82e4873a2a3e6f514b58387399"]
 PROTOCOL_SHA256: ProtocolHash = "657c3c74346aedb165473b4672ed18ba5671da82e4873a2a3e6f514b58387399"
 Commit = Annotated[str, Field(pattern=r"^[0-9a-f]{40}$", min_length=40, max_length=40)]
 HexText = Annotated[str, Field(min_length=1, max_length=32)]
@@ -112,7 +110,7 @@ class D1PublicFixture(Message):
             or s.particle_ids != ("p0",)
             or len(s.anchors) != 1
             or s.anchors[0].id != "a0"
-            or tuple(x.hex() for x in s.anchors[0].position) != (0.0.hex(), 0.0.hex())
+            or tuple(x.hex() for x in s.anchors[0].position) != ((0.0).hex(), (0.0).hex())
             or len(s.connections) != 1
             or (s.connections[0].a, s.connections[0].b) != ("p0", "a0")
             or o.space.limits != Limits()
@@ -145,13 +143,15 @@ class D1PublicFixture(Message):
                 or initial not in (0.125, 1.0)
                 or not _same(particle.position[1], 0.0)
                 or not _same(particle.mass, 1.0)
-                or tuple(x.hex() for x in particle.velocity) != (0.0.hex(), 0.0.hex())
+                or tuple(x.hex() for x in particle.velocity) != ((0.0).hex(), (0.0).hex())
                 or experiment.impulse is None
                 or experiment.impulse.particle_id != "p0"
-                or tuple(x.hex() for x in experiment.impulse.vector) != (0.0.hex(), 0.0.hex())
+                or tuple(x.hex() for x in experiment.impulse.vector) != ((0.0).hex(), (0.0).hex())
                 or len(trajectory.frames) != 2
             ):
-                raise ValueError("D1 actions have fixed mass, zero velocity and explicit zero impulse")
+                raise ValueError(
+                    "D1 actions have fixed mass, zero velocity and explicit zero impulse"
+                )
             first, last = trajectory.frames
             if (
                 not _same(first.time, 0.0)
@@ -160,7 +160,7 @@ class D1PublicFixture(Message):
                 or not 0.5 * initial <= last.positions[0][0] <= initial
                 or any(
                     not _same(frame.positions[0][1], 0.0)
-                    or tuple(x.hex() for x in frame.velocities[0]) != (0.0.hex(), 0.0.hex())
+                    or tuple(x.hex() for x in frame.velocities[0]) != ((0.0).hex(), (0.0).hex())
                     for frame in trajectory.frames
                 )
             ):
@@ -314,8 +314,11 @@ def validate_materialized_fixtures(
     """Bind exactly the materialized subset, preserving unavailable denominator rows."""
     bounded_canonical(outcomes, MAX_PRIVATE_BYTES)
     outcomes = parse_bounded_json(
-        outcomes.model_dump_json().encode("utf-8"), D1FixtureOutcomes,
-        max_bytes=MAX_PRIVATE_BYTES, max_depth=24, max_nodes=32768,
+        outcomes.model_dump_json().encode("utf-8"),
+        D1FixtureOutcomes,
+        max_bytes=MAX_PRIVATE_BYTES,
+        max_depth=24,
+        max_nodes=32768,
     )
     audits = tuple(x.audit for x in outcomes.outcomes if x.audit is not None)
     if len(public) != len(audits):
@@ -360,7 +363,7 @@ class D1WorldSignature(Message):
     @field_validator("coefficient_hex")
     @classmethod
     def normalize_zero(cls, value: str) -> str:
-        return 0.0.hex() if _finite_hex(value) == 0.0 else value
+        return (0.0).hex() if _finite_hex(value) == 0.0 else value
 
     @model_validator(mode="after")
     def coefficient_domain(self) -> Self:
@@ -382,10 +385,9 @@ class D1QuerySignature(Message):
 
     @model_validator(mode="after")
     def query_domain(self) -> Self:
-        if (
-            _finite_hex(self.initial_x_hex) not in (0.125, 1.0)
-            or _finite_hex(self.terminal_time_hex) not in (0.5, 0.75)
-        ):
+        if _finite_hex(self.initial_x_hex) not in (0.125, 1.0) or _finite_hex(
+            self.terminal_time_hex
+        ) not in (0.5, 0.75):
             raise ValueError("Query signature outside the fixed D1 arguments")
         return self
 
@@ -397,7 +399,7 @@ class D1PhysicalHistory(Message):
     @field_validator("recorded_x_hex")
     @classmethod
     def normalize_zeros(cls, values: tuple[str, ...]) -> tuple[str, ...]:
-        return tuple(0.0.hex() if _finite_hex(x) == 0.0 else x for x in values)
+        return tuple((0.0).hex() if _finite_hex(x) == 0.0 else x for x in values)
 
     @model_validator(mode="after")
     def slots(self) -> Self:
@@ -415,14 +417,13 @@ class D1PhysicalIdentity(Message):
     action_sha256: Annotated[tuple[Digest, ...], Field(min_length=1, max_length=2)]
     probe_sha256: Digest
 
-
     @field_validator("coefficient_hex")
     @classmethod
     def normalize_coefficient(cls, value: str) -> str:
         parsed = _finite_hex(value)
         if not 0 <= parsed <= 4:
             raise ValueError("Exposure coefficient outside the fixed support")
-        return 0.0.hex() if parsed == 0.0 else value
+        return (0.0).hex() if parsed == 0.0 else value
 
 
 def physical_identity(public: D1PublicFixture, audit: D1PrivateAudit) -> D1PhysicalIdentity:
@@ -433,9 +434,9 @@ def physical_identity(public: D1PublicFixture, audit: D1PrivateAudit) -> D1Physi
         mechanism=audit.blueprint.mechanism, coefficient_hex=audit.coefficient_hex
     )
     action = D1QuerySignature(
-        initial_x_hex=audit.blueprint.initial_x.hex(), terminal_time_hex=0.5.hex()
+        initial_x_hex=audit.blueprint.initial_x.hex(), terminal_time_hex=(0.5).hex()
     )
-    probe = D1QuerySignature(initial_x_hex=1.0.hex(), terminal_time_hex=0.75.hex())
+    probe = D1QuerySignature(initial_x_hex=(1.0).hex(), terminal_time_hex=(0.75).hex())
     actions = (message_sha256(action),) * audit.blueprint.record_count
     history = D1PhysicalHistory(
         action_sha256=actions,
@@ -463,9 +464,7 @@ class D1ExposureInventory(Message):
     )
     inventory_kind: Literal["exposed-development", "reserved-comparison"]
     entries: Annotated[tuple[D1ExposureEntry, ...], Field(max_length=MAX_INVENTORY_ROWS)]
-    completeness: Literal["not-established-by-this-contract"] = (
-        "not-established-by-this-contract"
-    )
+    completeness: Literal["not-established-by-this-contract"] = "not-established-by-this-contract"
 
     @model_validator(mode="after")
     def bounded_inventory(self) -> Self:
@@ -501,8 +500,11 @@ class D1ExposureFinding(Message):
             != ("overlap-in-supplied-inventory" if overlap else "no-overlap-in-supplied-inventory")
             or any(
                 i is not None and i >= self.supplied_entries
-                for i in (self.first_overlap_index, self.first_exact_construction_index,
-                          self.first_reserved_coefficient_index)
+                for i in (
+                    self.first_overlap_index,
+                    self.first_exact_construction_index,
+                    self.first_reserved_coefficient_index,
+                )
             )
         ):
             raise ValueError("Exposure finding must retain its supplied denominator and matches")
@@ -515,19 +517,24 @@ def check_supplied_inventory(
     """Detect world overlap despite renamed/reordered histories; never certify completeness."""
     bounded_canonical(identity, MAX_PRIVATE_BYTES)
     identity = parse_bounded_json(
-        identity.model_dump_json().encode("utf-8"), D1PhysicalIdentity,
-        max_bytes=MAX_PRIVATE_BYTES, max_depth=24, max_nodes=32768,
+        identity.model_dump_json().encode("utf-8"),
+        D1PhysicalIdentity,
+        max_bytes=MAX_PRIVATE_BYTES,
+        max_depth=24,
+        max_nodes=32768,
     )
     bounded_canonical(inventory, MAX_PRIVATE_BYTES)
     inventory = parse_d1_inventory(inventory.model_dump_json().encode("utf-8"))
     reserved_coefficients = tuple((n / 7).hex() for n in (1, 5, 13, 27))
     reserved = tuple(
-        i for i, entry in enumerate(inventory.entries)
+        i
+        for i, entry in enumerate(inventory.entries)
         if inventory.inventory_kind == "reserved-comparison"
         and entry.identity.coefficient_hex in reserved_coefficients
     )
     matches = tuple(
-        i for i, entry in enumerate(inventory.entries)
+        i
+        for i, entry in enumerate(inventory.entries)
         if entry.identity.world_sha256 == identity.world_sha256
     )
     exact = tuple(i for i in matches if inventory.entries[i].identity == identity)
@@ -542,7 +549,8 @@ def check_supplied_inventory(
         first_overlap_index=matches[0] if matches else None,
         first_exact_construction_index=exact[0] if exact else None,
         conclusion=(
-            "overlap-in-supplied-inventory" if matches or reserved
+            "overlap-in-supplied-inventory"
+            if matches or reserved
             else "no-overlap-in-supplied-inventory"
         ),
     )
@@ -576,8 +584,12 @@ def parse_d1_inventory(raw: bytes) -> D1ExposureInventory:
 
 def calibration_fixture_json_schema() -> JsonSchemaValue:
     roots = (
-        D1PublicFixture, D1PrivateAudit, D1FixtureOutcomes,
-        D1ExposureInventory, D1ExposureFinding, D1OwnerReviewReference,
+        D1PublicFixture,
+        D1PrivateAudit,
+        D1FixtureOutcomes,
+        D1ExposureInventory,
+        D1ExposureFinding,
+        D1OwnerReviewReference,
     )
     _, schema = models_json_schema(
         [(model, "validation") for model in roots], title="RA-N03-D1 supplied fixture contracts v1"
