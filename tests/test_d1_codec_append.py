@@ -19,39 +19,84 @@ DECIMAL: dict[str, object] = {"kind": "decimal", "parts": ["1", "12300", "-4"]}
 
 
 def raw(value: object) -> bytes:
-    return (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False) + "\n").encode("ascii")
+    return (
+        json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False)
+        + "\n"
+    ).encode("ascii")
 
 
 def intent() -> dict[str, Any]:
-    return {"ordinal": 0, "call_id": "c00000", "instance_id": "i12", "primitive": "log",
-            "scope": ["ct", "s0"], "arguments": deepcopy(DECIMAL)}
+    return {
+        "ordinal": 0,
+        "call_id": "c00000",
+        "instance_id": "i12",
+        "primitive": "log",
+        "scope": ["ct", "s0"],
+        "arguments": deepcopy(DECIMAL),
+    }
 
 
-def event(call: dict[str, Any] | None = None, *, sequence: int = 0,
-          returned: dict[str, Any] | None = None) -> dict[str, Any]:
-    return {"sequence": sequence, "kind": "intent" if returned is None else "returned",
-            "intent": intent() if call is None else call, "returned": returned, "fault": None}
+def event(
+    call: dict[str, Any] | None = None, *, sequence: int = 0, returned: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    return {
+        "sequence": sequence,
+        "kind": "intent" if returned is None else "returned",
+        "intent": intent() if call is None else call,
+        "returned": returned,
+        "fault": None,
+    }
 
 
-def failed(call: dict[str, Any] | None, *, sequence: int, phase: str = "primitive", ordinal: int = 0) -> dict[str, Any]:
-    return {"sequence": sequence, "kind": "failed", "intent": call, "returned": None,
-            "fault": {"ordinal": ordinal, "phase": phase, "exception_type": "builtins.ValueError",
-                      "exception_type_complete": True,
-                      "call_id": None if call is None or phase == "reentry" else call["call_id"]}}
+def failed(
+    call: dict[str, Any] | None, *, sequence: int, phase: str = "primitive", ordinal: int = 0
+) -> dict[str, Any]:
+    return {
+        "sequence": sequence,
+        "kind": "failed",
+        "intent": call,
+        "returned": None,
+        "fault": {
+            "ordinal": ordinal,
+            "phase": phase,
+            "exception_type": "builtins.ValueError",
+            "exception_type_complete": True,
+            "call_id": None if call is None or phase == "reentry" else call["call_id"],
+        },
+    }
 
 
 def context() -> dict[str, Any]:
-    return {"schema": "strange-physics.d1-primitive-sink.v1", "recorder_id": "recorder0", "run_id": "run0",
-            "source_commit": "1" * 40, "source_tree": "2" * 40, "protocol_sha256": PROTOCOL_SHA256,
-            "source_manifest_sha256": "3" * 64, "recorder_sha256": "4" * 64, "sink_sha256": "6" * 64,
-            "max_calls": 55100, "max_bytes": 16000000, "max_events": 110201, "event_capacity": 15979520,
-            "event_bytes": 4096, "shard_bytes": 4194304, "max_shards": 16, "context_bytes": 4096, "terminal_bytes": 16384}
+    return {
+        "schema": "strange-physics.d1-primitive-sink.v1",
+        "recorder_id": "recorder0",
+        "run_id": "run0",
+        "source_commit": "1" * 40,
+        "source_tree": "2" * 40,
+        "protocol_sha256": PROTOCOL_SHA256,
+        "source_manifest_sha256": "3" * 64,
+        "recorder_sha256": "4" * 64,
+        "sink_sha256": "6" * 64,
+        "max_calls": 55100,
+        "max_bytes": 16000000,
+        "max_events": 110201,
+        "event_capacity": 15979520,
+        "event_bytes": 4096,
+        "shard_bytes": 4194304,
+        "max_shards": 16,
+        "context_bytes": 4096,
+        "terminal_bytes": 16384,
+    }
 
 
 @pytest.fixture(scope="module")
 def table_raw() -> bytes:
-    return build_table(TableIdentity("1" * 40, "2" * 40, PROTOCOL_SHA256, "3" * 64, "4" * 64, "5" * 64,
-                                    "run0", "recorder0"), ("fake-owned-member",) * 14)
+    return build_table(
+        TableIdentity(
+            "1" * 40, "2" * 40, PROTOCOL_SHA256, "3" * 64, "4" * 64, "5" * 64, "run0", "recorder0"
+        ),
+        ("fake-owned-member",) * 14,
+    )
 
 
 @pytest.fixture(autouse=True)
@@ -62,8 +107,14 @@ def forbid_primitives(monkeypatch: pytest.MonkeyPatch) -> None:
     original_import = builtins.__import__
 
     def guarded_import(name: str, *args: Any, **kwargs: Any) -> Any:
-        if name.removeprefix("tests.") in {"d1_primitive_recording", "d1_primitive_sink", "endpoint_belief_reference",
-                    "d1_fixture_reference", "d1_prefix_evidence", "d1_bounds"} or name.startswith("strange_physics"):
+        if name.removeprefix("tests.") in {
+            "d1_primitive_recording",
+            "d1_primitive_sink",
+            "endpoint_belief_reference",
+            "d1_fixture_reference",
+            "d1_prefix_evidence",
+            "d1_bounds",
+        } or name.startswith("strange_physics"):
             forbidden()
         return original_import(name, *args, **kwargs)
 
@@ -92,7 +143,12 @@ def test_exact_lines_only_acknowledge_after_callback_returns(table_raw: bytes) -
         (raw(["r", 1, 0, ["d", "1", "12300", "-4"]]), 1),
     ]
     snapshot = bridge.snapshot()
-    assert (snapshot.raw_attempts, snapshot.physical_attempts, snapshot.callback_returns, snapshot.acknowledgements) == (2, 2, 2, 2)
+    assert (
+        snapshot.raw_attempts,
+        snapshot.physical_attempts,
+        snapshot.callback_returns,
+        snapshot.acknowledgements,
+    ) == (2, 2, 2, 2)
     assert snapshot.next_ordinal == 1 and snapshot.next_sequence == 2
     assert snapshot.activation == "not-established"
     assert snapshot.binding.material_authenticity == "unchecked"
@@ -114,8 +170,12 @@ def test_return_write_error_preserves_last_intent_after_codec_advance(table_raw:
     assert caught.value is original
     before = bridge.snapshot()
     assert before.next_ordinal == 1 and before.next_sequence == 2
-    assert before.physical_bytes == sum(map(len, lines))  # Full unknown reservations, not measured writes.
-    assert before.first_failed_attempt is not None and before.first_failed_attempt.callback == "raised"
+    assert before.physical_bytes == sum(
+        map(len, lines)
+    )  # Full unknown reservations, not measured writes.
+    assert (
+        before.first_failed_attempt is not None and before.first_failed_attempt.callback == "raised"
+    )
     with pytest.raises(BridgeStopped):
         bridge.append(raw(failed(intent(), sequence=2, phase="return_sink")))
     after = bridge.snapshot()
@@ -157,8 +217,14 @@ def test_raw_contract_failure_and_one_failed_event_are_never_acknowledged(table_
             bridge.append(line)
     snapshot = bridge.snapshot()
     assert lines == [first, last]
-    assert (snapshot.fallback_attempts, snapshot.callback_returns, snapshot.acknowledgements) == (2, 2, 0)
-    assert snapshot.first_failed_attempt is not None and not snapshot.first_failed_attempt.acknowledged
+    assert (snapshot.fallback_attempts, snapshot.callback_returns, snapshot.acknowledgements) == (
+        2,
+        2,
+        0,
+    )
+    assert (
+        snapshot.first_failed_attempt is not None and not snapshot.first_failed_attempt.acknowledged
+    )
     assert snapshot.first_failed_attempt.callback == "returned"
     with pytest.raises(BridgeStopped):
         bridge.append(last)
@@ -169,7 +235,9 @@ def test_unavailable_return_stops_then_accepts_only_failed_forensics(table_raw: 
     lines: list[bytes] = []
     bridge = make(table_raw, lines)
     bridge.append(raw(event()))
-    unavailable = raw(event(sequence=1, returned={"kind": "unavailable", "parts": ["owned.\u03a9Type"]}))
+    unavailable = raw(
+        event(sequence=1, returned={"kind": "unavailable", "parts": ["owned.\u03a9Type"]})
+    )
     last = raw(failed(intent(), sequence=2, phase="return_encoding"))
     with pytest.raises(BridgeStopped):
         bridge.append(unavailable)
@@ -180,8 +248,12 @@ def test_unavailable_return_stops_then_accepts_only_failed_forensics(table_raw: 
     assert bridge.snapshot().fallback_attempts == 2
 
 
-@pytest.mark.parametrize("ordinal", [0, 1, 2, 3], ids=["first", "second", "encoding-two", "encoding-three"])
-def test_failed_fault_ordinal_preserved_without_unseen_unavailable_line(table_raw: bytes, ordinal: int) -> None:
+@pytest.mark.parametrize(
+    "ordinal", [0, 1, 2, 3], ids=["first", "second", "encoding-two", "encoding-three"]
+)
+def test_failed_fault_ordinal_preserved_without_unseen_unavailable_line(
+    table_raw: bytes, ordinal: int
+) -> None:
     lines: list[bytes] = []
     bridge = make(table_raw, lines)
     bridge.append(raw(event()))
@@ -196,7 +268,9 @@ def test_failed_fault_ordinal_preserved_without_unseen_unavailable_line(table_ra
     assert parsed.material_authenticity == "unchecked"
 
 
-@pytest.mark.parametrize("kind", ["null-preflight", "unseen-intent", "reentry"], ids=["null", "unseen", "reentry"])
+@pytest.mark.parametrize(
+    "kind", ["null-preflight", "unseen-intent", "reentry"], ids=["null", "unseen", "reentry"]
+)
 def test_source_terminal_join_variants(table_raw: bytes, kind: str) -> None:
     lines: list[bytes] = []
     bridge = make(table_raw, lines)
@@ -212,10 +286,14 @@ def test_source_terminal_join_variants(table_raw: bytes, kind: str) -> None:
     assert lines[-1] == last
     parsed = classify_raw(last)
     if kind == "reentry":
-        assert parsed.intent is not None and parsed.fault is not None and parsed.fault.call_id is None
+        assert (
+            parsed.intent is not None and parsed.fault is not None and parsed.fault.call_id is None
+        )
 
 
-def test_failure_fallback_storage_error_is_not_replaced_by_intentional_stop(table_raw: bytes) -> None:
+def test_failure_fallback_storage_error_is_not_replaced_by_intentional_stop(
+    table_raw: bytes,
+) -> None:
     original = OSError("fake raw write")
     calls: list[bytes] = []
 
@@ -248,7 +326,10 @@ def test_original_stop_and_later_failure_are_separate(table_raw: bytes) -> None:
         bridge.append(raw(failed(call, sequence=1, phase="intent_sink")))
     assert second.value is secondary and bridge.first_exception is first.value
     snapshot = bridge.snapshot()
-    assert snapshot.first_failed_attempt is not None and snapshot.first_failed_attempt.callback == "returned"
+    assert (
+        snapshot.first_failed_attempt is not None
+        and snapshot.first_failed_attempt.callback == "returned"
+    )
     assert snapshot.last_attempt is not None and snapshot.last_attempt.callback == "raised"
 
 
@@ -272,7 +353,11 @@ def test_swallowed_reentry_cannot_acknowledge_or_resurrect(table_raw: bytes, nes
         bridge.append(raw(event()))
     assert outer.value is nested_errors[0] and bridge.first_exception is nested_errors[0]
     snapshot = bridge.snapshot()
-    assert snapshot.callback_returns == 1 and snapshot.acknowledgements == 0 and snapshot.physical_blocked
+    assert (
+        snapshot.callback_returns == 1
+        and snapshot.acknowledgements == 0
+        and snapshot.physical_blocked
+    )
     assert snapshot.last_attempt is not None and snapshot.last_attempt.callback == "returned"
     with pytest.raises(BridgeStopped):
         bridge.append(raw(failed(intent(), sequence=1, phase="intent_sink")))
@@ -281,7 +366,9 @@ def test_swallowed_reentry_cannot_acknowledge_or_resurrect(table_raw: bytes, nes
 
 
 @pytest.mark.parametrize("owner", ["pid", "thread"], ids=["pid", "thread"])
-def test_wrong_owner_stops_before_any_callback(table_raw: bytes, owner: str, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_wrong_owner_stops_before_any_callback(
+    table_raw: bytes, owner: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
     lines: list[bytes] = []
     bridge = make(table_raw, lines)
     with monkeypatch.context() as patch:
@@ -307,8 +394,19 @@ def test_finish_is_once_no_io_and_diagnostics_cannot_resume(table_raw: bytes) ->
     assert bridge.snapshot() == snapshot
 
 
-@pytest.mark.parametrize("field", ["source_commit", "source_tree", "protocol_sha256", "source_manifest_sha256", "recorder_sha256", "run_id", "recorder_id"],
-                         ids=["commit", "tree", "protocol", "manifest", "recorder", "run-id", "recorder-id"])
+@pytest.mark.parametrize(
+    "field",
+    [
+        "source_commit",
+        "source_tree",
+        "protocol_sha256",
+        "source_manifest_sha256",
+        "recorder_sha256",
+        "run_id",
+        "recorder_id",
+    ],
+    ids=["commit", "tree", "protocol", "manifest", "recorder", "run-id", "recorder-id"],
+)
 def test_context_shared_identity_mismatch_has_no_callback(table_raw: bytes, field: str) -> None:
     bad = context()
     bad[field] = "wrong"
@@ -318,32 +416,60 @@ def test_context_shared_identity_mismatch_has_no_callback(table_raw: bytes, fiel
     assert lines == []
 
 
-@pytest.mark.parametrize(("field", "value"), [
-    pytest.param("max_calls", 55099, id="call-plan"),
-    pytest.param("max_events", 110200, id="event-plan"),
-    pytest.param("event_bytes", 4097, id="event-cap"),
-    pytest.param("shard_bytes", 4194305, id="shard-cap"),
-    pytest.param("max_shards", 17, id="shards"),
-    pytest.param("context_bytes", 4095, id="context-reserve"),
-    pytest.param("terminal_bytes", 16383, id="terminal-reserve"),
-    pytest.param("max_bytes", 16777216, id="no-partition-withholding"),
-    pytest.param("max_bytes", 20480, id="no-event-space"),
-    pytest.param("event_capacity", 16000000, id="metadata-counted"),
-    pytest.param("max_calls", True, id="boolean"),
-    pytest.param("max_bytes", 16000000.0, id="float"),
-    pytest.param("sink_sha256", "G" * 64, id="sink-hash"),
-    pytest.param("schema", "other", id="schema"),
-    pytest.param("verified", True, id="unknown-claim"),
-])
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        pytest.param("max_calls", 55099, id="call-plan"),
+        pytest.param("max_events", 110200, id="event-plan"),
+        pytest.param("event_bytes", 4097, id="event-cap"),
+        pytest.param("shard_bytes", 4194305, id="shard-cap"),
+        pytest.param("max_shards", 17, id="shards"),
+        pytest.param("context_bytes", 4095, id="context-reserve"),
+        pytest.param("terminal_bytes", 16383, id="terminal-reserve"),
+        pytest.param("max_bytes", 16777216, id="no-partition-withholding"),
+        pytest.param("max_bytes", 20480, id="no-event-space"),
+        pytest.param("event_capacity", 16000000, id="metadata-counted"),
+        pytest.param("max_calls", True, id="boolean"),
+        pytest.param("max_bytes", 16000000.0, id="float"),
+        pytest.param("sink_sha256", "G" * 64, id="sink-hash"),
+        pytest.param("schema", "other", id="schema"),
+        pytest.param("verified", True, id="unknown-claim"),
+    ],
+)
 def test_context_rejects_unsupported_claims(table_raw: bytes, field: str, value: object) -> None:
     bad = context()
     bad[field] = value
     with pytest.raises(ValueError):
-        CodecAppendBridge(table_raw, raw(bad), append=lambda line: pytest.fail("constructor callback"))
+        CodecAppendBridge(
+            table_raw, raw(bad), append=lambda line: pytest.fail("constructor callback")
+        )
 
 
-@pytest.mark.parametrize("mutation", ["duplicate", "padding", "nested", "truncated", "oversize", "long-int", "nonfinite", "root-list", "non-ascii"],
-                         ids=["duplicate", "padding", "nested", "truncated", "oversize", "long-int", "nonfinite", "root-list", "non-ascii"])
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        "duplicate",
+        "padding",
+        "nested",
+        "truncated",
+        "oversize",
+        "long-int",
+        "nonfinite",
+        "root-list",
+        "non-ascii",
+    ],
+    ids=[
+        "duplicate",
+        "padding",
+        "nested",
+        "truncated",
+        "oversize",
+        "long-int",
+        "nonfinite",
+        "root-list",
+        "non-ascii",
+    ],
+)
 def test_context_raw_parser_is_bounded_and_canonical(table_raw: bytes, mutation: str) -> None:
     original = raw(context())
     if mutation == "duplicate":
@@ -378,19 +504,22 @@ def test_eight_digit_context_limit_does_not_widen_event_integers(table_raw: byte
     assert lines == []
 
 
-@pytest.mark.parametrize(("field", "value"), [
-    pytest.param("ordinal", 4, id="snapshot-only-four"),
-    pytest.param("ordinal", -1, id="negative"),
-    pytest.param("ordinal", True, id="bool-ordinal"),
-    pytest.param("phase", "fault_retention", id="snapshot-phase"),
-    pytest.param("phase", "unknown", id="unknown-phase"),
-    pytest.param("call_id", "other", id="call-substitution"),
-    pytest.param("exception_type", "x" * 193, id="long-type"),
-    pytest.param("exception_type", "", id="empty-type"),
-    pytest.param("exception_type_complete", 1, id="bool-coercion"),
-    pytest.param("exception_type_complete", False, id="false-short-type"),
-    pytest.param("extra", None, id="extra"),
-])
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        pytest.param("ordinal", 4, id="snapshot-only-four"),
+        pytest.param("ordinal", -1, id="negative"),
+        pytest.param("ordinal", True, id="bool-ordinal"),
+        pytest.param("phase", "fault_retention", id="snapshot-phase"),
+        pytest.param("phase", "unknown", id="unknown-phase"),
+        pytest.param("call_id", "other", id="call-substitution"),
+        pytest.param("exception_type", "x" * 193, id="long-type"),
+        pytest.param("exception_type", "", id="empty-type"),
+        pytest.param("exception_type_complete", 1, id="bool-coercion"),
+        pytest.param("exception_type_complete", False, id="false-short-type"),
+        pytest.param("extra", None, id="extra"),
+    ],
+)
 def test_fault_scalar_contract_rejects_forged_shapes(field: str, value: object) -> None:
     bad = failed(intent(), sequence=1)
     bad["fault"][field] = value
@@ -398,8 +527,27 @@ def test_fault_scalar_contract_rejects_forged_shapes(field: str, value: object) 
         classify_raw(raw(bad))
 
 
-@pytest.mark.parametrize("mutation", ["null-call", "nonnull-reentry", "later-reentry", "null-primitive", "later-primitive", "failed-value", "missing-fault"],
-                         ids=["null-call", "nonnull-reentry", "later-reentry", "null-primitive", "later-primitive", "failed-value", "missing-fault"])
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        "null-call",
+        "nonnull-reentry",
+        "later-reentry",
+        "null-primitive",
+        "later-primitive",
+        "failed-value",
+        "missing-fault",
+    ],
+    ids=[
+        "null-call",
+        "nonnull-reentry",
+        "later-reentry",
+        "null-primitive",
+        "later-primitive",
+        "failed-value",
+        "missing-fault",
+    ],
+)
 def test_phase_aware_fault_joins(mutation: str) -> None:
     bad = failed(intent(), sequence=1)
     if mutation == "null-call":
@@ -421,9 +569,28 @@ def test_phase_aware_fault_joins(mutation: str) -> None:
         classify_raw(raw(bad))
 
 
-@pytest.mark.parametrize("mutation", ["sequence", "return-intent", "failed-intent", "missing-intent", "second-intent", "failed-null"],
-                         ids=["sequence", "return-substitution", "failed-substitution", "return-without-intent", "second-intent", "erase-intent"])
-def test_sequence_and_full_intent_substitution_stop_before_write(table_raw: bytes, mutation: str) -> None:
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        "sequence",
+        "return-intent",
+        "failed-intent",
+        "missing-intent",
+        "second-intent",
+        "failed-null",
+    ],
+    ids=[
+        "sequence",
+        "return-substitution",
+        "failed-substitution",
+        "return-without-intent",
+        "second-intent",
+        "erase-intent",
+    ],
+)
+def test_sequence_and_full_intent_substitution_stop_before_write(
+    table_raw: bytes, mutation: str
+) -> None:
     lines: list[bytes] = []
     bridge = make(table_raw, lines)
     bridge.append(raw(event()))
@@ -450,16 +617,19 @@ def test_sequence_and_full_intent_substitution_stop_before_write(table_raw: byte
     assert len(lines) == 1
 
 
-@pytest.mark.parametrize("raw_bad", [
-    pytest.param(b" " * 4097, id="predecode-cap"),
-    pytest.param(b'{"sequence":0,"sequence":0}\n', id="duplicate"),
-    pytest.param(b'{"sequence":false}\n', id="bool"),
-    pytest.param(b"[[[[[0]]]]]\n", id="deep"),
-    pytest.param(b"{} \n", id="whitespace"),
-    pytest.param(b"{\n", id="truncated"),
-    pytest.param(b"[]\n", id="array"),
-    pytest.param(b"{}\n", id="missing"),
-])
+@pytest.mark.parametrize(
+    "raw_bad",
+    [
+        pytest.param(b" " * 4097, id="predecode-cap"),
+        pytest.param(b'{"sequence":0,"sequence":0}\n', id="duplicate"),
+        pytest.param(b'{"sequence":false}\n', id="bool"),
+        pytest.param(b"[[[[[0]]]]]\n", id="deep"),
+        pytest.param(b"{} \n", id="whitespace"),
+        pytest.param(b"{\n", id="truncated"),
+        pytest.param(b"[]\n", id="array"),
+        pytest.param(b"{}\n", id="missing"),
+    ],
+)
 def test_bad_raw_input_is_not_blindly_fallback_retained(table_raw: bytes, raw_bad: bytes) -> None:
     lines: list[bytes] = []
     bridge = make(table_raw, lines)
@@ -468,13 +638,18 @@ def test_bad_raw_input_is_not_blindly_fallback_retained(table_raw: bytes, raw_ba
     assert lines == [] and bridge.snapshot().stopped
 
 
-@pytest.mark.parametrize(("attribute", "value"), [
-    pytest.param("_raw_attempts", 110201, id="event-count"),
-    pytest.param("_raw_bytes", 67108864, id="logical-bytes"),
-    pytest.param("_physical_attempts", 110201, id="physical-count"),
-    pytest.param("_physical_bytes", 15979520, id="physical-bytes"),
-])
-def test_reservation_edges_without_building_a_batch(table_raw: bytes, attribute: str, value: int, monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.parametrize(
+    ("attribute", "value"),
+    [
+        pytest.param("_raw_attempts", 110201, id="event-count"),
+        pytest.param("_raw_bytes", 67108864, id="logical-bytes"),
+        pytest.param("_physical_attempts", 110201, id="physical-count"),
+        pytest.param("_physical_bytes", 15979520, id="physical-bytes"),
+    ],
+)
+def test_reservation_edges_without_building_a_batch(
+    table_raw: bytes, attribute: str, value: int, monkeypatch: pytest.MonkeyPatch
+) -> None:
     lines: list[bytes] = []
     bridge = make(table_raw, lines)
     # Test-only counter seam, not an authenticated checkpoint or resume API.
@@ -501,7 +676,9 @@ def test_tiny_context_does_not_claim_a_failure_reserve(table_raw: bytes, capacit
     assert lines == []
 
 
-def test_ordinary_capacity_cannot_borrow_from_terminal_reserve(table_raw: bytes, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_ordinary_capacity_cannot_borrow_from_terminal_reserve(
+    table_raw: bytes, monkeypatch: pytest.MonkeyPatch
+) -> None:
     lines: list[bytes] = []
     bridge = make(table_raw, lines)
     ordinary = bridge.snapshot().binding.ordinary_capacity
@@ -523,7 +700,9 @@ def test_ordinary_capacity_cannot_borrow_from_terminal_reserve(table_raw: bytes,
 
 
 @pytest.mark.parametrize("boundary", ["event", "context"], ids=["event", "context"])
-def test_predecode_cap_before_json_loader(table_raw: bytes, boundary: str, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_predecode_cap_before_json_loader(
+    table_raw: bytes, boundary: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
     lines: list[bytes] = []
     bridge = make(table_raw, lines)
 
@@ -542,7 +721,9 @@ def test_predecode_cap_before_json_loader(table_raw: bytes, boundary: str, monke
     assert lines == []
 
 
-def test_internal_conversion_error_allows_one_source_joined_failed_event(table_raw: bytes, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_internal_conversion_error_allows_one_source_joined_failed_event(
+    table_raw: bytes, monkeypatch: pytest.MonkeyPatch
+) -> None:
     lines: list[bytes] = []
     bridge = make(table_raw, lines)
     original = RuntimeError("owned fake converter fault")
@@ -590,7 +771,9 @@ def test_non_none_callback_return_cannot_acknowledge(table_raw: bytes, value: ob
 
 
 @pytest.mark.parametrize("completed", [False, True], ids=["after-intent", "after-return"])
-def test_terminal_phase_cannot_backtrack_observed_progress(table_raw: bytes, completed: bool) -> None:
+def test_terminal_phase_cannot_backtrack_observed_progress(
+    table_raw: bytes, completed: bool
+) -> None:
     lines: list[bytes] = []
     bridge = make(table_raw, lines)
     bridge.append(raw(event()))

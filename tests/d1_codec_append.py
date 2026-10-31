@@ -29,21 +29,42 @@ from d1_primitive_codec import (
 from d1_primitive_codec_table import TableView, parse_table
 
 Kind = Literal["intent", "returned", "failed"]
-Phase = Literal["preflight", "intent_sink", "primitive", "return_encoding", "return_sink", "reentry"]
+Phase = Literal[
+    "preflight", "intent_sink", "primitive", "return_encoding", "return_sink", "reentry"
+]
 Primitive = Literal["position", "exp", "log", "circle_constant", "native_exp"]
 CallbackState = Literal["not_entered", "entered", "returned", "raised"]
 _TOKEN = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:/-]{0,95}\Z")
 _EVENT_FIELDS = frozenset(("sequence", "kind", "intent", "returned", "fault"))
 _INTENT_FIELDS = frozenset(("ordinal", "call_id", "instance_id", "primitive", "scope", "arguments"))
-_FAULT_FIELDS = frozenset(("ordinal", "phase", "exception_type", "exception_type_complete", "call_id"))
+_FAULT_FIELDS = frozenset(
+    ("ordinal", "phase", "exception_type", "exception_type_complete", "call_id")
+)
 _TAGS = {"position": "p", "exp": "d", "log": "d", "circle_constant": "n", "native_exp": "b"}
-_PHASES = frozenset(("preflight", "intent_sink", "primitive", "return_encoding", "return_sink", "reentry"))
+_PHASES = frozenset(
+    ("preflight", "intent_sink", "primitive", "return_encoding", "return_sink", "reentry")
+)
 _CONTEXT_FIXED = {
-    "max_calls": MAX_CALLS, "max_events": MAX_EVENTS, "event_bytes": EVENT_BYTES,
-    "shard_bytes": 4_194_304, "max_shards": 16, "context_bytes": 4096, "terminal_bytes": 16384,
+    "max_calls": MAX_CALLS,
+    "max_events": MAX_EVENTS,
+    "event_bytes": EVENT_BYTES,
+    "shard_bytes": 4_194_304,
+    "max_shards": 16,
+    "context_bytes": 4096,
+    "terminal_bytes": 16384,
 }
-_SHARED = ("run_id", "recorder_id", "source_commit", "source_tree", "protocol_sha256", "source_manifest_sha256", "recorder_sha256")
-_CONTEXT_FIELDS = frozenset((*_SHARED, "sink_sha256", "schema", "max_bytes", "event_capacity", *_CONTEXT_FIXED))
+_SHARED = (
+    "run_id",
+    "recorder_id",
+    "source_commit",
+    "source_tree",
+    "protocol_sha256",
+    "source_manifest_sha256",
+    "recorder_sha256",
+)
+_CONTEXT_FIELDS = frozenset(
+    (*_SHARED, "sink_sha256", "schema", "max_bytes", "event_capacity", *_CONTEXT_FIXED)
+)
 LOGICAL_BYTES = 67_108_864
 METADATA_BYTES = 20_480
 MAX_SINK_BYTES = 16_777_216 - 3 * 65_536
@@ -106,8 +127,11 @@ def _intent(value: object) -> RawIntent:
         raise ValueError("Recorder scope extent")
     _value(fields["arguments"], _TAGS[primitive], wire=False)
     return RawIntent(
-        _int(fields["ordinal"], 0, MAX_CALLS - 1), _token(fields["call_id"]),
-        _token(fields["instance_id"]), cast(Primitive, primitive), tuple(_token(x) for x in scope),
+        _int(fields["ordinal"], 0, MAX_CALLS - 1),
+        _token(fields["call_id"]),
+        _token(fields["instance_id"]),
+        cast(Primitive, primitive),
+        tuple(_token(x) for x in scope),
         _canonical(fields),
     )
 
@@ -120,7 +144,11 @@ def _fault(value: object, intent: RawIntent | None) -> RawFault:
         raise ValueError("Failed Event phase; fault_retention is snapshot-only")
     name = _str(fields["exception_type"])
     complete = fields["exception_type_complete"]
-    if type(complete) is not bool or not 1 <= len(name) <= 192 or (not complete and len(name) != 192):
+    if (
+        type(complete) is not bool
+        or not 1 <= len(name) <= 192
+        or (not complete and len(name) != 192)
+    ):
         raise ValueError("Exact bounded exception type and completeness")
     call_id = None if fields["call_id"] is None else _token(fields["call_id"])
     if phase == "reentry":
@@ -217,9 +245,13 @@ def _context(raw: bytes, table: TableView) -> ContextBinding:
     if depth or quoted:
         raise ValueError("Truncated context")
     try:
-        data: object = json.loads(raw.decode("ascii"), object_pairs_hook=_pairs,
-                                  parse_int=_context_number, parse_float=_no_float,
-                                  parse_constant=_no_float)
+        data: object = json.loads(
+            raw.decode("ascii"),
+            object_pairs_hook=_pairs,
+            parse_int=_context_number,
+            parse_float=_no_float,
+            parse_constant=_no_float,
+        )
     except (ValueError, UnicodeError, RecursionError) as error:
         raise ValueError("Strict context JSON") from error
     fields = _object(data, _CONTEXT_FIELDS)
@@ -316,15 +348,21 @@ class CodecAppendBridge:
     _compact_bytes: int
     _unretained_faults: int
 
-    def __init__(self, table_raw: bytes, context_raw: bytes, *, append: Callable[[bytes], None]) -> None:
+    def __init__(
+        self, table_raw: bytes, context_raw: bytes, *, append: Callable[[bytes], None]
+    ) -> None:
         if not callable(append):
             raise ValueError("Synchronous owned callback required")
         table = parse_table(table_raw)
         self._binding = _context(context_raw, table)
         self._codec = PrimitiveEventCodec(table_raw, mode="encode")
-        self._append: Callable[[bytes], object] = append  # Validate the actual None return at the boundary.
+        self._append: Callable[[bytes], object] = (
+            append  # Validate the actual None return at the boundary.
+        )
         self._pid, self._thread = os.getpid(), threading.get_ident()
-        self._busy = self._stopped = self._physical_blocked = self._terminal = self._finished = False
+        self._busy = self._stopped = self._physical_blocked = self._terminal = self._finished = (
+            False
+        )
         self._allow_failed = False
         self._raw_attempts = self._raw_bytes = self._sequence = self._ordinal = 0
         self._physical_attempts = self._physical_bytes = self._callback_returns = self._acks = 0
@@ -341,11 +379,26 @@ class CodecAppendBridge:
 
     def snapshot(self) -> BridgeSnapshot:
         return BridgeSnapshot(
-            self._binding, self._raw_attempts, self._raw_bytes, self._sequence, self._ordinal,
-            self._physical_attempts, self._physical_bytes, self._compact_bytes, self._callback_returns, self._acks,
-            self._fallback_attempts, self._fallback_bytes, self._stopped, self._physical_blocked,
-            self._terminal, self._finished, self._first_failed_attempt, self._attempt,
-            tuple(self._faults), self._unretained_faults,
+            self._binding,
+            self._raw_attempts,
+            self._raw_bytes,
+            self._sequence,
+            self._ordinal,
+            self._physical_attempts,
+            self._physical_bytes,
+            self._compact_bytes,
+            self._callback_returns,
+            self._acks,
+            self._fallback_attempts,
+            self._fallback_bytes,
+            self._stopped,
+            self._physical_blocked,
+            self._terminal,
+            self._finished,
+            self._first_failed_attempt,
+            self._attempt,
+            tuple(self._faults),
+            self._unretained_faults,
         )
 
     def _latch(self, phase: str, error: BaseException, *, block: bool) -> None:
@@ -390,7 +443,11 @@ class CodecAppendBridge:
                 if event.fault.phase not in ("return_sink", "reentry"):
                     raise ValueError("Completed return cannot move back to an earlier phase")
                 # The codec may already have advanced and cleared its intent.
-            elif not self._stopped and intent.ordinal == self._ordinal and event.fault.phase in ("preflight", "intent_sink"):
+            elif (
+                not self._stopped
+                and intent.ordinal == self._ordinal
+                and event.fault.phase in ("preflight", "intent_sink")
+            ):
                 pass  # Recorder _emit can fail before reservation or callback.
             else:
                 raise ValueError("Terminal Intent lacks a visible or preflight join")
@@ -398,11 +455,16 @@ class CodecAppendBridge:
     def _write(self, raw: bytes, *, fallback: bool) -> None:
         if self._physical_blocked:
             raise BridgeStopped("Prior callback/ownership failure forbids physical writes")
-        if self._physical_attempts >= MAX_EVENTS or self._physical_bytes + len(raw) > self._binding.event_capacity:
+        if (
+            self._physical_attempts >= MAX_EVENTS
+            or self._physical_bytes + len(raw) > self._binding.event_capacity
+        ):
             raise BridgeStopped("Physical reservation exhausted")
         if not fallback and self._compact_bytes + len(raw) > self._binding.ordinary_capacity:
             raise BridgeStopped("Ordinary bytes cannot consume the failure reserve")
-        if fallback and (self._fallback_attempts >= 2 or self._fallback_bytes + len(raw) > FALLBACK_BYTES):
+        if fallback and (
+            self._fallback_attempts >= 2 or self._fallback_bytes + len(raw) > FALLBACK_BYTES
+        ):
             raise BridgeStopped("Terminal fallback reservation exhausted")
         self._physical_attempts += 1
         self._physical_bytes += len(raw)
@@ -412,8 +474,13 @@ class CodecAppendBridge:
         else:
             self._compact_bytes += len(raw)
         assert self._attempt is not None
-        self._attempt = replace(self._attempt, physical_sha256=hashlib.sha256(raw).hexdigest(),
-                                physical_bytes=len(raw), mode="raw" if fallback else "compact", callback="entered")
+        self._attempt = replace(
+            self._attempt,
+            physical_sha256=hashlib.sha256(raw).hexdigest(),
+            physical_bytes=len(raw),
+            mode="raw" if fallback else "compact",
+            callback="entered",
+        )
         try:
             result = self._append(raw)
         except BaseException as error:
@@ -451,7 +518,9 @@ class CodecAppendBridge:
             self._join(event)
             self._sequence += 1  # Recorder reserved this line before calling us.
             visible = True
-            self._attempt = Attempt(event.sequence, event.kind, hashlib.sha256(raw).hexdigest(), len(raw))
+            self._attempt = Attempt(
+                event.sequence, event.kind, hashlib.sha256(raw).hexdigest(), len(raw)
+            )
             if event.kind == "failed":
                 self._terminal = True
                 self._allow_failed = False
@@ -466,7 +535,11 @@ class CodecAppendBridge:
                 self._current = event.intent
             conversion = self._codec.convert(raw)
             if conversion.status == "converted":
-                if conversion.raw_event != raw or conversion.wire_event is None or conversion.table_sha256 != self._binding.table_sha256:
+                if (
+                    conversion.raw_event != raw
+                    or conversion.wire_event is None
+                    or conversion.table_sha256 != self._binding.table_sha256
+                ):
                     raise ValueError("Conversion bytes/table binding differs")
                 if event.kind == "returned":
                     self._current = None
