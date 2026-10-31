@@ -118,6 +118,13 @@ writer, hidden copies, logs or temporary files. Physical fit is unproved.
 
 ## Tests and remaining obligations
 
+Engineering validation at source b2ca4e7 passed all 91 synthetic cases (273
+ordered setup/call/teardown phases), formatting, linting and full typing across
+209 source files. Independent review verified immutable source, collected cases,
+unchanged environment and closure of all 12 child processes across preparation
+and checks. This result establishes the structural helper behavior only; it is
+not historical coverage, custody, an overlap conclusion or scientific admission.
+
 Tests use small synthetic JSON records, plus bounded metadata-only capacity
 cases. They cover all-part substitution/coverage, late dangling references,
 independent compatibility, raw strict booleans, opaque IDs/path grammar, embedded
