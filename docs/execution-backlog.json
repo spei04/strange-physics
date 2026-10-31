@@ -2,7 +2,7 @@
   "schema_version": "strange-physics.execution-plan.v1",
   "status": "approved_execution_in_progress",
   "baseline_commit": "28a4c19e8f9c92b83d886be6b96667d834784f9e",
-  "updated": "2026-10-30",
+  "updated": "2026-10-31",
   "staffing": {
     "engineers": 9,
     "delivery_fraction": 0.7,
@@ -15835,9 +15835,10 @@
       }
     },
     "current_summary": {
-      "verified": "The spring demo, saved playback and reference checks work; engineering checks for the grid implementation passed.",
-      "next": "Lead + Quality: Resolve allocation and storage requirements for one numerical qualification run.",
-      "blocker": "Research-cost reconciliation and runtime storage remain unresolved. Selector and law-change comparisons have not run. Detailed checkpoint: EXECUTION_LOG.md#2026-10-30--grid-qualification-implementation-and-engineering-checks"
+      "verified": "Protected-runtime software source248bbf5 passed302 guarded cases/906 phases,236-file typing, formatting/lint and independent raw-evidence review. Prior ordinary CI6302 cases/runtime remains separately source-qualified.",
+      "next": "Lead integrates through protected main and accepts one fresh same-run five-file candidate; Research/Platform prepare actual installation, runtime guards and live-descendant witness; Quality reviews.",
+      "blocker": "Actual runtime qualification requires exact candidate inputs, complete protected startup/native custody and observed service/owner closure. No scientific batch or production readiness is established.",
+      "record": "EXECUTION_LOG.md#current-assignment-board"
     },
     "laplace_reference_validation": {
       "status": "local_software_validation_independently_accepted",
@@ -16040,6 +16041,22 @@
         "retained_bytes": 438129,
         "index_sha256": "da2b12154309ae852654c501a52d9d3a5cffcaf324f5cc5920f9053b178b917c"
       }
+    },
+    "runtime_qualification": {
+      "source": "248bbf5bc3e723be6c374cd941af4213763a2605",
+      "cases": 302,
+      "phases": 906,
+      "typing_files": 236,
+      "closed_observed_children": 37,
+      "charged_cpu_seconds": 126.911507,
+      "charged_active_wall_seconds": 153.15158306481317,
+      "retained_logical_bytes": 1440609,
+      "private_checkpoint_sha256": "8f31c29e7d2393fe43c4912b085888e176ccb9c6e0ef8e9e785a2fafb5c3cc2d",
+      "prior_failures_retained": true,
+      "actual_runtime_qualified": false,
+      "scientific_batch_run": false,
+      "plan": "research/D1_RUNTIME_QUALIFICATION.md",
+      "candidate_input_change": "Future same-run candidate retains exact hashed runtime-requirements.txt as fifth file; historical four-file candidates are unchanged."
     }
   },
   "research_amendment": {

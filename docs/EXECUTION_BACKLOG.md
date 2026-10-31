@@ -2,6 +2,8 @@
 
 **Current checkpoint:** [Canonical progress and next action](EXECUTION_LOG.md#current-assignment-board).
 
+2026-10-31: protected-runtime software qualification passed (302 cases / 906 phases). Normal main integration, an exact candidate and actual capture-only validation follow the [runtime qualification plan](research/D1_RUNTIME_QUALIFICATION.md); scientific and enterprise release gates remain open.
+
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 
 **Execution:** [Current assignment board](EXECUTION_LOG.md#current-assignment-board); approved tasks, estimates and gates below are unchanged.
