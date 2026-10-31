@@ -98,16 +98,56 @@ The resolver receives actual expected objects from the trusted owner and compare
 the closed names/identities. A module origin that is unavailable, ambiguous,
 changed or outside its expected source/runtime root fails closed.
 
-`catalog_ref` resolves to the actual verified source-owned catalog member;
-`catalog_sha256` matches its bytes and the outer expected catalog. The catalog
-must enumerate every project helper/production module/configuration needed by
-the final D1 path, not merely the five primitive definitions. It includes the
-protocol, lock/config identity, fixture/prefix/bounds/evidence code, recorder,
-codec/table/bridge, sink/retention/resolver/installer and final driver/binder
-closure. That complete catalog does **not yet exist**. Its source authoring and
-review, including missing final driver files, precede sealing a usable S. More
-than 64 required members is an explicit failed-fit finding, not permission to
-omit members or expand this proposed ceiling automatically.
+### Acyclic catalog policy and exact comparison boundary
+
+`catalog_ref` names a source-owned **policy file**, not another source-hash
+manifest. Choose the simplest acyclic representation: no file digests, sizes,
+source commit/tree values or generated S/T/C/A/terminal hashes appear inside the
+catalog, including for its own member. Its own actual byte digest is pinned by
+the independently trusted outer source plan and by S's `catalog_sha256` and
+corresponding member row. Those two S declarations must match each other and the
+actual catalog bytes. There is no catalog self-hash to solve.
+
+The minimal catalog has exactly `schema` (literal
+`strange-physics.d1-source-catalog.v1`), `members`, `definitions`, `instances`,
+`dispatch_policy`, and `installation_member_ref`. It uses the same canonical
+compact ASCII encoding, strict types and bounded name/reference lexicons. As a
+source member its complete bytes remain within 131,072; no separate parser or
+retention allowance is borrowed. Its closed rows are:
+
+| Array | Policy row / comparison |
+| --- | --- |
+| `members` | `[member_id, origin, locator, loaded_module_or_null]`, sorted unique IDs, at most64; includes the catalog's own ID/path and the complete D1 source closure, but no hashes/sizes. |
+| `definitions` | The same five definition rows as S, with exact member/kind/module/qualname policy. |
+| `instances` | The same fourteen instance rows as S, including legitimate repeated member refs. |
+| `dispatch_policy` | `[instance_id, primitive_code, definition_id, dispatch_id, wrapper_member_id, wrapper_qualname, consumer_member_id, consumer_qualname, capture_layout]`, exactly23 in fixed slot order. |
+
+`capture_layout` is a closed source-owned tag, proposed as
+`bound_method_recorder_slot_v1` or `native_callable_recorder_slot_v1`. The first
+requires the original bound method, exact owner, actual recorder and fixed slot;
+the second requires the original emitter, actual recorder and fixed slot. The
+installer/resolver must freeze their precise object fields/closure positions and
+wrapper/consumer definitions before use. Tags are not instructions to evaluate
+arbitrary attribute paths or dynamic imports. That implementation is pending.
+
+The comparison boundary is exact: project every S member onto its four policy
+fields and require equality with catalog `members`; require S definitions and
+instances to equal those arrays; require every S binding to equal the first four
+fields of the corresponding dispatch-policy row. The installer member must
+match. Independently compare each S file hash/length with actual bounded bytes
+and the protected expected source/runtime pins, including the catalog's own
+bytes. Policy equality alone never authorizes a file digest or establishes
+loaded-code provenance. Wrapper/capture/consumer fields are compared to actual
+objects only in pass2 below, not invented in pass1.
+
+The complete catalog must enumerate every helper/production module/configuration
+needed by the final D1 path, not merely the five primitive definitions. This
+includes protocol, lock/config identity, fixture/prefix/bounds/evidence code,
+recorder, codec/table/bridge, sink/retention/resolver/installer and final
+driver/binder closure. That catalog does **not yet exist**. Its source authoring
+and review, including missing final files, precede usable S sealing. More than64
+required members is a failed-fit finding, not permission to omit members or
+increase the proposed ceiling automatically.
 
 ## Fixed definition and instance joins
 
@@ -160,8 +200,9 @@ assume the fixture object was bound before it existed. Unused initial counters
 and empty caches may be checked without numerical evaluation, but those state
 checks are not proof of past execution history.
 
-The dispatch wrapper itself must also be the independently verified installer
-function/code with its exact expected captures (original callable, actual owner,
+In pass2, after the real S-bound T/C, Bridge and Recorder exist, the dispatch
+wrapper must also be the independently verified installer function/code with
+its exact expected captures (original callable, actual owner,
 recorder and fixed slot). After installation, verify that the actual consumer
 holds that same wrapper and its preserved original; checking only an unused
 correct method would not establish routing. Hold those references and recheck
@@ -194,31 +235,49 @@ supplemental close uncertainty. These are bounded current observations under the
 held-root premise, not historical continuity or hostile concurrent-mutation proof.
 The final implementation must account for every ancestor/open/stat/close action.
 
-1. The outer owner fixes the final source catalog, runtime evidence, emitter and
-   installation code; holds actual roots and supplies the expected objects.
-   Verify the closed source/member set against that expectation, with real
-   bounded reads and the independent loaded-code provenance premise.
-2. Inspect and bind the actual owned roles before their first primitive call;
-   check all 23 definition/owner/dispatch slots. No global monkeypatch of the
-   underlying numeric functions is an acceptable replacement for exact hooks.
-3. Build strict S bytes from observed members and the fixed plan, then retain
-   once in its own owner-private source-evidence root. Use exclusive no-follow
-   file creation and separately owned pinned descriptors, direct bounded write,
-   file/directory fsync, exact bounded readback and once-only close. A full
-   reservation remains charged after partial write or uncertain close.
-4. Only after actual S readback/closure succeeds may T/C bind its actual SHA(S).
-   Keep the dependency graph `source/runtime evidence -> S -> T/C -> A`. S
-   contains no S/T/C/A digest, future terminal hash or self-referential receipt.
-   Its member hashes refer to immutable source/runtime files, not generated
-   downstream metadata. Any earlier runtime/catalog evidence referenced by S
-   must also be free of S/T/C/A hashes; the later outer admission is a distinct
-   artifact and cannot be used to manufacture a backward dependency. Source
-   catalog/installer code likewise cannot embed the
-   future generated S digest as a required self-pin.
-5. A separately admitted outer resolver must revalidate retained S and current
-   source/runtime/object joins before any later A retention/activation. This
-   proposal allows at most two S/source validation passes, described below;
-   additional passes are a new census/fit issue, never an invisible retry.
+1. **Pass1: source/runtime and originals.** The outer owner fixes the final catalog,
+   runtime evidence, emitter and installation code, holds actual roots and
+   supplies the original owned objects. Validate bounded source/member bytes,
+   trusted loaded-code provenance and the same thirteen oracle objects/emitter
+   with all23 original definition/owner slots. Compare the **declared dispatch
+   policy** with the reviewed catalog. Do not claim an actual recorder capture,
+   wrapper or consumer route has already been verified.
+2. **Seal S.** Build S from those observed bytes/originals and fixed policy, retain
+   once in its private source-evidence root, with direct bounded write,
+   file/directory fsync, exact bounded readback and once-only close. A full reservation remains charged
+   on partial write or uncertain close. The actual readback is the first of the
+   two admitted S-file reads; source-pass1 bytes are not silently read again.
+3. **Construct the real downstream objects, without invoking them.** Retain actual
+   C/T binding the retained SHA(S). Then construct the real `CodecAppendBridge`
+   from that T/C and the owned sink append callback; construct the real
+   `PrimitiveRecorder` with the bridge's synchronous append callback; install
+   the reviewed wrappers capturing that recorder and the held originals. This
+   order is necessary: Recorder requires append, and Bridge requires T/C whose
+   source-manifest fields already bind S. No deferred/stub append callback,
+   temporary recorder, replaced oracle, reset or resealed S is allowed. Constructed
+   objects are not activated; no Event or primitive is invoked.
+4. **Pass2: current bytes, originals and actual installation.** Re-read retained S
+   and revalidate held source/runtime premises and original owner/definition
+   identities against pass1 and the external expected plan. Check actual wrapper
+   code/captures, the real Recorder/Bridge/sink callback chain and the actual
+   consumer routing against all23 dispatch-policy rows. Original references are
+   retained throughout; checking a separate unused correct callable is not
+   sufficient. Any missing fixture hook, stale runtime proof, substituted owner,
+   callback/capture or bypass fails before A/admission.
+5. **Only after both passes:** a separate later slice may construct/retain candidate
+   A and obtain the protected outer S/T/C/A admission before activation. Source
+   and runtime evidence -> S -> C/T -> real Bridge/Recorder/wrappers -> pass2 ->
+   candidate A/outer admission is the construction order. The hash graph remains
+   S -> T/C -> A; actual wrapper identities are transient resolved references,
+   not new fields that require rewriting S. S contains no self/T/C/A/future
+   terminal digest. Earlier catalog/runtime evidence cannot contain those later
+   hashes either; the final outer admission is a distinct artifact.
+
+The same two source/S validation passes and byte ceilings below apply. Installing
+wrappers and checking actual captures/routing is additional explicitly counted
+non-numerical work, not a third source pass or free work. No new primitive call,
+source retry, catalog reseal or bypass is implied. A global numerical-function
+monkeypatch is not a substitute for the reviewed exact call-site installation.
 
 A failed preflight, source read, binding, retention, readback or close consumes
 that sealing/verification opportunity. Preserve entered/partial/unknown state,
@@ -307,7 +366,10 @@ all 14/23 joins. Independent literal fixtures should distinguish lexical
 consistency from actual resolution. This source work needs no numerical output.
 
 Next review the bounded owned-file resolver and source/loaded-origin checks,
-with fake callable owners and owned temporary source files. Cases must reject
+with fake callable owners and owned temporary source files. Independently test
+that catalog projection comparison contains no self-hash dependency, pass1
+cannot assert actual recorder capture, and pass2 rejects substituted real callback
+chains or wrappers after S-bound T/C construction. Cases must reject
 wrong roots, substituted/hardlinked/changed files, incomplete catalog, two roles
 sharing one oracle, wrong bound self/function, stale/missing runtime evidence,
 missing fixture hook and unapproved emitter. Retention/cleanup fault tests must
