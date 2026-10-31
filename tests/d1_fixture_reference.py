@@ -3,6 +3,7 @@
 Calling the producer is numerical work and requires separate admission. Source
 pins establish supplied-file consistency, not Git/runtime attestation or authority.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -18,17 +19,31 @@ import endpoint_belief_reference as oracle_module
 from endpoint_belief_reference import EndpointOracle, Key
 from pydantic import Field
 
+import strange_physics.bounded_json as json_module
 import strange_physics.calibration_fixture_contracts as fixture_module
 import strange_physics.contracts as core_module
-import strange_physics.bounded_json as json_module
 import strange_physics.research_contracts as research_module
 from strange_physics.bounded_json import bounded_canonical
 from strange_physics.calibration_fixture_contracts import (
-    CASE_IDS, PROTOCOL_SHA256, CaseId, D1Blueprint, D1ExposureFinding,
-    D1ExposureInventory, D1FixtureOutcome, D1FixtureOutcomes, D1LabelClaim,
-    D1PrivateAudit, D1PublicFixture, FailureStage, candidate_material,
-    check_supplied_inventory, parse_d1_inventory, parse_d1_public, physical_identity,
-    validate_fixture_binding, validate_materialized_fixtures,
+    CASE_IDS,
+    PROTOCOL_SHA256,
+    CaseId,
+    D1Blueprint,
+    D1ExposureFinding,
+    D1ExposureInventory,
+    D1FixtureOutcome,
+    D1FixtureOutcomes,
+    D1LabelClaim,
+    D1PrivateAudit,
+    D1PublicFixture,
+    FailureStage,
+    candidate_material,
+    check_supplied_inventory,
+    parse_d1_inventory,
+    parse_d1_public,
+    physical_identity,
+    validate_fixture_binding,
+    validate_materialized_fixtures,
 )
 from strange_physics.contracts import Message, ObservationBundle
 from strange_physics.research_contracts import Digest, message_sha256
@@ -50,18 +65,29 @@ ERROR = Fraction(1, 10**60)
 NUMERATORS = (1, 5, 13, 27)
 # Private order follows the first consumer. D03 and paired future use cached proofs.
 QUERY_SPECS = (
-    ("train-M01", 1, 0.0, 1.0, 0.5), ("future-M01", 1, 0.0, 1.0, 0.75),
-    ("train-M02", 5, 0.0, 1.0, 0.5), ("future-M02", 5, 0.0, 1.0, 0.75),
-    ("train-M03", 13, 0.0, 1.0, 0.5), ("future-M03", 13, 0.0, 1.0, 0.75),
-    ("train-M04", 27, 0.0, 1.0, 0.5), ("future-M04", 27, 0.0, 1.0, 0.75),
-    ("train-F02", 5, 0.125, 1.0, 0.5), ("future-F02", 5, 0.125, 1.0, 0.75),
-    ("train-F04", 27, 0.125, 1.0, 0.5), ("future-F04", 27, 0.125, 1.0, 0.75),
+    ("train-M01", 1, 0.0, 1.0, 0.5),
+    ("future-M01", 1, 0.0, 1.0, 0.75),
+    ("train-M02", 5, 0.0, 1.0, 0.5),
+    ("future-M02", 5, 0.0, 1.0, 0.75),
+    ("train-M03", 13, 0.0, 1.0, 0.5),
+    ("future-M03", 13, 0.0, 1.0, 0.75),
+    ("train-M04", 27, 0.0, 1.0, 0.5),
+    ("future-M04", 27, 0.0, 1.0, 0.75),
+    ("train-F02", 5, 0.125, 1.0, 0.5),
+    ("future-F02", 5, 0.125, 1.0, 0.75),
+    ("train-F04", 27, 0.125, 1.0, 0.5),
+    ("future-F04", 27, 0.125, 1.0, 0.75),
     ("train-W03", 13, 0.0, 0.125, 0.5),
 )
 CASE_SPECS = (
-    ("M01", 1, 1.0, 1), ("M02", 5, 1.0, 1), ("M03", 13, 1.0, 1),
-    ("M04", 27, 1.0, 1), ("D03", 13, 1.0, 2), ("F02", 5, 1.0, 1),
-    ("F04", 27, 1.0, 1), ("W03", 13, 0.125, 1),
+    ("M01", 1, 1.0, 1),
+    ("M02", 5, 1.0, 1),
+    ("M03", 13, 1.0, 1),
+    ("M04", 27, 1.0, 1),
+    ("D03", 13, 1.0, 2),
+    ("F02", 5, 1.0, 1),
+    ("F04", 27, 1.0, 1),
+    ("W03", 13, 0.125, 1),
 )
 
 
@@ -107,7 +133,9 @@ def verify_sources(root: Path, commit: str, pins: tuple[SourcePin, ...]) -> Sour
             raise ValueError("Actual source bytes disagree with the pinned manifest")
         sizes.append(len(raw))
     # A noneditable wheel installation is permitted only with the same bytes.
-    for module, pin in zip((fixture_module, core_module, json_module, research_module), pins[3:], strict=True):
+    for module, pin in zip(
+        (fixture_module, core_module, json_module, research_module), pins[3:], strict=True
+    ):
         with Path(module.__file__).open("rb") as stream:
             loaded = stream.read(FILE_LIMIT + 1)
         if not 0 < len(loaded) <= FILE_LIMIT or hashlib.sha256(loaded).hexdigest() != pin.sha256:
@@ -173,7 +201,8 @@ def verify_rounding(
     low_mid, high_mid = midpoint_cell(value)
     if (
         proof.source_sha256 != source_sha256
-        or proof.lower.fraction() != lower or proof.upper.fraction() != upper
+        or proof.lower.fraction() != lower
+        or proof.upper.fraction() != upper
         or proof.lower_midpoint.fraction() != low_mid
         or proof.upper_midpoint.fraction() != high_mid
         or not low_mid < lower <= upper < high_mid
@@ -187,8 +216,12 @@ def round_once(
 ) -> RoundingProof:
     low_mid, high_mid = midpoint_cell(candidate)
     proof = RoundingProof(
-        source_sha256=source_sha256, lower=ratio(lower), upper=ratio(upper),
-        recorded_hex=candidate.hex(), lower_midpoint=ratio(low_mid), upper_midpoint=ratio(high_mid),
+        source_sha256=source_sha256,
+        lower=ratio(lower),
+        upper=ratio(upper),
+        recorded_hex=candidate.hex(),
+        lower_midpoint=ratio(low_mid),
+        upper_midpoint=ratio(high_mid),
     )
     verify_rounding(proof, lower, upper, source_sha256)
     return proof
@@ -208,10 +241,14 @@ def coefficients() -> tuple[CoefficientProof, ...]:
     result = []
     for n in NUMERATORS:
         value = Fraction(n, 7)
-        result.append(CoefficientProof.model_validate({
-            "numerator": n,
-            "rounding": round_once(float(value), value, value, coefficient_source(n)),
-        }))
+        result.append(
+            CoefficientProof.model_validate(
+                {
+                    "numerator": n,
+                    "rounding": round_once(float(value), value, value, coefficient_source(n)),
+                }
+            )
+        )
     return tuple(result)
 
 
@@ -237,9 +274,21 @@ def fixed_plan(source: Sources, proofs: tuple[CoefficientProof, ...]) -> Plan:
         values[proof.numerator] = verify_rounding(
             proof.rounding, exact, exact, coefficient_source(proof.numerator)
         )
-    queries = tuple(Query(name=name, key=(
-        values[n].hex(), (1.0).hex(), a.hex(), q.hex(), (0.0).hex(), (0.0).hex(), t.hex(),
-    )) for name, n, a, q, t in QUERY_SPECS)
+    queries = tuple(
+        Query(
+            name=name,
+            key=(
+                values[n].hex(),
+                (1.0).hex(),
+                a.hex(),
+                q.hex(),
+                (0.0).hex(),
+                (0.0).hex(),
+                t.hex(),
+            ),
+        )
+        for name, n, a, q, t in QUERY_SPECS
+    )
     return Plan(source_sha256=message_sha256(source), coefficients=proofs, queries=queries)
 
 
@@ -257,14 +306,19 @@ def reference_proof(query: Query, source_sha256: str, center: Decimal) -> Refere
         raise ValueError("Finite Decimal reference center required")
     parts = center.as_tuple()
     if (
-        len(parts.digits) > 120 or not isinstance(parts.exponent, int)
-        or not -256 <= parts.exponent <= 128 or not D(0) <= center <= D(1)
+        len(parts.digits) > 120
+        or not isinstance(parts.exponent, int)
+        or not -256 <= parts.exponent <= 128
+        or not D(0) <= center <= D(1)
     ):
         raise ValueError("Reference center outside the fixed bounded representation")
     exact = Fraction(center)
     return ReferenceProof(
-        query=query, source_sha256=source_sha256, center=str(center),
-        lower=ratio(exact - ERROR), upper=ratio(exact + ERROR),
+        query=query,
+        source_sha256=source_sha256,
+        center=str(center),
+        lower=ratio(exact - ERROR),
+        upper=ratio(exact + ERROR),
     )
 
 
@@ -287,7 +341,8 @@ def validate_ids(ids: tuple[PublicIds, ...]) -> tuple[PublicIds, ...]:
     result = tuple(checked(value, PublicIds) for value in ids)
     operations = tuple(op for value in result for op in value.operations)
     if (
-        len({x.run_id for x in result}) != 8 or len(set(operations)) != 9
+        len({x.run_id for x in result}) != 8
+        or len(set(operations)) != 9
         or tuple(len(x.operations) for x in result) != (1, 1, 1, 1, 2, 1, 1, 1)
         or any(re.fullmatch(r"d1o-[0-9a-f]{32}", op) is None for op in operations)
     ):
@@ -297,11 +352,18 @@ def validate_ids(ids: tuple[PublicIds, ...]) -> tuple[PublicIds, ...]:
 
 def blueprint(case: CaseId) -> D1Blueprint:
     _, n, q, records = CASE_SPECS[CASE_IDS.index(case)]
-    return D1Blueprint.model_validate({
-        "case_id": case, "coefficient_numerator": n, "initial_x": q, "record_count": records,
-        "mechanism": "spring-plus-k-over-eight-force" if case.startswith("F") else "zero-rest-spring",
-        "scales": (0.25,) if case in ("D03", "W03") else (0.125, 0.25, 0.5),
-    })
+    return D1Blueprint.model_validate(
+        {
+            "case_id": case,
+            "coefficient_numerator": n,
+            "initial_x": q,
+            "record_count": records,
+            "mechanism": "spring-plus-k-over-eight-force"
+            if case.startswith("F")
+            else "zero-rest-spring",
+            "scales": (0.25,) if case in ("D03", "W03") else (0.125, 0.25, 0.5),
+        }
+    )
 
 
 def query_names(case: CaseId) -> tuple[str, str]:
@@ -316,30 +378,52 @@ def build_public(ids: PublicIds, initial_x: float, labels: tuple[float, ...]) ->
     if len(labels) != len(ids.operations) or len(labels) not in (1, 2):
         raise ValueError("Every public operation requires one training label")
     experiment = {
-        "particles": [{"id": "p0", "position": (initial_x, 0.0), "velocity": (0.0, 0.0), "mass": 1.0}],
+        "particles": [
+            {"id": "p0", "position": (initial_x, 0.0), "velocity": (0.0, 0.0), "mass": 1.0}
+        ],
         "impulse": {"particle_id": "p0", "vector": (0.0, 0.0)},
     }
-    records = tuple({
-        "operation_id": op, "index": index, "experiment": experiment, "status": "completed",
-        "trajectory": {"frames": (
-            {"time": 0.0, "positions": ((initial_x, 0.0),), "velocities": ((0.0, 0.0),)},
-            {"time": 0.5, "positions": ((label, 0.0),), "velocities": ((0.0, 0.0),)},
-        )},
-    } for index, (op, label) in enumerate(zip(ids.operations, labels, strict=True)))
-    public = D1PublicFixture.model_validate({"observations": {
-        "run_id": ids.run_id, "engine_version": "synthetic-ra-n03-d1.v1",
-        "engine_fingerprint": PROTOCOL_SHA256,
-        "space": {
-            "structure": {
-                "particle_ids": ("p0",), "anchors": ({"id": "a0", "position": (0.0, 0.0)},),
-                "connections": ({"a": "p0", "b": "a0"},),
+    records = tuple(
+        {
+            "operation_id": op,
+            "index": index,
+            "experiment": experiment,
+            "status": "completed",
+            "trajectory": {
+                "frames": (
+                    {"time": 0.0, "positions": ((initial_x, 0.0),), "velocities": ((0.0, 0.0),)},
+                    {"time": 0.5, "positions": ((label, 0.0),), "velocities": ((0.0, 0.0),)},
+                )
             },
-            "sampling": {"duration": 0.5, "dt": 1 / 64, "sample_interval": 0.5,
-                         "position_noise": 0.0, "velocity_noise": 0.0},
-            "budget": len(labels), "calibration_experiments": 0,
-        },
-        "records": records,
-    }})
+        }
+        for index, (op, label) in enumerate(zip(ids.operations, labels, strict=True))
+    )
+    public = D1PublicFixture.model_validate(
+        {
+            "observations": {
+                "run_id": ids.run_id,
+                "engine_version": "synthetic-ra-n03-d1.v1",
+                "engine_fingerprint": PROTOCOL_SHA256,
+                "space": {
+                    "structure": {
+                        "particle_ids": ("p0",),
+                        "anchors": ({"id": "a0", "position": (0.0, 0.0)},),
+                        "connections": ({"a": "p0", "b": "a0"},),
+                    },
+                    "sampling": {
+                        "duration": 0.5,
+                        "dt": 1 / 64,
+                        "sample_interval": 0.5,
+                        "position_noise": 0.0,
+                        "velocity_noise": 0.0,
+                    },
+                    "budget": len(labels),
+                    "calibration_experiments": 0,
+                },
+                "records": records,
+            }
+        }
+    )
     return parse_d1_public(public.model_dump_json().encode())
 
 
@@ -353,7 +437,14 @@ class Failure(Message):
 
 class QueryTrace(Message):
     query: Query
-    status: Literal["unrun", "attempted", "reference_returned", "reference_failed", "rounding_failed", "completed"]
+    status: Literal[
+        "unrun",
+        "attempted",
+        "reference_returned",
+        "reference_failed",
+        "rounding_failed",
+        "completed",
+    ]
     returned_center: str | None = Field(default=None, max_length=128)
 
 
@@ -394,8 +485,11 @@ class FixtureBatch:
 
 
 def bind_attempt(
-    attempt: Attempt, plan: Plan, source: Sources,
-    references: tuple[ReferenceProof, ...], roundings: tuple[RoundingProof, ...],
+    attempt: Attempt,
+    plan: Plan,
+    source: Sources,
+    references: tuple[ReferenceProof, ...],
+    roundings: tuple[RoundingProof, ...],
     inventories: tuple[D1ExposureInventory, ...],
 ) -> None:
     """Recompute digests and joins from retained material, never compare bare claims alone."""
@@ -413,16 +507,22 @@ def bind_attempt(
         digest = message_sha256(reference)
         proof = proofs[digest]
         verify_rounding(proof, reference.lower.fraction(), reference.upper.fraction(), digest)
-        claims.append(D1LabelClaim(
-            recorded_x_hex=proof.recorded_hex, reference_evidence_sha256=digest,
-            rounding_evidence_sha256=message_sha256(proof),
-        ))
+        claims.append(
+            D1LabelClaim(
+                recorded_x_hex=proof.recorded_hex,
+                reference_evidence_sha256=digest,
+                rounding_evidence_sha256=message_sha256(proof),
+            )
+        )
     b = blueprint(attempt.case)
     coefficient = next(p for p in plan.coefficients if p.numerator == b.coefficient_numerator)
     expected_audit = D1PrivateAudit(
-        source_commit=source.commit, blueprint=b, public_sha256=message_sha256(attempt.public),
+        source_commit=source.commit,
+        blueprint=b,
+        public_sha256=message_sha256(attempt.public),
         coefficient_hex=coefficient.rounding.recorded_hex,
-        training_labels=(claims[0],) * b.record_count, future_label=claims[1],
+        training_labels=(claims[0],) * b.record_count,
+        future_label=claims[1],
     )
     if checked(attempt.audit, D1PrivateAudit, 16 * 1024) != expected_audit:
         raise ValueError("Audit is not bound to the actual reference and rounded material")
@@ -436,13 +536,18 @@ def bind_attempt(
 def candidate_materials(batch: FixtureBatch) -> tuple[ObservationBundle, ...]:
     """Explicit all-success projection; the enclosing batch is always evaluator-private."""
     if (
-        batch.first_fault is not None or not batch.source_rechecked
-        or batch.sources is None or batch.plan is None
-        or len(batch.attempts) != 8 or len(batch.references) != 13 or len(batch.roundings) != 13
+        batch.first_fault is not None
+        or not batch.source_rechecked
+        or batch.sources is None
+        or batch.plan is None
+        or len(batch.attempts) != 8
+        or len(batch.references) != 13
+        or len(batch.roundings) != 13
         or (batch.lookup_attempted, batch.lookup_completed, batch.series_completed) != (13, 13, 13)
         or any(x.status != "materialized" for x in batch.outcomes.outcomes)
         or batch.oracle_census != (13, 13, 0, 0, 0, 0, 13)
-        or len(batch.query_trace) != 13 or any(x.status != "completed" for x in batch.query_trace)
+        or len(batch.query_trace) != 13
+        or any(x.status != "completed" for x in batch.query_trace)
     ):
         raise ValueError("Incomplete private construction is not candidate-ready")
     actual = verify_sources(batch.root, batch.commit, batch.pins)
@@ -452,8 +557,7 @@ def candidate_materials(batch: FixtureBatch) -> tuple[ObservationBundle, ...]:
         raise ValueError("Query trace differs from the actual plan")
     reference_centers = {x.query.name: x.center for x in batch.references}
     if any(
-        row.returned_center != reference_centers.get(row.query.name)
-        for row in batch.query_trace
+        row.returned_center != reference_centers.get(row.query.name) for row in batch.query_trace
     ):
         raise ValueError("Completed query trace must retain its actual reference center")
     if batch.reuse != (
@@ -466,7 +570,9 @@ def candidate_materials(batch: FixtureBatch) -> tuple[ObservationBundle, ...]:
     for attempt, outcome in zip(batch.attempts, batch.outcomes.outcomes, strict=True):
         if outcome.audit != attempt.audit or outcome.blueprint.case_id != attempt.case:
             raise ValueError("Outcome is not the retained attempt's exact private audit")
-        bind_attempt(attempt, batch.plan, actual, batch.references, batch.roundings, batch.inventories)
+        bind_attempt(
+            attempt, batch.plan, actual, batch.references, batch.roundings, batch.inventories
+        )
         if any(x.conclusion != "no-overlap-in-supplied-inventory" for x in attempt.findings):
             raise ValueError("Supplied exposure overlap blocks candidate projection")
     public = tuple(a.public for a in batch.attempts)
@@ -526,8 +632,13 @@ class D1FixtureProducer:
                 for name in query_names(case):
                     query = next(q for q in plan.queries if q.name == name)
                     if query.key in cache:
-                        reuses.append(Reuse(case=case, query_name=name,
-                                            consumer_slots=b.record_count if name.startswith("train") else 1))
+                        reuses.append(
+                            Reuse(
+                                case=case,
+                                query_name=name,
+                                consumer_slots=b.record_count if name.startswith("train") else 1,
+                            )
+                        )
                         continue
                     if plan.queries[requested] != query:
                         raise ValueError("Reference traversal differs from the fixed plan")
@@ -535,19 +646,32 @@ class D1FixtureProducer:
                     traces[requested] = QueryTrace(query=query, status="attempted")
                     requested += 1
                     key: Key = (
-                        binary(query.key[0]), binary(query.key[1]), binary(query.key[2]),
-                        binary(query.key[3]), binary(query.key[4]), binary(query.key[5]),
+                        binary(query.key[0]),
+                        binary(query.key[1]),
+                        binary(query.key[2]),
+                        binary(query.key[3]),
+                        binary(query.key[4]),
+                        binary(query.key[5]),
                         binary(query.key[6]),
                     )
                     # Existing oracle inherits the caller context beyond its precision.
                     # Supply every context setting explicitly for this finite invocation.
-                    context = Context(prec=100, rounding=ROUND_HALF_EVEN, Emin=-999999, Emax=999999,
-                                      capitals=1, clamp=0, flags=[], traps=[])
+                    context = Context(
+                        prec=100,
+                        rounding=ROUND_HALF_EVEN,
+                        Emin=-999999,
+                        Emax=999999,
+                        capitals=1,
+                        clamp=0,
+                        flags=[],
+                        traps=[],
+                    )
                     with localcontext(context):
                         center = oracle.position(key)
                     completed += 1
                     traces[requested - 1] = QueryTrace(
-                        query=query, status="reference_returned",
+                        query=query,
+                        status="reference_returned",
                         returned_center=str(center)[:128] if isinstance(center, Decimal) else None,
                     )
                     series = oracle.series_values
@@ -555,13 +679,17 @@ class D1FixtureProducer:
                     refs.append(reference)
                     stage = "rounding"
                     proof = round_once(
-                        float(center), reference.lower.fraction(), reference.upper.fraction(),
+                        float(center),
+                        reference.lower.fraction(),
+                        reference.upper.fraction(),
                         message_sha256(reference),
                     )
                     rounds.append(proof)
                     cache[query.key] = reference, proof
                     traces[requested - 1] = QueryTrace(
-                        query=query, status="completed", returned_center=str(center),
+                        query=query,
+                        status="completed",
+                        returned_center=str(center),
                     )
                 active_query = None
                 train_name, future_name = query_names(case)
@@ -570,15 +698,24 @@ class D1FixtureProducer:
                 train_ref, train_round = cache[train_key]
                 future_ref, future_round = cache[future_key]
                 stage = "public_binding"
-                public = build_public(group, b.initial_x, (binary(train_round.recorded_hex),) * b.record_count)
+                public = build_public(
+                    group, b.initial_x, (binary(train_round.recorded_hex),) * b.record_count
+                )
+
                 def claim(ref: ReferenceProof, rounding: RoundingProof) -> D1LabelClaim:
                     return D1LabelClaim(
-                        recorded_x_hex=rounding.recorded_hex, reference_evidence_sha256=message_sha256(ref),
+                        recorded_x_hex=rounding.recorded_hex,
+                        reference_evidence_sha256=message_sha256(ref),
                         rounding_evidence_sha256=message_sha256(rounding),
                     )
-                coefficient = next(x for x in plan.coefficients if x.numerator == b.coefficient_numerator)
+
+                coefficient = next(
+                    x for x in plan.coefficients if x.numerator == b.coefficient_numerator
+                )
                 audit = D1PrivateAudit(
-                    source_commit=source.commit, blueprint=b, public_sha256=message_sha256(public),
+                    source_commit=source.commit,
+                    blueprint=b,
+                    public_sha256=message_sha256(public),
                     coefficient_hex=coefficient.rounding.recorded_hex,
                     training_labels=(claim(train_ref, train_round),) * b.record_count,
                     future_label=claim(future_ref, future_round),
@@ -590,14 +727,23 @@ class D1FixtureProducer:
                 attempts.append(attempt)
                 bind_attempt(attempt, plan, source, tuple(refs), tuple(rounds), checked_inventories)
                 if any(x.conclusion != "no-overlap-in-supplied-inventory" for x in findings):
-                    raise ValueError("Overlap in supplied inventory; no historical completeness claim")
-                outcomes.append(D1FixtureOutcome(
-                    blueprint=b, status="materialized", failure_stage=None, failure_evidence_sha256=None, audit=audit,
-                ))
+                    raise ValueError(
+                        "Overlap in supplied inventory; no historical completeness claim"
+                    )
+                outcomes.append(
+                    D1FixtureOutcome(
+                        blueprint=b,
+                        status="materialized",
+                        failure_stage=None,
+                        failure_evidence_sha256=None,
+                        audit=audit,
+                    )
+                )
             stage = "reference"
             if (
                 (requested, completed, oracle.lookups, oracle.series_values) != (13, 13, 13, 13)
-                or (oracle.exp_calls, oracle.log_calls, oracle.trig_calls, oracle.machin_terms) != (0, 0, 0, 0)
+                or (oracle.exp_calls, oracle.log_calls, oracle.trig_calls, oracle.machin_terms)
+                != (0, 0, 0, 0)
                 or len(oracle.values) != 13
             ):
                 raise ValueError("Fixed reference work census differs")
@@ -618,28 +764,65 @@ class D1FixtureProducer:
                     returned_center=row.returned_center,
                 )
             fault = Failure(
-                case=case, stage=stage, exception_type=type(error).__name__[:96],
-                detail=f"{stage} stopped the fixed attempt; retained material is private", query=active_query,
+                case=case,
+                stage=stage,
+                exception_type=type(error).__name__[:96],
+                detail=f"{stage} stopped the fixed attempt; retained material is private",
+                query=active_query,
             )
             if len(outcomes) == 8:
                 outcomes.pop()
-            outcomes.append(D1FixtureOutcome(
-                blueprint=blueprint(case), status="failed", failure_stage=stage,
-                failure_evidence_sha256=message_sha256(fault), audit=None,
-            ))
+            outcomes.append(
+                D1FixtureOutcome(
+                    blueprint=blueprint(case),
+                    status="failed",
+                    failure_stage=stage,
+                    failure_evidence_sha256=message_sha256(fault),
+                    audit=None,
+                )
+            )
         while len(outcomes) < 8:
-            outcomes.append(D1FixtureOutcome(
-                blueprint=blueprint(CASE_IDS[len(outcomes)]), status="unrun",
-                failure_stage=None, failure_evidence_sha256=None, audit=None,
-            ))
-        census = None if oracle is None else (
-            oracle.lookups, oracle.series_values, oracle.exp_calls, oracle.log_calls,
-            oracle.trig_calls, oracle.machin_terms, len(oracle.values),
+            outcomes.append(
+                D1FixtureOutcome(
+                    blueprint=blueprint(CASE_IDS[len(outcomes)]),
+                    status="unrun",
+                    failure_stage=None,
+                    failure_evidence_sha256=None,
+                    audit=None,
+                )
+            )
+        census = (
+            None
+            if oracle is None
+            else (
+                oracle.lookups,
+                oracle.series_values,
+                oracle.exp_calls,
+                oracle.log_calls,
+                oracle.trig_calls,
+                oracle.machin_terms,
+                len(oracle.values),
+            )
         )
         if oracle is not None:
             series = oracle.series_values
         return FixtureBatch(
-            self.root, self.commit, self.pins, source, plan, tuple(refs), tuple(rounds),
-            tuple(attempts), checked_inventories, D1FixtureOutcomes(outcomes=tuple(outcomes)),
-            fault, requested, completed, series, source_rechecked, census, tuple(traces), tuple(reuses),
+            self.root,
+            self.commit,
+            self.pins,
+            source,
+            plan,
+            tuple(refs),
+            tuple(rounds),
+            tuple(attempts),
+            checked_inventories,
+            D1FixtureOutcomes(outcomes=tuple(outcomes)),
+            fault,
+            requested,
+            completed,
+            series,
+            source_rechecked,
+            census,
+            tuple(traces),
+            tuple(reuses),
         )
