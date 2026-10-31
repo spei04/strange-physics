@@ -59,9 +59,14 @@ def _context_bytes(value: SinkContext) -> bytes:
         text = getattr(value, name)
         if type(text) is not str or _TOKEN.fullmatch(text) is None:
             raise ValueError("Bounded opaque sink identity required")
-    for name, size in (("source_commit", 40), ("source_tree", 40),
-                       ("protocol_sha256", 64), ("source_manifest_sha256", 64),
-                       ("recorder_sha256", 64), ("sink_sha256", 64)):
+    for name, size in (
+        ("source_commit", 40),
+        ("source_tree", 40),
+        ("protocol_sha256", 64),
+        ("source_manifest_sha256", 64),
+        ("recorder_sha256", 64),
+        ("sink_sha256", 64),
+    ):
         text = getattr(value, name)
         if type(text) is not str or re.fullmatch("[0-9a-f]{" + str(size) + "}", text) is None:
             raise ValueError("Exact source identity required")
@@ -70,17 +75,23 @@ def _context_bytes(value: SinkContext) -> bytes:
     if type(value.max_bytes) is not int or not METADATA_BYTES < value.max_bytes <= MAX_BYTES:
         raise ValueError("Total byte ceiling must include both metadata reservations")
     fields = asdict(value) | {
-        "schema": SCHEMA, "max_events": value.max_events,
-        "event_capacity": value.event_capacity, "event_bytes": EVENT_BYTES,
-        "shard_bytes": SHARD_BYTES, "max_shards": MAX_SHARDS,
-        "context_bytes": CONTEXT_BYTES, "terminal_bytes": TERMINAL_BYTES,
+        "schema": SCHEMA,
+        "max_events": value.max_events,
+        "event_capacity": value.event_capacity,
+        "event_bytes": EVENT_BYTES,
+        "shard_bytes": SHARD_BYTES,
+        "max_shards": MAX_SHARDS,
+        "context_bytes": CONTEXT_BYTES,
+        "terminal_bytes": TERMINAL_BYTES,
     }
     return _encode(fields, CONTEXT_BYTES)
 
 
 def _encode(value: object, limit: int) -> bytes:
-    raw = (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True,
-                      allow_nan=False) + "\n").encode("ascii")
+    raw = (
+        json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False)
+        + "\n"
+    ).encode("ascii")
     if len(raw) > limit:
         raise ValueError("Bounded sink metadata exceeded")
     return raw
@@ -159,15 +170,20 @@ class _Anchor:
         self.parent: int | None = None
         self.directory: int | None = None
         try:
-            self.parent = os.open(root.parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC)
+            self.parent = os.open(
+                root.parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC
+            )
             parent = os.fstat(self.parent)
             private_stat(parent, directory=True)
             self.parent_identity = _identity(parent)
             if create:
                 os.mkdir(root.name, mode=0o700, dir_fd=self.parent)
                 os.fsync(self.parent)
-            self.directory = os.open(root.name, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC,
-                                     dir_fd=self.parent)
+            self.directory = os.open(
+                root.name,
+                os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC,
+                dir_fd=self.parent,
+            )
             directory = os.fstat(self.directory)
             private_stat(directory, directory=True)
             if directory.st_mode & 0o777 != 0o700:
@@ -185,9 +201,13 @@ class _Anchor:
         parent, root = os.fstat(self.parent), os.fstat(self.directory)
         private_stat(parent, directory=True)
         private_stat(root, directory=True)
-        if (_identity(parent) != self.parent_identity or _identity(root) != self.root_identity
+        if (
+            _identity(parent) != self.parent_identity
+            or _identity(root) != self.root_identity
             or _identity(os.stat(self.path.parent, follow_symlinks=False)) != self.parent_identity
-            or _identity(os.stat(self.path.name, dir_fd=self.parent, follow_symlinks=False)) != self.root_identity):
+            or _identity(os.stat(self.path.name, dir_fd=self.parent, follow_symlinks=False))
+            != self.root_identity
+        ):
             raise ValueError("Pinned directory identity changed")
 
     def open_file(self, name: str, *, create: bool) -> tuple[int, Identity]:
@@ -209,7 +229,9 @@ class _Anchor:
             except BaseException as supplemental:
                 self.closure_uncertain = True
                 self.close_faults.append(supplemental)
-                primary.add_note("Supplemental file close failure: " + type(supplemental).__name__[:96])
+                primary.add_note(
+                    "Supplemental file close failure: " + type(supplemental).__name__[:96]
+                )
             raise
 
     def file_check(self, name: str, fd: int, identity: Identity, size: int) -> None:
@@ -217,8 +239,14 @@ class _Anchor:
         info = os.fstat(fd)
         named = os.stat(name, dir_fd=self.directory, follow_symlinks=False)
         private_stat(info)
-        if (_identity(info) != identity or _identity(named) != identity
-            or info.st_nlink != 1 or named.st_nlink != 1 or info.st_size != size or named.st_size != size):
+        if (
+            _identity(info) != identity
+            or _identity(named) != identity
+            or info.st_nlink != 1
+            or named.st_nlink != 1
+            or info.st_size != size
+            or named.st_size != size
+        ):
             raise ValueError("Pinned file identity or extent changed")
 
     def sync(self) -> None:
@@ -302,7 +330,9 @@ def _observe(name: str, raw: bytes) -> ShardObservation:
         offset = newline + 1
     if len(raw) - offset >= EVENT_BYTES:
         raise ValueError("Observed fragment exceeds event bound")
-    return ShardObservation(name, len(raw), hashlib.sha256(raw).hexdigest(), lines, len(raw) - offset)
+    return ShardObservation(
+        name, len(raw), hashlib.sha256(raw).hexdigest(), lines, len(raw) - offset
+    )
 
 
 def _canonical_context(raw: bytes) -> bool:
@@ -313,6 +343,7 @@ def _canonical_context(raw: bytes) -> bool:
                 raise ValueError("Duplicate metadata key")
             result[key] = value
         return result
+
     try:
         data = json.loads(raw, object_pairs_hook=pairs)
         if type(data) is not dict:
@@ -335,7 +366,10 @@ def inspect_sink(root: Path, *, max_bytes: int) -> SinkInspection:
         assert anchor.directory is not None
         with os.scandir(anchor.directory) as entries:
             names = sorted(entry.name for entry in islice(entries, MAX_SHARDS + 3))
-        if len(names) > MAX_SHARDS + 2 or any(name not in ("context.json", "terminal.json") and _SHARD.fullmatch(name) is None for name in names):
+        if len(names) > MAX_SHARDS + 2 or any(
+            name not in ("context.json", "terminal.json") and _SHARD.fullmatch(name) is None
+            for name in names
+        ):
             raise ValueError("Unexpected or excessive sink files")
         shard_names = [name for name in names if _SHARD.fullmatch(name)]
         if shard_names != [f"events-{i:02}.jsonl" for i in range(len(shard_names))]:
@@ -345,7 +379,13 @@ def inspect_sink(root: Path, *, max_bytes: int) -> SinkInspection:
         terminal_raw: bytes | None = None
         shards: list[ShardObservation] = []
         for name in names:
-            limit = CONTEXT_BYTES if name == "context.json" else TERMINAL_BYTES if name == "terminal.json" else SHARD_BYTES
+            limit = (
+                CONTEXT_BYTES
+                if name == "context.json"
+                else TERMINAL_BYTES
+                if name == "terminal.json"
+                else SHARD_BYTES
+            )
             raw = _read_file(anchor, name, min(limit, max_bytes - actual))
             actual += len(raw)
             if name == "context.json":
@@ -360,7 +400,9 @@ def inspect_sink(root: Path, *, max_bytes: int) -> SinkInspection:
             hashlib.sha256(context_raw).hexdigest() if context_raw is not None else None,
             context_raw is not None and _canonical_context(context_raw),
             hashlib.sha256(terminal_raw).hexdigest() if terminal_raw is not None else None,
-            "present-unconfirmed" if terminal_raw is not None else "missing", tuple(shards), actual,
+            "present-unconfirmed" if terminal_raw is not None else "missing",
+            tuple(shards),
+            actual,
         )
     except BaseException as error:
         primary = error
@@ -431,14 +473,24 @@ class PrimitiveFileSink:
         except BaseException as primary:
             value._remember("context", primary)
             for error in value._anchor.close():
-                primary.add_note("Supplemental create anchor close failure: " + type(error).__name__[:96])
+                primary.add_note(
+                    "Supplemental create anchor close failure: " + type(error).__name__[:96]
+                )
             raise
         return value
 
     def snapshot(self) -> SinkSnapshot:
-        return SinkSnapshot(self._reserved_events, self._confirmed_events, self._reserved_bytes,
-                            self._confirmed_bytes, self._written_bytes, self._stopped, self._finished,
-                            tuple(self._faults), self._unretained_faults)
+        return SinkSnapshot(
+            self._reserved_events,
+            self._confirmed_events,
+            self._reserved_bytes,
+            self._confirmed_bytes,
+            self._written_bytes,
+            self._stopped,
+            self._finished,
+            tuple(self._faults),
+            self._unretained_faults,
+        )
 
     def _remember(self, phase: str, error: BaseException) -> None:
         self._stopped = True
@@ -451,7 +503,7 @@ class PrimitiveFileSink:
             self._unretained_faults += 1
 
     def _drain_close_faults(self) -> None:
-        for error in self._anchor.close_faults[self._close_fault_count:]:
+        for error in self._anchor.close_faults[self._close_fault_count :]:
             self._remember("descriptor_close", error)
         self._close_fault_count = len(self._anchor.close_faults)
 
@@ -522,9 +574,17 @@ class PrimitiveFileSink:
         progress = [0]
         phase = "append_preflight"
         try:
-            if type(raw) is not bytes or not 1 <= len(raw) <= EVENT_BYTES or not raw.endswith(b"\n") or raw.count(b"\n") != 1:
+            if (
+                type(raw) is not bytes
+                or not 1 <= len(raw) <= EVENT_BYTES
+                or not raw.endswith(b"\n")
+                or raw.count(b"\n") != 1
+            ):
                 raise ValueError("One exact bounded recorder line required")
-            if self._reserved_events >= self._max_events or self._reserved_bytes + len(raw) > self._event_capacity:
+            if (
+                self._reserved_events >= self._max_events
+                or self._reserved_bytes + len(raw) > self._event_capacity
+            ):
                 raise ValueError("Sink event allowance exhausted")
             self._reserved_events += 1
             self._reserved_bytes += len(raw)  # Full reservation remains after unknown delivery.
@@ -587,9 +647,16 @@ class PrimitiveFileSink:
                     shards.append({"name": name, "observation": "unavailable"})
                 self._drain_close_faults()
             try:
-                raw = _encode({"schema": SCHEMA, "state": "pending_external_confirmation",
-                               "context_sha256": hashlib.sha256(self._context_raw).hexdigest(),
-                               "snapshot_before_terminal": asdict(self.snapshot()), "shards": shards}, TERMINAL_BYTES)
+                raw = _encode(
+                    {
+                        "schema": SCHEMA,
+                        "state": "pending_external_confirmation",
+                        "context_sha256": hashlib.sha256(self._context_raw).hexdigest(),
+                        "snapshot_before_terminal": asdict(self.snapshot()),
+                        "shards": shards,
+                    },
+                    TERMINAL_BYTES,
+                )
                 terminal_hash = hashlib.sha256(raw).hexdigest()
                 self._metadata("terminal.json", raw)
                 acknowledged = True

@@ -24,6 +24,7 @@ import strange_physics.simulation as simulation
 def no_science(monkeypatch: pytest.MonkeyPatch) -> None:
     def deny(*args: object, **kwargs: object) -> NoReturn:
         raise AssertionError("File sink tests cannot execute scientific producers")
+
     for name in ("position", "exp", "log", "circle_constant", "trig"):
         monkeypatch.setattr(EndpointOracle, name, deny)
     monkeypatch.setattr(prediction, "predict_native_spring", deny)
@@ -33,8 +34,18 @@ def no_science(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 def context(*, max_calls: int = 4, max_bytes: int = 32768) -> sink.SinkContext:
-    return sink.SinkContext("recorder-a", "run-a", "a" * 40, "b" * 40, "c" * 64,
-                            "d" * 64, "e" * 64, "f" * 64, max_calls, max_bytes)
+    return sink.SinkContext(
+        "recorder-a",
+        "run-a",
+        "a" * 40,
+        "b" * 40,
+        "c" * 64,
+        "d" * 64,
+        "e" * 64,
+        "f" * 64,
+        max_calls,
+        max_bytes,
+    )
 
 
 def create(tmp_path: Path, value: sink.SinkContext | None = None) -> sink.PrimitiveFileSink:
@@ -60,7 +71,9 @@ def test_success_keeps_exact_bytes_and_only_pending_external_terminal(tmp_path: 
     assert report.actual_bytes == sum(p.stat().st_size for p in (tmp_path / "sink").iterdir())
 
 
-def test_exact_context_limits_are_derived_without_payload_or_verification_flags(tmp_path: Path) -> None:
+def test_exact_context_limits_are_derived_without_payload_or_verification_flags(
+    tmp_path: Path,
+) -> None:
     actual = context(max_calls=55100, max_bytes=64 * 1024**2)
     value = create(tmp_path, actual)
     raw = (tmp_path / "sink/context.json").read_bytes()
@@ -74,12 +87,22 @@ def test_exact_context_limits_are_derived_without_payload_or_verification_flags(
     assert value.finish().terminal_acknowledged
 
 
-@pytest.mark.parametrize("field,bad", (
-    ("max_calls", True), ("max_calls", 0), ("max_calls", 55101),
-    ("max_bytes", True), ("max_bytes", 20480), ("max_bytes", 64 * 1024**2 + 1),
-    ("source_commit", "a" * 40 + "\n"), ("source_tree", "g" * 40),
-    ("recorder_id", "../r"), ("run_id", "r" * 97), ("sink_sha256", "f" * 63),
-))
+@pytest.mark.parametrize(
+    "field,bad",
+    (
+        ("max_calls", True),
+        ("max_calls", 0),
+        ("max_calls", 55101),
+        ("max_bytes", True),
+        ("max_bytes", 20480),
+        ("max_bytes", 64 * 1024**2 + 1),
+        ("source_commit", "a" * 40 + "\n"),
+        ("source_tree", "g" * 40),
+        ("recorder_id", "../r"),
+        ("run_id", "r" * 97),
+        ("sink_sha256", "f" * 63),
+    ),
+)
 def test_invalid_context_cannot_create_a_directory(tmp_path: Path, field: str, bad: object) -> None:
     value = context()
     object.__setattr__(value, field, bad)
@@ -141,7 +164,9 @@ def test_exact_event_allowance_exhaustion_is_not_reusable(tmp_path: Path, bound:
     assert value.finish().terminal_acknowledged
 
 
-def test_small_test_only_rotation_preserves_lines_and_fixed_metadata_reservation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_small_test_only_rotation_preserves_lines_and_fixed_metadata_reservation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     # Exercise geometry with 8-byte shards; the separate context test pins 4 MiB.
     with monkeypatch.context() as patch:
         patch.setattr(sink, "SHARD_BYTES", 8)
@@ -155,7 +180,9 @@ def test_small_test_only_rotation_preserves_lines_and_fixed_metadata_reservation
         assert sink.inspect_sink(tmp_path / "sink", max_bytes=32768).actual_bytes < 20480
 
 
-def test_small_test_only_shard_count_limit_is_fail_stop(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_small_test_only_shard_count_limit_is_fail_stop(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     with monkeypatch.context() as patch:
         patch.setattr(sink, "SHARD_BYTES", 3)
         patch.setattr(sink, "MAX_SHARDS", 2)
@@ -168,17 +195,22 @@ def test_small_test_only_shard_count_limit_is_fail_stop(tmp_path: Path, monkeypa
         assert value.finish().snapshot.stopped
 
 
-def test_short_writes_are_one_event_and_fsync_precedes_confirmation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_short_writes_are_one_event_and_fsync_precedes_confirmation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     value = create(tmp_path)
     write, sync = os.write, os.fsync
     calls: list[int] = []
     acknowledged_at_sync: list[int] = []
+
     def short(fd: int, raw: bytes | memoryview) -> int:
         calls.append(len(raw))
         return write(fd, raw[:1])
+
     def observe(fd: int) -> None:
         acknowledged_at_sync.append(value.snapshot().confirmed_events)
         sync(fd)
+
     with monkeypatch.context() as patch:
         patch.setattr(os, "write", short)
         patch.setattr(os, "fsync", observe)
@@ -190,11 +222,14 @@ def test_short_writes_are_one_event_and_fsync_precedes_confirmation(tmp_path: Pa
 
 
 @pytest.mark.parametrize("kind", ("zero", "raise", "interrupt", "after-partial"))
-def test_write_failure_preserves_unknown_reservation_and_never_retries(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+def test_write_failure_preserves_unknown_reservation_and_never_retries(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
     value = create(tmp_path)
     real = os.write
     count = 0
     primary = KeyboardInterrupt() if kind == "interrupt" else OSError("owned failure")
+
     def fail(fd: int, raw: bytes | memoryview) -> int:
         nonlocal count
         count += 1
@@ -203,6 +238,7 @@ def test_write_failure_preserves_unknown_reservation_and_never_retries(tmp_path:
         if kind == "after-partial" and count == 1:
             return real(fd, raw[:2])
         raise primary
+
     with monkeypatch.context() as patch:
         patch.setattr(os, "write", fail)
         with pytest.raises((OSError, KeyboardInterrupt)):
@@ -220,16 +256,20 @@ def test_write_failure_preserves_unknown_reservation_and_never_retries(tmp_path:
 
 
 @pytest.mark.parametrize("where", ("new-shard-directory", "data"))
-def test_fsync_failure_never_turns_readable_bytes_into_ack(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, where: str) -> None:
+def test_fsync_failure_never_turns_readable_bytes_into_ack(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, where: str
+) -> None:
     value = create(tmp_path)
     real = os.fsync
     error = OSError("sync failed")
+
     def fail(fd: int) -> None:
         if (where == "new-shard-directory" and fd == value._anchor.directory) or (
             where == "data" and fd == value._fd and os.fstat(fd).st_size > 0
         ):
             raise error
         real(fd)
+
     with monkeypatch.context() as patch:
         patch.setattr(os, "fsync", fail)
         with pytest.raises(OSError) as caught:
@@ -242,54 +282,74 @@ def test_fsync_failure_never_turns_readable_bytes_into_ack(tmp_path: Path, monke
     assert report.acknowledgement == "not-inferred"
 
 
-def test_primary_write_error_survives_close_error_and_terminal_is_pending(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_primary_write_error_survives_close_error_and_terminal_is_pending(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     value = create(tmp_path)
     original = OSError("original")
     with monkeypatch.context() as patch:
+
         def fail_write(fd: int, raw: bytes | memoryview) -> NoReturn:
             raise original
+
         patch.setattr(os, "write", fail_write)
         with pytest.raises(OSError):
             value.append(b"{}\n")
     target = value._fd
     real = os.close
     failed = False
+
     def fail_close(fd: int) -> None:
         nonlocal failed
         real(fd)
         if fd == target and not failed:
             failed = True
             raise PermissionError("ambiguous close")
+
     with monkeypatch.context() as patch:
         patch.setattr(os, "close", fail_close)
         result = value.finish()
     assert value.first_exception is original
     assert not result.descriptors_closed and result.terminal_acknowledged
     assert any(f.phase == "data_close" for f in result.snapshot.faults)
-    assert json.loads((tmp_path / "sink/terminal.json").read_bytes())["state"] == "pending_external_confirmation"
+    assert (
+        json.loads((tmp_path / "sink/terminal.json").read_bytes())["state"]
+        == "pending_external_confirmation"
+    )
 
 
 @pytest.mark.parametrize("when", ("intent", "return"))
-def test_recorder_retention_failure_does_not_fabricate_primitive_failure(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, when: str) -> None:
+def test_recorder_retention_failure_does_not_fabricate_primitive_failure(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, when: str
+) -> None:
     value = create(tmp_path)
     recorder = PrimitiveRecorder(value.append, max_calls=1, max_bytes=8192)
     invoked: list[str] = []
     real = os.write
     writes = 0
+
     def fail(fd: int, raw: bytes | memoryview) -> int:
         nonlocal writes
         writes += 1
         if writes == (1 if when == "intent" else 2):
             raise OSError("retention")
         return real(fd, raw)
+
     def owned() -> Decimal:
         invoked.append("owned")
         return Decimal("-0.00")
+
     with monkeypatch.context() as patch:
         patch.setattr(os, "write", fail)
         with pytest.raises(OSError):
-            recorder.call(call_id="c", instance_id="i", primitive="log", scope=("scope",),
-                          arguments=Decimal(1), invoke=owned)
+            recorder.call(
+                call_id="c",
+                instance_id="i",
+                primitive="log",
+                scope=("scope",),
+                arguments=Decimal(1),
+                invoke=owned,
+            )
     snap = recorder.snapshot()
     assert snap.invoked == snap.returned == (0 if when == "intent" else 1)
     assert snap.primitive_failed == 0 and snap.stopped
@@ -333,7 +393,9 @@ def test_root_name_substitution_stops_the_pinned_writer(tmp_path: Path) -> None:
 
 
 @pytest.mark.parametrize("owner", ("pid", "thread"))
-def test_other_owner_cannot_write_or_close(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, owner: str) -> None:
+def test_other_owner_cannot_write_or_close(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, owner: str
+) -> None:
     value = create(tmp_path)
     with monkeypatch.context() as patch:
         if owner == "pid":
@@ -349,10 +411,13 @@ def test_other_owner_cannot_write_or_close(tmp_path: Path, monkeypatch: pytest.M
 
 
 @pytest.mark.parametrize("operation", ("append", "finish"))
-def test_reentry_cannot_be_swallowed_into_success(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, operation: str) -> None:
+def test_reentry_cannot_be_swallowed_into_success(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, operation: str
+) -> None:
     value = create(tmp_path)
     real = os.write
     entered = False
+
     def reenter(fd: int, raw: bytes | memoryview) -> int:
         nonlocal entered
         if not entered:
@@ -360,6 +425,7 @@ def test_reentry_cannot_be_swallowed_into_success(tmp_path: Path, monkeypatch: p
             with pytest.raises(sink.SinkStopped):
                 value.append(b"{}\n") if operation == "append" else value.finish()
         return real(fd, raw)
+
     with monkeypatch.context() as patch:
         patch.setattr(os, "write", reenter)
         with pytest.raises(sink.SinkStopped):
@@ -369,9 +435,12 @@ def test_reentry_cannot_be_swallowed_into_success(tmp_path: Path, monkeypatch: p
 
 
 @pytest.mark.parametrize("failure", ("write", "fsync", "reentry"))
-def test_finish_is_consumed_even_when_terminal_retention_fails(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, failure: str) -> None:
+def test_finish_is_consumed_even_when_terminal_retention_fails(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, failure: str
+) -> None:
     value = create(tmp_path)
     write, sync = os.write, os.fsync
+
     def terminal_write(fd: int, raw: bytes | memoryview) -> int:
         if failure == "write":
             write(fd, raw[:2])
@@ -380,10 +449,12 @@ def test_finish_is_consumed_even_when_terminal_retention_fails(tmp_path: Path, m
             with pytest.raises(sink.SinkStopped):
                 value.finish()
         return write(fd, raw)
+
     def terminal_sync(fd: int) -> None:
         if failure == "fsync":
             raise OSError("terminal sync")
         sync(fd)
+
     with monkeypatch.context() as patch:
         patch.setattr(os, "write", terminal_write)
         patch.setattr(os, "fsync", terminal_sync)
@@ -397,8 +468,20 @@ def test_finish_is_consumed_even_when_terminal_retention_fails(tmp_path: Path, m
     assert inspection.terminal_state == "present-unconfirmed"
 
 
-@pytest.mark.parametrize("change", ("missing-context", "extra-context-field", "partial-context", "unexpected-file", "shard-gap", "read-budget"))
-def test_inspection_never_promotes_partial_or_substituted_material(tmp_path: Path, change: str) -> None:
+@pytest.mark.parametrize(
+    "change",
+    (
+        "missing-context",
+        "extra-context-field",
+        "partial-context",
+        "unexpected-file",
+        "shard-gap",
+        "read-budget",
+    ),
+)
+def test_inspection_never_promotes_partial_or_substituted_material(
+    tmp_path: Path, change: str
+) -> None:
     value = create(tmp_path)
     value.append(b"{}\n")
     value.finish()
@@ -424,31 +507,57 @@ def test_inspection_never_promotes_partial_or_substituted_material(tmp_path: Pat
 
 
 def test_largest_bounded_identity_context_and_terminal_fit_reserved_bytes(tmp_path: Path) -> None:
-    actual = replace(context(max_calls=55100, max_bytes=64 * 1024**2), recorder_id="r" * 96, run_id="u" * 96)
+    actual = replace(
+        context(max_calls=55100, max_bytes=64 * 1024**2), recorder_id="r" * 96, run_id="u" * 96
+    )
     value = create(tmp_path, actual)
     value.finish()
     assert (tmp_path / "sink/context.json").stat().st_size <= 4096
     assert (tmp_path / "sink/terminal.json").stat().st_size <= 16384
     assert sink.inspect_sink(tmp_path / "sink", max_bytes=32768).actual_bytes < 20480
     # Maximum metadata shape, without allocating sixteen full data shards.
-    worst = sink.SinkSnapshot(110201, 110200, 64 * 1024**2, 64 * 1024**2,
-                              64 * 1024**2, True, True,
-                              tuple(sink.SinkFault("ownership_or_reentry", "e" * 192, False)
-                                    for _ in range(sink.MAX_FAULTS)), 99)
-    shards = [asdict(sink.ShardObservation(f"events-{i:02}.jsonl", sink.SHARD_BYTES,
-                                          "f" * 64, 110201, 4095)) for i in range(16)]
-    raw = sink._encode({"schema": sink.SCHEMA, "state": "pending_external_confirmation",
-                        "context_sha256": "f" * 64,
-                        "snapshot_before_terminal": asdict(worst), "shards": shards}, 16384)
+    worst = sink.SinkSnapshot(
+        110201,
+        110200,
+        64 * 1024**2,
+        64 * 1024**2,
+        64 * 1024**2,
+        True,
+        True,
+        tuple(
+            sink.SinkFault("ownership_or_reentry", "e" * 192, False) for _ in range(sink.MAX_FAULTS)
+        ),
+        99,
+    )
+    shards = [
+        asdict(
+            sink.ShardObservation(f"events-{i:02}.jsonl", sink.SHARD_BYTES, "f" * 64, 110201, 4095)
+        )
+        for i in range(16)
+    ]
+    raw = sink._encode(
+        {
+            "schema": sink.SCHEMA,
+            "state": "pending_external_confirmation",
+            "context_sha256": "f" * 64,
+            "snapshot_before_terminal": asdict(worst),
+            "shards": shards,
+        },
+        16384,
+    )
     assert len(raw) <= 16384
 
 
-def test_first_context_write_failure_keeps_partial_root_and_consumes_creation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_first_context_write_failure_keeps_partial_root_and_consumes_creation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     real = os.write
     error = OSError("context partial")
+
     def fail(fd: int, raw: bytes | memoryview) -> NoReturn:
         real(fd, raw[:2])
         raise error
+
     with monkeypatch.context() as patch:
         patch.setattr(os, "write", fail)
         with pytest.raises(OSError) as caught:
@@ -461,10 +570,13 @@ def test_first_context_write_failure_keeps_partial_root_and_consumes_creation(tm
     assert not report.context_canonical and report.terminal_state == "missing"
 
 
-def test_name_swap_during_fsync_cannot_acknowledge_wrong_named_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_name_swap_during_fsync_cannot_acknowledge_wrong_named_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     value = create(tmp_path)
     real = os.fsync
     moved = False
+
     def swap(fd: int) -> None:
         nonlocal moved
         real(fd)
@@ -474,6 +586,7 @@ def test_name_swap_during_fsync_cannot_acknowledge_wrong_named_file(tmp_path: Pa
             path.rename(tmp_path / "preserved")
             path.write_bytes(b"different\n")
             path.chmod(0o600)
+
     with monkeypatch.context() as patch:
         patch.setattr(os, "fsync", swap)
         with pytest.raises(ValueError):
@@ -489,7 +602,6 @@ def test_exact_4096_byte_event_is_retained_without_truncation(tmp_path: Path) ->
     result = value.finish()
     assert result.snapshot.confirmed_bytes == 4096
     assert (tmp_path / "sink/events-00.jsonl").read_bytes() == raw
-
 
 
 def test_parent_fsync_failure_precedes_context_write_and_consumes_root(
@@ -541,6 +653,7 @@ def test_failed_append_and_recorder_fallback_perform_no_more_filesystem_io(
         return Decimal(1)
 
     with monkeypatch.context() as patch:
+
         def first_write(fd: int, raw: bytes | memoryview) -> NoReturn:
             for name in ("stat", "lstat", "fstat", "open", "write", "fsync"):
                 patch.setattr(os, name, no_io)
@@ -548,8 +661,14 @@ def test_failed_append_and_recorder_fallback_perform_no_more_filesystem_io(
 
         patch.setattr(os, "write", first_write)
         with pytest.raises(OSError) as caught:
-            recorder.call(call_id="c", instance_id="i", primitive="log", scope=("scope",),
-                          arguments=Decimal(1), invoke=owned)
+            recorder.call(
+                call_id="c",
+                instance_id="i",
+                primitive="log",
+                scope=("scope",),
+                arguments=Decimal(1),
+                invoke=owned,
+            )
         with pytest.raises(sink.SinkStopped):
             value.append(b"{}\n")
     assert caught.value is primary and value.first_exception is primary
