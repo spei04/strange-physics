@@ -1,17 +1,18 @@
 """Synthetic adapter checks; every real physical/reference method is poisoned."""
+
 from __future__ import annotations
 
 from dataclasses import replace
 from decimal import ROUND_UP, Decimal, localcontext
 from typing import NoReturn
+
+import d1_prefix_evidence as a
+import pytest
 from d1_bounds import D1Certificate
 from d1_fixture_reference import FixtureBatch
-
-import pytest
 from endpoint_belief_reference import EndpointOracle
 from test_calibration_fixture_contracts import public
 
-import d1_prefix_evidence as a
 import strange_physics.native_endpoint_beliefs as native_belief
 import strange_physics.native_prediction as native_prediction
 from strange_physics.contracts import Frame, ObservationBundle, Trajectory
@@ -26,7 +27,10 @@ D = Decimal
 @pytest.fixture(autouse=True)
 def poison_physics(monkeypatch: pytest.MonkeyPatch) -> None:
     def deny(*args: object, **kwargs: object) -> NoReturn:
-        raise AssertionError("No real D1 reference, simulator or native predictor in synthetic tests")
+        raise AssertionError(
+            "No real D1 reference, simulator or native predictor in synthetic tests"
+        )
+
     for name in ("position", "exp", "log", "circle_constant", "trig"):
         monkeypatch.setattr(EndpointOracle, name, deny)
     monkeypatch.setattr(native_prediction, "predict_native_spring", deny)
@@ -41,40 +45,68 @@ def bound(case: a.CaseId = "M03", count: int = 256, token: str = "1") -> a.Bound
     particle = training.particles[0].model_copy(update={"position": (1.0, 0.0)})
     future = training.model_copy(update={"particles": (particle,)})
     pool = a.freeze_pool(count, value.observations.space.structure, training, future)
-    actual = a.NativeCandidateInput(pool=pool.pool, config=pool.candidate_config,
-                                    observations=value.observations)
+    actual = a.NativeCandidateInput(
+        pool=pool.pool, config=pool.candidate_config, observations=value.observations
+    )
     # Enumeration binds synthetic public metadata only; no physical forward occurs.
     result = produce_native_candidates(actual, attempt_id="candidate-a")
     return a.bind_candidates(case, pool, value, actual, result, attempt_id="candidate-a")
 
 
-def fake_prediction(actual: a.NativePredictionInput, *, attempt_id: str) -> a.NativePredictionResult:
+def fake_prediction(
+    actual: a.NativePredictionInput, *, attempt_id: str
+) -> a.NativePredictionResult:
     q = actual.request.experiment.particles[0].position[0]
     # This constant synthetic surrogate deliberately ignores the spring coefficient.
-    frames = tuple(Frame(time=t, positions=((q if t == 0 else q*0.75, 0.0),),
-                         velocities=((0.0, 0.0),)) for t in actual.request.times)
+    frames = tuple(
+        Frame(time=t, positions=((q if t == 0 else q * 0.75, 0.0),), velocities=((0.0, 0.0),))
+        for t in actual.request.times
+    )
     model_sha = message_sha256(actual.model)
-    payload = NativePredictionOutcome(status="predicted", reason=None,
-        actual_model_sha256=model_sha, requested_model_sha256=actual.request.model_sha256,
-        request_sha256=message_sha256(actual.request), candidate_config_sha256=message_sha256(actual.candidate_config),
-        prediction_config_sha256=message_sha256(actual.config), observation_sha256=actual.model.observation_sha256,
-        requested_frame_count=2, computed_frame_count=2, returned_frame_count=2, failed_frame_index=None,
-        response=PredictionResponse(model_sha256=model_sha, trajectory=Trajectory(frames=frames)))
-    return a.NativePredictionResult(payload=payload, facts=NativeWorkFacts(
-        attempt_id=attempt_id, operation="prediction", producer_version=actual.config.predictor_version,
-        config_sha256=message_sha256(actual.config), input_sha256=message_sha256(actual),
-        observation_sha256=actual.model.observation_sha256, model_sha256=model_sha,
-        output_sha256=message_sha256(payload), unit="frame", requested_count=2,
-        completed_count=2, failed_count=0, not_assessed_count=0, outcome="completed"))
+    payload = NativePredictionOutcome(
+        status="predicted",
+        reason=None,
+        actual_model_sha256=model_sha,
+        requested_model_sha256=actual.request.model_sha256,
+        request_sha256=message_sha256(actual.request),
+        candidate_config_sha256=message_sha256(actual.candidate_config),
+        prediction_config_sha256=message_sha256(actual.config),
+        observation_sha256=actual.model.observation_sha256,
+        requested_frame_count=2,
+        computed_frame_count=2,
+        returned_frame_count=2,
+        failed_frame_index=None,
+        response=PredictionResponse(model_sha256=model_sha, trajectory=Trajectory(frames=frames)),
+    )
+    return a.NativePredictionResult(
+        payload=payload,
+        facts=NativeWorkFacts(
+            attempt_id=attempt_id,
+            operation="prediction",
+            producer_version=actual.config.predictor_version,
+            config_sha256=message_sha256(actual.config),
+            input_sha256=message_sha256(actual),
+            observation_sha256=actual.model.observation_sha256,
+            model_sha256=model_sha,
+            output_sha256=message_sha256(payload),
+            unit="frame",
+            requested_count=2,
+            completed_count=2,
+            failed_count=0,
+            not_assessed_count=0,
+            outcome="completed",
+        ),
+    )
 
 
 class FakeOracle(EndpointOracle):
     """Counter/transport surrogate; its log/pi values are not numerical evidence."""
+
     def position(self, key: a.Key) -> Decimal:
         self.lookups += 1
         self.series_values += 1
         assert key not in self.values
-        self.values[key] = D.from_float(key[3]*0.75)
+        self.values[key] = D.from_float(key[3] * 0.75)
         return self.values[key]
 
     def exp(self, value: Decimal) -> Decimal:
@@ -99,14 +131,21 @@ def reference(monkeypatch: pytest.MonkeyPatch) -> a.D1Reference:
 def test_prefix_free_pool(count: int) -> None:
     b = bound(count=count)
     assert len(b.frozen.pool.coefficients) == count
-    assert b.frozen.pool.coefficients[0] == 2/count
-    assert b.frozen.pool.coefficients[-1] == 4-2/count
+    assert b.frozen.pool.coefficients[0] == 2 / count
+    assert b.frozen.pool.coefficients[-1] == 4 - 2 / count
     assert "observations" not in a.PoolMaterial.model_fields
     assert a.rebind(b) == b
 
 
-@pytest.mark.parametrize("field,value", [("count", 64), ("protocol_sha256", "0"*64),
-                                         ("cells", ()), ("pool", a.NativeSpringPool(coefficients=(1.0,)))])
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("count", 64),
+        ("protocol_sha256", "0" * 64),
+        ("cells", ()),
+        ("pool", a.NativeSpringPool(coefficients=(1.0,))),
+    ],
+)
 def test_freeze_mutation_is_rederived(field: str, value: object) -> None:
     b = bound()
     with pytest.raises(ValueError):
@@ -169,15 +208,22 @@ def test_cache_rejects_wrong_slot_without_forward(fault: str) -> None:
     b = bound("D03")
     cache = a.FirstRecordCache(b, "first")
     with pytest.raises(ValueError):
-        cache.consume(0, 1 if fault == "record" else 0, 0.5 if fault == "scale" else 0.25,
-                      a.request_for(b, 0), "other" if fault == "attempt" else "first")
+        cache.consume(
+            0,
+            1 if fault == "record" else 0,
+            0.5 if fault == "scale" else 0.25,
+            a.request_for(b, 0),
+            "other" if fault == "attempt" else "first",
+        )
     assert cache.failed and cache.attempted == 0
 
 
 def test_precompute_failure_cannot_retry() -> None:
     cache = a.FirstRecordCache(bound(), "first")
+
     def fail(actual: a.NativePredictionInput, *, attempt_id: str) -> a.NativePredictionResult:
         raise RuntimeError("injected")
+
     with pytest.raises(RuntimeError):
         cache.precompute(fail)
     assert cache.attempted == 1 and not cache.rows and cache.failed
@@ -185,7 +231,9 @@ def test_precompute_failure_cannot_retry() -> None:
         cache.precompute(fake_prediction)
 
 
-def test_reference_full_endpoint_census_bypasses_legacy_lookups(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_reference_full_endpoint_census_bypasses_legacy_lookups(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     refs = reference(monkeypatch)
     for case in a.CASE_IDS:
         for count in a.COUNTS:
@@ -207,8 +255,10 @@ def test_reference_full_endpoint_census_bypasses_legacy_lookups(monkeypatch: pyt
 
 def test_reference_first_fault_blocks_new_slots(monkeypatch: pytest.MonkeyPatch) -> None:
     refs = reference(monkeypatch)
+
     def fail(key: a.Key) -> Decimal:
         raise RuntimeError("injected reference failure")
+
     monkeypatch.setattr(refs.channels["strong"], "position", fail)
     with pytest.raises(RuntimeError):
         refs.training("M01", 256, 0.125, 0, 0)
@@ -218,7 +268,9 @@ def test_reference_first_fault_blocks_new_slots(monkeypatch: pytest.MonkeyPatch)
     assert refs.census()["logical_attempted"] == 1
 
 
-def test_reference_duplicate_logical_slot_is_not_another_lookup(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_reference_duplicate_logical_slot_is_not_another_lookup(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     refs = reference(monkeypatch)
     refs.take_training("D03", 256, 0.25, 0, 0)
     refs.take_training("D03", 256, 0.25, 0, 1)
@@ -228,7 +280,7 @@ def test_reference_duplicate_logical_slot_is_not_another_lookup(monkeypatch: pyt
         refs.take_training("D03", 256, 0.25, 0, 1)
 
 
-@pytest.mark.parametrize("bad", [D("NaN"), D("Infinity"), D("1.23456789"+"1"*100)])
+@pytest.mark.parametrize("bad", [D("NaN"), D("Infinity"), D("1.23456789" + "1" * 100)])
 def test_transcendental_center_shape(bad: Decimal) -> None:
     with pytest.raises(ValueError):
         a.rounded_decimal(bad)
@@ -242,7 +294,9 @@ def test_positive_log_perturbation_encloses_rational_argument() -> None:
         a.log_perturbation(D(1), a.Interval(D(0), D(1)), D(0))
 
 
-def test_reference_constants_and_normalization_counts_are_separate(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_reference_constants_and_normalization_counts_are_separate(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     refs = reference(monkeypatch)
     constants = refs.constants()
     assert refs.constants() is constants
@@ -250,7 +304,7 @@ def test_reference_constants_and_normalization_counts_are_separate(monkeypatch: 
     assert refs.census()["machin_terms"] == 128
     joint = tuple(a.ReferenceValue(D(0), a.point(0)) for _ in range(256))
     result = refs.normalize("M01", 256, 0.125, joint)
-    assert result.probabilities[0].lower <= D(1)/256 <= result.probabilities[0].upper
+    assert result.probabilities[0].lower <= D(1) / 256 <= result.probabilities[0].upper
     assert refs.census()["exp_calls"] == 256 and refs.census()["log_calls"] == 7
     with pytest.raises(ValueError):
         refs.normalize("M01", 256, 0.125, joint)
@@ -267,7 +321,7 @@ def test_wider_reference_does_not_enlarge_frozen_allowance(monkeypatch: pytest.M
 
 def test_training_bound_uses_half_time_and_ignores_ambient_context() -> None:
     frozen = bound("W03").frozen
-    endpoints = (0.09375,)*256
+    endpoints = (0.09375,) * 256
     expected = a.training_forecast(frozen, endpoints, D("1e-60"), source="prior")
     with localcontext() as c:
         c.prec = 3
@@ -283,10 +337,12 @@ def test_forecast_rejects_infeasible_mass_even_below_working_precision(residual:
     frozen = bound().frozen
     with localcontext() as c:
         c.prec = 200
-        first = D(1)/256+residual
-    masses = (a.point(first),)+(a.point(1.0/256),)*255
+        first = D(1) / 256 + residual
+    masses = (a.point(first),) + (a.point(1.0 / 256),) * 255
     with pytest.raises(ValueError, match="infeasible"):
-        a.training_forecast(frozen, (0.75,)*256, D(0), source="matched-base-posterior", masses=masses)
+        a.training_forecast(
+            frozen, (0.75,) * 256, D(0), source="matched-base-posterior", masses=masses
+        )
 
 
 @pytest.mark.parametrize("center", [D(0), D("1e-256")])
@@ -300,18 +356,26 @@ def test_zero_and_tiny_transcendental_rounding_stay_in_bounded_codec(center: Dec
 
 @pytest.mark.parametrize("records,expected", [(1, D("-2.5")), (2, D(-3))])
 def test_full_prefix_has_duplicate_loss_but_only_one_prior(records: int, expected: Decimal) -> None:
-    result = a.joint_enclosure((0.75,)*records, (a.point(0.5),)*records,
-                               0.25, a.point(0), a.point(-2))
+    result = a.joint_enclosure(
+        (0.75,) * records, (a.point(0.5),) * records, 0.25, a.point(0), a.point(-2)
+    )
     assert result == a.point(expected)
 
 
-@pytest.mark.parametrize("recorded,predicted,scale", [
-    ((), (), 0.25), ((0.75, 0.75), (a.point(0.5),), 0.25),
-    ((float("nan"),), (a.point(0.5),), 0.25),
-    ((0.75,), (a.point(3),), 0.25), ((0.75,), (a.point(0.5),), 0.1),
-])
+@pytest.mark.parametrize(
+    "recorded,predicted,scale",
+    [
+        ((), (), 0.25),
+        ((0.75, 0.75), (a.point(0.5),), 0.25),
+        ((float("nan"),), (a.point(0.5),), 0.25),
+        ((0.75,), (a.point(3),), 0.25),
+        ((0.75,), (a.point(0.5),), 0.1),
+    ],
+)
 def test_whole_prefix_arithmetic_refuses_missing_or_invalid_terms(
-    recorded: tuple[float, ...], predicted: tuple[a.Interval, ...], scale: float,
+    recorded: tuple[float, ...],
+    predicted: tuple[a.Interval, ...],
+    scale: float,
 ) -> None:
     with pytest.raises(ValueError):
         a.joint_enclosure(recorded, predicted, scale, a.point(0), a.point(-2))
@@ -319,20 +383,25 @@ def test_whole_prefix_arithmetic_refuses_missing_or_invalid_terms(
 
 def test_conditioned_native_error_is_separate_from_reference_endpoint_error() -> None:
     native = a.joint_enclosure((0.75,), (a.point(0.5),), 0.25, a.point(0), a.point(0))
-    ideal = a.joint_enclosure((0.75,), (a.around(D("0.499"), D("1e-60")),),
-                              0.25, a.point(0), a.point(0))
+    ideal = a.joint_enclosure(
+        (0.75,), (a.around(D("0.499"), D("1e-60")),), 0.25, a.point(0), a.point(0)
+    )
     assert native == a.point(D("-0.5"))
     assert ideal.upper < native.lower
     assert a.absolute_upper(a.minus(a.point(-0.49), native)) > D("0.009")
 
 
-@pytest.mark.parametrize("actual,reference", [
-    ((a.point(0),), (a.point(1),)),
-    ((a.point(1),), (a.point(D("0.1")),)),
-    ((a.point(D("0.5")),), (a.point(D("0.5")), a.point(D("0.5")))),
-])
+@pytest.mark.parametrize(
+    "actual,reference",
+    [
+        ((a.point(0),), (a.point(1),)),
+        ((a.point(1),), (a.point(D("0.1")),)),
+        ((a.point(D("0.5")),), (a.point(D("0.5")), a.point(D("0.5")))),
+    ],
+)
 def test_probability_error_does_not_drop_or_repair_nodes(
-    actual: tuple[a.Interval, ...], reference: tuple[a.Interval, ...],
+    actual: tuple[a.Interval, ...],
+    reference: tuple[a.Interval, ...],
 ) -> None:
     with pytest.raises(ValueError):
         a.probability_ratio_bound(actual, reference)
@@ -343,12 +412,19 @@ def test_identical_exact_probability_vectors_have_zero_ratio_error() -> None:
     assert a.probability_ratio_bound(values, values) == 0
 
 
-def test_future_join_and_failure_do_not_make_new_native_calls(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_future_join_and_failure_do_not_make_new_native_calls(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     b = bound()
     refs = reference(monkeypatch)
-    rows = tuple(a.bind_prediction(a.request_for(b, i, future=True),
-                 fake_prediction(a.request_for(b, i, future=True), attempt_id="future"),
-                 attempt_id="future") for i in range(256))
+    rows = tuple(
+        a.bind_prediction(
+            a.request_for(b, i, future=True),
+            fake_prediction(a.request_for(b, i, future=True), attempt_id="future"),
+            attempt_id="future",
+        )
+        for i in range(256)
+    )
     qualified = a.qualify_future(b, "future", rows, refs)
     a.validate_future(qualified)
     assert refs.census()["lookups"] == 256
@@ -363,63 +439,123 @@ def test_future_join_and_failure_do_not_make_new_native_calls(monkeypatch: pytes
 
 
 def belief_input(b: a.BoundCandidates, scale: float = 0.25, attempt: str = "belief") -> bytes:
-    return a.encoded(a.NativeEndpointBeliefInput(attempt_id=attempt, candidate_attempt_id=b.attempt_id,
-        candidate_input=b.actual, candidate_result=b.result, prediction_config=b.frozen.prediction_config,
-        profile=a.EndpointBeliefProfile(discrepancy=scale, cells=b.frozen.cells),
-        prediction_budget=b.frozen.count*len(b.public.observations.records)))
+    return a.encoded(
+        a.NativeEndpointBeliefInput(
+            attempt_id=attempt,
+            candidate_attempt_id=b.attempt_id,
+            candidate_input=b.actual,
+            candidate_result=b.result,
+            prediction_config=b.frozen.prediction_config,
+            profile=a.EndpointBeliefProfile(discrepancy=scale, cells=b.frozen.cells),
+            prediction_budget=b.frozen.count * len(b.public.observations.records),
+        )
+    )
 
 
 def synthetic_belief_result(raw: bytes, rows: tuple[a.CapturedPrediction, ...]) -> bytes:
     # Construct a complete metadata/result surrogate; no normalizer is executed.
     import hashlib
+
     from strange_physics.finite_log_weight_contracts import (
-        FiniteLogWeight, FiniteLogWeightInput, FiniteLogWeightResult,
-        NormalizedLogWeight, ShiftedLogNormalizer,
+        FiniteLogWeight,
+        FiniteLogWeightInput,
+        FiniteLogWeightResult,
+        NormalizedLogWeight,
+        ShiftedLogNormalizer,
     )
     from strange_physics.native_endpoint_belief_contracts import EndpointNodeEvaluation
+
     actual = a.parse_native_endpoint_belief_input(raw)
     count = len(actual.candidate_input.pool.coefficients)
     assert count == 256
     hashes = tuple(message_sha256(m) for m in actual.candidate_result.payload.models)
-    nodes = tuple(EndpointNodeEvaluation(model_sha256=h, log_likelihood=0.0, log_prior_mass=0.0) for h in hashes)
-    weights = FiniteLogWeightInput(entries=tuple(FiniteLogWeight(item_sha256=h, kind="finite", log_weight=0.0) for h in hashes))
+    nodes = tuple(
+        EndpointNodeEvaluation(model_sha256=h, log_likelihood=0.0, log_prior_mass=0.0)
+        for h in hashes
+    )
+    weights = FiniteLogWeightInput(
+        entries=tuple(FiniteLogWeight(item_sha256=h, kind="finite", log_weight=0.0) for h in hashes)
+    )
     log_sum = 5.545177444479562
-    normal = FiniteLogWeightResult(input_sha256=message_sha256(weights), status="normalized",
-        input_count=count, finite_count=count, exact_zero_count=0, upstream_failed_indices=(),
-        exp_underflow_indices=(), exp_evaluations=count, fsum_evaluations=1, log_evaluations=1,
-        failure_stage=None, failure_index=None,
+    normal = FiniteLogWeightResult(
+        input_sha256=message_sha256(weights),
+        status="normalized",
+        input_count=count,
+        finite_count=count,
+        exact_zero_count=0,
+        upstream_failed_indices=(),
+        exp_underflow_indices=(),
+        exp_evaluations=count,
+        fsum_evaluations=1,
+        log_evaluations=1,
+        failure_stage=None,
+        failure_index=None,
         normalizer=ShiftedLogNormalizer(maximum_log_weight=0.0, log_scaled_sum=log_sum),
-        entries=tuple(NormalizedLogWeight(item_sha256=h, kind="finite", log_probability=-log_sum) for h in hashes))
+        entries=tuple(
+            NormalizedLogWeight(item_sha256=h, kind="finite", log_probability=-log_sum)
+            for h in hashes
+        ),
+    )
     requested = actual.prediction_budget
     records = len(actual.candidate_input.observations.records)
-    result = a.NativeEndpointBeliefResult(attempt_id=actual.attempt_id,
-        input_raw_sha256=hashlib.sha256(raw).hexdigest(), input_sha256=message_sha256(actual),
-        profile_sha256=message_sha256(actual.profile), candidate_result_sha256=message_sha256(actual.candidate_result),
-        observation_sha256=message_sha256(actual.candidate_input.observations), status="normalized", reason=None,
-        candidate_count=count, completed_record_indices=tuple(range(records)), failed_record_indices=(),
-        predictions_requested=requested, predictions_completed=requested, predictions_failed=0, predictions_unassessed=0,
-        frames_completed=2*requested, frames_failed=0, frames_unassessed=0,
-        likelihood_evaluations=requested, completed_nodes=count, failed_node_index=None, failed_record_index=None,
-        prediction_result_sha256=tuple(message_sha256(x.result) for x in rows), nodes=nodes,
-        normalizer_input=weights, normalization=normal)
+    result = a.NativeEndpointBeliefResult(
+        attempt_id=actual.attempt_id,
+        input_raw_sha256=hashlib.sha256(raw).hexdigest(),
+        input_sha256=message_sha256(actual),
+        profile_sha256=message_sha256(actual.profile),
+        candidate_result_sha256=message_sha256(actual.candidate_result),
+        observation_sha256=message_sha256(actual.candidate_input.observations),
+        status="normalized",
+        reason=None,
+        candidate_count=count,
+        completed_record_indices=tuple(range(records)),
+        failed_record_indices=(),
+        predictions_requested=requested,
+        predictions_completed=requested,
+        predictions_failed=0,
+        predictions_unassessed=0,
+        frames_completed=2 * requested,
+        frames_failed=0,
+        frames_unassessed=0,
+        likelihood_evaluations=requested,
+        completed_nodes=count,
+        failed_node_index=None,
+        failed_record_index=None,
+        prediction_result_sha256=tuple(message_sha256(x.result) for x in rows),
+        nodes=nodes,
+        normalizer_input=weights,
+        normalization=normal,
+    )
     return a.encoded(result, a.RESULT_LIMIT)
 
 
-def synthetic_rows(b: a.BoundCandidates, attempt: str = "belief") -> tuple[a.CapturedPrediction, ...]:
-    return tuple(a.bind_prediction(a.request_for(b, node, record=record),
-        fake_prediction(a.request_for(b, node, record=record), attempt_id=attempt), attempt_id=attempt)
-        for node in range(b.frozen.count) for record in range(len(b.public.observations.records)))
+def synthetic_rows(
+    b: a.BoundCandidates, attempt: str = "belief"
+) -> tuple[a.CapturedPrediction, ...]:
+    return tuple(
+        a.bind_prediction(
+            a.request_for(b, node, record=record),
+            fake_prediction(a.request_for(b, node, record=record), attempt_id=attempt),
+            attempt_id=attempt,
+        )
+        for node in range(b.frozen.count)
+        for record in range(len(b.public.observations.records))
+    )
 
 
-def test_observer_replays_only_record_zero_and_binds_complete_raw_result(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_observer_replays_only_record_zero_and_binds_complete_raw_result(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     b = bound("D03")
     first = a.FirstRecordCache(b, "first")
     first.precompute(fake_prediction)
     first.seal_prior(reference(monkeypatch))
     calls = []
+
     def count(actual: a.NativePredictionInput, *, attempt_id: str) -> a.NativePredictionResult:
         calls.append(message_sha256(actual))
         return fake_prediction(actual, attempt_id=attempt_id)
+
     raw = belief_input(b, attempt="first")
     observer = a.TrainingObserver(raw, b, count, first)
     for node in range(256):
@@ -438,13 +574,17 @@ def test_observer_rejects_wrong_callback_before_forward(wrong: str) -> None:
     b = bound()
     raw = belief_input(b)
     calls = []
+
     def count(actual: a.NativePredictionInput, *, attempt_id: str) -> a.NativePredictionResult:
         calls.append(actual)
         return fake_prediction(actual, attempt_id=attempt_id)
+
     observer = a.TrainingObserver(raw, b, count)
     actual = a.request_for(b, 1 if wrong == "node" else 0)
     if wrong == "configuration":
-        actual = actual.model_copy(update={"request": actual.request.model_copy(update={"times": (0.0, 0.75)})})
+        actual = actual.model_copy(
+            update={"request": actual.request.model_copy(update={"times": (0.0, 0.75)})}
+        )
     with pytest.raises(ValueError):
         observer(actual, attempt_id="wrong" if wrong == "attempt" else "belief")
     assert observer.failed and not calls and observer.attempted == 1
@@ -470,6 +610,7 @@ def test_observer_finish_rejects_incomplete_or_substituted_material(wrong: str) 
 
 class AlignedOracle(FakeOracle):
     """Primitive transport response for binder tests, not a mathematical oracle."""
+
     def log(self, value: Decimal) -> Decimal:
         self.log_calls += 1
         return D.from_float(5.545177444479562) if value == D(256) else D(0)
@@ -482,18 +623,32 @@ def qualified(monkeypatch: pytest.MonkeyPatch) -> a.QualifiedPrefixEvidence:
     raw = belief_input(b)
     rows = synthetic_rows(b)
     result_raw = synthetic_belief_result(raw, rows)
-    prefix = a.BoundPrefix(b, raw, result_raw, a.parse_native_endpoint_belief_input(raw),
-                         a.parse_native_endpoint_belief_result(result_raw), rows)
-    future_rows = tuple(a.bind_prediction(a.request_for(b, i, future=True),
-        fake_prediction(a.request_for(b, i, future=True), attempt_id="future"), attempt_id="future") for i in range(256))
+    prefix = a.BoundPrefix(
+        b,
+        raw,
+        result_raw,
+        a.parse_native_endpoint_belief_input(raw),
+        a.parse_native_endpoint_belief_result(result_raw),
+        rows,
+    )
+    future_rows = tuple(
+        a.bind_prediction(
+            a.request_for(b, i, future=True),
+            fake_prediction(a.request_for(b, i, future=True), attempt_id="future"),
+            attempt_id="future",
+        )
+        for i in range(256)
+    )
     future = a.qualify_future(b, "future", future_rows, refs)
-    return a.qualify_prefix(prefix, future, refs, lambda _: 1.0/256)
+    return a.qualify_prefix(prefix, future, refs, lambda _: 1.0 / 256)
 
 
-def test_full_prefix_binder_retains_actual_vector_and_complete_evidence(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_full_prefix_binder_retains_actual_vector_and_complete_evidence(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     value = qualified(monkeypatch)
     assert len(value.nodes) == len(value.probabilities) == 256
-    assert value.probabilities == tuple(a.point(1.0/256) for _ in range(256))
+    assert value.probabilities == tuple(a.point(1.0 / 256) for _ in range(256))
     assert value.training[0].max_abs_error_upper == 0
     assert value.arithmetic.node_other_arithmetic_upper < D("1e-48")
     assert len(a.prefix_digest(value)) == 64
@@ -501,38 +656,66 @@ def test_full_prefix_binder_retains_actual_vector_and_complete_evidence(monkeypa
         a.bind_prefix(replace(value.bound, captures=value.bound.captures[::-1]))
 
 
-def duplicate_case(monkeypatch: pytest.MonkeyPatch, matched: a.QualifiedPrefixEvidence) -> tuple[FixtureBatch, a.BoundCandidates, D1Certificate, list[FixtureBatch]]:
+def duplicate_case(
+    monkeypatch: pytest.MonkeyPatch, matched: a.QualifiedPrefixEvidence
+) -> tuple[FixtureBatch, a.BoundCandidates, D1Certificate, list[FixtureBatch]]:
     from types import SimpleNamespace
     from typing import cast
+
     from d1_bounds import D1Identity, D1PrefixPremises, certify_d1_prefix
     from d1_fixture_reference import Attempt, FixtureBatch, Sources
     from test_calibration_fixture_contracts import audit
+
     duplicate = bound("D03", token="2")
     left = matched.bound.candidates
-    attempts = (Attempt("M03", left.public, audit(left.public, "M03"), ()),
-                Attempt("D03", duplicate.public, audit(duplicate.public, "D03"), ()))
+    attempts = (
+        Attempt("M03", left.public, audit(left.public, "M03"), ()),
+        Attempt("D03", duplicate.public, audit(duplicate.public, "D03"), ()),
+    )
     # Unit3 already tests actual source/rounding/exposure reconstruction. This
     # transport double proves this layer delegates that required check and joins
     # its returned material; it is not a fabricated scientific source receipt.
-    batch = cast(FixtureBatch, SimpleNamespace(attempts=attempts, commit="c"*40,
-        sources=Sources(commit="c"*40, pins=(), sizes=())))
+    batch = cast(
+        FixtureBatch,
+        SimpleNamespace(
+            attempts=attempts, commit="c" * 40, sources=Sources(commit="c" * 40, pins=(), sizes=())
+        ),
+    )
     checked = []
+
     def verify(actual: FixtureBatch) -> tuple[ObservationBundle, ...]:
         assert actual is batch
         checked.append(actual)
         return tuple(a.candidate_material(x.public) for x in actual.attempts)
+
     monkeypatch.setattr(a, "candidate_materials", verify)
-    identity = D1Identity(case="M03", count=256, scale=D("0.25"), source_commit="c"*40,
+    identity = D1Identity(
+        case="M03",
+        count=256,
+        scale=D("0.25"),
+        source_commit="c" * 40,
         observation_sha256=message_sha256(left.actual.observations),
-        future_query_sha256=message_sha256(left.frozen.future), future_values_sha256=a.future_digest(matched.future),
-        probabilities_sha256=a.probability_digest(matched.probabilities), evidence_sha256=a.prefix_digest(matched))
-    certificate = certify_d1_prefix(D1PrefixPremises(identity, (a.point(0.75),), matched.training,
-                                                     matched.future.endpoints, matched.arithmetic))
+        future_query_sha256=message_sha256(left.frozen.future),
+        future_values_sha256=a.future_digest(matched.future),
+        probabilities_sha256=a.probability_digest(matched.probabilities),
+        evidence_sha256=a.prefix_digest(matched),
+    )
+    certificate = certify_d1_prefix(
+        D1PrefixPremises(
+            identity,
+            (a.point(0.75),),
+            matched.training,
+            matched.future.endpoints,
+            matched.arithmetic,
+        )
+    )
     assert certificate.passed
     return batch, duplicate, certificate, checked
 
 
-def test_d03_equivalence_preserves_provenance_and_uses_no_new_forward(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_d03_equivalence_preserves_provenance_and_uses_no_new_forward(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     matched = qualified(monkeypatch)
     batch, duplicate, certificate, checked = duplicate_case(monkeypatch, matched)
     witness = a.duplicate_forecast(batch, matched, duplicate, certificate)
@@ -543,7 +726,7 @@ def test_d03_equivalence_preserves_provenance_and_uses_no_new_forward(monkeypatc
     assert witness.forecast.finite_mean == a.point(D("0.75"))
     with pytest.raises(ValueError):
         a.duplicate_forecast(batch, matched, duplicate, replace(certificate, passed=False))
-    wrong = replace(certificate.identity, future_query_sha256="f"*64)
+    wrong = replace(certificate.identity, future_query_sha256="f" * 64)
     assert certificate.prefix is not None
     bad_certificate = a.certify_d1_prefix(replace(certificate.prefix, identity=wrong))
     with pytest.raises(ValueError):
@@ -551,40 +734,77 @@ def test_d03_equivalence_preserves_provenance_and_uses_no_new_forward(monkeypatc
     altered = list(matched.emitted)
     altered[0] = 0.25
     with pytest.raises(ValueError):
-        a.duplicate_forecast(batch, replace(matched, emitted=tuple(altered)), duplicate, certificate)
+        a.duplicate_forecast(
+            batch, replace(matched, emitted=tuple(altered)), duplicate, certificate
+        )
 
 
-@pytest.mark.parametrize("field", ["training", "arithmetic", "node", "reference_coverage", "constant", "sum", "probability", "normalized_log"])
-def test_material_recheck_rejects_derived_substitutions(monkeypatch: pytest.MonkeyPatch, field: str) -> None:
+@pytest.mark.parametrize(
+    "field",
+    [
+        "training",
+        "arithmetic",
+        "node",
+        "reference_coverage",
+        "constant",
+        "sum",
+        "probability",
+        "normalized_log",
+    ],
+)
+def test_material_recheck_rejects_derived_substitutions(
+    monkeypatch: pytest.MonkeyPatch, field: str
+) -> None:
     value = qualified(monkeypatch)
     if field == "training":
-        value = replace(value, training=(replace(value.training[0], max_abs_error_upper=D("1e-13")),))
+        value = replace(
+            value, training=(replace(value.training[0], max_abs_error_upper=D("1e-13")),)
+        )
     elif field == "arithmetic":
-        value = replace(value, arithmetic=replace(value.arithmetic, node_other_arithmetic_upper=D(0)))
+        value = replace(
+            value, arithmetic=replace(value.arithmetic, node_other_arithmetic_upper=D(0))
+        )
     elif field == "node":
-        value = replace(value, nodes=(replace(value.nodes[0], conditioned_joint=a.point(0)), *value.nodes[1:]))
+        value = replace(
+            value, nodes=(replace(value.nodes[0], conditioned_joint=a.point(0)), *value.nodes[1:])
+        )
     elif field == "reference_coverage":
         value = replace(value, nodes=(replace(value.nodes[0], references=()), *value.nodes[1:]))
     elif field == "constant":
         gaussian = value.constants.gaussian
-        value = replace(value, constants=replace(value.constants,
-            gaussian=(replace(gaussian[0], enclosure=a.point(0)), *gaussian[1:])))
+        value = replace(
+            value,
+            constants=replace(
+                value.constants,
+                gaussian=(replace(gaussian[0], enclosure=a.point(0)), *gaussian[1:]),
+            ),
+        )
     elif field == "sum":
         value = replace(value, normalization=replace(value.normalization, sum_center=D(255)))
     elif field == "probability":
-        value = replace(value, normalization=replace(value.normalization,
-            probabilities=tuple(a.point(1.0/256) for _ in range(256))))
+        value = replace(
+            value,
+            normalization=replace(
+                value.normalization, probabilities=tuple(a.point(1.0 / 256) for _ in range(256))
+            ),
+        )
     else:
-        value = replace(value, normalization=replace(value.normalization,
-            normalized_logs=tuple(a.point(0) for _ in range(256))))
+        value = replace(
+            value,
+            normalization=replace(
+                value.normalization, normalized_logs=tuple(a.point(0) for _ in range(256))
+            ),
+        )
     with pytest.raises(ValueError):
         a.recheck_prefix_evidence(value)
 
 
 def test_material_recheck_is_pure_under_hostile_context(monkeypatch: pytest.MonkeyPatch) -> None:
     value = qualified(monkeypatch)
+
     def deny(*args: object, **kwargs: object) -> NoReturn:
         raise AssertionError("Recheck must not repeat any primitive/reference computation")
+
     for oracle in (FakeOracle, AlignedOracle):
         for name in ("position", "exp", "log", "circle_constant", "trig"):
             monkeypatch.setattr(oracle, name, deny)
@@ -594,39 +814,65 @@ def test_material_recheck_is_pure_under_hostile_context(monkeypatch: pytest.Monk
         assert a.recheck_prefix_evidence(value) == value
 
 
-def test_d03_rejects_coherent_substituted_masses_and_forged_certificate(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_d03_rejects_coherent_substituted_masses_and_forged_certificate(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     from d1_bounds import D1Identity, D1PrefixPremises, certify_d1_prefix
+
     original = qualified(monkeypatch)
     batch, duplicate, certificate, _ = duplicate_case(monkeypatch, original)
     emitted = (0.25, *original.emitted[1:])
-    altered = replace(original, emitted=emitted, probabilities=a.probabilities(emitted),
-        arithmetic=a.ArithmeticEvidence(D(0), D(0), D(0), D(0), D(0)))
+    altered = replace(
+        original,
+        emitted=emitted,
+        probabilities=a.probabilities(emitted),
+        arithmetic=a.ArithmeticEvidence(D(0), D(0), D(0), D(0), D(0)),
+    )
     assert altered.bound.input_raw == original.bound.input_raw
     assert altered.bound.result_raw == original.bound.result_raw
     assert altered.bound.captures == original.bound.captures
     # Recompute every claimed vector/evidence/certificate join, rather than
     # relying on a stale hash to make the negative test fail trivially.
-    identity = replace(certificate.identity,
+    identity = replace(
+        certificate.identity,
         probabilities_sha256=a.probability_digest(altered.probabilities),
-        evidence_sha256=a.prefix_digest(altered))
+        evidence_sha256=a.prefix_digest(altered),
+    )
     assert type(identity) is D1Identity
-    forged = certify_d1_prefix(D1PrefixPremises(identity, (a.point(0.75),), altered.training,
-                                              altered.future.endpoints, altered.arithmetic))
+    forged = certify_d1_prefix(
+        D1PrefixPremises(
+            identity,
+            (a.point(0.75),),
+            altered.training,
+            altered.future.endpoints,
+            altered.arithmetic,
+        )
+    )
     assert forged.passed
     with pytest.raises(ValueError):
         a.duplicate_forecast(batch, altered, duplicate, forged)
 
 
 @pytest.mark.parametrize("field", ["training", "arithmetic", "constants", "normalization"])
-def test_evidence_digest_binds_derived_material(monkeypatch: pytest.MonkeyPatch, field: str) -> None:
+def test_evidence_digest_binds_derived_material(
+    monkeypatch: pytest.MonkeyPatch, field: str
+) -> None:
     value = qualified(monkeypatch)
     if field == "training":
-        changed = replace(value, training=(replace(value.training[0], max_abs_error_upper=D("1e-13")),))
+        changed = replace(
+            value, training=(replace(value.training[0], max_abs_error_upper=D("1e-13")),)
+        )
     elif field == "arithmetic":
-        changed = replace(value, arithmetic=replace(value.arithmetic, shifted_log_evidence_error_upper=D(0)))
+        changed = replace(
+            value, arithmetic=replace(value.arithmetic, shifted_log_evidence_error_upper=D(0))
+        )
     elif field == "constants":
         changed = replace(value, constants=replace(value.constants, log_two_pi_center=D(1)))
     else:
-        changed = replace(value, normalization=replace(value.normalization,
-            normalized_logs=tuple(a.point(0) for _ in range(256))))
+        changed = replace(
+            value,
+            normalization=replace(
+                value.normalization, normalized_logs=tuple(a.point(0) for _ in range(256))
+            ),
+        )
     assert a.prefix_digest(changed) != a.prefix_digest(value)
