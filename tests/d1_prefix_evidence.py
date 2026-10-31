@@ -488,6 +488,8 @@ class ReferenceConstants:
     gaussian: tuple[ReferenceValue, ...]
     log_prior: tuple[ReferenceValue, ...]
     pi: ReferenceValue
+    log_two_pi_center: Decimal
+    log_scale_centers: tuple[Decimal, ...]
 
 
 @dataclass(frozen=True)
@@ -613,10 +615,13 @@ class D1Reference:
                     raise ValueError("Machin center outside the fixed enclosure domain")
                 pi = ReferenceValue(pi_center, around(pi_center, REFERENCE_ERROR))
                 argument = D(2)*pi_center
-                two_pi = log_perturbation(argument, times(point(2), pi.enclosure), oracle.log(argument))
+                log_two_pi_center = oracle.log(argument)
+                two_pi = log_perturbation(argument, times(point(2), pi.enclosure), log_two_pi_center)
                 gaussians = []
+                log_scale_centers = []
                 for scale in SCALES:
                     log_scale = oracle.log(D.from_float(scale))
+                    log_scale_centers.append(log_scale)
                     center = -log_scale - two_pi.center/2
                     enclosure = minus(negative(rounded_decimal(log_scale)),
                                       divide(two_pi.enclosure, point(2)))
@@ -626,7 +631,8 @@ class D1Reference:
             for value in (*gaussians, *priors):
                 if absolute_upper(minus(value.enclosure, point(value.center))) > D("1e-48"):
                     raise ValueError("Derived constant allowance exceeds the frozen reference reserve")
-            self.constant_values = ReferenceConstants(tuple(gaussians), priors, pi)
+            self.constant_values = ReferenceConstants(tuple(gaussians), priors, pi,
+                log_two_pi_center, tuple(log_scale_centers))
             return self.constant_values
         except BaseException:
             self.failed = True
@@ -903,6 +909,161 @@ def qualify_prefix(prefix: BoundPrefix, future: QualifiedFutureEvidence,
         ArithmeticEvidence(node_error, other_error, shifted, log_error, ratio))
 
 
+
+def recheck_constants(value: ReferenceConstants) -> None:
+    """Rebuild interval algebra from retained primitive returns, without logs/pi.
+
+    Correctly rounded primitive centers remain conditional inputs whose actual
+    execution belongs to the pinned call transcript, not to a digest assertion.
+    """
+    if (type(value) is not ReferenceConstants or len(value.gaussian) != 3
+            or len(value.log_prior) != 2 or len(value.log_scale_centers) != 3):
+        raise ValueError("Complete fixed constant primitive material required")
+    if type(value.pi) is not ReferenceValue:
+        raise ValueError("Actual retained Machin value required")
+    value.pi.__post_init__()
+    for item in (*value.gaussian, *value.log_prior):
+        if type(item) is not ReferenceValue:
+            raise ValueError("Typed retained constant values required")
+        item.__post_init__()
+    if not D(3) < value.pi.center < D(4) or value.pi.enclosure != around(value.pi.center, REFERENCE_ERROR):
+        raise ValueError("Fixed Machin enclosure required")
+    with localcontext(context()):
+        two_pi = log_perturbation(2*value.pi.center, times(point(2), value.pi.enclosure),
+                                 value.log_two_pi_center)
+        gaussians = []
+        for log_scale in value.log_scale_centers:
+            rounded_scale = rounded_decimal(log_scale)
+            center = -log_scale-two_pi.center/2
+            enclosure = minus(negative(rounded_scale), divide(two_pi.enclosure, point(2)))
+            gaussians.append(_reference(center, enclosure))
+        priors = tuple(ReferenceValue(x.center, rounded_decimal(x.center)) for x in value.log_prior)
+    if tuple(gaussians) != value.gaussian or priors != value.log_prior:
+        raise ValueError("Constant enclosures disagree with their retained primitive returns")
+    if any(absolute_upper(minus(x.enclosure, point(x.center))) > D("1e-48")
+           for x in (*gaussians, *priors)):
+        raise ValueError("Derived constant allowance exceeds the frozen reference reserve")
+
+
+def recheck_normalization(value: ReferenceNormalization,
+                          joint: tuple[ReferenceValue, ...]) -> None:
+    """Rebuild positive-sum/reference intervals from the same exp/log centers."""
+    if (type(value) is not ReferenceNormalization or value.joint != joint
+            or len(value.emitted) != len(joint) or not 1 <= len(joint) <= 1024):
+        raise ValueError("Exact complete reference-normalization node material required")
+    emitted = []
+    with localcontext(context()):
+        for target, returned in zip(joint, value.emitted, strict=True):
+            if type(target) is not ReferenceValue or type(returned) is not ReferenceValue:
+                raise ValueError("Typed retained reference values required")
+            target.__post_init__()
+            returned.__post_init__()
+            if not D(-32) <= target.enclosure.lower <= target.enclosure.upper <= D(4):
+                raise ValueError("Reference joint outside fixed D1 range")
+            eta = absolute_upper(minus(target.enclosure, point(target.center)))
+            if eta >= D(1) or returned.center <= 0:
+                raise ValueError("Invalid retained reference exponent input/output")
+            factor = Interval(minus(point(1), point(eta)).lower,
+                divide(point(1), minus(point(1), point(eta))).upper)
+            emitted.append(_reference(returned.center, times(rounded_decimal(returned.center), factor)))
+        sum_center = sum((x.center for x in emitted), D(0))
+        exact_sum = total(tuple(x.enclosure for x in emitted))
+        log_z = log_perturbation(sum_center, exact_sum, value.log_evidence.center)
+        maximum = Interval(max(x.enclosure.lower for x in joint), max(x.enclosure.upper for x in joint))
+        expected = ReferenceNormalization(joint, tuple(emitted), sum_center, log_z,
+            minus(log_z.enclosure, maximum),
+            tuple(minus(x.enclosure, log_z.enclosure) for x in joint),
+            tuple(divide(x.enclosure, exact_sum) for x in emitted))
+    if expected != value:
+        raise ValueError("Reference normalization fields disagree with retained primitive returns")
+    require_reference_reserve(expected)
+
+
+def recheck_prefix_evidence(value: QualifiedPrefixEvidence) -> QualifiedPrefixEvidence:
+    """Re-derive all certificate premises from actual retained material.
+
+    No oracle, predictor, exp/log or new label is called. Coherent source-level
+    fabrication still requires the independent execution transcript boundary.
+    """
+    if type(value) is not QualifiedPrefixEvidence:
+        raise ValueError("Exact complete prefix evidence required")
+    prefix = bind_prefix(value.bound)
+    validate_future(value.future)
+    bound = prefix.candidates
+    if value.future.candidates != bound:
+        raise ValueError("Future evidence belongs to another actual prefix")
+    recheck_constants(value.constants)
+    count, scale = bound.frozen.count, prefix.actual.profile.discrepancy
+    records = bound.public.observations.records
+    if len(value.nodes) != count or len(value.emitted) != count:
+        raise ValueError("Every ordered node and actual emitted output is required")
+    observations = []
+    for record in records:
+        if record.trajectory is None:
+            raise ValueError("Complete recorded prefix required")
+        observations.append(record.trajectory.frames[-1].positions[0][0])
+    gaussian = value.constants.gaussian[SCALES.index(scale)]
+    prior = value.constants.log_prior[COUNTS.index(count)]
+    normal, log_input = prefix.result.normalization, prefix.result.normalizer_input
+    if normal is None or normal.normalizer is None or log_input is None:
+        raise ValueError("Complete successful normalizer material required")
+    if normal.exp_evaluations != count or normal.log_evaluations != 1 or normal.exp_underflow_indices:
+        raise ValueError("Unexpected work or missing finite normalizer node")
+    maxima = [D(0) for _ in records]
+    node_error = other_error = D(0)
+    nodes = []
+    for i, supplied in enumerate(value.nodes):
+        if (type(supplied) is not PrefixNode or type(supplied.index) is not int
+                or supplied.index != i or len(supplied.references) != len(records)):
+            raise ValueError("Exact ordered full-prefix reference coverage required")
+        captured = prefix.captures[i*len(records):(i+1)*len(records)]
+        for r, (capture, ref) in enumerate(zip(captured, supplied.references, strict=True)):
+            if type(ref) is not ReferenceValue:
+                raise ValueError("Typed retained endpoint reference required")
+            ref.__post_init__()
+            if not D(-2) <= ref.center <= D(2) or ref.enclosure != around(ref.center, REFERENCE_ERROR):
+                raise ValueError("Fixed actual endpoint reference enclosure required")
+            maxima[r] = max(maxima[r], absolute_upper(minus(point(capture.endpoint()), point(ref.center))))
+        ideal = joint_enclosure(tuple(observations), tuple(x.enclosure for x in supplied.references),
+                                scale, gaussian.enclosure, prior.enclosure)
+        conditioned = joint_enclosure(tuple(observations), tuple(point(x.endpoint()) for x in captured),
+                                      scale, gaussian.enclosure, prior.enclosure)
+        with localcontext(context()):
+            center = prior.center
+            for y, ref in zip(observations, supplied.references, strict=True):
+                residual = D.from_float(y)-ref.center
+                center += gaussian.center-residual*residual/(2*D.from_float(scale)**2)
+        target = _reference(center, ideal)
+        executed = log_input.entries[i].log_weight
+        if executed is None:
+            raise ValueError("A completed node lost its joint log weight")
+        error = absolute_upper(minus(point(executed), conditioned))
+        node_error = max(node_error, absolute_upper(minus(point(executed), target.enclosure)))
+        other_error = max(other_error, error)
+        nodes.append(PrefixNode(i, supplied.references, target, conditioned, error))
+    if tuple(nodes) != value.nodes:
+        raise ValueError("Derived node evidence differs from retained raw producer material")
+    recheck_normalization(value.normalization, tuple(x.ideal_joint for x in nodes))
+    for emitted in value.emitted:
+        if type(emitted) is not float or not math.isfinite(emitted) or not 0 < emitted <= 1:
+            raise ValueError("Every actual emitted exp output must be positive finite binary64")
+    masses = probabilities(value.emitted)
+    log_error = D(0)
+    for entry, target in zip(normal.entries, value.normalization.normalized_logs, strict=True):
+        if entry.log_probability is None:
+            raise ValueError("No successful node may lose its normalized log weight")
+        log_error = max(log_error, absolute_upper(minus(point(entry.log_probability), target)))
+    shifted = absolute_upper(minus(point(normal.normalizer.log_scaled_sum), value.normalization.centered_log_evidence))
+    ratio = probability_ratio_bound(masses, value.normalization.probabilities)
+    coverage = tuple(range(count))
+    training = tuple(EndpointEvidence(x, REFERENCE_ERROR, coverage, coverage, ()) for x in maxima)
+    arithmetic = ArithmeticEvidence(node_error, other_error, shifted, log_error, ratio)
+    if (value.probabilities != masses or value.training != training or value.arithmetic != arithmetic):
+        raise ValueError("Derived probability/training/arithmetic claims differ from retained material")
+    return QualifiedPrefixEvidence(prefix, value.future, value.constants, tuple(nodes), value.normalization,
+                                   value.emitted, masses, training, arithmetic)
+
+
 def _digest_data(value: object) -> str:
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
 
@@ -940,6 +1101,20 @@ def prefix_digest(value: QualifiedPrefixEvidence) -> str:
         "reference_exp": [(str(x.center), _interval_data(x.enclosure)) for x in value.normalization.emitted],
         "sum_center": str(value.normalization.sum_center),
         "log_z": (str(value.normalization.log_evidence.center), _interval_data(value.normalization.log_evidence.enclosure)),
+        "constants": {"pi": (str(value.constants.pi.center), _interval_data(value.constants.pi.enclosure)),
+            "log_two_pi": str(value.constants.log_two_pi_center),
+            "log_scales": [str(x) for x in value.constants.log_scale_centers],
+            "gaussian": [(str(x.center), _interval_data(x.enclosure)) for x in value.constants.gaussian],
+            "prior": [(str(x.center), _interval_data(x.enclosure)) for x in value.constants.log_prior]},
+        "normalization_joint": [(str(x.center), _interval_data(x.enclosure)) for x in value.normalization.joint],
+        "centered_log_z": _interval_data(value.normalization.centered_log_evidence),
+        "normalized_logs": [_interval_data(x) for x in value.normalization.normalized_logs],
+        "reference_probabilities": [_interval_data(x) for x in value.normalization.probabilities],
+        "training": [(str(x.max_abs_error_upper), str(x.reference_error_upper), x.requested, x.completed, x.failed)
+                     for x in value.training],
+        "arithmetic": [str(value.arithmetic.node_observed_error_upper), str(value.arithmetic.node_other_arithmetic_upper),
+            str(value.arithmetic.shifted_log_evidence_error_upper), str(value.arithmetic.normalized_log_error_upper),
+            str(value.arithmetic.probability_representation_log_error_upper)],
         "emitted": [x.hex() for x in value.emitted],
         "probabilities": [_interval_data(x) for x in value.probabilities],
     })
@@ -985,9 +1160,9 @@ def duplicate_forecast(batch: FixtureBatch, matched: QualifiedPrefixEvidence,
     This does not establish that those supplied exposure inventories are complete.
     """
     candidate_materials(batch)
-    left = bind_prefix(matched.bound)
+    matched = recheck_prefix_evidence(matched)
+    left = matched.bound
     duplicate = rebind(duplicate)
-    validate_future(matched.future)
     if matched.future.candidates != left.candidates:
         raise ValueError("Matched future belongs to another actual prefix")
     if (left.candidates.case != "M03" or duplicate.case != "D03"
@@ -1027,8 +1202,7 @@ def duplicate_forecast(batch: FixtureBatch, matched: QualifiedPrefixEvidence,
             or premise.arithmetic != matched.arithmetic or premise.training != matched.training
             or premise.future != matched.future.endpoints
             or first.trajectory is None
-            or premise.recorded != (point(first.trajectory.frames[-1].positions[0][0]),)
-            or probabilities(matched.emitted) != matched.probabilities):
+            or premise.recorded != (point(first.trajectory.frames[-1].positions[0][0]),)):
         raise ValueError("Matched certificate must join the actual arrays and material")
     values = tuple(x.endpoint() for x in left.captures)
     forecast = training_forecast(left.candidates.frozen, values, certificate.epsilon,

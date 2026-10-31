@@ -209,3 +209,58 @@ accounting and failure behavior, not correctness of the oracle or D1 forecasts.
 Rational arithmetic cases separately check duplicate terms, a single prior,
 probability/representation rejection and the training bound. No historical
 exposure or owner-custody gate is discharged by these tests.
+
+
+## A2 material-recheck repair
+
+Independent review found that a caller could change derived probabilities,
+training/arithmetic claims and their matching certificate/digests together while
+leaving the raw producer material unchanged. A digest join alone did not close
+that inconsistency. `duplicate_forecast` now calls `recheck_prefix_evidence`
+before any reuse. The source repair is independently reviewable and unexecuted;
+it does not retroactively qualify A1/A2.
+
+The recheck reparses the complete raw native input/result and ordered captures,
+revalidates future material, and derives every training maximum, ideal joint,
+conditioned-native joint, observed/native arithmetic error, exact emitted ratio,
+shifted/normalized-log error and certificate premise again. It rejects altered
+node/reference coverage, missing records and any claimed bound that differs
+from reconstruction. Its certificate/digest comparison occurs only after that
+material check. The digest now also includes constants/primitive centers,
+normalization joint/centered/log/probability arrays, training coverage/bounds and
+all arithmetic fields. It is still not execution authentication.
+
+`ReferenceConstants` additionally retains the already evaluated ln(2*pi) center
+and three ln(sigma) centers. No extra primitive is evaluated. The recheck rebuilds
+their enclosures and prior logs using exact declared arguments, pi's existing
+1e-60 enclosure, the original log argument perturbation rule and the fixed1e-48
+reserve. Every normalization is reconstructed from its retained exp centers and
+one log-sum center: all positive weight intervals, sum, centered evidence,
+normalized logs and probabilities must agree. Those primitive centers remain
+conditional on the separately pinned actual source/call transcript; arbitrary
+coherent replacement of the whole transcript is not ruled out by interval
+algebra. Partial failed primitive retention still requires the later recorder.
+
+The two full-success M03-to-D03 witnesses add two material rechecks covering
+1,280 nodes. They add2,560 joint-enclosure calls/record terms and97,280 directed
+binary operations in those two formulas (76 per one-record node), plus complete
+constant/normalization/vector/error reconstruction. Reconstruction of the
+1,280 exp centers, two log-sum centers and twelve constant-log centers uses
+2,588 adjacent Decimal endpoint operations, with at most that many outward
+representation coarsenings; these are not new exp/ln calls. Future/raw capture
+validation is the same witness boundary as before. Exact comparisons,
+serialization/hashes, positive sums, ratio/log perturbation algebra and added
+schema/material bytes remain separate items for the final driver census.
+All37,120 native calls,37,120 logical reference requests,3,840 candidate+13
+fixture oracle positions,25,600 reference exp,46 reference ln and128 Machin
+terms are unchanged. No allowance is increased and no failed unit is retried.
+
+Fourteen additional authored fake cases bring the source census to72 cases/
+216 expected phases. A strong regression substitutes emitted masses, recomputes
+their vector/evidence digests and a passing zero-error certificate, leaves the
+actual raw producer outputs unchanged, and requires rejection. Other cases
+mutate each derived family, verify digest coverage and poison even fake
+primitive methods during a hostile-ambient-context recheck. The valid synthetic
+binder uses a declared fake primitive log return instead of directly replacing
+a derived normalizer interval. This remains transport/consistency evidence,
+not mathematical truth or an executed D1 reference.

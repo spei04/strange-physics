@@ -4,6 +4,8 @@ from __future__ import annotations
 from dataclasses import replace
 from decimal import ROUND_UP, Decimal, localcontext
 from typing import NoReturn
+from d1_bounds import D1Certificate
+from d1_fixture_reference import FixtureBatch
 
 import pytest
 from endpoint_belief_reference import EndpointOracle
@@ -466,19 +468,16 @@ def test_observer_finish_rejects_incomplete_or_substituted_material(wrong: str) 
     assert observer.finished
 
 
-class AlignedReference(a.D1Reference):
-    """Explicit transport surrogate for full binder tests, not an oracle proof."""
-    def normalize(self, case: a.CaseId, count: int, scale: float,
-                  joint: tuple[a.ReferenceValue, ...]) -> a.ReferenceNormalization:
-        value = super().normalize(case, count, scale, joint)
-        log_z = D.from_float(5.545177444479562)
-        return replace(value, log_evidence=a.ReferenceValue(log_z, a.point(log_z)),
-            centered_log_evidence=a.point(log_z), normalized_logs=tuple(a.point(log_z.copy_negate()) for _ in joint))
+class AlignedOracle(FakeOracle):
+    """Primitive transport response for binder tests, not a mathematical oracle."""
+    def log(self, value: Decimal) -> Decimal:
+        self.log_calls += 1
+        return D.from_float(5.545177444479562) if value == D(256) else D(0)
 
 
 def qualified(monkeypatch: pytest.MonkeyPatch) -> a.QualifiedPrefixEvidence:
-    monkeypatch.setattr(a, "EndpointOracle", FakeOracle)
-    refs = AlignedReference()
+    monkeypatch.setattr(a, "EndpointOracle", AlignedOracle)
+    refs = a.D1Reference()
     b = bound()
     raw = belief_input(b)
     rows = synthetic_rows(b)
@@ -502,13 +501,12 @@ def test_full_prefix_binder_retains_actual_vector_and_complete_evidence(monkeypa
         a.bind_prefix(replace(value.bound, captures=value.bound.captures[::-1]))
 
 
-def test_d03_equivalence_preserves_provenance_and_uses_no_new_forward(monkeypatch: pytest.MonkeyPatch) -> None:
+def duplicate_case(monkeypatch: pytest.MonkeyPatch, matched: a.QualifiedPrefixEvidence) -> tuple[FixtureBatch, a.BoundCandidates, D1Certificate, list[FixtureBatch]]:
     from types import SimpleNamespace
     from typing import cast
     from d1_bounds import D1Identity, D1PrefixPremises, certify_d1_prefix
     from d1_fixture_reference import Attempt, FixtureBatch, Sources
     from test_calibration_fixture_contracts import audit
-    matched = qualified(monkeypatch)
     duplicate = bound("D03", token="2")
     left = matched.bound.candidates
     attempts = (Attempt("M03", left.public, audit(left.public, "M03"), ()),
@@ -531,6 +529,12 @@ def test_d03_equivalence_preserves_provenance_and_uses_no_new_forward(monkeypatc
     certificate = certify_d1_prefix(D1PrefixPremises(identity, (a.point(0.75),), matched.training,
                                                      matched.future.endpoints, matched.arithmetic))
     assert certificate.passed
+    return batch, duplicate, certificate, checked
+
+
+def test_d03_equivalence_preserves_provenance_and_uses_no_new_forward(monkeypatch: pytest.MonkeyPatch) -> None:
+    matched = qualified(monkeypatch)
+    batch, duplicate, certificate, checked = duplicate_case(monkeypatch, matched)
     witness = a.duplicate_forecast(batch, matched, duplicate, certificate)
     assert len(checked) == 1
     assert witness.matched_observation_sha256 != witness.duplicate_observation_sha256
@@ -539,12 +543,90 @@ def test_d03_equivalence_preserves_provenance_and_uses_no_new_forward(monkeypatc
     assert witness.forecast.finite_mean == a.point(D("0.75"))
     with pytest.raises(ValueError):
         a.duplicate_forecast(batch, matched, duplicate, replace(certificate, passed=False))
-    wrong = replace(identity, future_query_sha256="f"*64)
+    wrong = replace(certificate.identity, future_query_sha256="f"*64)
     assert certificate.prefix is not None
-    bad_certificate = certify_d1_prefix(replace(certificate.prefix, identity=wrong))
+    bad_certificate = a.certify_d1_prefix(replace(certificate.prefix, identity=wrong))
     with pytest.raises(ValueError):
         a.duplicate_forecast(batch, matched, duplicate, bad_certificate)
     altered = list(matched.emitted)
     altered[0] = 0.25
     with pytest.raises(ValueError):
         a.duplicate_forecast(batch, replace(matched, emitted=tuple(altered)), duplicate, certificate)
+
+
+@pytest.mark.parametrize("field", ["training", "arithmetic", "node", "reference_coverage", "constant", "sum", "probability", "normalized_log"])
+def test_material_recheck_rejects_derived_substitutions(monkeypatch: pytest.MonkeyPatch, field: str) -> None:
+    value = qualified(monkeypatch)
+    if field == "training":
+        value = replace(value, training=(replace(value.training[0], max_abs_error_upper=D("1e-13")),))
+    elif field == "arithmetic":
+        value = replace(value, arithmetic=replace(value.arithmetic, node_other_arithmetic_upper=D(0)))
+    elif field == "node":
+        value = replace(value, nodes=(replace(value.nodes[0], conditioned_joint=a.point(0)), *value.nodes[1:]))
+    elif field == "reference_coverage":
+        value = replace(value, nodes=(replace(value.nodes[0], references=()), *value.nodes[1:]))
+    elif field == "constant":
+        gaussian = value.constants.gaussian
+        value = replace(value, constants=replace(value.constants,
+            gaussian=(replace(gaussian[0], enclosure=a.point(0)), *gaussian[1:])))
+    elif field == "sum":
+        value = replace(value, normalization=replace(value.normalization, sum_center=D(255)))
+    elif field == "probability":
+        value = replace(value, normalization=replace(value.normalization,
+            probabilities=tuple(a.point(1.0/256) for _ in range(256))))
+    else:
+        value = replace(value, normalization=replace(value.normalization,
+            normalized_logs=tuple(a.point(0) for _ in range(256))))
+    with pytest.raises(ValueError):
+        a.recheck_prefix_evidence(value)
+
+
+def test_material_recheck_is_pure_under_hostile_context(monkeypatch: pytest.MonkeyPatch) -> None:
+    value = qualified(monkeypatch)
+    def deny(*args: object, **kwargs: object) -> NoReturn:
+        raise AssertionError("Recheck must not repeat any primitive/reference computation")
+    for oracle in (FakeOracle, AlignedOracle):
+        for name in ("position", "exp", "log", "circle_constant", "trig"):
+            monkeypatch.setattr(oracle, name, deny)
+    with localcontext() as ctx:
+        ctx.prec = 3
+        ctx.rounding = ROUND_UP
+        assert a.recheck_prefix_evidence(value) == value
+
+
+def test_d03_rejects_coherent_substituted_masses_and_forged_certificate(monkeypatch: pytest.MonkeyPatch) -> None:
+    from d1_bounds import D1Identity, D1PrefixPremises, certify_d1_prefix
+    original = qualified(monkeypatch)
+    batch, duplicate, certificate, _ = duplicate_case(monkeypatch, original)
+    emitted = (0.25, *original.emitted[1:])
+    altered = replace(original, emitted=emitted, probabilities=a.probabilities(emitted),
+        arithmetic=a.ArithmeticEvidence(D(0), D(0), D(0), D(0), D(0)))
+    assert altered.bound.input_raw == original.bound.input_raw
+    assert altered.bound.result_raw == original.bound.result_raw
+    assert altered.bound.captures == original.bound.captures
+    # Recompute every claimed vector/evidence/certificate join, rather than
+    # relying on a stale hash to make the negative test fail trivially.
+    identity = replace(certificate.identity,
+        probabilities_sha256=a.probability_digest(altered.probabilities),
+        evidence_sha256=a.prefix_digest(altered))
+    assert type(identity) is D1Identity
+    forged = certify_d1_prefix(D1PrefixPremises(identity, (a.point(0.75),), altered.training,
+                                              altered.future.endpoints, altered.arithmetic))
+    assert forged.passed
+    with pytest.raises(ValueError):
+        a.duplicate_forecast(batch, altered, duplicate, forged)
+
+
+@pytest.mark.parametrize("field", ["training", "arithmetic", "constants", "normalization"])
+def test_evidence_digest_binds_derived_material(monkeypatch: pytest.MonkeyPatch, field: str) -> None:
+    value = qualified(monkeypatch)
+    if field == "training":
+        changed = replace(value, training=(replace(value.training[0], max_abs_error_upper=D("1e-13")),))
+    elif field == "arithmetic":
+        changed = replace(value, arithmetic=replace(value.arithmetic, shifted_log_evidence_error_upper=D(0)))
+    elif field == "constants":
+        changed = replace(value, constants=replace(value.constants, log_two_pi_center=D(1)))
+    else:
+        changed = replace(value, normalization=replace(value.normalization,
+            normalized_logs=tuple(a.point(0) for _ in range(256))))
+    assert a.prefix_digest(changed) != a.prefix_digest(value)
