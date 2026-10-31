@@ -120,6 +120,8 @@ its owned descriptors and retains a bounded completion/error record before
 exit. The watcher requires the successful completion record, then actual
 terminal-empty state, terminal receipt, stop and post-stop closure. A release
 write failure consumes that opportunity; cleanup never makes it a success.
+A release write/validation failure remains primary when its one close attempt
+also fails; the close error is retained separately, never substituted.
 
 The tests substitute helper-local OS/select/time/sys adapters, not shared stdlib
 functions. No actual fork, pipe, FIFO, service, profile hook, reference or primitive
@@ -155,9 +157,9 @@ scientific balance is reused.
 
 ## Authored verification scope
 
-Static AST census: 79 cases/237 prospective phases in 29 test functions:
+Static AST census: 80 cases/240 prospective phases in 30 test functions:
 41 lifecycle cases/18 functions, 20 parent-owner cases/8 functions, and
-18 benign cases/3 functions. They cover original-clock refusal, post-preflight
+19 benign cases/4 functions. They cover original-clock refusal, post-preflight
 launch reserve, independent timeout takeover, late acknowledgement, stale
 identity/missing units, unreaped child, terminal/final/intent failure, exact
 retained report substitutions, no-I/O preclaim/consumed rejection, leader-only

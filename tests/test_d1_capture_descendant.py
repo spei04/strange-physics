@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import stat
 from collections import deque
+from collections.abc import Callable
 from pathlib import Path
 from types import SimpleNamespace
 from typing import NoReturn
@@ -81,12 +82,14 @@ def plan(root: Path) -> benign.DescendantPlan:
 
 
 @pytest.fixture(autouse=True)
-def no_live_operations(monkeypatch: pytest.MonkeyPatch) -> None:
+def no_live_operations(monkeypatch: pytest.MonkeyPatch) -> Callable[[benign.PipeHandshake, str], None]:
+    original_release = benign.PipeHandshake.release
     def denied(*args: object, **kwargs: object) -> NoReturn:
         raise AssertionError("Live manager/pipe operation forbidden")
     monkeypatch.setattr(Systemd, "command", denied)
     monkeypatch.setattr(benign.PipeHandshake, "prepare", denied)
     monkeypatch.setattr(benign.PipeHandshake, "release", denied)
+    return original_release
 
 
 @pytest.mark.parametrize("kind", ("pass", "leader-only", "wrong-ready", "lost-release", "terminal-failed", "late"), ids=("pass", "leader-only", "wrong-ready", "lost-release", "receipt", "late"))
@@ -248,3 +251,36 @@ def test_benign_command_failure_preserves_primary_and_close_facts(tmp_path: Path
     assert result["supplemental"] == [{"stage": "log_close", "kind": "PermissionError", "detail": "synthetic close failure"}]
     assert result["status"] == "incomplete" and manager.submissions == 1
     assert result["cleanup_confirmed"] is True and not handshake.released
+
+
+def test_release_write_and_close_failures_preserve_order_without_retry(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    no_live_operations: Callable[[benign.PipeHandshake, str], None],
+) -> None:
+    write_error = OSError("synthetic FIFO write acknowledgement lost")
+    close_error = PermissionError("synthetic FIFO close acknowledgement lost")
+    events: list[str] = []
+
+    def write(fd: int, raw: bytes) -> NoReturn:
+        assert fd == 20 and raw == b"c" * 64 + b"\n"
+        events.append("write")
+        raise write_error
+
+    def close(fd: int) -> NoReturn:
+        assert fd == 20
+        events.append("close")
+        raise close_error
+
+    fake_os = SimpleNamespace(
+        open=lambda *args: 20, write=write, close=close, getuid=os.getuid,
+        fstat=lambda fd: SimpleNamespace(st_mode=stat.S_IFIFO | 0o600, st_uid=os.getuid()),
+        O_WRONLY=os.O_WRONLY, O_NONBLOCK=os.O_NONBLOCK, O_NOFOLLOW=os.O_NOFOLLOW,
+    )
+    with monkeypatch.context() as scoped:
+        scoped.setattr(benign, "os", fake_os)
+        with pytest.raises(CommandFailure) as raised:
+            no_live_operations(benign.PipeHandshake(tmp_path), "c" * 64)
+        assert raised.value.primary is write_error
+        assert raised.value.supplemental == (Fault.capture("release_close", close_error),)
+    assert events == ["write", "close"]
+    assert os.close is not close and list(tmp_path.iterdir()) == []
