@@ -71,8 +71,10 @@ def _object(value: object, keys: frozenset[str]) -> dict[str, object]:
 
 
 def _canonical(value: object) -> bytes:
-    return (json.dumps(value, sort_keys=True, separators=(",", ":"),
-                       ensure_ascii=True, allow_nan=False) + "\n").encode("ascii")
+    return (
+        json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False)
+        + "\n"
+    ).encode("ascii")
 
 
 def _pairs(pairs: list[tuple[str, object]]) -> dict[str, object]:
@@ -120,9 +122,13 @@ def _parse(raw: bytes, max_depth: int) -> object:
     if depth or quoted:
         raise _Invalid("truncated_json")
     try:
-        value: object = json.loads(raw.decode("ascii"), object_pairs_hook=_pairs,
-                                   parse_int=_number, parse_float=_no_float,
-                                   parse_constant=_no_float)
+        value: object = json.loads(
+            raw.decode("ascii"),
+            object_pairs_hook=_pairs,
+            parse_int=_number,
+            parse_float=_no_float,
+            parse_constant=_no_float,
+        )
     except (ValueError, UnicodeError, RecursionError) as error:
         raise _Invalid("invalid_strict_json") from error
     if _canonical(value) != raw:
@@ -213,8 +219,13 @@ def _scope_from_wire(table: TableView, value: object, instance: int, primitive: 
         node = _int(desc[3], 0, (256 if grid == 0 else 1024) - 1)
         _int(desc[4], 0, 0)
         expected_instance, expected_primitive = 1 + channel, 0
-        scope = ["ep", ("s", "w", "f")[channel],
-                 f"{'e' if channel == 2 else 'p'}{context:02d}", f"n{node:04d}", "r0"]
+        scope = [
+            "ep",
+            ("s", "w", "f")[channel],
+            f"{'e' if channel == 2 else 'p'}{context:02d}",
+            f"n{node:04d}",
+            "r0",
+        ]
     elif family in (2, 3, 5):
         _list(desc, 2 if family == 3 else 3)
         profile = _int(desc[1], 0, 39)
@@ -249,11 +260,19 @@ def _scope_to_wire(table: TableView, value: object, instance: int, primitive: in
         if items[1] not in ("s", "w", "f") or items[4] != "r0":
             raise _Invalid("endpoint_scope_tokens")
         channel = ("s", "w", "f").index(items[1])
-        desc = [1, channel, _token_index(items[2], "e" if channel == 2 else "p", 2),
-                _token_index(items[3], "n", 4), 0]
+        desc = [
+            1,
+            channel,
+            _token_index(items[2], "e" if channel == 2 else "p", 2),
+            _token_index(items[3], "n", 4),
+            0,
+        ]
     elif family in ("ne", "nv") and len(items) == 3:
-        desc = [2 if family == "ne" else 5, _token_index(items[1], "p", 2),
-                _token_index(items[2], "n", 4)]
+        desc = [
+            2 if family == "ne" else 5,
+            _token_index(items[1], "p", 2),
+            _token_index(items[2], "n", 4),
+        ]
     elif family == "nz" and len(items) == 2:
         desc = [3, _token_index(items[1], "p", 2)]
     elif family == "ct" and len(items) == 2:
@@ -298,10 +317,17 @@ class PrimitiveEventCodec:
             raise _Invalid("primitive_name")
         primitive = names.index(primitive_name)
         desc = _scope_to_wire(self._table, obj["scope"], instance, primitive)
-        argument, compact = _value(obj["arguments"], ("p", "d", "d", "n", "b")[primitive], wire=False)
-        checked: dict[str, object] = {"ordinal": ordinal, "call_id": f"c{ordinal:05d}", "instance_id": f"i{instance:02d}",
-                   "primitive": primitive_name, "scope": _scope_from_wire(self._table, desc, instance, primitive),
-                   "arguments": argument}
+        argument, compact = _value(
+            obj["arguments"], ("p", "d", "d", "n", "b")[primitive], wire=False
+        )
+        checked: dict[str, object] = {
+            "ordinal": ordinal,
+            "call_id": f"c{ordinal:05d}",
+            "instance_id": f"i{instance:02d}",
+            "primitive": primitive_name,
+            "scope": _scope_from_wire(self._table, desc, instance, primitive),
+            "arguments": argument,
+        }
         return checked, ["i", self._sequence, ordinal, instance, primitive, desc, compact]
 
     def _raw_to_wire(self, value: object) -> tuple[dict[str, object], list[object]]:
@@ -346,27 +372,43 @@ class PrimitiveEventCodec:
             instance, primitive = _int(items[3], 0, 13), _int(items[4], 0, 4)
             scope = _scope_from_wire(self._table, items[5], instance, primitive)
             argument, _ = _value(items[6], ("p", "d", "d", "n", "b")[primitive], wire=True)
-            intent: dict[str, object] = {"ordinal": ordinal, "call_id": f"c{ordinal:05d}",
-                "instance_id": f"i{instance:02d}", "primitive": self._table.rows[90 + primitive][2],
-                "scope": scope, "arguments": argument}
+            intent: dict[str, object] = {
+                "ordinal": ordinal,
+                "call_id": f"c{ordinal:05d}",
+                "instance_id": f"i{instance:02d}",
+                "primitive": self._table.rows[90 + primitive][2],
+                "scope": scope,
+                "arguments": argument,
+            }
             returned = None
         else:
             if self._current is None:
                 raise _Invalid("return_without_intent")
             intent = self._current
-            returned, _ = _value(items[3], "b" if intent["primitive"] == "native_exp" else "d", wire=True)
-        return {"sequence": self._sequence, "kind": "intent" if items[0] == "i" else "returned",
-                "intent": intent, "returned": returned, "fault": None}
+            returned, _ = _value(
+                items[3], "b" if intent["primitive"] == "native_exp" else "d", wire=True
+            )
+        return {
+            "sequence": self._sequence,
+            "kind": "intent" if items[0] == "i" else "returned",
+            "intent": intent,
+            "returned": returned,
+            "fault": None,
+        }
 
     def convert(self, line: bytes) -> Conversion:
         original = line if type(line) is bytes and len(line) <= EVENT_BYTES else None
         if self._stopped:
-            return Conversion("stopped", original, None, None, self._table.sha256, self._first_failure)
+            return Conversion(
+                "stopped", original, None, None, self._table.sha256, self._first_failure
+            )
         # A parser/internal exception cannot leave a reusable cursor by accident.
         self._stopped = True
         self._first_failure = "internal_conversion_error"
         try:
-            depth = 2 if self._mode == "expand" and type(line) is bytes and line.startswith(b"[") else 4
+            depth = (
+                2 if self._mode == "expand" and type(line) is bytes and line.startswith(b"[") else 4
+            )
             value = _parse(line, depth)
             if self._mode == "encode":
                 event, compact = self._raw_to_wire(value)
