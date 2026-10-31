@@ -1,13 +1,13 @@
-# D1 report gate registry proposal
+# D1 report gate registry
 
-Source proposal, 2026-10-30. This maps the frozen
+Original design, 2026-10-30; implementation checked on 2026-10-31. This maps the frozen
 [RA-N03-D1 protocol](RA_N03_CALIBRATION_SLICE.md) and
 [report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md) to the existing conditional
-producers. The source-only descriptor implementation below does not amend their
+producers. The private descriptor implementation below does not amend their
 scientific policy, admit a run, complete B1/B2, authenticate evidence, or prove
 that the payloads fit the output budget.
 
-The inspected source is `30f3cbeef72554748a7d77699a74c79a25a1ce87`.
+The original proposal inspected source `30f3cbeef72554748a7d77699a74c79a25a1ce87`.
 Its protocol digest is
 `657c3c74346aedb165473b4672ed18ba5671da82e4873a2a3e6f514b58387399`.
 The current [structural envelope](D1_REPORT_CONTRACT.md) must continue to report
@@ -252,10 +252,10 @@ Stress/scale/grid rows never increase the four-world primary denominator.
 
 ## Small implementation/test split
 
-The next B1 change can implement the pure row-key-to-required-check mapping,
+The implemented B1 descriptor slice provides the pure row-key-to-required-check mapping,
 fixed operand/threshold descriptors and synthetic positive/negative examples.
-It must retain structural-only scope until the full payload/binder is ready.
-Tests should alter every gate name/limit/applicability/operand; exercise coarse
+It retains structural-only scope until the full payload/binder is ready.
+Tests alter gate names/limits/applicability/operands and exercise coarse
 versus finest rows and prior versus posterior blocks; reject missing fields,
 zero-filled unavailable evidence and coherent digest/certificate substitution.
 
@@ -270,8 +270,8 @@ reference calls are needed for this engineering qualification.
 
 Codec losslessness, worst-shape byte fit, schema/runtime parity, callback
 installation/restoration and complete work/retention counts remain separate
-reviewable obligations. This mapping was prepared by source inspection only;
-no new test, calculation, fixture, schema generation or numerical run occurred.
+reviewable obligations. The original mapping was prepared by source inspection;
+the implementation validation below is subsequent synthetic engineering evidence.
 
 
 ## Source-owned descriptor implementation checkpoint
@@ -326,17 +326,24 @@ The expansion has source-derived 1,648 descriptors: 8 × 5 fixture, 40 × 26 pos
 16 × 17 prior, 18 × 6 prequential, 20 × 4 refinement, 12 × 3 scale, 2 × 4 duplicate stress,
 14 × 3 force/weak stress, 4 × 4 primary and 6 aggregate. These are metadata rows, not
 new physical calls, samples or budget grants. Construction/reconstruction and
-validation passes must be counted as pure engineering work when eventually run.
+validation passes remain counted as pure engineering work in subsequent integration.
 No serialized descriptor/table byte fit or timing claim follows from this count.
 
-The 18 authored test functions contain 48 synthetic cases / 144 expected phases by
-AST inspection. They exercise completeness and substitution, original dependency
-order, coarse/finest and prior/posterior distinctions, duplicate-prefix coverage,
-prequential reuse, finite refinement operands, diagnostic-only contrasts, exact
-co-primary ties and strict raw booleans/Decimal limits. Real scientific producers
-and certificate/score evaluators are poisoned. AST parsing and diff whitespace
-inspection are the only checks performed at this source checkpoint; imports,
-formatting, linting, typing, test execution and schema generation remain pending.
+At source a7f3abb, the 18 test functions passed all 48 synthetic cases and 144
+ordered setup/call/teardown phases. Formatting, linting and full configured typing
+across 211 files passed. The tests exercise completeness and substitution, original
+dependency order, coarse/finest and prior/posterior distinctions, duplicate-prefix
+coverage, prequential reuse, finite refinement operands, diagnostic-only contrasts,
+exact co-primary ties and strict raw booleans/Decimal limits. Real scientific
+producers and certificate/score evaluators are poisoned.
+
+An earlier check stopped at typing with 15 errors before any test bodies ran.
+The narrow repair separates boolean and row-key variable names and uses explicitly
+typed construction for the same negative cases; no policy or assertion changed.
+Fresh preparation and final checks used the same cumulative engineering account.
+Independent review verified the immutable source, all 48 identities, unchanged
+environment and closure of all 23 children across four attempts. Earlier failures
+remain recorded. JSON Schema generation/parity remains pending.
 Full material authentication, payload/codec/schema parity, prior aliases,
 actual repeated-loss joins, work/byte accounting and numerical admission remain
 separate obligations.
