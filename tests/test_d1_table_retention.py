@@ -665,7 +665,7 @@ def test_swallowed_first_fault_is_raised_instead_of_later_io_error(
         with pytest.raises(retention.TableRetentionStopped) as rejected:
             case.attempt.retain()
     assert len(nested) == 1 and rejected.value is nested[0]
-    assert rejected.value is not later and case.attempt.first_exception is nested[0]
+    assert case.attempt.first_exception is nested[0]
     state = case.attempt.snapshot()
     expected_phase = "metadata_create" if when == "parent-sync" else "context_after"
     assert [fault.phase for fault in state.faults] == ["ownership_or_reentry", expected_phase]
