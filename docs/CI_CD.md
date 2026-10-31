@@ -19,6 +19,15 @@ Every push to main, pull request and manual dispatch runs:
   This is a proportionate static baseline, not a penetration test or proof of
   absence of vulnerabilities.
 
+Each Checks job has a 20-minute timeout and reports the 25 slowest test
+durations, preserving the full regression suite while identifying where time
+is spent. The Python 3.12 job in [run 41152465569](https://github.com/spei04/strange-physics/actions/runs/41152465569)
+used 861 seconds of its previous 900-second limit, including 826 seconds in
+pytest. A pull-request attempt has a configured aggregate ceiling of 83
+job-minutes: two Checks jobs at 20, two analytic-reference jobs at 15, security
+at 10, and the gate at 3. This sums job limits; it is not measured CPU, elapsed
+pipeline time, or cost. The protected-main candidate remains skipped for PRs.
+
 The final required check is named exactly **CI gate**. It uses `always()`,
 depends on every required job, and accepts only `success` from each. Failed,
 cancelled, skipped, missing and unknown results fail. A skipped optional

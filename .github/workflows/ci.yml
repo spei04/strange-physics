@@ -22,7 +22,7 @@ jobs:
   checks:
     name: Checks (Python ${{ matrix.python }})
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -51,7 +51,7 @@ jobs:
       - run: uv run --no-sync ruff check .
       - run: uv run --no-sync ruff format --check .
       - run: uv run --no-sync mypy src tests examples
-      - run: uv run --no-sync pytest -p no:cacheprovider --ignore=tests/test_laplace_analytic_reference.py
+      - run: uv run --no-sync pytest -p no:cacheprovider --ignore=tests/test_laplace_analytic_reference.py --durations=25
       - name: Validate external JSON Schema fixtures and references
         run: uv run --no-sync python scripts/validate_contracts.py
       - name: Build and inspect package archives offline

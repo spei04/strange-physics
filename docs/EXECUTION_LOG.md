@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** GRID-Q1 passed 27 fixed profiles. D1 fixture contracts pass 76 focused tests, formatting, lint and 195-file typing. [Contract evidence](D1_FIXTURE_CONTRACT.md); no calibration result.
-- **Verification — Lead; Quality and Platform:** Close standard PR schema, security and package checks. Two local schema audits hit CPU limits; failures and prior costs remain retained.
-- **Next — Research; Quality review:** Author predictive bounds and quantile/score proofs in the separate existing checkout. The [eight-fixture protocol](research/RA_N03_CALIBRATION_SLICE.md) is frozen; scientific execution awaits qualified source, exposure review and complete allocation.
+- **Verified:** [Fixture contracts, PR #138](https://github.com/spei04/strange-physics/pull/138) passed all six CI jobs: 4,966 tests per runtime, schemas, security and packaging. Prior local failures remain recorded.
+- **Verified locally — Lead; Quality review:** [Predictive bounds](research/D1_BOUNDS_PROOF.md) pass 69 synthetic tests and 197-file typing after exact-mass and annotation repairs. Hosted verification is next; no calibration result.
+- **Assigned — Research; Quality review:** Reference-fixture producer, rounding proofs and exposure joins. Lead integrates; Platform verifies CI evidence. Scientific execution awaits qualified source, complete exposure review and allocation.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Quality / Platform / Project lead | D1 contract CI and predictive-bound checks | PR #138 passed six required jobs on frozen 8b7704a. Unit2 exact-mass defect repaired; 69 synthetic cases/197-file typing pass at 312774c, with prior type failure retained. Research authors unit3 reference/proof joins; Quality found a trace-center consistency fix before integration. No D1 scientific batch. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | RA-N03-D1 fixture contracts and numerical-bound source | Unit1 source and regressions reviewed; 76 focused cases and strict typing pass. Full schema audit incomplete after two CPU stops; standard PR verification next. Research owns unit2 bounds/proofs in the separate reused primary checkout; no scientific batch. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | RA-N03-D1 protocol and predictive decision | Eight-fixture protocol independently reviewed; frozen prior comparison, co-primary scores, claim limits and prospective cost scope accepted. Research next owns fixture/audit/exposure source; numerical batch remains disabled. |
 | 2026-10-30 | Project lead / Quality / Research / Platform | Approved supervised GRID-Q1 attempt and independent outcome review | Lead executed one fixed operator; all three controls and the 27-profile diagnostic passed. Quality verified runtime/evidence; Research verified all 142 artifacts and required gates; Platform accepted captured intervals/output with earlier costs explicitly unresolved. [Result](GRID_Q1_SUPERVISED_RUN_RESULT.md); no retry or merge. |
