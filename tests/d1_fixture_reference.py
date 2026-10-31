@@ -381,9 +381,9 @@ def build_public(ids: PublicIds, initial_x: float, labels: tuple[float, ...]) ->
     if len(labels) != len(ids.operations) or len(labels) not in (1, 2):
         raise ValueError("Every public operation requires one training label")
     experiment = {
-        "particles": [
-            {"id": "p0", "position": (initial_x, 0.0), "velocity": (0.0, 0.0), "mass": 1.0}
-        ],
+        "particles": (
+            {"id": "p0", "position": (initial_x, 0.0), "velocity": (0.0, 0.0), "mass": 1.0},
+        ),
         "impulse": {"particle_id": "p0", "vector": (0.0, 0.0)},
     }
     records = tuple(
