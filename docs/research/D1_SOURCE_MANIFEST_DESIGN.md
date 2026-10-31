@@ -116,8 +116,11 @@ Actual/protected source identities and filesystem aliases remain resolver duties
 
 A runtime locator is an opaque member ID in the independently verified runtime
 view, not an S-supplied filename;
-its exact hash/size must match that view, with declared size at most 67,108,864.
-Runtime bytes are not included inline or freshly read by this source resolver.
+its exact hash/size must match that view, with positive declared byte length
+1–67,108,864. This first-version declaration policy excludes empty runtime
+members; accepting them later requires a separately reviewed contract change,
+not an inference about actual runtime-file fit. Runtime bytes are not included
+inline or freshly read by this source resolver.
 Their independent verification and interval validity remain explicit outer work.
 
 `loaded_module_or_null`, definition `module` and `qualname` are fixed catalog
