@@ -231,21 +231,21 @@ are in-memory test machinery, not additional fixture files or an OS sandbox.
 ## Verified engineering checkpoint
 
 The repaired source fe369cd2983c610c1f6d572027fef25fd8df5cce passed formatting/lint, full
-configured typing over227files and all62synthetic cases with186ordered passing
-setup/call/teardown phases. Separate collection bound the same62IDs with zero
+configured typing over 227 files and all 62 synthetic cases with 186 ordered passing
+setup/call/teardown phases. Separate collection bound the same 62 IDs with zero
 phases; JUnit agreed, with no skips, xfails or forbidden events in the final check.
-All24owned child processes across four attempts closed cleanly. Source, helper
+All 24 owned child processes across four attempts closed cleanly. Source, helper
 and pinned environment identities matched. Both formatting steps preserved the
 complete target ASTs. The production helper and trusted guard remained unchanged
 by the test-isolation repair.
 
-The cumulative account charges106.312864CPU seconds and122.782534929wall seconds,
-including closeout holds. Its3,018,011logical bytes comprise568regular files,
-28symlinks and one unread FIFO, under385directories. The final suite's62owned
-checkout roots retain350,139payload bytes, below the358,066source-derived bound.
+The cumulative account charges 106.312864 CPU seconds and 122.782534929 wall seconds,
+including closeout holds. Its 3,018,011 logical bytes comprise 568 regular files,
+28 symlinks and one unread FIFO, under 385 directories. The final suite's 62 owned
+checkout roots retain 350,139 payload bytes, below the 358,066 source-derived bound.
 Hardlink pathnames are counted separately; link targets were not followed.
 Planning/review records are inventoried separately; external control usage and
-peak memory remain unknown. The interrupted check2 retains its original exit86,
+peak memory remain unknown. The interrupted check 2 retains its original exit 86,
 unknown exact trigger/phase/forbidden-entry census and all charges. Later success
 does not reconstruct that missing history or reset earlier scientific unknowns.
 The private checkpoint digest is 212f2261db7a9305dc9470697b7a2692dbf3873cf43ae31503177f5ab30954c9.
