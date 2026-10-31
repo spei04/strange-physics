@@ -113,11 +113,20 @@ class TableRetentionAttempt:
     def snapshot(self) -> RetentionSnapshot:
         """Bounded facts only; neither a serialized receipt nor retry authority."""
         return RetentionSnapshot(
-            self._consumed, self._stopped, self._reserved, self._written,
-            self._creation_entered, self._anchor is not None, self._table_creation_entered,
+            self._consumed,
+            self._stopped,
+            self._reserved,
+            self._written,
+            self._creation_entered,
+            self._anchor is not None,
+            self._table_creation_entered,
             self._table_created,
-            self._table_synced, self._readback_equal, self._close_confirmed,
-            self._observations, tuple(self._faults), self._unretained,
+            self._table_synced,
+            self._readback_equal,
+            self._close_confirmed,
+            self._observations,
+            tuple(self._faults),
+            self._unretained,
         )
 
     def _remember(self, phase: str, error: BaseException) -> None:
@@ -286,7 +295,12 @@ class TableRetentionAttempt:
             if after.raw != before.raw or binding_after != binding_before:
                 raise ValueError("Fresh context differs from the initial context")
             result = TableContextObservation(
-                actual, actual_hash, len(actual), after.raw, after.sha256, after.byte_length,
+                actual,
+                actual_hash,
+                len(actual),
+                after.raw,
+                after.sha256,
+                after.byte_length,
             )
             self._active()  # Also guard swallowed reentry inside the final observation.
             return result

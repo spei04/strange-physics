@@ -32,11 +32,17 @@ def no_scientific_imports(monkeypatch: pytest.MonkeyPatch) -> None:
 
     def guarded(name: str, *args: Any, **kwargs: Any) -> Any:
         if name.removeprefix("tests.") in {
-            "endpoint_belief_reference", "d1_fixture_reference", "d1_prefix_evidence",
-            "d1_bounds", "grid_q1_reference", "grid_q1_driver",
+            "endpoint_belief_reference",
+            "d1_fixture_reference",
+            "d1_prefix_evidence",
+            "d1_bounds",
+            "grid_q1_reference",
+            "grid_q1_driver",
         } or name in {
-            "strange_physics.native_prediction", "strange_physics.native_endpoint_beliefs",
-            "strange_physics.simulation", "strange_physics.finite_log_weights",
+            "strange_physics.native_prediction",
+            "strange_physics.native_endpoint_beliefs",
+            "strange_physics.simulation",
+            "strange_physics.finite_log_weights",
         }:
             raise AssertionError("T retention tests cannot import scientific producers")
         return original_import(name, *args, **kwargs)
@@ -56,14 +62,28 @@ class Case:
 def case(tmp_path: Path) -> Iterator[Case]:
     tmp_path.chmod(0o700)
     context = SinkContext(
-        "recorder-a", "run-a", "1" * 40, "2" * 40, PROTOCOL_SHA256,
-        "3" * 64, "4" * 64, "6" * 64, 55100, 32768,
+        "recorder-a",
+        "run-a",
+        "1" * 40,
+        "2" * 40,
+        PROTOCOL_SHA256,
+        "3" * 64,
+        "4" * 64,
+        "6" * 64,
+        55100,
+        32768,
     )
     value = PrimitiveFileSink.create(tmp_path / "sink", context)
     raw = build_table(
         TableIdentity(
-            "1" * 40, "2" * 40, PROTOCOL_SHA256, "3" * 64,
-            "4" * 64, "5" * 64, "run-a", "recorder-a",
+            "1" * 40,
+            "2" * 40,
+            PROTOCOL_SHA256,
+            "3" * 64,
+            "4" * 64,
+            "5" * 64,
+            "run-a",
+            "recorder-a",
         ),
         ("owned-fake-definition",) * 14,
     )
@@ -100,7 +120,8 @@ def assert_consumed(case: Case, monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 def test_success_orders_fresh_context_after_all_metadata_closes(
-    case: Case, monkeypatch: pytest.MonkeyPatch,
+    case: Case,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     original_observe = PrimitiveFileSink.observe_context
     observations = 0
@@ -135,7 +156,8 @@ def test_success_orders_fresh_context_after_all_metadata_closes(
     assert result.table_sha256 == hashlib.sha256(case.raw).hexdigest()
     assert result.context_sha256 == hashlib.sha256(result.context_raw).hexdigest()
     assert (result.table_bytes, result.context_bytes) == (
-        len(case.raw), len(result.context_raw),
+        len(case.raw),
+        len(result.context_raw),
     )
     assert not hasattr(result, "__dict__")
     invalid: Any = result
@@ -596,7 +618,8 @@ def test_primary_write_error_survives_independent_root_close_error(
     assert rejected.value is primary and case.attempt.first_exception is primary
     assert injections == 1
     assert [fault.phase for fault in case.attempt.snapshot().faults] == [
-        "table_write", "metadata_anchor_close",
+        "table_write",
+        "metadata_anchor_close",
     ]
     assert case.attempt.snapshot().metadata_close_confirmed is False
     assert case.attempt.snapshot().context_observations == 1
