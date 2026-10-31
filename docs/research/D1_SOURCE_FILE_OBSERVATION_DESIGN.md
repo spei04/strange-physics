@@ -73,8 +73,11 @@ an outer prerequisite; root rename/history is not inferred from its descriptor.
 
 Consume before parsing or I/O, record PID/thread ownership and latch reentry or
 wrong-owner faults. A rejected nested entry must not release the outer busy flag.
-After every work call, check sticky state before another work operation. This is
-a reviewed single-owner interval, not hostile-Python or concurrent-writer isolation.
+After every work call, check sticky state before another observation operation.
+Sticky faults stop observation work, but never suppress the remaining independent
+owned-FD closes. A later call on the consumed instance rejects before any work or
+cleanup; it cannot close the borrowed root or repeat an earlier close. This is a
+reviewed single-owner interval, not hostile-Python or concurrent-writer isolation.
 
 1. Validate raw inputs/plan/catalog before acquiring any owned descriptor. Reserve
    the complete planned checkout-read envelope; failure does not authorize a new
@@ -82,7 +85,11 @@ a reviewed single-owner interval, not hostile-Python or concurrent-writer isolat
 2. Visit checkout members in catalog order. Walk each canonical locator from the
    owned root, opening directories relative to their actual parent descriptors
    with `O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC`; hold that complete chain for this file.
-   Validate each directory's fstat/named identity before descending. Require the
+   Validate each directory's fstat/named identity before descending. Every named
+   metadata check, both before and after reading, uses
+   `os.stat(component, dir_fd=held_parent, follow_symlinks=False)` or equivalent
+   descriptor-relative lstat. Reject a symlink itself even when it points to the
+   already-open target; `O_NOFOLLOW` on the earlier open is not sufficient. Require the
    current user and no group/world write bits; public source modes such as 0755
    directories and 0644 files are allowed, without imposing private 0600/0700 rules.
 3. Open the leaf `O_RDONLY|O_NOFOLLOW|O_CLOEXEC|O_NONBLOCK`. Register every returned
@@ -94,7 +101,9 @@ a reviewed single-owner interval, not hostile-Python or concurrent-writer isolat
    size has been returned. Each call must return exact `bytes` of exactly the
    requested positive length. A short/zero return, interruption, error or malformed
    return consumes failure; do not fill, retry or continue. Hash accepted chunks
-   incrementally without retaining a chunk list or raw source bundle.
+   incrementally without retaining a chunk list or raw source bundle. Release the
+   helper's accepted chunk reference after hashing and before the next data read
+   or EOF probe; no record or closure retains it. This preserves the one-chunk bound.
 5. Make exactly one 1-byte overflow/EOF request after all declared data. Only here
    is `b''` the required successful return. Any returned byte fails. An empty source
    file or zero declared length is never admitted. Record requested bytes before
@@ -193,7 +202,9 @@ The final authored case/operation/fixture census must precede engineering admiss
   data, not observations made by the helper to approve itself.
 * Owned symlink/FIFO/directory/hardlink/unsafe-mode leaves and substituted ancestors
   fail without following links or blocking on FIFO. Distinct names resolving to
-  one file are not accepted as independent checkout members.
+  one file are not accepted as independent checkout members. Deterministically
+  replace an opened name with a symlink to the same held target before its next
+  named check; non-following metadata must reject it despite identical target bytes.
 * Deterministic extent/mtime/ctime or named-identity change during an owned read,
   plus digest mismatch with unchanged size. Use explicit mutations/hooks, no sleeps.
 * Short/zero/error/interrupted data reads stop without fill/probe/retry. A synthetic
@@ -203,7 +214,9 @@ The final authored case/operation/fixture census must precede engineering admiss
   A scoped real-close-then-EIO injection closes one exact owned FD once but leaves
   acknowledgement uncertain; restore mocks before caller-root/pytest cleanup.
 * Swallowed work- or close-hook reentry, including a later distinct error, cannot
-  return a batch or advance. Retry of the consumed instance performs no I/O.
+  return a batch or advance; all remaining independent owned closes still run.
+  Retry of the consumed instance performs neither observation I/O nor cleanup,
+  and never closes the caller's borrowed root.
 * A mid-batch failure preserves earlier observations and the full planned/failed/
   unrun denominator. Validate descriptor ownership per allocation, not by assuming
   numeric FD values are never reused. Small test-only chunk substitution can
