@@ -38,9 +38,16 @@ def no_evaluation(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(prediction, "_state_at_time", deny)
     monkeypatch.setattr(beliefs, "compute_native_endpoint_belief", deny)
     monkeypatch.setattr(simulation, "simulate", deny)
-    for name in ("certify_d1_prefix", "certify_d1_prior", "enclose_predictive", "enclose_cdf",
-                 "generalized_quantile", "enclose_scores",
-                 "pair_scores", "classify_matched_panel"):
+    for name in (
+        "certify_d1_prefix",
+        "certify_d1_prior",
+        "enclose_predictive",
+        "enclose_cdf",
+        "generalized_quantile",
+        "enclose_scores",
+        "pair_scores",
+        "classify_matched_panel",
+    ):
         monkeypatch.setattr(d1_bounds, name, deny)
 
 
@@ -59,18 +66,31 @@ def test_full_registry_preserves_manifest_denominators_dependencies_and_no_resul
         (r.key, r.kind, r.dependencies) for r in ROW_MANIFEST
     )
     assert {kind: sum(r.kind == kind for r in rows) for kind in {r.kind for r in rows}} == {
-        "fixture": 8, "belief": 40, "prior": 16, "prequential": 18, "refinement": 20,
-        "scale": 12, "stress": 16, "primary": 4, "aggregate": 1,
+        "fixture": 8,
+        "belief": 40,
+        "prior": 16,
+        "prequential": 18,
+        "refinement": 20,
+        "scale": 12,
+        "stress": 16,
+        "primary": 4,
+        "aggregate": 1,
     }
     assert all(len({c.name for c in row.checks}) == len(row.checks) for row in rows)
-    assert all(operand.row_key in {r.key for r in rows}
-               for row in rows for check in row.checks for operand in check.operands)
+    assert all(
+        operand.row_key in {r.key for r in rows}
+        for row in rows
+        for check in row.checks
+        for operand in check.operands
+    )
     assert not {"passed", "observed", "qualification", "utility"}.intersection(
         f.name for f in fields(RequiredCheck)
     )
     assert all(r.verification_scope == "required-check-descriptors-only" for r in rows)
-    assert all(r.on_required_rejection == "stop-subsequent-batch-retain-fault-and-later-unrun"
-               for r in rows)
+    assert all(
+        r.on_required_rejection == "stop-subsequent-batch-retain-fault-and-later-unrun"
+        for r in rows
+    )
 
 
 @pytest.mark.parametrize("family", ("belief", "prior"))
@@ -91,8 +111,15 @@ def test_coarse_certificates_are_diagnostics_while_finest_bounds_are_inclusive(f
 def test_prior_has_no_posterior_training_loss_or_normalizer_gate() -> None:
     prior = by_name(expected_checks("prior/D03/1024"))
     posterior = by_name(expected_checks("belief/D03/1024/0.25"))
-    forbidden = {"bind.prefix", "coverage.training", "training_endpoint", "normalizer.complete",
-                 "whole_prefix_node_error", "overlapping_reserve", "reference.normalization"}
+    forbidden = {
+        "bind.prefix",
+        "coverage.training",
+        "training_endpoint",
+        "normalizer.complete",
+        "whole_prefix_node_error",
+        "overlapping_reserve",
+        "reference.normalization",
+    }
     assert forbidden.isdisjoint(prior)
     assert forbidden.issubset(posterior)
     assert "delta=0" in prior["prior.uniform"].constants
@@ -112,7 +139,8 @@ def test_duplicate_prefix_keeps_both_channels_and_one_overlapping_reserve() -> N
     assert two["reference.normalization"].limit == D("1e-48")
     assert "two-global-plus-four-per-node-checks" in two["reference.normalization"].constants
     assert tuple(operand.field for operand in two["normalizer.complete"].operands[:2]) == (
-        "BoundPrefix.result.normalization", "BoundPrefix.result.normalizer_input",
+        "BoundPrefix.result.normalization",
+        "BoundPrefix.result.normalizer_input",
     )
 
 
@@ -133,15 +161,19 @@ def test_record1_uses_matched_posterior_and_training_time_not_a_second_prior() -
 def test_refinement_uses_ordered_finite_operands_and_no_continuous_error_substitution() -> None:
     value = by_name(expected_checks("refinement/F02/0.5/256-to-1024"))
     binding = value["bind.refinement"]
-    assert tuple(x.row_key for x in binding.operands) == ("belief/F02/256/0.5", "belief/F02/1024/0.5")
+    assert tuple(x.row_key for x in binding.operands) == (
+        "belief/F02/256/0.5",
+        "belief/F02/1024/0.5",
+    )
     assert "group-four-consecutive-fine-cells" in binding.constants
     assert value["refinement.mean"].limit == D("0.0005")
     assert "finite_mean" in value["refinement.mean"].operands[0].field
     assert all(c.relation == "upper<=" for c in value.values() if c.category == "upper-bound")
 
 
-@pytest.mark.parametrize("key", ("scale/M02/1024/0.125-to-0.25", "stress/F04:M04/1024/0.5",
-                                  "stress/W03:M03/256/0.25"))
+@pytest.mark.parametrize(
+    "key", ("scale/M02/1024/0.125-to-0.25", "stress/F04:M04/1024/0.5", "stress/W03:M03/256/0.25")
+)
 def test_scale_and_force_weak_effects_are_diagnostics_without_utility_threshold(key: str) -> None:
     checks = by_name(expected_checks(key))
     assert all(c.category != "upper-bound" and c.limit is None for c in checks.values())
@@ -158,9 +190,14 @@ def test_duplicate_witness_descriptor_keeps_material_gate_and_unavailable_overla
     check = by_name(expected_checks("stress/D03:M03/1024/0.25"))["duplicate.loss_identity"]
     assert check.limit is None and check.category == "predicate"
     assert check.relation == "contained-and-actual-material-joined"
-    assert "kernel-alone-not-authenticity" in check.constants and "overlap=unavailable" in check.constants
+    assert (
+        "kernel-alone-not-authenticity" in check.constants
+        and "overlap=unavailable" in check.constants
+    )
     assert tuple(x.row_key for x in check.operands[:3]) == (
-        "belief/D03/1024/0.25", "belief/M03/1024/0.25", "prequential/D03/1024/record1",
+        "belief/D03/1024/0.25",
+        "belief/M03/1024/0.25",
+        "prequential/D03/1024/record1",
     )
 
 
@@ -199,25 +236,47 @@ def test_no_subset_or_family_substitution_can_validate(change: str) -> None:
         validate_registry(changed)
 
 
-@pytest.mark.parametrize("change", ("name", "category", "producer", "relation", "limit", "quantum",
-                                    "operand-row", "operand-field", "applicability", "constants"))
+@pytest.mark.parametrize(
+    "change",
+    (
+        "name",
+        "category",
+        "producer",
+        "relation",
+        "limit",
+        "quantum",
+        "operand-row",
+        "operand-field",
+        "applicability",
+        "constants",
+    ),
+)
 def test_callers_cannot_choose_a_numerical_policy(change: str) -> None:
     row = expected_checks("belief/M01/1024/0.25")
     check = by_name(row)["finest_mean"]
     changes: dict[str, object] = {
-        "name": "made-up", "category": "diagnostic", "producer": "unreviewed",
-        "relation": "upper<", "limit": D("0.18"), "quantum": D("0.0180"),
+        "name": "made-up",
+        "category": "diagnostic",
+        "producer": "unreviewed",
+        "relation": "upper<",
+        "limit": D("0.18"),
+        "quantum": D("0.0180"),
         "operand-row": (Operand("belief/M02/1024/0.25", check.operands[0].field),),
         "operand-field": (Operand(row.key, "finite-error-instead"),),
-        "applicability": "coarse-only", "constants": ("optional=true",),
+        "applicability": "coarse-only",
+        "constants": ("optional=true",),
     }
-    field = {"quantum": "limit", "operand-row": "operands", "operand-field": "operands"}.get(change, change)
+    field = {"quantum": "limit", "operand-row": "operands", "operand-field": "operands"}.get(
+        change, change
+    )
     altered = replace(check, **{field: changes[change]})
     with pytest.raises(ValueError):
         validate_expected_row(replace_check(row, check.name, altered))
 
 
-@pytest.mark.parametrize("change", ("missing", "extra", "duplicate", "reordered", "coherent-foreign-block"))
+@pytest.mark.parametrize(
+    "change", ("missing", "extra", "duplicate", "reordered", "coherent-foreign-block")
+)
 def test_gate_sequence_cannot_drop_or_replace_requirements(change: str) -> None:
     row = expected_checks("belief/M01/1024/0.25")
     if change == "missing":
@@ -239,7 +298,9 @@ def test_non_decimal_or_nonfinite_limits_fail_before_equality(bad: object) -> No
     row = expected_checks("belief/M01/1024/0.25")
     check = by_name(row)["finest_mean"]
     with pytest.raises(ValueError):
-        validate_expected_row(replace_check(row, check.name, replace(check, limit=cast(Decimal, bad))))
+        validate_expected_row(
+            replace_check(row, check.name, replace(check, limit=cast(Decimal, bad)))
+        )
 
 
 def test_boolean_ordinal_is_not_equal_to_zero_ordinal() -> None:
@@ -255,8 +316,16 @@ def test_coherent_diagnostic_fake_pass_descriptor_is_rejected() -> None:
         validate_expected_row(replace_check(row, check.name, attempted))
 
 
-@pytest.mark.parametrize("key", ("belief/D03/256/0.125", "primary/F02/1024/0.25",
-                                  "belief/M01/64/0.25", "unknown", "fixture/M01\n"))
+@pytest.mark.parametrize(
+    "key",
+    (
+        "belief/D03/256/0.125",
+        "primary/F02/1024/0.25",
+        "belief/M01/64/0.25",
+        "unknown",
+        "fixture/M01\n",
+    ),
+)
 def test_no_unregistered_rows_are_inferred_from_lookalike_keys(key: str) -> None:
     with pytest.raises(ValueError):
         expected_checks(key)
@@ -273,9 +342,12 @@ def test_row_header_cannot_retarget_an_otherwise_correct_check_list(change: str)
 def test_strict_tie_decision_cannot_be_replaced_by_an_inclusive_pass() -> None:
     row = expected_checks("aggregate/matched/base/continuous-dk")
     check = by_name(row)["utility.co_primary"]
-    changed = replace(check, constants=tuple(
-        "both-upper<=0:local-screen-passed" if x == "both-upper<0:local-screen-passed" else x
-        for x in check.constants
-    ))
+    changed = replace(
+        check,
+        constants=tuple(
+            "both-upper<=0:local-screen-passed" if x == "both-upper<0:local-screen-passed" else x
+            for x in check.constants
+        ),
+    )
     with pytest.raises(ValueError):
         validate_expected_row(replace_check(row, check.name, changed))
