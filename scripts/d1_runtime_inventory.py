@@ -70,10 +70,12 @@ def collect_inventory(
             result["directories"].append({"path": str(path), "uid": info.st_uid, "entries": sorted(names)})
             pending.extend(path / name for name in names)
         elif stat.S_ISREG(info.st_mode):
-            total += info.st_size
-            if total > control.TOTAL_INPUT_LIMIT:
+            if info.st_size > control.FILE_LIMIT or total + info.st_size > control.TOTAL_INPUT_LIMIT:
                 raise ValueError("Inventory payload ceiling exceeded")
-            raw = _bytes(path)
+            raw = _bytes(path, info.st_size)
+            if len(raw) != info.st_size:
+                raise ValueError("Inventory file extent changed")
+            total += len(raw)
             result["files"].append({
                 "path": str(path), "uid": info.st_uid, "bytes": len(raw),
                 "sha256": hashlib.sha256(raw).hexdigest(),
@@ -301,6 +303,8 @@ def materialize_plan(
         *runtime_files, *source_files, *(Path(path) for path in routes.values()),
         paths["controller"], paths["controller_interpreter"], paths["bootstrap"],
         paths["checkout"] / "scripts/d1_owned_capture.py",
+        paths["checkout"] / "scripts/d1_capture_owner.py",
+        paths["checkout"] / "scripts/d1_capture_descendant.py",
         paths["checkout"] / "scripts/grid_q1_supervisor.py",
         paths["installation_record"],
         *(control._path(installation[key]) for key in ("lock_path", "archive_path", "provenance_path")),

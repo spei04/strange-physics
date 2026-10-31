@@ -247,9 +247,35 @@ def test_plan_materialization_joins_required_source_and_calls_existing_validator
     observed = inventory.materialize_plan(binding, runtime_files=(runtime,))
     assert observed == complete
     assert runtime in selected[0]
-    assert Path(binding["checkout"]) / "scripts/d1_owned_capture.py" in selected[0]
-    assert Path(binding["checkout"]) / "scripts/grid_q1_supervisor.py" in selected[0]
+    for source in (
+        "d1_owned_capture.py", "d1_capture_owner.py",
+        "d1_capture_descendant.py", "grid_q1_supervisor.py",
+    ):
+        assert Path(binding["checkout"]) / "scripts" / source in selected[0]
     # The existing validator, rather than a new trust flag, rejects an invalid join.
     binding["source_commit"] = "b" * 40
     with pytest.raises(ValueError, match="source differs"):
         inventory.materialize_plan(binding, runtime_files=(runtime,))
+
+
+@pytest.mark.parametrize("replacement", [b"abcd", b"ab"], ids=["growth", "shrink"])
+def test_inventory_binds_read_to_original_extent(
+    tmp_path: Path, owned: None, monkeypatch: pytest.MonkeyPatch, replacement: bytes
+) -> None:
+    path = tmp_path / "root/value"
+    put(path, b"abc")
+    original = inventory._bytes
+    limits: list[int] = []
+
+    def changed(value: Path, limit: int) -> bytes:
+        assert value == path
+        limits.append(limit)
+        value.write_bytes(replacement)
+        return original(value, limit)
+
+    monkeypatch.setattr(inventory, "_bytes", changed)
+    with pytest.raises(ValueError):
+        inventory.collect_inventory(
+            (path.parent,), (), stdlib=tmp_path / "stdlib", venv=tmp_path / "venv"
+        )
+    assert limits == [3]
