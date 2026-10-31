@@ -571,8 +571,9 @@
           "type": "string"
         },
         "future_initial_x": {
-          "const": 1.0,
           "default": 1.0,
+          "maximum": 1.0,
+          "minimum": 1.0,
           "title": "Future Initial X",
           "type": "number"
         },
@@ -580,8 +581,9 @@
           "$ref": "#/$defs/D1LabelClaim"
         },
         "future_time": {
-          "const": 0.75,
           "default": 0.75,
+          "maximum": 0.75,
+          "minimum": 0.75,
           "title": "Future Time",
           "type": "number"
         },

@@ -331,6 +331,16 @@
   ],
   "schema_negative": [
     {
+      "field": "future_initial_x",
+      "model": "D1PrivateAudit",
+      "value": 0.75
+    },
+    {
+      "field": "future_time",
+      "model": "D1PrivateAudit",
+      "value": 1.0
+    },
+    {
       "field": "schema_version",
       "model": "D1PublicFixture",
       "value": "wrong"
