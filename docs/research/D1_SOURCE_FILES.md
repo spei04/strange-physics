@@ -1,4 +1,4 @@
-# D1 checkout-file observation: source checkpoint
+# D1 checkout-file observation: implementation and verification
 
 Research's assigned source slice follows the reviewed
 [owned-file design](D1_SOURCE_FILE_OBSERVATION_DESIGN.md) at `b94d812`.
@@ -134,9 +134,8 @@ No allocation, historical-cost settlement or whole-science fit follows here.
 
 Static AST inspection finds **62 cases in 18 test functions**, **186 prospective
 phase reports**, and maximum node-ID length **106**. All parameterizations have
-short literal IDs. These are source counts, not a passing terminal runtime census;
-the later local attempt below stopped before completion, and this test-isolation
-repair has not been run.
+short literal IDs. Source review derived these counts; the final repaired
+engineering check below collected and passed the same cases.
 
 | Case group | Cases |
 | --- | ---: |
@@ -215,7 +214,8 @@ intercept the collector's own `Path.resolve` and failure-event writes. That is a
 concrete compatible mechanism; the missing receipt leaves the exact historical
 tripwire reason unknown. The failed attempt and its charges remain retained.
 Lead records the numerical ledger and execution evidence separately; this repair
-neither resets that account nor authorizes a retry.
+did not reset that account or authorize a retry; the later continuation was
+reviewed separately within the same limits.
 
 Tests now give `d1_source_files` fresh, explicitly populated `SimpleNamespace`
 OS/threading objects per case. Every untouched attribute is checked against the
@@ -227,3 +227,30 @@ local functions are poisoned. Scoped mocks restore before caller-root fixture
 cleanup and pytest teardown. No helper API, scientific guard, original test assertion,
 case ID or file-payload ceiling changes. The two tiny namespace objects per case
 are in-memory test machinery, not additional fixture files or an OS sandbox.
+
+## Verified engineering checkpoint
+
+The repaired source fe369cd2983c610c1f6d572027fef25fd8df5cce passed formatting/lint, full
+configured typing over227files and all62synthetic cases with186ordered passing
+setup/call/teardown phases. Separate collection bound the same62IDs with zero
+phases; JUnit agreed, with no skips, xfails or forbidden events in the final check.
+All24owned child processes across four attempts closed cleanly. Source, helper
+and pinned environment identities matched. Both formatting steps preserved the
+complete target ASTs. The production helper and trusted guard remained unchanged
+by the test-isolation repair.
+
+The cumulative account charges106.312864CPU seconds and122.782534929wall seconds,
+including closeout holds. Its3,018,011logical bytes comprise568regular files,
+28symlinks and one unread FIFO, under385directories. The final suite's62owned
+checkout roots retain350,139payload bytes, below the358,066source-derived bound.
+Hardlink pathnames are counted separately; link targets were not followed.
+Planning/review records are inventoried separately; external control usage and
+peak memory remain unknown. The interrupted check2 retains its original exit86,
+unknown exact trigger/phase/forbidden-entry census and all charges. Later success
+does not reconstruct that missing history or reset earlier scientific unknowns.
+The private checkpoint digest is 212f2261db7a9305dc9470697b7a2692dbf3873cf43ae31503177f5ab30954c9.
+
+One original ordinary PR CI attempt is next. The broader suite includes historical
+physics checks and cannot substitute for this private guard receipt or authorize
+D1 science. The next integration path and missing trust/resource evidence are
+listed in the [loaded-definition design](D1_LOADED_DEFINITION_DESIGN.md).

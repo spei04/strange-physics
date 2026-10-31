@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** PRs #138–#154 passed CI. The manifest parser passed 6,024 tests per runtime and 225-file typing, plus its independent 114-case local check.
-- **Assignments:** Research delivered the owned-file helper and 62 authored cases. Quality and Lead accepted its reentry repairs; Platform prepares bounded controls. Execution waits for final source/control review.
-- **Open gates:** Independent source/runtime proof, installation, protected inventory, historical evidence, aggregate fit and scientific admission remain pending. The owner and exposure policy are approved; no D1 batch is running.
+- **Verified:** PRs #138–#154 passed CI. The checkout observer passed independent review, 62 local cases/186 phases and full 227-file typing; its earlier interrupted attempt remains recorded.
+- **Assignments:** Lead publishes the observer draft; Platform verifies its original CI. Research maps remaining integration and resource evidence; Quality reviews release evidence. The [next design](research/D1_LOADED_DEFINITION_DESIGN.md) identifies concrete dependencies.
+- **Open gates:** Source/runtime proof, installation, protected inventory, historical evidence, whole-path fit and scientific admission remain pending. The owner and exposure policy are approved; no D1 batch is running.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Quality / Platform / Project lead | Owned-file observer qualified; original CI next | Research delivered62 fault cases and isolated helper-local OS mocks after an interrupted guard check. Quality and Lead accepted unchanged guard semantics, full227-file typing and exact62/186 passes;24children closed,106.312864CPU seconds charged with the failed attempt retained. Lead publishes the draft; Platform owns original CI evidence. Research maps the remaining end-to-end integration and resource evidence; accepted loaded-definition design stays unimplemented. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Parser CI accepted; owned-file source repaired | Original PR154 CI passed all six required jobs:6,024 tests/runtime,225-file typing,1,567 schemas and packaging/smoke checks. Research delivered the next three-file helper/test/guide slice. Quality and Lead found and closed first/final owner-guard reentry windows and an explicit-chaining lint issue before execution;62 cases are authored, not run. Platform prepares a disabled finite proposal; actual source/control qualification remains pending. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Owned-file observation design accepted; parser CI running | Research specified one checkout-only observation attempt against independent expected pins. Quality and Lead required no-follow named metadata, chunk release before subsequent reads, and remaining independent closes despite sticky faults; the corrected design preserves all bounds and defers loaded-code/runtime authority. Platform observes original PR154 run41186546429; Lead keeps its e9a6207c head frozen and publishes design separately. No helper implementation or scientific admission. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Pure source parser qualified; owned-file design next | Research delivered114 declaration cases. Quality and Lead accepted source, bounded controls and actual114/342 passes with225-file typing,27 imported sources and12 closed children;58.724645CPU seconds charged. Lead publishes one original ordinary CI attempt. Platform owns its evidence; Research designs a once-only owned-file observation boundary with independent expected pins and no primitive calls. Prior incomplete units, failures and scientific unknowns remain retained. |
