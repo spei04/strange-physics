@@ -5,9 +5,9 @@ from __future__ import annotations
 import json
 from decimal import Decimal
 
+import d1_report_contracts as c
 import pytest
 
-import d1_report_contracts as c
 from strange_physics.calibration_fixture_contracts import PROTOCOL_SHA256
 from strange_physics.control_contracts import ContractViolation
 
@@ -15,26 +15,49 @@ D = Decimal
 
 
 def fixture(*, complete: bool = True) -> c.D1ReportStructure:
-    tables = tuple(c.TableRef(
-        table_id=kind, kind=kind, path=f"{kind}/rows.jsonl", codec=f"{kind}-v1",
-        byte_length=1000, raw_sha256="1" * 64, record_count=count
-    ) for kind, count in zip(c.KINDS, c.GROUP_COUNTS, strict=True)) if complete else ()
+    tables = (
+        tuple(
+            c.TableRef(
+                table_id=kind,
+                kind=kind,
+                path=f"{kind}/rows.jsonl",
+                codec=f"{kind}-v1",
+                byte_length=1000,
+                raw_sha256="1" * 64,
+                record_count=count,
+            )
+            for kind, count in zip(c.KINDS, c.GROUP_COUNTS, strict=True)
+        )
+        if complete
+        else ()
+    )
     seen = dict.fromkeys(c.KINDS, 0)
     rows = []
     for ordinal, spec in enumerate(c.ROW_MANIFEST):
         slot = c.TableSlot(table_id=spec.kind, index=seen[spec.kind]) if complete else None
         seen[spec.kind] += 1
-        rows.append(c.RowState(
-            ordinal=ordinal, key=spec.key, kind=spec.kind, dependencies=spec.dependencies,
-            state="completed" if complete else "unrun", completion=slot,
-            reason=None if complete else "not-started"
-        ))
+        rows.append(
+            c.RowState(
+                ordinal=ordinal,
+                key=spec.key,
+                kind=spec.kind,
+                dependencies=spec.dependencies,
+                state="completed" if complete else "unrun",
+                completion=slot,
+                reason=None if complete else "not-started",
+            )
+        )
     frozen = tuple(rows)
     return c.D1ReportStructure(
-        protocol_sha256=PROTOCOL_SHA256, source_commit="1" * 40, source_tree="2" * 40,
-        run_id="synthetic-only", declared_execution="complete" if complete else "incomplete",
-        incomplete_reason=None if complete else "not-started", rows=frozen,
-        denominators=c.group_denominators(frozen), tables=tables
+        protocol_sha256=PROTOCOL_SHA256,
+        source_commit="1" * 40,
+        source_tree="2" * 40,
+        run_id="synthetic-only",
+        declared_execution="complete" if complete else "incomplete",
+        incomplete_reason=None if complete else "not-started",
+        rows=frozen,
+        denominators=c.group_denominators(frozen),
+        tables=tables,
     )
 
 
@@ -46,14 +69,23 @@ def test_exact_manifest_counts_and_critical_dependencies() -> None:
     rows = c.ROW_MANIFEST
     assert len(rows) == len({r.key for r in rows}) == 135
     expected = {
-        "fixture": 8, "belief": 40, "prior": 16, "prequential": 18,
-        "refinement": 20, "scale": 12, "stress": 16, "primary": 4, "aggregate": 1
+        "fixture": 8,
+        "belief": 40,
+        "prior": 16,
+        "prequential": 18,
+        "refinement": 20,
+        "scale": 12,
+        "stress": 16,
+        "primary": 4,
+        "aggregate": 1,
     }
     assert {k: sum(r.kind == k for r in rows) for k in expected} == expected
     by_key = {r.key: r for r in rows}
     for count in (256, 1024):
         assert by_key[f"prequential/D03/{count}/record1"].dependencies == (
-            "fixture/D03", "fixture/M03", f"belief/M03/{count}/0.25"
+            "fixture/D03",
+            "fixture/M03",
+            f"belief/M03/{count}/0.25",
         )
         assert f"prequential/D03/{count}/record1" in by_key[f"belief/D03/{count}/0.25"].dependencies
     assert rows[-1].dependencies == tuple(r.key for r in rows[:-1])
@@ -87,11 +119,18 @@ def test_full_denominator_rejects_survivor_or_extra_rows(fault: str) -> None:
         check(value.model_copy(update={"rows": rows}))
 
 
-@pytest.mark.parametrize("field,replacement", [
-    ("kind", "belief"), ("key", "fixture/renamed"), ("ordinal", 1),
-    ("dependencies", ("fixture/M02",)), ("completion", None),
-    ("reason", "silently-ignored"), ("state", "unrun"),
-])
+@pytest.mark.parametrize(
+    "field,replacement",
+    [
+        ("kind", "belief"),
+        ("key", "fixture/renamed"),
+        ("ordinal", 1),
+        ("dependencies", ("fixture/M02",)),
+        ("completion", None),
+        ("reason", "silently-ignored"),
+        ("state", "unrun"),
+    ],
+)
 def test_actual_nested_row_bypasses_are_revalidated(field: str, replacement: object) -> None:
     value = fixture()
     bad = value.rows[0].model_copy(update={field: replacement})
@@ -112,12 +151,19 @@ def test_changed_denominator_is_rejected_even_with_same_total() -> None:
         check(value.model_copy(update={"denominators": (first, *value.denominators[1:])}))
 
 
-@pytest.mark.parametrize("field,replacement", [
-    ("qualification", "qualified"), ("utility", "local-screen-passed"),
-    ("material_authenticity", "verified"), ("validation_scope", "numerical"),
-    ("protocol_sha256", "f" * 64), ("source_commit", "0" * 40),
-    ("source_tree", "0" * 40), ("incomplete_reason", "ignored failure"),
-])
+@pytest.mark.parametrize(
+    "field,replacement",
+    [
+        ("qualification", "qualified"),
+        ("utility", "local-screen-passed"),
+        ("material_authenticity", "verified"),
+        ("validation_scope", "numerical"),
+        ("protocol_sha256", "f" * 64),
+        ("source_commit", "0" * 40),
+        ("source_tree", "0" * 40),
+        ("incomplete_reason", "ignored failure"),
+    ],
+)
 def test_structure_cannot_promote_itself_or_hide_control_failure(
     field: str, replacement: object
 ) -> None:
@@ -128,24 +174,44 @@ def test_structure_cannot_promote_itself_or_hide_control_failure(
 def test_partial_and_failed_rows_remain_in_denominators() -> None:
     value = fixture(complete=False)
     table = c.TableRef(
-        table_id="partial", kind="fixture", path="fixture/partial.json", codec="fixture-v1",
-        byte_length=10, raw_sha256="1" * 64, record_count=1
+        table_id="partial",
+        kind="fixture",
+        path="fixture/partial.json",
+        codec="fixture-v1",
+        byte_length=10,
+        raw_sha256="1" * 64,
+        record_count=1,
     )
     fault = c.TableRef(
-        table_id="first-fault", kind="fault", path="fault/first.json", codec="fault-v1",
-        byte_length=10, raw_sha256="2" * 64, record_count=1
+        table_id="first-fault",
+        kind="fault",
+        path="fault/first.json",
+        codec="fault-v1",
+        byte_length=10,
+        raw_sha256="2" * 64,
+        record_count=1,
     )
     slot = c.TableSlot(table_id="first-fault", index=0)
-    failed = value.rows[0].model_copy(update={
-        "state": "failed", "fault": slot, "partial": (c.TableSlot(table_id="partial", index=0),),
-        "reason": "retained synthetic failure"
-    })
+    failed = value.rows[0].model_copy(
+        update={
+            "state": "failed",
+            "fault": slot,
+            "partial": (c.TableSlot(table_id="partial", index=0),),
+            "reason": "retained synthetic failure",
+        }
+    )
     attempted = value.rows[1].model_copy(update={"state": "attempted", "reason": "unknown-exit"})
     rows = (failed, attempted, *value.rows[2:])
-    actual = check(value.model_copy(update={
-        "rows": rows, "tables": (table, fault), "first_fault": slot,
-        "denominators": c.group_denominators(rows)
-    }))
+    actual = check(
+        value.model_copy(
+            update={
+                "rows": rows,
+                "tables": (table, fault),
+                "first_fault": slot,
+                "denominators": c.group_denominators(rows),
+            }
+        )
+    )
     assert actual.denominators[0] == c.Denominator(
         kind="fixture", planned=8, unrun=6, attempted=1, completed=0, failed=1
     )
@@ -169,15 +235,21 @@ def test_incomplete_states_cannot_fabricate_terminal_evidence(fault: str) -> Non
 
 def test_completed_row_cannot_hide_unfinished_dependency() -> None:
     value = fixture()
-    first = value.rows[0].model_copy(update={
-        "state": "attempted", "completion": None, "reason": "missing-source"
-    })
+    first = value.rows[0].model_copy(
+        update={"state": "attempted", "completion": None, "reason": "missing-source"}
+    )
     rows = (first, *value.rows[1:])
     with pytest.raises(ContractViolation):
-        check(value.model_copy(update={
-            "rows": rows, "denominators": c.group_denominators(rows),
-            "declared_execution": "incomplete", "incomplete_reason": "missing-source"
-        }))
+        check(
+            value.model_copy(
+                update={
+                    "rows": rows,
+                    "denominators": c.group_denominators(rows),
+                    "declared_execution": "incomplete",
+                    "incomplete_reason": "missing-source",
+                }
+            )
+        )
 
 
 @pytest.mark.parametrize("fault", ["unknown", "wrong-kind", "out-of-range", "alias"])
@@ -192,9 +264,9 @@ def test_completed_material_must_join_exact_table_role_and_slot(fault: str) -> N
         index = 8
     else:
         index = 1
-    bad = value.rows[0].model_copy(update={
-        "completion": c.TableSlot(table_id=table_id, index=index)
-    })
+    bad = value.rows[0].model_copy(
+        update={"completion": c.TableSlot(table_id=table_id, index=index)}
+    )
     with pytest.raises(ContractViolation):
         check(value.model_copy(update={"rows": (bad, *value.rows[1:])}))
 
@@ -208,19 +280,29 @@ def test_table_descriptor_set_is_exact(fault: str) -> None:
     elif fault == "duplicate-path":
         tables = (*tables, tables[0].model_copy(update={"table_id": "duplicate"}))
     elif fault == "orphan":
-        tables = (*tables, tables[0].model_copy(update={
-            "table_id": "unused", "path": "fixture/unused.json"
-        }))
+        tables = (
+            *tables,
+            tables[0].model_copy(update={"table_id": "unused", "path": "fixture/unused.json"}),
+        )
     else:
         tables = (tables[0].model_copy(update={"raw_sha256": "0" * 64}), *tables[1:])
     with pytest.raises(ContractViolation):
         check(value.model_copy(update={"tables": tables}))
 
 
-@pytest.mark.parametrize("path", [
-    "/fixture/a.json", "fixture/../a.json", "fixture/./a.json", "fixture//a.json",
-    "fixture/a.json/", "belief/a.json", "fixture/a.py", "fixture/a.json\n",
-])
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/fixture/a.json",
+        "fixture/../a.json",
+        "fixture/./a.json",
+        "fixture//a.json",
+        "fixture/a.json/",
+        "belief/a.json",
+        "fixture/a.py",
+        "fixture/a.json\n",
+    ],
+)
 def test_descriptor_path_does_not_allow_resolver_escape(path: str) -> None:
     data = fixture().tables[0].model_dump(mode="python")
     data["path"] = path
@@ -230,12 +312,22 @@ def test_descriptor_path_does_not_allow_resolver_escape(path: str) -> None:
 
 def test_declared_byte_overflow_fails_without_claiming_physical_fit() -> None:
     value = fixture()
-    tables = tuple(c.TableRef(
-        table_id=f"t-{r.ordinal}", kind=r.kind, path=f"{r.kind}/{r.ordinal}.json",
-        codec=r.kind + "-v1", byte_length=c.TABLE_BYTES, raw_sha256="1" * 64, record_count=1
-    ) for r in value.rows)
-    rows = tuple(r.model_copy(update={"completion": c.TableSlot(table_id=t.table_id, index=0)})
-                 for r, t in zip(value.rows, tables, strict=True))
+    tables = tuple(
+        c.TableRef(
+            table_id=f"t-{r.ordinal}",
+            kind=r.kind,
+            path=f"{r.kind}/{r.ordinal}.json",
+            codec=r.kind + "-v1",
+            byte_length=c.TABLE_BYTES,
+            raw_sha256="1" * 64,
+            record_count=1,
+        )
+        for r in value.rows
+    )
+    rows = tuple(
+        r.model_copy(update={"completion": c.TableSlot(table_id=t.table_id, index=0)})
+        for r, t in zip(value.rows, tables, strict=True)
+    )
     with pytest.raises(ContractViolation):
         check(value.model_copy(update={"rows": rows, "tables": tables}))
 
@@ -252,10 +344,18 @@ def test_decimal_bounds_are_not_silently_rounded(text: str) -> None:
         c.encode_decimal(D(text))
 
 
-@pytest.mark.parametrize("changes", [
-    {"sign": True}, {"sign": 2}, {"digits": "01"}, {"digits": "1\n"},
-    {"exponent": True}, {"exponent": -257}, {"digits": "2", "exponent": 128},
-])
+@pytest.mark.parametrize(
+    "changes",
+    [
+        {"sign": True},
+        {"sign": 2},
+        {"digits": "01"},
+        {"digits": "1\n"},
+        {"exponent": True},
+        {"exponent": -257},
+        {"digits": "2", "exponent": 128},
+    ],
+)
 def test_constructed_decimal_is_revalidated(changes: dict[str, object]) -> None:
     bad = c.encode_decimal(D(1)).model_copy(update=changes)
     with pytest.raises(ValueError):
@@ -267,9 +367,9 @@ def test_binary64_round_trip_is_exact(value: float) -> None:
     assert c.decode_binary64(c.encode_binary64(value)).hex() == value.hex()
 
 
-@pytest.mark.parametrize("text", [
-    "nan", "inf", "0x1p+999999999", "0x1p+0", "0x1.0000000000000p+0\n"
-])
+@pytest.mark.parametrize(
+    "text", ["nan", "inf", "0x1p+999999999", "0x1p+0", "0x1.0000000000000p+0\n"]
+)
 def test_binary64_nonfinite_noncanonical_and_overflow_are_contained(text: str) -> None:
     with pytest.raises(ValueError):
         c.Binary64Atom(value=text)

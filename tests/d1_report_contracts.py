@@ -15,13 +15,27 @@ from strange_physics.calibration_fixture_contracts import PROTOCOL_SHA256
 from strange_physics.contracts import Identifier, Message
 
 Kind = Literal[
-    "fixture", "belief", "prior", "prequential", "refinement", "scale", "stress",
-    "primary", "aggregate"
+    "fixture",
+    "belief",
+    "prior",
+    "prequential",
+    "refinement",
+    "scale",
+    "stress",
+    "primary",
+    "aggregate",
 ]
 State = Literal["unrun", "attempted", "completed", "failed"]
 KINDS: tuple[Kind, ...] = (
-    "fixture", "belief", "prior", "prequential", "refinement", "scale", "stress",
-    "primary", "aggregate"
+    "fixture",
+    "belief",
+    "prior",
+    "prequential",
+    "refinement",
+    "scale",
+    "stress",
+    "primary",
+    "aggregate",
 )
 CASES = ("M01", "M02", "M03", "M04", "D03", "F02", "F04", "W03")
 COUNTS = (256, 1024)
@@ -57,35 +71,71 @@ def fixed_row_manifest() -> tuple[RowSpec, ...]:
                 if c == "D03":
                     deps += (f"prequential/D03/{n}/record1",)
                 rows.append(RowSpec(f"belief/{c}/{n}/{scale}", "belief", deps))
-    rows.extend(RowSpec(f"prior/{c}/{n}", "prior", (f"fixture/{c}",))
-                for c in CASES for n in COUNTS)
-    rows.extend(RowSpec(f"prequential/{c}/{n}/record0", "prequential", (f"fixture/{c}",))
-                for c in CASES for n in COUNTS)
-    rows.extend(RowSpec(f"prequential/D03/{n}/record1", "prequential", (
-        "fixture/D03", "fixture/M03", f"belief/M03/{n}/0.25"
-    )) for n in COUNTS)
-    rows.extend(RowSpec(f"refinement/{c}/{scale}/256-to-1024", "refinement", (
-        f"belief/{c}/256/{scale}", f"belief/{c}/1024/{scale}"
-    )) for c in CASES for scale in _scales(c))
-    rows.extend(RowSpec(f"scale/{c}/1024/{left}-to-{right}", "scale", (
-        f"belief/{c}/1024/{left}", f"belief/{c}/1024/{right}"
-    )) for c in ("M01", "M02", "M03", "M04", "F02", "F04")
-        for left, right in (("0.125", "0.25"), ("0.25", "0.5")))
-    rows.extend(RowSpec(f"stress/D03:M03/{n}/0.25", "stress", (
-        f"belief/D03/{n}/0.25", f"belief/M03/{n}/0.25", f"prequential/D03/{n}/record1"
-    )) for n in COUNTS)
-    rows.extend(RowSpec(f"stress/{force}:{matched}/{n}/{scale}", "stress", (
-        f"belief/{force}/{n}/{scale}", f"belief/{matched}/{n}/{scale}"
-    )) for force, matched in (("F02", "M02"), ("F04", "M04"))
-        for n in COUNTS for scale in SCALES)
-    rows.extend(RowSpec(f"stress/W03:M03/{n}/0.25", "stress", (
-        f"belief/W03/{n}/0.25", f"belief/M03/{n}/0.25"
-    )) for n in COUNTS)
-    rows.extend(RowSpec(f"primary/{c}/1024/0.25", "primary", (
-        f"belief/{c}/1024/0.25", f"prior/{c}/1024"
-    )) for c in ("M01", "M02", "M03", "M04"))
-    rows.append(RowSpec("aggregate/matched/base/continuous-dk", "aggregate",
-                        tuple(row.key for row in rows)))
+    rows.extend(
+        RowSpec(f"prior/{c}/{n}", "prior", (f"fixture/{c}",)) for c in CASES for n in COUNTS
+    )
+    rows.extend(
+        RowSpec(f"prequential/{c}/{n}/record0", "prequential", (f"fixture/{c}",))
+        for c in CASES
+        for n in COUNTS
+    )
+    rows.extend(
+        RowSpec(
+            f"prequential/D03/{n}/record1",
+            "prequential",
+            ("fixture/D03", "fixture/M03", f"belief/M03/{n}/0.25"),
+        )
+        for n in COUNTS
+    )
+    rows.extend(
+        RowSpec(
+            f"refinement/{c}/{scale}/256-to-1024",
+            "refinement",
+            (f"belief/{c}/256/{scale}", f"belief/{c}/1024/{scale}"),
+        )
+        for c in CASES
+        for scale in _scales(c)
+    )
+    rows.extend(
+        RowSpec(
+            f"scale/{c}/1024/{left}-to-{right}",
+            "scale",
+            (f"belief/{c}/1024/{left}", f"belief/{c}/1024/{right}"),
+        )
+        for c in ("M01", "M02", "M03", "M04", "F02", "F04")
+        for left, right in (("0.125", "0.25"), ("0.25", "0.5"))
+    )
+    rows.extend(
+        RowSpec(
+            f"stress/D03:M03/{n}/0.25",
+            "stress",
+            (f"belief/D03/{n}/0.25", f"belief/M03/{n}/0.25", f"prequential/D03/{n}/record1"),
+        )
+        for n in COUNTS
+    )
+    rows.extend(
+        RowSpec(
+            f"stress/{force}:{matched}/{n}/{scale}",
+            "stress",
+            (f"belief/{force}/{n}/{scale}", f"belief/{matched}/{n}/{scale}"),
+        )
+        for force, matched in (("F02", "M02"), ("F04", "M04"))
+        for n in COUNTS
+        for scale in SCALES
+    )
+    rows.extend(
+        RowSpec(
+            f"stress/W03:M03/{n}/0.25", "stress", (f"belief/W03/{n}/0.25", f"belief/M03/{n}/0.25")
+        )
+        for n in COUNTS
+    )
+    rows.extend(
+        RowSpec(f"primary/{c}/1024/0.25", "primary", (f"belief/{c}/1024/0.25", f"prior/{c}/1024"))
+        for c in ("M01", "M02", "M03", "M04")
+    )
+    rows.append(
+        RowSpec("aggregate/matched/base/continuous-dk", "aggregate", tuple(row.key for row in rows))
+    )
     return tuple(rows)
 
 
@@ -179,10 +229,13 @@ class TableRef(Message):
     @model_validator(mode="after")
     def exact_descriptor(self) -> Self:
         parts = self.path.split("/")
-        if (len(parts) < 2 or parts[0] != self.kind
-                or any(re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", x) is None for x in parts)
-                or any(x in (".", "..") for x in parts)
-                or not self.path.endswith((".json", ".jsonl"))):
+        if (
+            len(parts) < 2
+            or parts[0] != self.kind
+            or any(re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", x) is None for x in parts)
+            or any(x in (".", "..") for x in parts)
+            or not self.path.endswith((".json", ".jsonl"))
+        ):
             raise ValueError("Normalized relative path in the declared role required")
         if self.codec != self.kind + "-v1":
             raise ValueError("Exact proposed row-table codec tag required")
@@ -215,8 +268,12 @@ class RowState(Message):
         if len(set((x.table_id, x.index) for x in self.partial)) != len(self.partial):
             raise ValueError("Partial material slots must be unique")
         if self.state == "completed":
-            if (self.completion is None or self.partial or self.fault is not None
-                    or self.reason is not None):
+            if (
+                self.completion is None
+                or self.partial
+                or self.fault is not None
+                or self.reason is not None
+            ):
                 raise ValueError("Completed row requires only its completion material")
         else:
             if self.completion is not None or self.reason is None or not self.reason.strip():
@@ -240,13 +297,17 @@ class Denominator(Message):
 
 
 def group_denominators(rows: tuple[RowState, ...]) -> tuple[Denominator, ...]:
-    return tuple(Denominator(
-        kind=kind, planned=planned,
-        unrun=sum(r.kind == kind and r.state == "unrun" for r in rows),
-        attempted=sum(r.kind == kind and r.state == "attempted" for r in rows),
-        completed=sum(r.kind == kind and r.state == "completed" for r in rows),
-        failed=sum(r.kind == kind and r.state == "failed" for r in rows)
-    ) for kind, planned in zip(KINDS, GROUP_COUNTS, strict=True))
+    return tuple(
+        Denominator(
+            kind=kind,
+            planned=planned,
+            unrun=sum(r.kind == kind and r.state == "unrun" for r in rows),
+            attempted=sum(r.kind == kind and r.state == "attempted" for r in rows),
+            completed=sum(r.kind == kind and r.state == "completed" for r in rows),
+            failed=sum(r.kind == kind and r.state == "failed" for r in rows),
+        )
+        for kind, planned in zip(KINDS, GROUP_COUNTS, strict=True)
+    )
 
 
 class D1ReportStructure(Message):
@@ -279,8 +340,9 @@ class D1ReportStructure(Message):
         if self.denominators != group_denominators(self.rows):
             raise ValueError("Exact all-row state denominators required")
         tables = {t.table_id: t for t in self.tables}
-        if (len(tables) != len(self.tables)
-                or len({t.path for t in self.tables}) != len(self.tables)):
+        if len(tables) != len(self.tables) or len({t.path for t in self.tables}) != len(
+            self.tables
+        ):
             raise ValueError("Table IDs and normalized paths must be unique")
         if sum(t.byte_length for t in self.tables) > DECLARED_SCIENCE_BYTES:
             raise ValueError("Declared table bytes exceed the unchanged science ceiling")
@@ -314,8 +376,11 @@ class D1ReportStructure(Message):
         if used != set(tables):
             raise ValueError("Unreferenced table descriptors are outside this structure envelope")
         if self.declared_execution == "complete":
-            if (any(r.state != "completed" for r in self.rows) or self.first_fault is not None
-                    or self.incomplete_reason is not None):
+            if (
+                any(r.state != "completed" for r in self.rows)
+                or self.first_fault is not None
+                or self.incomplete_reason is not None
+            ):
                 raise ValueError("Complete declaration requires all rows and no control fault")
         elif self.incomplete_reason is None or not self.incomplete_reason.strip():
             raise ValueError("Incomplete declaration requires its explicit reason")
