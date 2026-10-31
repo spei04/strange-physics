@@ -20,10 +20,17 @@ That ordinary standard-library initialization may call exp; there is no
 whole-invocation zero-exp claim or protected-startup qualification.
 
 The separately admitted original [PR #156 CI run](https://github.com/spei04/strange-physics/actions/runs/41194699505)
-is active on frozen source 838a211: Python 3.14 passed 6,240 tests and 232-file
-typing; Python 3.12 is still running. Both analytic jobs and security passed.
-This is ordinary software evidence and cannot substitute for the unexecuted
-guarded 143-case/429-phase test window, protected runtime or scientific admission. The earlier 233-file typing
+passed all six required jobs on frozen 838a211 and merge 92eb0b4, whose tree
+matches the head. Python 3.12 and 3.14 each passed 6,240 tests, 232-file typing,
+1,567 schema checks, packaging and one 8/8 CLI smoke; each analytic job passed
+24 cases/72 phases. The two serializer warnings per runtime and three audit
+flag warnings are unchanged. The evidence set retains 25 files/851,370 bytes.
+The 1,889 observed job-seconds and 958-second run interval are separate elapsed
+scopes, not CPU or a complete cost account.
+
+This is ordinary software evidence. It cannot substitute for the unexecuted
+guarded 143-case/429-phase window, protected runtime or scientific admission.
+The earlier 233-file typing
 estimate below is superseded by the observed 232-file scope.
 
 The standalone controller exits 64. Final capture acceptance remains false
