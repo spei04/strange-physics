@@ -278,7 +278,9 @@ def certify_d1_prior(identity: D1Identity, future: EndpointEvidence) -> D1Certif
     _coverage(future, identity.count)
     epsilon = _up_add(ENDPOINT_ERROR, REFERENCE_ERROR)
     mean, second, variance = _moments(ZERO, identity.count, epsilon)
-    reasons = () if future.max_abs_error_upper <= ENDPOINT_ERROR else ("future_endpoint",)
+    reasons: tuple[str, ...] = (
+        () if future.max_abs_error_upper <= ENDPOINT_ERROR else ("future_endpoint",)
+    )
     reasons += _finest_reasons(identity, (ZERO, mean, second, variance))
     return D1Certificate(
         identity,

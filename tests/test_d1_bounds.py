@@ -367,7 +367,8 @@ def test_predictive_outputs_keep_finite_and_continuous_targets_separate() -> Non
 def test_predictive_joins_reject_other_arrays_or_prior_weights(kind: str) -> None:
     p = premises()
     cert = certify_d1_prior(p.identity, p.future)
-    values, masses = (0.5,) * 256, (point(D("0.00390625")),) * 256
+    values: tuple[float, ...] = (0.5,) * 256
+    masses = (point(D("0.00390625")),) * 256
     future_hash, mass_hash = U, S
     if kind == "future":
         future_hash = T
