@@ -268,6 +268,8 @@ def _start_window(plan: dict[str, Any]) -> _PrimitiveWindow:
         or math.exp is not _PREPARED_EXP
     ):
         raise BootstrapError("Retained standard-library initialization is required")
+    if type(_PREPARED_EXP) is not BuiltinFunctionType:
+        raise BootstrapError("Retained exp must be an intact runtime builtin")
     window = _PrimitiveWindow(plan, _PREPARED_EXP)
     _WINDOW = window
     window.arm()
