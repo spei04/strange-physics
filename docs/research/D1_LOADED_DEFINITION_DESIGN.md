@@ -9,8 +9,9 @@ passed original ordinary CI on [PR #156](https://github.com/spei04/strange-physi
 all six required jobs succeeded, including 6,240 tests and 232-file typing on
 both Python 3.12 and 3.14. This evidence cannot establish guarded test execution,
 protected runtime or scientific admission.
-The separate [named-service lifecycle source](D1_OWNED_CAPTURE.md) is reviewed;
-its 37 authored tests and runtime qualification remain pending.
+The separate [named-service lifecycle source](D1_OWNED_CAPTURE.md) passed its
+guarded 37-case/111-phase check and full 233-file typing at f1adcabb. Its ordinary
+CI is next; protected-runtime qualification remains pending.
 The original proposal below remains design history; actual custody,
 whole-process closure, installation/pass2 and scientific admission are pending.
 

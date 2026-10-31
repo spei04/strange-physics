@@ -7,7 +7,7 @@ Both guard sentinels and collection of 143 cases/zero phases passed at 11629b1.
 The subsequent full check passed formatting/lint, then found nine typing errors
 in one test among 232 checked files. Renaming an integer index fixed the source
 conflict without changing assertions; that repaired source has not repeated the
-private check. No private test bodies have run, and the older collection does
+private check. None of those 143 test bodies ran, and the older collection does
 not qualify the repaired bytes.
 
 All 19 recorded child processes closed. The three attempts remain charged at
@@ -35,8 +35,10 @@ estimate below is superseded by the observed 232-file scope.
 
 The standalone controller exits 64. Final capture acceptance remains false
 even for a clean direct-child observation. The separate
-[named-service lifecycle source](D1_OWNED_CAPTURE.md) is reviewed, with 37 tests
-still unrun; it is outside the frozen PR #156 CI scope.
+[named-service lifecycle source](D1_OWNED_CAPTURE.md) passed its separate guarded
+37-case/111-phase check and full 233-file typing at f1adcabb. Its ordinary CI is
+next; it remains outside the frozen PR #156 CI scope. Protected-runtime
+qualification remains pending.
 The current environment is not admitted for protected startup. No child
 bootstrap, installation, environment repair or D1 scientific batch ran.
 

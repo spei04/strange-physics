@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Qualification in progress:** Platform is preparing the guarded runner for 37 owned-capture lifecycle tests; Quality reviews the controls before Lead executes them. The reused cloud checkout and its pinned environment match the saved identities.
-- **Research:** Audit test call paths and file bounds, then identify the smallest real-runtime qualification that follows these software checks.
-- **Existing evidence:** PR #156's six CI jobs passed. Private Unit19 remains incomplete; no actual capture service, protected-runtime qualification or D1 scientific batch has run.
+- **Lifecycle checks passed:** 37 guarded cases/111 phases, formatting/lint and 233-file typing passed at f1adcabb; all 20 owned children closed. Quality independently verified the evidence.
+- **CI next:** Lead prepares the lifecycle review PR; Platform owns its original CI evidence. Private Unit19 remains incomplete.
+- **Next runtime source:** Research delivered the bootstrap primitive-window guard; Quality accepted its source review. Its 80 authored cases remain unrun. Protected startup, real service qualification and scientific admission remain pending.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Platform / Quality / Research / Project lead | Owned-capture lifecycle software qualification passed; ordinary CI next | At f1adcabb, both preparations and the check passed: 37 exact cases/111 ordered phases, full 233-file typing, formatting/lint and 20 closed children. Charged 63.918798 CPU/79.140122 active-wall seconds; 1,568,723 logical retained bytes. Quality independently verified raw receipts and immutable source. Lead prepares the PR; Platform owns original CI evidence. Research separately delivered source-reviewed 871181 bootstrap primitive guard with 80 unrun cases. No protected service, scientific run, merge or budget reset. |
 | 2026-10-31 | Platform / Quality / Research / Project lead | Resume research-runtime validation: lifecycle checks | Platform owns concrete guarded37-case controls; Quality independently reviews; Research checks reachable calls/output bounds and next real-runtime prerequisites; Lead owns execution and accounting. I is reused clean at7ac88 with unchanged5548-file environment digest. No new checkout, dependency install, protected service or scientific operation. |
 | 2026-10-31 | Platform / Quality / Research / Project lead | Original PR #156 CI passed; lifecycle source and next proposal retained | Frozen 838a211/merge 92eb0b4 passed all six required jobs on original run 41194699505: 6,240 tests/runtime, 232-file typing, 1,567 schemas, analytic 24/72, package checks and one 8/8 smoke/runtime. Two serializer warnings/runtime and three audit-flag warnings are unchanged. The private 25-file 851,370-byte evidence set is sealed; 1,889 observed job-seconds and 958s interval are separate scopes. Private 143/429 remains unrun with all failed attempts and charges retained. Next source 7ac88 has 37 reviewed authored cases; its 200/600/8-MiB proposal permits no execution until concrete controls and admission. |
 | 2026-10-31 | Platform / Quality / Research / Project lead | Original PR #156 CI active; next source accepted | Run 41194699505 attempt 1 is frozen on 838a211 against PR155. Python 3.14 passed 6,240 tests, 232-file typing, 1,567 schema checks, packaging and the 8/8 smoke; Python 3.12 remains live. Both analytic jobs passed 24/72 and security passed with existing warnings retained. Separate source 7ac88 fixes pre-intent receipt writes and import-path mutation; 37 cases are authored but unrun. Its 200-CPU/600-wall/8-MiB two-cycle proposal is disabled, not allocated. Private Unit19 remains incomplete; no scientific run or merge. |

@@ -1,12 +1,16 @@
 # D1 owned capture lifecycle
 
-Source-only implementation based on `11629b131e4c828e16e547660be43054b531681d`;
-code checkpoint `ee7ec8ff16243484ecbafbe4e55c6c25bded42f4` (including the
-pre-intent ownership and direct-script import repairs to `1326bf8`). Research owns this
-new adapter, its fake-API tests and this guide. No project imports, formatter,
-typing, test collection/body, service, capture or scientific operation ran during
-authoring. The CLI is literally disabled. This is not an execution admission or
-a positive runtime qualification.
+Private software qualification passed at
+[f1adcabb](https://github.com/spei04/strange-physics/commit/f1adcabb9a0e7e5d917c240dc772f67943c0eb41):
+37 cases completed all 111 ordered phases, with formatting, lint and full
+233-file typing passing. Independent review verified all 20 owned child-process
+closures across two preparations and one check. The formatter preserved both
+Python ASTs and all comments.
+
+These tests exercise the actual lifecycle with fake service and protected-plan
+APIs. The CLI remains disabled. No protected startup, actual capture service,
+scientific operation or final runtime acceptance is established. Ordinary CI for
+this exact implementation is a separate verification step.
 
 The existing [bootstrap](D1_BOOTSTRAP.md) and original-owner source remain
 unchanged. `grid_q1_supervisor.py`, its profiles, argv, result validation and
@@ -129,16 +133,17 @@ resume capability.
 
 ## Authored tests and remaining qualification
 
-Static AST count: **37 cases in 16 functions, 111 prospective phases**, maximum
-literal node-ID length 103. All are unexecuted. They cover the absent/running/
+Verified test count: **37 cases in 16 functions, 111 passing phases**, maximum
+literal node-ID length 103. The guarded check matched its exact prior collection. They cover the absent/running/
 leader-exited-populated/terminal-empty/receipt/stop sequence; exact source and
 report substitutions; preflight deadline exhaustion; lost acknowledgement;
 terminal/final receipt failures; cleanup failures; stale invocation/group/CPU;
 retained failed state; duplicate intent; fixed argv/disabled CLI; and service
 wrapper first/supplemental errors. Four successor cases cover invalid public root/mismatched receipt store, and
 failed intent writes before or after a fake partial retention. All original test-function ASTs are
-unchanged. The two-line direct-script path guard was reviewed statically; actual formatting/
-lint/import qualification is still pending.
+unchanged. The two-line direct-script path guard was reviewed statically. Formatting,
+lint, ordinary definition imports and the guarded fake-service tests passed;
+actual direct-script service startup remains unqualified.
 
 The lifecycle tests use fake Systemd snapshots/operations and fake lower-level
 protected-plan APIs. They run the actual adapter's preflight joins, state machine
@@ -155,9 +160,16 @@ fixture/test/control/cache directories in the original 33-case estimate, plus
 four empty temporary roots for the new rejection cases: **105 directories** in
 total. Those four new cases create no files; the original payload/pathname upper
 bounds remain unchanged. No additional fixture payload is introduced by these rejection cases.
-Most receipts remain in fake in-memory stores. Actual test data, logs/JUnit,
-control records, CPU, wall and memory have not been measured; ordinary finite
-controls must account for them before any test execution.
+Most receipts remain in fake in-memory stores. The observed fixture files and framework links totaled 43,036 logical bytes.
+The complete retained Unit20 set, including controls, source/environment records,
+logs, JUnit, all three attempts and final checkpoint, totaled 1,568,723 bytes.
+Measured controller/child CPU was 48.918798 seconds; three retained closeout
+reservations brought the charged total to 63.918798 CPU seconds. Charged active
+wall time was 79.140122 seconds. These fit the reviewed 200-CPU/600-wall/8-MiB
+account; its remainder is not reused. External authoring, transport, publication,
+provider cost and peak memory remain unmeasured. The pinned standard-library
+initialization precedes the guarded window; its exp count is unknown, so this
+result makes no whole-invocation zero-exp claim.
 
 A later positive qualification must separately admit the protected runtime and
 complete import/source/installation inventory, service-manager custody, exact
