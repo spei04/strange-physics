@@ -81,14 +81,16 @@ is an identity ordering, not permission to reorder prequential execution.
 | Scope vocabulary | `["S",s,token]` | 6, index/token mapping below |
 | Successful value vocabulary | `["T",t,token,kind]` | 4, index/token/kind mapping below |
 
-Every row is capped at 512 bytes **including one conservative separator byte**;
-there are no arbitrary payload fields. `source_binding_ref` is a bounded
+For each row, `r_j` is its raw serialized byte length under the canonical
+encoding above, excluding LF and any surrounding table separator. Require
+`r_j + 1 <= 512`: the extra byte conservatively reserves a comma even for the
+final row. There are no arbitrary payload fields. `source_binding_ref` is a bounded
 32-character ASCII member ID in the separately pinned source/runtime manifest,
 not a path supplied by an event. The role and query strings below are exact.
 The table's header measurement `H` is the exact root serialization with
 `rows=[]`; it includes container punctuation, all header values and LF, and
-must be at most 4,096 bytes. With row bytes `r_j`, the actual table is bounded
-by `H + sum(r_j+1)` (one byte conservative for the final row):
+must be at most 4,096 bytes. The actual table is bounded by
+`H + sum(r_j+1)`; each `r_j` is counted once, with the separator reserve above:
 
 ```text
 105*512 + 4,096 = 57,856 bytes.
@@ -222,9 +224,22 @@ a parser needs only the current/just-completed call for stream expansion, not
 an arbitrary cross-history reference graph.
 
 Every wire line has exactly one final LF, no leading whitespace, and length
-at most4,096 bytes. Its first byte is the discriminator: `[` is a compact
-`i`/`r` array; `{` is an exact original canonical raw Event object retained as
-a terminal forensic fallback. There is no compact `f` mode or unknown tag.
+at most4,096 bytes. Its first byte is the discriminator. A `[` line must pass
+bounded strict parsing and exact array/type/index validation, then equal its
+canonical reserialization byte-for-byte: `json.dumps` with
+`separators=(",", ":")`, `ensure_ascii=True`, `allow_nan=False`, UTF-8 encoding
+and exactly one appended LF. Arrays have no object-key ordering choice. Reject
+interior/trailing whitespace, alternative number or escape spellings and any
+other noncanonical bytes even if expansion would produce the correct raw Event.
+Integer slots reject booleans and floats before any coercion. This wire-byte
+check, in addition to raw expansion equality, is required for the 26/20-byte
+framing bounds below.
+
+A `{` line is the exact original canonical raw Event object retained as a
+terminal forensic fallback, including its one LF; it is not a re-encoded or
+reformatted substitute. Bounded parsing rejects duplicate object keys before
+model conversion, for fallback objects and all table/activation/context
+objects alike. There is no compact `f` mode or unknown tag.
 A fallback never authorizes continued successful work. It retains a failed
 Event, a returned-unavailable Event, or the actual original event that could
 not satisfy the fixed codec contract. Retain it once where possible and stop;
@@ -243,33 +258,92 @@ validation; it never re-executes the scientific callback.
 
 ## Acyclic table/header retention and source joins
 
-Use an acyclic binding order:
+Use an acyclic binding order, where an arrow means the later artifact pins
+the earlier artifact's actual bytes:
 
 ```text
-source/runtime manifest S -> identity table T -> activation manifest A -> sink context
+S -> T
+S -> sink context C
+S, T, C -> activation manifest A
+A -> outer admission/resolver binding of exact retained A bytes
 ```
 
-S has no hash of T, A or the sink context. T's `source_manifest_sha256` binds S;
-T does not contain its own hash or A's hash. A binds the exact hashes/lengths
-of S and T, codec/recorder/source identities, run/recorder IDs and the fixed caps.
-Its proposed exact fields are `schema` (literal
+S has no hash of T, C or A. T's `source_manifest_sha256` binds S, and the
+unchanged `SinkContext.source_manifest_sha256` also remains **SHA(S)**. T and C
+do not contain A's hash. A binds the exact hashes/lengths of S, T and C, so C
+must be created and its actual bytes retained before A is finalized. Neither
+A nor T nor C pins a future terminal/event receipt. This avoids a circular hash
+dependency and preserves the sink context's existing source-manifest meaning.
+
+A's exact fields are `schema` (literal
 `strange-physics.d1-primitive-codec-activation.v1`), `source_manifest_sha256`,
 `source_manifest_bytes`, `table_sha256`, `table_bytes`, `table_name` (literal
-`identity-table.json`), `source_commit`, `source_tree`, `protocol_sha256`,
-`recorder_sha256`, `codec_sha256`, `run_id`, `recorder_id` and `limits`. The
-activation file name is `codec-activation.json`; S is supplied as exact retained
-bytes by the future owned resolver, not an event-selected path. `limits` has
-exactly the named call/event, row/header, table/copy, failure, metadata, slack,
-expanded-logical and physical-partition ceilings in this proposal; all values
-are source-owned, not choices made by an event. Unknown fields are rejected.
-These declared targets are not an owner admission. The unchanged sink context's
-`source_manifest_sha256` binds A, with its other pins agreeing with S/T/A. Neither A nor T pins a future
-terminal/event receipt. This avoids a circular hash dependency.
+`identity-table.json`), `context_sha256`, `context_bytes`, `source_commit`,
+`source_tree`, `protocol_sha256`, `recorder_sha256`, `codec_sha256`, `run_id`,
+`recorder_id` and `limits`. The activation file name is `codec-activation.json`;
+S and C are supplied as exact retained bytes by the future owned resolver,
+not event-selected paths. `context_bytes` is the actual C byte length, at most
+4,096, not the fixed context reservation. A itself, including its LF, remains
+capped at 4,096 bytes after adding these fields.
 
-Retain and acknowledge the bounded T and A bytes before activating the codec
-or any primitive call. Source/runtime binding evidence S must already be
-immutable, accessible and matched to the actual owned instances/callable.
-The necessary installation hooks and that evidence producer are unfinished.
+`limits` has exactly the following keys and strict integer values. Unknown
+keys, booleans and inconsistent duplicated declarations are rejected; the
+values describe existing ceilings/reservations, not an owner admission.
+
+| Exact key | Value | Existing meaning |
+| --- | ---: | --- |
+| `max_calls` | 55100 | Complete fixed primitive plan |
+| `max_events` | 110201 | At most `2*max_calls+1`, including non-success |
+| `event_bytes` | 4096 | One complete raw or wire line, including LF |
+| `table_rows` | 105 | Exact fixed table cardinality |
+| `row_with_separator_bytes` | 512 | `r_j+1` ceiling |
+| `table_header_bytes` | 4096 | Exact `rows=[]` header measurement H |
+| `activation_bytes` | 4096 | Complete A ceiling, including LF |
+| `table_activation_bytes` | 65536 | T/A reservation; actual upper 61,952 |
+| `temporary_table_activation_copy_bytes` | 65536 | At most one retained temporary T/A copy |
+| `failure_extra_bytes` | 8192 | Conservative non-success replacement allowance |
+| `context_reservation_bytes` | 4096 | Existing C reservation inside the sink total |
+| `terminal_reservation_bytes` | 16384 | Existing terminal reservation inside the sink total |
+| `metadata_bytes` | 20480 | Derived context plus terminal reservations |
+| `rotation_slack_bytes` | 65536 | Withholding, not additional output permission |
+| `shard_bytes` | 4194304 | Unchanged per-shard ceiling |
+| `max_shards` | 16 | Unchanged shard-count ceiling |
+| `expanded_logical_bytes` | 67108864 | Unchanged recorder logical raw-byte ceiling |
+| `transcript_partition_bytes` | 16777216 | Proposed aggregate physical transcript partition |
+
+The common `source_commit`, `source_tree`, `protocol_sha256`,
+`recorder_sha256`, `run_id` and `recorder_id` values must agree across S/T/C/A
+wherever present. C's `sink_sha256` must match the actual sink member
+pinned by S; the codec pin in T/A must match S's actual codec member. C's
+`max_calls`, derived `max_events`, event/shard limits and metadata reservations
+must agree with the fixed limits above. Its explicit `max_bytes` and derived
+`event_capacity` retain their existing sink validation and must also respect
+the partition withholding for T/A, their copy and rotation slack described
+below; no extra sink allocation follows from the logical raw-byte ceiling.
+The outer admission/resolver must bind and validate the actual retained A
+bytes and these joins before activation. C alone does not authenticate A, and
+matching supplied hash strings alone do not establish source or file authority.
+
+Retain and acknowledge T, C and A before activating the codec, retaining any
+event or invoking any primitive. S must already be immutable, accessible and
+matched to the actual owned instances/callable. The creation order may retain
+T and create the unchanged sink (which retains C), then finalize/retain A and
+validate the outer activation binding. Necessary installation hooks and the
+source evidence producer remain unfinished.
+
+Any creation, retention or activation-join failure consumes this opportunity:
+no primitive is invoked, no event processing begins, and there is no reopen,
+recreation or retry. Preserve created/partial T, C and A bytes, reservations,
+unknown acknowledgements and all preparation/cleanup costs. If a sink object
+was successfully created, call its existing one-use `finish` only for cleanup
+and a pending-external-confirmation terminal receipt; this does not activate
+the codec. If construction failed without a returned sink object, preserve its
+constructor fault/cleanup facts through the external controller. Independently
+attempt owned writer/descriptor cleanup, retaining supplemental faults without
+replacing the first fault. Do not overwrite or delete partial artifacts to make
+a subsequent activation look fresh. Missing terminal/close acknowledgement is
+an explicit unknown; file presence is not successful activation or closure.
+
 S is ordinary source/runtime proof material, not a place to hide call/scoped
 payload; its physical bytes and any copies remain in the whole-science
 accounting. Reusing a prior S requires exact identity/custody/access joins,
@@ -409,7 +483,15 @@ qualify source/sink/failure joins. Tests must cover all legal scope families,
 index boundaries, wrong case/grid/scale/instance joins, signed zero and Decimal
 quantum, Unicode fault escaping, missing/substituted intents, duplicate modes,
 unknown/raw fallback, partial frames and every first/supplemental failure path.
-Use synthetic extrema and owned fake callbacks; no scientific replay is needed.
+Explicit regressions must reject duplicate object keys before conversion,
+booleans in integer slots/limits, and interior or trailing wire whitespace even
+when expansion equals the original raw line. Test exact canonical fallback
+bytes, alternate escapes/numeric spellings, row `r_j+1` boundaries and actual
+A/C byte lengths. Activation tests must substitute S/T/C/A independently,
+reject missing/failed acknowledgements and show that C alone cannot authorize
+A. Creation/activation failures must invoke zero primitives, consume the one
+opportunity and retain original plus supplemental cleanup failures. Use
+synthetic extrema and owned fake callbacks; no scientific replay is needed.
 
 A full successful stream adds110,200 raw parses, wire encodings, wire decodes,
 expansions and byte comparisons under a straightforward one-pass design;
