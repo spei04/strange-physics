@@ -666,7 +666,7 @@ class PrimitiveFileSink:
         finally:
             errors = self._anchor.close()
             closed = closed and not errors and not self._anchor.closure_uncertain
-            for error in errors:
-                self._remember("anchor_close", error)
+            for close_error in errors:
+                self._remember("anchor_close", close_error)
             self._busy = False
         return SinkCloseout(self.snapshot(), acknowledged, closed, terminal_hash)
