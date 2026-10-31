@@ -85,14 +85,14 @@ def fixture_installation(
     package = site / "strange_physics"
     content = {
         "__init__.py": b'__version__ = "0.1.0a1"\n',
-        "laws.py": (
-            "def reference_registry():\n"
-            "    registry = LawRegistry()\n"
-            '    registry.register("spring", lambda p: None, implementation_id="spring-v1")\n'
-            '    registry.register("radial", lambda p: None, implementation_id="radial-v1")\n'
-            '    registry.register("velocity", lambda p: None, implementation_id="velocity-v1")\n'
-            "    return registry\n"
-        ).encode(),
+        b"laws.py": (
+            b"def reference_registry():\n"
+            b"    registry = LawRegistry()\n"
+            b'    registry.register("spring", lambda p: None, implementation_id="spring-v1")\n'
+            b'    registry.register("radial", lambda p: None, implementation_id="radial-v1")\n'
+            b'    registry.register("velocity", lambda p: None, implementation_id="velocity-v1")\n'
+            b"    return registry\n"
+        ),
         "py.typed": b"",
     }
     original = inventory.ci_artifacts
