@@ -206,6 +206,7 @@ class Manager:
         assert isinstance(plan, owned.CapturePlan)
         self.submissions += 1
         self.events.append("submit")
+        owned.preflight(plan.spec)  # Fake service-side first validation, not outer work.
         service_report(plan, self.records, self.clock)
         if self.mutation is not None:
             raw = self.records.raw["capture-service.json"]
@@ -336,7 +337,7 @@ def test_fixed_lifecycle_retains_before_cleanup_and_never_accepts_populated(
     assert (capture_root / "capture-terminal-before-stop.json").is_file()
 
 
-def test_disabled_cli_and_exact_future_command(capture_root: Path) -> None:
+def test_fixed_cli_and_exact_command(capture_root: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     item = spec(capture_root)
     plan = owned.CapturePlan(
         root=capture_root,
@@ -357,7 +358,9 @@ def test_disabled_cli_and_exact_future_command(capture_root: Path) -> None:
         terminal_seconds=300,
         service_file_bytes=1048576,
     )
-    assert owned.main() == 64
+    monkeypatch.setattr(owned, "sys", SimpleNamespace(argv=["d1_owned_capture.py"]))
+    with pytest.raises(ValueError, match="Only fixed"):
+        owned.main()
     assert plan.argv == [
         "/synthetic/python",
         "-I",
@@ -373,7 +376,7 @@ def test_disabled_cli_and_exact_future_command(capture_root: Path) -> None:
         replace(plan, runtime_seconds=239)
 
 
-def test_preflight_exhaustion_has_intent_but_zero_submissions(
+def test_service_preflight_exhaustion_cannot_become_success(
     capture_root: Path,
     monkeypatch: pytest.MonkeyPatch,
     preflight_api: list[str],
@@ -390,8 +393,9 @@ def test_preflight_exhaustion_has_intent_but_zero_submissions(
 
     monkeypatch.setattr(owned, "preflight", late)
     result = run(item, manager, records, clock)
-    assert preflight_api == ["read", "validate"] and manager.submissions == 0
+    assert preflight_api == ["read", "validate"] and manager.submissions == 1
     assert "capture-intent.json" in records.records and result["status"] == "incomplete"
+    assert result["cleanup_confirmed"] is False
 
 
 @pytest.mark.parametrize(
@@ -552,6 +556,7 @@ def test_poststop_observation_must_still_match(
 def test_service_entry_wraps_fake_launch_and_retains_exact_report(
     capture_root: Path,
     monkeypatch: pytest.MonkeyPatch,
+    preflight_api: list[str],
 ) -> None:
     item = spec(capture_root)
     request = {
@@ -651,6 +656,7 @@ def test_service_failure_keeps_first_and_supplemental_facts(
     capture_root: Path,
     monkeypatch: pytest.MonkeyPatch,
     receipt_failure: bool,
+    preflight_api: list[str],
 ) -> None:
     item = spec(capture_root)
     request = {
@@ -810,3 +816,36 @@ def test_case_cleanup_owns_sibling_control_root(
             assert not item.root.exists() and not item.control_root.exists()
             tmp_path.mkdir(mode=0o700)
             capture_root.mkdir(mode=0o700)
+
+
+@pytest.mark.parametrize("phase", ("entry", "preflight", "reserve"), ids=("late-entry", "late-preflight", "reserve"))
+def test_service_work_cutoff_prevents_target_launch(
+    capture_root: Path, monkeypatch: pytest.MonkeyPatch, phase: str,
+) -> None:
+    item = spec(capture_root)
+    request = owned.encoded(owned.request_record(item, 100.0))
+    path = capture_root / "capture-request.json"
+    path.write_bytes(request)
+    path.chmod(0o600)
+    (capture_root / "service-pycache").mkdir(mode=0o700)
+    clock = Clock()
+    clock.value = 340.0 if phase == "entry" else 101.0
+    validations: list[str] = []
+
+    def preflight(value: owned.CaptureSpec) -> None:
+        assert value == item
+        validations.append("preflight")
+        clock.value = 340.0 if phase == "preflight" else 275.0
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(owned, "preflight", preflight)
+        scoped.setattr(owned, "time", SimpleNamespace(monotonic=clock.now))
+        scoped.setattr(owned, "service_identity", lambda unit: (INVOCATION, "/user.slice/" + unit))
+        scoped.setattr(owned, "sys", SimpleNamespace(
+            flags=SimpleNamespace(isolated=1, dont_write_bytecode=1),
+            pycache_prefix=str(capture_root / "service-pycache"),
+        ))
+        assert owned.service_entry(path, hashlib.sha256(request).hexdigest()) == 1
+    record = json.loads((capture_root / "capture-service.json").read_bytes())
+    assert record["launch"] is None and record["first_fault"]["kind"] == "TimeoutError"
+    assert validations == ([] if phase == "entry" else ["preflight"])

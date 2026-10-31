@@ -1,187 +1,209 @@
 # D1 owned capture lifecycle
 
-Historical private software qualification passed at
-[f1adcabb](https://github.com/spei04/strange-physics/commit/f1adcabb9a0e7e5d917c240dc772f67943c0eb41):
-37 cases completed all 111 ordered phases, with formatting, lint and full
-233-file typing passing. Independent review verified all 20 owned child-process
-closures across two preparations and one check. The formatter preserved both
-Python ASTs and all comments.
+The current source adds a fixed independent deadline owner and a separate benign
+leader-exit handshake. It is **source authored, not runtime qualified**. The
+capture service CLI now accepts only its fixed `service REQUEST SHA256` role;
+this source activation is part of the new commit and must be included in the
+accepted release, protected source inventory and actual hashes. It grants no
+scientific permission, installed-runtime trust or admission.
 
-These tests exercise the actual lifecycle with fake service and protected-plan
-APIs. The CLI remains disabled. No protected startup, actual capture service,
-scientific operation or final runtime acceptance is established. Ordinary CI for
-this exact implementation subsequently failed seven lifecycle cases per runtime.
-Both raw failures remain retained; the repaired combined source subsequently
-passed all six required CI jobs.
+The earlier lifecycle implementation passed 37 private cases/111 phases, full
+233-file typing and all 20 owned child closures at
+[f1adcabb](https://github.com/spei04/strange-physics/commit/f1adcabb9a0e7e5d917c240dc772f67943c0eb41).
+The pytest-owned sibling-root repair subsequently passed ordinary checks as part
+of [d51aab55](https://github.com/spei04/strange-physics/commit/d51aab5567b8b73ee175f3cf6f8a1061a4ff2da8).
+Those are historical results, not qualification of this successor. Unit19's
+unfinished guarded obligation and every prior failure/charge remain retained.
 
-The lifecycle component leaves original-owner source unchanged. The separately
-reviewed [bootstrap guard](D1_BOOTSTRAP.md) is combined with this component for
-successor validation. `grid_q1_supervisor.py`, its profiles, argv, result validation and
-numerical meanings are also unchanged. The new capture path never calls the
-GRID `Files.result` or `execute` functions.
+## Fixed source roles
 
-## Fixed interface and source responsibility
+`scripts/d1_owned_capture.py` retains the existing fake-API `execute` and
+`CaptureSpec`, fixed request/report joins, and the invocation-bound GRID utility
+primitives. `grid_q1_supervisor.py`, its CLI, profiles and numerical meanings are
+unchanged. No GRID result or execution is called.
 
-`CaptureSpec` contains the exact private root, checkout, controller interpreter,
-protected-plan path/digest, source commit, external admission digest and three
-source digests: this adapter, the existing bootstrap controller and bootstrap.
-These are declarations joined to the current protected plan, not authority by
-possession of the DTO or a matching checksum.
+`run_owned(spec)` now delegates to `scripts/d1_capture_owner.py`. The parent
+validates the private output root, writes one exclusive owner intent and one
+canonical request containing the original start, deadline, intended unit and
+parent PID, then starts exactly one fixed controller child. The child command is
+the declared protected controller interpreter, `-I -B -X`, a fresh owned cache,
+the source-owned owner script, literal `controller` and that request path/hash.
+There is no plan-selected command or import root. The parent's wait occurs
+outside the submit-capable child, so a stalled child preflight or submit does not
+hold the parent's Python call stack.
 
-`run_owned(spec)` is the concrete outer API. It uses the existing `Systemd`
-implementation and private receipt writer. `execute(spec, supervisor, files, ...)`
-exposes the same operation for reviewed fake backends. No callback from a plan
-selects code, a command, a profile or an acceptance rule. The local `CapturePlan`
-subclass changes only the named-unit identity and fixed service argv; it retains
-`Snapshot.bind` and `confirms_empty_unit_cleanup` unchanged.
+The child re-reads the actual request, joins source location/startup/parent PID,
+and passes the original start into `execute`; it cannot restart the clock. It
+submits only the predetermined capture unit. Its ordinary final record remains
+provisional. The parent re-reads the actual final/terminal/service records and
+child log and repeats their identity and byte joins before considering the child
+successful. A nonzero child or missing/substituted report cannot be promoted by
+later successful cleanup.
 
-The intended service argv is the pinned controller interpreter, `-I -B -X`, a
-fresh `service-pycache` prefix under the owned root, the source-owned
-`scripts/d1_owned_capture.py`, literal `service`, and the exact request path/hash.
-Its direct-script-only root import insertion derives from this source file's
-location. Ordinary module imports preserve the global lookup order. It never takes an import root from the plan or adds checkout `src`. That source
-root, every imported `scripts` module, interpreter, startup and service-manager
-environment require independently protected custody before eventual execution.
-Byte checks alone do not exclude a hostile writer or authenticate loaded code.
+The independent parent holds the unit name before any possible submit. Lost
+acknowledgement never causes another submission. On timeout it kills/reaps only
+its own `Popen` handle, then observes the predetermined service name. TERM/KILL
+and stop still use the existing invocation-bound `Systemd` operations. An absent
+unit without a previously bound terminal snapshot is unknown, not proof that a
+late queued submission cannot appear. No reset, retry, name release or inferred
+absence is introduced. The parent retains `named_ownership_released=False` and
+requires external ledger closure. A reaped controller is not proof of all its
+possible descendants: `controller_descendants_closed` remains null. Protected
+startup and actual external process closure are separate premises. The actual
+invocation **must** use the already-reviewed private `process_guard.py` bytes
+`edfef49728f6d5965cf2d5ac75aa74830678343639690499ca14611950501ddd`:
+an isolated owned group, `waitid(WNOWAIT)`, group cleanup before leader reap,
+and a retained terminal closure receipt. The new controller never calls
+`setsid`, requests a new session, or detaches, so its CLI descendants remain in
+that enclosing group. The external receipt must bind the original owner
+invocation, source/spec/request, original deadline and resulting service records;
+unknown group closure cannot admit the capture. This required enclosure is not
+installed or authenticated by `run_capture` itself. The separately named service
+still requires its own invocation/cgroup terminal-empty proof.
 
-`service_entry` validates the retained request, startup flags and empty cache;
-observes its actual systemd `INVOCATION_ID` and unified `/proc/self/cgroup`; then
-calls unchanged `d1_bootstrap_control.launch`. That controller retains its exact
-isolated target-interpreter command and installed-package route. This adds no
-fixture generation, primitive invocation, S/A retention or recorder installation.
-The source-selected CLI remains disabled: an eventual entry activation and its
-changed source pins require separate review. The fake service-entry case is not
-evidence that the CLI or a real service works.
+The parent has distinct `owner-control` command logs and owner receipts; it does
+not race the controller's receipt names or command-log counters. Terminal-empty
+facts are retained before a takeover stop. First and supplemental errors, missing
+receipts, unknown writes and unknown cleanup remain failures. A manager/kernel/
+filesystem stall may prevent timely physical closure or receipt delivery; the
+code never converts that uncertainty into an accepted result.
 
-## One attempt and receipt ordering
+## Validation placement and original deadlines
 
-1. Sample the original monotonic start and parent/waited-CLI CPU baselines.
-   Validate the existing private root and persist an exclusive intent, including
-   the absolute deadline and profile, before reading the protected plan. A root/
-   receipt-store validation failure returns bounded incomplete facts without any
-   receipt write. A failed intent callback returns an existing-intent or unknown-
-   acknowledgement disposition; neither permits later receipt I/O or preflight.
-   The external owner retains these returned facts and any partial intent bytes.
-2. Exclusively create the sibling control root and empty service cache. Persist
-   and fsync the canonical bounded request and its containing directory.
-3. Call the existing `read_plan` and `validate_plan`, then join actual source
-   hashes and fixed controller/bootstrap paths to the spec. Check the remaining
-   original deadline, observe the intended unit absent, and submit exactly once.
-4. Bind actual InvocationID, cgroup, quota/burst, accounting and fixed properties.
-   Persist observations. A leader exit while populated never closes the group or
-   permits report acceptance. Disappearance is usable only after an actual group
-   and populated-state observation was bound to this invocation.
-5. After terminal-empty observation and successful service exit, join the bounded
-   service record to the exact spec, request, source, admission, root, invocation,
-   group and original deadline. Re-read the actual child log and join its exact
-   bytes/hash/length and zero-primitive capture shape. The inner result must still
-   say `owned_tree_closed=None`, `captured=False`: the inner API cannot manufacture
-   this outer lifecycle's conclusion.
-6. Persist terminal accounting and the report join **before** stop. Use the
-   existing invocation-bound stop operation, then confirm empty cleanup. Preserve
-   retained failed-unit identity, exit/timestamps and nondecreasing accounting.
-   Persist the final receipt. The returned status can be `provisional_complete`,
-   while `accepted` remains false until the external owner closes the full ledger.
+There are still exactly three full protected inventory validations. The first
+`read_plan`/`validate_plan` and exact source joins now run inside `service_entry`,
+immediately before unchanged `d1_bootstrap_control.launch` and its pre/post
+passes. The outer parent and controller do no full inventory scan. Their source,
+interpreter, imports, environment and manager custody must therefore be
+independently established **before** service dispatch. Moving validation inside
+the service does not establish those premises.
 
-The first observed operation fault and later supplemental facts remain separate.
-Lost submission acknowledgement consumes the dispatch opportunity; cleanup may
-observe the same unit but never resubmit it or upgrade that history. Signals use
-only the existing named-unit operation, which rebinds before TERM/KILL. No bare
-PID/group signal is introduced. A missing/late/changed report, receipt failure,
-identity drift, accounting decrease or unknown cleanup remains incomplete.
-Terminal receipt failure prevents stop. A partial or uncertain write is retained,
-not retried or deleted. An existing exclusive intent prevents another dispatch.
+The existing fixed profile is unchanged: 240-second service runtime,
+5-second start/stop timeouts, 50% quota/100 ms, zero observed burst, a 120 CPU-second
+watch, at most 60 four-second observations and the original 300-second terminal
+deadline. Useful work has a source-owned cutoff at start+240. The service rejects
+entry outside the original work window, checks again after its first full
+preflight, and refuses launch unless more than 65 seconds remain (the existing
+60-second child wait plus 5-second child cleanup). It checks the cutoff after
+launch too. The unchanged launch's own pre/post validation can still block: the
+65-second reserve is not a bound on those reads.
 
-The service wrapper retains the first capture fault in its report. If that report
-write also fails, its raised `ServiceReceiptFailure` retains first and supplemental
-facts separately. A failure before the wrapper can form a report leaves the outer
-result incomplete; missing evidence does not prove that no service work occurred.
+The independent parent stops waiting for the controller at start+240; controller
+kill/reap and named-service reconciliation consume the remaining 60 seconds.
+Every subsequent command/wait is clipped to start+300. Takeover permits at most
+eight snapshots, one TERM and one KILL, and one terminal-receipt/stop/post-stop
+sequence. These worst-case calls are not promised to all fit: exhaustion retains
+incomplete state. Even a late systemd submission must pass the original service
+work-window check before any target launch. RuntimeMaxSec starts when the service
+becomes active; it does not replace the original deadline. Arbitrary manager or
+kernel stalls cannot be given a hard 300-second closure guarantee here.
 
-## Finite source bounds and accounting limits
+## Separate benign leader-exit qualification
 
-The fixed prospective profile is 300 seconds from the original outer start,
-240 seconds service runtime, 5-second start/stop timeouts, 50% CPU quota with a
-100 ms period and zero observed burst, a 120 CPU-second cgroup watch, at most
-60 four-second polling observations, 5 seconds per control command, and a
-2-second TERM grace. Cleanup has at most four final polling observations and
-shares the same 300-second deadline. These constants grant no allocation and
-reuse no GRID or prior engineering remainder.
+`scripts/d1_capture_descendant.py` supplies one fixed worker and watcher. It is a
+separate prospective qualification unit, never a capture report or scientific
+fixture. `DescendantPlan` retains the capture resource profile and derives a
+separate deterministic unit name. Its request fixes one 64-hex token and original
+30-second worker deadline. The watcher has 60 seconds for handshake and cleanup.
+These bounds do not allocate a run.
 
-A blocking preflight is checked after it returns; this cannot enforce a hard
-wall bound while that read is blocked. An external bounded controller covering
-initial preflight through final receipts is still required before execution.
-Systemd's runtime starts later and cannot replace that whole-attempt deadline.
-Likewise the CPU watch is an observation, not a kernel aggregate CPU cap.
+After an exclusive intent, `PipeHandshake.prepare` checks the actual worker
+source digest, creates the private control root and release FIFO, and seals the
+request. The service worker makes one pipe and forks once. Its child opens the
+owned FIFO, retains a ready record bound to the actual invocation/group/token,
+and acknowledges readiness to the leader. The leader then exits. The watcher
+requires a nonzero leader-exit timestamp, successful leader exit and a still
+populated bound cgroup; leader-only/empty fixtures cannot pass. It retains this
+observation before one exact token release. The child rejects an expired deadline immediately before waiting and after
+reading, even if the exact token was already buffered; it checks the token, closes
+its owned descriptors and retains a bounded completion/error record before
+exit. The watcher requires the successful completion record, then actual
+terminal-empty state, terminal receipt, stop and post-stop closure. A release
+write failure consumes that opportunity; cleanup never makes it a success.
 
-There are **three** full protected inventory validations: one outer pre-submit
-pass and the unchanged controller's pre/post passes inside the service. The
-generic payload ceiling is `3 * 512 MiB = 1,610,612,736 bytes`, plus four bounded
-plan reads, three installation-record reads, three configuration reads, request/
-report reads, imports and metadata work. This is a source ceiling, not observed
-fit or a new S/runtime budget. The distinct S read contract is not enlarged.
-Parent CPU, directly waited CLI CPU and cgroup CPU are retained as separate
-scopes, never added as though overlap had been resolved. Final receipt writing,
-external transport/publication and other post-sample work still need accounting.
+The tests substitute helper-local OS/select/time/sys adapters, not shared stdlib
+functions. No actual fork, pipe, FIFO, service, profile hook, reference or primitive
+runs in the authored fake cases. Actual handshake/cgroup behavior is a later
+qualification requirement. The fixture does not rerun any GRID controls.
 
-The request is at most 16 KiB. Existing receipt writes are at most 64 KiB each;
-child log reads are at most 64 KiB; unified-cgroup reading requests at most
-4,097 bytes and rejects more than 4,096. The path has at most 60 observation
-records and 64 non-request records in total, one request, one inner child log,
-one service console and at most 75 existing CLI command logs. Existing limits
-remain 8 KiB per command log and 1 MiB for the service console. These selected
-file ceilings do not establish complete retained-output or memory fit: copies,
-protected inputs, import/runtime state, failed writes and external records remain
-in the eventual whole-path census. There is no serialized source authority or
-resume capability.
+## Finite source accounting
 
-## Authored tests and remaining qualification
+The three inventory passes retain the prior generic input ceiling
+`3 × 512 MiB = 1,610,612,736 bytes`, plus the existing bounded plan/configuration/
+installation/request/report/import reads. The owner adds one 16-KiB request read
+and up to four 64-KiB retained-record/log reads for its final joins. Request,
+JSON-decoding, serialization and retained byte copies are additional work and
+memory; no whole-path RSS or actual CPU fit is claimed.
 
-Historical Unit20 test count: **37 cases in 16 functions, 111 passing phases**, maximum
-literal node-ID length 103. The guarded check matched its exact prior collection. They cover the absent/running/
-leader-exited-populated/terminal-empty/receipt/stop sequence; exact source and
-report substitutions; preflight deadline exhaustion; lost acknowledgement;
-terminal/final receipt failures; cleanup failures; stale invocation/group/CPU;
-retained failed state; duplicate intent; fixed argv/disabled CLI; and service
-wrapper first/supplemental errors. Four successor cases cover invalid public root/mismatched receipt store, and
-failed intent writes before or after a fake partial retention. All original test-function ASTs are
-unchanged. The two-line direct-script path guard was reviewed statically. Formatting,
-lint, ordinary definition imports and the guarded fake-service tests passed;
-actual direct-script service startup remains unqualified.
+The earlier capture selected-file ceiling was 5,939,200 bytes/142 names: up to
+64 receipts, one request, child log, service console and 75 command logs. The
+parent adds three 64-KiB receipts, one 16-KiB request and at most 15 8-KiB command
+logs: 335,872 bytes/19 names. The selected capture subtotal is therefore
+6,275,072 bytes/161 names, plus directories/cache state. The benign selected-file
+ceiling is four 64-KiB watcher receipts, three 4-KiB request/ready/done records,
+one 1-MiB console, 21 8-KiB command logs and one zero-byte FIFO pathname:
+1,495,040 bytes/30 names. Combined selected files are 7,770,112 bytes/191 names.
+Protected inventory/artifact inputs, source copies, controls, snapshots, partial
+failed files and external publication are **not** included in this subtotal;
+it is not an 8-MiB whole-operation-fit claim or a transfer of any allocation.
 
-The lifecycle tests use fake Systemd snapshots/operations and fake lower-level
-protected-plan APIs. They run the actual adapter's preflight joins, state machine
-and report joins, not actual protected source validation or service dispatch.
-One composition uses the actual existing receipt writer on owned temporary
-files. The service-entry tests use a fake launch and fake service identity; they
-cannot establish real cgroup, startup, owner capture or process closure.
+Parent CPU, waited controller/CLI CPU and service cgroup CPU overlap and remain
+separate observations. The three full validations are now service-accounted;
+outer setup, interpreter startup, imports, logging, cleanup and publication still
+need actual accounting. No prior remainder, source-manifest read budget or
+scientific balance is reused.
 
-Historical Unit20 source-derived conservative fixture ceiling: at most 33 request files at 4 KiB,
-nine other receipt files at 64 KiB and two child logs at 64 KiB, totaling
-**856,064 bytes**. Request bounds are asserted in the authored tests. There are
-at most 44 regular pathnames, no symlinks, hardlinks or FIFOs, and at most 101
-fixture/test/control/cache directories in the original 33-case estimate, plus
-four empty temporary roots for the new rejection cases: **105 directories** in
-total. Those four new cases create no files; the original payload/pathname upper
-bounds remain unchanged. No additional fixture payload is introduced by these rejection cases.
-Most receipts remain in fake in-memory stores. The observed fixture files and framework links totaled 43,036 logical bytes.
-The complete retained Unit20 set, including controls, source/environment records,
-logs, JUnit, all three attempts and final checkpoint, totaled 1,568,723 bytes.
-Measured controller/child CPU was 48.918798 seconds; three retained closeout
-reservations brought the charged total to 63.918798 CPU seconds. Charged active
-wall time was 79.140122 seconds. These fit the reviewed 200-CPU/600-wall/8-MiB
-account; its remainder is not reused. External authoring, transport, publication,
-provider cost and peak memory remain unmeasured. The pinned standard-library
-initialization precedes the guarded window; its exp count is unknown, so this
-result makes no whole-invocation zero-exp claim.
+## Authored verification scope
 
-A later positive qualification must separately admit the protected runtime and
-complete import/source/installation inventory, service-manager custody, exact
-source activation, whole-parent deadline/usage control and real named-group
-observations. It must include a benign leader/descendant case proving leader
-exit alone is insufficient. Existing Unit19 failures, costs and unknowns remain
-retained. No current result qualifies S/A, installation/pass2, exposure evidence,
-whole scientific fit or a D1 batch.
-## Lifecycle test cleanup correction
+Static AST census: 79 cases/237 prospective phases in 29 test functions:
+41 lifecycle cases/18 functions, 20 parent-owner cases/8 functions, and
+18 benign cases/3 functions. They cover original-clock refusal, post-preflight
+launch reserve, independent timeout takeover, late acknowledgement, stale
+identity/missing units, unreaped child, terminal/final/intent failure, exact
+retained report substitutions, no-I/O preclaim/consumed rejection, leader-only
+rejection, ready/release joins, fake parent/child branches, fork refusal and close
+uncertainty. Command failures retain the underlying first error and supplemental
+log-close facts. Worker descriptors are marked consumed before every close;
+close-after-consumption cannot retry the same descriptor or skip the remaining
+independent closes. Parent read errors survive later close errors. Existing
+report/cleanup assertions remain; the preflight test now correctly observes its
+moved service-side position.
+
+A conservative fixture payload estimate per retained suite is 1,269,760 bytes:
+1,064,960 for lifecycle cases (including three new request/report cases), 102,400
+for owner requests, and 102,400 for benign records (eleven requests and seven pairs
+of ready/done files, each at most 4 KiB). Two retained
+suite sets require 2,539,520 bytes before framework metadata/logs. This is a
+source-derived loose upper bound, not measured output. Fake tests create no
+symlinks, hardlinks or FIFOs; pytest may create its own links. Most receipt data
+stays in bounded fake stores. Actual qualification must census every retained
+pathname and failed copy, not reuse the former 1.5-MiB two-suite partition without
+reconciliation.
+
+No imports, formatters, typing, collection, tests or service actions were executed
+during this source-authoring stage. Planned ordinary checks, in the accepted
+engineering environment after review, are:
+
+```
+python -m ruff format --check scripts/d1_owned_capture.py scripts/d1_capture_owner.py scripts/d1_capture_descendant.py tests/test_d1_owned_capture.py tests/test_d1_capture_owner.py tests/test_d1_capture_descendant.py
+python -m ruff check scripts/d1_owned_capture.py scripts/d1_capture_owner.py scripts/d1_capture_descendant.py tests/test_d1_owned_capture.py tests/test_d1_capture_owner.py tests/test_d1_capture_descendant.py
+python -m mypy src tests examples
+python -m pytest tests/test_d1_owned_capture.py tests/test_d1_capture_owner.py tests/test_d1_capture_descendant.py
+```
+
+Actual accepted installation, complete protected startup/runtime inventory,
+closed outer ownership, benign live handshake and one capture-only qualification
+remain prerequisites. No source-shape/checksum or fake pass substitutes for them.
+The frozen D1 diagnostic and downstream approved 36-episode/432-slot comparison
+remain the research purpose; neither is executed by this slice.
+
+## Historical software checkpoint
+
+The following account describes the earlier b2408ab9 checkpoint, not the new
+source or its delivery status. The complete earlier bounds, costs and private
+qualification record remain in the [immutable lifecycle guide](https://github.com/spei04/strange-physics/blob/b2408ab909863e143ea0d89e1c7eaeeeb2bae8f8/docs/research/D1_OWNED_CAPTURE.md).
+
+### Lifecycle test cleanup correction
 
 The original PR157 CI run failed seven cases on each Python runtime: 6,270
 passed and seven failed. Formatting, lint and full typing passed; schema,
