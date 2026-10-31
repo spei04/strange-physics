@@ -9,9 +9,10 @@ The exact reviewed source must first reach protected main through normal
 reviewed integration and pass that main revision's candidate workflow. Retain
 the resulting commit M even when its tree equals an earlier feature tree.
 Independently verify the actual run/attempt, branch protection, artifact digest,
-four-file bundle, checksums, source/lock provenance and package bytes using the
-existing delivery policy. Never relabel the old main artifact. Generating JSON
-does not establish candidate acceptance, custody or production readiness.
+five-file bundle, checksums, source/lock provenance and package bytes using the
+current delivery policy. Historical four-file records remain unchanged; never
+relabel an old main artifact. Generating JSON does not establish candidate
+acceptance, custody or production readiness.
 
 ## Installation prerequisite
 
@@ -54,14 +55,16 @@ utilities do not establish protected custody, candidate acceptance or complete
 native/deferred closure. The interpreter copy adds bounded file work; the
 shared base stdlib and native libraries still require their full reviewed pins.
 
-The candidate uses uv 0.13.4. Do not silently replace the separately pinned
-cloud tool or assume cross-version export equivalence. Regenerate the exact
-reviewed runtime requirements export and compare its complete byte hash with
-runtime_requirements_sha256 in the actual provenance before installation.
-Header command text is included. Mismatch stops preparation; do not normalize
-headers, change provenance or install another tool implicitly. This change
-does not alter workflow/artifact policy. If exact regeneration is impossible,
-review the smallest candidate-artifact amendment before integration.
+The candidate uses uv 0.13.4 and now retains the exact requirements export used
+for its installation. The current five-file artifact contains the wheel, sdist,
+provenance.json, SHA256SUMS and runtime-requirements.txt, all at the candidate
+archive root. After accepting that exact candidate, compare the retained export's
+complete byte hash with runtime_requirements_sha256 in its original provenance
+before installation. Header command text is included. Missing bytes or mismatch
+stop preparation; do not regenerate or normalize the export, change provenance,
+or install another tool implicitly. The separately pinned cloud uv tool remains
+unchanged, and no cross-version export equivalence is assumed. Historical
+four-file candidates cannot satisfy this new retained-input route.
 
 After that join, the one admitted preparation may install hashed runtime-only
 dependencies and the exact candidate wheel offline without dependency

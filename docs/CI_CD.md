@@ -123,12 +123,19 @@ fresh environment, checks development/build tools are absent, and executes the
 spring investigate/inspect smoke through that environment's CLI. It never uses
 `uv run` or a source-project fallback for this acceptance step.
 
-Only the validated wheel, source distribution, `provenance.json` and
-`SHA256SUMS` are uploaded. Provenance identifies the source commit, repository,
-workflow run/attempt, Python/uv versions, lock checksum, exported runtime-lock
-checksum and distribution hashes/sizes. These are integrity and traceability
-records, not signatures or an attestation of independent authorship. Smoke
-outputs and raw observations are not uploaded.
+Current candidates upload five files from the same candidate directory: the
+validated wheel, source distribution, `provenance.json`, `SHA256SUMS` and the
+exact `runtime-requirements.txt` used for the isolated installation. The export
+is copied into that directory only after archive validation and provenance
+creation succeed, preserving the previous archive layout. Its complete bytes,
+including the generated header, must match `runtime_requirements_sha256` in
+provenance before any subsequent installation; do not regenerate or normalize
+this accepted input. Provenance also identifies the source commit, repository,
+workflow run/attempt, Python/uv versions, lock checksum and distribution
+hashes/sizes. These are integrity and traceability records, not signatures or
+an attestation of independent authorship. Smoke outputs and raw observations
+are not uploaded. Historical four-file candidates and their delivery records
+remain unchanged; they do not acquire a requirements file retrospectively.
 
 Artifacts expire after seven days. An approved release process must copy its
 required records to approved durable release storage before that expiry.
