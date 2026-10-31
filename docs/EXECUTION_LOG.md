@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** PRs #138–#140 passed CI. Adapter #141 is in CI; its incomplete local run remains recorded. The recorder passed 57 cases/171 phases and full 203-file typing.
-- **Assignments:** Platform verifies #141. Lead prepares recorder delivery; Research prepares report-structure checks. Quality reviews the numerical-gate mapping. The 135-row structural source has passed independent review.
-- **Open gates:** Exposure policy and initial owner custody are approved. Protected inventory, durable recording, complete numerical binding and scientific admission remain open. No D1 batch is running.
+- **Verified:** PRs #138–#141 passed CI. Recorder #142 is in CI after 57 local passes. The report check retained 76 passes and two failures; its reviewed repair has 89 authored cases awaiting CI.
+- **Assignments:** Platform verifies #142. Lead prepares the report PR; Research reviewed its repair. Quality reviews Research's repeated-loss kernel and 59 authored tests.
+- **Open gates:** Exposure policy and initial owner custody are approved. Protected inventory, durable recording, complete material binding and scientific admission remain pending. No D1 batch is running.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Platform / Quality / Research / Project lead | Recorder PR #142 and structural report validation | Adapter #141 passed all six CI jobs with 5,149 tests per runtime. Recorder's 57-case local check passed; its CI is running. Report's local 76-pass/2-failure result and 205-file typing remain recorded; reviewed strict-type repairs at 4e0a59a add 11 regressions, for 89 authored cases awaiting CI. Research's conditional repeated-loss kernel has 59 authored cases under independent review. No D1 batch. |
 | 2026-10-31 | Quality / Research / Platform / Project lead | D1 recorder and report structure | Recorder source98f55f8 passed57 synthetic cases/171 phases and203-file typing; all12 owned processes closed,46.092669 CPU seconds charged. Independent result review accepted. Report-structure source30f3cbe accepted with78 authored cases still unrun; numerical-gate mapping under review. Parent adapter PR141 CI remains pending. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | D1 adapter engineering and failure retention | Source 76a8edc independently accepted; formatting/lint/201-file typing passed. Local guarded tests hit SIGXCPU with no terminal census; six attempts and the 120.182184-second charged overrun remain recorded. One ordinary PR CI completion next. Recorder source ca928755 reviewed; Quality begins fixed report contracts. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | D1 contract CI and predictive-bound checks | PR #138 passed six required jobs on frozen 8b7704a. Unit2 exact-mass defect repaired; 69 synthetic cases/197-file typing pass at 312774c, with prior type failure retained. Research authors unit3 reference/proof joins; Quality found a trace-center consistency fix before integration. No D1 scientific batch. |
