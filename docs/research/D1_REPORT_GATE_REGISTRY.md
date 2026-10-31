@@ -3,8 +3,9 @@
 Source proposal, 2026-10-30. This maps the frozen
 [RA-N03-D1 protocol](RA_N03_CALIBRATION_SLICE.md) and
 [report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md) to the existing conditional
-producers. It does not amend their scientific policy, admit a run, implement
-B1/B2, authenticate evidence, or prove that the payloads fit the output budget.
+producers. The source-only descriptor implementation below does not amend their
+scientific policy, admit a run, complete B1/B2, authenticate evidence, or prove
+that the payloads fit the output budget.
 
 The inspected source is `30f3cbeef72554748a7d77699a74c79a25a1ce87`.
 Its protocol digest is
@@ -271,3 +272,71 @@ Codec losslessness, worst-shape byte fit, schema/runtime parity, callback
 installation/restoration and complete work/retention counts remain separate
 reviewable obligations. This mapping was prepared by source inspection only;
 no new test, calculation, fixture, schema generation or numerical run occurred.
+
+
+## Source-owned descriptor implementation checkpoint
+
+[tests/d1_required_checks.py](../../tests/d1_required_checks.py) implements this
+registry as private frozen `Operand`, `RequiredCheck` and `ExpectedRow` dataclasses.
+`expected_checks(row_key)` accepts only an exact key from the unchanged
+`ROW_MANIFEST`; `expected_registry()` expands all 135 rows. There is no user-selected
+list of thresholds, optional gate configuration, observed value, gate pass flag
+or scientific evaluator. The separate structural report remains unavailable/
+unchecked for qualification, utility and authenticity.
+
+Every operand carries its exact source row key and fixed field vocabulary.
+Posterior/prior pairing uses the original same-case/grid prior row; held-out truth
+binds that case's fixture row; D03 record 1 names the M03/base one-record posterior;
+refinement and contrasts retain ordered coarse/fine, adjacent-scale or exact
+stress-pair identities. Fields describe the named existing producer or a still-
+pending B2 semantic input. They are not an executable JSONPath language and do
+not create the unfinished payload codec or resolver. Producer labels beginning
+`B2.` and named chronology/authentication binders explicitly denote unfinished
+implementations. No predictor, reference, CDF, score or certificate is called.
+
+`validate_expected_row` validates raw dataclass field types before comparing the
+complete descriptor to its source-owned expansion, including Decimal limit
+representation. `validate_registry` additionally requires all 135 original rows
+in their exact order. Boolean ordinals/limits cannot exploit numeric equality.
+Missing, additional, duplicated, reordered or coherently substituted checks,
+relations, operands, producer names, applicability or constants are rejected.
+Accepting these descriptors proves only that their policy labels match this
+source; it does not validate any report material or enforce runtime stopping.
+
+Numerical upper gates keep the existing inclusive relations. Reference constant/
+normalization descriptors require a complete rebuild and every original radius
+check at 1e-48, rather than only a convenient supplied maximum. Exact 1e-60 endpoint
+allowance and fixed 3e-9 reserve remain separate required constants. At N=256 the
+four finest fields are diagnostics with no limit or pass flag; N=1024 retains the
+four inclusive ceilings. Prior rows omit posterior training, likelihood and log
+normalization gates. The 18 prequential rows use t=.5 mean/innovation semantics,
+with delta 0 only for record 0; record 1 preserves the matched posterior delta.
+
+The concrete names `forecast.diagnostics`, `contrast.diagnostics` and
+`aggregate.diagnostics` label already-required retained information, not extra
+scientific acceptance gates. `utility.co_primary` describes the existing aggregate
+sign rule: both upper bounds strictly negative pass the local screen, either
+lower bound nonnegative (including an exact tie) does not meet it, otherwise
+inconclusive. It adds no individual-world superiority gate or metric tradeoff.
+The fixed descriptor property `on_required_rejection` states that subsequent
+batch work stops while retaining the fault and later unrun rows; a future binder/
+runner must actually enforce that policy. Missing proof is never zero-filled.
+
+The expansion has source-derived 1,648 descriptors: 8 × 5 fixture, 40 × 26 posterior,
+16 × 17 prior, 18 × 6 prequential, 20 × 4 refinement, 12 × 3 scale, 2 × 4 duplicate stress,
+14 × 3 force/weak stress, 4 × 4 primary and 6 aggregate. These are metadata rows, not
+new physical calls, samples or budget grants. Construction/reconstruction and
+validation passes must be counted as pure engineering work when eventually run.
+No serialized descriptor/table byte fit or timing claim follows from this count.
+
+The 18 authored test functions contain 48 synthetic cases / 144 expected phases by
+AST inspection. They exercise completeness and substitution, original dependency
+order, coarse/finest and prior/posterior distinctions, duplicate-prefix coverage,
+prequential reuse, finite refinement operands, diagnostic-only contrasts, exact
+co-primary ties and strict raw booleans/Decimal limits. Real scientific producers
+and certificate/score evaluators are poisoned. AST parsing and diff whitespace
+inspection are the only checks performed at this source checkpoint; imports,
+formatting, linting, typing, test execution and schema generation remain pending.
+Full material authentication, payload/codec/schema parity, prior aliases,
+actual repeated-loss joins, work/byte accounting and numerical admission remain
+separate obligations.
