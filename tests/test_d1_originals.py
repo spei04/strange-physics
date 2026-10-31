@@ -112,9 +112,9 @@ def test_actual_consumers_own_all_thirteen_and_fixed_original_slots() -> None:
         (12, 3),
     )
     assert len(result.original_methods) == 22
-    for method, (owner, definition) in zip(result.original_methods, expected, strict=True):
+    for method, (owner_index, definition) in zip(result.original_methods, expected, strict=True):
         assert (
-            method.__self__ is result.owners[owner]
+            method.__self__ is result.owners[owner_index]
             and method.__func__ is saved.functions[definition]
         )
     assert result.emitter is saved.emitter and result.emitter is math.exp
