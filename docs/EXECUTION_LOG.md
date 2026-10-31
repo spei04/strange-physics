@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** PRs #138–#152 passed CI. Table retention passed source review; local checks closed incomplete after lint and typing repairs. The source-manifest design passed review.
-- **Assignments:** Lead publishes table retention. Platform audits its original CI; Quality checks final evidence. Research completed the manifest catalog and construction-order design.
-- **Open gates:** Source-manifest implementation, activation, installation, protected inventory, historical evidence, aggregate fit and scientific admission remain pending. The owner and exposure policy are approved; no D1 batch is running.
+- **Verified:** PRs #138–#152 passed CI. Table-retention PR #153 is frozen for CI; its local qualification remains incomplete. The source-manifest design passed independent review.
+- **Assignments:** Platform audits #153; Lead publishes the reviewed manifest design and maintains the backlog. Quality completed code/evidence review. Research completed the catalog and construction-order design.
+- **Open gates:** Bounded manifest parsing and resolution, activation, installation, protected inventory, historical evidence, aggregate fit and scientific admission remain pending. The owner and exposure policy are approved; no D1 batch is running.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Quality / Platform / Project lead | Source-manifest design accepted; table-retention CI running | Research resolved the catalog self-reference and actual-routing construction order; Quality and Lead accepted the unchanged limits as proposed bounds. Lead integrated the design over repaired table-retention source without executing it. Platform owns original CI run41183211071 for draft PR153 at3ee39ee2. Next implementation is bounded S wire/catalog comparison; actual source resolution, fixture hook, emitter and installer remain prerequisites for usable authentication. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Conditional table retention reviewed; local qualification incomplete | Research implemented actual T retention with independent descriptors, fresh C joins and retained first faults; Quality reviewed code and narrow repairs. Platform verified four closed attempts/21 children, preserved lint and typing failures, 69.863723 CPU seconds charged and no guarded test bodies. Lead freezes 87884ac1 for one ordinary CI attempt. Source-manifest design now separates hash-free catalog policy from source pins and verifies actual routing only after S-bound C/T and real Bridge/Recorder construction. No scientific run or merge. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Table-retention design reviewed; context CI | Context PR #152 is frozen at 72ec513d in its original CI attempt. Independently reviewed [table-retention design](research/D1_TABLE_RETENTION_DESIGN.md) requires actual sibling-parent identity before creation, independent metadata descriptor ownership and fresh C reads. Review clarified sticky-failure checks both before and after final C, including swallowed close-hook reentry. Research owns the focused helper/test slice; activation and source authority remain separate. No table-retention runtime or D1 batch. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Owned context observation accepted; table-retention boundary next | Handoff #151 passed six required CI jobs with 5,850 tests per runtime. Context source 513e1740 passed 25 cases/75 phases and full 221-file typing; all 12 children closed and 51.081367 CPU seconds charged. Independent review verified 31,197 fixture bytes including deliberate link/FIFO cases and separate read-close uncertainty. Later table retention must own its descriptors and join fresh C; fixed activation still requires resolved source authority and outer admission. |
