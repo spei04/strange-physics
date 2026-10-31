@@ -129,17 +129,16 @@ resume capability.
 
 ## Authored tests and remaining qualification
 
-Static AST count: **38 cases in 17 functions, 114 prospective phases**, maximum
+Static AST count: **37 cases in 16 functions, 111 prospective phases**, maximum
 literal node-ID length 103. All are unexecuted. They cover the absent/running/
 leader-exited-populated/terminal-empty/receipt/stop sequence; exact source and
 report substitutions; preflight deadline exhaustion; lost acknowledgement;
 terminal/final receipt failures; cleanup failures; stale invocation/group/CPU;
 retained failed state; duplicate intent; fixed argv/disabled CLI; and service
-wrapper first/supplemental errors. Five successor cases cover the direct-script
-path guard, invalid public root/mismatched receipt store, and failed intent writes
-before or after a fake partial retention. All original test-function ASTs are
-unchanged. The path-guard case inspects source AST, not a second module execution;
-actual formatting/lint/import qualification is still pending.
+wrapper first/supplemental errors. Four successor cases cover invalid public root/mismatched receipt store, and
+failed intent writes before or after a fake partial retention. All original test-function ASTs are
+unchanged. The two-line direct-script path guard was reviewed statically; actual formatting/
+lint/import qualification is still pending.
 
 The lifecycle tests use fake Systemd snapshots/operations and fake lower-level
 protected-plan APIs. They run the actual adapter's preflight joins, state machine
@@ -154,9 +153,8 @@ nine other receipt files at 64 KiB and two child logs at 64 KiB, totaling
 at most 44 regular pathnames, no symlinks, hardlinks or FIFOs, and at most 101
 fixture/test/control/cache directories in the original 33-case estimate, plus
 four empty temporary roots for the new rejection cases: **105 directories** in
-total. Those five new cases create no files; the original payload/pathname upper
-bounds remain unchanged. The source-guard case reads this adapter once (currently
-28,999 bytes); it creates no fixture output.
+total. Those four new cases create no files; the original payload/pathname upper
+bounds remain unchanged. No additional fixture payload is introduced by these rejection cases.
 Most receipts remain in fake in-memory stores. Actual test data, logs/JUnit,
 control records, CPU, wall and memory have not been measured; ordinary finite
 controls must account for them before any test execution.

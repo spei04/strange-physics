@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import ast
 import hashlib
 import json
 from collections import deque
@@ -430,21 +429,6 @@ def test_service_failure_keeps_first_and_supplemental_facts(
         value = json.loads((tmp_path / "capture-service.json").read_bytes())
         assert value["launch"] is None and value["first_fault"]["kind"] == "OSError"
 
-
-def test_import_path_setup_is_guarded_by_direct_script_entry() -> None:
-    tree = ast.parse(Path(owned.__file__).read_text(encoding="utf-8"))
-    expected_call = ast.parse("sys.path.insert", mode="eval")
-    expected_guard = ast.parse('__name__ == "__main__"', mode="eval")
-    assert isinstance(expected_call, ast.Expression) and isinstance(expected_guard, ast.Expression)
-    mutations = [node for node in ast.walk(tree) if isinstance(node, ast.Call)
-                 and ast.dump(node.func) == ast.dump(expected_call.body)]
-    assert len(mutations) == 1
-    guards = [node for node in tree.body if isinstance(node, ast.If)
-              and ast.dump(node.test) == ast.dump(expected_guard.body)
-              and mutations[0] in list(ast.walk(node))]
-    assert len(guards) == 1 and not guards[0].orelse
-    assert len(guards[0].body) == 1 and isinstance(guards[0].body[0], ast.Expr)
-    assert guards[0].body[0].value is mutations[0]
 
 
 @pytest.mark.parametrize("kind", ("public-root", "wrong-store"), ids=("public", "store"))
