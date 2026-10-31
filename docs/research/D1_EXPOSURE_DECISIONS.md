@@ -1,9 +1,10 @@
 # D1 exposure policy decisions
 
 Status: the owner approved the recommended policy and its source implementation
-on 2026-10-31. Evaluation custody remains unresolved. This approval does not
-establish inventory completeness, amend the frozen protocol bytes, or authorize
-numerical execution.
+on 2026-10-31 and subsequently accepted initial evaluation custody. The actual
+six-world inventory and its overlap acceptance remain pending. These decisions
+do not establish inventory completeness, amend the frozen protocol bytes, or
+authorize numerical execution.
 
 The next implementation can compare supplied exposure records. It cannot infer
 that those records cover every experiment or that a test catalog is an untouched
@@ -49,15 +50,17 @@ history cannot be reconciled, that is a separate explicit protocol decision.
 
 ## Ownership and next implementation
 
-The project owner approved the policy; the separate evaluation-custodian
-question remains unanswered. The custodian may be the owner or a designated
-reviewer; the role is not assumed to exist merely because this plan names it.
+The repository owner is the initial evaluation custodian, following the explicit
+answer, "I’ll own it initially." This assigns responsibility for the actual
+reserved inventory and its overlap disposition; it does not establish an
+independent reviewer, untouched labels, or an accepted six-world inventory.
 
 Research may now implement one bounded nonnumerical extraction slice, Quality
 can independently check its coverage and overlap rules, and the lead can
-integrate its evidence. Actual reserved-world acceptance still needs the named
-custodian and its immutable inventory. This does not authorize archive searches,
-new endpoints, tuning after overlap inspection, or a scientific rerun.
+integrate its evidence. Actual reserved-world acceptance still needs the owner's
+review of an immutable inventory and an explicit overlap disposition. This does
+not authorize archive searches, new endpoints, tuning after overlap inspection,
+or a scientific rerun.
 
 Adapter, report and disabled-runner source work may continue in parallel.
 The frozen D1 protocol, experiment counts, previous failed attempts and resource
