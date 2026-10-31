@@ -71,6 +71,7 @@ from strange_physics.native_spring_contracts import (
 from strange_physics.research_contracts import Digest, PredictionRequest, message_sha256
 
 D = Decimal
+_ZERO = D(0)
 COUNTS = (256, 1024)
 SCALES = (0.125, 0.25, 0.5)
 REFERENCE_ERROR = D("1e-60")
@@ -513,7 +514,7 @@ def training_forecast(
     *,
     source: Literal["prior", "matched-base-posterior"],
     masses: tuple[Interval, ...] | None = None,
-    delta: Decimal = D(0),
+    delta: Decimal = _ZERO,
 ) -> TrainingForecast:
     frozen = _pool(frozen)
     if (
