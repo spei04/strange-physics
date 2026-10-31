@@ -208,8 +208,9 @@ synthetic file tests would still not authenticate S or qualify a D1 experiment.
 
 ## Test-isolation repair after the interrupted local attempt
 
-Lead reports local check2 stopped with exit86 during the first case, without a
-retained tripwire event receipt. Global test patches of `os.stat`/`os.open` can
+Lead reports local check2 stopped with exit86 and no terminal test census; only
+the first case's fixture was retained. Historical test phases are unknown, and
+no tripwire event receipt was retained. Global test patches of `os.stat`/`os.open` can
 intercept the collector's own `Path.resolve` and failure-event writes. That is a
 concrete compatible mechanism; the missing receipt leaves the exact historical
 tripwire reason unknown. The failed attempt and its charges remain retained.
@@ -222,7 +223,7 @@ actual standard-library object. Fault patches target only those helper namespace
 fixture setup, captured real callbacks, descriptor assertions, pytest and the
 collector continue using actual `os`/`threading`. The no-I/O retry helper also
 asserts shared `open/read/fstat/stat/close` identities remain unchanged while its
-local functions are poisoned. Scoped mocks still restore before once-only owned
-cleanup and teardown. No helper API, scientific guard, original test assertion,
+local functions are poisoned. Scoped mocks restore before caller-root fixture
+cleanup and pytest teardown. No helper API, scientific guard, original test assertion,
 case ID or file-payload ceiling changes. The two tiny namespace objects per case
 are in-memory test machinery, not additional fixture files or an OS sandbox.
