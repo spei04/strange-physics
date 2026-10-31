@@ -132,8 +132,8 @@ conservative pair ceiling is `148 + 2I + R`.
 ```
 
 An upper bound above 64 MiB does **not** prove the actual frozen caller material
-exceeds 64 MiB. It proves that the broad current token/value domain alone cannot
-supply a sufficient fit certificate. Actual fixed call IDs, scope layouts,
+exceeds 64 MiB. This conservative bound does not supply a sufficient fit
+certificate. Actual fixed call IDs, scope layouts,
 source-owned table cardinalities and value-width bounds still need a proof.
 The generic 4,096-byte event cap gives a much looser successful ceiling of
 451,379,200 bytes, or 451,383,296 for `2N+1` emitted events; these are domain
