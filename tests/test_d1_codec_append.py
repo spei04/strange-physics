@@ -11,7 +11,7 @@ from copy import deepcopy
 from typing import Any, NoReturn
 
 import pytest
-from d1_codec_append import CodecAppendBridge, BridgeStopped, _context, classify_raw
+from d1_codec_append import BridgeStopped, CodecAppendBridge, _context, classify_raw
 from d1_primitive_codec import PrimitiveEventCodec
 from d1_primitive_codec_table import PROTOCOL_SHA256, TableIdentity, build_table, parse_table
 
