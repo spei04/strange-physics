@@ -71,9 +71,7 @@ def bound(case: CaseId = "M03", count: int = 256, token: str = "1") -> a.BoundCa
     return a.bind_candidates(case, pool, value, actual, result, attempt_id="candidate-a")
 
 
-def fake_prediction(
-    actual: NativePredictionInput, *, attempt_id: str
-) -> NativePredictionResult:
+def fake_prediction(actual: NativePredictionInput, *, attempt_id: str) -> NativePredictionResult:
     q = actual.request.experiment.particles[0].position[0]
     # This constant synthetic surrogate deliberately ignores the spring coefficient.
     frames = tuple(
@@ -401,9 +399,7 @@ def test_whole_prefix_arithmetic_refuses_missing_or_invalid_terms(
 
 def test_conditioned_native_error_is_separate_from_reference_endpoint_error() -> None:
     native = a.joint_enclosure((0.75,), (point(0.5),), 0.25, point(0), point(0))
-    ideal = a.joint_enclosure(
-        (0.75,), (around(D("0.499"), D("1e-60")),), 0.25, point(0), point(0)
-    )
+    ideal = a.joint_enclosure((0.75,), (around(D("0.499"), D("1e-60")),), 0.25, point(0), point(0))
     assert native == point(D("-0.5"))
     assert ideal.upper < native.lower
     assert absolute_upper(minus(point(-0.49), native)) > D("0.009")
