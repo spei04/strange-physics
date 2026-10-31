@@ -1,7 +1,8 @@
 # D1 owned capture lifecycle
 
 Source-only implementation based on `11629b131e4c828e16e547660be43054b531681d`;
-code checkpoint `1326bf8f95e830606ab6fad20800cef2096b93f4`. Research owns this
+code checkpoint `ee7ec8ff16243484ecbafbe4e55c6c25bded42f4` (including the
+pre-intent ownership and direct-script import repairs to `1326bf8`). Research owns this
 new adapter, its fake-API tests and this guide. No project imports, formatter,
 typing, test collection/body, service, capture or scientific operation ran during
 authoring. The CLI is literally disabled. This is not an execution admission or
@@ -30,8 +31,8 @@ subclass changes only the named-unit identity and fixed service argv; it retains
 The intended service argv is the pinned controller interpreter, `-I -B -X`, a
 fresh `service-pycache` prefix under the owned root, the source-owned
 `scripts/d1_owned_capture.py`, literal `service`, and the exact request path/hash.
-Its root import insertion derives only from this source file's location. It
-never takes an import root from the plan or adds checkout `src`. That source
+Its direct-script-only root import insertion derives from this source file's
+location. Ordinary module imports preserve the global lookup order. It never takes an import root from the plan or adds checkout `src`. That source
 root, every imported `scripts` module, interpreter, startup and service-manager
 environment require independently protected custody before eventual execution.
 Byte checks alone do not exclude a hostile writer or authenticate loaded code.
@@ -49,7 +50,11 @@ evidence that the CLI or a real service works.
 
 1. Sample the original monotonic start and parent/waited-CLI CPU baselines.
    Validate the existing private root and persist an exclusive intent, including
-   the absolute deadline and profile, before reading the protected plan.
+   the absolute deadline and profile, before reading the protected plan. A root/
+   receipt-store validation failure returns bounded incomplete facts without any
+   receipt write. A failed intent callback returns an existing-intent or unknown-
+   acknowledgement disposition; neither permits later receipt I/O or preflight.
+   The external owner retains these returned facts and any partial intent bytes.
 2. Exclusively create the sibling control root and empty service cache. Persist
    and fsync the canonical bounded request and its containing directory.
 3. Call the existing `read_plan` and `validate_plan`, then join actual source
@@ -124,13 +129,17 @@ resume capability.
 
 ## Authored tests and remaining qualification
 
-Static AST count: **33 cases in 14 functions, 99 prospective phases**, maximum
+Static AST count: **38 cases in 17 functions, 114 prospective phases**, maximum
 literal node-ID length 103. All are unexecuted. They cover the absent/running/
 leader-exited-populated/terminal-empty/receipt/stop sequence; exact source and
 report substitutions; preflight deadline exhaustion; lost acknowledgement;
 terminal/final receipt failures; cleanup failures; stale invocation/group/CPU;
 retained failed state; duplicate intent; fixed argv/disabled CLI; and service
-wrapper first/supplemental errors.
+wrapper first/supplemental errors. Five successor cases cover the direct-script
+path guard, invalid public root/mismatched receipt store, and failed intent writes
+before or after a fake partial retention. All original test-function ASTs are
+unchanged. The path-guard case inspects source AST, not a second module execution;
+actual formatting/lint/import qualification is still pending.
 
 The lifecycle tests use fake Systemd snapshots/operations and fake lower-level
 protected-plan APIs. They run the actual adapter's preflight joins, state machine
@@ -143,7 +152,11 @@ Source-derived conservative fixture ceiling: at most 33 request files at 4 KiB,
 nine other receipt files at 64 KiB and two child logs at 64 KiB, totaling
 **856,064 bytes**. Request bounds are asserted in the authored tests. There are
 at most 44 regular pathnames, no symlinks, hardlinks or FIFOs, and at most 101
-fixture/test/control/cache directories using a conservative 33-case bound.
+fixture/test/control/cache directories in the original 33-case estimate, plus
+four empty temporary roots for the new rejection cases: **105 directories** in
+total. Those five new cases create no files; the original payload/pathname upper
+bounds remain unchanged. The source-guard case reads this adapter once (currently
+28,999 bytes); it creates no fixture output.
 Most receipts remain in fake in-memory stores. Actual test data, logs/JUnit,
 control records, CPU, wall and memory have not been measured; ordinary finite
 controls must account for them before any test execution.
