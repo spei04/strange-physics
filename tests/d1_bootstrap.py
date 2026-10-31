@@ -392,6 +392,9 @@ def _check_loaded(plan: dict[str, Any]) -> None:
         if spec is None:
             raise BootstrapError("Unmapped module has no import specification")
         origin = spec.origin
+        if name in ("sitecustomize", "_sysconfigdata__linux_x86_64-linux-gnu"):
+            if type(module) is not ModuleType or not _runtime_alias_origin(name, module, plan, files):
+                raise BootstrapError("Reviewed runtime source alias identity differs")
         if origin == "built-in":
             if name not in builtin:
                 raise BootstrapError("Unlisted builtin module")

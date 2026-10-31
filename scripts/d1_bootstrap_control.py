@@ -218,7 +218,7 @@ def runtime_aliases(paths: dict[str, Path]) -> dict[Path, tuple[str, Path, str, 
         stdlib / "_sysconfigdata__linux_x86_64-linux-gnu.py": (
             config.name, config, "file", SYSCONFIG_SHA256, 0
         ),
-        stdlib / "config-3.12-x86_64-linux-gnu/libpython3.12.so": (
+        Path("/usr/lib/python3.12/config-3.12-x86_64-linux-gnu/libpython3.12.so"): (
             "../../x86_64-linux-gnu/libpython3.12.so.1",
             Path("/usr/lib/x86_64-linux-gnu/libpython3.12.so.1"),
             "link", None, 0,

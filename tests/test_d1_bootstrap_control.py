@@ -553,3 +553,14 @@ def test_reviewed_ubuntu_hook_requires_absent_optional_dependency(case: str) -> 
     else:
         with pytest.raises(control.PreflightError):
             control._startup_hooks(plan, {"stdlib": stdlib, "site_packages": site}, inventory, hashes)
+
+
+def test_libpython_build_alias_cannot_be_relocated() -> None:
+    paths = {"stdlib": Path("/different/python3.12"), "venv_root": Path("/owned/venv")}
+    aliases = control.runtime_aliases(paths)
+    relocated = paths["stdlib"] / "config-3.12-x86_64-linux-gnu/libpython3.12.so"
+    assert relocated not in aliases
+    assert aliases[Path("/usr/lib/python3.12/config-3.12-x86_64-linux-gnu/libpython3.12.so")][:2] == (
+        "../../x86_64-linux-gnu/libpython3.12.so.1",
+        Path("/usr/lib/x86_64-linux-gnu/libpython3.12.so.1"),
+    )
