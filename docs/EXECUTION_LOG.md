@@ -2,8 +2,8 @@
 
 ## Current assignment board
 
-- **Verified:** PRs #138–#153 passed CI. The manifest parser passed independent review, 114 local cases/342 phases and full 225-file typing. Table-retention private qualification remains incomplete.
-- **Assignments:** Lead publishes the parser draft; Platform checks its original CI. Research designs the next owned-file observation boundary; Quality reviews that design and release evidence.
+- **Verified:** PRs #138–#153 passed CI. The manifest parser passed 114 local cases/342 phases and full 225-file typing; PR #154 is in its original CI run.
+- **Assignments:** Platform checks PR #154 evidence. Research delivered the owned-file observation design; Quality and Lead accepted its corrected path, memory and cleanup rules. Implementation is queued.
 - **Open gates:** Independent source/runtime proof, installation, protected inventory, historical evidence, aggregate fit and scientific admission remain pending. The owner and exposure policy are approved; no D1 batch is running.
 
 ## Approval and execution capacity
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Quality / Platform / Project lead | Owned-file observation design accepted; parser CI running | Research specified one checkout-only observation attempt against independent expected pins. Quality and Lead required no-follow named metadata, chunk release before subsequent reads, and remaining independent closes despite sticky faults; the corrected design preserves all bounds and defers loaded-code/runtime authority. Platform observes original PR154 run41186546429; Lead keeps its e9a6207c head frozen and publishes design separately. No helper implementation or scientific admission. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Pure source parser qualified; owned-file design next | Research delivered114 declaration cases. Quality and Lead accepted source, bounded controls and actual114/342 passes with225-file typing,27 imported sources and12 closed children;58.724645CPU seconds charged. Lead publishes one original ordinary CI attempt. Platform owns its evidence; Research designs a once-only owned-file observation boundary with independent expected pins and no primitive calls. Prior incomplete units, failures and scientific unknowns remain retained. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Bounded manifest parser implementation active | Research owns the pure raw S/catalog parser, immutable output views and synthetic malformed/boundary/join cases. Quality and Lead accepted explicit catalog guards, canonical root-member joins and Python/native declaration compatibility; raw T comparison and actual file/object resolution remain separate. Platform prepared a disabled verification proposal with prior failures/costs retained. Lead reuses I for integration; no new checkout, scientific run or runtime admission. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Table-retention CI accepted; bounded manifest parser queued | Original PR153 CI passed all six required jobs: 5,910 tests/runtime, 223-file typing, 1,567 schemas, package/reference/smoke checks and 24/72 analytic checks. Four private attempts remain incomplete with original failures/costs retained. Research audited47 current candidate source members; Quality and Lead accepted the lock-only262144-byte design correction and33,947,906 attempted-read proposal. The catalog is still incomplete and these bounds grant no allocation. Next source slice is pure bounded S/catalog comparison; actual source and object resolution follow separately. |
