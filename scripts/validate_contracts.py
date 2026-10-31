@@ -48,6 +48,19 @@ def main() -> None:
             raise ValueError(f"Unexpected schema result for {reference}: {errors[:1]}")
         count += 1
 
+    calibration = json.loads((ROOT / "calibration-fixture.examples.json").read_text())
+    for name, fixture in calibration["valid"].items():
+        check(f"calibration-fixture.schema.json#/$defs/{name}", fixture)
+    for group in ["schema_negative", "runtime_negative"]:
+        for fixture in calibration[group]:
+            value = copy.deepcopy(calibration["valid"][fixture["model"]])
+            value[fixture["field"]] = fixture["value"]
+            check(
+                f"calibration-fixture.schema.json#/$defs/{fixture['model']}",
+                value,
+                group == "runtime_negative",
+            )
+
     finite_weights = json.loads((ROOT / "finite-log-weight.examples.json").read_text())
     for name, fixture in finite_weights["valid"].items():
         check(f"finite-log-weight.schema.json#/$defs/{name}", fixture)

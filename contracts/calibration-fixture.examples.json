@@ -1,0 +1,748 @@
+{
+  "description": "Structural placeholders only; no true D1 labels or exposure acceptance.",
+  "runtime_negative": [
+    {
+      "field": "observations",
+      "model": "D1PublicFixture",
+      "value": {
+        "engine_fingerprint": "657c3c74346aedb165473b4672ed18ba5671da82e4873a2a3e6f514b58387399",
+        "engine_version": "synthetic-force-F02",
+        "records": [
+          {
+            "error": null,
+            "experiment": {
+              "impulse": {
+                "particle_id": "p0",
+                "vector": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "particles": [
+                {
+                  "id": "p0",
+                  "mass": 1.0,
+                  "position": [
+                    1.0,
+                    0.0
+                  ],
+                  "velocity": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "schema_version": "strange-physics.experiment.v1"
+            },
+            "index": 0,
+            "operation_id": "d1o-22222222222222222222222222222222",
+            "status": "completed",
+            "trajectory": {
+              "frames": [
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.0,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      0.75,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.5,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "run_id": "d1r-11111111111111111111111111111111",
+        "schema_version": "strange-physics.observations.v1",
+        "space": {
+          "budget": 1,
+          "calibration_experiments": 0,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.015625,
+            "duration": 0.5,
+            "position_noise": 0.0,
+            "sample_interval": 0.5,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a0",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p0",
+                "b": "a0"
+              }
+            ],
+            "particle_ids": [
+              "p0"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "field": "coefficient_hex",
+      "model": "D1PrivateAudit",
+      "value": "0x1p+9999"
+    },
+    {
+      "field": "training_labels",
+      "model": "D1PrivateAudit",
+      "value": [
+        {
+          "recorded_x_hex": "0x1.8000000000000p-1",
+          "reference_evidence_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "rounding_evidence_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        {
+          "recorded_x_hex": "0x1.8000000000000p-1",
+          "reference_evidence_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "rounding_evidence_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      ]
+    },
+    {
+      "field": "outcomes",
+      "model": "D1FixtureOutcomes",
+      "value": [
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "W03",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 13,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 0.125,
+            "mechanism": "zero-rest-spring",
+            "record_count": 1,
+            "scales": [
+              0.25
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "F04",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 27,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "spring-plus-k-over-eight-force",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "F02",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 5,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "spring-plus-k-over-eight-force",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "D03",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 13,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "zero-rest-spring",
+            "record_count": 2,
+            "scales": [
+              0.25
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "M04",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 27,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "zero-rest-spring",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "M03",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 13,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "zero-rest-spring",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "M02",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 5,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "zero-rest-spring",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "M01",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 1,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "zero-rest-spring",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        }
+      ]
+    },
+    {
+      "field": "overlapping_world_entries",
+      "model": "D1ExposureFinding",
+      "value": 1
+    }
+  ],
+  "schema_negative": [
+    {
+      "field": "future_initial_x",
+      "model": "D1PrivateAudit",
+      "value": 0.75
+    },
+    {
+      "field": "future_time",
+      "model": "D1PrivateAudit",
+      "value": 1.0
+    },
+    {
+      "field": "schema_version",
+      "model": "D1PublicFixture",
+      "value": "wrong"
+    },
+    {
+      "field": "protocol_sha256",
+      "model": "D1PrivateAudit",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "field": "coefficient_hex",
+      "model": "D1PrivateAudit",
+      "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    {
+      "field": "outcomes",
+      "model": "D1FixtureOutcomes",
+      "value": []
+    },
+    {
+      "field": "completeness",
+      "model": "D1ExposureInventory",
+      "value": "complete"
+    },
+    {
+      "field": "conclusion",
+      "model": "D1ExposureFinding",
+      "value": "certified-disjoint"
+    },
+    {
+      "field": "execution_authorized",
+      "model": "D1OwnerReviewReference",
+      "value": true
+    }
+  ],
+  "valid": {
+    "D1ExposureFinding": {
+      "conclusion": "no-overlap-in-supplied-inventory",
+      "first_exact_construction_index": null,
+      "first_overlap_index": null,
+      "first_reserved_coefficient_index": null,
+      "identity_sha256": "27a2b95fa0d9c716f067bfc20f63bb2f6bc424b51896c75673cb70f80e6e5429",
+      "inventory_kind": "exposed-development",
+      "inventory_sha256": "daad1de9363b857579ffc31e5568f2a00ddc0984b23fc78e47c0c6ac52151818",
+      "overlapping_world_entries": 0,
+      "reserved_coefficient_entries": 0,
+      "supplied_entries": 0
+    },
+    "D1ExposureInventory": {
+      "completeness": "not-established-by-this-contract",
+      "entries": [],
+      "inventory_kind": "exposed-development",
+      "schema_version": "strange-physics.d1-exposure-inventory.v1"
+    },
+    "D1FixtureOutcomes": {
+      "outcomes": [
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "M01",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 1,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "zero-rest-spring",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "M02",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 5,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "zero-rest-spring",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "M03",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 13,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "zero-rest-spring",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "M04",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 27,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "zero-rest-spring",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "D03",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 13,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "zero-rest-spring",
+            "record_count": 2,
+            "scales": [
+              0.25
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "F02",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 5,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "spring-plus-k-over-eight-force",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "F04",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 27,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 1.0,
+            "mechanism": "spring-plus-k-over-eight-force",
+            "record_count": 1,
+            "scales": [
+              0.125,
+              0.25,
+              0.5
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        },
+        {
+          "audit": null,
+          "blueprint": {
+            "case_id": "W03",
+            "coefficient_denominator": 7,
+            "coefficient_numerator": 13,
+            "counts": [
+              256,
+              1024
+            ],
+            "initial_x": 0.125,
+            "mechanism": "zero-rest-spring",
+            "record_count": 1,
+            "scales": [
+              0.25
+            ]
+          },
+          "failure_evidence_sha256": null,
+          "failure_stage": null,
+          "status": "unrun"
+        }
+      ],
+      "schema_version": "strange-physics.d1-fixture-outcomes.v1"
+    },
+    "D1OwnerReviewReference": {
+      "comparison_inventory_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "development_inventory_sha256": "daad1de9363b857579ffc31e5568f2a00ddc0984b23fc78e47c0c6ac52151818",
+      "disposition": "pending",
+      "fixture_outcomes_sha256": "957298f425c5b090262f06d824fd8e5d4166352bb98e98f1c4897267e9e57973",
+      "protocol_sha256": "657c3c74346aedb165473b4672ed18ba5671da82e4873a2a3e6f514b58387399",
+      "review_evidence_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "scope": "historical-completeness-requires-independent-review"
+    },
+    "D1PrivateAudit": {
+      "authority": "supplied-material-not-numerical-proof",
+      "blueprint": {
+        "case_id": "M03",
+        "coefficient_denominator": 7,
+        "coefficient_numerator": 13,
+        "counts": [
+          256,
+          1024
+        ],
+        "initial_x": 1.0,
+        "mechanism": "zero-rest-spring",
+        "record_count": 1,
+        "scales": [
+          0.125,
+          0.25,
+          0.5
+        ]
+      },
+      "coefficient_hex": "0x1.db6db6db6db6ep+0",
+      "future_initial_x": 1.0,
+      "future_label": {
+        "recorded_x_hex": "0x1.4000000000000p-1",
+        "reference_evidence_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "rounding_evidence_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "future_time": 0.75,
+      "protocol_sha256": "657c3c74346aedb165473b4672ed18ba5671da82e4873a2a3e6f514b58387399",
+      "public_sha256": "da884dc12e5e38eb5b656ed5dcc9e4006bdf844cfafb1251f2065b3a1a5ef21b",
+      "schema_version": "strange-physics.d1-private-audit.v1",
+      "source_commit": "cccccccccccccccccccccccccccccccccccccccc",
+      "training_labels": [
+        {
+          "recorded_x_hex": "0x1.8000000000000p-1",
+          "reference_evidence_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "rounding_evidence_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      ]
+    },
+    "D1PublicFixture": {
+      "observations": {
+        "engine_fingerprint": "657c3c74346aedb165473b4672ed18ba5671da82e4873a2a3e6f514b58387399",
+        "engine_version": "synthetic-ra-n03-d1.v1",
+        "records": [
+          {
+            "error": null,
+            "experiment": {
+              "impulse": {
+                "particle_id": "p0",
+                "vector": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "particles": [
+                {
+                  "id": "p0",
+                  "mass": 1.0,
+                  "position": [
+                    1.0,
+                    0.0
+                  ],
+                  "velocity": [
+                    0.0,
+                    0.0
+                  ]
+                }
+              ],
+              "schema_version": "strange-physics.experiment.v1"
+            },
+            "index": 0,
+            "operation_id": "d1o-22222222222222222222222222222222",
+            "status": "completed",
+            "trajectory": {
+              "frames": [
+                {
+                  "positions": [
+                    [
+                      1.0,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.0,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                },
+                {
+                  "positions": [
+                    [
+                      0.75,
+                      0.0
+                    ]
+                  ],
+                  "time": 0.5,
+                  "velocities": [
+                    [
+                      0.0,
+                      0.0
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "run_id": "d1r-11111111111111111111111111111111",
+        "schema_version": "strange-physics.observations.v1",
+        "space": {
+          "budget": 1,
+          "calibration_experiments": 0,
+          "limits": {
+            "impulse_norm": 1.0,
+            "max_mass": 2.0,
+            "min_mass": 0.5,
+            "position_norm": 2.0,
+            "velocity_norm": 2.0
+          },
+          "sampling": {
+            "dt": 0.015625,
+            "duration": 0.5,
+            "position_noise": 0.0,
+            "sample_interval": 0.5,
+            "velocity_noise": 0.0
+          },
+          "schema_version": "strange-physics.space.v1",
+          "structure": {
+            "anchors": [
+              {
+                "id": "a0",
+                "position": [
+                  0.0,
+                  0.0
+                ]
+              }
+            ],
+            "connections": [
+              {
+                "a": "p0",
+                "b": "a0"
+              }
+            ],
+            "particle_ids": [
+              "p0"
+            ]
+          }
+        }
+      },
+      "provenance": "synthetic-terminal-x-development.v1",
+      "schema_version": "strange-physics.d1-public-fixture.v1",
+      "velocity_semantics": "unused-zero-placeholder"
+    }
+  }
+}
