@@ -253,3 +253,42 @@ scientific gate, allowance or reset of earlier charges.
    admission. Only then may the completed fixed D1 batch produce its first retained
    D1 evidence. Missing inputs or unknown costs remain explicit; source progress
    and synthetic checks do not spend an inferred scientific balance.
+
+## Current handoff evidence — 2026-10-31
+
+A read-only review of source `f36f0895` refreshed the known candidate closure to
+49 members and 968,648 bytes. Its largest ordinary member is 69,136 bytes;
+`uv.lock` is 250,735 bytes. These fit the distinct existing file limits.
+This is an incomplete candidate set: final catalog, runtime, bootstrap, installer
+and driver choices still need a complete import/member census.
+
+The unchanged [codec contract](D1_PRIMITIVE_CODEC_CONTRACT.md) establishes a
+16,860,600-byte lower bound for full-success raw JSONL, exceeding the 16 MiB
+transcript partition. Its compact 13,432,214-byte envelope remains conditional on
+the exact identities, copies and failure rules. It is not proof that all science
+artifacts fit 64 MiB. The 33,947,906-byte two-pass source-read ceiling also excludes
+extra `verify_sources` invocations, startup/imports and runtime verification.
+Complete those source-derived counts before costly whole-path qualification.
+
+A separate bounded inspection found a noneditable installed package at the
+expected engineering-environment location. Fifteen selected files—12 `native_*`
+modules plus the initializer, `finite_log_weights` and `installed_identity`—match
+the frozen checkout bytes. This establishes current-byte agreement for those
+files only. The sole top-level `.pth` file imports `_virtualenv`; its hook body
+was not executed or inspected in this check. Four inspected environment
+ancestors have mode `0775`, and `pyvenv.cfg` has mode `0664`. These observed
+group-write bits do not identify other users or establish hostile access, but
+they cannot supply protected startup custody. No permissions were changed.
+
+The next coherent handoff is the concrete protected startup/import plan and
+actual original-owner flow described above, including the same fixture-owner
+hook and selected d4. Review the startup hook, root/ancestor custody and complete
+runtime evidence within that flow. Matching installed bytes must not become an
+implicit trusted flag, and another detached expected-object comparator would not
+resolve these dependencies. S retention, installation, pass2, the complete binder,
+exposure inputs and measured whole-path fit remain unfinished.
+
+The [approved exposure and initial custody decisions](D1_EXPOSURE_DECISIONS.md)
+are now present alongside this design. Their approval stands; the actual
+six-world inventory and overlap disposition remain pending. These inspections
+made no project imports, scientific calls, environment changes or new allocations.
