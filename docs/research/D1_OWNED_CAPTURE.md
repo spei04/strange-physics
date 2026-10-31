@@ -49,7 +49,17 @@ late queued submission cannot appear. No reset, retry, name release or inferred
 absence is introduced. The parent retains `named_ownership_released=False` and
 requires external ledger closure. A reaped controller is not proof of all its
 possible descendants: `controller_descendants_closed` remains null. Protected
-startup and actual external process closure are separate premises.
+startup and actual external process closure are separate premises. The actual
+invocation **must** use the already-reviewed private `process_guard.py` bytes
+`edfef49728f6d5965cf2d5ac75aa74830678343639690499ca14611950501ddd`:
+an isolated owned group, `waitid(WNOWAIT)`, group cleanup before leader reap,
+and a retained terminal closure receipt. The new controller never calls
+`setsid`, requests a new session, or detaches, so its CLI descendants remain in
+that enclosing group. The external receipt must bind the original owner
+invocation, source/spec/request, original deadline and resulting service records;
+unknown group closure cannot admit the capture. This required enclosure is not
+installed or authenticated by `run_capture` itself. The separately named service
+still requires its own invocation/cgroup terminal-empty proof.
 
 The parent has distinct `owner-control` command logs and owner receipts; it does
 not race the controller's receipt names or command-log counters. Terminal-empty
@@ -154,10 +164,11 @@ rejection, ready/release joins, fake parent/child branches, fork refusal and clo
 uncertainty. Existing report/cleanup assertions remain; the preflight test now
 correctly observes its moved service-side position.
 
-A conservative fixture payload estimate per retained suite is 1,232,896 bytes:
+A conservative fixture payload estimate per retained suite is 1,216,512 bytes:
 1,064,960 for lifecycle cases (including three new request/report cases), 94,208
-for owner requests, and 73,728 for benign request/ready/done records. Two retained
-suite sets require 2,465,792 bytes before framework metadata/logs. This is a
+for owner requests, and 57,344 for benign records (six requests and four pairs
+of ready/done files, each at most 4 KiB). Two retained
+suite sets require 2,433,024 bytes before framework metadata/logs. This is a
 source-derived loose upper bound, not measured output. Fake tests create no
 symlinks, hardlinks or FIFOs; pytest may create its own links. Most receipt data
 stays in bounded fake stores. Actual qualification must census every retained
