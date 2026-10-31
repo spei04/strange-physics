@@ -78,6 +78,20 @@ interpreter, imports, environment and manager custody must therefore be
 independently established **before** service dispatch. Moving validation inside
 the service does not establish those premises.
 
+The selected installation route is a genuine fresh uv environment with a
+verified regular copy at bin/python, prepared before installation, probes or
+capture consume it. Preserve uv's actual pyvenv.cfg, disabled system site
+packages and the python3/python3.12 -> python links. CaptureSpec.interpreter,
+plan.controller_interpreter and plan.interpreter name that same owned regular
+executable; the owner/controller/service/target retain their separate process
+roles. This satisfies the resolved-controller identity join without selecting
+the global system executable for controller startup. Follow the bounded copy,
+post-install checks and failure retention in the
+[runtime inventory recipe](D1_RUNTIME_INVENTORY.md#installation-prerequisite).
+A copied interpreter still uses shared base stdlib/native files: their pins,
+startup/deferred membership and exclusive custody remain independent admission
+requirements. No environment or real capture is created by this documentation.
+
 The existing fixed profile is unchanged: 240-second service runtime,
 5-second start/stop timeouts, 50% quota/100 ms, zero observed burst, a 120 CPU-second
 watch, at most 60 four-second observations and the original 300-second terminal

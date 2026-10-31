@@ -17,10 +17,42 @@ does not establish candidate acceptance, custody or production readiness.
 
 Use one fresh owned cloud runtime outside disposable checkouts, private
 ancestors, a restrictive umask and the existing approved pinned uv tool. Do not
-repair or chmod the shared engineering environment. Prefer uv's Linux layout:
-bin/python, lib/python3.12/site-packages, version_info in pyvenv.cfg and disabled
-system site packages. Each mutable installation file must be independently
-owned; no shared mutable environment or hard-link installation.
+repair or chmod the shared engineering environment. Create a genuine uv Linux
+environment with bin/python, lib/python3.12/site-packages, version_info in
+pyvenv.cfg and disabled system site packages. Preserve the actual generated
+configuration; do not manufacture version_info or replace it with stdlib venv
+metadata. Each mutable installation file must be independently owned; no shared
+mutable environment or hard-link installation.
+
+Before installation, probes or capture consume that new environment, replace
+only its verified bin/python symlink with a regular copy of the exact protected
+source interpreter. The operator procedure to freeze before admission is:
+
+1. Pin the source executable's real path, regular-file identity, size, hash and
+   actual version, with protected ownership and ancestors independently checked.
+   Retain the new environment's original bin/python link identity/literal target,
+   pyvenv.cfg bytes and python3/python3.12 link targets.
+2. Copy at most 64 MiB into an exclusively created, owned regular temporary file
+   in the new bin directory, using no-follow descriptor operations. Set its
+   executable mode to 0755, verify the complete byte hash and size, recheck the
+   source identity, and fsync the copy. Do not hard-link the executable or write
+   through the existing bin/python link.
+3. Recheck the original bin/python link, then atomically replace only that link
+   with the verified copy and fsync its directory. Require bin/python to be a
+   regular file with one link and protected ancestors; preserve the genuine
+   pyvenv.cfg and the python3/python3.12 -> python links unchanged.
+4. Reverify the copy and configuration after dependency sync and wheel install.
+   Retain partial files and failures; do not automatically repeat preparation.
+
+Reuse scripts/ci_python.py inspect_file and copied_executable for their matching
+file checks. Its create operation creates a different environment layout and
+must not adopt or overwrite this uv environment. Its existing check operation
+can verify actual executable/prefix/version/site facts with a fixed 15-second
+-I -B probe after startup custody is accepted, inside the admitted outer process
+envelope. Supply its source/version record from actual observations. These
+utilities do not establish protected custody, candidate acceptance or complete
+native/deferred closure. The interpreter copy adds bounded file work; the
+shared base stdlib and native libraries still require their full reviewed pins.
 
 The candidate uses uv 0.13.4. Do not silently replace the separately pinned
 cloud tool or assume cross-version export equivalence. Regenerate the exact
@@ -38,10 +70,14 @@ outputs within the whole-path envelope.
 
 ## Observe the real runtime
 
-CaptureSpec.interpreter and plan.controller_interpreter identify the resolved
-controller executable, normally /usr/bin/python3.12. The distinct target in
-plan.interpreter is exactly <venv>/bin/python. The actual controller source is
-scripts/d1_bootstrap_control.py and the target source is tests/d1_bootstrap.py.
+CaptureSpec.interpreter, plan.controller_interpreter and plan.interpreter all
+identify the new regular <venv>/bin/python. Its resolved path remains inside the
+uv environment, so the actual controller executable identity and the existing
+preflight join agree while normal site startup excludes global site packages.
+The controller and target are distinct processes using this same verified
+binary. The bootstrap controller source is scripts/d1_bootstrap_control.py and
+the target source is tests/d1_bootstrap.py; copying the binary grants neither
+process startup trust by itself.
 
 Inspect startup files before running a benign target observation. One frozen,
 bounded invocation of the target with -I -B may collect only standard-library
