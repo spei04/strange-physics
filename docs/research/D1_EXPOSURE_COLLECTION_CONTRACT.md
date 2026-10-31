@@ -3,10 +3,10 @@
 Source-only implementation of the approved [bounded design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_EXPOSURE_INVENTORY_DESIGN.md).
 The repository owner is the initial evaluation custodian; the protected actual
 six-world inventory and its authenticated disposition remain pending. No history
-was extracted and no overlap, scientific qualification or execution was performed
-for this source checkpoint. The23 test functions contain91 authored cases/273 expected phases by AST census;
-none has been imported or executed. Formatting, linting, typing, schema generation
-and runtime qualification remain pending.
+was extracted, and overlap and scientific qualification remain unavailable.
+The 23 test functions passed all 91 synthetic cases and 273 ordered phases;
+formatting, linting and full 209-file typing also passed with independent review.
+JSON Schema generation/parity and actual collection remain pending.
 
 The scoped files are `tests/d1_exposure_collection.py`, its synthetic test module,
 and this guide. These are private engineering helpers, not a public SDK or a new
