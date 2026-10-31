@@ -258,9 +258,16 @@ def test_frozen_input_graph_rejects_implicit_discovery(change: str) -> None:
     else:
         extra = deepcopy(ctx["inputs"][0])
         extra["input_id"] = "i1"
-        if change == "conflicting-size":
-            extra["byte_length"] += 1
         ctx["inputs"].append(extra)
+        if change == "conflicting-size":
+            extra["relative_path"] = "synthetic/mirror.json"
+            ctx["inputs"][0]["references"] = [{"target_input_id": "i1", "locator": "/mirror"}]
+            root["coverage"][0]["reference_edges"] = 1
+            root["coverage"].append({"input_id": "i1", "disposition": "processed", "row_count": 0,
+                                     "reference_edges": 0, "reason": reason("no-records")})
+            refresh_context(root, parts)
+            assert c.verify_collection(*seal(root, parts)).unique_raw_input_objects == 1
+            extra["byte_length"] += 1
     refresh_context(root, parts)
     with pytest.raises(ContractViolation):
         c.verify_collection(*seal(root, parts))
