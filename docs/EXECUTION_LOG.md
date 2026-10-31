@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** the installed [candidate](https://github.com/spei04/strange-physics/commit/5e0b3e7db436061f4d7c9a5e983f7878cea31974) passed seven CI jobs, with 6,399 tests per Python version. Native3 passed: 115 ELFs, 234 edges; all 147 native children closed across three attempts.
-- **Retained:** native charges are 48.88882 CPU / 66.53442699555308 wall seconds; setup charges 22.297874/43.56647578487173. Earlier failures remain. Materialization, probes, benign handshake and capture are unstarted.
-- **Pending:** Quality's [continuation operator](research/D1_RUNTIME_CONTINUATION_DECISION.md) passed Research's independent review; Platform updated docs, Lead holds execution pending user approval. Existing native 200/600 and overall 600/1800 limits remain. Proposed 400/600 and 800/1800 are unapproved/unadmitted. Scientific execution remains unstarted.
+- **[Outcome](research/D1_RUNTIME_QUALIFICATION_RESULT.md):** materialization, three guard probes and the descendant handshake passed. Capture failed with `BootstrapError: Unlisted frozen module` before capture JSON; the module name is unknown. The runtime remains unqualified.
+- **Retained:** runtime charge is 219.91242 CPU / 113.7971664420329 wall seconds, including the unreconciled 150 CPU service hold. Candidate source remains [main 5e0b3e7](https://github.com/spei04/strange-physics/commit/5e0b3e7db436061f4d7c9a5e983f7878cea31974); all failures remain.
+- **Next:** Research/Quality accepted the failed-run evidence; Platform reconciled the ledger/docs; Lead owns custody. Source repair is proposed only, without implementation or runtime allocation. No retry/new service is admitted; science remains unstarted.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,9 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Quality / Platform / Project lead | Capture failed; runtime unqualified | Materialization, guard probes and the descendant handshake passed. Capture failed before capture JSON on an unlisted frozen module; its name remains unknown. Research/Quality accepted failed-run evidence; Platform reconciled the review ledger and docs; Lead owns custody. Runtime charge 219.91242 CPU / 113.7971664420329 wall retains the full 150 CPU service hold and prior failures. No retry/new service or scientific run is admitted. |
+| 2026-10-31 | Research / Quality / Platform / Project lead | Materialization passed; pre-probe review | Installation and protected-plan records were materialized with no children/services or cleanup failures. Stage charge 7.609223 CPU / 10.553777021821588 wall; cumulative runtime 56.498043 / 77.08820401737466 retains all native attempts. Research reviews actual source/guards; Quality verifies closure/accounting before probes. Platform updates docs; Lead alone executes. Probes, benign handshake, capture and science remain unstarted. |
+| 2026-10-31 | Project lead / Research / Quality / Platform | Approved runtime continuation; materialization in progress | Owner approved +200 CPU only: runtime 400/600, overall 800/1800, retaining all charges. Lead alone launched materialization under 25/60; result pending. Research reviews actual source/guards, Quality reviews closure/accounting, Platform maintains these docs. Probes, benign handshake, capture and science remain unstarted. |
 | 2026-10-31 | Quality / Research / Platform / Project lead | Native inventory passed; continuation decision pending | Quality completed the bounded continuation operator; Research independently accepted it; Platform updated the progress documents; Lead holds execution pending user approval. Native3 passed (115 ELFs, 234 edges, 116 closed children); all 147 native children closed across three retained attempts. Existing 200/600 native and 600/1800 overall limits remain authoritative. Proposed 400/600 and 800/1800 limits are not approved or admitted. Materialization, probes, benign handshake, capture and D1 science are unstarted. |
 | 2026-10-31 | Platform / Research / Quality / Project lead | Protected runtime source qualification passed; delivery integration next | Platform delivered actual Linux aliases, bounded record materialization, the genuine uv interpreter-copy route and exact requirements-file retention. Research delivered independent original-deadline ownership and a benign leader-exit/live-descendant handshake. Quality accepted source 248bbf5 and the actual 302/906 guarded result, 236-file typing, formatting/lint, all 35 runner children plus two formatter children and unchanged environment. Unit22 charges 126.911507 CPU / 153.151583 active-wall seconds across all seven attempts and preparation; 1,440,609 retained logical bytes include final checkpoint 8f31c29e. Failed lint/typing and rejected-source collection are retained. Lead integrates the reviewed stack into main through required CI, then accepts a new five-file internal candidate before actual runtime setup. No scientific batch, actual capture or production-readiness claim. |
 | 2026-10-31 | Platform / Quality / Research / Project lead | Combined capture software validation passed | Original successor run 41223320879 attempt 1 passed all six required jobs at frozen d51aab55 / merge 512c67f: 6,302 tests per runtime, 233-file typing, 1,567 schemas, packaging, analytic 24/72 and one 8/8 smoke per runtime. Two serializer warnings per runtime and three audit-flag warnings are unchanged. Observed job time 2,082s and run interval 968s are separate scopes; CPU/cost remain unknown. The protected-main candidate was skipped. Original failed run 41220847398 and Unit21 typing failure remain retained; 80/240 guarded and 38 ordinary local results stay scoped. Lead publishes documentation separately without moving the tested PR head. Research identified accepted installation/startup custody and the live leader/descendant witness as the next concrete runtime prerequisites. |
@@ -1863,3 +1866,92 @@ contingent stage total is 368.88882 CPU / 591.534427 wall seconds, subject to
 live readiness and remaining-cap checks. The earlier 300/900 draft remains
 withdrawn and unused. There is no reset, closed-account transfer or expansion
 of scientific, provider or release authority.
+
+## 2026-10-31 — Continuation approved; materialization launched
+
+The owner directly approved the reviewed continuation: +200 CPU seconds for
+the existing runtime account, now 400 CPU / 600 active-wall seconds. The
+overall engineering allocation is 800/1800; wall ceilings, other partitions,
+all prior charges and failure records remain unchanged. This approval does
+not authorize science, additional provider spending, release or deployment.
+
+The [original reviewed request](https://github.com/spei04/strange-physics/blob/f54a7d609ec77e75771b653aed158275dd8271f9/docs/research/D1_RUNTIME_CONTINUATION_DECISION.md)
+and private approval record are retained. Approval SHA-256 is
+`1819fd874c135c032ad01bcdaa5097a5841ae4a80090b5b2859684b6a42edd16`;
+it binds the direct answer, reviewed proposal and exact continuation operator.
+Native charges before continuation remain 48.88882 CPU /
+66.53442699555308 wall seconds. The earlier 300/900 draft remains withdrawn;
+this is a separate explicit approval, not a reset or closed-account transfer.
+
+Lead launched materialization once under its 25 CPU / 60 wall stage ceiling;
+no terminal result is recorded at this checkpoint. Probes, the benign
+descendant handshake and capture remain unstarted. Research reviews the actual
+source/guard path, Quality checks actual closure and accounting, and Platform
+updates the public records. Lead retains sole execution and custody ownership.
+The candidate remains exact main 5e0b3e7; this documentation head does not alter
+its source or provenance. No new CI run accompanies this documentation update.
+
+### Materialization outcome
+
+The single approved materialization attempt passed, creating the installation
+record (161,081 bytes) and protected plan (612,843 bytes). No child or service
+was launched, and no cleanup failure was recorded. Its charge is 7.609223 CPU /
+10.553777021821588 active-wall seconds. Including all three native attempts,
+cumulative runtime charges are 56.498043 CPU / 77.08820401737466 wall seconds
+within the approved 400/600 account.
+
+Research and Quality are reviewing the actual source/guard and closure/accounting
+evidence before probes. The generated records do not by themselves establish
+protected-runtime acceptance. Probes, benign handshake, capture and scientific
+execution remain unstarted.
+
+## 2026-10-31 — Three continuation checks passed; capture failed
+
+Materialization passed and was independently accepted. The three guard probes
+passed: each exited 86, was closed/reaped with clean EOF, and recorded one
+expected denial with no benign body or return. The C probe invoked builtin
+`len` through the retained-C branch labelled `math.exp`; it did not test an
+actual `math.exp` call. Probe charges are 4.101099 CPU /
+7.201204144861549 wall seconds.
+
+The benign descendant witness passed: the cgroup remained populated after
+leader exit, release was acknowledged, and terminal cgroup closure and cleanup
+were confirmed. Its original `accepted=false` record remains unchanged.
+The two outer commands closed at exit 0. Its 5.011944 CPU charge comprises
+0.185838 service CPU, 2.826106 parent/waited-child CPU and a 2 CPU reserve;
+wall charge is 10.037434913683683 seconds. These scopes are combined once.
+
+Capture failed before producing capture JSON. The child reported
+`BootstrapError: Unlisted frozen module`; the actual module name is unknown.
+The two outer children closed (manager exit 0, invoker exit 1), but the original
+capture receipt retains `closed=false`, unknown usage and a cleanup
+`AssertionError`. Controller evidence reports cgroup closure, successful
+cleanup and 5.574222 service CPU seconds; the independent owner's final record
+lacks identity/quota/burst observations after the service was cleared and
+remains false/unknown. Later absence of the named cgroup and outer PIDs is a
+limited diagnostic, not retrospective proof of those missing observations.
+
+Capture retains 154.301334 CPU / 19.470323366113007 wall seconds, including
+the full 150 CPU service hold without a refund. Cumulative runtime charges are
+219.91242 CPU / 113.7971664420329 wall seconds within the approved 400/600
+allocation; this accounting is not a complete measured whole-operation cost.
+Research and Quality independently accepted the failed-run evidence and retained
+accounting; they did not qualify the protected runtime. A source repair for the frozen-module admission path
+is a proposed next step only; no retry or new service is admitted. Scientific
+execution remains unstarted.
+
+### Final evidence review and closeout limitation
+
+Research and Quality accepted the recorded pass/fail outcomes and retained
+uncertainties. The [consolidated result](research/D1_RUNTIME_QUALIFICATION_RESULT.md)
+keeps the candidate identity, source-only follow-up proposals and evidence pins
+together. All four continuation attempts are consumed; no retry or remainder
+transfer is authorized.
+
+The existing 50 CPU / 150 wall review account reconciles to 46.304715 CPU /
+134.19866465963423 wall seconds of known observations plus retained/reserved
+amounts, including one 2/5 ledger-reader hold and one 2/5 final Lead hold.
+Unmeasured setup/admission peer reads and a diagnostic closeout remain coverage
+gaps within review work; external authoring/SSH/GitHub administration is a
+separate unknown scope. The rollup is not total observed cost or proof of hard
+50/150 compliance, and its modeled margin is not reusable authority.
