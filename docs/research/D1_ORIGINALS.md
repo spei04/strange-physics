@@ -1,5 +1,14 @@
 # D1 same-child original-owner preparation
 
+
+Current engineering status is [recorded with the integrated bootstrap](D1_BOOTSTRAP.md):
+source review accepted the fixed owner preparation and the 0c76a102 test typing
+repair. The private check remains incomplete; 143 cases were collected on the
+preceding source and no test bodies ran. Ordinary CI verification is pending
+and will not substitute for protected-runtime or scientific qualification.
+
+The following paragraph describes the original source-authoring checkpoint.
+
 Source-only checkpoint based on `9cde8f7648be1da7564d93cb4669c8456923fd8e`.
 Code commits `678dc99c95016bd254c8872ffcc931676ce7f019` and
 `ea909dce691308747de063e27a7ffe5d1275b3c9` add a concrete fixture

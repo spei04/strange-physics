@@ -1,11 +1,34 @@
 # D1 protected bootstrap and original-object capture
 
-Status: source implementation and synthetic tests are authored. No project
-imports, formatter, type checker, test bodies, child bootstrap, scientific
-operation, installation or environment repair has run for this slice. The
-standalone controller exits 64. The outer owned-process-group integration is
-not implemented; final capture acceptance remains false even for a clean direct
-child observation. The current environment is not admitted for protected startup.
+Status: source interfaces and the minimal test typing repair at
+[0c76a102](https://github.com/spei04/strange-physics/commit/0c76a1021f87f76d638d598d6ea5e64fb608e797)
+are independently reviewed. Private engineering qualification is **incomplete**.
+Both guard sentinels and collection of 143 cases/zero phases passed at 11629b1.
+The subsequent full check passed formatting/lint, then found nine typing errors
+in one test among 232 checked files. Renaming an integer index fixed the source
+conflict without changing assertions; that repaired source has not repeated the
+private check. No private test bodies have run, and the older collection does
+not qualify the repaired bytes.
+
+All 19 recorded child processes closed. The three attempts remain charged at
+60.297004 CPU seconds and 76.197045 wall seconds; the 120-CPU/300-wall/8-MiB
+private account is unchanged. The first collection failure intercepted
+retained math.exp before its body; its exact caller remains unknown.
+The reviewed successor initializes the pinned Python random module before
+adding project paths, then arms the unchanged project/test prohibitions.
+That ordinary standard-library initialization may call exp; there is no
+whole-invocation zero-exp claim or protected-startup qualification.
+
+One separately admitted ordinary CI attempt is the next software-verification
+step. It cannot substitute for the unexecuted guarded 143-case/429-phase test
+window, protected runtime or scientific admission. The earlier 233-file typing
+estimate below is superseded by the observed 232-file scope.
+
+The standalone controller exits 64. Final capture acceptance remains false
+even for a clean direct-child observation; the named-service integration is
+being authored separately and is not included in this checkpoint.
+The current environment is not admitted for protected startup. No child
+bootstrap, installation, environment repair or D1 scientific batch ran.
 
 ## Concrete ownership and call path
 

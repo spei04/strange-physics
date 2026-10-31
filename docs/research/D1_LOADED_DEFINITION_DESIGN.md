@@ -1,14 +1,15 @@
 # Proposed D1 loaded-definition boundary
 
-Current implementation checkpoint: [source3365e2](https://github.com/spei04/strange-physics/tree/3365e2e641ee765745fc0f56a6c47f0f82ddba4b)
-contains the [protected startup/capture path](D1_BOOTSTRAP.md) and
-[actual original-owner preparation](D1_ORIGINALS.md). Independent source review
-accepted their repaired interfaces. Their tests remain unrun at this checkpoint;
-the bounded engineering controls are being prepared. The original design below
-is retained as design history, not evidence of runtime qualification.
-Actual startup custody, owned-process-tree closure, installation/pass2 and
-scientific admission remain pending.
-
+Current implementation checkpoint: the [protected startup/capture source](D1_BOOTSTRAP.md)
+and [actual original-owner preparation](D1_ORIGINALS.md) have independent source
+review. The minimal typing repair is at 0c76a102. Private engineering checks
+remain incomplete: 143 cases were collected on the preceding source, but no
+test bodies ran before the 232-file type check failed. The repaired source
+will receive ordinary CI verification separately; that cannot establish
+guarded test execution, protected runtime or scientific admission.
+Named-service lifecycle integration is being authored in a separate checkout.
+The original proposal below remains design history; actual custody,
+whole-process closure, installation/pass2 and scientific admission are pending.
 
 Design only, based on `36fee7865e149a483b8cef377d92bc3a1cc1e100` and the
 [accepted S ordering](D1_SOURCE_MANIFEST_DESIGN.md). Research owns this document;
