@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import errno
 import hashlib
 import json
+import shutil
 from collections import deque
 from dataclasses import asdict, replace
 from pathlib import Path
@@ -263,6 +265,14 @@ def no_real_service_or_capture(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 @pytest.fixture
+def capture_root(tmp_path: Path) -> Path:
+    # Pytest owns both the run root and its sibling control root on case cleanup.
+    root = tmp_path / "run"
+    root.mkdir(mode=0o700)
+    return root
+
+
+@pytest.fixture
 def preflight_api(monkeypatch: pytest.MonkeyPatch) -> list[str]:
     calls: list[str] = []
 
@@ -302,13 +312,13 @@ def run(
 
 
 def test_fixed_lifecycle_retains_before_cleanup_and_never_accepts_populated(
-    tmp_path: Path,
+    capture_root: Path,
     preflight_api: list[str],
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     clock = Clock()
     events: list[str] = []
-    records = Records(tmp_path, events, real=True)
+    records = Records(capture_root, events, real=True)
     manager = Manager(records, clock)
     result = run(item, manager, records, clock)
     assert preflight_api == ["read", "validate"] and manager.submissions == 1
@@ -323,13 +333,13 @@ def test_fixed_lifecycle_retains_before_cleanup_and_never_accepts_populated(
     )
     terminal = records.records["capture-terminal-before-stop.json"]
     assert terminal["cgroup_cpu_ns"] == 300 and terminal["scopes_not_added"] is True
-    assert (tmp_path / "capture-terminal-before-stop.json").is_file()
+    assert (capture_root / "capture-terminal-before-stop.json").is_file()
 
 
-def test_disabled_cli_and_exact_future_command(tmp_path: Path) -> None:
-    item = spec(tmp_path)
+def test_disabled_cli_and_exact_future_command(capture_root: Path) -> None:
+    item = spec(capture_root)
     plan = owned.CapturePlan(
-        root=tmp_path,
+        root=capture_root,
         admission_sha256=item.admission_sha256,
         controller_sha256=item.adapter_sha256,
         spec=item,
@@ -353,10 +363,10 @@ def test_disabled_cli_and_exact_future_command(tmp_path: Path) -> None:
         "-I",
         "-B",
         "-X",
-        f"pycache_prefix={tmp_path / 'service-pycache'}",
+        f"pycache_prefix={capture_root / 'service-pycache'}",
         "/synthetic/source/scripts/d1_owned_capture.py",
         "service",
-        str(tmp_path / "capture-request.json"),
+        str(capture_root / "capture-request.json"),
         "2" * 64,
     ]
     with pytest.raises(ValueError, match="Fixed capture"):
@@ -364,13 +374,13 @@ def test_disabled_cli_and_exact_future_command(tmp_path: Path) -> None:
 
 
 def test_preflight_exhaustion_has_intent_but_zero_submissions(
-    tmp_path: Path,
+    capture_root: Path,
     monkeypatch: pytest.MonkeyPatch,
     preflight_api: list[str],
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     clock = Clock()
-    records = Records(tmp_path, [])
+    records = Records(capture_root, [])
     manager = Manager(records, clock)
     original = owned.preflight
 
@@ -400,24 +410,24 @@ def test_preflight_exhaustion_has_intent_but_zero_submissions(
     ids=("source", "root", "plan", "admission", "invocation", "group", "late", "inner", "stdout"),
 )
 def test_report_join_cannot_be_substituted(
-    tmp_path: Path, preflight_api: list[str], kind: str
+    capture_root: Path, preflight_api: list[str], kind: str
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     clock = Clock()
-    records = Records(tmp_path, [])
+    records = Records(capture_root, [])
     manager = Manager(records, clock)
     manager.mutation = kind
     result = run(item, manager, records, clock)
     assert result["status"] == "incomplete" and result["report_join"] is None
-    assert manager.submissions == 1 and manager.stopped
+    assert manager.submissions == 1 and manager.stopped, result["first_fault"]
 
 
 def test_lost_acknowledgement_is_not_retry_or_success(
-    tmp_path: Path, preflight_api: list[str]
+    capture_root: Path, preflight_api: list[str]
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     clock = Clock()
-    records = Records(tmp_path, [])
+    records = Records(capture_root, [])
     manager = Manager(records, clock)
     manager.submit_error = OSError("lost submission acknowledgement")
     result = run(item, manager, records, clock)
@@ -434,22 +444,24 @@ def test_lost_acknowledgement_is_not_retry_or_success(
     "name", ("capture-terminal-before-stop.json", "capture-final.json"), ids=("terminal", "final")
 )
 def test_receipt_failure_stays_incomplete(
-    tmp_path: Path, preflight_api: list[str], name: str
+    capture_root: Path, preflight_api: list[str], name: str
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     clock = Clock()
-    records = Records(tmp_path, [])
+    records = Records(capture_root, [])
     manager = Manager(records, clock)
     records.fail = name
     result = run(item, manager, records, clock)
     assert result["status"] == "incomplete" and result["accepted"] is False
-    assert manager.stopped is (name == "capture-final.json")
+    assert manager.stopped is (name == "capture-final.json"), result["first_fault"]
 
 
-def test_cleanup_failure_cannot_promote_capture(tmp_path: Path, preflight_api: list[str]) -> None:
-    item = spec(tmp_path)
+def test_cleanup_failure_cannot_promote_capture(
+    capture_root: Path, preflight_api: list[str]
+) -> None:
+    item = spec(capture_root)
     clock = Clock()
-    records = Records(tmp_path, [])
+    records = Records(capture_root, [])
     manager = Manager(records, clock)
     manager.stop_error = PermissionError("synthetic stop failure")
     result = run(item, manager, records, clock)
@@ -461,10 +473,12 @@ def test_cleanup_failure_cannot_promote_capture(tmp_path: Path, preflight_api: l
     }
 
 
-def test_existing_intent_does_not_dispatch_again(tmp_path: Path, preflight_api: list[str]) -> None:
-    item = spec(tmp_path)
+def test_existing_intent_does_not_dispatch_again(
+    capture_root: Path, preflight_api: list[str]
+) -> None:
+    item = spec(capture_root)
     clock = Clock()
-    records = Records(tmp_path, [])
+    records = Records(capture_root, [])
     manager = Manager(records, clock)
     run(item, manager, records, clock)
     before = set(records.records)
@@ -479,14 +493,14 @@ def test_existing_intent_does_not_dispatch_again(tmp_path: Path, preflight_api: 
     ids=("stale", "cpu", "group", "missing", "failed"),
 )
 def test_snapshot_identity_and_failed_outcomes_remain_nonaccepting(
-    tmp_path: Path,
+    capture_root: Path,
     preflight_api: list[str],
     monkeypatch: pytest.MonkeyPatch,
     kind: str,
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     clock = Clock()
-    records = Records(tmp_path, [])
+    records = Records(capture_root, [])
     manager = Manager(records, clock)
     original = manager.submit
 
@@ -509,7 +523,7 @@ def test_snapshot_identity_and_failed_outcomes_remain_nonaccepting(
 
     monkeypatch.setattr(manager, "submit", submit)
     result = run(item, manager, records, clock)
-    assert result["status"] == "incomplete" and manager.submissions == 1
+    assert result["status"] == "incomplete" and manager.submissions == 1, result["first_fault"]
     if kind == "failed":
         assert manager.stopped and result["cleanup_confirmed"] is True
         assert result["terminal_cgroup_cpu_ns"] == 300
@@ -519,11 +533,11 @@ def test_snapshot_identity_and_failed_outcomes_remain_nonaccepting(
     "kind", ("invocation", "group", "populated"), ids=("invocation", "group", "populated")
 )
 def test_poststop_observation_must_still_match(
-    tmp_path: Path, preflight_api: list[str], kind: str
+    capture_root: Path, preflight_api: list[str], kind: str
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     clock = Clock()
-    records = Records(tmp_path, [])
+    records = Records(capture_root, [])
     manager = Manager(records, clock)
     props = {"LoadState": "loaded", "ActiveState": "inactive"}
     if kind == "invocation":
@@ -536,10 +550,10 @@ def test_poststop_observation_must_still_match(
 
 
 def test_service_entry_wraps_fake_launch_and_retains_exact_report(
-    tmp_path: Path,
+    capture_root: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     request = {
         "schema": "d1-capture-request-v1",
         "spec": item.record(),
@@ -548,11 +562,11 @@ def test_service_entry_wraps_fake_launch_and_retains_exact_report(
         "deadline": 400.0,
     }
     raw = owned.encoded(request)
-    path = tmp_path / "capture-request.json"
+    path = capture_root / "capture-request.json"
     assert len(raw) <= 4096
     path.write_bytes(raw)
     path.chmod(0o600)
-    (tmp_path / "service-pycache").mkdir(mode=0o700)
+    (capture_root / "service-pycache").mkdir(mode=0o700)
     calls: list[Path] = []
 
     def launch(plan_path: Path, digest: str, output: Path) -> capture.LaunchResult:
@@ -583,15 +597,15 @@ def test_service_entry_wraps_fake_launch_and_retains_exact_report(
             "sys",
             SimpleNamespace(
                 flags=SimpleNamespace(isolated=1, dont_write_bytecode=1),
-                pycache_prefix=str(tmp_path / "service-pycache"),
+                pycache_prefix=str(capture_root / "service-pycache"),
             ),
         )
         scoped.setattr(capture, "launch", launch)
         scoped.setattr(owned, "time", SimpleNamespace(monotonic=lambda: 101.0))
         scoped.setenv("INVOCATION_ID", INVOCATION)
         assert owned.service_entry(path, hashlib.sha256(raw).hexdigest()) == 0
-    value = json.loads((tmp_path / "capture-service.json").read_bytes())
-    assert calls == [tmp_path / "capture"]
+    value = json.loads((capture_root / "capture-service.json").read_bytes())
+    assert calls == [capture_root / "capture"]
     assert value["invocation_id"] == INVOCATION and value["launch"]["captured"] is False
     assert value["bootstrap_report_sha256"] == hashlib.sha256(child_report(item)).hexdigest()
 
@@ -602,11 +616,11 @@ def test_service_entry_wraps_fake_launch_and_retains_exact_report(
     ids=("source", "adapter", "controller", "bootstrap"),
 )
 def test_preflight_joins_actual_validation_map_to_fixed_sources(
-    tmp_path: Path,
+    capture_root: Path,
     preflight_api: list[str],
     kind: str,
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     if kind == "source":
         changed = replace(item, source_commit="0" * 40)
     elif kind == "adapter":
@@ -620,10 +634,12 @@ def test_preflight_joins_actual_validation_map_to_fixed_sources(
     assert preflight_api == ["read", "validate"]
 
 
-def test_existing_named_unit_prevents_submission(tmp_path: Path, preflight_api: list[str]) -> None:
-    item = spec(tmp_path)
+def test_existing_named_unit_prevents_submission(
+    capture_root: Path, preflight_api: list[str]
+) -> None:
+    item = spec(capture_root)
     clock = Clock()
-    records = Records(tmp_path, [])
+    records = Records(capture_root, [])
     manager = Manager(records, clock)
     manager.last = Snapshot({"LoadState": "loaded", "ActiveState": "inactive"}, None)
     result = run(item, manager, records, clock)
@@ -632,11 +648,11 @@ def test_existing_named_unit_prevents_submission(tmp_path: Path, preflight_api: 
 
 @pytest.mark.parametrize("receipt_failure", (False, True), ids=("retained", "receipt-failed"))
 def test_service_failure_keeps_first_and_supplemental_facts(
-    tmp_path: Path,
+    capture_root: Path,
     monkeypatch: pytest.MonkeyPatch,
     receipt_failure: bool,
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     request = {
         "schema": "d1-capture-request-v1",
         "spec": item.record(),
@@ -645,11 +661,11 @@ def test_service_failure_keeps_first_and_supplemental_facts(
         "deadline": 400.0,
     }
     raw = owned.encoded(request)
-    path = tmp_path / "capture-request.json"
+    path = capture_root / "capture-request.json"
     assert len(raw) <= 4096
     path.write_bytes(raw)
     path.chmod(0o600)
-    (tmp_path / "service-pycache").mkdir(mode=0o700)
+    (capture_root / "service-pycache").mkdir(mode=0o700)
     calls: list[str] = []
 
     def failed_launch(plan_path: Path, digest: str, output: Path) -> NoReturn:
@@ -667,7 +683,7 @@ def test_service_failure_keeps_first_and_supplemental_facts(
             "sys",
             SimpleNamespace(
                 flags=SimpleNamespace(isolated=1, dont_write_bytecode=1),
-                pycache_prefix=str(tmp_path / "service-pycache"),
+                pycache_prefix=str(capture_root / "service-pycache"),
             ),
         )
         scoped.setattr(owned, "time", SimpleNamespace(monotonic=lambda: 101.0))
@@ -682,41 +698,41 @@ def test_service_failure_keeps_first_and_supplemental_facts(
             assert owned.service_entry(path, hashlib.sha256(raw).hexdigest()) == 1
     assert calls == ["launch"]
     if not receipt_failure:
-        value = json.loads((tmp_path / "capture-service.json").read_bytes())
+        value = json.loads((capture_root / "capture-service.json").read_bytes())
         assert value["launch"] is None and value["first_fault"]["kind"] == "OSError"
 
 
 @pytest.mark.parametrize("kind", ("public-root", "wrong-store"), ids=("public", "store"))
 def test_preintent_rejection_never_writes_or_preflights(
-    tmp_path: Path,
+    capture_root: Path,
     preflight_api: list[str],
     kind: str,
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     clock = Clock()
     events: list[str] = []
-    records = Records(tmp_path if kind == "public-root" else tmp_path / "different", events)
+    records = Records(capture_root if kind == "public-root" else capture_root / "different", events)
     manager = Manager(records, clock)
     if kind == "public-root":
-        tmp_path.chmod(0o755)
+        capture_root.chmod(0o755)
     result = run(item, manager, records, clock)
     assert result["reason"] == "pre_intent_validation_failed"
     assert result["intent_attempted"] is False and result["intent_acknowledged"] is False
     assert result["first_fault"] is not None and result["no_retry"] is True
     assert events == [] and preflight_api == [] and manager.submissions == 0
-    assert not records.records and list(tmp_path.iterdir()) == []
+    assert not records.records and list(capture_root.iterdir()) == []
 
 
 @pytest.mark.parametrize("partial", (False, True), ids=("before", "partial"))
 def test_unacknowledged_intent_has_no_followup_io(
-    tmp_path: Path,
+    capture_root: Path,
     monkeypatch: pytest.MonkeyPatch,
     preflight_api: list[str],
     partial: bool,
 ) -> None:
-    item = spec(tmp_path)
+    item = spec(capture_root)
     clock = Clock()
-    records = Records(tmp_path, [])
+    records = Records(capture_root, [])
     manager = Manager(records, clock)
 
     def failed_intent(name: str, record: dict[str, object]) -> NoReturn:
@@ -738,4 +754,59 @@ def test_unacknowledged_intent_has_no_followup_io(
     assert result["no_retry"] is True and result["dispatch_attempted"] is False
     assert records.events == ["capture-intent.json"] and preflight_api == []
     assert bool(records.records) is partial and manager.submissions == 0
-    assert list(tmp_path.iterdir()) == []
+    assert list(capture_root.iterdir()) == []
+
+
+def test_case_cleanup_owns_sibling_control_root(
+    tmp_path: Path, capture_root: Path, preflight_api: list[str]
+) -> None:
+    legacy_root = tmp_path / "legacy0"
+    legacy_root.mkdir(mode=0o700)
+    legacy = spec(legacy_root)
+    clock = Clock()
+    records = Records(legacy_root, [])
+    manager = Manager(records, clock)
+    initial = run(legacy, manager, records, clock)
+    assert initial["status"] == "provisional_complete", initial["first_fault"]
+    assert manager.submissions == 1 and manager.stopped
+
+    # Failed-only retention removes a passed numbered root, not its sibling.
+    shutil.rmtree(legacy_root)
+    legacy_root.mkdir(mode=0o700)
+    assert legacy.control_root.is_dir()
+    calls_before_collision = list(preflight_api)
+    collision_clock = Clock()
+    collision_records = Records(legacy_root, [])
+    collision_manager = Manager(collision_records, collision_clock)
+    collision = run(legacy, collision_manager, collision_records, collision_clock)
+    assert collision["status"] == "incomplete"
+    assert collision["first_fault"] == {
+        "stage": "attempt",
+        "kind": "FileExistsError",
+        "detail": str(FileExistsError(errno.EEXIST, "File exists", str(legacy.control_root))),
+    }
+    assert preflight_api == calls_before_collision and collision_manager.submissions == 0
+    assert not collision_manager.stopped
+
+    item = spec(capture_root)
+    assert item.root.parent == tmp_path and item.control_root.parent == tmp_path
+    for cycle in range(2):
+        current_clock = Clock()
+        current_records = Records(capture_root, [])
+        current_manager = Manager(current_records, current_clock)
+        current_manager.mutation = "root"
+        call_count = len(preflight_api)
+        result = run(item, current_manager, current_records, current_clock)
+        assert preflight_api[call_count:] == ["read", "validate"]
+        assert result["status"] == "incomplete" and result["report_join"] is None
+        assert result["first_fault"] == {
+            "stage": "attempt",
+            "kind": "ValueError",
+            "detail": "Service report/source/admission/root/invocation join differs",
+        }
+        assert current_manager.submissions == 1 and current_manager.stopped
+        if cycle == 0:
+            shutil.rmtree(tmp_path)
+            assert not item.root.exists() and not item.control_root.exists()
+            tmp_path.mkdir(mode=0o700)
+            capture_root.mkdir(mode=0o700)
