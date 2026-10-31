@@ -227,7 +227,16 @@ The separate unit2 engineering ledger charged 90.330926 CPU seconds and
 105.836336 active wall seconds including retained closeout reservations and
 the earlier failed typing attempt. These are not whole-operation costs:
 authoring/external control remains unmeasured. Unit1 costs are separate and
-retained. Hosted multi-runtime verification for this new slice remains pending.
+retained.
+
+Hosted verification is accepted at source
+6af5a5adf86870ca7485e94f6645d784f3cc0fd7:
+[PR #139 CI, attempt 1](https://github.com/spei04/strange-physics/actions/runs/41155942409)
+passed all six required jobs. Both Python versions passed 5,035 tests, 197-file
+typing, 1,567 schema checks, package inspection and 8/8 CLI smoke. Separate
+analytic jobs passed 24 cases/72 phases each. The tested merge tree equals the
+source tree. This qualifies the source; it does not establish D1 physical
+premises or erase earlier local failures.
 
 Actual reference premises for every D1 prefix, the complete finite operation/byte
 census, report contracts, disabled runner and numerical allocation are subsequent
