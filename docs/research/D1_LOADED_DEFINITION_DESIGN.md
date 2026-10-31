@@ -1,5 +1,15 @@
 # Proposed D1 loaded-definition boundary
 
+Current implementation checkpoint: [source3365e2](https://github.com/spei04/strange-physics/tree/3365e2e641ee765745fc0f56a6c47f0f82ddba4b)
+contains the [protected startup/capture path](D1_BOOTSTRAP.md) and
+[actual original-owner preparation](D1_ORIGINALS.md). Independent source review
+accepted their repaired interfaces. Their tests remain unrun at this checkpoint;
+the bounded engineering controls are being prepared. The original design below
+is retained as design history, not evidence of runtime qualification.
+Actual startup custody, owned-process-tree closure, installation/pass2 and
+scientific admission remain pending.
+
+
 Design only, based on `36fee7865e149a483b8cef377d92bc3a1cc1e100` and the
 [accepted S ordering](D1_SOURCE_MANIFEST_DESIGN.md). Research owns this document;
 Lead owns central progress and A. Unit18's
@@ -292,3 +302,57 @@ The [approved exposure and initial custody decisions](D1_EXPOSURE_DECISIONS.md)
 are now present alongside this design. Their approval stands; the actual
 six-world inventory and overlap disposition remain pending. These inspections
 made no project imports, scientific calls, environment changes or new allocations.
+
+
+## Next concrete ownership and closure integration
+
+The current controller can observe a valid capture report and a reaped leader.
+It deliberately leaves owned-tree closure unknown and final capture acceptance
+false. The next integration must connect this observation to the existing
+Systemd ownership operations, not add a boolean that declares cleanup complete.
+
+Reuse the reviewed Systemd, Snapshot.bind and terminal/retained-failed cleanup
+checks in scripts/grid_q1_supervisor.py. Add a narrow, fixed capture command and
+report join. Preserve GRID's existing command, source, result and outcome
+validation: those rules describe GRID numerical work and cannot validate a D1
+capture report unchanged. This work implements the existing integration
+obligation; it creates no scientific gate, budget or retry permission.
+
+The capture-specific plan must bind the source/controller/bootstrap, independently
+accepted protected-record digest, one exclusive output/cache root, exact
+interpreter and isolated/cache-prefix argv, and an explicitly admitted finite
+profile. Record the exclusive intent and whole-attempt deadline/accounting
+baseline before the first plan read or preflight. An exhausted preflight must
+submit nothing. Keep the same deadline through submission, observation,
+termination, stop and final records; a service runtime limit covers its subtree,
+not the preceding parent work.
+
+Submit once and retain the actual unit, InvocationID, cgroup, quota and accounting
+from that original invocation. Join the exact bounded report bytes/hash to the
+same source, admission, unit and output root. Retain terminal accounting before
+stop and require the bound terminal/empty state, followed by confirmed cleanup.
+A disappeared group is acceptable only under the existing previously-bound
+cleanup predicate. Rebind named-unit operations before signaling; never signal a
+numeric PID or process group after reap. Missing or late records, lost submission
+acknowledgement, first faults and unknown cleanup remain nonaccepted even if
+cleanup later succeeds.
+
+The first composition test should use the real preflight/control/report join with
+owned synthetic inputs and fake Systemd observations:
+
+absent → bound/running → leader exited but group populated → same invocation
+terminal and empty → terminal receipt → stop → confirmed empty
+
+Require one submission and no acceptance while the group is populated. Check the
+exact source/report/admission/unit join, retained monotonic accounting and absence
+of numeric PID signals. Add stale-identity/report, exhausted-preflight,
+lost-acknowledgement, receipt, cleanup and retained-failed cases using the existing
+supervisor tests as the behavioral reference.
+
+Actual complete-path qualification remains a separately admitted protected-runtime
+test: the real fixed startup/capture, thirteen actual oracle owners, twenty-two
+original methods and the retained emitter, zero primitive work, real named-unit
+observations and external ledger closure. A separate benign leader/descendant
+fixture must demonstrate that leader exit does not prove tree closure. No such
+service or test has run. This qualification cannot automatically activate S/A or
+the scientific batch, and its complete parent/service costs remain unmeasured.
