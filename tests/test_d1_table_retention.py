@@ -16,7 +16,14 @@ from typing import Any
 import d1_table_retention as retention
 import pytest
 from d1_primitive_codec_table import PROTOCOL_SHA256, TABLE_BYTES, TableIdentity, build_table
-from d1_primitive_sink import ContextObservation, PrimitiveFileSink, SinkContext, _Anchor
+from d1_primitive_sink import (
+    ContextObservation,
+    PrimitiveFileSink,
+    SinkContext,
+    _Anchor,
+    _read_file,
+    _write_remaining,
+)
 
 
 @pytest.fixture(autouse=True)
@@ -98,7 +105,7 @@ def test_success_orders_fresh_context_after_all_metadata_closes(
     original_observe = PrimitiveFileSink.observe_context
     observations = 0
     metadata_fds: list[int] = []
-    original_write = retention._write_remaining
+    original_write = _write_remaining
 
     def tracked_write(fd: int, raw: bytes, progress: list[int], check: Callable[[], None]) -> None:
         anchor = case.attempt._anchor
@@ -266,7 +273,7 @@ def test_failed_write_keeps_full_reservation_and_first_error(
     monkeypatch: pytest.MonkeyPatch,
     failure: str,
 ) -> None:
-    original_write = retention._write_remaining
+    original_write = _write_remaining
     primary = (
         InterruptedError("synthetic interrupted write")
         if failure == "interrupt"
@@ -352,7 +359,7 @@ def test_owned_close_then_error_never_acknowledges_or_rereads_context(
     monkeypatch: pytest.MonkeyPatch,
     target: str,
 ) -> None:
-    original_write, original_read, original_close = retention._write_remaining, os.read, os.close
+    original_write, original_read, original_close = _write_remaining, os.read, os.close
     primary = OSError(errno.EIO, "synthetic lost metadata close confirmation")
     target_fd: int | None = None
     captured: list[int] = []
@@ -404,7 +411,7 @@ def test_swallowed_reentry_stays_sticky_at_all_handoffs(
     monkeypatch: pytest.MonkeyPatch,
     when: str,
 ) -> None:
-    original_write = retention._write_remaining
+    original_write = _write_remaining
     original_close = os.close
     original_observe = PrimitiveFileSink.observe_context
     root_fd: int | None = None
@@ -495,7 +502,7 @@ def test_intervening_sink_change_prevents_final_join(
     monkeypatch: pytest.MonkeyPatch,
     change: str,
 ) -> None:
-    original_read = retention._read_file
+    original_read = _read_file
 
     def altered_sink(anchor: _Anchor, name: str, limit: int) -> bytes:
         raw = original_read(anchor, name, limit)
@@ -520,7 +527,7 @@ def test_same_parent_root_substitution_cannot_pass_named_checks(
     case: Case,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    original_write = retention._write_remaining
+    original_write = _write_remaining
 
     def swapped_root(fd: int, raw: bytes, progress: list[int], check: Callable[[], None]) -> None:
         original_write(fd, raw, progress, check)
@@ -540,7 +547,7 @@ def test_same_byte_new_table_inode_is_not_the_synced_created_table(
     case: Case,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    original_read = retention._read_file
+    original_read = _read_file
 
     def replaced_table(anchor: _Anchor, name: str, limit: int) -> bytes:
         replacement = case.parent / "replacement"
@@ -560,7 +567,7 @@ def test_primary_write_error_survives_independent_root_close_error(
     case: Case,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    original_write, original_close = retention._write_remaining, os.close
+    original_write, original_close = _write_remaining, os.close
     primary = OSError(errno.EIO, "first write error")
     supplemental = OSError(errno.EIO, "later close error")
     root_fd: int | None = None
