@@ -37,10 +37,114 @@ The standalone controller exits 64. Final capture acceptance remains false
 even for a clean direct-child observation. The separate
 [named-service lifecycle source](D1_OWNED_CAPTURE.md) passed its separate guarded
 37-case/111-phase check and full 233-file typing at f1adcabb. Its ordinary CI is
-next; it remains outside the frozen PR #156 CI scope. Protected-runtime
-qualification remains pending.
+running on [PR #157](https://github.com/spei04/strange-physics/pull/157); it remains
+outside the frozen PR #156 CI scope. Protected-runtime qualification is pending.
 The current environment is not admitted for protected startup. No child
 bootstrap, installation, environment repair or D1 scientific batch ran.
+
+## Capture-window source extension (unqualified)
+
+Source checkpoint `f76b604dd4a8c8bfdd15d6c2258ee4f0f0b2fa8a`, integrated without Python changes at
+`bf7c10ed2c3b634caac9fdc4811fcb51726060db` onto the frozen PR #157 source, adds the guard to the actual
+`child -> capture` path. Only this guide, `tests/d1_bootstrap.py` and its test
+module change. No project import, formatter, typecheck, collection, test body,
+profiler installation, primitive probe, real child or service ran during
+source authoring. The separate 37-case owned-lifecycle qualification is unchanged.
+This extension is not qualified by that suite or the older Unit19 collection.
+
+The ordered boundaries are now concrete:
+
+1. Normal Python/site startup and the bootstrap's own standard imports happen
+   before the window. Their calls are not measured by this guard. The parent
+   still needs independently accepted runtime, installation and source custody.
+2. Before adding the helper path, initialize only the reviewed stdlib `random`
+   module. Its protected-plan entry must have exactly 34,683 bytes and SHA256
+   `0693d4ded36916f5b07d6c395cc331dbf1011bb70e90daaa29eaa32490a09425`.
+   The actual module, ordinary source-loader origin and `_exp` alias are checked,
+   followed by the existing loaded-module check. Actual file hash/custody comes
+   from the parent's existing validation; matching a plan field is not authority.
+   This is a fixed compatibility boundary for that reviewed Python source, not
+   permission to accept arbitrary replacement startup code. The pre-arm exp
+   count remains unknown, including when `random` was already loaded.
+3. Add the fixed helper path. `capture` requires the retained standard-library
+   state and rejects reuse, existing profiling or tracing. It installs fixed
+   defining-file/qualified-name denials **before** `_raw_anchors` imports the
+   oracle. No producer or scientific module is preimported to arm the guard.
+4. Immediately after capturing raw oracle definitions, retain their four exact
+   code objects plus the actual `trig` code, and the same runtime `math.exp`.
+   Then import consumers and prepare the 13 actual owners as before. No original
+   function, code object or emitter is replaced or called as an identity probe.
+5. Recheck the first-denial latch and installed callback at the existing capture
+   boundaries and immediately before/after writing the ordinary completion
+   report. The profile is never voluntarily disarmed before child termination.
+   The report's existing schema/counts remain unchanged.
+
+The source table covers 43 fixed scientific qualified names at 12 concrete
+helper/installed-package paths. Constructors and the fixture's pre-call owner
+preparation remain allowed; producer execution, reference evaluation,
+normalization, predictions, CDF/score work and exposure checks do not. The
+source routes guard initial imports; five held code identities additionally
+cover retained aliases afterward. One exact C-call identity covers `math.exp`.
+These are current-thread checks for the reviewed single-thread capture path,
+not hostile-Python or concurrent-actor isolation, and not a whole-startup or
+whole-interpreter call census.
+
+Actual armed denial sets the first bounded label and exits the child with code
+86. There is no production reset or catchable-exception recovery for a denied
+body. Profile/trace replacement and existing process/network denials take the
+same fatal path once the window exists. At most one diagnostic write is
+attempted: ASCII `D1_DENIED:`, at most 128 label characters, and LF, at most
+139 bytes. The write may be partial or fail; its acknowledgement is not inferred,
+and fatal exit still occurs. The existing outer log/nonzero-exit/failure receipts
+must preserve that uncertainty. Later denial cannot replace the first label.
+There is no new output file, receipt schema, S/A field or authorization switch.
+
+Per Python-call callback there are at most five retained-code identity checks,
+one fixed-path dictionary lookup and one bounded-name membership test; C-call
+handling compares one object identity. There is no path resolution, source read,
+argument capture or import inside the callback. Setup constructs 12 route sets
+containing 43 names. Standard-library preparation scans the existing bounded
+plan file list once (at most 32,768 inventory entries under the parent contract),
+then performs one fixed import and an existing loaded-module scan. The total
+number of import/profile callbacks, allocation/copies and actual runtime costs
+remain unmeasured; these per-event bounds are not a whole-path fit proof or a
+new CPU allowance.
+
+The authored bootstrap suite now has **80 cases in 30 test functions**, or
+**240 prospective phases**: the previous 56 cases plus 24 guard cases. The
+maximum statically derived node ID is 125 characters; new parameter IDs are
+short explicit literals. The earlier positive identity/order assertions remain,
+with added guard-state checks. Synthetic fixtures now carry a local fake
+`sys`/`os` profile state and prepared stdlib identity. No real profile or trace
+is installed, and no real primitive is invoked as a negative probe. The actual
+`math.exp` object is compared by identity only. Fake frames/code metadata exercise initial source routes and
+held aliases; source-shape AST mirroring is not used as a test.
+
+The new cases cover denial during the first oracle import, held-code binding
+before the first consumer, all five oracle routes, the exact C identity versus
+an unrelated callable, a consumer scientific route, existing/replaced/missing
+instrumentation, swallowed denial and diagnostic uncertainty, once-only
+consumption, and failed or successful pre-arm initialization. Direct audit and
+capture tests preserve the existing sticky failure semantics using only
+helper-local fakes. This does not qualify actual `sys.setprofile`, audit event
+ordering, OS exit delivery, import compatibility or source provenance.
+
+All 24 additional cases create **zero filesystem fixture payload and zero new
+fixture paths**. The existing bootstrap-only filesystem cases remain nine
+pytest roots, eight cache directories, and two regular payload files: one
+small synthetic JSON record (conservatively at most 128 bytes) and one one-byte
+cache marker, at most 129 retained payload bytes. Source copies, logs, JUnit,
+control receipts and in-memory fake module tables remain additional. No new
+symlink, hardlink or FIFO is introduced. The combined controller/bootstrap
+source census is now 45 + 80 = 125 cases (375 prospective phases), which is a
+census only, not an instruction to combine their next qualification accounts.
+
+Next runtime prerequisites stay concrete: exact-source accepted installation
+and protected startup/runtime record plus custody; independent qualification
+of this current-thread guard and the real benign leader-exit/live-descendant
+witness; reviewed source activation and finite parent accounting. The current
+source guard does not produce an accepted installation record or activate a
+service. No scientific execution or budget is implied.
 
 ## Concrete ownership and call path
 
@@ -246,8 +350,9 @@ interval precedes the child audit hook, so leader reap is insufficient evidence
 for owned descendant closure. The result may set `capture_observed=True` but
 always reports `owned_tree_closed=None`, `captured=False`, and the unproved
 outer-closure reason on an otherwise clean observation. No caller boolean can
-override this. A reviewed outer owned-group lifecycle must be connected before
-final capture acceptance; this integration is explicitly unimplemented.
+override this. The separately source-reviewed owned-group adapter must be qualified and
+activated before final capture acceptance; source implementation alone does
+not establish the actual lifecycle.
 Timeout or signal/wait failure remains unsuccessful, with unresolved closure
 explicit. The parent attempts final wait even if signaling fails. No PID is
 reused after reap and there is no detached cleanup or automatic retry.
@@ -263,9 +368,10 @@ These conditions do not establish final owned-tree acceptance.
 
 ## Bounded engineering qualification proposal
 
-This is a proposal, not an admission. The current authored focused suite has
-**101 cases in 35 test functions**, or **303 prospective pytest phases**:
-45 controller cases and 56 bootstrap cases. It exercises synthetic file
+This retained original Unit19 proposal is not a new admission. Its authored
+focused suite had **101 cases in 35 test functions**, or **303 prospective
+pytest phases**: 45 controller cases and 56 bootstrap cases. The source extension
+above supersedes the bootstrap census with 80 cases. It exercises synthetic file
 inventories, fake `Popen` handles, fake modules and owners, negative origin/
 custody/chain cases, and direct audit-event validation. No test starts a real
 child or imports real D1 consumers to construct actual owners.
@@ -285,6 +391,8 @@ and 10 CPU / 30 wall withholding. The paired originals source and tests must
 be integrated and reviewed before freezing the actual commands and total
 case census; this proposal does not allocate an additional allowance to them.
 
+The following historical proposal remains unexecuted for its original scope;
+current guard-source census and unchanged-account limits are described above.
 The necessary checks are:
 
 1. Rehash the integrated source, pinned environment, controller/collector and
@@ -312,18 +420,19 @@ The static AST census is not a substitute for guarded collection.
 ## Separate actual-startup qualification
 
 A successful fake-only run cannot qualify the real protected fresh child.
-Existing ordinary collectors add checkout `src`, preimport definitions, poison
-oracle methods and pin checkout code origins. Those choices conflict with the
-installed-origin and intact-original requirements of this path. They must not
-be silently relaxed or represented as real startup evidence.
+Checkout-context collectors add checkout `src`, preimport definitions and pin
+checkout code origins. The current Unit19 collector preserves original methods;
+older collectors also poisoned them. Neither configuration proves fresh-child
+installed-origin startup, and it must not be represented as that evidence.
 
 After the complete external runtime/custody prerequisites are satisfied, a
 separate finite proposal must freeze the actual parent invocation, exact record
 and installed identities, one child, all source/deferred/runtime inventory and
-complete accounting/output closure. It must preserve original function objects
-while denying entry by their actual defining code, deny producer/native
-scientific entry points, permit only the reviewed zero-call owner constructors,
-and check the actual `math.exp` object on C-call profile events. A benign dummy
+complete accounting/output closure. It must qualify the implemented capture-window guard on actual protected
+origins: preserve original function objects, deny their entry and other
+scientific routes, permit only the reviewed zero-call owner constructors, and
+check the actual `math.exp` identity on C-call events. The authoring tests above
+do not install that profiler in their test process. A benign dummy
 Python function and benign unrelated C callable can qualify fail-stop behavior;
 real scientific functions or `math.exp` must never be negative probes. Profile
 and audit instrumentation must not be described as a security sandbox.
