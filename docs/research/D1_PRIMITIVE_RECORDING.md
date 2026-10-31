@@ -1,8 +1,8 @@
 # D1 primitive-return recorder
 
-Source-only slice, 2026-10-30. The facade in
-`tests/d1_primitive_recording.py` and its authored fake tests have not been
-executed or qualified. It implements the in-memory ordering boundary from the
+Source slice, 2026-10-31. The facade in
+`tests/d1_primitive_recording.py` passed bounded ordinary synthetic engineering
+checks, as recorded below. It implements the in-memory ordering boundary from the
 [report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md), not a durable file sink, a driver,
 a report schema or numerical admission. Existing numerical files are unchanged.
 
@@ -105,7 +105,8 @@ intent with zero invocations, successful return followed by sink failure,
 primary exception plus failed fault retention, invalid returned material,
 call/byte exhaustion, duplicate IDs, nested calls and downstream rejection.
 They also cover KeyboardInterrupt/SystemExit and an exception whose `__str__`
-raises. There are57 authored cases; no collection or execution has occurred.
+raises. All 57 cases passed the guarded check; the exact collection and 171 test phases
+were independently verified. These use fake callbacks and sinks.
 
 Before a scientific run, independently review and qualify a concrete durable
 append sink, its no-follow/exclusive path and fsync behavior, its fallback
@@ -116,3 +117,27 @@ from this callback interface. Integrate the recorder before the first primitive
 call, preserve partial returns before adapter consumption, and restore any
 instrumentation in the enclosing finally path. Ordinary fake-only engineering
 checks are separate from that implementation and from numerical authority.
+
+
+## Engineering checkpoint
+
+Source 98f55f88c89f2d1ed145691090e218a8590de0be passed formatting, lint and full
+typing across 203 source files. All 57 synthetic cases and 171 ordered
+setup/call/teardown phases passed, with no skips, expected failures or forbidden
+events. The sealed collection, source/helper identities, unchanged environment,
+raw logs and JUnit counts were independently reviewed. Formatting preserved
+the authored AST except ordering of identical import statements.
+
+Both local attempts passed and all 12 owned processes closed. The cumulative
+charge is 46.092669 CPU seconds / 55.725405 wall seconds, including the retained
+per-attempt closeout holds. Retained unit output is 1,613,326 bytes within the
+120 CPU / 300 wall / 8 MiB engineering allowance. Additional controller
+headroom was withheld from child selection, not charged again. Prior failed
+units and reservations remain retained; external-control and whole-operation
+costs remain unknown.
+
+Hosted verification is a separate pending step after the parent adapter PR
+qualifies. This checkpoint establishes fake-only ordering, codec and failure
+behavior. It does not establish actual sink durability, callable/argument
+authenticity, complete transcript storage fit, a D1 scientific result or
+production readiness.
