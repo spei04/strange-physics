@@ -35,6 +35,8 @@ Row completion and qualification differ. A row can complete its declared
 evaluation with a retained rejected gate. If work stops, preserve all later
 unrun rows, actual partial returns and the first fault. No failed node, profile
 or world is removed to obtain a successful normalization or average.
+A completed evaluation with a rejected required gate stops subsequent batch
+work and leaves later rows unrun, preserving the frozen protocol.
 
 Gate evaluation is a pure reconstruction from already retained material. It
 must not rerun a predictor, oracle, exp, log, label generator or primitive.
