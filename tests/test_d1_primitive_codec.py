@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 from copy import deepcopy
-from typing import Any, NoReturn
+from typing import Any, Literal, NoReturn
 
 import d1_primitive_codec as codec
 import pytest
@@ -41,10 +41,8 @@ def event(call: dict[str, Any], *, returned: dict[str, Any] | None = None,
             "intent": call, "returned": returned, "fault": None}
 
 
-def cursor(mode: str = "encode") -> codec.PrimitiveEventCodec:
-    # Deliberate raw input also exercises the constructor's strict mode boundary.
-    value: Any = mode
-    return codec.PrimitiveEventCodec(table_bytes(), mode=value)
+def cursor(mode: Literal["encode", "expand"] = "encode") -> codec.PrimitiveEventCodec:
+    return codec.PrimitiveEventCodec(table_bytes(), mode=mode)
 
 
 @pytest.mark.parametrize(("instance", "primitive", "scope", "argument", "descriptor", "code", "tag"), [
@@ -218,7 +216,7 @@ def test_terminal_inputs_are_explicitly_unsupported_not_acknowledged(kind: str) 
 def test_strict_canonical_raw_and_wire_inputs(change: str) -> None:
     call = intent()
     original = raw(event(call))
-    mode = "encode"
+    mode: Literal["encode", "expand"] = "encode"
     if change == "space":
         mode, original = "expand", b'["i", 0,0,12,2,[4,2],["d","1","12300","-4"]]\n'
     elif change == "two-lf":
@@ -247,7 +245,7 @@ def test_bounds_precede_json_decoding(monkeypatch: pytest.MonkeyPatch, kind: str
         raise AssertionError("Invalid input reached JSON decoder")
     line = b"x" * 4097 if kind == "bytes" else b"[[[[[]]]]]\n"
     with monkeypatch.context() as scoped:
-        scoped.setattr(codec.json, "loads", forbidden)
+        scoped.setattr(json, "loads", forbidden)
         result = machine.convert(line)
     assert result.status == "invalid"
     assert result.input_bytes == (None if kind == "bytes" else line)
@@ -272,7 +270,7 @@ def test_closed_cursor_does_not_parse_again(monkeypatch: pytest.MonkeyPatch) -> 
     def forbidden(*args: object, **kwargs: object) -> NoReturn:
         raise AssertionError("Stopped cursor parsed input")
     with monkeypatch.context() as scoped:
-        scoped.setattr(codec.json, "loads", forbidden)
+        scoped.setattr(json, "loads", forbidden)
         result = machine.convert(raw(event(intent())))
     assert result.status == "stopped" and result.reason == first.reason
 
@@ -280,8 +278,9 @@ def test_closed_cursor_does_not_parse_again(monkeypatch: pytest.MonkeyPatch) -> 
 def test_table_and_direction_are_validated_before_cursor_creation() -> None:
     with pytest.raises(ValueError):
         codec.PrimitiveEventCodec(b"{}\n", mode="encode")
+    invalid_mode: Any = "either"
     with pytest.raises(ValueError):
-        cursor("either")
+        codec.PrimitiveEventCodec(table_bytes(), mode=invalid_mode)
 
 
 def test_table_source_hash_changes_do_not_authenticate_event_material() -> None:
