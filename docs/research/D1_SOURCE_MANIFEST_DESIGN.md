@@ -85,8 +85,21 @@ The four row arrays have these positional forms:
 locator is a canonical repository-relative ASCII path, at most 160 characters,
 with no absolute path, empty/dot/dot-dot component, backslash or control character.
 Its spelling must equal the reviewed catalog; the parser's lexical rule does not
-allow new paths. Source byte length is 1–131,072. A runtime locator is an opaque
-member ID in the independently verified runtime view, not an S-supplied filename;
+allow new paths. Ordinary checkout source byte length is 1–131,072, including the
+catalog. Exactly one mandatory member has origin `checkout_source`, the literal
+canonical locator `uv.lock`, and `loaded_module_or_null=null`. Only that row may
+have length 1–262,144 under the fixed `lock_file_bytes` limit, and it occupies one
+of the existing 64 member slots. Its hash must equal root `uv_lock_sha256`, the
+SHA256 of the actual bounded lockfile bytes and the independently protected
+expected lockfile hash; its length must equal the actual and protected expected
+byte lengths.
+Reject an omitted, duplicate or aliased lock row, an alternate origin/locator,
+a non-null loaded module, or a second member resolving to that same lockfile.
+Matching declaration strings alone do not establish any of these actual joins.
+No other source or loaded copy receives the lock-specific ceiling.
+
+A runtime locator is an opaque member ID in the independently verified runtime
+view, not an S-supplied filename;
 its exact hash/size must match that view, with declared size at most 67,108,864.
 Runtime bytes are not included inline or freshly read by this source resolver.
 Their independent verification and interval validity remain explicit outer work.
@@ -148,6 +161,19 @@ driver/binder closure. That catalog does **not yet exist**. Its source authoring
 and review, including missing final files, precede usable S sealing. More than64
 required members is a failed-fit finding, not permission to omit members or
 increase the proposed ceiling automatically.
+
+A bounded static audit at `e63d8eae0a77566f3ce1c29adff973aec3cf05b2` found
+47 candidate members (44 Python files), including the known native implementation
+and installation-check imports, deferred imports, protocol and lock/config.
+This is a conservative current-known set, **not the complete final catalog**;
+resolver, installer, driver/binder, emitter selection and runtime-member joins
+remain unfinished. The actual `uv.lock` is 250,735 bytes, SHA256
+`45ea41dd4302e48ecaf42178e094a2e15aa19fa0506d4a36ece6f886920bc838`;
+it exceeds the former uniform 131,072-byte proposal by 119,663 bytes. The largest
+known Python member is `tests/d1_prefix_evidence.py` at 69,136 bytes. This finding
+motivates only the literal-lock exception above, not a general source-cap increase
+or proof that future members fit. The private audit remains retained unchanged;
+its metadata does not authenticate sources or authorize their use.
 
 ## Fixed definition and instance joins
 
@@ -291,33 +317,46 @@ not invent their schema or budget.
 
 ## Proposed finite byte/read/copy ceilings
 
-The `limits` object has exactly these integer declarations; the parser compares
+The `limits` object has exactly these 16 integer declarations; the parser compares
 against the source-owned constants rather than accepting caller policy:
 
 ```text
 manifest_bytes=65536, header_bytes=4096, row_with_separator_bytes=512,
 source_members=64, definitions=5, instances=14, bindings=23,
-source_file_bytes=131072, loaded_source_copies=64,
+source_file_bytes=131072, lock_file_bytes=262144, loaded_source_copies=64,
 validation_passes=2, json_depth=3, json_nodes=2048,
 integer_token_chars=10, retained_source_copies=0, retained_manifest_copies=0
 ```
 
 Header H is the canonical complete S with all four row arrays empty, including
-root/limits punctuation and LF. H<=4,096. Each row's exact canonical bytes plus
-one separator reserve is <=512. Thus the maximum structural envelope is
+root/limits punctuation and LF. Adding the fixed `lock_file_bytes` key/value
+contributes 25 canonical header bytes (including its comma); H<=4,096 remains
+unchanged. Each row's exact canonical bytes plus one separator reserve is <=512.
+Thus the maximum structural envelope is
 `4096 + (64+5+14+23)*512 = 58,368 <= 65,536` bytes. Row/header validation and
 actual extrema need independent tests; this is arithmetic, not measured fit.
 
-Each source pass admits at most 64 checkout source files and at most 64 actual
-loaded project/helper source copies, each with 131,072 accepted bytes plus one
-explicit overflow-probe byte. Repeated physical reads count again even when
-digests match. Same-file aliases can avoid a duplicate read only after actual
-fd/name identity and held-root conditions are established; the ceiling assumes
-no such saving. Two passes plus two S reads with their one-byte probes give:
+Each source pass admits at most 63 ordinary checkout source files at 131,072
+accepted bytes each, the one mandatory checkout `uv.lock` at 262,144 bytes, and
+at most 64 actual loaded project/helper source copies at 131,072 bytes each.
+The lockfile is not a loaded module. Every read has one explicitly counted
+overflow-probe byte. The source-member maximum remains 64; runtime-member rows
+occupy that same maximum rather than creating extra checkout slots. Repeated
+physical reads count again even when digests match. Same-file aliases for ordinary
+source/loaded-copy reads can avoid a duplicate read only after actual fd/name
+identity and held-root conditions are established; lock-member aliases remain
+rejected. The ceiling assumes no read savings. Two passes plus two S reads give:
 
 ```text
-2 * (128 * 131073 + 65537) = 33,685,762 maximum attempted payload-read bytes.
+2 * (63 * 131073 + 262145 + 64 * 131073 + 65537)
+= 2 * (127 * 131073 + 262145 + 65537)
+= 33,947,906 maximum attempted payload-read bytes.
 ```
+
+The lock-only correction adds 262,144 attempted read bytes over the former uniform
+source-file formula. It does not add a source member, loaded-copy slot, validation
+pass, retained source copy or budget. Actual row/header/manifest fit remains
+unqualified; the fixed structural reservations above are unchanged.
 
 Source files are read serially; there is no retained source bundle or copied
 checkout. The newly retained S file reserves at most 65,536 bytes, including a
@@ -335,7 +374,7 @@ interpreter evidence; it does not cause a new native-binary read under the
 held interval, verification stops. Any fresh runtime/dependency/archive scan is
 separate explicitly bounded outer work and must be included in the complete
 allocation; it cannot be relabeled free metadata or assumed covered by this
-33,685,762-byte source-read ceiling.
+33,947,906-byte source-read ceiling.
 
 ## Existing checks remain scoped, and repeated work remains charged
 
@@ -362,7 +401,12 @@ and unknown historical scientific usage stay retained; no fresh balance follows.
 First implement only bounded S wire/catalog comparison and synthetic negative
 cases: duplicate/unknown fields, noncanonical bytes, booleans, depth/token/size
 limits, reordered/missing/extra members, mismatched row/header identities and
-all 14/23 joins. Independent literal fixtures should distinguish lexical
+all 14/23 joins. Lock-specific cases must reject omitted/duplicate/aliased rows,
+wrong origin or locator, non-null loaded module, wrong root hash or actual/protected
+hash/length joins, and any ordinary/catalog/loaded source attempting to use the
+larger lock ceiling. Test the exact 16 limit keys and unchanged header/row/manifest
+bounds without treating this proposal as actual-fit evidence.
+Independent literal fixtures should distinguish lexical
 consistency from actual resolution. This source work needs no numerical output.
 
 Next review the bounded owned-file resolver and source/loaded-origin checks,
