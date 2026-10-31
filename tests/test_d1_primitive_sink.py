@@ -139,7 +139,11 @@ def test_exclusive_private_root_creation(tmp_path: Path, kind: str) -> None:
         tmp_path.chmod(0o700)
 
 
-@pytest.mark.parametrize("bad", (b"", b"{}", b"{}\n{}\n", b"x" * 4096 + b"\n", bytearray(b"{}\n")))
+@pytest.mark.parametrize(
+    "bad",
+    (b"", b"{}", b"{}\n{}\n", b"x" * 4096 + b"\n", bytearray(b"{}\n")),
+    ids=("empty", "missing-newline", "multiple-lines", "oversized-line", "mutable-buffer"),
+)
 def test_invalid_line_stops_without_reserving_or_writing(tmp_path: Path, bad: object) -> None:
     value = create(tmp_path)
     with pytest.raises(ValueError):
