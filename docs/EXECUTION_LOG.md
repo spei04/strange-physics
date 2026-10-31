@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** PRs #138–#155 passed CI. The observer passed 6,086 tests per runtime, full 227-file typing and 62 private cases/186 phases; its interrupted attempt remains recorded.
-- **Next assignments:** Research and Platform—concrete startup/import and original-owner integration; Quality—independent review; Lead—whole-path fit. The [handoff](research/D1_LOADED_DEFINITION_DESIGN.md) records remaining dependencies.
-- **Open gates:** Runtime custody, installation, protected inventory, historical evidence, resource fit and scientific admission remain pending. The [owner and exposure decisions](research/D1_EXPOSURE_DECISIONS.md) stand; no D1 batch is running.
+- **Verified:** PR155 passed six CI jobs with 6,086 tests per runtime; the observer passed 227-file typing and 62 private cases/186 phases. Earlier failures remain recorded.
+- **Active:** Research—fixture-owner hook and original capture; Platform—protected startup/import bootstrap; Quality—independent review; Lead—resources and integration. [Handoff](research/D1_LOADED_DEFINITION_DESIGN.md).
+- **Open:** Protected runtime and inventory evidence, installation/pass2, full-path fit and scientific admission remain pending. The [owner decisions](research/D1_EXPOSURE_DECISIONS.md) stand; no D1 batch is running.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Platform / Quality / Project lead | Concrete launch-to-original-owner source integration | Research owns the retained fixture-owner hook and fixed original capture; Platform owns protected startup/import control in the other reused checkout. Quality reviews immutable source; Lead coordinates resources/integration. New source tests are authored, not run; actual protected runtime, installation/pass2, inventory and full-path evidence remain open. No scientific admission or D1 batch. |
 | 2026-10-31 | Platform / Quality / Research / Project lead | PR155 original CI accepted; concrete integration handoff | Platform sealed six passing jobs at frozen f36f0895: 6,086 tests/runtime, 227-file typing and 1,567 schema checks. Lead independently matched raw logs and immutable source identity; Quality audits the release evidence. Research supplied the finite integration map and read-only installed-runtime facts; the approved owner policy is restored unchanged. Next assignments cover startup/import custody, actual original-owner integration and whole-path fit. All earlier failures and unknowns remain retained; no D1 batch or merge. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Owned-file observer qualified; original CI next | Research delivered 62 fault cases and isolated helper-local OS mocks after an interrupted guard check. Quality and Lead accepted unchanged guard semantics, full 227-file typing and exact 62/186 passes; 24 children closed, 106.312864 CPU seconds charged with the failed attempt retained. Lead publishes the draft; Platform owns original CI evidence. Research maps the remaining end-to-end integration and resource evidence; accepted loaded-definition design stays unimplemented. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Parser CI accepted; owned-file source repaired | Original PR154 CI passed all six required jobs:6,024 tests/runtime,225-file typing,1,567 schemas and packaging/smoke checks. Research delivered the next three-file helper/test/guide slice. Quality and Lead found and closed first/final owner-guard reentry windows and an explicit-chaining lint issue before execution;62 cases are authored, not run. Platform prepares a disabled finite proposal; actual source/control qualification remains pending. |
