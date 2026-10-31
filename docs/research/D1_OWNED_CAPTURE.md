@@ -154,21 +154,25 @@ scientific balance is reused.
 
 ## Authored verification scope
 
-Static AST census: 71 cases/213 prospective phases in 27 test functions:
-41 lifecycle cases/18 functions, 18 parent-owner cases/7 functions, and
-12 benign cases/2 functions. They cover original-clock refusal, post-preflight
+Static AST census: 77 cases/231 prospective phases in 29 test functions:
+41 lifecycle cases/18 functions, 20 parent-owner cases/8 functions, and
+16 benign cases/3 functions. They cover original-clock refusal, post-preflight
 launch reserve, independent timeout takeover, late acknowledgement, stale
 identity/missing units, unreaped child, terminal/final/intent failure, exact
 retained report substitutions, no-I/O preclaim/consumed rejection, leader-only
 rejection, ready/release joins, fake parent/child branches, fork refusal and close
-uncertainty. Existing report/cleanup assertions remain; the preflight test now
-correctly observes its moved service-side position.
+uncertainty. Command failures retain the underlying first error and supplemental
+log-close facts. Worker descriptors are marked consumed before every close;
+close-after-consumption cannot retry the same descriptor or skip the remaining
+independent closes. Parent read errors survive later close errors. Existing
+report/cleanup assertions remain; the preflight test now correctly observes its
+moved service-side position.
 
-A conservative fixture payload estimate per retained suite is 1,216,512 bytes:
-1,064,960 for lifecycle cases (including three new request/report cases), 94,208
-for owner requests, and 57,344 for benign records (six requests and four pairs
+A conservative fixture payload estimate per retained suite is 1,245,184 bytes:
+1,064,960 for lifecycle cases (including three new request/report cases), 102,400
+for owner requests, and 77,824 for benign records (nine requests and five pairs
 of ready/done files, each at most 4 KiB). Two retained
-suite sets require 2,433,024 bytes before framework metadata/logs. This is a
+suite sets require 2,490,368 bytes before framework metadata/logs. This is a
 source-derived loose upper bound, not measured output. Fake tests create no
 symlinks, hardlinks or FIFOs; pytest may create its own links. Most receipt data
 stays in bounded fake stores. Actual qualification must census every retained

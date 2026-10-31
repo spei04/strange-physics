@@ -1,4 +1,4 @@
-"""Fixed benign leader-exit handshake; no capture, reference or science imports."""
+"""Fixed benign leader-exit handshake; never invokes capture or science."""
 
 from __future__ import annotations
 
@@ -126,11 +126,14 @@ def watch_descendant(
 
     def fault(stage: str, error: BaseException) -> None:
         nonlocal first
-        value = Fault.capture(stage, error)
+        original = error.primary if isinstance(error, CommandFailure) else error
+        value = Fault.capture(stage, original)
         if first is None:
             first = value
         elif len(supplemental) < 8:
             supplemental.append(value)
+        if isinstance(error, CommandFailure):
+            supplemental.extend(error.supplemental[:max(0, 8 - len(supplemental))])
 
     def bind(value: Snapshot) -> None:
         nonlocal invocation, group, latest, closed
@@ -251,61 +254,83 @@ def worker(path: Path, digest: str) -> int:
         raise ValueError("Fixed isolated benign worker required")
     invocation, group = owned.service_identity(unit)
     ready_r, ready_w = os.pipe()
+    descriptors = {ready_r, ready_w}
+    primary: BaseException | None = None
+    primary_phase = "worker"
+    supplemental: list[Fault] = []
+
+    def remember(stage: str, error: BaseException) -> None:
+        nonlocal primary, primary_phase
+        if primary is None:
+            primary, primary_phase = error, stage
+        else:
+            supplemental.append(Fault.capture(stage, error))
+
+    def close_once(descriptor: int) -> None:
+        if descriptor not in descriptors:
+            return
+        descriptors.remove(descriptor)  # A failed close consumes ownership too.
+        try:
+            os.close(descriptor)
+        except BaseException as close_error:
+            remember("worker_close", close_error)
+
     try:
         child = os.fork()
     except BaseException as fork_error:
-        close_faults: list[Fault] = []
-        for descriptor in (ready_r, ready_w):
-            try:
-                os.close(descriptor)
-            except OSError as close_error:
-                close_faults.append(Fault.capture("fork_close", close_error))
-        if close_faults:
-            raise CommandFailure(fork_error, tuple(close_faults)) from None
+        remember("fork", fork_error)
+        for descriptor in tuple(sorted(descriptors)):
+            close_once(descriptor)
+        if supplemental:
+            raise CommandFailure(fork_error, tuple(supplemental)) from None
         raise
     if child:
-        os.close(ready_w)
+        close_once(ready_w)
         try:
-            readable, _, _ = select.select([ready_r], [], [], min(5.0, max(0.0, deadline - time.monotonic())))
-            if not readable or os.read(ready_r, 2) != b"R":
-                raise TimeoutError("Descendant did not acknowledge readiness")
+            if primary is None:
+                readable, _, _ = select.select([ready_r], [], [], min(5.0, max(0.0, deadline - time.monotonic())))
+                if not readable or os.read(ready_r, 2) != b"R":
+                    raise TimeoutError("Descendant did not acknowledge readiness")
+        except BaseException as ready_error:
+            remember("leader_ready", ready_error)
         finally:
-            os.close(ready_r)
+            for descriptor in tuple(sorted(descriptors)):
+                close_once(descriptor)
+        if primary is not None:
+            if supplemental:
+                raise CommandFailure(primary, tuple(supplemental)) from None
+            raise primary
         return 0  # The service leader exits while its descendant still waits.
-    os.close(ready_r)
-    release_fd: int | None = None
+    close_once(ready_r)
     code = 1
-    primary: Fault | None = None
-    close_faults = []
     try:
-        release_fd = os.open(path.parent / "release.fifo", os.O_RDWR | os.O_NONBLOCK | os.O_NOFOLLOW)
-        info = os.fstat(release_fd)
-        if not stat.S_ISFIFO(info.st_mode) or info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) != 0o600:
-            raise ValueError("Owned private release FIFO required")
-        body = owned.encoded({"schema": "d1-descendant-ready-v1", "unit": unit, "invocation_id": invocation, "cgroup": group, "token": token})
-        owned.write_request(path.parent / "descendant-ready.json", body)
-        if os.write(ready_w, b"R") != 1:
-            raise OSError("Ready handoff failed")
-        os.close(ready_w)
-        ready_w = -1
-        readable, _, _ = select.select([release_fd], [], [], max(0.0, deadline - time.monotonic()))
-        if not readable or os.read(release_fd, 66) != (token + "\n").encode("ascii"):
-            raise ValueError("Release missing/late/substituted")
-        code = 0
+        if primary is None:
+            release_fd = os.open(path.parent / "release.fifo", os.O_RDWR | os.O_NONBLOCK | os.O_NOFOLLOW)
+            descriptors.add(release_fd)
+            info = os.fstat(release_fd)
+            if not stat.S_ISFIFO(info.st_mode) or info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) != 0o600:
+                raise ValueError("Owned private release FIFO required")
+            body = owned.encoded({"schema": "d1-descendant-ready-v1", "unit": unit, "invocation_id": invocation, "cgroup": group, "token": token})
+            owned.write_request(path.parent / "descendant-ready.json", body)
+            if os.write(ready_w, b"R") != 1:
+                raise OSError("Ready handoff failed")
+            close_once(ready_w)
+            if primary is None:
+                readable, _, _ = select.select([release_fd], [], [], max(0.0, deadline - time.monotonic()))
+                if not readable or os.read(release_fd, 66) != (token + "\n").encode("ascii"):
+                    raise ValueError("Release missing/late/substituted")
+                code = 0
     except BaseException as child_error:
-        primary = Fault.capture("descendant", child_error)
+        remember("descendant", child_error)
     finally:
-        for descriptor in (ready_w, release_fd):
-            if descriptor is not None and descriptor >= 0:
-                try:
-                    os.close(descriptor)
-                except OSError as close_error:
-                    close_faults.append(Fault.capture("descendant_close", close_error))
-                    code = 1
+        for descriptor in tuple(sorted(descriptors)):
+            close_once(descriptor)
+        if primary is not None:
+            code = 1
         done = {"schema": "d1-descendant-done-v1", "unit": unit,
                 "invocation_id": invocation, "cgroup": group, "token": token,
-                "exit_code": code, "first_fault": None if primary is None else asdict(primary),
-                "supplemental": [asdict(item) for item in close_faults]}
+                "exit_code": code, "first_fault": None if primary is None else asdict(Fault.capture(primary_phase, primary)),
+                "supplemental": [asdict(item) for item in supplemental]}
         try:
             owned.write_request(path.parent / "descendant-done.json", owned.encoded(done))
         except BaseException:

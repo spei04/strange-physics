@@ -13,7 +13,7 @@ import pytest
 
 from scripts import d1_capture_descendant as benign
 from scripts import d1_owned_capture as owned
-from scripts.grid_q1_supervisor import Plan, Systemd
+from scripts.grid_q1_supervisor import CommandFailure, Fault, Plan, Systemd
 from test_d1_owned_capture import INVOCATION, MISSING, Clock, Manager, Records, state
 
 
@@ -122,27 +122,31 @@ def test_benign_witness_requires_live_descendant_and_bound_release(tmp_path: Pat
     assert manager.submissions == (0 if kind == "late" else 1)
 
 
-@pytest.mark.parametrize("kind", ("leader", "child", "timeout", "bad-token", "fork-failed", "close-failed"), ids=("leader", "child", "timeout", "bad-token", "fork", "close"))
+@pytest.mark.parametrize("kind", ("leader", "child", "timeout", "bad-token", "fork-failed", "close-failed", "parent-close", "child-ready-close", "read-close"), ids=("leader", "child", "timeout", "bad-token", "fork", "close", "parent-close", "ready-close", "read-close"))
 def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
     item = plan(tmp_path)
     path = tmp_path / "descendant-request.json"
     path.write_bytes(item.request)
     path.chmod(0o600)
     events: list[tuple[str, object]] = []
+    read_error = OSError("synthetic ready read failure")
+    late_close_error = PermissionError("synthetic lost close acknowledgement")
 
     def fork() -> int:
         events.append(("fork", 0))
         if kind == "fork-failed":
             raise OSError("synthetic fork refusal")
-        return 42 if kind == "leader" else 0
+        return 42 if kind in ("leader", "parent-close", "read-close") else 0
 
     def close(fd: int) -> None:
         events.append(("close", fd))
-        if kind == "close-failed" and fd == 20:
-            raise OSError("synthetic close uncertainty")
+        if (kind == "close-failed" and fd == 20) or (kind in ("parent-close", "child-ready-close") and fd == 11) or (kind == "read-close" and fd == 10):
+            raise late_close_error
 
     def read(fd: int, size: int) -> bytes:
         events.append(("read", fd))
+        if kind == "read-close":
+            raise read_error
         if kind == "leader":
             return b"R"
         return (("f" * 64 if kind == "bad-token" else item.token) + "\n").encode()
@@ -176,6 +180,18 @@ def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path
             assert benign.worker(path, item.request_sha256) == 0
             assert events[-1] == ("close", 10)
             assert not (tmp_path / "descendant-ready.json").exists()
+        elif kind == "parent-close":
+            with pytest.raises(PermissionError) as raised_parent:
+                benign.worker(path, item.request_sha256)
+            assert raised_parent.value is late_close_error
+            assert events.count(("close", 11)) == 1 and events.count(("close", 10)) == 1
+            assert not any(event[0] == "select" for event in events)
+        elif kind == "read-close":
+            with pytest.raises(CommandFailure) as raised_pair:
+                benign.worker(path, item.request_sha256)
+            assert raised_pair.value.primary is read_error
+            assert raised_pair.value.supplemental == (Fault.capture("worker_close", late_close_error),)
+            assert events.count(("close", 10)) == events.count(("close", 11)) == 1
         elif kind == "fork-failed":
             with pytest.raises(OSError, match="fork refusal"):
                 benign.worker(path, item.request_sha256)
@@ -185,12 +201,39 @@ def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path
                 benign.worker(path, item.request_sha256)
             assert raised.value.code == (0 if kind == "child" else 1)
             assert ("write", (11, b"R")) in events
-            assert events.index(("write", (11, b"R"))) < events.index(("select", (20,)))
+            if kind == "child-ready-close":
+                assert not any(event[0] == "select" for event in events)
+                assert events.count(("close", 11)) == 1
+            else:
+                assert events.index(("write", (11, b"R"))) < events.index(("select", (20,)))
             assert ("close", 20) in events
             ready = owned.decoded((tmp_path / "descendant-ready.json").read_bytes(), 4096)
             assert ready["token"] == item.token and ready["invocation_id"] == INVOCATION
             done = owned.decoded((tmp_path / "descendant-done.json").read_bytes(), 4096)
             assert done["exit_code"] == raised.value.code
-            if kind == "close-failed":
-                assert done["supplemental"] and done["first_fault"] is None
+            if kind in ("close-failed", "child-ready-close"):
+                assert done["first_fault"] == {"stage": "worker_close", "kind": "PermissionError", "detail": str(late_close_error)}
+                assert done["supplemental"] == []
     assert os.close is not close
+
+
+def test_benign_command_failure_preserves_primary_and_close_facts(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    item = plan(tmp_path)
+    clock = Clock()
+    records = Records(tmp_path, [])
+    manager = FakeManager(records, clock)
+    handshake = FakeHandshake(records, item)
+    original = manager.submit
+    first = OSError("synthetic submit acknowledgement lost")
+    close = Fault.capture("log_close", PermissionError("synthetic close failure"))
+
+    def submit(value: Plan, timeout: float) -> NoReturn:
+        original(value, timeout)
+        raise CommandFailure(first, (close,))
+
+    monkeypatch.setattr(manager, "submit", submit)
+    result = benign.watch_descendant(item, manager, records, handshake, clock.now, clock.sleep)
+    assert result["first_fault"] == {"stage": "benign", "kind": "OSError", "detail": str(first)}
+    assert result["supplemental"] == [{"stage": "log_close", "kind": "PermissionError", "detail": "synthetic close failure"}]
+    assert result["status"] == "incomplete" and manager.submissions == 1
+    assert result["cleanup_confirmed"] is True and not handshake.released

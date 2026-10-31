@@ -22,7 +22,7 @@ if __name__ == "__main__":
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scripts import d1_owned_capture as owned
-from scripts.grid_q1_supervisor import Fault, Snapshot, Supervisor, Systemd, confirms_empty_unit_cleanup, private_bytes
+from scripts.grid_q1_supervisor import CommandFailure, Fault, Snapshot, Supervisor, Systemd, confirms_empty_unit_cleanup, private_bytes
 
 
 class Child(Protocol):
@@ -104,11 +104,14 @@ def watch(
 
     def fault(stage: str, error: BaseException) -> None:
         nonlocal first
-        item = Fault.capture(stage, error)
+        original = error.primary if isinstance(error, CommandFailure) else error
+        item = Fault.capture(stage, original)
         if first is None:
             first = item
         elif len(supplemental) < 16:
             supplemental.append(item)
+        if isinstance(error, CommandFailure):
+            supplemental.extend(error.supplemental[:max(0, 16 - len(supplemental))])
 
     def remaining(end: float = deadline) -> float:
         value = min(5.0, end - clock())

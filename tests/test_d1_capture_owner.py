@@ -13,7 +13,7 @@ import pytest
 
 from scripts import d1_capture_owner as owner
 from scripts import d1_owned_capture as owned
-from scripts.grid_q1_supervisor import Plan, Snapshot, Systemd
+from scripts.grid_q1_supervisor import CommandFailure, Fault, Plan, Snapshot, Systemd
 from test_d1_owned_capture import INVOCATION, MISSING, Clock, Manager, Records, spec, state
 
 
@@ -233,3 +233,27 @@ def test_start_failure_keeps_named_unknown_and_cannot_retry(tmp_path: Path) -> N
     again = watch(values)
     assert again["intent_acknowledged"] is False and start.calls == 1
     assert records.events[len(before):] == ["capture-owner-intent.json"]
+
+
+@pytest.mark.parametrize("secondary", (False, True), ids=("primary", "supplemental"))
+def test_command_failure_preserves_underlying_first_and_close_facts(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, secondary: bool) -> None:
+    values = setup(tmp_path, timeout=secondary)
+    _, _, _, start, manager = values
+    original = OSError("synthetic original command failure")
+    close = Fault.capture("log_close", PermissionError("synthetic close uncertainty"))
+    failure = CommandFailure(original, (close,))
+    if secondary:
+        def snapshot(plan: Plan, timeout: float) -> NoReturn:
+            raise failure
+        monkeypatch.setattr(manager, "snapshot", snapshot)
+    else:
+        start.failure = failure
+    result = watch(values)
+    assert first(result)["kind"] == ("TimeoutExpired" if secondary else "OSError")
+    if not secondary:
+        assert first(result)["detail"] == str(original)
+    supplemental = result["supplemental"]
+    assert type(supplemental) is list
+    assert {"stage": "log_close", "kind": "PermissionError", "detail": "synthetic close uncertainty"} in supplemental
+    if secondary:
+        assert {"stage": "owner_reconcile", "kind": "OSError", "detail": str(original)} in supplemental
