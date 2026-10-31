@@ -331,9 +331,12 @@ them. Source authoring and algebraic derivation are not numerical qualification.
 ## 5. Conditional kernel source checkpoint
 
 [tests/d1_repeated_loss.py](../../tests/d1_repeated_loss.py) implements only the
-interval recipe in section1. Its tests are authored synthetic/rational cases;
-imports, tests, typing, lint and numerical qualification have not been run for
-this checkpoint. The existing Q1 directed primitives are reused unchanged.
+interval recipe in section1. At the 2026-10-31 engineering checkpoint,
+formatted source 72548b4 passed all59 synthetic cases/177 phases, formatting,
+lint and full configured typing across207 files. Independent review verified
+source, environment, exact test census and child-process closure. The existing
+Q1 directed primitives are reused unchanged. Hosted CI remains separate; this
+does not qualify actual D1 material or authorize a scientific run.
 
 `repeated_loss_witness(RepeatedLossInput)` takes an immutable ordered tuple of
 `RepeatedLossNode(index, one_emitted, two_probability, prior_mass)`, the declared
@@ -394,6 +397,6 @@ The companion tests poison actual reference, predictor, simulator, normalizer
 and CDF/score entrypoints. They exercise exact rational enclosure, both allowed
 endpoints, disjoint/overlap precedence, complete coverage, normalized feasibility
 below directed precision, malformed bypass objects, signed zero, finite/domain
-limits and hostile ambient Decimal settings. These are proposed software checks,
+limits and hostile ambient Decimal settings. These are software checks of the conditional kernel,
 not D1 outcomes. Prior alias implementation, the full report binder and its
 physical-byte/operational evidence remain pending.
