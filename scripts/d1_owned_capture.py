@@ -56,8 +56,10 @@ PROFILE = {
 
 
 def encoded(value: object) -> bytes:
-    return (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True,
-                       allow_nan=False) + "\n").encode("ascii")
+    return (
+        json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False)
+        + "\n"
+    ).encode("ascii")
 
 
 def _pairs(values: list[tuple[str, object]]) -> dict[str, object]:
@@ -83,7 +85,11 @@ def decoded(raw: bytes, limit: int) -> dict[str, object]:
 
 
 def _digest(value: object, length: int = 64) -> str:
-    if type(value) is not str or len(value) != length or any(c not in "0123456789abcdef" for c in value):
+    if (
+        type(value) is not str
+        or len(value) != length
+        or any(c not in "0123456789abcdef" for c in value)
+    ):
         raise ValueError("Exact lowercase digest required")
     return value
 
@@ -111,15 +117,22 @@ class CaptureSpec:
     bootstrap_sha256: str
 
     def record(self) -> dict[str, object]:
-        return {name: str(value) if isinstance(value, Path) else value
-                for name, value in vars_from_spec(self).items()}
+        return {
+            name: str(value) if isinstance(value, Path) else value
+            for name, value in vars_from_spec(self).items()
+        }
 
     def validate(self) -> None:
         for path in (self.root, self.checkout, self.interpreter, self.protected_plan):
             if type(path) is not type(Path()) or _path(str(path)) != path:
                 raise ValueError("Exact path objects required")
-        for digest in (self.protected_plan_sha256, self.admission_sha256, self.adapter_sha256,
-                       self.controller_sha256, self.bootstrap_sha256):
+        for digest in (
+            self.protected_plan_sha256,
+            self.admission_sha256,
+            self.adapter_sha256,
+            self.controller_sha256,
+            self.bootstrap_sha256,
+        ):
             _digest(digest)
         _digest(self.source_commit, 40)
         if self.root == self.checkout or self.root.is_relative_to(self.checkout):
@@ -136,24 +149,44 @@ class CaptureSpec:
 
 
 def vars_from_spec(spec: CaptureSpec) -> dict[str, object]:
-    return {"root": spec.root, "checkout": spec.checkout, "interpreter": spec.interpreter,
-            "protected_plan": spec.protected_plan, "protected_plan_sha256": spec.protected_plan_sha256,
-            "source_commit": spec.source_commit, "admission_sha256": spec.admission_sha256,
-            "adapter_sha256": spec.adapter_sha256, "controller_sha256": spec.controller_sha256,
-            "bootstrap_sha256": spec.bootstrap_sha256}
+    return {
+        "root": spec.root,
+        "checkout": spec.checkout,
+        "interpreter": spec.interpreter,
+        "protected_plan": spec.protected_plan,
+        "protected_plan_sha256": spec.protected_plan_sha256,
+        "source_commit": spec.source_commit,
+        "admission_sha256": spec.admission_sha256,
+        "adapter_sha256": spec.adapter_sha256,
+        "controller_sha256": spec.controller_sha256,
+        "bootstrap_sha256": spec.bootstrap_sha256,
+    }
 
 
 def _spec(value: object) -> CaptureSpec:
     if type(value) is not dict or set(value) != {
-        "root", "checkout", "interpreter", "protected_plan", "protected_plan_sha256",
-        "source_commit", "admission_sha256", "adapter_sha256", "controller_sha256", "bootstrap_sha256",
+        "root",
+        "checkout",
+        "interpreter",
+        "protected_plan",
+        "protected_plan_sha256",
+        "source_commit",
+        "admission_sha256",
+        "adapter_sha256",
+        "controller_sha256",
+        "bootstrap_sha256",
     }:
         raise ValueError("Exact capture binding fields required")
     result = CaptureSpec(
-        _path(value["root"]), _path(value["checkout"]), _path(value["interpreter"]),
-        _path(value["protected_plan"]), _digest(value["protected_plan_sha256"]),
-        _digest(value["source_commit"], 40), _digest(value["admission_sha256"]),
-        _digest(value["adapter_sha256"]), _digest(value["controller_sha256"]),
+        _path(value["root"]),
+        _path(value["checkout"]),
+        _path(value["interpreter"]),
+        _path(value["protected_plan"]),
+        _digest(value["protected_plan_sha256"]),
+        _digest(value["source_commit"], 40),
+        _digest(value["admission_sha256"]),
+        _digest(value["adapter_sha256"]),
+        _digest(value["controller_sha256"]),
         _digest(value["bootstrap_sha256"]),
     )
     result.validate()
@@ -169,9 +202,12 @@ class CapturePlan(Plan):
         super().__post_init__()
         self.spec.validate()
         _digest(self.request_sha256)
-        if (self.root != self.spec.root or self.admission_sha256 != self.spec.admission_sha256
-                or self.controller_sha256 != self.spec.adapter_sha256
-                or any(getattr(self, name) != value for name, value in PROFILE.items())):
+        if (
+            self.root != self.spec.root
+            or self.admission_sha256 != self.spec.admission_sha256
+            or self.controller_sha256 != self.spec.adapter_sha256
+            or any(getattr(self, name) != value for name, value in PROFILE.items())
+        ):
             raise ValueError("Fixed capture profile and source binding required")
 
     @property
@@ -180,14 +216,22 @@ class CapturePlan(Plan):
 
     @property
     def argv(self) -> list[str]:
-        return [str(self.spec.interpreter), "-I", "-B", "-X",
-                f"pycache_prefix={self.root / 'service-pycache'}",
-                str(self.spec.checkout / "scripts/d1_owned_capture.py"), "service",
-                str(self.root / "capture-request.json"), self.request_sha256]
+        return [
+            str(self.spec.interpreter),
+            "-I",
+            "-B",
+            "-X",
+            f"pycache_prefix={self.root / 'service-pycache'}",
+            str(self.spec.checkout / "scripts/d1_owned_capture.py"),
+            "service",
+            str(self.root / "capture-request.json"),
+            self.request_sha256,
+        ]
 
 
 class ReceiptIO(Protocol):
     root: Path
+
     def write(self, name: str, record: dict[str, object]) -> None: ...
     def read(self, name: str, maximum: int) -> bytes: ...
 
@@ -210,7 +254,8 @@ def preflight(spec: CaptureSpec) -> None:
     plan = capture.read_plan(spec.protected_plan, spec.protected_plan_sha256)
     hashes = capture.validate_plan(plan)
     expected = {
-        "source_commit": spec.source_commit, "checkout": str(spec.checkout),
+        "source_commit": spec.source_commit,
+        "checkout": str(spec.checkout),
         "controller_interpreter": str(spec.interpreter),
         "controller": str(spec.checkout / "scripts/d1_bootstrap_control.py"),
         "bootstrap": str(spec.checkout / "tests/d1_bootstrap.py"),
@@ -229,9 +274,14 @@ def preflight(spec: CaptureSpec) -> None:
 
 
 def usage() -> dict[str, float]:
-    parent, children = resource.getrusage(resource.RUSAGE_SELF), resource.getrusage(resource.RUSAGE_CHILDREN)
-    return {"parent_cpu_seconds": parent.ru_utime + parent.ru_stime,
-            "waited_cli_cpu_seconds": children.ru_utime + children.ru_stime}
+    parent, children = (
+        resource.getrusage(resource.RUSAGE_SELF),
+        resource.getrusage(resource.RUSAGE_CHILDREN),
+    )
+    return {
+        "parent_cpu_seconds": parent.ru_utime + parent.ru_stime,
+        "waited_cli_cpu_seconds": children.ru_utime + children.ru_stime,
+    }
 
 
 def _usage_delta(before: dict[str, float], after: dict[str, float]) -> dict[str, float]:
@@ -248,9 +298,15 @@ def _bootstrap_report(spec: CaptureSpec, raw: bytes) -> None:
     if not 0 < len(raw) <= capture.LOG_LIMIT:
         raise ValueError("Bounded bootstrap report required")
     value = json.loads(raw, object_pairs_hook=_pairs, parse_constant=_constant)
-    expected = {"kind": "d1-capture-only", "source_commit": spec.source_commit, "owners": 13,
-                "original_methods": 22, "emitter": "math.exp", "primitive_calls_permitted": False,
-                "retention_activated": False}
+    expected = {
+        "kind": "d1-capture-only",
+        "source_commit": spec.source_commit,
+        "owners": 13,
+        "original_methods": 22,
+        "emitter": "math.exp",
+        "primitive_calls_permitted": False,
+        "retention_activated": False,
+    }
     if encoded(value) != encoded(expected):
         raise ValueError("Exact zero-primitive capture report differs")
 
@@ -259,7 +315,9 @@ class ServiceReceiptFailure(RuntimeError):
     def __init__(self, first: Fault, supplemental: Fault) -> None:
         self.first = first
         self.supplemental = supplemental
-        super().__init__(f"{first.stage}:{first.kind}:{first.detail}; {supplemental.stage}:{supplemental.kind}")
+        super().__init__(
+            f"{first.stage}:{first.kind}:{first.detail}; {supplemental.stage}:{supplemental.kind}"
+        )
 
 
 def service_identity(unit: str) -> tuple[str, str]:
@@ -281,18 +339,28 @@ def service_entry(request_path: Path, expected_sha256: str) -> int:
     if hashlib.sha256(raw).hexdigest() != _digest(expected_sha256):
         raise ValueError("Actual service request digest differs")
     request = decoded(raw, REQUEST_BYTES)
-    if set(request) != {"schema", "spec", "unit", "started", "deadline"} or request["schema"] != "d1-capture-request-v1":
+    if (
+        set(request) != {"schema", "spec", "unit", "started", "deadline"}
+        or request["schema"] != "d1-capture-request-v1"
+    ):
         raise ValueError("Exact service request required")
     spec = _spec(request["spec"])
     if request_path != spec.root / "capture-request.json" or request["unit"] != spec.unit:
         raise ValueError("Fixed request root and unit differ")
     started, deadline = request["started"], request["deadline"]
-    if (type(started) is not float or type(deadline) is not float
-            or not math.isfinite(started) or not math.isfinite(deadline)
-            or deadline - started != 300.0):
+    if (
+        type(started) is not float
+        or type(deadline) is not float
+        or not math.isfinite(started)
+        or not math.isfinite(deadline)
+        or deadline - started != 300.0
+    ):
         raise ValueError("Original absolute deadline required")
-    if (sys.flags.isolated != 1 or sys.flags.dont_write_bytecode != 1
-            or sys.pycache_prefix != str(spec.root / "service-pycache")):
+    if (
+        sys.flags.isolated != 1
+        or sys.flags.dont_write_bytecode != 1
+        or sys.pycache_prefix != str(spec.root / "service-pycache")
+    ):
         raise ValueError("Fixed isolated service startup differs")
     if next((spec.root / "service-pycache").iterdir(), None) is not None:
         raise ValueError("Fresh service cache is not empty")
@@ -304,7 +372,9 @@ def service_entry(request_path: Path, expected_sha256: str) -> int:
     try:
         if time.monotonic() >= deadline:
             raise TimeoutError("Original capture deadline reached before launch")
-        result = capture.launch(spec.protected_plan, spec.protected_plan_sha256, spec.root / "capture")
+        result = capture.launch(
+            spec.protected_plan, spec.protected_plan_sha256, spec.root / "capture"
+        )
         if time.monotonic() >= deadline:
             raise TimeoutError("Original capture deadline reached after launch")
         if not result.capture_observed:
@@ -315,11 +385,18 @@ def service_entry(request_path: Path, expected_sha256: str) -> int:
     except BaseException as service_error:
         primary = Fault.capture("service_capture", service_error)
     record: dict[str, object] = {
-        "schema": "d1-owned-capture-service-v1", "spec": spec.record(), "unit": spec.unit,
-        "invocation_id": invocation, "cgroup": group, "request_sha256": expected_sha256,
-        "started": started, "deadline": deadline, "observed_at": time.monotonic(),
+        "schema": "d1-owned-capture-service-v1",
+        "spec": spec.record(),
+        "unit": spec.unit,
+        "invocation_id": invocation,
+        "cgroup": group,
+        "request_sha256": expected_sha256,
+        "started": started,
+        "deadline": deadline,
+        "observed_at": time.monotonic(),
         "launch": None if result is None else asdict(result),
-        "bootstrap_report_sha256": report_sha, "bootstrap_report_bytes": report_size,
+        "bootstrap_report_sha256": report_sha,
+        "bootstrap_report_bytes": report_size,
         "first_fault": None if primary is None else asdict(primary),
     }
     try:
@@ -327,58 +404,120 @@ def service_entry(request_path: Path, expected_sha256: str) -> int:
     except BaseException as receipt_error:
         if primary is None:
             raise
-        raise ServiceReceiptFailure(primary, Fault.capture("service_receipt", receipt_error)) from None
+        raise ServiceReceiptFailure(
+            primary, Fault.capture("service_receipt", receipt_error)
+        ) from None
     return 0 if primary is None else 1
 
 
-def join_report(plan: CapturePlan, files: ReceiptIO, invocation: str, cgroup: str,
-                started: float, deadline: float) -> dict[str, object]:
+def join_report(
+    plan: CapturePlan,
+    files: ReceiptIO,
+    invocation: str,
+    cgroup: str,
+    started: float,
+    deadline: float,
+) -> dict[str, object]:
     raw = files.read("capture-service.json", REPORT_BYTES)
     # Files.write uses sorted indented JSON, which is bounded and duplicate-checked here.
     if type(raw) is not bytes or not 0 < len(raw) <= REPORT_BYTES:
         raise ValueError("Bounded service report bytes required before parsing")
     value = json.loads(raw, object_pairs_hook=_pairs, parse_constant=_constant)
     if type(value) is not dict or set(value) != {
-        "schema", "spec", "unit", "invocation_id", "cgroup", "request_sha256", "started",
-        "deadline", "observed_at", "launch", "bootstrap_report_sha256", "bootstrap_report_bytes", "first_fault",
+        "schema",
+        "spec",
+        "unit",
+        "invocation_id",
+        "cgroup",
+        "request_sha256",
+        "started",
+        "deadline",
+        "observed_at",
+        "launch",
+        "bootstrap_report_sha256",
+        "bootstrap_report_bytes",
+        "first_fault",
     }:
         raise ValueError("Exact bounded service report shape required")
-    expected = {"schema": "d1-owned-capture-service-v1", "spec": plan.spec.record(), "unit": plan.unit,
-                "invocation_id": invocation, "cgroup": cgroup, "request_sha256": plan.request_sha256,
-                "started": started, "deadline": deadline, "first_fault": None}
+    expected = {
+        "schema": "d1-owned-capture-service-v1",
+        "spec": plan.spec.record(),
+        "unit": plan.unit,
+        "invocation_id": invocation,
+        "cgroup": cgroup,
+        "request_sha256": plan.request_sha256,
+        "started": started,
+        "deadline": deadline,
+        "first_fault": None,
+    }
     if any(encoded(value[key]) != encoded(item) for key, item in expected.items()):
         raise ValueError("Service report/source/admission/root/invocation join differs")
     observed = value["observed_at"]
     if type(observed) is not float or not started <= observed < deadline:
         raise ValueError("Missing or late capture observation")
     inner = value["launch"]
-    keys = {"exit_code", "reaped", "timed_out", "custody_rechecked", "stdout_bytes", "wall_seconds",
-            "child_cpu_seconds", "capture_observed", "owned_tree_closed", "captured", "failure"}
+    keys = {
+        "exit_code",
+        "reaped",
+        "timed_out",
+        "custody_rechecked",
+        "stdout_bytes",
+        "wall_seconds",
+        "child_cpu_seconds",
+        "capture_observed",
+        "owned_tree_closed",
+        "captured",
+        "failure",
+    }
     if type(inner) is not dict or set(inner) != keys:
         raise ValueError("Exact inner capture result required")
-    for key, item in {"exit_code": 0, "reaped": True, "timed_out": False, "custody_rechecked": True,
-                      "capture_observed": True, "owned_tree_closed": None, "captured": False,
-                      "failure": "outer_owned_tree_closure_unproved"}.items():
+    for key, item in {
+        "exit_code": 0,
+        "reaped": True,
+        "timed_out": False,
+        "custody_rechecked": True,
+        "capture_observed": True,
+        "owned_tree_closed": None,
+        "captured": False,
+        "failure": "outer_owned_tree_closure_unproved",
+    }.items():
         if encoded(inner[key]) != encoded(item):
             raise ValueError("Inner observation cannot claim whole-tree acceptance")
     for key, upper in (("wall_seconds", 65.0), ("child_cpu_seconds", 30.0)):
         number = inner[key]
-        if type(number) not in (int, float) or not math.isfinite(number) or not 0 <= number <= upper:
+        if (
+            type(number) not in (int, float)
+            or not math.isfinite(number)
+            or not 0 <= number <= upper
+        ):
             raise ValueError("Inner measured scope missing or outside fixed limits")
     child_raw = files.read("capture/child.log", capture.LOG_LIMIT)
     _bootstrap_report(plan.spec, child_raw)
-    if (type(inner["stdout_bytes"]) is not int or inner["stdout_bytes"] != len(child_raw)
-            or type(value["bootstrap_report_bytes"]) is not int or value["bootstrap_report_bytes"] != len(child_raw)
-            or value["bootstrap_report_sha256"] != hashlib.sha256(child_raw).hexdigest()):
+    if (
+        type(inner["stdout_bytes"]) is not int
+        or inner["stdout_bytes"] != len(child_raw)
+        or type(value["bootstrap_report_bytes"]) is not int
+        or value["bootstrap_report_bytes"] != len(child_raw)
+        or value["bootstrap_report_sha256"] != hashlib.sha256(child_raw).hexdigest()
+    ):
         raise ValueError("Exact retained bootstrap bytes differ")
-    return {"service_sha256": hashlib.sha256(raw).hexdigest(), "service_bytes": len(raw),
-            "bootstrap_sha256": hashlib.sha256(child_raw).hexdigest(), "bootstrap_bytes": len(child_raw),
-            "inner_measured_scope": inner}
+    return {
+        "service_sha256": hashlib.sha256(raw).hexdigest(),
+        "service_bytes": len(raw),
+        "bootstrap_sha256": hashlib.sha256(child_raw).hexdigest(),
+        "bootstrap_bytes": len(child_raw),
+        "inner_measured_scope": inner,
+    }
 
 
-def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
-            clock: Callable[[], float] = time.monotonic, pause: Callable[[float], None] = time.sleep,
-            sample_usage: Callable[[], dict[str, float]] = usage) -> dict[str, object]:
+def execute(
+    spec: CaptureSpec,
+    supervisor: Supervisor,
+    files: ReceiptIO,
+    clock: Callable[[], float] = time.monotonic,
+    pause: Callable[[float], None] = time.sleep,
+    sample_usage: Callable[[], dict[str, float]] = usage,
+) -> dict[str, object]:
     """One owned attempt; returned success is provisional pending external ledger."""
     started = clock()
     baseline = sample_usage()
@@ -416,7 +555,9 @@ def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
         snapshot.bind(plan, invocation)
         if group is None:
             if not snapshot.cgroup or snapshot.populated is None:
-                raise ValueError("Actual populated-state/group binding required before disappearance")
+                raise ValueError(
+                    "Actual populated-state/group binding required before disappearance"
+                )
             group = snapshot.cgroup
         elif snapshot.cgroup and snapshot.cgroup != group:
             raise ValueError("Bound service group changed")
@@ -431,23 +572,48 @@ def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
         if files.root != spec.root:
             raise ValueError("Receipt root differs from intended root")
         # Validate the existing private run root before writing into it; no plan read yet.
-        request = {"schema": "d1-capture-request-v1", "spec": spec.record(), "unit": spec.unit,
-                   "started": started, "deadline": deadline}
+        request = {
+            "schema": "d1-capture-request-v1",
+            "spec": spec.record(),
+            "unit": spec.unit,
+            "started": started,
+            "deadline": deadline,
+        }
         request_raw = encoded(request)
         if len(request_raw) > REQUEST_BYTES:
             raise ValueError("Request byte bound")
-        plan = CapturePlan(root=spec.root, admission_sha256=spec.admission_sha256,
-                           controller_sha256=spec.adapter_sha256, spec=spec,
-                           request_sha256=hashlib.sha256(request_raw).hexdigest(),
-                           runtime_seconds=240, start_timeout_seconds=5, stop_timeout_seconds=5,
-                           cpu_quota_percent=50, quota_period_us=100_000,
-                           cpu_watch_ns=120_000_000_000, poll_seconds=4, observations=60,
-                           command_seconds=5, term_grace_seconds=2, terminal_seconds=300,
-                           service_file_bytes=1024 * 1024)
+        plan = CapturePlan(
+            root=spec.root,
+            admission_sha256=spec.admission_sha256,
+            controller_sha256=spec.adapter_sha256,
+            spec=spec,
+            request_sha256=hashlib.sha256(request_raw).hexdigest(),
+            runtime_seconds=240,
+            start_timeout_seconds=5,
+            stop_timeout_seconds=5,
+            cpu_quota_percent=50,
+            quota_period_us=100_000,
+            cpu_watch_ns=120_000_000_000,
+            poll_seconds=4,
+            observations=60,
+            command_seconds=5,
+            term_grace_seconds=2,
+            terminal_seconds=300,
+            service_file_bytes=1024 * 1024,
+        )
         intent_attempted = True
-        files.write("capture-intent.json", {"spec": spec.record(), "unit": spec.unit,
-                    "started": started, "deadline": deadline, "cpu_baseline": baseline,
-                    "no_retry": True, "profile": PROFILE})
+        files.write(
+            "capture-intent.json",
+            {
+                "spec": spec.record(),
+                "unit": spec.unit,
+                "started": started,
+                "deadline": deadline,
+                "cpu_baseline": baseline,
+                "no_retry": True,
+                "profile": PROFILE,
+            },
+        )
         claimed = True
         spec.control_root.mkdir(mode=0o700)
         (spec.root / "service-pycache").mkdir(mode=0o700)
@@ -455,7 +621,9 @@ def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
         request_path = spec.root / "capture-request.json"
         fd = os.open(request_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
         with os.fdopen(fd, "wb") as stream:
-            stream.write(request_raw); stream.flush(); os.fsync(stream.fileno())
+            stream.write(request_raw)
+            stream.flush()
+            os.fsync(stream.fileno())
         directory = os.open(spec.root, os.O_RDONLY | os.O_DIRECTORY)
         try:
             os.fsync(directory)
@@ -472,12 +640,19 @@ def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
         for index in range(60):
             bind(supervisor.snapshot(plan, remaining(started + 245.0)))
             assert latest is not None
-            files.write(f"capture-observation-{index:02d}.json", {
-                "unit": plan.unit, "invocation_id": invocation, "cgroup": group,
-                "snapshot": asdict(latest), "elapsed": clock() - started,
-                "parent_cli_delta": _usage_delta(baseline, sample_usage()),
-                "cgroup_cpu_ns": latest.cpu_ns, "scopes_not_added": True,
-            })
+            files.write(
+                f"capture-observation-{index:02d}.json",
+                {
+                    "unit": plan.unit,
+                    "invocation_id": invocation,
+                    "cgroup": group,
+                    "snapshot": asdict(latest),
+                    "elapsed": clock() - started,
+                    "parent_cli_delta": _usage_delta(baseline, sample_usage()),
+                    "cgroup_cpu_ns": latest.cpu_ns,
+                    "scopes_not_added": True,
+                },
+            )
             if latest.cpu_ns >= plan.cpu_watch_ns:
                 raise RuntimeError("Cgroup CPU watch reached")
             if closed:
@@ -485,9 +660,11 @@ def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
             pause(min(4.0, max(0.0, started + 245.0 - clock())))
         if not closed or latest is None:
             raise TimeoutError("Observation limit exhausted")
-        if (latest.properties.get("Result") != "success"
-                or latest.properties.get("ExecMainCode") != "1"
-                or latest.properties.get("ExecMainStatus") != "0"):
+        if (
+            latest.properties.get("Result") != "success"
+            or latest.properties.get("ExecMainCode") != "1"
+            or latest.properties.get("ExecMainStatus") != "0"
+        ):
             raise ValueError("Named capture service did not exit successfully")
         assert invocation is not None and group is not None
         joined = join_report(plan, files, invocation, group, started, deadline)
@@ -505,11 +682,18 @@ def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
                 reason = "intent_acknowledgement_unknown"
             else:
                 reason = "pre_intent_validation_failed"
-            return {"status": "incomplete", "accepted": False, "reason": reason,
-                    "intent_attempted": intent_attempted, "intent_acknowledged": False,
-                    "dispatch_attempted": False, "external_ledger_closure_required": True,
-                    "first_fault": None if first is None else asdict(first),
-                    "supplemental": [asdict(item) for item in supplemental], "no_retry": True}
+            return {
+                "status": "incomplete",
+                "accepted": False,
+                "reason": reason,
+                "intent_attempted": intent_attempted,
+                "intent_acknowledged": False,
+                "dispatch_attempted": False,
+                "external_ledger_closure_required": True,
+                "first_fault": None if first is None else asdict(first),
+                "supplemental": [asdict(item) for item in supplemental],
+                "no_retry": True,
+            }
     if dispatch and not closed and plan is not None:
         try:
             bind(supervisor.snapshot(plan, remaining()))
@@ -532,25 +716,41 @@ def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
             fault("termination", cleanup_error)
     try:
         remaining()
-        files.write("capture-terminal-before-stop.json", {
-            "unit": spec.unit, "invocation_id": invocation, "cgroup": group,
-            "snapshot": None if latest is None else asdict(latest), "closed": closed,
-            "first_fault": None if first is None else asdict(first),
-            "supplemental": [asdict(item) for item in supplemental], "report_join": joined,
-            "parent_cli_delta": _usage_delta(baseline, sample_usage()),
-            "cgroup_cpu_ns": None if latest is None else latest.cpu_ns,
-            "scopes_not_added": True,
-        })
+        files.write(
+            "capture-terminal-before-stop.json",
+            {
+                "unit": spec.unit,
+                "invocation_id": invocation,
+                "cgroup": group,
+                "snapshot": None if latest is None else asdict(latest),
+                "closed": closed,
+                "first_fault": None if first is None else asdict(first),
+                "supplemental": [asdict(item) for item in supplemental],
+                "report_join": joined,
+                "parent_cli_delta": _usage_delta(baseline, sample_usage()),
+                "cgroup_cpu_ns": None if latest is None else latest.cpu_ns,
+                "scopes_not_added": True,
+            },
+        )
         terminal_saved = True
     except BaseException as terminal_error:
         fault("terminal_receipt", terminal_error)
-    if closed and terminal_saved and plan is not None and invocation is not None and latest is not None:
+    if (
+        closed
+        and terminal_saved
+        and plan is not None
+        and invocation is not None
+        and latest is not None
+    ):
         try:
             supervisor.stop(plan, invocation, remaining())
             after = supervisor.snapshot(plan, remaining())
             after_snapshot = after
-            if (after.invocation not in ("", invocation) or after.cgroup not in ("", group)
-                    or after.properties.get("Id") not in (None, plan.unit)):
+            if (
+                after.invocation not in ("", invocation)
+                or after.cgroup not in ("", group)
+                or after.properties.get("Id") not in (None, plan.unit)
+            ):
                 raise ValueError("Post-stop identity changed")
             if after.invocation and after.cpu_ns < latest.cpu_ns:
                 raise ValueError("Post-stop CPU accounting decreased")
@@ -565,17 +765,28 @@ def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
     except BaseException as accounting_error:
         fault("final_accounting", accounting_error)
     record: dict[str, object] = {
-        "status": "provisional_complete" if first is None and not supplemental and closed and stopped and joined is not None else "incomplete",
-        "accepted": False, "external_ledger_closure_required": True,
-        "spec": spec.record(), "unit": spec.unit, "invocation_id": invocation, "cgroup": group,
-        "dispatch_attempted": dispatch, "cgroup_closed": closed, "cleanup_confirmed": stopped,
-        "terminal_receipt_saved": terminal_saved, "report_join": joined,
+        "status": "provisional_complete"
+        if first is None and not supplemental and closed and stopped and joined is not None
+        else "incomplete",
+        "accepted": False,
+        "external_ledger_closure_required": True,
+        "spec": spec.record(),
+        "unit": spec.unit,
+        "invocation_id": invocation,
+        "cgroup": group,
+        "dispatch_attempted": dispatch,
+        "cgroup_closed": closed,
+        "cleanup_confirmed": stopped,
+        "terminal_receipt_saved": terminal_saved,
+        "report_join": joined,
         "cleanup_snapshot": None if after_snapshot is None else asdict(after_snapshot),
         "terminal_cgroup_cpu_ns": None if latest is None else latest.cpu_ns,
-        "parent_cli_delta_before_final_receipt": final_usage, "scopes_not_added": True,
+        "parent_cli_delta_before_final_receipt": final_usage,
+        "scopes_not_added": True,
         "first_fault": None if first is None else asdict(first),
         "supplemental": [asdict(item) for item in supplemental],
-        "elapsed_before_final_receipt": clock() - started, "no_retry": True,
+        "elapsed_before_final_receipt": clock() - started,
+        "no_retry": True,
     }
     try:
         remaining()
