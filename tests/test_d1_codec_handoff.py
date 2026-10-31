@@ -32,11 +32,17 @@ def no_scientific_callbacks(monkeypatch: pytest.MonkeyPatch) -> None:
 
     def guarded_import(name: str, *args: Any, **kwargs: Any) -> Any:
         if name.removeprefix("tests.") in {
-            "endpoint_belief_reference", "d1_fixture_reference", "d1_prefix_evidence",
-            "d1_bounds", "grid_q1_driver", "grid_q1_reference",
+            "endpoint_belief_reference",
+            "d1_fixture_reference",
+            "d1_prefix_evidence",
+            "d1_bounds",
+            "grid_q1_driver",
+            "grid_q1_reference",
         } or name in {
-            "strange_physics.native_prediction", "strange_physics.native_endpoint_beliefs",
-            "strange_physics.simulation", "strange_physics.finite_log_weights",
+            "strange_physics.native_prediction",
+            "strange_physics.native_endpoint_beliefs",
+            "strange_physics.simulation",
+            "strange_physics.finite_log_weights",
         }:
             forbidden()
         return original_import(name, *args, **kwargs)
@@ -48,8 +54,16 @@ def no_scientific_callbacks(monkeypatch: pytest.MonkeyPatch) -> None:
 
 def fake_table() -> bytes:
     return build_table(
-        TableIdentity("1" * 40, "2" * 40, PROTOCOL_SHA256, "3" * 64,
-                      "4" * 64, "5" * 64, "handoff-run", "handoff-recorder"),
+        TableIdentity(
+            "1" * 40,
+            "2" * 40,
+            PROTOCOL_SHA256,
+            "3" * 64,
+            "4" * 64,
+            "5" * 64,
+            "handoff-run",
+            "handoff-recorder",
+        ),
         ("owned-fake-definition",) * 14,
     )
 
@@ -57,8 +71,18 @@ def fake_table() -> bytes:
 def fake_context() -> SinkContext:
     # Complete fixed call declaration, but this test executes only a tiny prefix.
     # The hash strings are synthetic declarations, not source authentication.
-    return SinkContext("handoff-recorder", "handoff-run", "1" * 40, "2" * 40,
-                       PROTOCOL_SHA256, "3" * 64, "4" * 64, "6" * 64, 55100, 65536)
+    return SinkContext(
+        "handoff-recorder",
+        "handoff-run",
+        "1" * 40,
+        "2" * 40,
+        PROTOCOL_SHA256,
+        "3" * 64,
+        "4" * 64,
+        "6" * 64,
+        55100,
+        65536,
+    )
 
 
 def bounded_read(path: Path, limit: int) -> bytes:
@@ -89,8 +113,12 @@ class OwnedFiles:
 
 
 @contextmanager
-def owned_files(tmp_path: Path, *, close_fault: OSError | None = None,
-                monkeypatch: pytest.MonkeyPatch | None = None) -> Iterator[OwnedFiles]:
+def owned_files(
+    tmp_path: Path,
+    *,
+    close_fault: OSError | None = None,
+    monkeypatch: pytest.MonkeyPatch | None = None,
+) -> Iterator[OwnedFiles]:
     """Test-only resource owner: no metadata activation or production coordinator."""
     tmp_path.chmod(0o700)
     table = fake_table()  # Kept in memory only; no T/A file is added to sink root.
@@ -103,8 +131,11 @@ def owned_files(tmp_path: Path, *, close_fault: OSError | None = None,
         value.body_error = body_error
         raise
     finally:
-        owned_fds = tuple(fd for fd in (value.sink._fd, value.sink._anchor.directory,
-                                        value.sink._anchor.parent) if fd is not None)
+        owned_fds = tuple(
+            fd
+            for fd in (value.sink._fd, value.sink._anchor.directory, value.sink._anchor.parent)
+            if fd is not None
+        )
         if value.bridge is not None:
             value.bridge_finishes += 1
             try:
@@ -159,10 +190,14 @@ def owned_files(tmp_path: Path, *, close_fault: OSError | None = None,
             if value.body_error is None:
                 raise value.cleanup_errors[0]
             for supplemental_error in value.cleanup_errors:
-                value.body_error.add_note("Supplemental owned cleanup observation: " + type(supplemental_error).__name__)
+                value.body_error.add_note(
+                    "Supplemental owned cleanup observation: " + type(supplemental_error).__name__
+                )
 
 
-def connect(value: OwnedFiles, *, after_append: Callable[[], None] | None = None) -> tuple[CodecAppendBridge, PrimitiveRecorder]:
+def connect(
+    value: OwnedFiles, *, after_append: Callable[[], None] | None = None
+) -> tuple[CodecAppendBridge, PrimitiveRecorder]:
     def append(line: bytes) -> None:
         value.timeline.append("append-start")
         value.physical_calls.append(line)
@@ -177,8 +212,14 @@ def connect(value: OwnedFiles, *, after_append: Callable[[], None] | None = None
 
 
 def log_call(recorder: PrimitiveRecorder, invoke: Callable[[], Decimal]) -> Decimal:
-    return recorder.call(call_id="c00000", instance_id="i12", primitive="log",
-                         scope=("ct", "s0"), arguments=Decimal("0"), invoke=invoke)
+    return recorder.call(
+        call_id="c00000",
+        instance_id="i12",
+        primitive="log",
+        scope=("ct", "s0"),
+        arguments=Decimal("0"),
+        invoke=invoke,
+    )
 
 
 def assert_closed(value: OwnedFiles, *, bridge: bool = True, uncertain: bool = False) -> None:
@@ -191,8 +232,12 @@ def assert_closed(value: OwnedFiles, *, bridge: bool = True, uncertain: bool = F
     assert terminal["state"] == "pending_external_confirmation"
 
 
-@pytest.mark.parametrize("representation", ["decimal", "binary64"], ids=["decimal-quantum", "signed-binary64"])
-def test_actual_success_handoff_is_ordered_and_exact(tmp_path: Path, representation: Literal["decimal", "binary64"]) -> None:
+@pytest.mark.parametrize(
+    "representation", ["decimal", "binary64"], ids=["decimal-quantum", "signed-binary64"]
+)
+def test_actual_success_handoff_is_ordered_and_exact(
+    tmp_path: Path, representation: Literal["decimal", "binary64"]
+) -> None:
     with owned_files(tmp_path) as value:
         bridge, recorder = connect(value)
         invoked: list[str] = []
@@ -206,6 +251,7 @@ def test_actual_success_handoff_is_ordered_and_exact(tmp_path: Path, representat
             assert value.sink.snapshot().confirmed_events == 1
 
         if representation == "decimal":
+
             def decimal_result() -> Decimal:
                 entered()
                 return Decimal("1.2500")
@@ -213,16 +259,30 @@ def test_actual_success_handoff_is_ordered_and_exact(tmp_path: Path, representat
             actual_decimal = log_call(recorder, decimal_result)
             assert actual_decimal.as_tuple() == Decimal("1.2500").as_tuple()
         else:
+
             def binary_result() -> float:
                 entered()
                 return -0.0
 
-            actual_binary = recorder.call(call_id="c00000", instance_id="i13", primitive="native_exp",
-                                          scope=("nv", "p00", "n0000"), arguments=-0.0, invoke=binary_result)
+            actual_binary = recorder.call(
+                call_id="c00000",
+                instance_id="i13",
+                primitive="native_exp",
+                scope=("nv", "p00", "n0000"),
+                arguments=-0.0,
+                invoke=binary_result,
+            )
             assert actual_binary.hex() == "-0x0.0p+0"
         value.timeline.append("consumer-handoff")
         assert invoked == ["fake"]
-        assert value.timeline == ["append-start", "append-return", "fake-invoke", "append-start", "append-return", "consumer-handoff"]
+        assert value.timeline == [
+            "append-start",
+            "append-return",
+            "fake-invoke",
+            "append-start",
+            "append-return",
+            "consumer-handoff",
+        ]
         records = recorder.snapshot()
         assert (records.invoked, records.returned, records.primitive_failed) == (1, 1, 0)
         assert all(item.delivery == "confirmed" for item in records.events)
@@ -238,13 +298,17 @@ def test_actual_success_handoff_is_ordered_and_exact(tmp_path: Path, representat
     assert value.cleanup_errors == []
 
 
-def test_intent_write_failure_prevents_fake_invocation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_intent_write_failure_prevents_fake_invocation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     original = OSError("owned intent-write fault")
     invoked: list[str] = []
     with owned_files(tmp_path) as value:
         bridge, recorder = connect(value)
 
-        def no_write(fd: int, raw: bytes, progress: list[int], check: Callable[[], None]) -> NoReturn:
+        def no_write(
+            fd: int, raw: bytes, progress: list[int], check: Callable[[], None]
+        ) -> NoReturn:
             assert fd == value.sink._fd and progress == [0] and raw.startswith(b'["i"')
             check()
             raise original
@@ -260,17 +324,27 @@ def test_intent_write_failure_prevents_fake_invocation(tmp_path: Path, monkeypat
         assert caught.value is original and recorder.first_exception is original
         assert invoked == [] and recorder.snapshot().invoked == 0
         assert len(value.physical_calls) == 1
-        assert value.sink.snapshot().reserved_events == 1 and value.sink.snapshot().confirmed_events == 0
+        assert (
+            value.sink.snapshot().reserved_events == 1
+            and value.sink.snapshot().confirmed_events == 0
+        )
         assert all(item.delivery == "unknown" for item in recorder.snapshot().events)
-        assert len(recorder.snapshot().events) == 2  # Intent plus failed logical Event; no physical retry.
+        assert (
+            len(recorder.snapshot().events) == 2
+        )  # Intent plus failed logical Event; no physical retry.
         assert bridge.snapshot().physical_blocked and bridge.snapshot().acknowledgements == 0
     assert_closed(value)
     inspection = inspect_sink(value.root, max_bytes=32768)
-    assert inspection.shards[0].complete_lines == 0 and inspection.shards[0].trailing_fragment_bytes == 0
+    assert (
+        inspection.shards[0].complete_lines == 0
+        and inspection.shards[0].trailing_fragment_bytes == 0
+    )
     assert inspection.acknowledgement == inspection.execution == "not-inferred"
 
 
-def test_return_partial_write_keeps_original_and_lost_close_confirmation(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_return_partial_write_keeps_original_and_lost_close_confirmation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     original = OSError("owned return-prefix fault")
     secondary = OSError(errno.EIO, "owned synthetic lost close confirmation")
     invoked: list[str] = []
@@ -282,7 +356,9 @@ def test_return_partial_write_keeps_original_and_lost_close_confirmation(tmp_pat
             real_write = sink_module._write_remaining
             writes: list[bytes] = []
 
-            def partial_return(fd: int, raw: bytes, progress: list[int], check: Callable[[], None]) -> None:
+            def partial_return(
+                fd: int, raw: bytes, progress: list[int], check: Callable[[], None]
+            ) -> None:
                 assert fd == value.sink._fd
                 writes.append(raw)
                 if len(writes) == 1:
@@ -315,7 +391,9 @@ def test_return_partial_write_keeps_original_and_lost_close_confirmation(tmp_pat
     assert (records.invoked, records.returned, records.primitive_failed) == (1, 1, 0)
     assert [item.delivery for item in records.events] == ["confirmed", "unknown", "unknown"]
     assert bridge.snapshot().next_ordinal == 1 and bridge.snapshot().physical_blocked
-    assert value.sink.snapshot().reserved_events == 2 and value.sink.snapshot().confirmed_events == 1
+    assert (
+        value.sink.snapshot().reserved_events == 2 and value.sink.snapshot().confirmed_events == 1
+    )
     assert value.sink.snapshot().reserved_bytes == sum(map(len, value.physical_calls))
     assert value.sink.snapshot().written_bytes == len(value.physical_calls[0]) + len(fragments[0])
     assert_closed(value, uncertain=True)
@@ -341,7 +419,11 @@ def test_fake_primitive_exception_is_distinct_from_forensic_acknowledgement(tmp_
             log_call(recorder, fake)
         assert caught.value is original and recorder.first_exception is original
         records = recorder.snapshot()
-        assert invoked == ["fake"] and (records.invoked, records.returned, records.primitive_failed) == (1, 0, 1)
+        assert invoked == ["fake"] and (
+            records.invoked,
+            records.returned,
+            records.primitive_failed,
+        ) == (1, 0, 1)
         assert [item.delivery for item in records.events] == ["confirmed", "unknown"]
         assert [fault.phase for fault in records.faults] == ["primitive", "fault_retention"]
         assert bridge.snapshot().callback_returns == 2 and bridge.snapshot().acknowledgements == 1
@@ -375,7 +457,13 @@ def test_swallowed_recorder_reentry_invalid_return_produces_fault_three(tmp_path
         records = recorder.snapshot()
         assert callbacks == ["outer"] and len(nested) == 1
         assert recorder.first_exception is nested[0] and outer.value is not nested[0]
-        assert [fault.phase for fault in records.faults] == ["reentry", "return_encoding", "return_sink", "return_encoding", "fault_retention"]
+        assert [fault.phase for fault in records.faults] == [
+            "reentry",
+            "return_encoding",
+            "return_sink",
+            "return_encoding",
+            "fault_retention",
+        ]
         assert [fault.ordinal for fault in records.faults] == [0, 1, 2, 3, 4]
         assert [item.delivery for item in records.events] == ["confirmed", "unknown", "unknown"]
         assert (records.invoked, records.returned, records.primitive_failed) == (1, 1, 0)
@@ -385,8 +473,13 @@ def test_swallowed_recorder_reentry_invalid_return_produces_fault_three(tmp_path
         failed_event = classify_raw(lines[2])
         assert unavailable.unavailable and failed_event.fault is not None
         assert failed_event.fault.ordinal == 3 and failed_event.fault.phase == "return_encoding"
-        assert failed_event.fault.exception_type == type(outer.value).__module__ + "." + type(outer.value).__qualname__
-        assert value.sink.snapshot().confirmed_events == 3 and bridge.snapshot().acknowledgements == 1
+        assert (
+            failed_event.fault.exception_type
+            == type(outer.value).__module__ + "." + type(outer.value).__qualname__
+        )
+        assert (
+            value.sink.snapshot().confirmed_events == 3 and bridge.snapshot().acknowledgements == 1
+        )
         assert bridge.snapshot().fallback_attempts == 2
     assert_closed(value)
 
@@ -395,6 +488,7 @@ def test_swallowed_bridge_reentry_after_real_write_never_invokes_fake(tmp_path: 
     nested: list[BaseException] = []
     invoked: list[str] = []
     with owned_files(tmp_path) as value:
+
         def reenter() -> None:
             assert value.bridge is not None
             try:
