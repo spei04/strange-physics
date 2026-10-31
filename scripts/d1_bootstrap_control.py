@@ -29,6 +29,8 @@ LOG_LIMIT = 64 * 1024
 CHILD_CPU_LIMIT = 30
 CHILD_WALL_LIMIT = 60
 CLEANUP_LIMIT = 5
+SITE_CUSTOMIZE_SHA256 = "43d81125d92376b1a69d53a71126a041cc9a18d8080e92dea0a2ae23be138b1e"
+SYSCONFIG_SHA256 = "ee5bb5493fa4575f7788e1b0e8a067b9c463f9705dcb36f5eb571d1c0812ea82"
 VIRTUALENV_HOOK_SHA256 = "cfb3db86aaa53bb62b5ff764970bec2d71c9228590a0ebec57f6ec926cc0bf1a"
 HELPERS = (
     "d1_bootstrap",
@@ -207,6 +209,52 @@ def _interpreter_file(
     raise PreflightError("Interpreter chain exceeds its finite inventory")
 
 
+def runtime_aliases(paths: dict[str, Path]) -> dict[Path, tuple[str, Path, str, str | None, int]]:
+    """Only the reviewed Linux aliases; their targets are inventoried once."""
+    stdlib, venv = paths["stdlib"], paths["venv_root"]
+    config = stdlib / "_sysconfigdata__x86_64-linux-gnu.py"
+    return {
+        venv / "lib64": ("lib", venv / "lib", "directory", None, os.getuid()),
+        stdlib / "_sysconfigdata__linux_x86_64-linux-gnu.py": (
+            config.name, config, "file", SYSCONFIG_SHA256, 0
+        ),
+        stdlib / "config-3.12-x86_64-linux-gnu/libpython3.12.so": (
+            "../../x86_64-linux-gnu/libpython3.12.so.1",
+            Path("/usr/lib/x86_64-linux-gnu/libpython3.12.so.1"),
+            "link", None, 0,
+        ),
+        Path("/usr/lib/x86_64-linux-gnu/libpython3.12.so.1"): (
+            "libpython3.12.so.1.0",
+            Path("/usr/lib/x86_64-linux-gnu/libpython3.12.so.1.0"),
+            "file", None, 0,
+        ),
+        stdlib / "sitecustomize.py": (
+            "/etc/python3.12/sitecustomize.py",
+            Path("/etc/python3.12/sitecustomize.py"),
+            "file",
+            SITE_CUSTOMIZE_SHA256,
+            0,
+        ),
+    }
+
+
+def _absent(path: Path) -> None:
+    """Observe ENOENT without closing unrelated siblings; custody remains external."""
+    _ancestors(path)
+    before = path.parent.lstat()
+    try:
+        path.lstat()
+    except FileNotFoundError:
+        pass
+    else:
+        raise PreflightError("Startup path is present, including a dangling link")
+    after = path.parent.lstat()
+    if (before.st_dev, before.st_ino, before.st_uid, before.st_mode) != (
+        after.st_dev, after.st_ino, after.st_uid, after.st_mode
+    ):
+        raise PreflightError("Startup absence parent changed")
+
+
 def _startup_hooks(
     plan: dict[str, Any],
     paths: dict[str, Path],
@@ -224,14 +272,33 @@ def _startup_hooks(
         if _path(item["path"]) in startup | {site}
         for name in item["entries"]
     }
-    if any(
-        path.name in ("sitecustomize", "usercustomize")
+    customization = {
+        path for path in candidates
+        if path.name in ("sitecustomize", "usercustomize")
         or path.name.startswith(("sitecustomize.", "usercustomize."))
-        for path in candidates
-    ):
-        raise PreflightError("Unreviewed startup customization")
-    pth = {path for path in candidates if path.parent == site and path.suffix == ".pth"}
+    }
     expected: set[str] = set()
+    if customization:
+        hook = paths.get("stdlib", Path("/unsupported")) / "sitecustomize.py"
+        target = Path("/etc/python3.12/sitecustomize.py")
+        links = {item["path"]: item for item in plan.get("links", [])}
+        if (
+            customization != {hook}
+            or inventory.get(hook) != "link"
+            or inventory.get(target) != "file"
+            or links.get(str(hook), {}).get("target") != str(target)
+            or hashes.get(str(target)) != SITE_CUSTOMIZE_SHA256
+        ):
+            raise PreflightError("Unreviewed startup customization")
+        # The reviewed hook is inert only when its optional import is unavailable.
+        if (
+            any(path.name.startswith("apport_python_hook") for path in candidates)
+            or any(name == "apport_python_hook" or name.startswith("apport_python_hook.")
+                   for name in plan.get("builtin_modules", []) + plan.get("frozen_modules", []))
+        ):
+            raise PreflightError("Unreviewed apport startup dependency")
+        expected.update((str(hook), str(target)))
+    pth = {path for path in candidates if path.parent == site and path.suffix == ".pth"}
     if pth:
         hook, source = site / "_virtualenv.pth", site / "_virtualenv.py"
         if pth != {hook}:
@@ -243,7 +310,7 @@ def _startup_hooks(
             raise PreflightError("Startup hook import line differs")
         if hashes.get(str(source)) != VIRTUALENV_HOOK_SHA256:
             raise PreflightError("Startup hook source differs from its independent review")
-        expected = {str(hook), str(source)}
+        expected.update((str(hook), str(source)))
     if set(plan["startup_hook_files"]) != expected:
         raise PreflightError("Startup hook membership is incomplete")
 
@@ -368,12 +435,15 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
         paths["interpreter"].parent / "python3.12",
     }
     targets: dict[Path, str] = {}
+    aliases = runtime_aliases(paths)
+    file_owners = {item["path"]: item["uid"] for item in files}
+    directory_owners = {item["path"]: item["uid"] for item in directories}
     for item in links:
         if not isinstance(item, dict) or set(item) != {"path", "uid", "target"}:
             raise PreflightError("Invalid interpreter link")
         path = _path(item["path"])
-        if path not in allowed_links or path in inventory:
-            raise PreflightError("Only the explicit interpreter links are permitted")
+        if path not in allowed_links | aliases.keys() or path in inventory:
+            raise PreflightError("Only explicit interpreter and reviewed runtime links are permitted")
         _ancestors(path)
         info = path.lstat()
         if (
@@ -387,8 +457,21 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
             raise PreflightError("Interpreter literal link target differs")
         inventory[path] = "link"
         targets[path] = item["target"]
+    link_owners = {item["path"]: item["uid"] for item in links}
     for path in targets:
-        _interpreter_file(path, inventory, targets)
+        if path in aliases:
+            literal, target, kind, digest, owner = aliases[path]
+            owners = {"file": file_owners, "directory": directory_owners, "link": link_owners}[kind]
+            if (
+                targets[path] != literal
+                or link_owners[str(path)] != owner
+                or inventory.get(target) != kind
+                or owners.get(str(target)) != owner
+                or (digest is not None and hashes.get(str(target)) != digest)
+            ):
+                raise PreflightError("Reviewed runtime alias target or custody differs")
+        else:
+            _interpreter_file(path, inventory, targets)
     target_executable = _interpreter_file(paths["interpreter"], inventory, targets)
     for item in directories:
         if any(_path(item["path"]) / name not in inventory for name in item["entries"]):
@@ -411,13 +494,15 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
     if settings.get("version_info") != plan["python_version"]:
         raise PreflightError("Virtual environment version differs")
     for name in plan["startup_hook_files"]:
-        if inventory.get(_path(name)) != "file":
+        hook = _path(name)
+        if inventory.get(hook) != "file" and not (
+            inventory.get(hook) == "link"
+            and hook == paths["stdlib"] / "sitecustomize.py"
+        ):
             raise PreflightError("Reviewed startup hook source is missing")
     for name in plan["absent_startup_paths"]:
         path = _path(name)
-        _ancestors(path)
-        if path.exists() or path.is_symlink() or inventory.get(path.parent) != "directory":
-            raise PreflightError("Startup absence requires closed parent membership")
+        _absent(path)
     for name in plan["startup_sys_path"]:
         path = _path(name)
         if path not in inventory and name not in plan["absent_startup_paths"]:

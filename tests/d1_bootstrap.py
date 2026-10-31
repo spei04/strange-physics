@@ -316,6 +316,44 @@ def _source_module(name: str, plan: dict[str, Any]) -> ModuleType:
     return module
 
 
+def _runtime_alias_origin(
+    name: str, module: ModuleType, plan: dict[str, Any], files: dict[str, Any]
+) -> bool:
+    """Match only reviewed source aliases; parent preflight checks actual custody."""
+    stdlib = Path(plan.get("stdlib", "/unsupported"))
+    aliases = {
+        "sitecustomize": (
+            stdlib / "sitecustomize.py",
+            "/etc/python3.12/sitecustomize.py",
+            Path("/etc/python3.12/sitecustomize.py"),
+            "43d81125d92376b1a69d53a71126a041cc9a18d8080e92dea0a2ae23be138b1e",
+        ),
+        "_sysconfigdata__linux_x86_64-linux-gnu": (
+            stdlib / "_sysconfigdata__linux_x86_64-linux-gnu.py",
+            "_sysconfigdata__x86_64-linux-gnu.py",
+            stdlib / "_sysconfigdata__x86_64-linux-gnu.py",
+            "ee5bb5493fa4575f7788e1b0e8a067b9c463f9705dcb36f5eb571d1c0812ea82",
+        ),
+    }
+    if name not in aliases:
+        return False
+    origin, literal, target, digest = aliases[name]
+    spec = module.__spec__
+    links = {item["path"]: item for item in plan.get("links", [])}
+    link, entry = links.get(str(origin), {}), files.get(str(target), {})
+    return (
+        spec is not None
+        and spec.name == name
+        and type(spec.loader) is importlib.machinery.SourceFileLoader
+        and spec.origin == str(origin)
+        and module.__dict__.get("__file__") == str(origin)
+        and link.get("target") == literal
+        and link.get("uid") == 0
+        and entry.get("uid") == 0
+        and entry.get("sha256") == digest
+    )
+
+
 def _check_loaded(plan: dict[str, Any]) -> None:
     files = {item["path"]: item for item in plan["files"]}
     routes = plan["import_map"]
@@ -324,6 +362,8 @@ def _check_loaded(plan: dict[str, Any]) -> None:
     for name, module in tuple(sys.modules.items()):
         if module is None:
             continue
+        if name == "apport_python_hook" or name.startswith("apport_python_hook."):
+            raise BootstrapError("Unreviewed apport startup dependency was loaded")
         if name.startswith("tests.") or name in FORBIDDEN_HELPERS:
             raise BootstrapError("Alternate helper alias or inactive component was loaded")
         if name in ("typing.io", "typing.re"):
@@ -359,7 +399,8 @@ def _check_loaded(plan: dict[str, Any]) -> None:
             if name not in frozen:
                 raise BootstrapError("Unlisted frozen module")
         elif origin not in files:
-            raise BootstrapError("Loaded module origin is outside the protected runtime inventory")
+            if type(module) is not ModuleType or not _runtime_alias_origin(name, module, plan, files):
+                raise BootstrapError("Loaded module origin is outside the protected runtime inventory")
         if isinstance(origin, str):
             source_roots = (
                 Path(plan["checkout"]) / "tests",

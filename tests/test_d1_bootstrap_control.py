@@ -467,3 +467,89 @@ def test_startup_hook_membership_is_derived_not_asserted(
     else:
         with pytest.raises(control.PreflightError):
             control._startup_hooks(plan, {"site_packages": site}, inventory, hashes)
+
+
+def test_absence_does_not_inventory_unrelated_siblings(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(control, "_ancestors", lambda path: None)
+    (tmp_path / "unrelated").symlink_to("/not-followed")
+    control._absent(tmp_path / "python312.zip")
+
+
+@pytest.mark.parametrize("kind", ["regular", "directory", "dangling"])
+def test_absence_rejects_every_existing_entry(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
+    monkeypatch.setattr(control, "_ancestors", lambda path: None)
+    path = tmp_path / "python312.zip"
+    if kind == "regular":
+        path.write_bytes(b"archive")
+    elif kind == "directory":
+        path.mkdir()
+    else:
+        path.symlink_to(tmp_path / "missing")
+    with pytest.raises(control.PreflightError, match="present"):
+        control._absent(path)
+
+
+def test_absence_does_not_hide_permission_errors(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(control, "_ancestors", lambda path: None)
+    class DeniedPath(Path):
+        def lstat(self) -> os.stat_result:
+            if self.name == "python312.zip":
+                raise PermissionError("synthetic")
+            return super().lstat()
+
+    with pytest.raises(PermissionError):
+        control._absent(DeniedPath("/python312.zip"))
+
+
+@pytest.mark.parametrize("literal", ["lib", "other"])
+def test_closed_venv_lib64_alias(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, literal: str
+) -> None:
+    plan = synthetic_plan(tmp_path, monkeypatch)
+    alias = Path(plan["venv_root"]) / "lib64"
+    alias.symlink_to(literal)
+    plan["links"].append({"path": str(alias), "uid": os.getuid(), "target": literal})
+    next(d for d in plan["directories"] if d["path"] == plan["venv_root"])["entries"].append("lib64")
+    if literal == "lib":
+        control.validate_plan(plan)
+    else:
+        with pytest.raises(control.PreflightError, match="runtime alias"):
+            control.validate_plan(plan)
+
+
+@pytest.mark.parametrize("case", ["reviewed", "changed_hash", "omitted", "apport_py", "apport_dir", "apport_so", "apport_pyc", "apport_frozen", "apport_builtin"])
+def test_reviewed_ubuntu_hook_requires_absent_optional_dependency(case: str) -> None:
+    stdlib = Path("/protected/stdlib")
+    site = Path("/protected/site")
+    dynamic = stdlib / "lib-dynload"
+    hook = stdlib / "sitecustomize.py"
+    target = Path("/etc/python3.12/sitecustomize.py")
+    plan: dict[str, Any] = {
+        "startup_sys_path": [str(stdlib), str(dynamic), str(site)],
+        "startup_hook_files": [] if case == "omitted" else [str(hook), str(target)],
+        "directories": [
+            {"path": str(stdlib), "entries": ["sitecustomize.py", "lib-dynload"]},
+            {"path": str(site), "entries": []},
+            {"path": str(dynamic), "entries": []},
+        ],
+        "links": [{"path": str(hook), "uid": 0, "target": str(target)}],
+        "builtin_modules": [], "frozen_modules": [],
+    }
+    if case in ("apport_py", "apport_dir", "apport_so", "apport_pyc"):
+        suffix = {"apport_py": ".py", "apport_dir": "", "apport_so": ".cpython-312-x86_64-linux-gnu.so", "apport_pyc": ".pyc"}[case]
+        plan["directories"][2]["entries"].append("apport_python_hook" + suffix)
+    if case == "apport_frozen":
+        plan["frozen_modules"] = ["apport_python_hook"]
+    if case == "apport_builtin":
+        plan["builtin_modules"] = ["apport_python_hook"]
+    inventory = {stdlib: "directory", site: "directory", dynamic: "directory", hook: "link", target: "file"}
+    hashes = {str(target): "0" * 64 if case == "changed_hash" else control.SITE_CUSTOMIZE_SHA256}
+    if case == "reviewed":
+        control._startup_hooks(plan, {"stdlib": stdlib, "site_packages": site}, inventory, hashes)
+    else:
+        with pytest.raises(control.PreflightError):
+            control._startup_hooks(plan, {"stdlib": stdlib, "site_packages": site}, inventory, hashes)

@@ -869,3 +869,51 @@ def test_window_cannot_be_recreated_after_consumption(monkeypatch: pytest.Monkey
     with pytest.raises(bootstrap.BootstrapError, match="consumed"):
         bootstrap._start_window(plan)
     assert bootstrap._WINDOW is window
+
+
+@pytest.mark.parametrize("name", ["sitecustomize", "_sysconfigdata__linux_x86_64-linux-gnu"])
+@pytest.mark.parametrize("fault", [None, "name", "loader", "literal", "hash", "owner"])
+def test_loaded_linux_source_aliases_require_exact_identity(
+    monkeypatch: pytest.MonkeyPatch, name: str, fault: str | None
+) -> None:
+    stdlib = Path("/protected/stdlib")
+    if name == "sitecustomize":
+        origin, literal, target, digest = (
+            stdlib / "sitecustomize.py",
+            "/etc/python3.12/sitecustomize.py",
+            Path("/etc/python3.12/sitecustomize.py"),
+            "43d81125d92376b1a69d53a71126a041cc9a18d8080e92dea0a2ae23be138b1e",
+        )
+    else:
+        origin, literal, target, digest = (
+            stdlib / (name + ".py"), "_sysconfigdata__x86_64-linux-gnu.py",
+            stdlib / "_sysconfigdata__x86_64-linux-gnu.py",
+            "ee5bb5493fa4575f7788e1b0e8a067b9c463f9705dcb36f5eb571d1c0812ea82",
+        )
+    module = ModuleType(name)
+    loader = importlib.machinery.SourceFileLoader(name, str(origin))
+    module.__spec__ = importlib.machinery.ModuleSpec(name, loader, origin=str(origin))
+    module.__file__ = str(origin)
+    plan: dict[str, Any] = {
+        "stdlib": str(stdlib), "checkout": "/protected/checkout",
+        "site_packages": "/protected/site", "import_map": {},
+        "builtin_modules": [], "frozen_modules": [],
+        "links": [{"path": str(origin), "target": literal, "uid": 0}],
+        "files": [{"path": str(target), "sha256": digest, "uid": 0}],
+    }
+    if fault == "name":
+        module.__spec__.name = "impostor"
+    elif fault == "loader":
+        module.__spec__.loader = None
+    elif fault == "literal":
+        plan["links"][0]["target"] = "/different"
+    elif fault == "hash":
+        plan["files"][0]["sha256"] = "0" * 64
+    elif fault == "owner":
+        plan["links"][0]["uid"] = 99
+    monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={name: module}))
+    if fault is None:
+        bootstrap._check_loaded(plan)
+    else:
+        with pytest.raises(bootstrap.BootstrapError):
+            bootstrap._check_loaded(plan)
