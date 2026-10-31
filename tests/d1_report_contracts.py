@@ -177,7 +177,7 @@ def encode_decimal(value: Decimal) -> DecimalAtom:
 def decode_decimal(value: DecimalAtom) -> Decimal:
     if type(value) is not DecimalAtom:
         raise ValueError("Exact DecimalAtom required")
-    return DecimalAtom.model_validate_json(value.model_dump_json()).value()
+    return DecimalAtom.model_validate(vars(value)).value()
 
 
 def _hex(value: str) -> str:
