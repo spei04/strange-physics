@@ -12,6 +12,8 @@ from typing import Any
 
 import pytest
 
+from scripts import ci_artifacts
+from scripts import d1_bootstrap_control as control
 from scripts import d1_runtime_inventory as inventory
 
 
@@ -24,7 +26,7 @@ def put(path: Path, raw: bytes) -> None:
 @pytest.fixture
 def owned(monkeypatch: pytest.MonkeyPatch) -> None:
     # /tmp is deliberately not a protected runtime. Test only owned fixture I/O.
-    monkeypatch.setattr(inventory.control, "_ancestors", lambda path: None)
+    monkeypatch.setattr(control, "_ancestors", lambda path: None)
 
 
 def test_inventory_deduplicates_overlapping_roots_and_alias_target(
@@ -69,9 +71,9 @@ def test_inventory_stops_at_cumulative_limits(
     put(tmp_path / "root/a", b"abc")
     put(tmp_path / "root/b", b"def")
     if bound == "entries":
-        monkeypatch.setattr(inventory.control, "ENTRY_LIMIT", 2)
+        monkeypatch.setattr(control, "ENTRY_LIMIT", 2)
     else:
-        monkeypatch.setattr(inventory.control, "TOTAL_INPUT_LIMIT", 5)
+        monkeypatch.setattr(control, "TOTAL_INPUT_LIMIT", 5)
     with pytest.raises(ValueError):
         inventory.collect_inventory(
             (tmp_path / "root",), (), stdlib=tmp_path / "stdlib", venv=tmp_path / "venv"
@@ -95,7 +97,7 @@ def fixture_installation(
         ),
         "py.typed": b"",
     }
-    original = inventory.ci_artifacts
+    original = ci_artifacts
     monkeypatch.setattr(
         inventory,
         "ci_artifacts",
@@ -245,7 +247,7 @@ def test_records_are_exclusive_owner_only_and_bounded(tmp_path: Path, owned: Non
         inventory.write_record(path, {"observed": 2})
     assert json.loads(path.read_bytes()) == {"observed": 1}
     with pytest.raises(ValueError, match="ceiling"):
-        inventory.encoded({"value": "x" * inventory.control.PLAN_LIMIT})
+        inventory.encoded({"value": "x" * control.PLAN_LIMIT})
 
 
 def test_materialize_plan_rejects_supplied_inventory() -> None:
@@ -303,7 +305,7 @@ def test_plan_materialization_joins_required_source_and_calls_existing_validator
 
     monkeypatch.setattr(inventory, "collect_inventory", census)
     monkeypatch.setattr(
-        inventory, "_bytes", lambda path, limit: inventory.control._read(path, limit, os.getuid())
+        inventory, "_bytes", lambda path, limit: control._read(path, limit, os.getuid())
     )
     runtime = Path("/reviewed/native.so")
     observed = inventory.materialize_plan(binding, runtime_files=(runtime,))
@@ -369,7 +371,7 @@ def test_materialization_cannot_omit_missing_fixed_entry_source(
 
     monkeypatch.setattr(inventory, "collect_inventory", census)
     monkeypatch.setattr(
-        inventory, "_bytes", lambda path, limit: inventory.control._read(path, limit, os.getuid())
+        inventory, "_bytes", lambda path, limit: control._read(path, limit, os.getuid())
     )
     with pytest.raises(FileNotFoundError):
         inventory.materialize_plan(binding, runtime_files=(Path("/reviewed/native.so"),))

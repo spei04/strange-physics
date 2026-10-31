@@ -473,14 +473,14 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
     link_owners = {item["path"]: item["uid"] for item in links}
     for path in targets:
         if path in aliases:
-            literal, target, kind, digest, owner = aliases[path]
+            literal, target, kind, alias_digest, owner = aliases[path]
             owners = {"file": file_owners, "directory": directory_owners, "link": link_owners}[kind]
             if (
                 targets[path] != literal
                 or link_owners[str(path)] != owner
                 or inventory.get(target) != kind
                 or owners.get(str(target)) != owner
-                or (digest is not None and hashes.get(str(target)) != digest)
+                or (alias_digest is not None and hashes.get(str(target)) != alias_digest)
             ):
                 raise PreflightError("Reviewed runtime alias target or custody differs")
         else:
