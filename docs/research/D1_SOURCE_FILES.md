@@ -2,8 +2,11 @@
 
 Research's assigned source slice follows the reviewed
 [owned-file design](D1_SOURCE_FILE_OBSERVATION_DESIGN.md) at `b94d812`.
-The helper and tests are committed at
-`c11f95e91fb931bd4edf00e55badb48de9d4b421`; this note adds no implementation.
+The original 60-case helper/test checkpoint is
+`c11f95e91fb931bd4edf00e55badb48de9d4b421`. Independent source review found
+two busy-state windows around the first and final owner guards. This successor
+keeps busy state across both guards and cleanup, with two additional regressions;
+the original 60 cases and assertions remain unchanged.
 Only `tests/d1_source_files.py`, `tests/test_d1_source_files.py` and this guide
 belong to the slice. Lead owns central progress and A. Source review and a fresh
 bounded engineering unit are prerequisites to execution; the parser's own
@@ -58,7 +61,11 @@ owned checkout-shaped directory proves none of those scientific premises.
 
 Consume the opportunity before parsing or filesystem work. PID/thread mismatch
 or reentry latches the first exception. Rejected nested entry never clears an
-outer busy flag; a later consumed call performs no I/O or cleanup. Sticky faults
+outer busy flag. Entry marks used/busy before any owner callback; the first guard
+runs inside protected cleanup, and an outermost finally clears busy only after
+the final guard and completion decision. A swallowed nested call from either
+guard therefore latches the exact original exception. A later consumed call
+performs no I/O or cleanup. Sticky faults
 block further observation work, including after swallowed callbacks, while all
 remaining independently owned closes still execute once. Slots are removed
 before close; the borrowed FD is never in the ownership stack.
@@ -125,7 +132,7 @@ No allocation, historical-cost settlement or whole-science fit follows here.
 
 ## Authored tests and retained fixture estimate
 
-Static AST inspection finds **60 cases in 17 test functions**, **180 prospective
+Static AST inspection finds **62 cases in 18 test functions**, **186 prospective
 phase reports**, and maximum node-ID length **106**. All parameterizations have
 short literal IDs. None has been collected or executed.
 
@@ -144,6 +151,7 @@ short literal IDs. None has been collected or executed.
 | Swallowed read/close reentry, with/without later error | 4 |
 | Entered open with no returned FD | 1 |
 | Wrong PID/thread using scoped substitution | 2 |
+| Swallowed reentry during first/final owner guard | 2 |
 | Descriptor/named-stat failures | 2 |
 | First-leaf/final-root close uncertainty | 2 |
 | Explicit plan field/member/length caps | 6 |
@@ -158,26 +166,30 @@ conservative 3,597-byte input/file bound. The fixture also asserts its encoded
 length is below 8,192 before writing. This is static syntax arithmetic, not an
 observed encoding measurement or a scientific table/batch encoding run.
 
-The seven other initial files each contain nine fake bytes. Across **all 60
+The seven other initial files each contain nine fake bytes. Across **all 62
 retained parametrized cases**, the conservative payload calculation is:
 
-`60*(3597+7*9) + 131063 + 9 + 9 + 1 + 64 = 350,746 bytes`.
+`62*(3597+7*9) + 131063 + 9 + 9 + 1 + 64 = 358,066 bytes`.
 
 The additions cover the one large-file replacement delta, retained replacement
 copy, extra hardlink pathname, appended byte and all symlink payloads. This fits
 a proposed **384 KiB fixture payload ceiling**, below the accepted 1 MiB planning
 target; it is not measured retention or an engineering admission. Count each
-hardlink name, not just unique physical bytes. At most 482 regular-file names,
-4 symlinks, 1 FIFO and 301 fixture-owned directories are retained; the 60 pytest
+hardlink name, not just unique physical bytes. At most 498 regular-file names,
+4 symlinks, 1 FIFO and 311 fixture-owned directories are retained; the 62 pytest
 case directories and pytest's own parent/cache/log files are additional. Symlinks
 are not followed in the later whole-output census. No mock survives its context
 into caller-root close or pytest teardown.
 
-Fixture setup invokes at most 541 high-level `mkdir` calls and 484 content-write
+Fixture setup invokes at most 559 high-level `mkdir` calls and 500 content-write
 calls, including mutations; recursive `Path.mkdir` internals are distinct from
-those high-level counts. There is one hardlink creation, one FIFO creation, four
+those high-level counts. Each fixture explicitly chmods only its root and four
+known owned parent directories to 0755 (310 directory chmods across all cases);
+this avoids dependence on inherited umask and makes public-mode coverage explicit.
+There are at most 498 file chmods including the two mode mutations. There is one
+hardlink creation, one FIFO creation, four
 symlinks and five renames. Helper work across this authored matrix is bounded by
-1,020 opens/closes, 5,040 stat calls and 961 read calls (8 fixed members per case,
+1,054 opens/closes, 5,208 stat calls and 993 read calls (8 fixed members per case,
 with one additional data chunk in the large case). Fixture/hook metadata checks,
 caller-root opens/closes, test reads/writes, Python/pathlib internals and logs are
 additional, not hidden inside those helper counts. Each test lends one root FD;

@@ -257,7 +257,6 @@ class CheckoutObservationAttempt:
         if self._used:
             raise SourceFilesStopped("Observation already consumed")
         self._used = True
-        self._guard()
         self._busy = True
 
     def _open(self, name: str, parent: int, *, directory: bool) -> int:
@@ -393,44 +392,53 @@ class CheckoutObservationAttempt:
 
     def observe(self) -> CheckoutObservation:
         self._enter()  # Rejected nested/consumed entry must never clean the outer owner.
-        result: CheckoutObservation | None = None
         try:
-            catalog = parse_catalog(self._catalog_raw)
-            self._guard()
-            plan = _plan(self._raw_plan, catalog)
-            self._guard()
-            expected_root = _root(self._raw_root)
-            borrowed = _integer(self._root_fd, 2**31 - 1)
-            self._planned = tuple(row.member_id for row in plan.files)
-            self._planned_bytes = sum(row.byte_length + 1 for row in plan.files)
-            self._uid = os.getuid()
-            self._guard()
-            self._root_check(borrowed, expected_root)
-            root = self._open(".", borrowed, directory=True)
-            self._root_check(root, expected_root)
-            seen: set[tuple[int, int]] = set()
-            for expected in plan.files:
-                observation = self._file(expected, root, expected_root, seen)
-                self._observed.append(observation)
-                self._close_to(1)
+            result: CheckoutObservation | None = None
+            try:
                 self._guard()
-            self._member = None
-            self._root_check(borrowed, expected_root)
-            self._root_check(root, expected_root)
-            result = CheckoutObservation(
-                plan.source_commit, plan.source_tree, catalog.sha256, expected_root,
-                tuple(self._observed), tuple(
-                    row.member_id for row in catalog.members if row.origin == "trusted_runtime_member"
-                ),
-            )
-        except BaseException as work_error:
-            if work_error is not self._first:
-                self._remember(work_error)
+                catalog = parse_catalog(self._catalog_raw)
+                self._guard()
+                plan = _plan(self._raw_plan, catalog)
+                self._guard()
+                expected_root = _root(self._raw_root)
+                borrowed = _integer(self._root_fd, 2**31 - 1)
+                self._planned = tuple(row.member_id for row in plan.files)
+                self._planned_bytes = sum(row.byte_length + 1 for row in plan.files)
+                self._uid = os.getuid()
+                self._guard()
+                self._root_check(borrowed, expected_root)
+                root = self._open(".", borrowed, directory=True)
+                self._root_check(root, expected_root)
+                seen: set[tuple[int, int]] = set()
+                for expected in plan.files:
+                    observation = self._file(expected, root, expected_root, seen)
+                    self._observed.append(observation)
+                    self._close_to(1)
+                    self._guard()
+                self._member = None
+                self._root_check(borrowed, expected_root)
+                self._root_check(root, expected_root)
+                result = CheckoutObservation(
+                    plan.source_commit, plan.source_tree, catalog.sha256, expected_root,
+                    tuple(self._observed), tuple(
+                        row.member_id for row in catalog.members if row.origin == "trusted_runtime_member"
+                    ),
+                )
+            except BaseException as work_error:
+                if work_error is not self._first:
+                    self._remember(work_error)
+            finally:
+                self._close_to(0)
+            self._guard()
+            if result is None:
+                raise SourceFilesStopped("Observation did not produce a complete result")
+            self._completed = True
+            return result
+        except BaseException as final_error:
+            if final_error is not self._first:
+                self._remember(final_error)
+            if self._first is not None:
+                raise self._first
+            raise
         finally:
-            self._close_to(0)
             self._busy = False
-        self._guard()
-        if result is None:
-            raise SourceFilesStopped("Observation did not produce a complete result")
-        self._completed = True
-        return result

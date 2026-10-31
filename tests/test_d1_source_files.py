@@ -148,6 +148,8 @@ def owned(tmp_path: Path) -> Iterator[OwnedFixture]:
         path.write_bytes(data)
         path.chmod(0o644)
         expected.append(ExpectedCheckoutFile(member, locator, module, hashlib.sha256(data).hexdigest(), len(data)))
+    for directory in (root, root / "synthetic", root / "tests", root / "docs", root / "docs/research"):
+        directory.chmod(0o755)
     fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC)
     actual = os.fstat(fd)
     try:
@@ -679,3 +681,61 @@ def test_renamed_single_link_file_cannot_fill_two_member_rows(owned: OwnedFixtur
     assert moved and target.stat().st_nlink == 1
     assert tuple(row.member_id for row in attempt.snapshot().observed) == ("m00",)
     assert attempt.snapshot().confirmed_closes == attempt.snapshot().returned_opens
+
+
+@pytest.mark.parametrize("window", ["first", "final"], ids=["first-guard", "final-guard"])
+def test_owner_guard_reentry_stays_latched_through_final_close(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, window: str) -> None:
+    original_pid, original_open, original_close = os.getpid, os.open, os.close
+    attempt = owned.attempt()
+    nested: list[SourceFilesStopped] = []
+    root_descriptor: int | None = None
+    root_closed = False
+    injected = False
+
+    def capture_root(path: Any, flags: int, mode: int = 0o777, *, dir_fd: int | None = None) -> int:
+        nonlocal root_descriptor
+        result = original_open(path, flags, mode, dir_fd=dir_fd)
+        if path == ".":
+            root_descriptor = result
+        return result
+
+    def close_owned(descriptor: int) -> None:
+        nonlocal root_closed
+        original_close(descriptor)
+        if descriptor == root_descriptor:
+            root_closed = True
+
+    def swallowed_reentry() -> int:
+        nonlocal injected
+        if not injected and (window == "first" or root_closed):
+            injected = True
+            try:
+                attempt.observe()
+            except SourceFilesStopped as nested_error:
+                nested.append(nested_error)
+        return original_pid()
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(os, "getpid", swallowed_reentry)
+        if window == "first":
+            for name in ("open", "read", "fstat", "stat", "close"):
+                scoped.setattr(os, name, denied)
+        else:
+            scoped.setattr(os, "open", capture_root)
+            scoped.setattr(os, "close", close_owned)
+        with pytest.raises(SourceFilesStopped, match="reentry") as caught:
+            attempt.observe()
+    assert injected and len(nested) == 1 and caught.value is nested[0]
+    snapshot = attempt.snapshot()
+    assert snapshot.consumed and not snapshot.completed
+    assert snapshot.returned_opens == snapshot.close_attempts == snapshot.confirmed_closes
+    if window == "first":
+        assert snapshot.open_attempts == snapshot.read_calls == 0
+        assert snapshot.observed == () and not root_closed
+    else:
+        assert root_closed and root_descriptor is not None
+        assert len(snapshot.observed) == 8 and snapshot.returned_opens > 0
+        with pytest.raises(OSError):
+            os.fstat(root_descriptor)
+    assert os.fstat(owned.fd).st_ino == owned.identity.inode
+    assert_no_io_retry(attempt, monkeypatch)
