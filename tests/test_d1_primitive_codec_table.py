@@ -413,7 +413,7 @@ def test_caps_reject_before_json_parser(monkeypatch: pytest.MonkeyPatch, kind: s
 
     bad = b"x" * 57857 if kind == "bytes" else b"[[[[]]]]\n"
     with monkeypatch.context() as scoped:
-        scoped.setattr(table.json, "loads", forbidden)
+        scoped.setattr(json, "loads", forbidden)
         with pytest.raises(ValueError):
             table.parse_table(bad)
 
