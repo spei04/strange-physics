@@ -13,7 +13,6 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, NoReturn
 
-import d1_source_files as files
 import pytest
 from d1_source_files import (
     CheckoutObservationAttempt, ExpectedCheckoutFile, ExpectedCheckoutPlan,
