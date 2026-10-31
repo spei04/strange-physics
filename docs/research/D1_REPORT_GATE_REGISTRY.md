@@ -1,12 +1,13 @@
-# D1 report gate registry proposal
+# D1 report gate registry
 
-Source proposal, 2026-10-30. This maps the frozen
+Original design, 2026-10-30; implementation checked on 2026-10-31. This maps the frozen
 [RA-N03-D1 protocol](RA_N03_CALIBRATION_SLICE.md) and
 [report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md) to the existing conditional
-producers. It does not amend their scientific policy, admit a run, implement
-B1/B2, authenticate evidence, or prove that the payloads fit the output budget.
+producers. The private descriptor implementation below does not amend their
+scientific policy, admit a run, complete B1/B2, authenticate evidence, or prove
+that the payloads fit the output budget.
 
-The inspected source is `30f3cbeef72554748a7d77699a74c79a25a1ce87`.
+The original proposal inspected source `30f3cbeef72554748a7d77699a74c79a25a1ce87`.
 Its protocol digest is
 `657c3c74346aedb165473b4672ed18ba5671da82e4873a2a3e6f514b58387399`.
 The current [structural envelope](D1_REPORT_CONTRACT.md) must continue to report
@@ -76,7 +77,7 @@ There is one training channel per record: one for M/F/W and two for D03.
 | `future_endpoint` | `.future.endpoints.max_abs_error_upper` / premise `.future.max_abs_error_upper` | `<= 1e-12`, for every future node. No reuse of a training-time maximum. |
 | `reference.constants` | `ReferenceConstants.gaussian`, `.log_prior`, `.pi`, `.log_two_pi_center`, `.log_scale_centers`; `recheck_constants` | Existing dyadic scales/prior inputs, actual retained constants and perturbation algebra agree; every derived Gaussian/prior center-radius check is `<= 1e-48`. Pi's source allowance is `1e-60`. |
 | `reference.normalization` | `ReferenceNormalization.joint/emitted/sum_center/log_evidence/centered_log_evidence/normalized_logs/probabilities`; `recheck_normalization`, `require_reference_reserve` | Positive sums/denominators, exact complete coverage and retained exp/log centers reconstruct the same normalization. Every existing `require_reference_reserve` check is `<= 1e-48`: two global log-evidence radii and four per-node joint/log-probability/relative-exp/relative-probability checks. Preserve the complete check vector and its maximum, not an invented substitute norm. |
-| `normalizer.complete` | `BoundPrefix.result.normalization`, `.normalizer_input` and raw result; existing adapter assertions | Status normalized, N finite joint and normalized log entries, `exp_evaluations=N`, `log_evaluations=1`, no exp-underflow indices; every actual emitted binary64 exp output is positive and at most one. Exact normalized emitted ratios, not a rounded independently normalized vector, feed later moments/CDFs. |
+| `normalizer.complete` | `BoundPrefix.result.normalization`, `BoundPrefix.result.normalizer_input` and raw result; existing adapter assertions | Status normalized, N finite joint and normalized log entries, `exp_evaluations=N`, `log_evaluations=1`, no exp-underflow indices; every actual emitted binary64 exp output is positive and at most one. Exact normalized emitted ratios, not a rounded independently normalized vector, feed later moments/CDFs. |
 | `whole_prefix_node_error` | `D1Certificate.reserve_components[0]` | `A <= 1e-9`, as defined below; this is the certificate's existing reason name. |
 | `centered_normalizer_error` | `.reserve_components[1]` | `B <= 1e-9`. Keep native shift and log-scaled-sum separately; this compares native `log_scaled_sum` to the independent centered log evidence. |
 | `normalized_probability_error` | `.reserve_components[2]` | `C <= 1e-9`. The inclusive emitted-ratio bound is required; normalized logs alone are insufficient. |
@@ -251,10 +252,10 @@ Stress/scale/grid rows never increase the four-world primary denominator.
 
 ## Small implementation/test split
 
-The next B1 change can implement the pure row-key-to-required-check mapping,
+The implemented B1 descriptor slice provides the pure row-key-to-required-check mapping,
 fixed operand/threshold descriptors and synthetic positive/negative examples.
-It must retain structural-only scope until the full payload/binder is ready.
-Tests should alter every gate name/limit/applicability/operand; exercise coarse
+It retains structural-only scope until the full payload/binder is ready.
+Tests alter gate names/limits/applicability/operands and exercise coarse
 versus finest rows and prior versus posterior blocks; reject missing fields,
 zero-filled unavailable evidence and coherent digest/certificate substitution.
 
@@ -269,5 +270,80 @@ reference calls are needed for this engineering qualification.
 
 Codec losslessness, worst-shape byte fit, schema/runtime parity, callback
 installation/restoration and complete work/retention counts remain separate
-reviewable obligations. This mapping was prepared by source inspection only;
-no new test, calculation, fixture, schema generation or numerical run occurred.
+reviewable obligations. The original mapping was prepared by source inspection;
+the implementation validation below is subsequent synthetic engineering evidence.
+
+
+## Source-owned descriptor implementation checkpoint
+
+[tests/d1_required_checks.py](../../tests/d1_required_checks.py) implements this
+registry as private frozen `Operand`, `RequiredCheck` and `ExpectedRow` dataclasses.
+`expected_checks(row_key)` accepts only an exact key from the unchanged
+`ROW_MANIFEST`; `expected_registry()` expands all 135 rows. There is no user-selected
+list of thresholds, optional gate configuration, observed value, gate pass flag
+or scientific evaluator. The separate structural report remains unavailable/
+unchecked for qualification, utility and authenticity.
+
+Every operand carries its exact source row key and fixed field vocabulary.
+Posterior/prior pairing uses the original same-case/grid prior row; held-out truth
+binds that case's fixture row; D03 record 1 names the M03/base one-record posterior;
+refinement and contrasts retain ordered coarse/fine, adjacent-scale or exact
+stress-pair identities. Fields describe the named existing producer or a still-
+pending B2 semantic input. They are not an executable JSONPath language and do
+not create the unfinished payload codec or resolver. Producer labels beginning
+`B2.` and named chronology/authentication binders explicitly denote unfinished
+implementations. No predictor, reference, CDF, score or certificate is called.
+
+`validate_expected_row` validates raw dataclass field types before comparing the
+complete descriptor to its source-owned expansion, including Decimal limit
+representation. `validate_registry` additionally requires all 135 original rows
+in their exact order. Boolean ordinals/limits cannot exploit numeric equality.
+Missing, additional, duplicated, reordered or coherently substituted checks,
+relations, operands, producer names, applicability or constants are rejected.
+Accepting these descriptors proves only that their policy labels match this
+source; it does not validate any report material or enforce runtime stopping.
+
+Numerical upper gates keep the existing inclusive relations. Reference constant/
+normalization descriptors require a complete rebuild and every original radius
+check at 1e-48, rather than only a convenient supplied maximum. Exact 1e-60 endpoint
+allowance and fixed 3e-9 reserve remain separate required constants. At N=256 the
+four finest fields are diagnostics with no limit or pass flag; N=1024 retains the
+four inclusive ceilings. Prior rows omit posterior training, likelihood and log
+normalization gates. The 18 prequential rows use t=.5 mean/innovation semantics,
+with delta 0 only for record 0; record 1 preserves the matched posterior delta.
+
+The concrete names `forecast.diagnostics`, `contrast.diagnostics` and
+`aggregate.diagnostics` label already-required retained information, not extra
+scientific acceptance gates. `utility.co_primary` describes the existing aggregate
+sign rule: both upper bounds strictly negative pass the local screen, either
+lower bound nonnegative (including an exact tie) does not meet it, otherwise
+inconclusive. It adds no individual-world superiority gate or metric tradeoff.
+The fixed descriptor property `on_required_rejection` states that subsequent
+batch work stops while retaining the fault and later unrun rows; a future binder/
+runner must actually enforce that policy. Missing proof is never zero-filled.
+
+The expansion has source-derived 1,648 descriptors: 8 × 5 fixture, 40 × 26 posterior,
+16 × 17 prior, 18 × 6 prequential, 20 × 4 refinement, 12 × 3 scale, 2 × 4 duplicate stress,
+14 × 3 force/weak stress, 4 × 4 primary and 6 aggregate. These are metadata rows, not
+new physical calls, samples or budget grants. Construction/reconstruction and
+validation passes remain counted as pure engineering work in subsequent integration.
+No serialized descriptor/table byte fit or timing claim follows from this count.
+
+At source a7f3abb, the 18 test functions passed all 48 synthetic cases and 144
+ordered setup/call/teardown phases. Formatting, linting and full configured typing
+across 211 files passed. The tests exercise completeness and substitution, original
+dependency order, coarse/finest and prior/posterior distinctions, duplicate-prefix
+coverage, prequential reuse, finite refinement operands, diagnostic-only contrasts,
+exact co-primary ties and strict raw booleans/Decimal limits. Real scientific
+producers and certificate/score evaluators are poisoned.
+
+An earlier check stopped at typing with 15 errors before any test bodies ran.
+The narrow repair separates boolean and row-key variable names and uses explicitly
+typed construction for the same negative cases; no policy or assertion changed.
+Fresh preparation and final checks used the same cumulative engineering account.
+Independent review verified the immutable source, all 48 identities, unchanged
+environment and closure of all 23 children across four attempts. Earlier failures
+remain recorded. JSON Schema generation/parity remains pending.
+Full material authentication, payload/codec/schema parity, prior aliases,
+actual repeated-loss joins, work/byte accounting and numerical admission remain
+separate obligations.
