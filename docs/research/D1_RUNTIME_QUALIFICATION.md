@@ -110,3 +110,10 @@ not total observed cost or proof of hard 50/150 compliance: setup/admission
 peer-read and diagnostic-closeout gaps remain within review coverage, separately
 from unknown authoring/SSH/GitHub administration. No modeled remainder transfers
 to runtime, and all four continuation attempts are consumed.
+
+## Separate repair update
+
+The owner approved the new bounded [repair package](D1_RUNTIME_REPAIR_PLAN.md)
+at commit `ca0b26ae`. Its [startup diagnosis passed](D1_RUNTIME_REPAIR_RESULT.md);
+software qualification is next. That separate account does not reopen this
+consumed continuation or change its failed capture, retained charges or unknowns.

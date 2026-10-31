@@ -15835,9 +15835,9 @@
       }
     },
     "current_summary": {
-      "verified": "Both runtime repairs, the fixed startup diagnostic and the complete validation proposal have passed static review. The draft adds 27 regression cases; no new tests, CI or runtime have run. Prior qualification remains incomplete.",
-      "next": "Lead presents the complete repair-and-validation proposal for approval, then seals each dependent control before execution. Quality has reviewed the recipe; Platform maintains delivery records. See research/D1_RUNTIME_REPAIR_PLAN.md.",
-      "blocker": "The offending frozen-module name remains unknown. Closed Unit22 and the consumed four-stage continuation provide no fresh test or retry authority; prior failures, charges and uncertainty remain retained. Science is unstarted.",
+      "verified": "A startup diagnosis passed: both exact importlib aliases satisfy the approved identity/source condition. A charged 12.296822 CPU / 24.187402 wall; E1 closed 10 CPU / 25 wall. Source 58a8be4 adds 16 cases, total 345/1035 prospective. Earlier failures/charges remain retained.",
+      "next": "Research finalizes the source/import/fixture census; Quality reviews source and disabled B controls; Lead seals and executes bounded software qualification. Platform has prepared disabled candidate setup controls.",
+      "blocker": "B, new CI/candidate delivery and actual capture remain unrun. Science retains exposure, adequacy, independence and 50/45 GiB capacity gates; the separate capacity proposal is unapproved.",
       "record": "EXECUTION_LOG.md#current-assignment-board"
     },
     "laplace_reference_validation": {

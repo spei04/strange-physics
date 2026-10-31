@@ -2,20 +2,19 @@
 
 ## Current assignment board
 
-- **Result:** [runtime qualification remains incomplete](research/D1_RUNTIME_QUALIFICATION_RESULT.md). Capture failed; earlier charges and unresolved evidence remain retained.
-- **Research / Quality:** Both failure paths, the startup diagnostic and 27 new regression cases have passed static review; none has run. Quality has also reviewed the controls recipe.
-- **Lead / Platform:** The [complete repair and validation proposal](research/D1_RUNTIME_REPAIR_PLAN.md) has passed review. Lead owns the approval handoff and later control sealing; Platform maintains the delivery record. Science remains unstarted.
+- **A passed:** the [startup diagnosis](research/D1_RUNTIME_REPAIR_RESULT.md) supports exactly two importlib aliases. Earlier failures and charges remain retained.
+- **Research / Quality:** the source draft adds 16 cases, reaching 345 prospective cases. Research finishes its fixture/import census; Quality reviews the exact source and disabled controls.
+- **Lead / Platform:** Lead owns bounded software qualification and delivery. Platform's candidate controls are prepared. Science and capacity changes remain separately gated; reuse the existing checkouts.
 
 ## Approval and execution capacity
 
-**Current repair scope (2026-10-31):** standing project implementation approval
-covers unexecuted source drafting and static review. Research owns the repair
-in the existing checkout; Quality reviews it. Software qualification, new
-hosted CI/candidate work and actual runtime execution require one complete
-reviewed allocation covering the whole delivery path. Closed Unit22's 200 CPU /
-600 wall qualification account is not a fresh test budget; the approved
-four-stage runtime continuation has been consumed and is not retry authority.
-All earlier charges, failures and unknowns remain retained.
+**Current repair scope (2026-10-31):** the owner approved the complete package
+at `ca0b26ae`: 1,190 CPU / 2,970 active-wall seconds, one original PR/main CI
+sequence capped at 181 configured job-minutes, and 1 GiB of new artifacts.
+Each dependent control still requires exact sealing and independent acceptance
+before launch. Closed Unit22 and the consumed prior continuation are not reused.
+The new allocation excludes science, releases and capacity purchases; earlier
+charges, failures and unknowns remain retained.
 
 2026-10-19 — Product owner approved execution baseline `2d78e3598252e211110883b164854b64c356eeda` and requested independent engineer subagents, reassignment on completion and this short log.
 
@@ -27,6 +26,8 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Quality / Platform / Project lead | Startup diagnosis accepted; software qualification next | One A diagnostic passed with both exact importlib aliases, known process closure and unchanged source/runtime checks. Cumulative A 12.296822 CPU / 24.187402 wall; E1 closed 10 CPU / 25 wall. Research committed 58a8be4 with 16 alias cases; total 345/1035 remains prospective. Quality reviews source/census and controls; Lead owns B and original CI delivery; Platform has prepared disabled C controls. No new capture or science. |
+| 2026-10-31 | Project lead / Research / Quality / Platform | Complete repair package approved | Owner approved ca0b26ae and all finite limits. Lead activated the new private ledger with a retained 2 CPU / 5 wall preparation hold in A. Research prepares the diagnostic parent control; Quality reviews it; Platform prepares disabled B controls. No diagnostic, test, CI or new capture has run. Capacity recovery remains separately unresolved. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Repair draft reviewed; complete validation proposal | Research authored bounded frozen-module diagnostics, strict failed-controller evidence reconciliation and 27 regression cases. Quality accepted the exact four-file draft by static review. Research owns startup-only diagnostic preparation; Platform drafts the complete allocation; Lead integrates the reviewable source and plan. No new tests, CI, runtime or scientific execution. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Capture failed; runtime unqualified | Materialization, guard probes and the descendant handshake passed. Capture failed before capture JSON on an unlisted frozen module; its name remains unknown. Research/Quality accepted failed-run evidence; Platform reconciled the review ledger and docs; Lead owns custody. Runtime charge 219.91242 CPU / 113.7971664420329 wall retains the full 150 CPU service hold and prior failures. No retry/new service or scientific run is admitted. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Materialization passed; pre-probe review | Installation and protected-plan records were materialized with no children/services or cleanup failures. Stage charge 7.609223 CPU / 10.553777021821588 wall; cumulative runtime 56.498043 / 77.08820401737466 retains all native attempts. Research reviews actual source/guards; Quality verifies closure/accounting before probes. Platform updates docs; Lead alone executes. Probes, benign handshake, capture and science remain unstarted. |

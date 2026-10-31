@@ -65,14 +65,12 @@ Evidence and the actual installation remain private in the cloud, owner protecte
 
 ## Follow-up work
 
-The [source repair](https://github.com/spei04/strange-physics/commit/ed3053a7137949c6a6adb2619291687325f783f0)
-and 27 new regression cases have passed static review under standing implementation
-authority. Lead is preparing the [complete repair and validation proposal](D1_RUNTIME_REPAIR_PLAN.md)
-for diagnosis, software checks, one PR CI, protected-main candidate delivery,
-acquisition/setup, actual runtime validation and failure closeout. No tests,
-new candidate execution or runtime commands are admitted by this source task.
-The closed Unit22 200/600 account and consumed four-stage continuation do not
-provide a fresh test budget or retry authority.
+The owner approved the separate [complete repair and validation package](D1_RUNTIME_REPAIR_PLAN.md)
+at commit `ca0b26ae`. Its [startup diagnosis passed](D1_RUNTIME_REPAIR_RESULT.md);
+the source repair now includes the two observed importlib aliases and 16 additional
+regression cases. Software checks, new candidate delivery and actual capture remain
+pending. The closed Unit22 account, this consumed continuation, its failed outcome,
+full service hold and unresolved evidence are retained separately.
 
 The source repair must address both defects without weakening rejection:
 

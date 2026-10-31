@@ -167,3 +167,10 @@ within-review coverage gaps. Authoring, SSH/GitHub administration and provider
 dollars are distinct external unknowns. Consequently this rollup is not a
 complete observed cost or proof of hard 50/150 fit; its modeled margin is not
 reusable authority. Original runtime usage/closure uncertainties are unchanged.
+
+## Separate repair update
+
+The owner approved the new bounded [repair package](D1_RUNTIME_REPAIR_PLAN.md)
+at commit `ca0b26ae`. Its [startup diagnosis passed](D1_RUNTIME_REPAIR_RESULT.md);
+software qualification is next. That separate account does not reopen this
+consumed continuation or change its failed capture, retained charges or unknowns.
