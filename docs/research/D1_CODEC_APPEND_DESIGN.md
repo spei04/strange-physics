@@ -63,9 +63,13 @@ budget, not extra sink permission. Checking this inequality does not admit a run
 The bridge owns only its conversion cursor, bounded event state and callback
 reference. It neither constructs nor closes the file sink or metadata writers.
 Capture one process/thread owner and reject reentry before parsing or calling the
-callback; a reentry fault consumes the bridge. No thread-safe or hostile-Python
-sandbox claim is made. A returned diagnostic view cannot be supplied back to
-resume or authorize the bridge. Construction failure performs no append.
+callback; a reentry fault irreversibly consumes the bridge. The outer append must
+recheck this sticky error after its callback returns and before acknowledging. If
+the callback catches a nested bridge error and returns normally, retain that
+callback-return observation but raise the latched original bridge error: no normal
+outer return, resurrection or further physical append is permitted. No thread-safe
+or hostile-Python sandbox claim is made. A returned diagnostic view cannot be
+supplied back to resume or authorize the bridge. Construction failure performs no append.
 
 The outer owner calls `finish()` once after the recorder call has unwound, then
 calls the existing sink's `finish()` once in its cleanup path, even after a bridge
@@ -96,14 +100,41 @@ its actual escaped bytes must fit the same Event cap, with no invented truncatio
 Fault fields are `ordinal`, `phase`, `exception_type`,
 `exception_type_complete`, `call_id`. The fault ordinal is the recorder's fault-list
 index, **not** the call ordinal or Event sequence. Preserve it rather than replacing
-it with a predicted value. Source phases include preflight, intent_sink, primitive,
-return_encoding, return_sink and reentry; fault_retention is a supplemental fault
-in snapshots. Validate actual phase/type/nullable-call structure against the pinned
-recorder and observed local state, retaining gaps caused by unseen supplemental
-faults. The exception name is at most 192 characters, with a strict boolean
-completeness flag; do not serialize exception arguments, messages or tracebacks.
-The existing bounded integer-token parser remains a representation guard, not
-proof that the declared fault happened.
+it with a predicted value. Failed-Event phases are preflight, intent_sink, primitive,
+return_encoding, return_sink and reentry. `fault_retention` is added only after the
+failed Event's append raises, in the recorder snapshot; it is not an ordinary
+failed-Event phase and does not produce another Event. The exception name is at
+most 192 characters, with a strict boolean completeness flag; do not serialize
+exception arguments, messages or tracebacks.
+
+Under the pinned recorder's public API, with no private-state mutation, the
+proposed source-supported failed-Event Fault.ordinal bound is **0 through 3 inclusive**.
+This follows from `_remember`, `_abort` and `call`, not the call-count ceiling:
+
+1. Ordinary first failure uses ordinal 0. A first reentry also records ordinal 0
+   with phase `reentry` and call_id null. Because `call` checks `_stopped` before
+   `_active`, subsequent public reentry attempts add no further faults.
+2. If the outer error is that same first exception, `_abort` reuses fault 0. If it
+   is a different error, `_abort` adds one fault, permitting ordinal 1.
+3. The longest path starts when `invoke` catches the first reentry error, then
+   returns an invalid value. Return encoding adds fault 1. If retention of the
+   returned-unavailable Event raises, the inner handler adds return_sink fault 2.
+   `_abort` then receives the encoding error, which differs from the original
+   reentry exception, and adds return_encoding fault 3 before the failed Event.
+   Without that unavailable-append error, the failed Event uses ordinal 2.
+4. Failure to retain the failed Event may subsequently add fault_retention with
+   snapshot ordinal 4. It cannot increase the already-emitted Event's ordinal or
+   authorize another terminal Event. Earlier failure to construct/encode a fault
+   can instead leave the terminal Event absent; absence is not repaired.
+
+Validate this finite ordinal domain, the phase and locally available Intent joins,
+without inventing the unseen intermediate faults. In particular, a failed Event
+may carry the outer **non-null Intent** while its reused first fault has phase
+`reentry` and **call_id null**. A blanket equality between fault.call_id and
+Event.intent.call_id would reject this valid forensic shape. Other nullable-call
+cases must follow the pinned preflight/Intent construction paths; null is not a
+general exception to identity binding. The conservative ordinal range does not
+make every ordinal/phase combination reachable or authenticate its history.
 
 A source-shaped Event outside the fixed codec vocabulary may be retained raw as
 contract-failure evidence. It does not become a valid D1 call. This requires the
@@ -242,20 +273,28 @@ raise; no real primitive, history, protected inventory or file sink is needed.
 
 Required independent tests include:
 
-- Exact intent/return vectors: callback order, raw replay equality and value
-  representation preservation; the fake callable cannot run before intent ack
-  and cannot hand back its result before return ack.
+- Exact intent/return vectors: raw replay equality and value representation
+  preservation; bridge normal return occurs only after its append callback
+  succeeds. A fake caller's subsequent action illustrates sequencing only. This
+  unit has no primitive API or real recorder wiring; actual callback-before-work
+  and retained-return-before-value-handoff ordering requires later wiring tests.
 - Return append failure after codec ordinal advancement, matching next failed
   Event, substituted last intent rejection and no duplicate physical append.
-- Primitive failure, preflight/null intent, unseen-but-source-shaped intent,
-  recorder pre-append byte failure, returned-unavailable and original Fault
-  ordinal distinct from call ordinal; no fabricated invocation evidence.
+- Source-derived raw vectors for primitive failure, preflight/null intent,
+  unseen-but-source-shaped intent, recorder pre-append byte failure and
+  returned-unavailable. Include the longest ordinal 3 path and reject ordinal 4
+  as a failed-Event fault, preserving original ordinals without fabricating
+  invocation or intermediate-fault evidence. Include non-null outer Intent
+  with phase reentry/null fault.call_id; reject fault_retention as Event phase.
 - Raw unsupported/failed success followed by intentional stop, plus storage
   failure; original and supplemental exceptions remain distinguishable. The
   recorder's unknown delivery and separate callback-return observation both survive.
 - One optional failed Event only, strict sequence and cap exhaustion, stopped
   sink callback never called again, reentry/wrong owner, finish consumed before
-  cleanup, and no resume after any unknown delivery.
+  cleanup, and no resume after any unknown delivery. A callback that catches a
+  reentrant bridge error and returns normally must leave the outer append
+  unacknowledged and consumed, while separately retaining callback-return
+  observation; all later physical callbacks remain forbidden.
 - Duplicate keys, booleans, unknown fields, malformed/truncated/oversized input,
   noncanonical escapes/whitespace, invalid Fault/Value/Intent joins and raw fallback
   refusing arbitrary payloads. Short independently specified parameter IDs.
