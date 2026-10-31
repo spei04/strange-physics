@@ -65,6 +65,8 @@ class LaunchResult:
     stdout_bytes: int
     wall_seconds: float
     child_cpu_seconds: float | None
+    capture_observed: bool
+    owned_tree_closed: bool | None
     captured: bool
     failure: str | None
 
@@ -472,13 +474,21 @@ def launch(plan_path: Path, plan_sha256: str, output: Path) -> LaunchResult:
             failure = "unexpected_capture_output"
     except (OSError, PreflightError):
         failure = "output_census_unavailable"
-    captured = (
+    capture_observed = (
         reaped and code == 0 and custody and not timed_out and size <= LOG_LIMIT
         and report_ok and failure is None and elapsed <= CHILD_WALL_LIMIT + CLEANUP_LIMIT
     )
     # No concurrent child work is permitted in the accepted controller context.
     cpu = (after.ru_utime + after.ru_stime) - (before.ru_utime + before.ru_stime) if reaped else None
-    return LaunchResult(code, reaped, timed_out, custody, size, elapsed, cpu, captured, failure)
+    # A reaped leader is not proof that startup left no surviving descendants.
+    # No caller flag can promote this observation into final capture acceptance.
+    failure = failure or (
+        "outer_owned_tree_closure_unproved" if capture_observed else "capture_not_observed"
+    )
+    return LaunchResult(
+        code, reaped, timed_out, custody, size, elapsed, cpu,
+        capture_observed, None, False, failure,
+    )
 
 
 def main() -> int:

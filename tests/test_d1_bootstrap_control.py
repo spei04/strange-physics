@@ -280,7 +280,10 @@ def test_owned_fake_child_lifecycle(
     assert argv[:4] == ["/fixed/python", "-I", "-B", "-X"]
     assert kwargs["env"] == {"LANG": "C.UTF-8", "LC_ALL": "C.UTF-8"}
     assert kwargs["stdin"] == subprocess.DEVNULL and kwargs["close_fds"]
-    assert result.reaped and result.captured == (outcome == "success")
+    assert result.reaped and result.capture_observed == (outcome == "success")
+    assert result.captured is False and result.owned_tree_closed is None
+    if outcome == "success":
+        assert result.failure == "outer_owned_tree_closure_unproved"
     assert killed == ([True] if outcome == "timeout" else [])
     assert stat.S_IMODE((tmp_path / "output/child.log").stat().st_mode) == 0o600
 

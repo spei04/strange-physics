@@ -36,6 +36,7 @@ SOURCE_PIN_PATHS = (
 )
 PLAN_LIMIT = 4 * 1024**2
 REPORT_LIMIT = 4096
+_DENIED_WORK: str | None = None
 
 
 class BootstrapError(ValueError):
@@ -101,9 +102,14 @@ def _check_loaded(plan: dict[str, Any]) -> None:
                 raise BootstrapError("Unlisted frozen module")
         elif origin not in files:
             raise BootstrapError("Loaded module origin is outside the protected runtime inventory")
-        if isinstance(origin, str) and Path(origin).is_relative_to(Path(plan["checkout"])):
-            if routes.get(name) != origin:
-                raise BootstrapError("Unmapped checkout helper or project source was loaded")
+        if isinstance(origin, str):
+            source_roots = (
+                Path(plan["checkout"]) / "tests", Path(plan["checkout"]) / "src",
+                Path(plan["site_packages"]) / "strange_physics",
+            )
+            if any(Path(origin).is_relative_to(root) for root in source_roots):
+                if routes.get(name) != origin:
+                    raise BootstrapError("Unmapped helper or installed project source was loaded")
         if origin in routes.values() and name not in routes:
             raise BootstrapError("Protected helper or native source was loaded under an alias")
         if name.startswith("strange_physics") and name not in routes:
@@ -162,8 +168,14 @@ def _unchanged(
         raise BootstrapError("Original math module or emitter changed")
 
 
+def _require_no_denied_work() -> None:
+    if _DENIED_WORK is not None:
+        raise BootstrapError("Capture observed denied work: " + _DENIED_WORK)
+
+
 def capture(plan: dict[str, Any]) -> PreparedOriginals:
     """Retain real objects in this child; the returned references are not serializable authority."""
+    _require_no_denied_work()
     if any(name in sys.modules for name in ("endpoint_belief_reference", *CONSUMERS)):
         raise BootstrapError("Capture requires a fresh helper namespace")
     raw = _raw_anchors(plan)
@@ -171,11 +183,13 @@ def capture(plan: dict[str, Any]) -> PreparedOriginals:
     fixture = _source_module("d1_fixture_reference", plan)
     _source_module("d1_prefix_evidence", plan)
     _source_module("d1_originals", plan)
+    _require_no_denied_work()
     _unchanged(raw)
     _check_loaded(plan)
     from d1_originals import OriginalAnchors, prepare_originals
 
     anchors = OriginalAnchors(*raw)
+    _require_no_denied_work()
     _unchanged(raw)
     root = Path(plan["checkout"])
     file_pins = {item["path"]: item["sha256"] for item in plan["files"]}
@@ -185,9 +199,11 @@ def capture(plan: dict[str, Any]) -> PreparedOriginals:
         fixture.SourcePin(path=relative, sha256=file_pins[str(root / relative)])
         for relative in fixture.SOURCE_PATHS
     )
+    _require_no_denied_work()
     prepared = prepare_originals(
         anchors, root=root, commit=plan["source_commit"], pins=pins,
     )
+    _require_no_denied_work()
     _unchanged(raw)
     _check_loaded(plan)
     if len(prepared.owners) != 13 or len(prepared.original_methods) != 22:
@@ -198,11 +214,14 @@ def capture(plan: dict[str, Any]) -> PreparedOriginals:
 
 
 def _deny_external_work(event: str, args: tuple[object, ...]) -> None:
+    global _DENIED_WORK
     del args
     if event in (
         "subprocess.Popen", "os.system", "os.posix_spawn", "os.exec", "os.fork",
         "os.forkpty", "pty.spawn",
     ) or event.startswith("socket."):
+        if _DENIED_WORK is None:
+            _DENIED_WORK = event[:128]
         raise BootstrapError("Capture child cannot spawn processes or use the network")
 
 
@@ -235,6 +254,7 @@ def child(plan_path: Path, plan_digest: str, cache: Path) -> dict[str, object]:
     sys.addaudithook(_deny_external_work)
     sys.path.insert(0, helper_root)
     prepared = capture(plan)
+    _require_no_denied_work()
     # Strong references stay alive through the final checks. No future child can
     # reconstruct these anchors from this bounded capture-only completion report.
     return {

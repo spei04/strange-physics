@@ -15,6 +15,12 @@ import d1_bootstrap as bootstrap
 import pytest
 
 
+@pytest.fixture(autouse=True)
+def isolated_denied_work_state(monkeypatch: pytest.MonkeyPatch) -> None:
+    # Test isolation only: the production once-per-child latch has no reset API.
+    monkeypatch.setattr(bootstrap, "_DENIED_WORK", None)
+
+
 def fake_boundary(monkeypatch: pytest.MonkeyPatch) -> tuple[dict[str, Any], dict[str, Any]]:
     calls: list[str] = []
     oracle = ModuleType("endpoint_belief_reference")
@@ -216,6 +222,7 @@ def test_loaded_registry_matches_fixed_origins(
     plan = {
         "files": [{"path": origin}], "import_map": {name: origin}, "checkout": "/owned",
         "frozen_modules": ["os"], "builtin_modules": ["sys"],
+        "site_packages": "/owned/.venv/lib/python3.12/site-packages",
     }
     if case == "unknown_origin":
         module.__spec__.origin = "/unreviewed/source.py"
@@ -309,6 +316,7 @@ def test_pinned_but_unmapped_checkout_origin_is_rejected(
     plan = {
         "checkout": "/owned", "files": [{"path": origin}], "import_map": {},
         "frozen_modules": [], "builtin_modules": [],
+        "site_packages": "/owned/.venv/lib/python3.12/site-packages",
     }
     monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={name: module}))
     with pytest.raises(bootstrap.BootstrapError):
@@ -335,3 +343,77 @@ def test_cache_scan_observes_only_first_unexpected_entry(monkeypatch: pytest.Mon
     monkeypatch.setattr(bootstrap, "os", SimpleNamespace(scandir=lambda path: Entries()))
     assert not bootstrap._empty_cache(Path("/synthetic"))
     assert seen == [0]
+
+
+@pytest.mark.parametrize("stage", ["consumer", "anchors", "prepare"])
+def test_swallowed_denied_work_still_rejects_capture(
+    monkeypatch: pytest.MonkeyPatch, stage: str,
+) -> None:
+    plan, context = fake_boundary(monkeypatch)
+
+    def swallowed_attempt() -> None:
+        try:
+            bootstrap._deny_external_work("socket.connect", ())
+        except bootstrap.BootstrapError:
+            pass
+
+    if stage == "consumer":
+        original_import = bootstrap._source_module
+
+        def importer(name: str, record: dict[str, Any]) -> ModuleType:
+            result = original_import(name, record)
+            if name == "d1_prefix_evidence":
+                swallowed_attempt()
+            return result
+
+        monkeypatch.setattr(bootstrap, "_source_module", importer)
+    else:
+        name = "OriginalAnchors" if stage == "anchors" else "prepare_originals"
+        module = context["objects"]["d1_originals"]
+        original = module.__dict__[name]
+
+        def wrapped(*args: Any, **kwargs: Any) -> Any:
+            result = original(*args, **kwargs)
+            swallowed_attempt()
+            return result
+
+        module.__dict__[name] = wrapped
+    with pytest.raises(bootstrap.BootstrapError, match="denied work"):
+        bootstrap.capture(plan)
+    assert bootstrap._DENIED_WORK == "socket.connect"
+    if stage in ("consumer", "anchors"):
+        assert "prepare" not in context["calls"]
+
+
+def test_first_denied_event_remains_sticky() -> None:
+    for event in ("socket.connect", "os.fork"):
+        with pytest.raises(bootstrap.BootstrapError):
+            bootstrap._deny_external_work(event, ())
+    assert bootstrap._DENIED_WORK == "socket.connect"
+    with pytest.raises(bootstrap.BootstrapError, match="socket.connect"):
+        bootstrap._require_no_denied_work()
+
+
+@pytest.mark.parametrize("case", ["dependency_inside_checkout_venv", "installed_project_alias"])
+def test_runtime_inside_checkout_preserves_installed_source_boundary(
+    monkeypatch: pytest.MonkeyPatch, case: str,
+) -> None:
+    site = "/owned/.venv/lib/python3.12/site-packages"
+    name = "dependency.module" if case == "dependency_inside_checkout_venv" else "project_alias"
+    suffix = "/dependency/module.py" if case == "dependency_inside_checkout_venv" else (
+        "/strange_physics/unlisted.py"
+    )
+    origin = site + suffix
+    module = ModuleType(name)
+    loader = importlib.machinery.SourceFileLoader(name, origin)
+    module.__spec__ = importlib.machinery.ModuleSpec(name, loader, origin=origin)
+    plan = {
+        "checkout": "/owned", "site_packages": site, "files": [{"path": origin}],
+        "import_map": {}, "frozen_modules": [], "builtin_modules": [],
+    }
+    monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={name: module}))
+    if case == "dependency_inside_checkout_venv":
+        bootstrap._check_loaded(plan)
+    else:
+        with pytest.raises(bootstrap.BootstrapError, match="installed project"):
+            bootstrap._check_loaded(plan)
