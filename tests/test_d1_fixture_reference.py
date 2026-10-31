@@ -448,3 +448,198 @@ def test_completed_trace_center_must_match_reference(
     with pytest.raises(ValueError, match="actual reference center"):
         candidate_materials(bad)
     assert len(fake.calls) == 13
+
+
+def test_prepare_owner_precedes_all_producer_work(monkeypatch: pytest.MonkeyPatch) -> None:
+    def forbidden(*args: object, **kwargs: object) -> NoReturn:
+        raise AssertionError("Preparation must not begin producer work")
+
+    value = D1FixtureProducer(ROOT, COMMIT, pins())
+    with monkeypatch.context() as scoped:
+        for name in ("verify_sources", "coefficients", "fixed_plan", "_inventories"):
+            scoped.setattr(producer, name, forbidden)
+        owner = value.prepare_reference_owner()
+    assert value.prepared_reference_owner is owner
+    assert not value.started and owner.values == {} and owner.pi is None
+    assert (
+        owner.lookups,
+        owner.series_values,
+        owner.exp_calls,
+        owner.log_calls,
+        owner.trig_calls,
+        owner.machin_terms,
+    ) == (0, 0, 0, 0, 0, 0)
+
+
+def test_prepared_run_uses_exact_owner_without_replacement(
+    monkeypatch: pytest.MonkeyPatch, fake: FakeReference
+) -> None:
+    value = D1FixtureProducer(ROOT, COMMIT, pins())
+    owner = value.prepare_reference_owner()
+    actual_position = EndpointOracle.position
+    seen: list[EndpointOracle] = []
+
+    def position(actual: EndpointOracle, key: Key) -> Decimal:
+        seen.append(actual)
+        return actual_position(actual, key)
+
+    def replacement() -> NoReturn:
+        raise AssertionError("Prepared producer must not allocate another oracle")
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(EndpointOracle, "position", position)
+        scoped.setattr(producer, "EndpointOracle", replacement)
+        batch = value.run(ids(), inventories())
+    assert batch.first_fault is None and len(fake.calls) == 13
+    assert len(seen) == 13 and all(actual is owner for actual in seen)
+    assert value.prepared_reference_owner is owner and owner.lookups == 13
+    with pytest.raises(ValueError, match="consumed"):
+        value.run(ids(), inventories())
+
+
+def test_legacy_bad_source_still_precedes_owner_allocation(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    allocations: list[None] = []
+    value = D1FixtureProducer(ROOT, COMMIT, pins())
+
+    def replacement() -> NoReturn:
+        allocations.append(None)
+        raise AssertionError("Legacy source failure must precede allocation")
+
+    def source_failure(*args: object, **kwargs: object) -> NoReturn:
+        raise OSError("synthetic source failure")
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(producer, "EndpointOracle", replacement)
+        scoped.setattr(producer, "verify_sources", source_failure)
+        batch = value.run(ids(), inventories())
+    assert batch.first_fault is not None and batch.lookup_attempted == 0
+    assert allocations == []
+
+
+def test_prepared_bad_source_retains_unused_owner(monkeypatch: pytest.MonkeyPatch) -> None:
+    value = D1FixtureProducer(ROOT, COMMIT, pins())
+    owner = value.prepare_reference_owner()
+
+    def source_failure(*args: object, **kwargs: object) -> NoReturn:
+        raise OSError("synthetic source failure")
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(producer, "verify_sources", source_failure)
+        batch = value.run(ids(), inventories())
+    assert batch.first_fault is not None and batch.lookup_attempted == 0
+    assert value.prepared_reference_owner is owner
+    assert owner.lookups == 0 and owner.series_values == 0 and owner.values == {}
+    with pytest.raises(ValueError, match="consumed"):
+        value.run(ids(), inventories())
+
+
+def test_failed_owner_preparation_is_consumed(monkeypatch: pytest.MonkeyPatch) -> None:
+    value = D1FixtureProducer(ROOT, COMMIT, pins())
+    failure = OSError("synthetic allocation failure")
+    allocations: list[None] = []
+
+    def allocate() -> NoReturn:
+        allocations.append(None)
+        raise failure
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(producer, "EndpointOracle", allocate)
+        with pytest.raises(OSError) as first:
+            value.prepare_reference_owner()
+        with pytest.raises(OSError) as second:
+            value.prepare_reference_owner()
+    assert first.value is failure and second.value is failure and allocations == [None]
+    with pytest.raises(OSError) as later:
+        value.run(ids(), inventories())
+    assert later.value is failure
+
+
+def test_repeated_owner_preparation_does_not_replace(monkeypatch: pytest.MonkeyPatch) -> None:
+    value = D1FixtureProducer(ROOT, COMMIT, pins())
+    owner = value.prepare_reference_owner()
+
+    def replacement() -> NoReturn:
+        raise AssertionError("Repeated preparation must not allocate")
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(producer, "EndpointOracle", replacement)
+        with pytest.raises(ValueError, match="consumed") as first:
+            value.prepare_reference_owner()
+        with pytest.raises(ValueError) as second:
+            value.prepare_reference_owner()
+    assert first.value is second.value and owner.values == {}
+    with pytest.raises(ValueError) as later:
+        value.run(ids(), inventories())
+    assert later.value is first.value
+
+
+@pytest.mark.parametrize("kind", ("prepare", "run"), ids=("prepare", "run"))
+def test_swallowed_preparation_reentry_stays_failed(
+    monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
+    value = D1FixtureProducer(ROOT, COMMIT, pins())
+    seen: list[BaseException] = []
+    allocations: list[EndpointOracle] = []
+
+    def allocate() -> EndpointOracle:
+        try:
+            if kind == "prepare":
+                value.prepare_reference_owner()
+            else:
+                value.run(ids(), inventories())
+        except ValueError as nested_error:
+            seen.append(nested_error)
+        result = EndpointOracle()
+        allocations.append(result)
+        return result
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(producer, "EndpointOracle", allocate)
+        with pytest.raises(ValueError) as raised:
+            value.prepare_reference_owner()
+    assert len(seen) == 1 and raised.value is seen[0] and len(allocations) == 1
+    assert allocations[0].values == {} and allocations[0].lookups == 0
+    with pytest.raises(ValueError) as later:
+        value.run(ids(), inventories())
+    assert later.value is raised.value
+
+
+@pytest.mark.parametrize(
+    "kind", ("lost", "substituted", "wrong-type"), ids=("lost", "substituted", "wrong-type")
+)
+def test_prepared_owner_tampering_fails_before_work_or_replacement(
+    monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
+    value = D1FixtureProducer(ROOT, COMMIT, pins())
+    owner = value.prepare_reference_owner()
+    replacement: object = (
+        None if kind == "lost" else (EndpointOracle() if kind == "substituted" else object())
+    )
+    object.__setattr__(value, "_prepared_reference_owner", replacement)
+    calls: list[str] = []
+
+    def forbidden(*args: object, **kwargs: object) -> NoReturn:
+        calls.append("work-or-allocation")
+        raise AssertionError("Tampered prepared owner must fail before work or allocation")
+
+    with monkeypatch.context() as scoped:
+        for name in (
+            "EndpointOracle",
+            "verify_sources",
+            "coefficients",
+            "fixed_plan",
+            "_inventories",
+        ):
+            scoped.setattr(producer, name, forbidden)
+        with pytest.raises(ValueError, match="identity lost or substituted") as first:
+            value.run(ids(), inventories())
+        with pytest.raises(ValueError) as repeated:
+            value.run(ids(), inventories())
+        with pytest.raises(ValueError) as observation:
+            _ = value.prepared_reference_owner
+    assert first.value is repeated.value is observation.value
+    assert value.started and calls == []
+    assert vars(value)["_prepared_owner_anchor"] is owner
+    assert owner.values == {} and owner.lookups == 0

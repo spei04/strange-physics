@@ -1,5 +1,16 @@
 # Proposed D1 loaded-definition boundary
 
+Current implementation checkpoint: the [protected startup/capture source](D1_BOOTSTRAP.md)
+and [actual original-owner preparation](D1_ORIGINALS.md) have independent source
+review. The minimal typing repair is at 0c76a102. Private engineering checks
+remain incomplete: 143 cases were collected on the preceding source, but no
+test bodies ran before the 232-file type check failed. The repaired source
+will receive ordinary CI verification separately; that cannot establish
+guarded test execution, protected runtime or scientific admission.
+Named-service lifecycle integration is being authored in a separate checkout.
+The original proposal below remains design history; actual custody,
+whole-process closure, installation/pass2 and scientific admission are pending.
+
 Design only, based on `36fee7865e149a483b8cef377d92bc3a1cc1e100` and the
 [accepted S ordering](D1_SOURCE_MANIFEST_DESIGN.md). Research owns this document;
 Lead owns central progress and A. Unit18's
@@ -253,3 +264,96 @@ scientific gate, allowance or reset of earlier charges.
    admission. Only then may the completed fixed D1 batch produce its first retained
    D1 evidence. Missing inputs or unknown costs remain explicit; source progress
    and synthetic checks do not spend an inferred scientific balance.
+
+## Current handoff evidence — 2026-10-31
+
+A read-only review of source `f36f0895` refreshed the known candidate closure to
+49 members and 968,648 bytes. Its largest ordinary member is 69,136 bytes;
+`uv.lock` is 250,735 bytes. These fit the distinct existing file limits.
+This is an incomplete candidate set: final catalog, runtime, bootstrap, installer
+and driver choices still need a complete import/member census.
+
+The unchanged [codec contract](D1_PRIMITIVE_CODEC_CONTRACT.md) establishes a
+16,860,600-byte lower bound for full-success raw JSONL, exceeding the 16 MiB
+transcript partition. Its compact 13,432,214-byte envelope remains conditional on
+the exact identities, copies and failure rules. It is not proof that all science
+artifacts fit 64 MiB. The 33,947,906-byte two-pass source-read ceiling also excludes
+extra `verify_sources` invocations, startup/imports and runtime verification.
+Complete those source-derived counts before costly whole-path qualification.
+
+A separate bounded inspection found a noneditable installed package at the
+expected engineering-environment location. Fifteen selected files—12 `native_*`
+modules plus the initializer, `finite_log_weights` and `installed_identity`—match
+the frozen checkout bytes. This establishes current-byte agreement for those
+files only. The sole top-level `.pth` file imports `_virtualenv`; its hook body
+was not executed or inspected in this check. Four inspected environment
+ancestors have mode `0775`, and `pyvenv.cfg` has mode `0664`. These observed
+group-write bits do not identify other users or establish hostile access, but
+they cannot supply protected startup custody. No permissions were changed.
+
+The next coherent handoff is the concrete protected startup/import plan and
+actual original-owner flow described above, including the same fixture-owner
+hook and selected d4. Review the startup hook, root/ancestor custody and complete
+runtime evidence within that flow. Matching installed bytes must not become an
+implicit trusted flag, and another detached expected-object comparator would not
+resolve these dependencies. S retention, installation, pass2, the complete binder,
+exposure inputs and measured whole-path fit remain unfinished.
+
+The [approved exposure and initial custody decisions](D1_EXPOSURE_DECISIONS.md)
+are now present alongside this design. Their approval stands; the actual
+six-world inventory and overlap disposition remain pending. These inspections
+made no project imports, scientific calls, environment changes or new allocations.
+
+
+## Next concrete ownership and closure integration
+
+The current controller can observe a valid capture report and a reaped leader.
+It deliberately leaves owned-tree closure unknown and final capture acceptance
+false. The next integration must connect this observation to the existing
+Systemd ownership operations, not add a boolean that declares cleanup complete.
+
+Reuse the reviewed Systemd, Snapshot.bind and terminal/retained-failed cleanup
+checks in scripts/grid_q1_supervisor.py. Add a narrow, fixed capture command and
+report join. Preserve GRID's existing command, source, result and outcome
+validation: those rules describe GRID numerical work and cannot validate a D1
+capture report unchanged. This work implements the existing integration
+obligation; it creates no scientific gate, budget or retry permission.
+
+The capture-specific plan must bind the source/controller/bootstrap, independently
+accepted protected-record digest, one exclusive output/cache root, exact
+interpreter and isolated/cache-prefix argv, and an explicitly admitted finite
+profile. Record the exclusive intent and whole-attempt deadline/accounting
+baseline before the first plan read or preflight. An exhausted preflight must
+submit nothing. Keep the same deadline through submission, observation,
+termination, stop and final records; a service runtime limit covers its subtree,
+not the preceding parent work.
+
+Submit once and retain the actual unit, InvocationID, cgroup, quota and accounting
+from that original invocation. Join the exact bounded report bytes/hash to the
+same source, admission, unit and output root. Retain terminal accounting before
+stop and require the bound terminal/empty state, followed by confirmed cleanup.
+A disappeared group is acceptable only under the existing previously-bound
+cleanup predicate. Rebind named-unit operations before signaling; never signal a
+numeric PID or process group after reap. Missing or late records, lost submission
+acknowledgement, first faults and unknown cleanup remain nonaccepted even if
+cleanup later succeeds.
+
+The first composition test should use the real preflight/control/report join with
+owned synthetic inputs and fake Systemd observations:
+
+absent → bound/running → leader exited but group populated → same invocation
+terminal and empty → terminal receipt → stop → confirmed empty
+
+Require one submission and no acceptance while the group is populated. Check the
+exact source/report/admission/unit join, retained monotonic accounting and absence
+of numeric PID signals. Add stale-identity/report, exhausted-preflight,
+lost-acknowledgement, receipt, cleanup and retained-failed cases using the existing
+supervisor tests as the behavioral reference.
+
+Actual complete-path qualification remains a separately admitted protected-runtime
+test: the real fixed startup/capture, thirteen actual oracle owners, twenty-two
+original methods and the retained emitter, zero primitive work, real named-unit
+observations and external ledger closure. A separate benign leader/descendant
+fixture must demonstrate that leader exit does not prove tree closure. No such
+service or test has run. This qualification cannot automatically activate S/A or
+the scientific batch, and its complete parent/service costs remain unmeasured.
