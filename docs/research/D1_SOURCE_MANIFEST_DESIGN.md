@@ -98,6 +98,22 @@ a non-null loaded module, or a second member resolving to that same lockfile.
 Matching declaration strings alone do not establish any of these actual joins.
 No other source or loaded copy receives the lock-specific ceiling.
 
+The following root pins also require exactly one declared `checkout_source` row
+at each literal canonical locator. Require unique member locators and the exact
+loaded-module declaration shown; that member's declared hash must equal the root
+pin. These are declaration joins, not observations of actual/protected bytes or
+loaded objects. The fixed protocol hash above remains mandatory.
+
+| Root pin | Required canonical locator | Loaded module |
+| --- | --- | --- |
+| `protocol_sha256` | `docs/research/RA_N03_CALIBRATION_SLICE.md` | null |
+| `recorder_sha256` | `tests/d1_primitive_recording.py` | `d1_primitive_recording` |
+| `codec_sha256` | `tests/d1_primitive_codec.py` | `d1_primitive_codec` |
+| `sink_sha256` | `tests/d1_primitive_sink.py` | `d1_primitive_sink` |
+
+The separate literal `uv.lock` row retains its null module and root-hash rule.
+Actual/protected source identities and filesystem aliases remain resolver duties.
+
 A runtime locator is an opaque member ID in the independently verified runtime
 view, not an S-supplied filename;
 its exact hash/size must match that view, with declared size at most 67,108,864.
@@ -126,7 +142,13 @@ The minimal catalog has exactly `schema` (literal
 `dispatch_policy`, and `installation_member_ref`. It uses the same canonical
 compact ASCII encoding, strict types and bounded name/reference lexicons. As a
 source member its complete bytes remain within 131,072; no separate parser or
-retention allowance is borrowed. Its closed rows are:
+retention allowance is borrowed. For the first pure-parser slice, explicitly
+apply the same predecode depth3/node2,048/integer-token10 guards to catalog bytes,
+counting containers, object keys and scalar values before decoding. The token
+limit includes any minus sign. Apply the same4,096-byte empty-row header and
+512-byte row-plus-separator ceilings; the catalog has no `limits` object. This
+prospective parser clarification adds no source member, validation pass, retained
+copy or allocation. Its closed rows are:
 
 | Array | Policy row / comparison |
 | --- | --- |
@@ -408,6 +430,13 @@ larger lock ceiling. Test the exact 16 limit keys and unchanged header/row/manif
 bounds without treating this proposal as actual-fit evidence.
 Independent literal fixtures should distinguish lexical
 consistency from actual resolution. This source work needs no numerical output.
+The first interface is only `parse_manifest(raw)`, `parse_catalog(raw)`, and
+`compare_declarations(manifest_raw, catalog_raw)`. Each comparison reparses exact
+raw bytes and returns immutable output-only views; constructed views do not enter
+validation boundaries. Compare the root/member declarations above and exact
+catalog projections, fixed definitions/instance/slot joins and capture-layout
+tags. Raw T identity/reference comparison is deferred to a separate boundary;
+this parser does not authenticate a supplied catalog or select a scientific emitter.
 
 Next review the bounded owned-file resolver and source/loaded-origin checks,
 with fake callable owners and owned temporary source files. Independently test
