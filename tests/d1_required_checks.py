@@ -684,29 +684,29 @@ def _checks(spec: RowSpec) -> tuple[RequiredCheck, ...]:
             )
         return result
     if kind == "primary":
-        posterior, prior = spec.dependencies
+        posterior_key, prior_key = spec.dependencies
         return (
             _pair(
                 "bind.primary",
                 "B2.primary",
-                posterior,
-                prior,
+                posterior_key,
+                prior_key,
                 "actual-continuous-dk-score-and-truth",
                 constants=("exact-matched-finest-base",),
             ),
             _pair(
                 "bind.prior_alias",
                 "B2.prior-view-binder",
-                posterior,
-                prior,
+                posterior_key,
+                prior_key,
                 "original-context-identities",
                 constants=("no-certificate-identity-rewrite",),
             ),
             _pair(
                 "paired_scores.rebuilt",
                 "B2.pair-from-prior-view",
-                posterior,
-                prior,
+                posterior_key,
+                prior_key,
                 "ScoreEnclosure.squared_loss",
                 "ScoreEnclosure.interval_score",
                 constants=("posterior-minus-prior",),

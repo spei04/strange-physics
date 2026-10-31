@@ -254,22 +254,29 @@ def test_no_subset_or_family_substitution_can_validate(change: str) -> None:
 def test_callers_cannot_choose_a_numerical_policy(change: str) -> None:
     row = expected_checks("belief/M01/1024/0.25")
     check = by_name(row)["finest_mean"]
-    changes: dict[str, object] = {
-        "name": "made-up",
-        "category": "diagnostic",
-        "producer": "unreviewed",
-        "relation": "upper<",
-        "limit": D("0.18"),
-        "quantum": D("0.0180"),
-        "operand-row": (Operand("belief/M02/1024/0.25", check.operands[0].field),),
-        "operand-field": (Operand(row.key, "finite-error-instead"),),
-        "applicability": "coarse-only",
-        "constants": ("optional=true",),
-    }
-    field = {"quantum": "limit", "operand-row": "operands", "operand-field": "operands"}.get(
-        change, change
-    )
-    altered = replace(check, **{field: changes[change]})
+    if change == "name":
+        altered = replace(check, name="made-up")
+    elif change == "category":
+        altered = replace(check, category="diagnostic")
+    elif change == "producer":
+        altered = replace(check, producer="unreviewed")
+    elif change == "relation":
+        altered = replace(check, relation="upper<")
+    elif change == "limit":
+        altered = replace(check, limit=D("0.18"))
+    elif change == "quantum":
+        altered = replace(check, limit=D("0.0180"))
+    elif change == "operand-row":
+        altered = replace(
+            check, operands=(Operand("belief/M02/1024/0.25", check.operands[0].field),)
+        )
+    elif change == "operand-field":
+        altered = replace(check, operands=(Operand(row.key, "finite-error-instead"),))
+    elif change == "applicability":
+        altered = replace(check, applicability="coarse-only")
+    else:
+        assert change == "constants"
+        altered = replace(check, constants=("optional=true",))
     with pytest.raises(ValueError):
         validate_expected_row(replace_check(row, check.name, altered))
 
@@ -334,9 +341,15 @@ def test_no_unregistered_rows_are_inferred_from_lookalike_keys(key: str) -> None
 @pytest.mark.parametrize("change", ("dependencies", "ordinal", "kind"))
 def test_row_header_cannot_retarget_an_otherwise_correct_check_list(change: str) -> None:
     row = expected_checks("belief/D03/1024/0.25")
-    replacement: object = () if change == "dependencies" else 0 if change == "ordinal" else "prior"
+    if change == "dependencies":
+        changed = replace(row, dependencies=())
+    elif change == "ordinal":
+        changed = replace(row, ordinal=0)
+    else:
+        assert change == "kind"
+        changed = replace(row, kind="prior")
     with pytest.raises(ValueError):
-        validate_expected_row(replace(row, **{change: replacement}))
+        validate_expected_row(changed)
 
 
 def test_strict_tie_decision_cannot_be_replaced_by_an_inclusive_pass() -> None:
