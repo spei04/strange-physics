@@ -182,6 +182,9 @@ def test_runtime_builtin_is_only_an_unresolved_declaration() -> None:
     assert result.manifest.definitions[-1].kind == "runtime_builtin"
     assert result.manifest.members[2].byte_length == 67108864
     assert result.catalog.members[2].locator == "native-emitter"
+    manifest["members"][2][4] = 0
+    with pytest.raises(ValueError, match="bounded integer"):
+        source.parse_manifest(encoded(manifest))
 
 
 def test_complete_member_limit_and_attainable_row_extrema() -> None:
@@ -203,16 +206,19 @@ def test_complete_member_limit_and_attainable_row_extrema() -> None:
 def test_opaque_extrema_and_original_bytes_survive_input_mutation() -> None:
     catalog = catalog_fixture()
     manifest = manifest_fixture(catalog)
-    manifest["run_id"], manifest["recorder_id"] = "r" * 96, "c" * 96
+    # Long quoted digits are ordinary opaque text, not outside-string integer tokens.
+    manifest["run_id"], manifest["recorder_id"] = "9" * 96, "c" * 96
     manifest["runtime_admission_ref"] = "a" * 32
     raw = encoded(manifest)
     result = source.parse_manifest(raw)
     manifest["members"][0][3] = "f" * 64
-    assert result.raw == raw and result.identity.run_id == "r" * 96
+    assert result.raw == raw and result.identity.run_id == "9" * 96
+    untrusted_view: Any = result
     with pytest.raises(FrozenInstanceError):
-        setattr(result, "raw", b"changed")
+        untrusted_view.raw = b"changed"
+    untrusted_policy: Any = result.members[0].policy
     with pytest.raises(FrozenInstanceError):
-        setattr(result.members[0].policy, "locator", "changed")
+        untrusted_policy.locator = "changed"
 
 
 @pytest.mark.parametrize("bad", [bytearray(b"{}\n"), memoryview(b"{}\n"), "{}\n", None], ids=["mutable", "view", "text", "none"])
@@ -277,12 +283,20 @@ def test_predecode_guards_run_before_json_allocation(kind: str, monkeypatch: pyt
 
 
 @pytest.mark.parametrize("token", [b"10000000000", b"-1000000000"], ids=["eleven-positive", "sign-counted"])
-def test_integer_length_is_bounded_before_conversion(token: bytes) -> None:
+def test_integer_length_is_bounded_before_conversion(
+    token: bytes, monkeypatch: pytest.MonkeyPatch
+) -> None:
     raw = b'{"x":' + token + b'}\n'
-    with pytest.raises(ValueError, match="strict source") as failure:
-        source.parse_manifest(raw)
-    assert isinstance(failure.value.__cause__, ValueError)
-    assert "ten characters" in str(failure.value.__cause__)
+
+    def forbidden(*args: object, **kwargs: object) -> NoReturn:
+        raise AssertionError("Numeric-token guard must precede decoder entry")
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(json, "loads", forbidden)
+        with pytest.raises(ValueError, match="token including sign"):
+            source.parse_manifest(raw)
+        with pytest.raises(ValueError, match="token including sign"):
+            source.parse_catalog(raw)
 
 
 @pytest.mark.parametrize("field,bad", [("schema", "other"), ("source_commit", "A" * 40), ("source_tree", "0" * 39), ("protocol_sha256", "f" * 64), ("run_id", "r" * 97), ("recorder_id", "bad/id"), ("runtime_admission_ref", "x" * 33), ("runtime_admission_sha256", True), ("catalog_ref", "missing"), ("installation_member_ref", "missing")], ids=["schema", "commit", "tree", "protocol", "run", "recorder", "runtime-ref", "hash-bool", "catalog-ref", "installer-ref"])
@@ -372,7 +386,10 @@ def test_lock_exception_is_unique_and_cannot_spread(change: str) -> None:
     elif change == "catalog-size":
         manifest["members"][0][4] = 131073
     else:
-        manifest["members"][2][1:3] = ["trusted_runtime_member", "emitter"]
+        catalog["members"][2] = ["m02", "trusted_runtime_member", "emitter", "runtime_emitter"]
+        catalog["definitions"][4] = ["d4", "m02", "runtime_builtin", "runtime_emitter", "exp"]
+        manifest = manifest_fixture(catalog)
+        source.parse_manifest(encoded(manifest))
         manifest["members"][2][4] = 67108865
     with pytest.raises(ValueError):
         source.parse_manifest(encoded(manifest))
@@ -501,15 +518,54 @@ def test_structural_reservations_with_explicit_test_only_lowering(which: str, mo
     manifest = manifest_fixture(catalog)
     document = manifest if which.startswith("manifest") else catalog
     parser = source.parse_manifest if which.startswith("manifest") else source.parse_catalog
+    arrays = (
+        "members", "definitions", "instances",
+        "bindings" if which.startswith("manifest") else "dispatch_policy",
+    )
     if which.endswith("header"):
         header = dict(document)
-        for name in ("members", "definitions", "instances", "bindings" if which.startswith("manifest") else "dispatch_policy"):
+        for name in arrays:
             header[name] = []
-        limit_name, limit = "HEADER_BYTES", len(encoded(header)) - 1
+        limit_name, inclusive = "HEADER_BYTES", len(encoded(header))
     else:
-        limit_name, limit = "ROW_BYTES", len(encoded(document["members"][0])) - 1
+        # One LF and one separator each cost one byte. Include every row array,
+        # so a later longer row cannot mask a missing separator in the check.
+        limit_name = "ROW_BYTES"
+        inclusive = max(len(encoded(row)) for name in arrays for row in document[name])
     parser(encoded(document))
     with monkeypatch.context() as scoped:
-        scoped.setattr(source, limit_name, limit)
+        scoped.setattr(source, limit_name, inclusive)
+        parser(encoded(document))
+        scoped.setattr(source, limit_name, inclusive - 1)
         with pytest.raises(ValueError):
             parser(encoded(document))
+
+
+@pytest.mark.parametrize("which", ["manifest", "catalog"], ids=["s", "catalog"])
+def test_cross_origin_same_locator_is_not_two_members(which: str) -> None:
+    catalog = catalog_fixture()
+    catalog["members"].extend([
+        ["m09", "checkout_source", "shared-token", None],
+        ["m10", "trusted_runtime_member", "separate-native", None],
+    ])
+    document = manifest_fixture(catalog) if which == "manifest" else catalog
+    parser = source.parse_manifest if which == "manifest" else source.parse_catalog
+    parser(encoded(document))
+    document["members"][-1][2] = document["members"][-2][2]
+    with pytest.raises(ValueError, match="locator"):
+        parser(encoded(document))
+
+
+def test_bytes_subclass_is_rejected_before_overridden_hooks() -> None:
+    class UntrustedBytes(bytes):
+        def __len__(self) -> int:
+            raise AssertionError("Exact-type check must precede length hook")
+
+        def decode(self, encoding: str = "utf-8", errors: str = "strict") -> str:
+            raise AssertionError("Exact-type check must precede decoding hook")
+
+    untrusted: Any = UntrustedBytes(b"{}\n")
+    with pytest.raises(ValueError):
+        source.parse_manifest(untrusted)
+    with pytest.raises(ValueError):
+        source.parse_catalog(untrusted)

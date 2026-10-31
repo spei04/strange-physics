@@ -152,8 +152,8 @@ def _encode(value: object, *, newline: bool = True) -> bytes:
 
 def _scan(raw: bytes) -> None:
     """Count keys, scalar values and containers before JSON object allocation."""
-    depth = nodes = 0
-    quoted = escaped = scalar = False
+    depth = nodes = token_chars = 0
+    quoted = escaped = scalar = numeric = False
     for byte in raw:
         if quoted:
             if escaped:
@@ -165,20 +165,30 @@ def _scan(raw: bytes) -> None:
             continue
         if byte == 34:
             quoted = True
-            scalar = False
+            scalar = numeric = False
+            token_chars = 0
             nodes += 1
         elif byte in (91, 123):
             depth += 1
             nodes += 1
-            scalar = False
+            scalar = numeric = False
+            token_chars = 0
         elif byte in (93, 125):
             depth -= 1
-            scalar = False
+            scalar = numeric = False
+            token_chars = 0
         elif byte in (9, 10, 13, 32, 44, 58):
-            scalar = False
+            scalar = numeric = False
+            token_chars = 0
         elif not scalar:
             nodes += 1
             scalar = True
+            numeric = byte == 45 or 48 <= byte <= 57
+            token_chars = 1 if numeric else 0
+        elif numeric:
+            token_chars += 1
+        if token_chars > INTEGER_TOKEN_CHARS:
+            raise ValueError("Integer token including sign exceeds ten characters")
         if depth < 0 or depth > MAX_DEPTH or nodes > MAX_NODES:
             raise ValueError("Source declaration depth or node ceiling exceeded")
     if depth or quoted:
@@ -321,7 +331,7 @@ def _member_policies(values: tuple[MemberPolicy, ...]) -> dict[str, MemberPolicy
     ids = tuple(value.member_id for value in values)
     if ids != tuple(sorted(set(ids))):
         raise ValueError("Member IDs must be unique and ordered")
-    locations = tuple((value.origin, value.locator) for value in values)
+    locations = tuple(value.locator for value in values)
     if len(set(locations)) != len(locations):
         raise ValueError("Duplicate or aliased member locator declaration")
     locks = tuple(value for value in values if value.locator == "uv.lock")
