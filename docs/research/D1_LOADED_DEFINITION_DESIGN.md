@@ -5,9 +5,13 @@ and [actual original-owner preparation](D1_ORIGINALS.md) have independent source
 review. The minimal typing repair is at 0c76a102. Private engineering checks
 remain incomplete: 143 cases were collected on the preceding source, but no
 test bodies ran before the 232-file type check failed. The repaired source
-will receive ordinary CI verification separately; that cannot establish
-guarded test execution, protected runtime or scientific admission.
-Named-service lifecycle integration is being authored in a separate checkout.
+passed original ordinary CI on [PR #156](https://github.com/spei04/strange-physics/pull/156):
+all six required jobs succeeded, including 6,240 tests and 232-file typing on
+both Python 3.12 and 3.14. This evidence cannot establish guarded test execution,
+protected runtime or scientific admission.
+The separate [named-service lifecycle source](D1_OWNED_CAPTURE.md) passed its
+guarded 37-case/111-phase check and full 233-file typing at f1adcabb. Its ordinary
+CI is next; protected-runtime qualification remains pending.
 The original proposal below remains design history; actual custody,
 whole-process closure, installation/pass2 and scientific admission are pending.
 

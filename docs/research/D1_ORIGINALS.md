@@ -4,8 +4,10 @@
 Current engineering status is [recorded with the integrated bootstrap](D1_BOOTSTRAP.md):
 source review accepted the fixed owner preparation and the 0c76a102 test typing
 repair. The private check remains incomplete; 143 cases were collected on the
-preceding source and no test bodies ran. Ordinary CI verification is pending
-and will not substitute for protected-runtime or scientific qualification.
+preceding source and no test bodies ran. Original ordinary CI passed on [PR #156](https://github.com/spei04/strange-physics/pull/156):
+6,240 tests and 232-file typing on both Python 3.12 and 3.14, with all six required
+jobs successful. This does not substitute for guarded, protected-runtime or
+scientific qualification.
 
 The following paragraph describes the original source-authoring checkpoint.
 

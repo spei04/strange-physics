@@ -14,9 +14,10 @@ import json
 import math
 import os
 import sys
+from collections.abc import Callable
 from pathlib import Path
-from types import BuiltinFunctionType, CodeType, FunctionType, ModuleType
-from typing import TYPE_CHECKING, Any, cast
+from types import BuiltinFunctionType, CodeType, FrameType, FunctionType, ModuleType
+from typing import TYPE_CHECKING, Any, NoReturn, cast
 
 if TYPE_CHECKING:
     from d1_originals import PreparedOriginals
@@ -45,10 +46,234 @@ SOURCE_PIN_PATHS = (
 PLAN_LIMIT = 4 * 1024**2
 REPORT_LIMIT = 4096
 _DENIED_WORK: str | None = None
+_STANDARD_ATTEMPTED = False
+_PREPARED_RANDOM: ModuleType | None = None
+_PREPARED_EXP: BuiltinFunctionType | None = None
+_WINDOW: _PrimitiveWindow | None = None
+# Reviewed Python 3.12 stdlib source, already included in the protected parent plan.
+_RANDOM_SHA256 = "0693d4ded36916f5b07d6c395cc331dbf1011bb70e90daaa29eaa32490a09425"
+_RANDOM_BYTES = 34683
+# Fixed defining routes apply BEFORE importing these modules. No source-selected
+# callback, imports, resolve/stat or argument inspection occurs in the profile.
+_HELPER_DENIALS = {
+    "endpoint_belief_reference": (
+        "binary",
+        "EndpointOracle.position",
+        "EndpointOracle.exp",
+        "EndpointOracle.log",
+        "EndpointOracle.circle_constant",
+        "EndpointOracle.trig",
+    ),
+    "d1_fixture_reference": (
+        "D1FixtureProducer.run",
+        "coefficients",
+        "fixed_plan",
+        "verify_sources",
+        "_inventories",
+    ),
+    "d1_prefix_evidence": (
+        "D1Reference._endpoint",
+        "D1Reference.training",
+        "D1Reference.take_training",
+        "D1Reference.future",
+        "D1Reference.constants",
+        "D1Reference.normalize",
+        "D1Reference.census",
+        "D1Reference.require_complete",
+        "qualify_prefix",
+        "qualify_future",
+        "joint_enclosure",
+        "training_forecast",
+        "duplicate_forecast",
+        "require_reference_reserve",
+    ),
+    "d1_bounds": (
+        "enclose_cdf",
+        "generalized_quantile",
+        "enclose_predictive",
+        "enclose_scores",
+        "certify_d1_prefix",
+        "certify_d1_prior",
+        "pair_scores",
+        "classify_matched_panel",
+    ),
+    "grid_q1_reference": ("GridQ1Reference.__init__",),
+}
+_NATIVE_DENIALS = {
+    "calibration_fixture_contracts": ("check_supplied_inventory", "physical_identity"),
+    "native_prediction": ("predict_native_spring",),
+    "native_candidates": ("produce_native_candidates",),
+    "native_endpoint_beliefs": ("compute_native_endpoint_belief",),
+    "prediction": ("predict_linear_spring", "_state_at_time"),
+    "simulation": ("simulate",),
+    "finite_log_weights": ("normalize_finite_log_weights",),
+}
 
 
 class BootstrapError(ValueError):
     """The actual fresh-child import or retained-object boundary differs."""
+
+
+class _PrimitiveWindow:
+    """One child-owned current-thread window; no hostile-Python sandbox claim."""
+
+    routes: dict[str, frozenset[str]]
+    codes: tuple[CodeType, ...]
+    emitter: BuiltinFunctionType
+    callback: Callable[[FrameType, str, object], None]
+    getprofile: Callable[[], object]
+    armed: bool
+    installing: bool
+    used: bool
+    diagnostic_attempted: bool
+
+    def __init__(self, plan: dict[str, Any], emitter: BuiltinFunctionType) -> None:
+        root = Path(plan["checkout"])
+        site = Path(plan["site_packages"])
+        self.routes = {
+            str(root / "tests" / (name + ".py")): frozenset(names)
+            for name, names in _HELPER_DENIALS.items()
+        }
+        self.routes.update(
+            {
+                str(site / "strange_physics" / (name + ".py")): frozenset(names)
+                for name, names in _NATIVE_DENIALS.items()
+            }
+        )
+        self.codes = ()
+        self.emitter = emitter
+        self.callback = self.profile
+        self.getprofile = sys.getprofile
+        self.armed = False
+        self.installing = False
+        self.used = False
+        self.diagnostic_attempted = False
+
+    def deny(self, label: str) -> NoReturn:
+        global _DENIED_WORK
+        if _DENIED_WORK is None:
+            _DENIED_WORK = label[:128]
+        # Diagnostic delivery can be partial/unknown; a failed write must not
+        # turn a denied call into Python exception recovery or permit its body.
+        if not self.diagnostic_attempted:
+            self.diagnostic_attempted = True
+            try:
+                os.write(2, ("D1_DENIED:" + _DENIED_WORK + "\n").encode("ascii", "replace"))
+            finally:
+                os._exit(86)
+        os._exit(86)
+
+    def profile(self, frame: FrameType, event: str, arg: object) -> None:
+        if event == "call":
+            code = frame.f_code
+            if any(code is retained for retained in self.codes):
+                self.deny("retained-oracle-code")
+            names = self.routes.get(code.co_filename)
+            if names is not None and code.co_qualname in names:
+                self.deny("source:" + code.co_qualname)
+        elif event == "c_call" and arg is self.emitter:
+            self.deny("retained-c:math.exp")
+
+    def arm(self) -> None:
+        if self.used:
+            self.deny("window-already-consumed")
+        self.used = True
+        if self.getprofile() is not None or sys.gettrace() is not None:
+            self.deny("preexisting-profile-or-trace")
+        self.installing = True
+        try:
+            sys.setprofile(self.callback)
+        finally:
+            self.installing = False
+        self.armed = True
+        self.check()
+
+    def check(self) -> None:
+        if _DENIED_WORK is not None:
+            self.deny(_DENIED_WORK)
+        if not self.armed or self.getprofile() is not self.callback:
+            self.deny("capture-profile-missing")
+
+    def retain(
+        self,
+        owner: type[EndpointOracle],
+        codes: tuple[CodeType, ...],
+        emitter: BuiltinFunctionType,
+        origin: str,
+    ) -> None:
+        self.check()
+        if self.codes or emitter is not self.emitter or len(codes) != 4:
+            self.deny("retained-window-binding")
+        extra = owner.__dict__.get("trig")
+        if type(extra) is not FunctionType or extra.__code__.co_filename != origin:
+            self.deny("retained-trig-origin")
+        self.codes = (*codes, extra.__code__)
+
+
+def _prepare_standard_library(plan: dict[str, Any]) -> None:
+    """Complete one reviewed stdlib initialization BEFORE adding helper lookup.
+
+    Parent validation supplies the actual source hash/custody premise. There is
+    no claim to measure pre-arm exp calls or authenticate the supplied plan here.
+    """
+    global _STANDARD_ATTEMPTED, _PREPARED_RANDOM, _PREPARED_EXP
+    if _STANDARD_ATTEMPTED or _WINDOW is not None:
+        raise BootstrapError("Standard-library preparation is already consumed")
+    _STANDARD_ATTEMPTED = True
+    root = Path(plan["checkout"])
+    if any(str(root / part) in sys.path for part in ("tests", "src", "")):
+        raise BootstrapError("Standard initialization must precede helper lookup")
+    origin = str(Path(plan["stdlib"]) / "random.py")
+    entries = [item for item in plan["files"] if item.get("path") == origin]
+    if (
+        len(entries) != 1
+        or entries[0].get("sha256") != _RANDOM_SHA256
+        or type(entries[0].get("bytes")) is not int
+        or entries[0]["bytes"] != _RANDOM_BYTES
+    ):
+        raise BootstrapError("Reviewed random source pin is required before initialization")
+    original = math.__dict__.get("exp")
+    if type(original) is not BuiltinFunctionType:
+        raise BootstrapError("Intact runtime exp is required before initialization")
+    module = importlib.import_module("random")
+    spec = module.__spec__
+    if (
+        type(module) is not ModuleType
+        or module.__name__ != "random"
+        or sys.modules.get("random") is not module
+        or spec is None
+        or type(spec.loader) is not importlib.machinery.SourceFileLoader
+        or spec.origin != origin
+        or module.__file__ != origin
+        or math.exp is not original
+        or module.__dict__.get("_exp") is not original
+    ):
+        raise BootstrapError("Actual random origin or retained exp alias differs")
+    _check_loaded(plan)
+    _require_no_denied_work()
+    _PREPARED_RANDOM = module
+    _PREPARED_EXP = original
+
+
+def _start_window(plan: dict[str, Any]) -> _PrimitiveWindow:
+    global _WINDOW
+    if _WINDOW is not None:
+        raise BootstrapError("Capture window is already consumed")
+    if (
+        not _STANDARD_ATTEMPTED
+        or _PREPARED_RANDOM is None
+        or _PREPARED_EXP is None
+        or sys.modules.get("random") is not _PREPARED_RANDOM
+        or _PREPARED_RANDOM.__dict__.get("_exp") is not _PREPARED_EXP
+        or math.exp is not _PREPARED_EXP
+    ):
+        raise BootstrapError("Retained standard-library initialization is required")
+    if type(_PREPARED_EXP) is not BuiltinFunctionType:
+        raise BootstrapError("Retained exp must be an intact runtime builtin")
+    window = _PrimitiveWindow(plan, _PREPARED_EXP)
+    _WINDOW = window
+    window.arm()
+    return window
 
 
 def read_launch_record(path: Path, expected_sha256: str) -> dict[str, Any]:
@@ -215,6 +440,8 @@ def _unchanged(
 
 
 def _require_no_denied_work() -> None:
+    if _WINDOW is not None:
+        _WINDOW.check()
     if _DENIED_WORK is not None:
         raise BootstrapError("Capture observed denied work: " + _DENIED_WORK)
 
@@ -224,7 +451,9 @@ def capture(plan: dict[str, Any]) -> PreparedOriginals:
     _require_no_denied_work()
     if any(name in sys.modules for name in ("endpoint_belief_reference", *CONSUMERS)):
         raise BootstrapError("Capture requires a fresh helper namespace")
+    window = _start_window(plan)
     raw = _raw_anchors(plan)
+    window.retain(raw[1], raw[3], raw[5], plan["import_map"]["endpoint_belief_reference"])
     # Save raw references before any consumer or record-construction helper import.
     fixture = _source_module("d1_fixture_reference", plan)
     _source_module("d1_prefix_evidence", plan)
@@ -265,6 +494,9 @@ def capture(plan: dict[str, Any]) -> PreparedOriginals:
 def _deny_external_work(event: str, args: tuple[object, ...]) -> None:
     global _DENIED_WORK
     del args
+    if _WINDOW is not None and event in ("sys.setprofile", "sys.settrace"):
+        if event != "sys.setprofile" or not _WINDOW.installing:
+            _WINDOW.deny("guard-removal:" + event)
     if event in (
         "subprocess.Popen",
         "os.system",
@@ -274,6 +506,8 @@ def _deny_external_work(event: str, args: tuple[object, ...]) -> None:
         "os.forkpty",
         "pty.spawn",
     ) or event.startswith("socket."):
+        if _WINDOW is not None:
+            _WINDOW.deny(event)
         if _DENIED_WORK is None:
             _DENIED_WORK = event[:128]
         raise BootstrapError("Capture child cannot spawn processes or use the network")
@@ -310,6 +544,7 @@ def child(plan_path: Path, plan_digest: str, cache: Path) -> dict[str, object]:
     if helper_root in sys.path or str(root / "src") in sys.path or str(root) in sys.path:
         raise BootstrapError("Checkout was already present in startup search paths")
     sys.addaudithook(_deny_external_work)
+    _prepare_standard_library(plan)
     sys.path.insert(0, helper_root)
     prepared = capture(plan)
     _require_no_denied_work()
@@ -333,7 +568,9 @@ def main() -> int:
     raw = json.dumps(result, sort_keys=True)
     if len(raw.encode("utf-8")) + 1 > REPORT_LIMIT:
         raise BootstrapError("Capture report exceeds its bound")
+    _require_no_denied_work()
     print(raw)
+    _require_no_denied_work()
     return 0
 
 
