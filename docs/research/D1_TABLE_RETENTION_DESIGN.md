@@ -116,7 +116,12 @@ claim. No creation-inode continuity claim is added.
 5. Check pinned identities and close all metadata-owned descriptors, including
    the temporary read fd and parent/root anchors. Every required write/sync/read/
    close must have returned without uncertainty. There are no metadata close
-   callbacks remaining after this step.
+   callbacks remaining after this step. After every owned close has been
+   attempted, check the T attempt's sticky active/reentry state **before** the
+   final C observation. A close hook may swallow a nested `retain()` failure and
+   return normally; that earlier failure still prohibits a second C read.
+   Preserve its first fault while independently attempting all remaining owned
+   closes; the latch check must not bypass cleanup.
 6. Obtain the second fresh C observation, reapply `_context`, and require exact
    equality with the first C bytes and the same derived binding. Immediately
    before returning, check the T attempt's own sticky active/reentry state again.
@@ -242,6 +247,9 @@ Tests should cover these distinct behaviors before any runtime qualification:
 * Original failure plus supplemental close failure; owned real-close-then-error
   leaves no descriptor leak but no success/second-C read; all other owned closes
   are attempted once with mocks restored before caller finish/pytest teardown.
+* A metadata-close hook swallows nested `retain()` failure and returns normally:
+  retain the first fault, independently attempt every remaining owned close,
+  then reject before any second C read. No close or retention retry is allowed.
 * Wrong-owner/reentrant attempt, including a swallowed nested failure during the
   final C observation, consumes the object; repeated `retain()` does no further
   I/O. Failed files stay intact.
