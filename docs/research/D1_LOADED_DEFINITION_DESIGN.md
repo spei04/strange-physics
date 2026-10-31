@@ -5,9 +5,11 @@ and [actual original-owner preparation](D1_ORIGINALS.md) have independent source
 review. The minimal typing repair is at 0c76a102. Private engineering checks
 remain incomplete: 143 cases were collected on the preceding source, but no
 test bodies ran before the 232-file type check failed. The repaired source
-will receive ordinary CI verification separately; that cannot establish
-guarded test execution, protected runtime or scientific admission.
-Named-service lifecycle integration is being authored in a separate checkout.
+has an active original ordinary CI run on [PR #156](https://github.com/spei04/strange-physics/pull/156):
+Python 3.14 passed its 6,240-test suite; Python 3.12 remains live. This evidence
+cannot establish guarded test execution, protected runtime or scientific admission.
+The separate [named-service lifecycle source](D1_OWNED_CAPTURE.md) is reviewed;
+its 37 authored tests and runtime qualification remain pending.
 The original proposal below remains design history; actual custody,
 whole-process closure, installation/pass2 and scientific admission are pending.
 
