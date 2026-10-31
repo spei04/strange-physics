@@ -2,11 +2,9 @@
 
 Qualification protocol: [finite-grid calibration handoff](../FINITE_GRID_CALIBRATION_HANDOFF.md). Numerical admission and scientific acceptance remain separate.
 
-**Current checkpoint (2026-10-30)**
+**Current checkpoint:** [Canonical progress and assignments](../EXECUTION_LOG.md#current-assignment-board).
 
-- **Verified:** The spring demo, saved playback and reference checks work; engineering checks for the grid implementation passed.
-- **Next — Lead + Quality:** Resolve allocation and storage requirements for one numerical qualification run.
-- **Blocked:** Research-cost reconciliation and runtime storage remain unresolved. Selector and law-change comparisons have not run. [Detailed checkpoint](../EXECUTION_LOG.md#2026-10-30--grid-qualification-implementation-and-engineering-checks).
+The fixed numerical diagnostic is recorded in [GRID-Q1 results](../GRID_Q1_SUPERVISED_RUN_RESULT.md); the next bounded development protocol is [RA-N03-D1](RA_N03_CALIBRATION_SLICE.md). Neither completes RA-N03 or admits another run.
 
 Status: **owner-approved for scoped implementation and the bounded comparison on2026-10-21**. Accepted plan source33ddfbf74837dde29e0f1db3b1b4263e7031ddc2, PR #100. The reviewed native dependency amendment and scoped RA_EXEC are active; scientific/implementation entry gates and all caps remain. See [approval record](APPROVALS.md#native-comparison-2026-10-21).
 

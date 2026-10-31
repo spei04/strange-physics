@@ -1,5 +1,7 @@
 # Finite-grid calibration handoff — proposed GRID-Q1
 
+**Historical pre-run proposal:** preserved below with its original assumptions and forecasts. The completed diagnostic and its limits are recorded in [GRID-Q1 results](GRID_Q1_SUPERVISED_RUN_RESULT.md). Current work follows the reviewed [RA-N03-D1 protocol](research/RA_N03_CALIBRATION_SLICE.md) and [assignment board](EXECUTION_LOG.md#current-assignment-board).
+
 The sequencing is deliberate: the initial one-parameter experiment makes an explicitly checked grid practical. Laplace approximates the posterior around a fitted mode; accurate Gaussian integrals alone do not establish that the approximation captures a boundary, a flat likelihood or multiple explanations. Grid qualification establishes the reference and shared inference keeps the selector comparison focused on experiment choice. Laplace's mathematical validation proceeds in parallel; comparative adoption follows a measured accuracy check against the qualified reference.
 
 

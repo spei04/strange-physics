@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** One GRID-Q1 diagnostic passed all required checks across 27 fixed synthetic profiles. Three live controls qualified; retained artifacts and service closure passed independent review. See the [immutable result record](GRID_Q1_SUPERVISED_RUN_RESULT.md).
-- **Accounting:** Captured execution and output stayed within limits; four services used 99.704934 CPU seconds. Earlier preparation/bootstrap and historical unknown costs remain retained. Complete whole-operation accounting is unresolved; no refund or retry.
-- **Next — Lead; Quality, Research and Platform reviews complete:** Review discrepancy assumptions and the numerical profile, then freeze disjoint calibration fixtures. Calibration, selector/adaptation evidence and Laplace comparison remain separate gates.
+- **Verified:** One GRID-Q1 diagnostic passed all required checks across 27 fixed profiles. Independent review accepted numerical evidence and captured execution; historical costs remain unresolved. [Result](GRID_Q1_SUPERVISED_RUN_RESULT.md).
+- **Reviewed:** [RA-N03-D1](research/RA_N03_CALIBRATION_SLICE.md) specifies eight fixtures and a frozen prediction comparison against no learning, including interval width and explicit inconclusive outcomes. This establishes no calibration result.
+- **Next — Research; Quality and Platform review:** Implement fixture, audit and exposure contracts under existing authorization, then numerical certificates and the disabled runner. Numerical execution awaits qualified source and a complete finite allocation; the consumed GRID attempt remains closed.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Quality / Platform / Project lead | RA-N03-D1 protocol and predictive decision | Eight-fixture protocol independently reviewed; frozen prior comparison, co-primary scores, claim limits and prospective cost scope accepted. Research next owns fixture/audit/exposure source; numerical batch remains disabled. |
 | 2026-10-30 | Project lead / Quality / Research / Platform | Approved supervised GRID-Q1 attempt and independent outcome review | Lead executed one fixed operator; all three controls and the 27-profile diagnostic passed. Quality verified runtime/evidence; Research verified all 142 artifacts and required gates; Platform accepted captured intervals/output with earlier costs explicitly unresolved. [Result](GRID_Q1_SUPERVISED_RUN_RESULT.md); no retry or merge. |
 | 2026-10-30 | Quality / Research / Project lead | PR #137 corrected cleanup and hosted verification | Quality scoped shared mocks; Research accepted the exact test-only change; Lead verified [all six required checks](https://github.com/spei04/strange-physics/actions/runs/41144492809) at 30bc815: 4,890 tests and 24 analytic cases per runtime. Prior failed run retained; one complete run decision pending. |
 | 2026-10-30 | Quality / Research / Platform / Project lead | GRID-Q1 preparation incident and control repair | Quality authors fixtures/runbook; Research reviews identity and failure contracts; Platform reviews service/lease/output accounting; Lead tests, integrates and publishes. Final108-case integrated suite and independent reviews passed; complete bounded proposal awaiting decision; no live qualification or numerical run. |
