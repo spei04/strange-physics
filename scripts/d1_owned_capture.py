@@ -1,4 +1,4 @@
-"""Disabled, fixed D1 capture lifecycle; no scientific or activation authority.
+"""Fixed D1 capture lifecycle; no scientific or admission authority.
 
 The outer invocation and protected runtime remain independently admitted. The
 standard capture controller is reused unchanged inside one named service.
@@ -31,12 +31,14 @@ from scripts.grid_q1_supervisor import (
     Plan,
     Snapshot,
     Supervisor,
-    Systemd,
     confirms_empty_unit_cleanup,
     private_bytes,
 )
 
-ENABLED = False
+ENABLED = True
+WORK_SECONDS = 240.0
+TERMINAL_SECONDS = 300.0
+LAUNCH_RESERVE = 65.0
 REQUEST_BYTES = 16 * 1024
 REPORT_BYTES = 64 * 1024
 PROFILE = {
@@ -229,6 +231,42 @@ class CapturePlan(Plan):
         ]
 
 
+def request_record(spec: CaptureSpec, started: float) -> dict[str, object]:
+    if type(started) is not float or not math.isfinite(started) or started < 0:
+        raise ValueError("Finite original monotonic start required")
+    return {
+        "schema": "d1-capture-request-v1", "spec": spec.record(), "unit": spec.unit,
+        "started": started, "deadline": started + TERMINAL_SECONDS,
+    }
+
+
+def fixed_plan(spec: CaptureSpec, started: float) -> CapturePlan:
+    return CapturePlan(
+        root=spec.root, admission_sha256=spec.admission_sha256,
+        controller_sha256=spec.adapter_sha256, spec=spec,
+        request_sha256=hashlib.sha256(encoded(request_record(spec, started))).hexdigest(),
+        runtime_seconds=240, start_timeout_seconds=5, stop_timeout_seconds=5,
+        cpu_quota_percent=50, quota_period_us=100_000, cpu_watch_ns=120_000_000_000,
+        poll_seconds=4, observations=60, command_seconds=5, term_grace_seconds=2,
+        terminal_seconds=300, service_file_bytes=1024 * 1024,
+    )
+
+
+def write_request(path: Path, raw: bytes) -> None:
+    if type(raw) is not bytes or not 0 < len(raw) <= REQUEST_BYTES:
+        raise ValueError("Bounded immutable request required")
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(fd, "wb") as stream:
+        stream.write(raw)
+        stream.flush()
+        os.fsync(stream.fileno())
+    directory = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        os.fsync(directory)
+    finally:
+        os.close(directory)
+
+
 class ReceiptIO(Protocol):
     root: Path
 
@@ -250,7 +288,7 @@ class CaptureFiles:
 
 
 def preflight(spec: CaptureSpec) -> None:
-    """One additional full validation, after the outer intent and baseline."""
+    """First full validation, inside the named service before unchanged launch."""
     plan = capture.read_plan(spec.protected_plan, spec.protected_plan_sha256)
     hashes = capture.validate_plan(plan)
     expected = {
@@ -370,13 +408,17 @@ def service_entry(request_path: Path, expected_sha256: str) -> int:
     report_sha: str | None = None
     report_size: int | None = None
     try:
-        if time.monotonic() >= deadline:
-            raise TimeoutError("Original capture deadline reached before launch")
+        cutoff = started + WORK_SECONDS
+        if not started <= time.monotonic() < cutoff:
+            raise TimeoutError("Original work cutoff reached before preflight")
+        preflight(spec)
+        if cutoff - time.monotonic() <= LAUNCH_RESERVE:
+            raise TimeoutError("Original work cutoff cannot reserve child wait and closure")
         result = capture.launch(
             spec.protected_plan, spec.protected_plan_sha256, spec.root / "capture"
         )
-        if time.monotonic() >= deadline:
-            raise TimeoutError("Original capture deadline reached after launch")
+        if time.monotonic() >= cutoff:
+            raise TimeoutError("Original work cutoff reached after launch")
         if not result.capture_observed:
             raise ValueError("Inner capture remains incomplete")
         child_raw = private_bytes(spec.root / "capture/child.log", capture.LOG_LIMIT)
@@ -517,9 +559,12 @@ def execute(
     clock: Callable[[], float] = time.monotonic,
     pause: Callable[[float], None] = time.sleep,
     sample_usage: Callable[[], dict[str, float]] = usage,
+    *,
+    original_start: float | None = None,
 ) -> dict[str, object]:
     """One owned attempt; returned success is provisional pending external ledger."""
-    started = clock()
+    started = clock() if original_start is None else original_start
+    request_record(spec, started)
     baseline = sample_usage()
     deadline = started + 300.0
     first: Fault | None = None
@@ -572,35 +617,11 @@ def execute(
         if files.root != spec.root:
             raise ValueError("Receipt root differs from intended root")
         # Validate the existing private run root before writing into it; no plan read yet.
-        request = {
-            "schema": "d1-capture-request-v1",
-            "spec": spec.record(),
-            "unit": spec.unit,
-            "started": started,
-            "deadline": deadline,
-        }
+        request = request_record(spec, started)
         request_raw = encoded(request)
         if len(request_raw) > REQUEST_BYTES:
             raise ValueError("Request byte bound")
-        plan = CapturePlan(
-            root=spec.root,
-            admission_sha256=spec.admission_sha256,
-            controller_sha256=spec.adapter_sha256,
-            spec=spec,
-            request_sha256=hashlib.sha256(request_raw).hexdigest(),
-            runtime_seconds=240,
-            start_timeout_seconds=5,
-            stop_timeout_seconds=5,
-            cpu_quota_percent=50,
-            quota_period_us=100_000,
-            cpu_watch_ns=120_000_000_000,
-            poll_seconds=4,
-            observations=60,
-            command_seconds=5,
-            term_grace_seconds=2,
-            terminal_seconds=300,
-            service_file_bytes=1024 * 1024,
-        )
+        plan = fixed_plan(spec, started)
         intent_attempted = True
         files.write(
             "capture-intent.json",
@@ -618,27 +639,16 @@ def execute(
         spec.control_root.mkdir(mode=0o700)
         (spec.root / "service-pycache").mkdir(mode=0o700)
         # Canonical request bytes are fixed; the standard indented writer is not used here.
-        request_path = spec.root / "capture-request.json"
-        fd = os.open(request_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
-        with os.fdopen(fd, "wb") as stream:
-            stream.write(request_raw)
-            stream.flush()
-            os.fsync(stream.fileno())
-        directory = os.open(spec.root, os.O_RDONLY | os.O_DIRECTORY)
-        try:
-            os.fsync(directory)
-        finally:
-            os.close(directory)
-        preflight(spec)
-        remaining(started + 245.0)
+        write_request(spec.root / "capture-request.json", request_raw)
+        remaining(started + WORK_SECONDS)
         initial = supervisor.snapshot(plan, remaining())
         if initial.properties.get("LoadState") != "not-found":
             raise ValueError("Intended unit already exists; no submission")
-        remaining(started + 245.0)
+        remaining(started + WORK_SECONDS)
         dispatch = True
         supervisor.submit(plan, remaining())
         for index in range(60):
-            bind(supervisor.snapshot(plan, remaining(started + 245.0)))
+            bind(supervisor.snapshot(plan, remaining(started + WORK_SECONDS)))
             assert latest is not None
             files.write(
                 f"capture-observation-{index:02d}.json",
@@ -657,7 +667,7 @@ def execute(
                 raise RuntimeError("Cgroup CPU watch reached")
             if closed:
                 break
-            pause(min(4.0, max(0.0, started + 245.0 - clock())))
+            pause(min(4.0, max(0.0, started + WORK_SECONDS - clock())))
         if not closed or latest is None:
             raise TimeoutError("Observation limit exhausted")
         if (
@@ -800,7 +810,10 @@ def execute(
 
 def run_owned(spec: CaptureSpec) -> dict[str, object]:
     """Fixed concrete API for a separately admitted outer invocation, not a CLI."""
-    return execute(spec, Systemd(spec.control_root), CaptureFiles(spec.root))
+    # The fixed parent stays outside the sole submit-capable controller child.
+    from scripts.d1_capture_owner import run_capture
+
+    return run_capture(spec)
 
 
 def main() -> int:
