@@ -201,3 +201,95 @@ def test_record_read_uses_expected_digest(tmp_path: Path) -> None:
     }
     with pytest.raises(bootstrap.BootstrapError, match="bytes"):
         bootstrap.read_launch_record(path, "0" * 64)
+
+
+@pytest.mark.parametrize("case", ["allowed", "unknown_origin", "alias", "tests_alias", "missing_spec",
+                                 "unknown_builtin", "unknown_frozen", "native_outside_map"])
+def test_loaded_registry_matches_fixed_origins(
+    monkeypatch: pytest.MonkeyPatch, case: str,
+) -> None:
+    name = "owned"
+    origin = "/owned/source.py"
+    module = ModuleType(name)
+    loader = importlib.machinery.SourceFileLoader(name, origin)
+    module.__spec__ = importlib.machinery.ModuleSpec(name, loader, origin=origin)
+    plan = {
+        "files": [{"path": origin}], "import_map": {name: origin},
+        "frozen_modules": ["os"], "builtin_modules": ["sys"],
+    }
+    if case == "unknown_origin":
+        module.__spec__.origin = "/unreviewed/source.py"
+    elif case == "alias":
+        name = "alternative_name"
+    elif case == "tests_alias":
+        name = "tests.owned"
+    elif case == "missing_spec":
+        module.__spec__ = None
+    elif case == "unknown_builtin":
+        module.__spec__.origin = "built-in"
+    elif case == "unknown_frozen":
+        module.__spec__.origin = "frozen"
+    elif case == "native_outside_map":
+        name = "strange_physics.unlisted"
+    monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={name: module}))
+    if case == "allowed":
+        bootstrap._check_loaded(plan)
+    else:
+        with pytest.raises(bootstrap.BootstrapError):
+            bootstrap._check_loaded(plan)
+
+
+@pytest.mark.parametrize("case", ["success", "not_isolated", "bytecode_writes", "used_cache",
+                                 "path", "version", "prefix", "checkout_path"])
+def test_child_startup_gates_without_importing_consumers(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, case: str,
+) -> None:
+    cache = tmp_path / "cache"
+    cache.mkdir()
+    root = tmp_path / "checkout"
+    venv = tmp_path / "venv"
+    captured: list[object] = []
+    hooks: list[object] = []
+    plan = {
+        "checkout": str(root), "venv_root": str(venv), "python_version": "3.12.3",
+        "startup_sys_path": ["/owned/stdlib"], "builtin_modules": ["sys"],
+        "bootstrap": str(Path(bootstrap.__file__).absolute()), "source_commit": "a" * 40,
+    }
+    state = SimpleNamespace(
+        flags=SimpleNamespace(isolated=1, dont_write_bytecode=1),
+        _xoptions={"pycache_prefix": str(cache)}, version_info=(3, 12, 3),
+        prefix=str(venv), path=["/owned/stdlib"], builtin_module_names=("sys",),
+        addaudithook=hooks.append,
+    )
+    if case == "not_isolated":
+        state.flags.isolated = 0
+    elif case == "bytecode_writes":
+        state.flags.dont_write_bytecode = 0
+    elif case == "used_cache":
+        (cache / "old.pyc").write_bytes(b"x")
+    elif case == "path":
+        state.path = ["/unexpected"]
+    elif case == "version":
+        state.version_info = (3, 12, 4)
+    elif case == "prefix":
+        state.prefix = "/wrong"
+    elif case == "checkout_path":
+        state.path = [str(root / "tests")]
+        plan["startup_sys_path"] = list(state.path)
+    monkeypatch.setattr(bootstrap, "sys", state)
+    monkeypatch.setattr(bootstrap, "read_launch_record", lambda *args: plan)
+    monkeypatch.setattr(bootstrap, "_check_loaded", lambda record: None)
+
+    def capture(record: dict[str, Any]) -> SimpleNamespace:
+        captured.append(record)
+        return SimpleNamespace(owners=(object(),) * 13, original_methods=(object(),) * 22)
+
+    monkeypatch.setattr(bootstrap, "capture", capture)
+    if case == "success":
+        result = bootstrap.child(tmp_path / "record", "b" * 64, cache)
+        assert result["owners"] == 13 and result["primitive_calls_permitted"] is False
+        assert captured == [plan] and hooks == [bootstrap._deny_external_work]
+    else:
+        with pytest.raises(bootstrap.BootstrapError):
+            bootstrap.child(tmp_path / "record", "b" * 64, cache)
+        assert captured == [] and hooks == []
