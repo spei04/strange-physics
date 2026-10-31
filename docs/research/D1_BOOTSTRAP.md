@@ -5,6 +5,14 @@ Current software checkpoint: the capture-window suite passed all **80 cases /
 with formatting/lint and full 233-file typing. This uses helper-local fakes;
 actual protected startup and runtime instrumentation remain unqualified.
 
+Combined [PR #157 CI](https://github.com/spei04/strange-physics/actions/runs/41223320879)
+passed all six required jobs on d51aab55 / merge 512c67f. Both Python 3.12 and
+3.14 passed 6,302 tests, 233-file typing, 1,567 schema checks, packaging and one
+8/8 CLI smoke; both analytic jobs passed 24 cases/72 phases. The two serializer
+warnings per runtime and three audit-flag warnings are unchanged. This is
+ordinary software evidence; the protected-main release candidate was skipped,
+so this run supplies no accepted installation for actual capture.
+
 Historical Unit19 source interfaces and the minimal test typing repair at
 [0c76a102](https://github.com/spei04/strange-physics/commit/0c76a1021f87f76d638d598d6ea5e64fb608e797)
 are independently reviewed. Private engineering qualification is **incomplete**.
@@ -44,7 +52,7 @@ even for a clean direct-child observation. The separate
 37-case/111-phase check and full 233-file typing at f1adcabb. Its original ordinary CI on
 [PR #157](https://github.com/spei04/strange-physics/pull/157) failed seven lifecycle
 cases per runtime under failed-only pytest cleanup. The test ownership repair
-and this guard are now combined for successor validation. The failed run remains
+and this guard were combined in the successful successor run above. The failed run remains
 outside the frozen PR #156 CI scope and is retained. Protected-runtime qualification is pending.
 The current environment is not admitted for protected startup. No child
 bootstrap, installation, environment repair or D1 scientific batch ran.

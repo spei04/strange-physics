@@ -11,7 +11,8 @@ These tests exercise the actual lifecycle with fake service and protected-plan
 APIs. The CLI remains disabled. No protected startup, actual capture service,
 scientific operation or final runtime acceptance is established. Ordinary CI for
 this exact implementation subsequently failed seven lifecycle cases per runtime.
-Both raw failures remain retained; successor validation is pending.
+Both raw failures remain retained; the repaired combined source subsequently
+passed all six required CI jobs.
 
 The lifecycle component leaves original-owner source unchanged. The separately
 reviewed [bootstrap guard](D1_BOOTSTRAP.md) is combined with this component for
@@ -208,7 +209,14 @@ all three child processes closed, and source/environment hashes were unchanged.
 The separate ordinary check charged 9.927693 CPU / 14.854678 active-wall seconds,
 including its 5/10 closeout reservation. Normal pytest cleanup left no retained
 fixtures. This is ordinary software evidence, not private guard or protected
-runtime qualification. Full combined CI is pending.
+runtime qualification. [Full combined CI](https://github.com/spei04/strange-physics/actions/runs/41223320879)
+passed all six required jobs on d51aab55 / merge 512c67f. Both Python runtimes
+passed 6,302 tests, 233-file typing, 1,567 schemas, package checks and one 8/8
+CLI smoke; both analytic jobs passed 24 cases/72 phases. Existing warnings are
+unchanged. The protected-main candidate was skipped. The 2,082 observed
+required-job seconds and 968-second run interval are separate elapsed scopes;
+whole CI CPU and provider cost remain unknown. The PR stays unmerged, and this
+result does not qualify protected startup or a real capture service.
 
 The earlier 37/111 private result remains attached to its original bytes.
 Conservative successor fixture planning includes up to four additional request
