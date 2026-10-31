@@ -322,7 +322,9 @@ def _policy(member_id: object, origin: object, locator: object, module: object) 
     selected_origin = _origin(origin)
     selected_locator = _path(locator) if selected_origin == "checkout_source" else _ref(locator)
     return MemberPolicy(
-        _ref(member_id), selected_origin, selected_locator,
+        _ref(member_id),
+        selected_origin,
+        selected_locator,
         None if module is None else _name(module),
     )
 
@@ -379,7 +381,13 @@ def _definitions(value: object, members: dict[str, MemberPolicy]) -> tuple[Defin
 def _instances(value: object, members: dict[str, MemberPolicy]) -> tuple[Instance, ...]:
     result: list[Instance] = []
     roles = (
-        "fixture", "strong", "weak", "future", *("arithmetic",) * 8, "constants", "native_emit"
+        "fixture",
+        "strong",
+        "weak",
+        "future",
+        *("arithmetic",) * 8,
+        "constants",
+        "native_emit",
     )
     for index, item in enumerate(_rows(value, 14)):
         row = _row(item, 4)
@@ -397,10 +405,29 @@ def _instances(value: object, members: dict[str, MemberPolicy]) -> tuple[Instanc
 
 
 _SLOTS = (
-    (0, 0), (1, 0), (2, 0), (3, 0),
-    (4, 1), (4, 2), (5, 1), (5, 2), (6, 1), (6, 2), (7, 1), (7, 2),
-    (8, 1), (8, 2), (9, 1), (9, 2), (10, 1), (10, 2), (11, 1), (11, 2),
-    (12, 2), (12, 3), (13, 4),
+    (0, 0),
+    (1, 0),
+    (2, 0),
+    (3, 0),
+    (4, 1),
+    (4, 2),
+    (5, 1),
+    (5, 2),
+    (6, 1),
+    (6, 2),
+    (7, 1),
+    (7, 2),
+    (8, 1),
+    (8, 2),
+    (9, 1),
+    (9, 2),
+    (10, 1),
+    (10, 2),
+    (11, 1),
+    (11, 2),
+    (12, 2),
+    (12, 3),
+    (13, 4),
 )
 
 
@@ -413,7 +440,8 @@ def _binding(row: list[object], index: int) -> Binding:
 
 
 def _joins(
-    definitions: tuple[Definition, ...], instances: tuple[Instance, ...],
+    definitions: tuple[Definition, ...],
+    instances: tuple[Instance, ...],
     bindings: tuple[Binding, ...],
 ) -> None:
     for binding in bindings:
@@ -439,9 +467,19 @@ _ROOT_PINS = (
 )
 _IDENTITY_KEYS = frozenset(
     (
-        "source_commit", "source_tree", "protocol_sha256", "uv_lock_sha256",
-        "recorder_sha256", "codec_sha256", "sink_sha256", "run_id", "recorder_id",
-        "catalog_ref", "catalog_sha256", "runtime_admission_ref", "runtime_admission_sha256",
+        "source_commit",
+        "source_tree",
+        "protocol_sha256",
+        "uv_lock_sha256",
+        "recorder_sha256",
+        "codec_sha256",
+        "sink_sha256",
+        "run_id",
+        "recorder_id",
+        "catalog_ref",
+        "catalog_sha256",
+        "runtime_admission_ref",
+        "runtime_admission_sha256",
         "installation_member_ref",
     )
 )
@@ -470,11 +508,19 @@ def _identity(document: dict[str, object]) -> ManifestIdentity:
     if protocol != PROTOCOL_SHA256:
         raise ValueError("Frozen D1 protocol hash required")
     return ManifestIdentity(
-        _hash(document["source_commit"], 40), _hash(document["source_tree"], 40), protocol,
-        _hash(document["uv_lock_sha256"]), _hash(document["recorder_sha256"]),
-        _hash(document["codec_sha256"]), _hash(document["sink_sha256"]), run_id, recorder_id,
-        _ref(document["catalog_ref"]), _hash(document["catalog_sha256"]),
-        _ref(document["runtime_admission_ref"]), _hash(document["runtime_admission_sha256"]),
+        _hash(document["source_commit"], 40),
+        _hash(document["source_tree"], 40),
+        protocol,
+        _hash(document["uv_lock_sha256"]),
+        _hash(document["recorder_sha256"]),
+        _hash(document["codec_sha256"]),
+        _hash(document["sink_sha256"]),
+        run_id,
+        recorder_id,
+        _ref(document["catalog_ref"]),
+        _hash(document["catalog_sha256"]),
+        _ref(document["runtime_admission_ref"]),
+        _hash(document["runtime_admission_sha256"]),
         _ref(document["installation_member_ref"]),
     )
 
@@ -496,8 +542,11 @@ def parse_manifest(raw: bytes) -> ManifestView:
         row = _row(item, 6)
         policy = _policy(row[0], row[1], row[2], row[5])
         ceiling = (
-            67_108_864 if policy.origin == "trusted_runtime_member"
-            else 262_144 if policy.locator == "uv.lock" else 131_072
+            67_108_864
+            if policy.origin == "trusted_runtime_member"
+            else 262_144
+            if policy.locator == "uv.lock"
+            else 131_072
         )
         members.append(SourceMember(policy, _hash(row[3]), _int(row[4], 1, ceiling)))
     policies = _member_policies(tuple(member.policy for member in members))
@@ -525,14 +574,18 @@ def parse_manifest(raw: bytes) -> ManifestView:
     definitions = _definitions(document["definitions"], policies)
     instances = _instances(document["instances"], policies)
     bindings = tuple(
-        _binding(_row(item, 4), index)
-        for index, item in enumerate(_rows(document["bindings"], 23))
+        _binding(_row(item, 4), index) for index, item in enumerate(_rows(document["bindings"], 23))
     )
     _joins(definitions, instances, bindings)
     _header(document, _MANIFEST_ARRAYS)
     return ManifestView(
-        raw, hashlib.sha256(raw).hexdigest(), identity, tuple(members),
-        definitions, instances, bindings,
+        raw,
+        hashlib.sha256(raw).hexdigest(),
+        identity,
+        tuple(members),
+        definitions,
+        instances,
+        bindings,
     )
 
 
@@ -562,7 +615,8 @@ def parse_catalog(raw: bytes) -> CatalogView:
         capture = _text(row[8])
         expected = (
             "native_callable_recorder_slot_v1"
-            if binding.primitive_code == 4 else "bound_method_recorder_slot_v1"
+            if binding.primitive_code == 4
+            else "bound_method_recorder_slot_v1"
         )
         if capture != expected:
             raise ValueError("Fixed slot capture-layout declaration required")
@@ -572,20 +626,26 @@ def parse_catalog(raw: bytes) -> CatalogView:
     _joins(definitions, instances, tuple(policy.binding for policy in dispatch))
     _header(document, _CATALOG_ARRAYS)
     return CatalogView(
-        raw, hashlib.sha256(raw).hexdigest(), tuple(members), definitions,
-        instances, tuple(dispatch), installation,
+        raw,
+        hashlib.sha256(raw).hexdigest(),
+        tuple(members),
+        definitions,
+        instances,
+        tuple(dispatch),
+        installation,
     )
 
 
 def compare_declarations(manifest_raw: bytes, catalog_raw: bytes) -> DeclaredSources:
     """Reparse both byte inputs and join declarations to actual supplied catalog bytes.
 
-This does not authenticate the supplied catalog or compare T, files, loaded code,
-owned objects, runtime evidence, installation, retention or an outer admission.
-"""
+    This does not authenticate the supplied catalog or compare T, files, loaded code,
+    owned objects, runtime evidence, installation, retention or an outer admission.
+    """
     manifest, catalog = parse_manifest(manifest_raw), parse_catalog(catalog_raw)
     member = next(
-        value for value in manifest.members
+        value
+        for value in manifest.members
         if value.policy.member_id == manifest.identity.catalog_ref
     )
     if (
