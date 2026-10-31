@@ -15,14 +15,19 @@ from typing import Any, NoReturn
 
 import pytest
 from d1_source_files import (
-    CheckoutObservationAttempt, ExpectedCheckoutFile, ExpectedCheckoutPlan,
-    RootIdentity, SourceFilesStopped,
+    CheckoutObservationAttempt,
+    ExpectedCheckoutFile,
+    ExpectedCheckoutPlan,
+    RootIdentity,
+    SourceFilesStopped,
 )
 
 
 def encoded(value: object) -> bytes:
-    return (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True,
-                       allow_nan=False) + "\n").encode("ascii")
+    return (
+        json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False)
+        + "\n"
+    ).encode("ascii")
 
 
 def catalog_fixture() -> dict[str, Any]:
@@ -36,7 +41,9 @@ def catalog_fixture() -> dict[str, Any]:
             ["m03", "checkout_source", "synthetic/installer.py", "synthetic_installer"],
             ["m04", "checkout_source", "uv.lock", None],
             [
-                "m05", "checkout_source", "tests/endpoint_belief_reference.py",
+                "m05",
+                "checkout_source",
+                "tests/endpoint_belief_reference.py",
                 "endpoint_belief_reference",
             ],
             ["m06", "checkout_source", "docs/research/RA_N03_CALIBRATION_SLICE.md", None],
@@ -48,67 +55,284 @@ def catalog_fixture() -> dict[str, Any]:
             ["d1", "m05", "python_method", "endpoint_belief_reference", "EndpointOracle.exp"],
             ["d2", "m05", "python_method", "endpoint_belief_reference", "EndpointOracle.log"],
             [
-                "d3", "m05", "python_method", "endpoint_belief_reference",
+                "d3",
+                "m05",
+                "python_method",
+                "endpoint_belief_reference",
                 "EndpointOracle.circle_constant",
             ],
             ["d4", "m02", "python_function", "synthetic_emitter", "emit"],
         ],
         "instances": [
-            ["i00", "fixture", None, "m05"], ["i01", "strong", None, "m05"],
-            ["i02", "weak", None, "m05"], ["i03", "future", None, "m05"],
-            ["i04", "arithmetic", 0, "m05"], ["i05", "arithmetic", 1, "m05"],
-            ["i06", "arithmetic", 2, "m05"], ["i07", "arithmetic", 3, "m05"],
-            ["i08", "arithmetic", 4, "m05"], ["i09", "arithmetic", 5, "m05"],
-            ["i10", "arithmetic", 6, "m05"], ["i11", "arithmetic", 7, "m05"],
-            ["i12", "constants", None, "m05"], ["i13", "native_emit", None, "m02"],
+            ["i00", "fixture", None, "m05"],
+            ["i01", "strong", None, "m05"],
+            ["i02", "weak", None, "m05"],
+            ["i03", "future", None, "m05"],
+            ["i04", "arithmetic", 0, "m05"],
+            ["i05", "arithmetic", 1, "m05"],
+            ["i06", "arithmetic", 2, "m05"],
+            ["i07", "arithmetic", 3, "m05"],
+            ["i08", "arithmetic", 4, "m05"],
+            ["i09", "arithmetic", 5, "m05"],
+            ["i10", "arithmetic", 6, "m05"],
+            ["i11", "arithmetic", 7, "m05"],
+            ["i12", "constants", None, "m05"],
+            ["i13", "native_emit", None, "m02"],
         ],
         "dispatch_policy": [
-            ["i00", 0, "d0", "j00",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i01", 0, "d0", "j01",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i02", 0, "d0", "j02",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i03", 0, "d0", "j03",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i04", 1, "d1", "j04",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i04", 2, "d2", "j05",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i05", 1, "d1", "j06",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i05", 2, "d2", "j07",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i06", 1, "d1", "j08",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i06", 2, "d2", "j09",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i07", 1, "d1", "j10",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i07", 2, "d2", "j11",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i08", 1, "d1", "j12",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i08", 2, "d2", "j13",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i09", 1, "d1", "j14",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i09", 2, "d2", "j15",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i10", 1, "d1", "j16",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i10", 2, "d2", "j17",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i11", 1, "d1", "j18",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i11", 2, "d2", "j19",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i12", 2, "d2", "j20",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i12", 3, "d3", "j21",
-             "m03", "dispatch", "m03", "run", "bound_method_recorder_slot_v1"],
-            ["i13", 4, "d4", "j22",
-             "m03", "dispatch", "m03", "run", "native_callable_recorder_slot_v1"],
+            [
+                "i00",
+                0,
+                "d0",
+                "j00",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i01",
+                0,
+                "d0",
+                "j01",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i02",
+                0,
+                "d0",
+                "j02",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i03",
+                0,
+                "d0",
+                "j03",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i04",
+                1,
+                "d1",
+                "j04",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i04",
+                2,
+                "d2",
+                "j05",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i05",
+                1,
+                "d1",
+                "j06",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i05",
+                2,
+                "d2",
+                "j07",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i06",
+                1,
+                "d1",
+                "j08",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i06",
+                2,
+                "d2",
+                "j09",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i07",
+                1,
+                "d1",
+                "j10",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i07",
+                2,
+                "d2",
+                "j11",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i08",
+                1,
+                "d1",
+                "j12",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i08",
+                2,
+                "d2",
+                "j13",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i09",
+                1,
+                "d1",
+                "j14",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i09",
+                2,
+                "d2",
+                "j15",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i10",
+                1,
+                "d1",
+                "j16",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i10",
+                2,
+                "d2",
+                "j17",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i11",
+                1,
+                "d1",
+                "j18",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i11",
+                2,
+                "d2",
+                "j19",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i12",
+                2,
+                "d2",
+                "j20",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i12",
+                3,
+                "d3",
+                "j21",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "bound_method_recorder_slot_v1",
+            ],
+            [
+                "i13",
+                4,
+                "d4",
+                "j22",
+                "m03",
+                "dispatch",
+                "m03",
+                "run",
+                "native_callable_recorder_slot_v1",
+            ],
         ],
     }
 
@@ -123,8 +347,10 @@ class OwnedFixture:
 
     def attempt(self, *, plan: ExpectedCheckoutPlan | None = None) -> CheckoutObservationAttempt:
         return CheckoutObservationAttempt(
-            self.raw, self.plan if plan is None else plan,
-            root_fd=self.fd, expected_root=self.identity,
+            self.raw,
+            self.plan if plan is None else plan,
+            root_fd=self.fd,
+            expected_root=self.identity,
         )
 
 
@@ -146,14 +372,27 @@ def owned(tmp_path: Path) -> Iterator[OwnedFixture]:
         path.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
         path.write_bytes(data)
         path.chmod(0o644)
-        expected.append(ExpectedCheckoutFile(member, locator, module, hashlib.sha256(data).hexdigest(), len(data)))
-    for directory in (root, root / "synthetic", root / "tests", root / "docs", root / "docs/research"):
+        expected.append(
+            ExpectedCheckoutFile(
+                member, locator, module, hashlib.sha256(data).hexdigest(), len(data)
+            )
+        )
+    for directory in (
+        root,
+        root / "synthetic",
+        root / "tests",
+        root / "docs",
+        root / "docs/research",
+    ):
         directory.chmod(0o755)
     fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC)
     actual = os.fstat(fd)
     try:
         yield OwnedFixture(
-            root, fd, raw, ExpectedCheckoutPlan("a" * 40, "b" * 40, "m00", tuple(expected)),
+            root,
+            fd,
+            raw,
+            ExpectedCheckoutPlan("a" * 40, "b" * 40, "m00", tuple(expected)),
             RootIdentity(actual.st_dev, actual.st_ino, actual.st_uid, stat.S_IMODE(actual.st_mode)),
         )
     finally:
@@ -165,11 +404,18 @@ def no_scientific_imports(monkeypatch: pytest.MonkeyPatch) -> None:
     original = builtins.__import__
 
     def guarded(name: str, *args: Any, **kwargs: Any) -> Any:
-        if name.startswith((
-            "strange_physics", "endpoint_belief_reference", "d1_fixture_reference",
-            "d1_prefix_evidence", "d1_primitive_recording", "d1_primitive_sink",
-            "d1_codec_append", "d1_table_retention",
-        )):
+        if name.startswith(
+            (
+                "strange_physics",
+                "endpoint_belief_reference",
+                "d1_fixture_reference",
+                "d1_prefix_evidence",
+                "d1_primitive_recording",
+                "d1_primitive_sink",
+                "d1_codec_append",
+                "d1_table_retention",
+            )
+        ):
             raise AssertionError("No scientific, recorder, sink or runtime resolution")
         return original(name, *args, **kwargs)
 
@@ -180,7 +426,9 @@ def denied(*args: Any, **kwargs: Any) -> NoReturn:
     raise AssertionError("Unexpected filesystem operation")
 
 
-def assert_no_io_retry(attempt: CheckoutObservationAttempt, monkeypatch: pytest.MonkeyPatch) -> None:
+def assert_no_io_retry(
+    attempt: CheckoutObservationAttempt, monkeypatch: pytest.MonkeyPatch
+) -> None:
     with monkeypatch.context() as scoped:
         for name in ("open", "read", "fstat", "stat", "close"):
             scoped.setattr(os, name, denied)
@@ -198,10 +446,21 @@ def changed_plan(owned: OwnedFixture, index: int, **changes: Any) -> ExpectedChe
     return replace(owned.plan, files=tuple(rows))
 
 
-def test_complete_owned_observation_and_consumed_retry(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_complete_owned_observation_and_consumed_retry(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch
+) -> None:
     attempt = owned.attempt()
     result = attempt.observe()
-    assert tuple(row.member_id for row in result.files) == ("m00", "m01", "m03", "m04", "m05", "m06", "m07", "m08")
+    assert tuple(row.member_id for row in result.files) == (
+        "m00",
+        "m01",
+        "m03",
+        "m04",
+        "m05",
+        "m06",
+        "m07",
+        "m08",
+    )
     assert tuple((row.sha256, row.byte_length) for row in result.files) == tuple(
         (row.sha256, row.byte_length) for row in owned.plan.files
     )
@@ -211,14 +470,55 @@ def test_complete_owned_observation_and_consumed_retry(owned: OwnedFixture, monk
     assert snapshot.completed and snapshot.read_calls == 16
     assert snapshot.requested_bytes == sum(row.byte_length + 1 for row in owned.plan.files)
     assert snapshot.known_returned_bytes == sum(row.byte_length for row in owned.plan.files)
-    assert snapshot.open_attempts == snapshot.returned_opens == snapshot.close_attempts == snapshot.confirmed_closes
+    assert (
+        snapshot.open_attempts
+        == snapshot.returned_opens
+        == snapshot.close_attempts
+        == snapshot.confirmed_closes
+    )
     assert not snapshot.unknown_open and not snapshot.closure_uncertain
     assert os.fstat(owned.fd).st_ino == owned.identity.inode
     assert_no_io_retry(attempt, monkeypatch)
 
 
-@pytest.mark.parametrize("kind", ["missing", "extra", "order", "module", "locator", "bool", "hash", "catalog-pin", "catalog-ref", "empty", "large", "tuple", "commit", "tree"], ids=["missing", "extra", "order", "module", "locator", "bool", "hash", "catalog-pin", "catalog-ref", "empty", "large", "tuple", "commit", "tree"])
-def test_plan_failures_precede_owned_io(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+@pytest.mark.parametrize(
+    "kind",
+    [
+        "missing",
+        "extra",
+        "order",
+        "module",
+        "locator",
+        "bool",
+        "hash",
+        "catalog-pin",
+        "catalog-ref",
+        "empty",
+        "large",
+        "tuple",
+        "commit",
+        "tree",
+    ],
+    ids=[
+        "missing",
+        "extra",
+        "order",
+        "module",
+        "locator",
+        "bool",
+        "hash",
+        "catalog-pin",
+        "catalog-ref",
+        "empty",
+        "large",
+        "tuple",
+        "commit",
+        "tree",
+    ],
+)
+def test_plan_failures_precede_owned_io(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
     plan = replace(owned.plan)
     if kind == "missing":
         plan = replace(plan, files=plan.files[:-1])
@@ -259,8 +559,14 @@ def test_plan_failures_precede_owned_io(owned: OwnedFixture, monkeypatch: pytest
     assert_no_io_retry(attempt, monkeypatch)
 
 
-@pytest.mark.parametrize("kind", ["raw", "plan-subclass", "record-subclass", "root-bool", "fd-bool", "root-mode"], ids=["raw", "plan-type", "record-type", "root-bool", "fd-bool", "root-mode"])
-def test_exact_boundaries_reject_without_opens(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+@pytest.mark.parametrize(
+    "kind",
+    ["raw", "plan-subclass", "record-subclass", "root-bool", "fd-bool", "root-mode"],
+    ids=["raw", "plan-type", "record-type", "root-bool", "fd-bool", "root-mode"],
+)
+def test_exact_boundaries_reject_without_opens(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
     raw: Any = owned.raw
     plan = owned.plan
     identity = replace(owned.identity)
@@ -268,14 +574,20 @@ def test_exact_boundaries_reject_without_opens(owned: OwnedFixture, monkeypatch:
     if kind == "raw":
         raw = bytearray(raw)
     elif kind == "plan-subclass":
+
         class PlanSubclass(ExpectedCheckoutPlan):
             pass
+
         plan = PlanSubclass(plan.source_commit, plan.source_tree, plan.catalog_ref, plan.files)
     elif kind == "record-subclass":
+
         class FileSubclass(ExpectedCheckoutFile):
             pass
+
         row = plan.files[0]
-        substituted = FileSubclass(row.member_id, row.locator, row.loaded_module, row.sha256, row.byte_length)
+        substituted = FileSubclass(
+            row.member_id, row.locator, row.loaded_module, row.sha256, row.byte_length
+        )
         plan = replace(plan, files=(substituted, *plan.files[1:]))
     elif kind == "root-bool":
         object.__setattr__(identity, "inode", True)
@@ -293,15 +605,23 @@ def test_exact_boundaries_reject_without_opens(owned: OwnedFixture, monkeypatch:
 
 
 def test_wrong_root_identity_does_not_close_borrowed_root(owned: OwnedFixture) -> None:
-    attempt = CheckoutObservationAttempt(owned.raw, owned.plan, root_fd=owned.fd,
-        expected_root=replace(owned.identity, inode=owned.identity.inode + 1))
+    attempt = CheckoutObservationAttempt(
+        owned.raw,
+        owned.plan,
+        root_fd=owned.fd,
+        expected_root=replace(owned.identity, inode=owned.identity.inode + 1),
+    )
     with pytest.raises(ValueError, match="root identity"):
         attempt.observe()
     assert attempt.snapshot().open_attempts == attempt.snapshot().close_attempts == 0
     assert os.fstat(owned.fd).st_ino == owned.identity.inode
 
 
-@pytest.mark.parametrize("kind", ["symlink", "fifo", "directory", "hardlink", "writable", "ancestor-link"], ids=["symlink", "fifo", "directory", "hardlink", "writable", "ancestor-link"])
+@pytest.mark.parametrize(
+    "kind",
+    ["symlink", "fifo", "directory", "hardlink", "writable", "ancestor-link"],
+    ids=["symlink", "fifo", "directory", "hardlink", "writable", "ancestor-link"],
+)
 def test_owned_nonregular_or_unsafe_paths(owned: OwnedFixture, kind: str) -> None:
     target = owned.root / "tests/d1_primitive_codec.py"
     if kind == "writable":
@@ -330,7 +650,9 @@ def test_owned_nonregular_or_unsafe_paths(owned: OwnedFixture, kind: str) -> Non
 
 
 @pytest.mark.parametrize("kind", ["leaf", "ancestor"], ids=["leaf", "ancestor"])
-def test_post_open_same_target_symlink_is_not_followed(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+def test_post_open_same_target_symlink_is_not_followed(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
     original_open = os.open
     injected = False
     target = owned.root / ("tests/d1_primitive_codec.py" if kind == "leaf" else "tests")
@@ -355,8 +677,14 @@ def test_post_open_same_target_symlink_is_not_followed(owned: OwnedFixture, monk
     assert attempt.snapshot().confirmed_closes == attempt.snapshot().returned_opens
 
 
-@pytest.mark.parametrize("kind", ["extent", "mtime", "replacement", "digest"], ids=["extent", "mtime", "replacement", "digest"])
-def test_deterministic_read_mutations(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+@pytest.mark.parametrize(
+    "kind",
+    ["extent", "mtime", "replacement", "digest"],
+    ids=["extent", "mtime", "replacement", "digest"],
+)
+def test_deterministic_read_mutations(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
     target = owned.root / "tests/d1_primitive_codec.py"
     old = target.stat()
     original_read = os.read
@@ -389,11 +717,21 @@ def test_deterministic_read_mutations(owned: OwnedFixture, monkeypatch: pytest.M
     assert attempt.snapshot().returned_opens == attempt.snapshot().confirmed_closes
 
 
-@pytest.mark.parametrize("kind", ["short", "zero", "interrupt", "error", "not-bytes", "overflow"], ids=["short", "zero", "interrupt", "error", "type", "overflow"])
-def test_read_fault_is_once_only(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+@pytest.mark.parametrize(
+    "kind",
+    ["short", "zero", "interrupt", "error", "not-bytes", "overflow"],
+    ids=["short", "zero", "interrupt", "error", "type", "overflow"],
+)
+def test_read_fault_is_once_only(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
     original_read = os.read
     calls = 0
-    primary = InterruptedError("synthetic interruption") if kind == "interrupt" else OSError(errno.EIO, "synthetic read")
+    primary = (
+        InterruptedError("synthetic interruption")
+        if kind == "interrupt"
+        else OSError(errno.EIO, "synthetic read")
+    )
 
     def failing(descriptor: int, count: int) -> Any:
         nonlocal calls
@@ -421,7 +759,9 @@ def test_read_fault_is_once_only(owned: OwnedFixture, monkeypatch: pytest.Monkey
     assert_no_io_retry(attempt, monkeypatch)
 
 
-def test_exact_chunk_and_eof_request_schedule(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_exact_chunk_and_eof_request_schedule(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch
+) -> None:
     target = owned.root / "tests/d1_primitive_codec.py"
     data = b"a" * 131072
     target.write_bytes(data)
@@ -444,7 +784,9 @@ def test_exact_chunk_and_eof_request_schedule(owned: OwnedFixture, monkeypatch: 
     assert attempt.snapshot().requested_bytes == sum(row.byte_length + 1 for row in plan.files)
 
 
-def test_primary_read_fault_survives_real_close_then_error(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_primary_read_fault_survives_real_close_then_error(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch
+) -> None:
     original_close = os.close
     primary = OSError(errno.EIO, "read first")
     target: int | None = None
@@ -481,7 +823,9 @@ def test_primary_read_fault_survives_real_close_then_error(owned: OwnedFixture, 
 
 @pytest.mark.parametrize("phase", ["read", "close"], ids=["read", "close"])
 @pytest.mark.parametrize("later_error", [False, True], ids=["swallowed", "later-error"])
-def test_sticky_reentry_blocks_work_but_keeps_cleanup(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, phase: str, later_error: bool) -> None:
+def test_sticky_reentry_blocks_work_but_keeps_cleanup(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, phase: str, later_error: bool
+) -> None:
     original_read, original_close = os.read, os.close
     attempt = owned.attempt()
     nested: list[SourceFilesStopped] = []
@@ -509,21 +853,29 @@ def test_sticky_reentry_blocks_work_but_keeps_cleanup(owned: OwnedFixture, monke
         reenter()
 
     with monkeypatch.context() as scoped:
-        scoped.setattr(os, "read" if phase == "read" else "close", hooked_read if phase == "read" else hooked_close)
+        scoped.setattr(
+            os,
+            "read" if phase == "read" else "close",
+            hooked_read if phase == "read" else hooked_close,
+        )
         with pytest.raises(SourceFilesStopped) as caught:
             attempt.observe()
     assert len(nested) == 1 and caught.value is nested[0]
     snapshot = attempt.snapshot()
     assert not snapshot.completed and len(snapshot.entered) == 1
     assert snapshot.close_attempts == snapshot.returned_opens
-    assert snapshot.confirmed_closes == snapshot.close_attempts - int(phase == "close" and later_error)
+    assert snapshot.confirmed_closes == snapshot.close_attempts - int(
+        phase == "close" and later_error
+    )
     if later_error:
         assert snapshot.faults[-1].exception_type == "OSError"
     assert os.fstat(owned.fd).st_ino == owned.identity.inode
     assert_no_io_retry(attempt, monkeypatch)
 
 
-def test_open_entry_failure_retains_unknown_without_fabricated_fd(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_open_entry_failure_retains_unknown_without_fabricated_fd(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch
+) -> None:
     primary = OSError(errno.EIO, "no returned descriptor")
 
     def fail_open(*args: Any, **kwargs: Any) -> NoReturn:
@@ -541,13 +893,16 @@ def test_open_entry_failure_retains_unknown_without_fabricated_fd(owned: OwnedFi
 
 
 @pytest.mark.parametrize("owner", ["pid", "thread"], ids=["pid", "thread"])
-def test_wrong_owner_consumes_without_descriptor_work(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, owner: str) -> None:
+def test_wrong_owner_consumes_without_descriptor_work(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, owner: str
+) -> None:
     attempt = owned.attempt()
     with monkeypatch.context() as scoped:
         if owner == "pid":
             scoped.setattr(os, "getpid", lambda: -1)
         else:
             import threading
+
             scoped.setattr(threading, "get_ident", lambda: -1)
         scoped.setattr(os, "open", denied)
         scoped.setattr(os, "close", denied)
@@ -555,8 +910,12 @@ def test_wrong_owner_consumes_without_descriptor_work(owned: OwnedFixture, monke
             attempt.observe()
     assert attempt.snapshot().consumed and attempt.snapshot().open_attempts == 0
     assert_no_io_retry(attempt, monkeypatch)
+
+
 @pytest.mark.parametrize("operation", ["fstat", "stat"], ids=["fd-stat", "named-stat"])
-def test_stat_error_keeps_prior_observations_and_closes_owned_chain(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, operation: str) -> None:
+def test_stat_error_keeps_prior_observations_and_closes_owned_chain(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, operation: str
+) -> None:
     original_fstat, original_stat = os.fstat, os.stat
     inode = (owned.root / "tests/d1_primitive_codec.py").stat().st_ino
     primary = OSError(errno.EIO, "stat failure")
@@ -567,7 +926,9 @@ def test_stat_error_keeps_prior_observations_and_closes_owned_chain(owned: Owned
             raise primary
         return result
 
-    def fail_named(path: Any, *, dir_fd: int | None = None, follow_symlinks: bool = True) -> os.stat_result:
+    def fail_named(
+        path: Any, *, dir_fd: int | None = None, follow_symlinks: bool = True
+    ) -> os.stat_result:
         if path == "d1_primitive_codec.py":
             assert follow_symlinks is False
             raise primary
@@ -587,7 +948,9 @@ def test_stat_error_keeps_prior_observations_and_closes_owned_chain(owned: Owned
 
 
 @pytest.mark.parametrize("target_name", ["catalog.json", "."], ids=["first-file", "final-root"])
-def test_close_uncertainty_alone_cannot_return_success(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, target_name: str) -> None:
+def test_close_uncertainty_alone_cannot_return_success(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, target_name: str
+) -> None:
     original_open, original_close = os.open, os.close
     target: int | None = None
     injections = 0
@@ -624,8 +987,14 @@ def test_close_uncertainty_alone_cannot_return_success(owned: OwnedFixture, monk
     assert_no_io_retry(attempt, monkeypatch)
 
 
-@pytest.mark.parametrize("kind", ["members", "lock-size", "id", "locator", "module", "root-range"], ids=["members-65", "lock-cap", "id-long", "path-long", "module-long", "root-range"])
-def test_declared_input_caps_precede_owned_io(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+@pytest.mark.parametrize(
+    "kind",
+    ["members", "lock-size", "id", "locator", "module", "root-range"],
+    ids=["members-65", "lock-cap", "id-long", "path-long", "module-long", "root-range"],
+)
+def test_declared_input_caps_precede_owned_io(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
     plan = owned.plan
     identity = owned.identity
     if kind == "members":
@@ -648,11 +1017,16 @@ def test_declared_input_caps_precede_owned_io(owned: OwnedFixture, monkeypatch: 
             attempt.observe()
     assert attempt.snapshot().open_attempts == 0
 
-def test_renamed_single_link_file_cannot_fill_two_member_rows(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch) -> None:
+
+def test_renamed_single_link_file_cannot_fill_two_member_rows(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch
+) -> None:
     original_open, original_close = os.open, os.close
     catalog_path = owned.root / "synthetic/catalog.json"
     target = owned.root / "tests/d1_primitive_codec.py"
-    plan = changed_plan(owned, 1, byte_length=len(owned.raw), sha256=hashlib.sha256(owned.raw).hexdigest())
+    plan = changed_plan(
+        owned, 1, byte_length=len(owned.raw), sha256=hashlib.sha256(owned.raw).hexdigest()
+    )
     catalog_fd: int | None = None
     moved = False
 
@@ -683,7 +1057,9 @@ def test_renamed_single_link_file_cannot_fill_two_member_rows(owned: OwnedFixtur
 
 
 @pytest.mark.parametrize("window", ["first", "final"], ids=["first-guard", "final-guard"])
-def test_owner_guard_reentry_stays_latched_through_final_close(owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, window: str) -> None:
+def test_owner_guard_reentry_stays_latched_through_final_close(
+    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, window: str
+) -> None:
     original_pid, original_open, original_close = os.getpid, os.open, os.close
     attempt = owned.attempt()
     nested: list[SourceFilesStopped] = []

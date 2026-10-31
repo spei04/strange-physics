@@ -119,8 +119,10 @@ def _root(value: RootIdentity) -> RootIdentity:
     if type(value) is not RootIdentity:
         raise ValueError("Exact RootIdentity required")
     return RootIdentity(
-        _integer(value.device, 2**64 - 1), _integer(value.inode, 2**64 - 1),
-        _integer(value.uid, 2**64 - 1), _integer(value.mode, 0o7777),
+        _integer(value.device, 2**64 - 1),
+        _integer(value.inode, 2**64 - 1),
+        _integer(value.uid, 2**64 - 1),
+        _integer(value.mode, 0o7777),
     )
 
 
@@ -166,8 +168,14 @@ def _identity(value: os.stat_result) -> RootIdentity:
 
 def _stamp(value: os.stat_result) -> tuple[int, ...]:
     return (
-        value.st_dev, value.st_ino, value.st_uid, value.st_mode, value.st_nlink,
-        value.st_size, value.st_mtime_ns, value.st_ctime_ns,
+        value.st_dev,
+        value.st_ino,
+        value.st_uid,
+        value.st_mode,
+        value.st_nlink,
+        value.st_size,
+        value.st_mtime_ns,
+        value.st_ctime_ns,
     )
 
 
@@ -205,8 +213,12 @@ class CheckoutObservationAttempt:
     _uid: int
 
     def __init__(
-        self, catalog_raw: bytes, plan: ExpectedCheckoutPlan, *,
-        root_fd: int, expected_root: RootIdentity,
+        self,
+        catalog_raw: bytes,
+        plan: ExpectedCheckoutPlan,
+        *,
+        root_fd: int,
+        expected_root: RootIdentity,
     ) -> None:
         self._pid, self._thread = os.getpid(), threading.get_ident()
         self._catalog_raw, self._raw_plan = catalog_raw, plan
@@ -227,18 +239,32 @@ class CheckoutObservationAttempt:
 
     def snapshot(self) -> ObservationSnapshot:
         return ObservationSnapshot(
-            self._used, self._completed, self._planned, tuple(self._entered),
-            tuple(self._observed), self._planned_bytes, self._requested, self._returned,
-            self._reads, self._opens, self._returned_opens, self._closes,
-            self._confirmed_closes, self._unknown_open, self._closure_uncertain,
-            tuple(self._faults), self._overflow,
+            self._used,
+            self._completed,
+            self._planned,
+            tuple(self._entered),
+            tuple(self._observed),
+            self._planned_bytes,
+            self._requested,
+            self._returned,
+            self._reads,
+            self._opens,
+            self._returned_opens,
+            self._closes,
+            self._confirmed_closes,
+            self._unknown_open,
+            self._closure_uncertain,
+            tuple(self._faults),
+            self._overflow,
         )
 
     def _remember(self, error: BaseException) -> None:
         if self._first is None:
             self._first = error
         if len(self._faults) < MAX_FAULTS:
-            self._faults.append(ObservationFault(self._phase, self._member, type(error).__name__[:192]))
+            self._faults.append(
+                ObservationFault(self._phase, self._member, type(error).__name__[:192])
+            )
         else:
             self._overflow += 1
 
@@ -338,7 +364,10 @@ class CheckoutObservationAttempt:
                 self._confirmed_closes += 1
 
     def _file(
-        self, expected: ExpectedCheckoutFile, root: int, root_identity: RootIdentity,
+        self,
+        expected: ExpectedCheckoutFile,
+        root: int,
+        root_identity: RootIdentity,
         seen: set[tuple[int, int]],
     ) -> FileObservation:
         self._member = expected.member_id
@@ -386,8 +415,12 @@ class CheckoutObservationAttempt:
         if observed_digest != expected.sha256:
             raise ValueError("Source digest differs from expected pin")
         return FileObservation(
-            expected.member_id, observed_digest, expected.byte_length, key,
-            before_file.st_mtime_ns, before_file.st_ctime_ns,
+            expected.member_id,
+            observed_digest,
+            expected.byte_length,
+            key,
+            before_file.st_mtime_ns,
+            before_file.st_ctime_ns,
         )
 
     def observe(self) -> CheckoutObservation:
@@ -419,9 +452,15 @@ class CheckoutObservationAttempt:
                 self._root_check(borrowed, expected_root)
                 self._root_check(root, expected_root)
                 result = CheckoutObservation(
-                    plan.source_commit, plan.source_tree, catalog.sha256, expected_root,
-                    tuple(self._observed), tuple(
-                        row.member_id for row in catalog.members if row.origin == "trusted_runtime_member"
+                    plan.source_commit,
+                    plan.source_tree,
+                    catalog.sha256,
+                    expected_root,
+                    tuple(self._observed),
+                    tuple(
+                        row.member_id
+                        for row in catalog.members
+                        if row.origin == "trusted_runtime_member"
                     ),
                 )
             except BaseException as work_error:
