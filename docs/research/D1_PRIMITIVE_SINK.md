@@ -80,7 +80,7 @@ from these logical-byte counts.
 The 16 by 4 MiB ceiling is not 64 MiB of payload permission. Shard tail slack and
 the fixed metadata reservations can cause earlier exhaustion. The proposed
 16 MiB transcript partition and 64 MiB whole-science fit from the
-[report design](D1_REPORT_BINDING_DESIGN.md) are still unproved. The existing raw
+[report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md) are still unproved. The existing raw
 recorder encoding is deliberately not replaced by an unreviewed compact codec.
 If it cannot fit, stop and design a lossless reviewed representation within the
 unchanged allocation; never drop intents/returns or increase a cap silently.
@@ -118,7 +118,9 @@ The terminal file records `pending_external_confirmation`. It contains a snapsho
 from before its own write and cannot attest to its own fsync or final descriptor/
 process closure. The in-process `SinkCloseout` separately reports whether that
 terminal write was acknowledged and whether descriptor closure was confirmed,
-plus the latest snapshot. Neither flag is scientific success. A terminal write,
+plus the latest snapshot. `SinkCloseout.terminal_sha256` identifies the intended
+terminal bytes even when only a partial write is retained; `inspect_sink` instead
+hashes the actual observed bytes. Neither flag is scientific success. A terminal write,
 fsync, close or anchor failure can leave a partial or absent terminal file. There
 is no replacement receipt or recursive failure-writing loop; external closeout
 must retain the remaining unknowns. All calls still require an external bounded
@@ -146,20 +148,22 @@ identities, parse the event schema, and reconcile process/service outcomes.
 
 ## Authored checks and operation accounting
 
-The 24 test functions contain 57 synthetic cases / 171 expected phases by AST
+The 26 test functions contain 59 synthetic cases / 177 expected phases by AST
 inspection only. They cover strict context/limits; exact byte retention;
 private/exclusive paths; positive short writes and zero progress; partial writes,
 interrupts and fsync failures; primary plus close failure; recorder intent failure
 with zero invocation and return retention failure without a primitive failure;
 file/root substitution, hard links and FIFOs; PID/thread/reentry rejection;
-consumed finish; and bounded recovery without acknowledgment inference.
+consumed finish; and bounded recovery without acknowledgment inference. Focused
+regressions require parent-directory fsync before context writes and zero further
+stat/open/write/fsync calls after a failed append, including the recorder fallback.
 
 Rotation/count tests substitute only test-local 8/3-byte shard limits and a
 2-shard limit, restoring them before teardown. Separate checks pin the actual
 4 MiB/16-shard context constants. These small fixtures exercise the boundary
 logic without allocating full 4 MiB shards. One case writes exactly 4,096 event
 bytes; other cases write only small synthetic lines. A conservative source-only
-retained test-file estimate is below 1.5 MiB: at most 57 directories, each bounded
+retained test-file estimate is below 1.5 MiB: at most 59 directories, each bounded
 by 20,480 metadata bytes plus 4,096 synthetic event bytes and 64 substitution/
 orphan bytes. Actual counts/bytes, pytest artifacts and engineering-control files
 must be measured under the later engineering allowance; this estimate is neither

@@ -81,8 +81,10 @@ def test_exact_context_limits_are_derived_without_payload_or_verification_flags(
     ("recorder_id", "../r"), ("run_id", "r" * 97), ("sink_sha256", "f" * 63),
 ))
 def test_invalid_context_cannot_create_a_directory(tmp_path: Path, field: str, bad: object) -> None:
+    value = context()
+    object.__setattr__(value, field, bad)
     with pytest.raises(ValueError):
-        create(tmp_path, replace(context(), **{field: bad}))
+        create(tmp_path, value)
     assert not (tmp_path / "sink").exists()
 
 
@@ -487,3 +489,74 @@ def test_exact_4096_byte_event_is_retained_without_truncation(tmp_path: Path) ->
     result = value.finish()
     assert result.snapshot.confirmed_bytes == 4096
     assert (tmp_path / "sink/events-00.jsonl").read_bytes() == raw
+
+
+
+def test_parent_fsync_failure_precedes_context_write_and_consumes_root(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    tmp_path.chmod(0o700)
+    parent = tmp_path.stat()
+    syncs: list[tuple[int, int]] = []
+    writes: list[int] = []
+    primary = OSError("parent directory sync failed")
+
+    def fail_sync(fd: int) -> NoReturn:
+        actual = os.fstat(fd)
+        syncs.append((actual.st_dev, actual.st_ino))
+        raise primary
+
+    def no_write(fd: int, raw: bytes | memoryview) -> NoReturn:
+        writes.append(len(raw))
+        raise AssertionError("Context cannot be written before parent fsync")
+
+    with monkeypatch.context() as patch:
+        patch.setattr(os, "fsync", fail_sync)
+        patch.setattr(os, "write", no_write)
+        with pytest.raises(OSError) as caught:
+            create(tmp_path)
+    assert caught.value is primary
+    assert syncs == [(parent.st_dev, parent.st_ino)] and writes == []
+    root = tmp_path / "sink"
+    assert root.is_dir() and not list(root.iterdir())
+    with pytest.raises(FileExistsError):
+        create(tmp_path)
+
+
+def test_failed_append_and_recorder_fallback_perform_no_more_filesystem_io(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    value = create(tmp_path)
+    recorder = PrimitiveRecorder(value.append, max_calls=1, max_bytes=8192)
+    primary = OSError("first append write failed")
+    forbidden_calls: list[str] = []
+    invoked: list[str] = []
+
+    def no_io(*args: object, **kwargs: object) -> NoReturn:
+        forbidden_calls.append("filesystem")
+        raise AssertionError("Consumed append cannot perform filesystem I/O")
+
+    def owned() -> Decimal:
+        invoked.append("owned")
+        return Decimal(1)
+
+    with monkeypatch.context() as patch:
+        def first_write(fd: int, raw: bytes | memoryview) -> NoReturn:
+            for name in ("stat", "lstat", "fstat", "open", "write", "fsync"):
+                patch.setattr(os, name, no_io)
+            raise primary
+
+        patch.setattr(os, "write", first_write)
+        with pytest.raises(OSError) as caught:
+            recorder.call(call_id="c", instance_id="i", primitive="log", scope=("scope",),
+                          arguments=Decimal(1), invoke=owned)
+        with pytest.raises(sink.SinkStopped):
+            value.append(b"{}\n")
+    assert caught.value is primary and value.first_exception is primary
+    assert forbidden_calls == [] and invoked == []
+    recorded = recorder.snapshot()
+    assert recorded.invoked == recorded.returned == recorded.primitive_failed == 0
+    assert any(fault.phase == "fault_retention" for fault in recorded.faults)
+    assert value.snapshot().reserved_events == 1 and value.snapshot().confirmed_events == 0
+    closeout = value.finish()
+    assert closeout.terminal_acknowledged and closeout.descriptors_closed
