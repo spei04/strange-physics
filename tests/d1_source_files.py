@@ -437,8 +437,10 @@ class CheckoutObservationAttempt:
         except BaseException as final_error:
             if final_error is not self._first:
                 self._remember(final_error)
+            if self._first is final_error:
+                raise
             if self._first is not None:
-                raise self._first
+                raise self._first from None
             raise
         finally:
             self._busy = False
