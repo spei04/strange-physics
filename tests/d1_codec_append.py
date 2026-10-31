@@ -293,6 +293,28 @@ class CodecAppendBridge:
     """Conditional synchronous retention callback; does not install or own a sink."""
 
     first_exception: BaseException | None
+    _binding: ContextBinding
+    _codec: PrimitiveEventCodec
+    _pid: int
+    _thread: int
+    _busy: bool
+    _stopped: bool
+    _physical_blocked: bool
+    _terminal: bool
+    _finished: bool
+    _allow_failed: bool
+    _raw_attempts: int
+    _raw_bytes: int
+    _sequence: int
+    _ordinal: int
+    _physical_attempts: int
+    _physical_bytes: int
+    _callback_returns: int
+    _acks: int
+    _fallback_attempts: int
+    _fallback_bytes: int
+    _compact_bytes: int
+    _unretained_faults: int
 
     def __init__(self, table_raw: bytes, context_raw: bytes, *, append: Callable[[bytes], None]) -> None:
         if not callable(append):
