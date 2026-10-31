@@ -1,8 +1,8 @@
 # Proposed D1 primitive codec and fixed identity contract
 
-Status: source-only proposal for independent review. This is not an adopted
-installation, serializer implementation, numerical admission or whole-science
-fit certificate. No primitive, project import, encoding batch or scientific
+Status: independently reviewed contract for pure source development. This is
+not an installed recorder, serializer implementation, numerical admission or
+whole-science fit certificate. No primitive, project import, encoding batch or scientific
 calculation was executed for this document. The complete 55,100-call plan,
 16 MiB proposed transcript partition, recorder logical 64 MiB ceiling and
 64 MiB whole-science cap remain unchanged.
@@ -13,7 +13,7 @@ omitting calls, arguments, returns or failures. The fixed protocol remains
 [657c3c74](https://github.com/spei04/strange-physics/blob/6d3edf1fbc6c01c97ac84bc0a06231b4199a83e8/docs/research/RA_N03_CALIBRATION_SLICE.md).
 The [report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md)
 retains its aggregate fit and actual-material binding obligations. The
-[source-only sink contract](D1_PRIMITIVE_SINK.md) is unchanged.
+[private sink contract](D1_PRIMITIVE_SINK.md) is unchanged.
 
 ## Source and installation boundary
 
