@@ -2,7 +2,7 @@
 
 **Current checkpoint:** [Canonical progress and next action](EXECUTION_LOG.md#current-assignment-board).
 
-2026-10-31: protected-runtime software qualification passed (302 cases / 906 phases). Normal main integration, an exact candidate and actual capture-only validation follow the [runtime qualification plan](research/D1_RUNTIME_QUALIFICATION.md); scientific and enterprise release gates remain open.
+2026-10-31: exact main [5e0b3e7](https://github.com/spei04/strange-physics/commit/5e0b3e7db436061f4d7c9a5e983f7878cea31974) passed all seven protected-main CI jobs and its same-run candidate is installed. Native validation passed with 115 loadable ELFs and 234 dependency edges; all 147 children across three attempts closed. Materialization, guard probes, the descendant witness and capture remain unstarted. The [continuation decision](research/D1_RUNTIME_CONTINUATION_DECISION.md) proposes 200 additional CPU seconds with no wall-time increase; it is unapproved. Existing caps remain authoritative, and all failures and charges are retained. Scientific execution and enterprise readiness remain separate open gates.
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 

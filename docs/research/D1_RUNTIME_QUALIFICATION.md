@@ -20,7 +20,52 @@ Verify complete stdlib, environment, package/dependency, interpreter-link and st
 
 ## Prospective engineering envelope
 
-Local command partitions: source qualification 200 CPU / 600 active-wall seconds; acquisition/install 150 / 450; inventory, benign qualification and capture 200 / 600; closure 50 / 150. Total 600 CPU / 1,800 active-wall seconds. These are prospective command ceilings, not a whole-operation CPU measurement. Authoring, SSH/GitHub administration and provider dollars remain unmeasured.
+Current local command partitions remain source qualification 200 CPU / 600
+active-wall seconds; acquisition/install 150/450; inventory, benign
+qualification and capture 200/600; review/closure 50/150. Total 600 CPU /
+1,800 active-wall seconds. The 150 CPU-second capture hold remains inside the
+native partition, not an additional allowance.
+
+Native attempts 1–3 retain their cumulative charge of 48.88882 CPU /
+66.53442699555308 active-wall seconds. Native3 passed with 115 ELFs, 234
+dependency edges and 116 closed children; its charge is 29.301474 CPU /
+38.90633799415082 wall seconds. Across all three attempts, 147 children
+closed; earlier failures remain retained. Remaining native ceilings are
+151.11118 CPU / 533.46557300444692 wall seconds. The current CPU limit cannot
+preserve both the existing 150 CPU capture hold and 10 CPU headroom.
+
+Setup2 plus final custody leave cumulative setup charges of 22.297874 CPU /
+43.56647578487173 wall seconds within the unchanged 150/450 partition,
+including the initial failed setup. All five setup children closed. These
+command charges are not a whole-operation CPU measurement; authoring,
+SSH/GitHub administration and provider dollars remain unmeasured.
+
+**2026-10-31 correction retained:** the native 300/900 (overall 700/2100)
+draft was withdrawn, unauthorized and unused. No increased attempt ran.
+
+**Continuation proposal — not approved or admitted.** The
+[D1 runtime continuation decision](D1_RUNTIME_CONTINUATION_DECISION.md)
+proposes native 400 CPU / 600 wall seconds, an increase of 200 CPU only.
+Overall engineering would become 800 CPU / 1,800 wall seconds; source
+qualification 200/600, setup 150/450 and review/closure 50/150 remain unchanged.
+Existing native 200/600 and overall 600/1800 limits remain authoritative until
+approval and concrete admission. Materialization, probes, benign handshake
+and capture remain unstarted; the prepared materialization admission has not run.
+
+| Proposed remaining stage | CPU seconds | Active-wall seconds |
+| --- | ---: | ---: |
+| Materialization | 25 | 60 |
+| Probes | 15 | 45 |
+| Benign handshake | 80 | 90 |
+| Capture and closeout | 200 | 330 |
+| Remaining total | 320 | 525 |
+| Including all retained native attempts | 368.88882 | 591.534427 |
+
+Each stage ceiling includes its closeout. These are contingent prospective
+limits, not measured costs or permission to execute; actual admission must
+recheck remaining CPU, wall, output, custody and closure requirements. No failed
+cost resets or closed-account transfers follow, and scientific, provider and
+release authority do not expand.
 
 Retained-output ceiling: 1 GiB, partitioned into 512 MiB installation, 128 MiB bootstrap temporary files, 16 MiB candidate bundle, 32 MiB source/control copies, 64 MiB evidence (32 MiB software and 32 MiB actual runtime), and 272 MiB failure reserve. Tighter existing per-file/inventory limits still apply. Actual source census and output bounds must fit before runtime starts.
 

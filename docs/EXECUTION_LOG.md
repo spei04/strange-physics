@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Runtime software checks passed:** source 248bbf5 passed 302 guarded cases / 906 phases, 236-file strict typing, formatting and lint. Quality independently accepted the raw evidence; all 37 observed children closed. Earlier failed checks and costs remain retained.
-- **Platform:** completed Linux runtime inventory, narrow startup aliases, interpreter-copy recipe and exact dependency-export retention. **Research:** completed independent deadline ownership and the leader-exit/live-descendant worker; prepares the actual runtime invocation. **Quality:** reviews source, process closure and candidate evidence. **Lead:** owns integration, execution and accounting.
-- **Next:** normal protected-main integration and a fresh same-run unpublished candidate, then one accepted cloud installation, real guard probes, the live-descendant witness and capture-only qualification. See the [bounded runtime plan](research/D1_RUNTIME_QUALIFICATION.md). Actual runtime and scientific execution remain unperformed.
+- **Verified:** the installed [candidate](https://github.com/spei04/strange-physics/commit/5e0b3e7db436061f4d7c9a5e983f7878cea31974) passed seven CI jobs, with 6,399 tests per Python version. Native3 passed: 115 ELFs, 234 edges; all 147 native children closed across three attempts.
+- **Retained:** native charges are 48.88882 CPU / 66.53442699555308 wall seconds; setup charges 22.297874/43.56647578487173. Earlier failures remain. Materialization, probes, benign handshake and capture are unstarted.
+- **Pending:** Quality's [continuation operator](research/D1_RUNTIME_CONTINUATION_DECISION.md) passed Research's independent review; Platform updated docs, Lead holds execution pending user approval. Existing native 200/600 and overall 600/1800 limits remain. Proposed 400/600 and 800/1800 are unapproved/unadmitted. Scientific execution remains unstarted.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Quality / Research / Platform / Project lead | Native inventory passed; continuation decision pending | Quality completed the bounded continuation operator; Research independently accepted it; Platform updated the progress documents; Lead holds execution pending user approval. Native3 passed (115 ELFs, 234 edges, 116 closed children); all 147 native children closed across three retained attempts. Existing 200/600 native and 600/1800 overall limits remain authoritative. Proposed 400/600 and 800/1800 limits are not approved or admitted. Materialization, probes, benign handshake, capture and D1 science are unstarted. |
 | 2026-10-31 | Platform / Research / Quality / Project lead | Protected runtime source qualification passed; delivery integration next | Platform delivered actual Linux aliases, bounded record materialization, the genuine uv interpreter-copy route and exact requirements-file retention. Research delivered independent original-deadline ownership and a benign leader-exit/live-descendant handshake. Quality accepted source 248bbf5 and the actual 302/906 guarded result, 236-file typing, formatting/lint, all 35 runner children plus two formatter children and unchanged environment. Unit22 charges 126.911507 CPU / 153.151583 active-wall seconds across all seven attempts and preparation; 1,440,609 retained logical bytes include final checkpoint 8f31c29e. Failed lint/typing and rejected-source collection are retained. Lead integrates the reviewed stack into main through required CI, then accepts a new five-file internal candidate before actual runtime setup. No scientific batch, actual capture or production-readiness claim. |
 | 2026-10-31 | Platform / Quality / Research / Project lead | Combined capture software validation passed | Original successor run 41223320879 attempt 1 passed all six required jobs at frozen d51aab55 / merge 512c67f: 6,302 tests per runtime, 233-file typing, 1,567 schemas, packaging, analytic 24/72 and one 8/8 smoke per runtime. Two serializer warnings per runtime and three audit-flag warnings are unchanged. Observed job time 2,082s and run interval 968s are separate scopes; CPU/cost remain unknown. The protected-main candidate was skipped. Original failed run 41220847398 and Unit21 typing failure remain retained; 80/240 guarded and 38 ordinary local results stay scoped. Lead publishes documentation separately without moving the tested PR head. Research identified accepted installation/startup custody and the live leader/descendant witness as the next concrete runtime prerequisites. |
 | 2026-10-31 | Research / Platform / Quality / Project lead | Repair runtime-validation integration failures | Original PR157 run 41220847398 failed 7/6,277 tests per runtime; typing passed and later schema/package/smoke steps were skipped. Research delivered test-only cleanup ownership and a collision regression at 22779331. Platform repaired retained-builtin type validation at cb32c43; a reviewed same-ledger continuation passed 80/240 and 233-file typing, retaining the original typing failure. All 32 children closed; 110.378867 CPU/136.488404 active-wall seconds charged, 1,826,566 retained logical bytes. Lead integrated both at 5ac97608; all 38 lifecycle cases passed with normal failed-only cleanup, including the collision regression. Focused lint/format passed; three children closed with unchanged source/environment. One combined-source CI is next. Existing scientific and Unit19 obligations remain open. |
@@ -1770,3 +1771,95 @@ Lead verified108 cases/324 phases plus focused types and lint on the successor.
 No test/cleanup was skipped or weakened; runtime/scientific bytes are unchanged.
 Source8b16c7e and its new engineering acceptance supersede the earlier test
 checkpoint. Fresh required hosted checks must pass before approval handoff.
+
+## 2026-10-31 — Main candidate accepted; first runtime setup stopped
+
+[Protected-main CI 41230418150/1](https://github.com/spei04/strange-physics/actions/runs/41230418150/attempts/1) passed all seven jobs at exact main
+[5e0b3e7](https://github.com/spei04/strange-physics/commit/5e0b3e7db436061f4d7c9a5e983f7878cea31974). Both Python versions passed 6,399 tests, 236-file typing,
+1,567 schema checks, package validation and an 8/8 smoke. The same-run
+unpublished candidate also passed its isolated installed-wheel smoke.
+Candidate artifact 13053797988 was transferred once and independently verified,
+including its exact retained requirements export. This is package acceptance,
+not protected-runtime or enterprise production readiness.
+
+Setup attempt 1 stopped before runtime-environment creation or child launch:
+the checker does not admit an existing 300-byte bytecode cache for a reviewed
+root-owned startup hook. Research and Quality are reviewing a narrow
+cache/source-equivalence correction. Lead's next step is bounded continuation
+after review, followed by native closure, benign guard/live-descendant probes
+and capture-only qualification under the [existing plan](research/D1_RUNTIME_QUALIFICATION.md).
+
+Cumulative charged preparation, including the failed attempt and reservations,
+is 10.269376 CPU / 25.387547466 active-wall seconds within the existing 150/450
+envelope. Earlier failures, reservations and unknown administrative costs remain
+retained; no balance is reset or refunded. D1 scientific execution remains
+unstarted.
+
+## 2026-10-31 — Candidate installed; native inventory correction pending
+
+The accepted same-run candidate is installed, and all five observed setup
+children closed. The known root-owned startup cache is admitted only through
+the reviewed exact source/bytecode-equivalence exception. Original setup
+attempt 1 and its costs remain retained. The runtime's owned empty .lock
+was corrected to mode 0600 and independently confirmed; no shared environment
+permission change is implied.
+
+Native attempt 1 failed in the Version parser. Native attempt 2 failed when
+the inventory treated nonloadable python.o as a loadable object. Both attempts
+closed with known usage. Their cumulative 19.587346 CPU / 27.6280890014
+active-wall seconds remain charged. Research and Quality next review native3's
+exact ELF classification correction; Lead owns the bounded continuation,
+followed by benign probes, the live-descendant handshake and capture-only
+qualification. Platform maintains the delivery and execution evidence.
+
+The authoritative engineering ceilings remain native 200 CPU / 600 wall
+seconds and overall 600/1800. The observed census contains 75 loadable ELFs
+and one build REL object. Their measured continuation costs will determine
+whether the unchanged 150 CPU capture hold leaves sufficient headroom.
+Source qualification 200/600, setup 150/450 and review/closure 50/150 remain
+unchanged. The two retained native charges leave 180.412654 CPU /
+572.371911 wall seconds before further work, including the capture hold.
+These are command limits, not measured whole-operation costs.
+
+**2026-10-31 correction:** the draft native 300 CPU / 900 wall envelope
+(overall 700/2100) was withdrawn; it was not authorized or used. No increased attempt ran; the existing caps and
+no-additional-spending constraint remain authoritative. Any required increase
+must be presented for user approval after actual remaining work is measured.
+No failed cost is reset or transferred from a closed account. Scientific
+allocation and limits are unchanged; D1 scientific execution remains unstarted.
+
+## 2026-10-31 — Native inventory passed; continuation allocation pending
+
+Exact main [5e0b3e7](https://github.com/spei04/strange-physics/commit/5e0b3e7db436061f4d7c9a5e983f7878cea31974) retains all seven passing jobs from
+[protected-main CI 41230418150/1](https://github.com/spei04/strange-physics/actions/runs/41230418150/attempts/1).
+Its accepted same-run candidate is installed. Setup attempt 2 and the final
+custody work leave cumulative setup charges of 22.297874 CPU /
+43.56647578487173 active-wall seconds, including the retained initial failure.
+All five setup children closed; the exact source/bytecode cache exception and
+owned empty .lock mode 0600 remain independently reviewed.
+
+Native attempt 3 passed with 115 ELF objects, 234 dependency edges and 116
+closed children. Its own charge is 29.301474 CPU / 38.90633799415082 wall
+seconds. Across all three attempts, 147 children closed and cumulative charges
+are 48.88882 CPU / 66.53442699555308 wall seconds. The Version-parser and
+nonloadable python.o failures remain retained. These are native inventory
+results, not completed protected capture or a scientific result.
+
+The existing native 200 CPU / 600 wall and overall 600/1800 ceilings remain
+authoritative. Only 151.11118 CPU / 533.46557300444692 wall seconds remain in
+the native account, so the current CPU limit cannot preserve both the 150 CPU
+capture hold and 10 CPU headroom. Materialization, probes, the benign handshake
+and capture remain unstarted; preparing a materialization admission did not
+execute it.
+
+Quality completed the exact [continuation decision](research/D1_RUNTIME_CONTINUATION_DECISION.md) operator,
+Research independently accepted source and allocation, and Platform reconciled
+these documents. Lead owns custody and awaits the user's allocation decision. The proposal increases only native CPU from
+200 to 400, retaining its 600-wall ceiling; overall engineering would become
+800 CPU / 1,800 wall. It is not approved or admitted. Proposed remaining stages
+are materialization 25/60, probes 15/45, benign handshake 80/90 and capture
+200/330 CPU/wall seconds, including closeout. With retained native costs, the
+contingent stage total is 368.88882 CPU / 591.534427 wall seconds, subject to
+live readiness and remaining-cap checks. The earlier 300/900 draft remains
+withdrawn and unused. There is no reset, closed-account transfer or expansion
+of scientific, provider or release authority.
