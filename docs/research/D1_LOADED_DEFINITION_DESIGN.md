@@ -61,7 +61,15 @@ provides a complete protected D1 import record or captures all required original
 Use an ordinary fresh invocation of the pinned interpreter and normal reviewed
 Python imports, not a new loader, manual compile/exec, reload, or a second imported
 copy manufactured to compare code. The existing isolated-child pattern is a
-starting point, not code that can be copied unchanged:
+starting point, not code that can be copied unchanged. Recommend this standard
+launch arrangement, still proposed pending protected startup/import-map evidence:
+
+```text
+<pinned-venv-python> -I -B -X pycache_prefix=<fresh-owned-empty-directory> <pinned-bootstrap>
+```
+
+It retains normal site initialization and the installed-native origin. It does
+not authorize creating that directory or launching a process now.
 
 * The outer control fixes exact executable and startup configuration, dependency/
   stdlib/runtime premises, permitted source roots and the import map. The source
@@ -76,12 +84,21 @@ starting point, not code that can be copied unchanged:
   site-package directory. A D1 control must not inherit that conflicting path
   list. Only fixed helper roots may be added while production loaded copies are
   joined to the expected checkout bytes and verified installation.
-* Fix startup hooks and bytecode-cache policy explicitly. `-I` does not itself
-  establish trusted site initialization; `-B` prevents cache writes, not reads.
-  Current `.py` hashes therefore do not cover an unverified consumed `.pyc`.
-  The next control review must choose either a proven trusted cache inventory or
-  a standard fresh-cache arrangement that cannot consume stale caches; this
-  document does not select a loader workaround or allocate a new cache/root.
+* Independently verify interpreter/venv configuration and startup inputs before
+  launch, including applicable `.pth` and `sitecustomize` files. `-I` excludes the
+  user site and environment-driven Python paths but retains normal site startup;
+  executable startup hooks run before bootstrap checks. A later self-report or
+  installation check cannot establish their prior trust. [Python startup](https://docs.python.org/3.12/library/site.html)
+* The outer owner establishes an empty, non-symlink, owner-controlled cache prefix
+  for this attempt and holds its trusted interval. The explicit command-line
+  prefix redirects ordinary source cache reads away from existing `__pycache__`;
+  `-B` prevents cache writes. A stale prefix cannot be reused, and its preparation,
+  checks, retained failures and closure are counted. Sourceless/zip/custom loaders
+  remain excluded for checkout-source members. Separately allowed runtime modules
+  need explicit protected runtime coverage and the existing catalog origin/kind
+  rules; they are not a fallback for mismatched source. Builtin/extension identity
+  remains a runtime premise. [Cache reads](https://docs.python.org/3.12/library/sys.html#sys.pycache_prefix),
+  [isolated mode and `-B`](https://docs.python.org/3.12/using/cmdline.html)
 * Capture exact module, class, function and code-object references immediately
   after those controlled imports, before any poisoning or wrapper installation.
   Retain strong references through both passes. Name/origin/`co_filename` checks
@@ -100,8 +117,14 @@ Inputs must not be supplied through candidate JSON or synthesized after the fact
 from inspected objects. Authentication rests on the independently trusted control
 that produced/holds the anchors, not a field such as `trusted=True`.
 
-The exact startup/cache enforcement, complete import membership, deferred imports,
-actual trusted runtime evidence and bootstrap receipts are still unspecified.
+Do not add `-S` as an unreviewed shortcut: before Python 3.14 it affects venv
+prefix initialization, while the existing verifier derives its package root from
+`sysconfig`. Supporting a different startup path would need a separate compatible
+source/control change. [Python version distinction](https://docs.python.org/3.14/library/sys_path_init.html)
+
+The actual protected startup inventory, exact empty-prefix enforcement and closure,
+complete import membership/deferred edges, trusted runtime evidence and bootstrap
+receipts are still unspecified.
 Resolve them in the next source/control review **before claiming this boundary
 implemented**. Do not silently enlarge the S source-read allowance: Python's own
 imports/startup/cache reads, installation checks and their copies are additional
@@ -199,3 +222,34 @@ Do not reseal S to insert wrapper identities, use deferred append callbacks,
 replace oracle instances, repeat imports as a probe, or promote any partial
 conditional observation into A. This design supplies neither execution authority
 nor the missing final catalog, producer hook, emitter or installer.
+
+## Finite dependency sequence to the first D1 evidence
+
+This orders the existing integration/fit/admission obligations; it adds no
+scientific gate, allowance or reset of earlier charges.
+
+1. **Unit18:** the bounded checkout observer is implemented, with qualification
+   tracked separately. It supplies current-file observations only. The S/catalog
+   parser is implemented; a final complete catalog and trusted import map are not.
+2. **Bootstrap and originals:** qualify the concrete launch/control above, bind
+   protected runtime/import evidence, bind the twelve actual reference owners,
+   expose the same fixture owner through a concrete hook, and fix approved d4.
+   The hook/emitter and complete
+   original-binding flow are unresolved; existing file checks cannot fill them.
+3. **S and installation:** implement actual S construction/retention, join the
+   existing C/sink and T-retention components, construct the existing real
+   recorder/bridge chain, and install the reviewed wrappers. Verify pass2 against
+   held originals and actual consumers before candidate A. Component helpers
+   exist; S sealing, installer, complete routing and A joins remain unresolved.
+4. **Whole-path fit:** begin source-derived byte/work assessment now using the
+   frozen census and existing caps. Complete it when remaining wire formats,
+   failure records, call sites and retention copies are concrete, before costly
+   execution. Do not wait for D1 labels to discover an impossible layout. Measure
+   complete-path resource fit only in separately reviewed bounded qualification
+   using admissible synthetic/previously exposed material where valid; those
+   measurements cannot substitute for unmeasured D1 work or claim science results.
+5. **Admission and evidence:** assemble the existing required source, exposure,
+   numerical, accounting, storage and whole-path evidence for reviewed execution
+   admission. Only then may the completed fixed D1 batch produce its first retained
+   D1 evidence. Missing inputs or unknown costs remain explicit; source progress
+   and synthetic checks do not spend an inferred scientific balance.
