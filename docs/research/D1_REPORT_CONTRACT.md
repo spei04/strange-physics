@@ -1,7 +1,7 @@
 # D1 report structure: B1 sub-slice
 
 Source only, 2026-10-30. `tests/d1_report_contracts.py` implements a structural
-envelope from the [report design](D1_REPORT_BINDING_DESIGN.md). Its78 authored
+envelope from the [report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md). Its78 authored
 synthetic cases have not been collected or executed. This is not completion of
 B1's numerical payload codecs or gate registry, not the material binder, and
 not permission to run D1. Numerical, recorder, production and workflow source
