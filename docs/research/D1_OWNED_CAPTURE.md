@@ -114,7 +114,8 @@ owned FIFO, retains a ready record bound to the actual invocation/group/token,
 and acknowledges readiness to the leader. The leader then exits. The watcher
 requires a nonzero leader-exit timestamp, successful leader exit and a still
 populated bound cgroup; leader-only/empty fixtures cannot pass. It retains this
-observation before one exact token release. The child checks the token, closes
+observation before one exact token release. The child rejects an expired deadline immediately before waiting and after
+reading, even if the exact token was already buffered; it checks the token, closes
 its owned descriptors and retains a bounded completion/error record before
 exit. The watcher requires the successful completion record, then actual
 terminal-empty state, terminal receipt, stop and post-stop closure. A release
@@ -154,9 +155,9 @@ scientific balance is reused.
 
 ## Authored verification scope
 
-Static AST census: 77 cases/231 prospective phases in 29 test functions:
+Static AST census: 79 cases/237 prospective phases in 29 test functions:
 41 lifecycle cases/18 functions, 20 parent-owner cases/8 functions, and
-16 benign cases/3 functions. They cover original-clock refusal, post-preflight
+18 benign cases/3 functions. They cover original-clock refusal, post-preflight
 launch reserve, independent timeout takeover, late acknowledgement, stale
 identity/missing units, unreaped child, terminal/final/intent failure, exact
 retained report substitutions, no-I/O preclaim/consumed rejection, leader-only
@@ -168,11 +169,11 @@ independent closes. Parent read errors survive later close errors. Existing
 report/cleanup assertions remain; the preflight test now correctly observes its
 moved service-side position.
 
-A conservative fixture payload estimate per retained suite is 1,245,184 bytes:
+A conservative fixture payload estimate per retained suite is 1,269,760 bytes:
 1,064,960 for lifecycle cases (including three new request/report cases), 102,400
-for owner requests, and 77,824 for benign records (nine requests and five pairs
+for owner requests, and 102,400 for benign records (eleven requests and seven pairs
 of ready/done files, each at most 4 KiB). Two retained
-suite sets require 2,490,368 bytes before framework metadata/logs. This is a
+suite sets require 2,539,520 bytes before framework metadata/logs. This is a
 source-derived loose upper bound, not measured output. Fake tests create no
 symlinks, hardlinks or FIFOs; pytest may create its own links. Most receipt data
 stays in bounded fake stores. Actual qualification must census every retained

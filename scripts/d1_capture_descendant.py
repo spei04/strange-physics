@@ -316,9 +316,17 @@ def worker(path: Path, digest: str) -> int:
                 raise OSError("Ready handoff failed")
             close_once(ready_w)
             if primary is None:
-                readable, _, _ = select.select([release_fd], [], [], max(0.0, deadline - time.monotonic()))
-                if not readable or os.read(release_fd, 66) != (token + "\n").encode("ascii"):
-                    raise ValueError("Release missing/late/substituted")
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise TimeoutError("Original descendant deadline before release wait")
+                readable, _, _ = select.select([release_fd], [], [], remaining)
+                if not readable:
+                    raise TimeoutError("Release missing before descendant deadline")
+                release = os.read(release_fd, 66)
+                if time.monotonic() >= deadline:
+                    raise TimeoutError("Original descendant deadline after release read")
+                if release != (token + "\n").encode("ascii"):
+                    raise ValueError("Release token substituted")
                 code = 0
     except BaseException as child_error:
         remember("descendant", child_error)

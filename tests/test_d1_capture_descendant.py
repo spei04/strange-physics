@@ -122,13 +122,14 @@ def test_benign_witness_requires_live_descendant_and_bound_release(tmp_path: Pat
     assert manager.submissions == (0 if kind == "late" else 1)
 
 
-@pytest.mark.parametrize("kind", ("leader", "child", "timeout", "bad-token", "fork-failed", "close-failed", "parent-close", "child-ready-close", "read-close"), ids=("leader", "child", "timeout", "bad-token", "fork", "close", "parent-close", "ready-close", "read-close"))
+@pytest.mark.parametrize("kind", ("leader", "child", "timeout", "bad-token", "fork-failed", "close-failed", "parent-close", "child-ready-close", "read-close", "late-buffered", "late-read"), ids=("leader", "child", "timeout", "bad-token", "fork", "close", "parent-close", "ready-close", "read-close", "late-buffered", "late-read"))
 def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
     item = plan(tmp_path)
     path = tmp_path / "descendant-request.json"
     path.write_bytes(item.request)
     path.chmod(0o600)
     events: list[tuple[str, object]] = []
+    clock = Clock()
     read_error = OSError("synthetic ready read failure")
     late_close_error = PermissionError("synthetic lost close acknowledgement")
 
@@ -140,11 +141,15 @@ def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path
 
     def close(fd: int) -> None:
         events.append(("close", fd))
+        if kind == "late-buffered" and fd == 11:
+            clock.value = 130.0
         if (kind == "close-failed" and fd == 20) or (kind in ("parent-close", "child-ready-close") and fd == 11) or (kind == "read-close" and fd == 10):
             raise late_close_error
 
     def read(fd: int, size: int) -> bytes:
         events.append(("read", fd))
+        if kind == "late-read" and fd == 20:
+            clock.value = 130.0
         if kind == "read-close":
             raise read_error
         if kind == "leader":
@@ -173,7 +178,7 @@ def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path
     with monkeypatch.context() as scoped:
         scoped.setattr(benign, "os", fake_os)
         scoped.setattr(benign, "select", SimpleNamespace(select=selected))
-        scoped.setattr(benign, "time", SimpleNamespace(monotonic=lambda: 100.0))
+        scoped.setattr(benign, "time", SimpleNamespace(monotonic=clock.now))
         scoped.setattr(benign, "sys", SimpleNamespace(flags=SimpleNamespace(isolated=1, dont_write_bytecode=1)))
         scoped.setattr(owned, "service_identity", lambda unit: (INVOCATION, "/user.slice/" + unit))
         if kind == "leader":
@@ -201,7 +206,7 @@ def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path
                 benign.worker(path, item.request_sha256)
             assert raised.value.code == (0 if kind == "child" else 1)
             assert ("write", (11, b"R")) in events
-            if kind == "child-ready-close":
+            if kind in ("child-ready-close", "late-buffered"):
                 assert not any(event[0] == "select" for event in events)
                 assert events.count(("close", 11)) == 1
             else:
@@ -211,6 +216,12 @@ def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path
             assert ready["token"] == item.token and ready["invocation_id"] == INVOCATION
             done = owned.decoded((tmp_path / "descendant-done.json").read_bytes(), 4096)
             assert done["exit_code"] == raised.value.code
+            if kind in ("late-buffered", "late-read"):
+                expected_detail = "Original descendant deadline " + ("before release wait" if kind == "late-buffered" else "after release read")
+                assert done["first_fault"] == {"stage": "descendant", "kind": "TimeoutError", "detail": expected_detail}
+                assert done["supplemental"] == []
+                assert events.count(("close", 20)) == 1
+                assert (("read", 20) in events) is (kind == "late-read")
             if kind in ("close-failed", "child-ready-close"):
                 assert done["first_fault"] == {"stage": "worker_close", "kind": "PermissionError", "detail": str(late_close_error)}
                 assert done["supplemental"] == []
