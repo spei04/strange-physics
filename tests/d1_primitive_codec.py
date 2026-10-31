@@ -294,6 +294,12 @@ class PrimitiveEventCodec:
     mutation or concurrent use is outside this single-owner pure helper boundary.
     """
 
+    _table: TableView
+    _mode: Literal["encode", "expand"]
+    _sequence: int
+    _ordinal: int
+    _stopped: bool
+
     def __init__(self, table_bytes: bytes, *, mode: Literal["encode", "expand"]) -> None:
         if type(mode) is not str or mode not in ("encode", "expand"):
             raise ValueError("Fixed codec direction required")

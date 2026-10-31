@@ -436,7 +436,7 @@ def test_raw_ordering_and_complete_intent_identity_are_enforced(change: str) -> 
     if change != "without-intent":
         assert enc.convert(raw(event(call))).status == "converted"
     altered = deepcopy(call)
-    sequence = 1
+    sequence = 0 if change == "without-intent" else 1
     if change == "repeat-sequence":
         sequence = 0
     elif change == "skip-ordinal":
@@ -452,6 +452,8 @@ def test_raw_ordering_and_complete_intent_identity_are_enforced(change: str) -> 
     )
     result = enc.convert(raw(value))
     assert result.status == "invalid"
+    if change == "without-intent":
+        assert result.reason == "return_intent_substitution"
     later = enc.convert(raw(event(call, returned=DECIMAL, sequence=1)))
     assert later.status == "stopped" and later.reason == result.reason
 
