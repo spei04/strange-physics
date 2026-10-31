@@ -158,6 +158,8 @@ def structural_examples() -> dict[str, Any]:
         "description": "Structural placeholders only; no true D1 labels or exposure acceptance.",
         "valid": valid,
         "schema_negative": [
+            {"model": "D1PrivateAudit", "field": "future_initial_x", "value": 0.75},
+            {"model": "D1PrivateAudit", "field": "future_time", "value": 1.0},
             {"model": "D1PublicFixture", "field": "schema_version", "value": "wrong"},
             {"model": "D1PrivateAudit", "field": "protocol_sha256", "value": "a" * 64},
             {"model": "D1PrivateAudit", "field": "coefficient_hex", "value": "x" * 33},

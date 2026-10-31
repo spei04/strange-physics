@@ -317,6 +317,7 @@ def test_audit_binds_exact_public_values_and_shape(kind: str) -> None:
         ("coefficient_hex", "0x1p+0"),
         ("coefficient_hex", (2.0).hex()),
         ("protocol_sha256", S),
+        ("future_initial_x", 0.75),
         ("future_time", 1.0),
     ),
 )

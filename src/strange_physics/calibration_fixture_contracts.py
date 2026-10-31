@@ -226,8 +226,8 @@ class D1PrivateAudit(Message):
     coefficient_hex: HexText
     training_labels: Annotated[tuple[D1LabelClaim, ...], Field(min_length=1, max_length=2)]
     future_label: D1LabelClaim
-    future_initial_x: Literal[1.0] = 1.0
-    future_time: Literal[0.75] = 0.75
+    future_initial_x: Annotated[float, Field(ge=1.0, le=1.0)] = 1.0
+    future_time: Annotated[float, Field(ge=0.75, le=0.75)] = 0.75
     authority: Literal["supplied-material-not-numerical-proof"] = (
         "supplied-material-not-numerical-proof"
     )
