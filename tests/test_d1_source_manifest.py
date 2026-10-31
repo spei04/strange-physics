@@ -384,7 +384,12 @@ def test_lock_exception_is_unique_and_cannot_spread(change: str) -> None:
     elif change == "ordinary-size":
         manifest["members"][2][4] = 131073
     elif change == "catalog-size":
-        manifest["members"][0][4] = 131073
+        # A lock-sized member cannot lend its larger ceiling to a catalog claim.
+        manifest["catalog_ref"] = "m04"
+        manifest["catalog_sha256"] = manifest["members"][4][3]
+        manifest["members"][4][4] = 131072
+        source.parse_manifest(encoded(manifest))
+        manifest["members"][4][4] = 131073
     else:
         catalog["members"][2] = ["m02", "trusted_runtime_member", "emitter", "runtime_emitter"]
         catalog["definitions"][4] = ["d4", "m02", "runtime_builtin", "runtime_emitter", "exp"]
@@ -412,12 +417,17 @@ def test_coherent_catalog_cannot_override_definition_policy(change: str) -> None
     elif change == "kind":
         catalog["definitions"][0][2] = "python_function"
     elif change == "module":
-        catalog["definitions"][0][3] = "other"
+        catalog["members"][5][3] = "changed_endpoint"
+        for index in range(4):
+            catalog["definitions"][index][3] = "changed_endpoint"
     elif change == "null-module":
         catalog["members"][5][3] = None
     elif change == "same-member":
         catalog["members"].append(["m09", "checkout_source", "other.py", "endpoint_belief_reference"])
-        catalog["definitions"][1][1] = "m09"
+        for index in range(1, 4):
+            catalog["definitions"][index][1] = "m09"
+        for index in range(4, 13):
+            catalog["instances"][index][3] = "m09"
     elif change == "runtime-python":
         catalog["members"][2][1:3] = ["trusted_runtime_member", "emitter"]
     elif change == "checkout-builtin":
