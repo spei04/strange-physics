@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** PR155 passed six CI jobs with 6,086 tests per runtime; the observer passed 227-file typing and 62 private cases/186 phases. Earlier failures remain recorded.
-- **Active:** Research—fixture-owner hook and original capture; Platform—protected startup/import bootstrap; Quality—independent review; Lead—resources and integration. [Handoff](research/D1_LOADED_DEFINITION_DESIGN.md).
-- **Open:** Protected runtime and inventory evidence, installation/pass2, full-path fit and scientific admission remain pending. The [owner decisions](research/D1_EXPOSURE_DECISIONS.md) stand; no D1 batch is running.
+- **Source accepted:** Research completed actual owner preparation; Platform completed protected startup/capture source. Quality reviewed both. The [checkpoint](research/D1_BOOTSTRAP.md) has 143 prospective private cases, still unrun.
+- **Current assignments:** Platform prepares bounded engineering controls; Quality reviews them; Lead owns integration and accounting. Research supplied the frozen qualification proposal.
+- **Next:** Connect the existing Systemd ownership checks to the [capture handoff](research/D1_LOADED_DEFINITION_DESIGN.md). Runtime custody, process-tree closure, protected inventory, installation/pass2, fit and scientific admission remain pending; no D1 batch is running.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Platform / Quality / Project lead | Bootstrap and actual-owner source accepted; qualification controls next | Integrated source3365e2 is public after independent source review. Prepared-owner replacement, descriptor invocation, interpreter-link custody, import aliases and caught-denial gaps were repaired; Python typing aliases have narrow protected-parent joins. The 143 private cases/429 phases are prospective; 53 fake-producer cases are separate. Capture observation cannot establish whole-tree closure. Lead retained a concrete Systemd integration and positive acceptance-test handoff; no new execution or science. |
 | 2026-10-31 | Research / Platform / Quality / Project lead | Concrete launch-to-original-owner source integration | Research owns the retained fixture-owner hook and fixed original capture; Platform owns protected startup/import control in the other reused checkout. Quality reviews immutable source; Lead coordinates resources/integration. New source tests are authored, not run; actual protected runtime, installation/pass2, inventory and full-path evidence remain open. No scientific admission or D1 batch. |
 | 2026-10-31 | Platform / Quality / Research / Project lead | PR155 original CI accepted; concrete integration handoff | Platform sealed six passing jobs at frozen f36f0895: 6,086 tests/runtime, 227-file typing and 1,567 schema checks. Lead independently matched raw logs and immutable source identity; Quality audits the release evidence. Research supplied the finite integration map and read-only installed-runtime facts; the approved owner policy is restored unchanged. Next assignments cover startup/import custody, actual original-owner integration and whole-path fit. All earlier failures and unknowns remain retained; no D1 batch or merge. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Owned-file observer qualified; original CI next | Research delivered 62 fault cases and isolated helper-local OS mocks after an interrupted guard check. Quality and Lead accepted unchanged guard semantics, full 227-file typing and exact 62/186 passes; 24 children closed, 106.312864 CPU seconds charged with the failed attempt retained. Lead publishes the draft; Platform owns original CI evidence. Research maps the remaining end-to-end integration and resource evidence; accepted loaded-definition design stays unimplemented. |
