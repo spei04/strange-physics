@@ -420,8 +420,19 @@ def helper_os(monkeypatch: pytest.MonkeyPatch) -> SimpleNamespace:
         stat_result=os.stat_result,
     )
     for name in (
-        "O_CLOEXEC", "O_DIRECTORY", "O_NOFOLLOW", "O_NONBLOCK", "O_RDONLY",
-        "close", "fstat", "getpid", "getuid", "open", "read", "stat", "stat_result",
+        "O_CLOEXEC",
+        "O_DIRECTORY",
+        "O_NOFOLLOW",
+        "O_NONBLOCK",
+        "O_RDONLY",
+        "close",
+        "fstat",
+        "getpid",
+        "getuid",
+        "open",
+        "read",
+        "stat",
+        "stat_result",
     ):
         assert getattr(namespace, name) is getattr(os, name)
     monkeypatch.setattr("d1_source_files.os", namespace)
@@ -464,7 +475,8 @@ def denied(*args: Any, **kwargs: Any) -> NoReturn:
 
 
 def assert_no_io_retry(
-    attempt: CheckoutObservationAttempt, monkeypatch: pytest.MonkeyPatch,
+    attempt: CheckoutObservationAttempt,
+    monkeypatch: pytest.MonkeyPatch,
     helper_os: SimpleNamespace,
 ) -> None:
     names = ("open", "read", "fstat", "stat", "close")
@@ -472,7 +484,9 @@ def assert_no_io_retry(
     with monkeypatch.context() as scoped:
         for name in names:
             scoped.setattr(helper_os, name, denied)
-        assert all(getattr(os, name) is original for name, original in zip(names, originals, strict=True))
+        assert all(
+            getattr(os, name) is original for name, original in zip(names, originals, strict=True)
+        )
         with pytest.raises(SourceFilesStopped, match="consumed"):
             attempt.observe()
 
@@ -488,7 +502,8 @@ def changed_plan(owned: OwnedFixture, index: int, **changes: Any) -> ExpectedChe
 
 
 def test_complete_owned_observation_and_consumed_retry(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
     helper_os: SimpleNamespace,
 ) -> None:
     attempt = owned.attempt()
@@ -559,7 +574,9 @@ def test_complete_owned_observation_and_consumed_retry(
     ],
 )
 def test_plan_failures_precede_owned_io(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
+    kind: str,
     helper_os: SimpleNamespace,
 ) -> None:
     plan = replace(owned.plan)
@@ -608,7 +625,9 @@ def test_plan_failures_precede_owned_io(
     ids=["raw", "plan-type", "record-type", "root-bool", "fd-bool", "root-mode"],
 )
 def test_exact_boundaries_reject_without_opens(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
+    kind: str,
     helper_os: SimpleNamespace,
 ) -> None:
     raw: Any = owned.raw
@@ -695,7 +714,9 @@ def test_owned_nonregular_or_unsafe_paths(owned: OwnedFixture, kind: str) -> Non
 
 @pytest.mark.parametrize("kind", ["leaf", "ancestor"], ids=["leaf", "ancestor"])
 def test_post_open_same_target_symlink_is_not_followed(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
+    kind: str,
     helper_os: SimpleNamespace,
 ) -> None:
     original_open = os.open
@@ -728,7 +749,9 @@ def test_post_open_same_target_symlink_is_not_followed(
     ids=["extent", "mtime", "replacement", "digest"],
 )
 def test_deterministic_read_mutations(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
+    kind: str,
     helper_os: SimpleNamespace,
 ) -> None:
     target = owned.root / "tests/d1_primitive_codec.py"
@@ -769,7 +792,9 @@ def test_deterministic_read_mutations(
     ids=["short", "zero", "interrupt", "error", "type", "overflow"],
 )
 def test_read_fault_is_once_only(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
+    kind: str,
     helper_os: SimpleNamespace,
 ) -> None:
     original_read = os.read
@@ -807,7 +832,8 @@ def test_read_fault_is_once_only(
 
 
 def test_exact_chunk_and_eof_request_schedule(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
     helper_os: SimpleNamespace,
 ) -> None:
     target = owned.root / "tests/d1_primitive_codec.py"
@@ -833,7 +859,8 @@ def test_exact_chunk_and_eof_request_schedule(
 
 
 def test_primary_read_fault_survives_real_close_then_error(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
     helper_os: SimpleNamespace,
 ) -> None:
     original_close = os.close
@@ -873,7 +900,10 @@ def test_primary_read_fault_survives_real_close_then_error(
 @pytest.mark.parametrize("phase", ["read", "close"], ids=["read", "close"])
 @pytest.mark.parametrize("later_error", [False, True], ids=["swallowed", "later-error"])
 def test_sticky_reentry_blocks_work_but_keeps_cleanup(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, phase: str, later_error: bool,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
+    phase: str,
+    later_error: bool,
     helper_os: SimpleNamespace,
 ) -> None:
     original_read, original_close = os.read, os.close
@@ -924,7 +954,8 @@ def test_sticky_reentry_blocks_work_but_keeps_cleanup(
 
 
 def test_open_entry_failure_retains_unknown_without_fabricated_fd(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
     helper_os: SimpleNamespace,
 ) -> None:
     primary = OSError(errno.EIO, "no returned descriptor")
@@ -945,7 +976,9 @@ def test_open_entry_failure_retains_unknown_without_fabricated_fd(
 
 @pytest.mark.parametrize("owner", ["pid", "thread"], ids=["pid", "thread"])
 def test_wrong_owner_consumes_without_descriptor_work(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, owner: str,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
+    owner: str,
     helper_os: SimpleNamespace,
     helper_threading: SimpleNamespace,
 ) -> None:
@@ -965,7 +998,9 @@ def test_wrong_owner_consumes_without_descriptor_work(
 
 @pytest.mark.parametrize("operation", ["fstat", "stat"], ids=["fd-stat", "named-stat"])
 def test_stat_error_keeps_prior_observations_and_closes_owned_chain(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, operation: str,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
+    operation: str,
     helper_os: SimpleNamespace,
 ) -> None:
     original_fstat, original_stat = os.fstat, os.stat
@@ -1001,7 +1036,9 @@ def test_stat_error_keeps_prior_observations_and_closes_owned_chain(
 
 @pytest.mark.parametrize("target_name", ["catalog.json", "."], ids=["first-file", "final-root"])
 def test_close_uncertainty_alone_cannot_return_success(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, target_name: str,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
+    target_name: str,
     helper_os: SimpleNamespace,
 ) -> None:
     original_open, original_close = os.open, os.close
@@ -1046,7 +1083,9 @@ def test_close_uncertainty_alone_cannot_return_success(
     ids=["members-65", "lock-cap", "id-long", "path-long", "module-long", "root-range"],
 )
 def test_declared_input_caps_precede_owned_io(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, kind: str,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
+    kind: str,
     helper_os: SimpleNamespace,
 ) -> None:
     plan = owned.plan
@@ -1073,7 +1112,8 @@ def test_declared_input_caps_precede_owned_io(
 
 
 def test_renamed_single_link_file_cannot_fill_two_member_rows(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
     helper_os: SimpleNamespace,
 ) -> None:
     original_open, original_close = os.open, os.close
@@ -1113,7 +1153,9 @@ def test_renamed_single_link_file_cannot_fill_two_member_rows(
 
 @pytest.mark.parametrize("window", ["first", "final"], ids=["first-guard", "final-guard"])
 def test_owner_guard_reentry_stays_latched_through_final_close(
-    owned: OwnedFixture, monkeypatch: pytest.MonkeyPatch, window: str,
+    owned: OwnedFixture,
+    monkeypatch: pytest.MonkeyPatch,
+    window: str,
     helper_os: SimpleNamespace,
 ) -> None:
     original_pid, original_open, original_close = os.getpid, os.open, os.close
