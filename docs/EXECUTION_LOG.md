@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** [Fixture contracts, PR #138](https://github.com/spei04/strange-physics/pull/138) passed all six CI jobs: 4,966 tests per runtime, schemas, security and packaging. Prior local failures remain recorded.
-- **Verified locally — Lead; Quality review:** [Predictive bounds](research/D1_BOUNDS_PROOF.md) pass 69 synthetic tests and 197-file typing after exact-mass and annotation repairs. Hosted verification is next; no calibration result.
-- **Assigned — Research; Quality review:** Reference-fixture producer, rounding proofs and exposure joins. Lead integrates; Platform verifies CI evidence. Scientific execution awaits qualified source, complete exposure review and allocation.
+- **Verified:** [Fixture contracts, PR #138](https://github.com/spei04/strange-physics/pull/138) passed all required CI jobs. [Predictive bounds, PR #139](https://github.com/spei04/strange-physics/pull/139) passed69 local synthetic cases; Platform follows its hosted checks.
+- **Lead; Quality review:** [Fixture references](research/D1_FIXTURE_REFERENCE.md) have a reviewed strict-container repair. Local qualification remains incomplete; the planned full CI must verify it. All failed attempts remain recorded.
+- **Research:** Implement native/reference adapter source and proof joins. Exposure-history review found unresolved scope, representation and reserved-world custody. D1 scientific execution remains disabled.
 
 ## Approval and execution capacity
 
