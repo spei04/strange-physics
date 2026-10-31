@@ -1,4 +1,4 @@
-# D1 primitive identity table: source-only slice
+# D1 primitive identity table: bounded structural validation
 
 This slice implements only bounded construction and structural validation of
 identity-table bytes from the [reviewed codec proposal](D1_PRIMITIVE_CODEC_CONTRACT.md).
@@ -75,7 +75,7 @@ and independently specified rows; separate test-only lowered caps exercise
 inclusive separator/LF checks. Oversized, padded and overlong inputs are invalid
 defenses, not claimed valid boundary examples.
 
-## Static work and pending checks
+## Work and verification
 
 One `parse_table` call scans at most 57,856 bytes for depth, performs one bounded
 JSON parse, checks exactly 105 rows (at most seven atoms per row), serializes each
@@ -91,13 +91,26 @@ then uses the same parser. Repeated validation/construction is explicit work;
 it is not another scientific call or a source-authentication check. A later
 installer/decoder must account for its actual repeated passes and copies.
 
-The 20 test functions define 95 authored cases (285 expected pytest phases).
-They cover the independent complete table, maximal legal field
-lengths, legitimate repeated source-member refs, immutable output snapshots,
-raw-type bypasses, semantic joins, malformed/truncated input, canonical spelling,
-duplicate keys, booleans, Unicode, nesting and pre-parse caps. They remain
-unexecuted at this source checkpoint. Formatting, configured typing and the
-bounded synthetic test unit require separate engineering controls.
+The 20 test functions define 95 cases (285 expected pytest phases).
+They cover the independent complete table, maximal legal field lengths,
+legitimate repeated source-member refs, immutable output snapshots, raw-type
+bypasses, semantic joins, malformed/truncated input, canonical spelling,
+duplicate keys, booleans, Unicode, nesting and pre-parse caps.
+
+At code checkpoint `6b23db52ae349cadb6c0ddabd691876b08c1c35b`, formatting,
+configured lint and full typing across 215 source files passed. Three
+collect-only preparations independently reconciled the same 95 ordered case
+identities with zero test phases. The final test child hit its remaining CPU
+limit before producing a terminal receipt or JUnit result. Its executed case
+and phase counts are unknown; this is not a 95-case pass or proof that no
+bodies ran. Standard frozen-head PR CI remains the test qualification path.
+
+Independent closure review verified all 33 children across six local attempts,
+unchanged source/environment identity and 3,069,172 retained logical bytes.
+The cumulative charge is 109.748763 CPU seconds, including six closeout holds;
+earlier lint and typing failures remain recorded. Both repairs changed only
+test syntax/import references. There is no further local continuation or
+transfer of unused allowance, and this record is not whole-operation billing.
 
 Activation S/T/C/A joins, source/history authentication, table retention,
 event-array encoding/expansion and acknowledgement, failure installation,
