@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import hashlib
 import json
 from collections import deque
@@ -428,3 +429,60 @@ def test_service_failure_keeps_first_and_supplemental_facts(
     if not receipt_failure:
         value = json.loads((tmp_path / "capture-service.json").read_bytes())
         assert value["launch"] is None and value["first_fault"]["kind"] == "OSError"
+
+
+def test_import_path_setup_is_guarded_by_direct_script_entry() -> None:
+    tree = ast.parse(Path(owned.__file__).read_text(encoding="utf-8"))
+    expected_call = ast.parse("sys.path.insert", mode="eval")
+    expected_guard = ast.parse('__name__ == "__main__"', mode="eval")
+    assert isinstance(expected_call, ast.Expression) and isinstance(expected_guard, ast.Expression)
+    mutations = [node for node in ast.walk(tree) if isinstance(node, ast.Call)
+                 and ast.dump(node.func) == ast.dump(expected_call.body)]
+    assert len(mutations) == 1
+    guards = [node for node in tree.body if isinstance(node, ast.If)
+              and ast.dump(node.test) == ast.dump(expected_guard.body)
+              and mutations[0] in list(ast.walk(node))]
+    assert len(guards) == 1 and not guards[0].orelse
+    assert len(guards[0].body) == 1 and isinstance(guards[0].body[0], ast.Expr)
+    assert guards[0].body[0].value is mutations[0]
+
+
+@pytest.mark.parametrize("kind", ("public-root", "wrong-store"), ids=("public", "store"))
+def test_preintent_rejection_never_writes_or_preflights(
+    tmp_path: Path, preflight_api: list[str], kind: str,
+) -> None:
+    item = spec(tmp_path); clock = Clock(); events: list[str] = []
+    records = Records(tmp_path if kind == "public-root" else tmp_path / "different", events)
+    manager = Manager(records, clock)
+    if kind == "public-root":
+        tmp_path.chmod(0o755)
+    result = run(item, manager, records, clock)
+    assert result["reason"] == "pre_intent_validation_failed"
+    assert result["intent_attempted"] is False and result["intent_acknowledged"] is False
+    assert result["first_fault"] is not None and result["no_retry"] is True
+    assert events == [] and preflight_api == [] and manager.submissions == 0
+    assert not records.records and list(tmp_path.iterdir()) == []
+
+
+@pytest.mark.parametrize("partial", (False, True), ids=("before", "partial"))
+def test_unacknowledged_intent_has_no_followup_io(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, preflight_api: list[str], partial: bool,
+) -> None:
+    item = spec(tmp_path); clock = Clock(); records = Records(tmp_path, [])
+    manager = Manager(records, clock)
+    def failed_intent(name: str, record: dict[str, object]) -> NoReturn:
+        assert name == "capture-intent.json"
+        records.events.append(name)
+        if partial:
+            records.records[name] = record
+        raise OSError("intent write acknowledgement lost")
+    monkeypatch.setattr(records, "write", failed_intent)
+    result = run(item, manager, records, clock)
+    assert result["reason"] == "intent_acknowledgement_unknown"
+    assert result["intent_attempted"] is True and result["intent_acknowledged"] is False
+    assert result["first_fault"] == {"stage": "attempt", "kind": "OSError",
+                                     "detail": "intent write acknowledgement lost"}
+    assert result["no_retry"] is True and result["dispatch_attempted"] is False
+    assert records.events == ["capture-intent.json"] and preflight_api == []
+    assert bool(records.records) is partial and manager.submissions == 0
+    assert list(tmp_path.iterdir()) == []

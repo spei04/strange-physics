@@ -18,9 +18,10 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Protocol
 
-# Fixed source-owned import root; its custody belongs to the protected outer runtime.
-# This does not add checkout/src or accept a path from the supplied plan.
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+# Only the direct script bootstrap needs this fixed source-owned import root.
+# Ordinary imports preserve lookup order; no plan path or checkout/src is added.
+if __name__ == "__main__":
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scripts import d1_bootstrap_control as capture
 from scripts.grid_q1_supervisor import (
@@ -389,7 +390,7 @@ def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
     after_snapshot: Snapshot | None = None
     invocation: str | None = None
     group: str | None = None
-    dispatch = claimed = closed = stopped = terminal_saved = False
+    dispatch = claimed = intent_attempted = closed = stopped = terminal_saved = False
     joined: dict[str, object] | None = None
 
     def fault(stage: str, error: BaseException) -> None:
@@ -443,6 +444,7 @@ def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
                            cpu_watch_ns=120_000_000_000, poll_seconds=4, observations=60,
                            command_seconds=5, term_grace_seconds=2, terminal_seconds=300,
                            service_file_bytes=1024 * 1024)
+        intent_attempted = True
         files.write("capture-intent.json", {"spec": spec.record(), "unit": spec.unit,
                     "started": started, "deadline": deadline, "cpu_baseline": baseline,
                     "no_retry": True, "profile": PROFILE})
@@ -493,9 +495,21 @@ def execute(spec: CaptureSpec, supervisor: Supervisor, files: ReceiptIO,
             raise ValueError("Service cache changed")
         remaining()
     except BaseException as attempt_error:
-        if isinstance(attempt_error, FileExistsError) and not claimed:
-            return {"status": "incomplete", "accepted": False, "reason": "exclusive_intent_exists", "no_retry": True}
         fault("attempt", attempt_error)
+        if not claimed:
+            # No later receipt may use an unvalidated root or uncertain claim.
+            # An intent callback may have partially written before raising.
+            if intent_attempted and isinstance(attempt_error, FileExistsError):
+                reason = "exclusive_intent_exists"
+            elif intent_attempted:
+                reason = "intent_acknowledgement_unknown"
+            else:
+                reason = "pre_intent_validation_failed"
+            return {"status": "incomplete", "accepted": False, "reason": reason,
+                    "intent_attempted": intent_attempted, "intent_acknowledged": False,
+                    "dispatch_attempted": False, "external_ledger_closure_required": True,
+                    "first_fault": None if first is None else asdict(first),
+                    "supplemental": [asdict(item) for item in supplemental], "no_retry": True}
     if dispatch and not closed and plan is not None:
         try:
             bind(supervisor.snapshot(plan, remaining()))
