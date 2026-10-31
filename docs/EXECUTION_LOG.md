@@ -2,8 +2,8 @@
 
 ## Current assignment board
 
-- **Verified:** PRs #138–#146 passed CI; sink #147 is running. Table formatting, lint and 215-file typing passed; local test qualification is incomplete.
-- **Assignments:** Platform verifies #147. Quality reviews closure and codec source; Research prepares codec checks. Lead publishes the table checkpoint.
+- **Verified:** PRs #138–#147 passed CI. Table formatting, lint and 215-file typing passed; local test qualification is incomplete. Codec source passed independent review.
+- **Assignments:** Platform completed sink CI. Research prepares codec checks; Quality reviews their controls. Lead publishes the table checkpoint and prepares its PR.
 - **Open gates:** Raw transcript storage exceeds 16 MiB. Lossless encoding, actual installation, protected inventory, historical evidence, complete material binding, aggregate fit and scientific admission remain pending. Owner appointment and exposure policy remain approved; no D1 batch is running.
 
 ## Approval and execution capacity
