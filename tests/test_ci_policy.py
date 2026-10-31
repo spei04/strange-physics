@@ -253,10 +253,10 @@ def test_workflow_requires_the_reference_partition() -> None:
     pytest_lines = [line.strip() for line in checks.splitlines() if "pytest " in line]
     assert pytest_lines == [
         "- run: uv run --no-sync pytest -p no:cacheprovider "
-        "--ignore=tests/test_laplace_analytic_reference.py"
+        "--ignore=tests/test_laplace_analytic_reference.py --durations=25"
     ]
     assert 'python: ["3.12", "3.14"]' in reference
-    assert "timeout-minutes: 15" in checks and "timeout-minutes: 15" in reference
+    assert "timeout-minutes: 20" in checks and "timeout-minutes: 15" in reference
     assert reference.count(".venv/bin/python -I -B scripts/ci_analytic_reference.py ") == 1
     assert 'PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"' in reference
     assert "needs: [checks, analytic_reference, security]" in gate
