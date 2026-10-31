@@ -33,7 +33,9 @@ def test_inventory_deduplicates_overlapping_roots_and_alias_target(
     venv = tmp_path / "venv"
     put(venv / "lib/value", b"value")
     (venv / "lib64").symlink_to("lib")
-    result = inventory.collect_inventory((venv, venv / "lib"), (), stdlib=tmp_path / "stdlib", venv=venv)
+    result = inventory.collect_inventory(
+        (venv, venv / "lib"), (), stdlib=tmp_path / "stdlib", venv=venv
+    )
     assert len(result["files"]) == 1
     assert len(result["directories"]) == 2
     assert result["links"] == [{"path": str(venv / "lib64"), "uid": os.getuid(), "target": "lib"}]
@@ -71,7 +73,9 @@ def test_inventory_stops_at_cumulative_limits(
     else:
         monkeypatch.setattr(inventory.control, "TOTAL_INPUT_LIMIT", 5)
     with pytest.raises(ValueError):
-        inventory.collect_inventory((tmp_path / "root",), (), stdlib=tmp_path / "stdlib", venv=tmp_path / "venv")
+        inventory.collect_inventory(
+            (tmp_path / "root",), (), stdlib=tmp_path / "stdlib", venv=tmp_path / "venv"
+        )
 
 
 def fixture_installation(
@@ -92,17 +96,27 @@ def fixture_installation(
         "py.typed": b"",
     }
     original = inventory.ci_artifacts
-    monkeypatch.setattr(inventory, "ci_artifacts", SimpleNamespace(
-        MODULES=frozenset(content), MAX_MEMBER_BYTES=original.MAX_MEMBER_BYTES,
-        MAX_ARCHIVE_BYTES=original.MAX_ARCHIVE_BYTES, MAX_MEMBERS=original.MAX_MEMBERS,
-        check_name=original.check_name,
-    ))
+    monkeypatch.setattr(
+        inventory,
+        "ci_artifacts",
+        SimpleNamespace(
+            MODULES=frozenset(content),
+            MAX_MEMBER_BYTES=original.MAX_MEMBER_BYTES,
+            MAX_ARCHIVE_BYTES=original.MAX_ARCHIVE_BYTES,
+            MAX_MEMBERS=original.MAX_MEMBERS,
+            check_name=original.check_name,
+        ),
+    )
     for name, raw in content.items():
         put(root / "src/strange_physics" / name, raw)
         put(package / name, raw)
     put(site / "numpy-2.dist-info/METADATA", b"Name: numpy\nVersion: 2.0\n")
     put(site / "pydantic-2.dist-info/METADATA", b"Name: pydantic\nVersion: 2.0\n")
-    lock, requirements, interpreter = root / "uv.lock", tmp_path / "requirements", tmp_path / "python"
+    lock, requirements, interpreter = (
+        root / "uv.lock",
+        tmp_path / "requirements",
+        tmp_path / "python",
+    )
     put(lock, b"fixed lock")
     put(requirements, b"fixed exact export\n")
     put(interpreter, b"synthetic executable, never executed")
@@ -114,19 +128,28 @@ def fixture_installation(
     provenance = tmp_path / "provenance.json"
     candidate = {
         "schema_version": "strange-physics.release-candidate.v1",
-        "repository": "spei04/strange-physics", "source_commit": "a" * 40,
+        "repository": "spei04/strange-physics",
+        "source_commit": "a" * 40,
         "uv_lock_sha256": hashlib.sha256(lock.read_bytes()).hexdigest(),
         "uv_version": "0.13.4",
         "runtime_requirements_sha256": hashlib.sha256(requirements.read_bytes()).hexdigest(),
         "distribution_files": [
-            {"name": wheel.name, "sha256": hashlib.sha256(wheel.read_bytes()).hexdigest(), "bytes": wheel.stat().st_size},
+            {
+                "name": wheel.name,
+                "sha256": hashlib.sha256(wheel.read_bytes()).hexdigest(),
+                "bytes": wheel.stat().st_size,
+            },
             {"name": "strange_physics-0.1.0a1.tar.gz", "sha256": "b" * 64, "bytes": 1},
         ],
     }
     put(provenance, json.dumps(candidate).encode())
     return {
-        "checkout": root, "site": site, "interpreter_file": interpreter,
-        "python_version": "3.12.3", "source_commit": "a" * 40, "wheel": wheel,
+        "checkout": root,
+        "site": site,
+        "interpreter_file": interpreter,
+        "python_version": "3.12.3",
+        "source_commit": "a" * 40,
+        "wheel": wheel,
         "provenance": provenance,
         "expected_provenance_sha256": hashlib.sha256(provenance.read_bytes()).hexdigest(),
         "requirements": requirements,
@@ -140,29 +163,56 @@ def test_installation_materializes_actual_membership(
     record = inventory.materialize_installation(**args)
     assert {item["path"] for item in record["package_files"]} == set(content)
     assert {item["path"] for item in record["dependency_files"]} == {
-        "numpy-2.dist-info/METADATA", "pydantic-2.dist-info/METADATA",
+        "numpy-2.dist-info/METADATA",
+        "pydantic-2.dist-info/METADATA",
     }
     assert record["source_commit"] == "a" * 40
-    assert record["python_executable_sha256"] == hashlib.sha256(args["interpreter_file"].read_bytes()).hexdigest()
+    assert (
+        record["python_executable_sha256"]
+        == hashlib.sha256(args["interpreter_file"].read_bytes()).hexdigest()
+    )
     # A declaration of the existing evidence kind is not an independent acceptance.
     assert set(record) == {
-        "evidence_kind", "source_commit", "uv_lock_sha256", "lock_path",
-        "archive_path", "archive_sha256", "provenance_path", "provenance_sha256",
-        "python_version", "python_executable_sha256", "engine_fingerprint",
-        "package_files", "dependency_files",
+        "evidence_kind",
+        "source_commit",
+        "uv_lock_sha256",
+        "lock_path",
+        "archive_path",
+        "archive_sha256",
+        "provenance_path",
+        "provenance_sha256",
+        "python_version",
+        "python_executable_sha256",
+        "engine_fingerprint",
+        "package_files",
+        "dependency_files",
     }
 
 
-@pytest.mark.parametrize("fault", ["provenance", "requirements", "source", "installed", "lock", "wheel", "extra_package", "duplicate_metadata"])
+@pytest.mark.parametrize(
+    "fault",
+    [
+        "provenance",
+        "requirements",
+        "source",
+        "installed",
+        "lock",
+        "wheel",
+        "extra_package",
+        "duplicate_metadata",
+    ],
+)
 def test_materialization_rejects_mismatched_actual_bytes(
     tmp_path: Path, owned: None, monkeypatch: pytest.MonkeyPatch, fault: str
 ) -> None:
     args, _ = fixture_installation(tmp_path, monkeypatch)
     paths = {
-        "provenance": args["provenance"], "requirements": args["requirements"],
+        "provenance": args["provenance"],
+        "requirements": args["requirements"],
         "source": args["checkout"] / "src/strange_physics/laws.py",
         "installed": args["site"] / "strange_physics/laws.py",
-        "lock": args["checkout"] / "uv.lock", "wheel": args["wheel"],
+        "lock": args["checkout"] / "uv.lock",
+        "wheel": args["wheel"],
     }
     if fault in paths:
         paths[fault].write_bytes(paths[fault].read_bytes() + b"\n")
@@ -219,11 +269,17 @@ def test_engine_digest_parity_with_existing_implementation(
     record = inventory.materialize_installation(**args)
     registry = LawRegistry()
     for kind in ("spring", "radial", "velocity"):
-        registry.register(kind, lambda parameters: pytest.fail("No law construction"), implementation_id=kind + "-v1")
+        registry.register(
+            kind,
+            lambda parameters: pytest.fail("No law construction"),
+            implementation_id=kind + "-v1",
+        )
     monkeypatch.setattr(serialization, "__version__", "0.1.0a1")
     monkeypatch.setattr(serialization, "platform", SimpleNamespace(python_version=lambda: "3.12.3"))
     monkeypatch.setattr(serialization, "version", lambda name: "2.0")
-    monkeypatch.setattr(serialization, "__file__", str(args["site"] / "strange_physics/serialization.py"))
+    monkeypatch.setattr(
+        serialization, "__file__", str(args["site"] / "strange_physics/serialization.py")
+    )
     assert record["engine_fingerprint"] == serialization.engine_fingerprint(registry)
 
 
@@ -233,7 +289,11 @@ def test_plan_materialization_joins_required_source_and_calls_existing_validator
     from test_d1_bootstrap_control import synthetic_plan
 
     complete = synthetic_plan(tmp_path, monkeypatch)
-    binding = {key: value for key, value in complete.items() if key not in ("files", "directories", "links")}
+    binding = {
+        key: value
+        for key, value in complete.items()
+        if key not in ("files", "directories", "links")
+    }
     selected: list[tuple[Path, ...]] = []
 
     def census(roots: tuple[Path, ...], files: tuple[Path, ...], **kwargs: Any) -> dict[str, Any]:
@@ -242,14 +302,18 @@ def test_plan_materialization_joins_required_source_and_calls_existing_validator
         return {key: complete[key] for key in ("files", "directories", "links")}
 
     monkeypatch.setattr(inventory, "collect_inventory", census)
-    monkeypatch.setattr(inventory, "_bytes", lambda path, limit: inventory.control._read(path, limit, os.getuid()))
+    monkeypatch.setattr(
+        inventory, "_bytes", lambda path, limit: inventory.control._read(path, limit, os.getuid())
+    )
     runtime = Path("/reviewed/native.so")
     observed = inventory.materialize_plan(binding, runtime_files=(runtime,))
     assert observed == complete
     assert runtime in selected[0]
     for source in (
-        "d1_owned_capture.py", "d1_capture_owner.py",
-        "d1_capture_descendant.py", "grid_q1_supervisor.py",
+        "d1_owned_capture.py",
+        "d1_capture_owner.py",
+        "d1_capture_descendant.py",
+        "grid_q1_supervisor.py",
     ):
         assert Path(binding["checkout"]) / "scripts" / source in selected[0]
     # The existing validator, rather than a new trust flag, rejects an invalid join.
@@ -288,7 +352,11 @@ def test_materialization_cannot_omit_missing_fixed_entry_source(
     from test_d1_bootstrap_control import synthetic_plan
 
     complete = synthetic_plan(tmp_path, monkeypatch)
-    binding = {key: value for key, value in complete.items() if key not in ("files", "directories", "links")}
+    binding = {
+        key: value
+        for key, value in complete.items()
+        if key not in ("files", "directories", "links")
+    }
     expected = Path(binding["checkout"]) / "scripts" / missing
 
     def census(roots: tuple[Path, ...], files: tuple[Path, ...], **kwargs: Any) -> dict[str, Any]:
@@ -300,6 +368,8 @@ def test_materialization_cannot_omit_missing_fixed_entry_source(
         return {key: complete[key] for key in ("files", "directories", "links")}
 
     monkeypatch.setattr(inventory, "collect_inventory", census)
-    monkeypatch.setattr(inventory, "_bytes", lambda path, limit: inventory.control._read(path, limit, os.getuid()))
+    monkeypatch.setattr(
+        inventory, "_bytes", lambda path, limit: inventory.control._read(path, limit, os.getuid())
+    )
     with pytest.raises(FileNotFoundError):
         inventory.materialize_plan(binding, runtime_files=(Path("/reviewed/native.so"),))

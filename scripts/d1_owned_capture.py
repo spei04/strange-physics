@@ -235,20 +235,33 @@ def request_record(spec: CaptureSpec, started: float) -> dict[str, object]:
     if type(started) is not float or not math.isfinite(started) or started < 0:
         raise ValueError("Finite original monotonic start required")
     return {
-        "schema": "d1-capture-request-v1", "spec": spec.record(), "unit": spec.unit,
-        "started": started, "deadline": started + TERMINAL_SECONDS,
+        "schema": "d1-capture-request-v1",
+        "spec": spec.record(),
+        "unit": spec.unit,
+        "started": started,
+        "deadline": started + TERMINAL_SECONDS,
     }
 
 
 def fixed_plan(spec: CaptureSpec, started: float) -> CapturePlan:
     return CapturePlan(
-        root=spec.root, admission_sha256=spec.admission_sha256,
-        controller_sha256=spec.adapter_sha256, spec=spec,
+        root=spec.root,
+        admission_sha256=spec.admission_sha256,
+        controller_sha256=spec.adapter_sha256,
+        spec=spec,
         request_sha256=hashlib.sha256(encoded(request_record(spec, started))).hexdigest(),
-        runtime_seconds=240, start_timeout_seconds=5, stop_timeout_seconds=5,
-        cpu_quota_percent=50, quota_period_us=100_000, cpu_watch_ns=120_000_000_000,
-        poll_seconds=4, observations=60, command_seconds=5, term_grace_seconds=2,
-        terminal_seconds=300, service_file_bytes=1024 * 1024,
+        runtime_seconds=240,
+        start_timeout_seconds=5,
+        stop_timeout_seconds=5,
+        cpu_quota_percent=50,
+        quota_period_us=100_000,
+        cpu_watch_ns=120_000_000_000,
+        poll_seconds=4,
+        observations=60,
+        command_seconds=5,
+        term_grace_seconds=2,
+        terminal_seconds=300,
+        service_file_bytes=1024 * 1024,
     )
 
 

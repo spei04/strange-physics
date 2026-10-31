@@ -22,7 +22,15 @@ if __name__ == "__main__":
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scripts import d1_owned_capture as owned
-from scripts.grid_q1_supervisor import CommandFailure, Fault, Snapshot, Supervisor, Systemd, confirms_empty_unit_cleanup, private_bytes
+from scripts.grid_q1_supervisor import (
+    CommandFailure,
+    Fault,
+    Snapshot,
+    Supervisor,
+    Systemd,
+    confirms_empty_unit_cleanup,
+    private_bytes,
+)
 
 
 class Child(Protocol):
@@ -42,11 +50,22 @@ class Controller:
         if script != spec.checkout / "scripts/d1_capture_owner.py":
             raise ValueError("Fixed owner source location differs")
         return subprocess.Popen(
-            [str(spec.interpreter), "-I", "-B", "-X",
-             f"pycache_prefix={spec.root / 'owner-pycache'}", str(script),
-             "controller", str(path), digest],
-            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-            cwd=spec.root, close_fds=True,
+            [
+                str(spec.interpreter),
+                "-I",
+                "-B",
+                "-X",
+                f"pycache_prefix={spec.root / 'owner-pycache'}",
+                str(script),
+                "controller",
+                str(path),
+                digest,
+            ],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            cwd=spec.root,
+            close_fds=True,
             env={**os.environ, "LANG": "C.UTF-8", "LC_ALL": "C.UTF-8"},
         )
 
@@ -65,7 +84,9 @@ def terminal_snapshot(value: object) -> Snapshot:
     if type(value) is not dict or set(value) != {"properties", "populated"}:
         raise ValueError("Exact retained terminal snapshot required")
     properties, populated = value["properties"], value["populated"]
-    if type(properties) is not dict or any(type(k) is not str or type(v) is not str for k, v in properties.items()):
+    if type(properties) is not dict or any(
+        type(k) is not str or type(v) is not str for k, v in properties.items()
+    ):
         raise ValueError("Exact snapshot property strings required")
     if populated is not None and type(populated) is not bool:
         raise ValueError("Exact populated observation required")
@@ -111,7 +132,7 @@ def watch(
         elif len(supplemental) < 16:
             supplemental.append(item)
         if isinstance(error, CommandFailure):
-            supplemental.extend(error.supplemental[:max(0, 16 - len(supplemental))])
+            supplemental.extend(error.supplemental[: max(0, 16 - len(supplemental))])
 
     def remaining(end: float = deadline) -> float:
         value = min(5.0, end - clock())
@@ -140,16 +161,26 @@ def watch(
             raise ValueError("Owner receipt root differs")
         plan = owned.fixed_plan(spec, started)  # Validates root before any write.
         request = {
-            "schema": "d1-capture-owner-v1", "spec": spec.record(), "unit": spec.unit,
-            "started": started, "deadline": deadline, "parent_pid": os.getpid(),
+            "schema": "d1-capture-owner-v1",
+            "spec": spec.record(),
+            "unit": spec.unit,
+            "started": started,
+            "deadline": deadline,
+            "parent_pid": os.getpid(),
         }
         raw = owned.encoded(request)
         if len(raw) > owned.REQUEST_BYTES:
             raise ValueError("Owner request bound")
         digest = hashlib.sha256(raw).hexdigest()
-        files.write("capture-owner-intent.json", {
-            **request, "request_sha256": digest, "baseline": baseline, "no_retry": True,
-        })
+        files.write(
+            "capture-owner-intent.json",
+            {
+                **request,
+                "request_sha256": digest,
+                "baseline": baseline,
+                "no_retry": True,
+            },
+        )
         claimed = True
         (spec.root / "owner-control").mkdir(mode=0o700)
         (spec.root / "owner-pycache").mkdir(mode=0o700)
@@ -203,9 +234,13 @@ def watch(
 
     if not claimed:
         return {
-            "status": "incomplete", "accepted": False, "intent_acknowledged": False,
-            "named_ownership_released": False, "first_fault": None if first is None else asdict(first),
-            "supplemental": [asdict(item) for item in supplemental], "no_retry": True,
+            "status": "incomplete",
+            "accepted": False,
+            "intent_acknowledged": False,
+            "named_ownership_released": False,
+            "first_fault": None if first is None else asdict(first),
+            "supplemental": [asdict(item) for item in supplemental],
+            "no_retry": True,
         }
     assert plan is not None
     # Reconcile the predetermined name even when submission acknowledgement was
@@ -214,7 +249,11 @@ def watch(
         sent_term = sent_kill = False
         for _ in range(8):
             observed = manager.snapshot(plan, remaining())
-            if latest is not None and closed and confirms_empty_unit_cleanup(plan, latest, observed):
+            if (
+                latest is not None
+                and closed
+                and confirms_empty_unit_cleanup(plan, latest, observed)
+            ):
                 stopped = True
                 break
             if observed.properties.get("LoadState") == "not-found":
@@ -239,13 +278,20 @@ def watch(
         fault("owner_reconcile", reconcile_error)
     try:
         remaining()
-        files.write("capture-owner-terminal.json", {
-            "unit": spec.unit, "invocation_id": invocation, "cgroup": group,
-            "snapshot": None if latest is None else asdict(latest), "closed": closed,
-            "child_reaped": child_reaped, "child_code": child_code,
-            "first_fault": None if first is None else asdict(first),
-            "supplemental": [asdict(item) for item in supplemental],
-        })
+        files.write(
+            "capture-owner-terminal.json",
+            {
+                "unit": spec.unit,
+                "invocation_id": invocation,
+                "cgroup": group,
+                "snapshot": None if latest is None else asdict(latest),
+                "closed": closed,
+                "child_reaped": child_reaped,
+                "child_code": child_code,
+                "first_fault": None if first is None else asdict(first),
+                "supplemental": [asdict(item) for item in supplemental],
+            },
+        )
         terminal_saved = True
     except BaseException as terminal_error:
         fault("owner_terminal", terminal_error)
@@ -259,16 +305,27 @@ def watch(
         except BaseException as stop_error:
             fault("owner_stop", stop_error)
     result: dict[str, object] = {
-        "status": "provisional_complete" if successful_child and child_reaped and closed and stopped and first is None else "incomplete",
-        "accepted": False, "unit": spec.unit, "started": started, "deadline": deadline,
-        "child_reaped": child_reaped, "child_code": child_code,
+        "status": "provisional_complete"
+        if successful_child and child_reaped and closed and stopped and first is None
+        else "incomplete",
+        "accepted": False,
+        "unit": spec.unit,
+        "started": started,
+        "deadline": deadline,
+        "child_reaped": child_reaped,
+        "child_code": child_code,
         "controller_descendants_closed": None,
-        "invocation_id": invocation, "cgroup": group, "cgroup_closed": closed,
-        "cleanup_confirmed": stopped, "terminal_saved": terminal_saved,
-        "named_ownership_released": False, "external_ledger_closure_required": True,
+        "invocation_id": invocation,
+        "cgroup": group,
+        "cgroup_closed": closed,
+        "cleanup_confirmed": stopped,
+        "terminal_saved": terminal_saved,
+        "named_ownership_released": False,
+        "external_ledger_closure_required": True,
         "cgroup_cpu_ns": None if latest is None else latest.cpu_ns,
         "first_fault": None if first is None else asdict(first),
-        "supplemental": [asdict(item) for item in supplemental], "no_retry": True,
+        "supplemental": [asdict(item) for item in supplemental],
+        "no_retry": True,
     }
     try:
         remaining()
@@ -283,7 +340,9 @@ def watch(
 
 
 def run_capture(spec: owned.CaptureSpec) -> dict[str, object]:
-    return watch(spec, Controller(), Systemd(spec.root / "owner-control"), owned.CaptureFiles(spec.root))
+    return watch(
+        spec, Controller(), Systemd(spec.root / "owner-control"), owned.CaptureFiles(spec.root)
+    )
 
 
 def controller_entry(path: Path, digest: str) -> int:
@@ -291,22 +350,34 @@ def controller_entry(path: Path, digest: str) -> int:
     if hashlib.sha256(raw).hexdigest() != owned._digest(digest):
         raise ValueError("Owner request bytes differ")
     value = owned.decoded(raw, owned.REQUEST_BYTES)
-    if set(value) != {"schema", "spec", "unit", "started", "deadline", "parent_pid"} or value["schema"] != "d1-capture-owner-v1":
+    if (
+        set(value) != {"schema", "spec", "unit", "started", "deadline", "parent_pid"}
+        or value["schema"] != "d1-capture-owner-v1"
+    ):
         raise ValueError("Exact fixed owner request required")
     spec = owned._spec(value["spec"])
     started, deadline, parent = value["started"], value["deadline"], value["parent_pid"]
     if (
-        type(started) is not float or not math.isfinite(started) or started < 0
-        or type(deadline) is not float or deadline != started + 300.0
-        or type(parent) is not int or parent <= 1 or os.getppid() != parent
-        or value["unit"] != spec.unit or path != spec.root / "capture-owner-request.json"
+        type(started) is not float
+        or not math.isfinite(started)
+        or started < 0
+        or type(deadline) is not float
+        or deadline != started + 300.0
+        or type(parent) is not int
+        or parent <= 1
+        or os.getppid() != parent
+        or value["unit"] != spec.unit
+        or path != spec.root / "capture-owner-request.json"
         or Path(__file__).resolve() != spec.checkout / "scripts/d1_capture_owner.py"
-        or sys.flags.isolated != 1 or sys.flags.dont_write_bytecode != 1
+        or sys.flags.isolated != 1
+        or sys.flags.dont_write_bytecode != 1
         or sys.pycache_prefix != str(spec.root / "owner-pycache")
         or not started <= time.monotonic() < started + owned.WORK_SECONDS
     ):
         raise ValueError("Original owner/source/startup/window binding differs")
-    result = owned.execute(spec, Systemd(spec.control_root), owned.CaptureFiles(spec.root), original_start=started)
+    result = owned.execute(
+        spec, Systemd(spec.control_root), owned.CaptureFiles(spec.root), original_start=started
+    )
     return 0 if result.get("status") == "provisional_complete" else 1
 
 

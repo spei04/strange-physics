@@ -886,7 +886,8 @@ def test_loaded_linux_source_aliases_require_exact_identity(
         )
     else:
         origin, literal, target, digest = (
-            stdlib / (name + ".py"), "_sysconfigdata__x86_64-linux-gnu.py",
+            stdlib / (name + ".py"),
+            "_sysconfigdata__x86_64-linux-gnu.py",
             stdlib / "_sysconfigdata__x86_64-linux-gnu.py",
             "ee5bb5493fa4575f7788e1b0e8a067b9c463f9705dcb36f5eb571d1c0812ea82",
         )
@@ -895,9 +896,12 @@ def test_loaded_linux_source_aliases_require_exact_identity(
     module.__spec__ = importlib.machinery.ModuleSpec(name, loader, origin=str(origin))
     module.__file__ = str(origin)
     plan: dict[str, Any] = {
-        "stdlib": str(stdlib), "checkout": "/protected/checkout",
-        "site_packages": "/protected/site", "import_map": {},
-        "builtin_modules": [], "frozen_modules": [],
+        "stdlib": str(stdlib),
+        "checkout": "/protected/checkout",
+        "site_packages": "/protected/site",
+        "import_map": {},
+        "builtin_modules": [],
+        "frozen_modules": [],
         "links": [{"path": str(origin), "target": literal, "uid": 0}],
         "files": [{"path": str(target), "sha256": digest, "uid": 0}],
     }

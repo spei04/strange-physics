@@ -18,7 +18,15 @@ if __name__ == "__main__":
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scripts import d1_owned_capture as owned
-from scripts.grid_q1_supervisor import CommandFailure, Fault, Plan, Snapshot, Supervisor, confirms_empty_unit_cleanup, private_bytes
+from scripts.grid_q1_supervisor import (
+    CommandFailure,
+    Fault,
+    Plan,
+    Snapshot,
+    Supervisor,
+    confirms_empty_unit_cleanup,
+    private_bytes,
+)
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -39,12 +47,22 @@ class DescendantPlan(Plan):
 
     @property
     def unit(self) -> str:
-        return "d1-descendant-" + hashlib.sha256(f"{self.root}:{self.admission_sha256}".encode()).hexdigest()[:24] + ".service"
+        return (
+            "d1-descendant-"
+            + hashlib.sha256(f"{self.root}:{self.admission_sha256}".encode()).hexdigest()[:24]
+            + ".service"
+        )
 
     @property
     def request(self) -> bytes:
-        return owned.encoded({"schema": "d1-descendant-request-v1", "unit": self.unit,
-                              "token": self.token, "deadline": self.started + 30.0})
+        return owned.encoded(
+            {
+                "schema": "d1-descendant-request-v1",
+                "unit": self.unit,
+                "token": self.token,
+                "deadline": self.started + 30.0,
+            }
+        )
 
     @property
     def request_sha256(self) -> str:
@@ -52,8 +70,15 @@ class DescendantPlan(Plan):
 
     @property
     def argv(self) -> list[str]:
-        return [str(self.interpreter), "-I", "-B", str(Path(__file__).resolve()),
-                "worker", str(self.root / "descendant-request.json"), self.request_sha256]
+        return [
+            str(self.interpreter),
+            "-I",
+            "-B",
+            str(Path(__file__).resolve()),
+            "worker",
+            str(self.root / "descendant-request.json"),
+            self.request_sha256,
+        ]
 
 
 class Handshake(Protocol):
@@ -91,7 +116,11 @@ class PipeHandshake:
         supplemental: list[Fault] = []
         try:
             info = os.fstat(fd)
-            if not stat.S_ISFIFO(info.st_mode) or info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) != 0o600:
+            if (
+                not stat.S_ISFIFO(info.st_mode)
+                or info.st_uid != os.getuid()
+                or stat.S_IMODE(info.st_mode) != 0o600
+            ):
                 raise ValueError("Owned private FIFO required")
             raw = (owned._digest(token) + "\n").encode("ascii")
             if os.write(fd, raw) != len(raw):
@@ -112,7 +141,10 @@ class PipeHandshake:
 
 
 def watch_descendant(
-    plan: DescendantPlan, manager: Supervisor, files: owned.ReceiptIO, handshake: Handshake,
+    plan: DescendantPlan,
+    manager: Supervisor,
+    files: owned.ReceiptIO,
+    handshake: Handshake,
     clock: Callable[[], float] = time.monotonic,
     pause: Callable[[float], None] = time.sleep,
 ) -> dict[str, object]:
@@ -146,7 +178,7 @@ def watch_descendant(
         elif len(supplemental) < 8:
             supplemental.append(value)
         if isinstance(error, CommandFailure):
-            supplemental.extend(error.supplemental[:max(0, 8 - len(supplemental))])
+            supplemental.extend(error.supplemental[: max(0, 8 - len(supplemental))])
 
     def bind(value: Snapshot) -> None:
         nonlocal invocation, group, latest, closed
@@ -166,7 +198,16 @@ def watch_descendant(
         owned._digest(token)
         if files.root != plan.root:
             raise ValueError("Benign receipt root differs")
-        files.write("descendant-intent.json", {"unit": plan.unit, "started": started, "deadline": deadline, "request_sha256": plan.request_sha256, "no_retry": True})
+        files.write(
+            "descendant-intent.json",
+            {
+                "unit": plan.unit,
+                "started": started,
+                "deadline": deadline,
+                "request_sha256": plan.request_sha256,
+                "no_retry": True,
+            },
+        )
         claimed = True
         if not started <= clock() < started + 30.0:
             raise TimeoutError("Benign preparation missed original worker window")
@@ -179,22 +220,45 @@ def watch_descendant(
             bind(manager.snapshot(plan, remaining()))
             assert latest is not None
             leader_exit = latest.properties.get("ExecMainExitTimestampMonotonic", "0")
-            if not released and leader_exit.isdecimal() and int(leader_exit) > 0 and latest.populated is True:
-                if latest.properties.get("ExecMainCode") != "1" or latest.properties.get("ExecMainStatus") != "0":
+            if (
+                not released
+                and leader_exit.isdecimal()
+                and int(leader_exit) > 0
+                and latest.populated is True
+            ):
+                if (
+                    latest.properties.get("ExecMainCode") != "1"
+                    or latest.properties.get("ExecMainStatus") != "0"
+                ):
                     raise ValueError("Benign leader did not exit successfully")
                 ready = handshake.ready()
-                if ready != {"schema": "d1-descendant-ready-v1", "unit": plan.unit, "invocation_id": invocation, "cgroup": group, "token": token}:
+                if ready != {
+                    "schema": "d1-descendant-ready-v1",
+                    "unit": plan.unit,
+                    "invocation_id": invocation,
+                    "cgroup": group,
+                    "token": token,
+                }:
                     raise ValueError("Ready bytes do not bind the observed populated group")
-                files.write("descendant-populated.json", {"snapshot": asdict(latest), "ready": ready})
+                files.write(
+                    "descendant-populated.json", {"snapshot": asdict(latest), "ready": ready}
+                )
                 witnessed = True
                 handshake.release(token)
                 released = True
             if closed:
                 if not witnessed or not released:
                     raise ValueError("Empty/leader-only fixture cannot qualify descendants")
-                if handshake.done() != {"schema": "d1-descendant-done-v1", "unit": plan.unit,
-                    "invocation_id": invocation, "cgroup": group, "token": token,
-                    "exit_code": 0, "first_fault": None, "supplemental": []}:
+                if handshake.done() != {
+                    "schema": "d1-descendant-done-v1",
+                    "unit": plan.unit,
+                    "invocation_id": invocation,
+                    "cgroup": group,
+                    "token": token,
+                    "exit_code": 0,
+                    "first_fault": None,
+                    "supplemental": [],
+                }:
                     raise ValueError("Descendant completion/close acknowledgement differs")
                 break
             pause(min(1.0, remaining()))
@@ -203,7 +267,11 @@ def watch_descendant(
     except BaseException as operation_error:
         fault("benign", operation_error)
     if not claimed:
-        return {"status": "incomplete", "first_fault": None if first is None else asdict(first), "no_retry": True}
+        return {
+            "status": "incomplete",
+            "first_fault": None if first is None else asdict(first),
+            "no_retry": True,
+        }
     if submitted and not closed:
         try:
             bind(manager.snapshot(plan, remaining()))
@@ -220,7 +288,15 @@ def watch_descendant(
     terminal_saved = False
     try:
         remaining()
-        files.write("descendant-terminal.json", {"unit": plan.unit, "snapshot": None if latest is None else asdict(latest), "closed": closed, "first_fault": None if first is None else asdict(first)})
+        files.write(
+            "descendant-terminal.json",
+            {
+                "unit": plan.unit,
+                "snapshot": None if latest is None else asdict(latest),
+                "closed": closed,
+                "first_fault": None if first is None else asdict(first),
+            },
+        )
         terminal_saved = True
     except BaseException as receipt_error:
         fault("benign_terminal", receipt_error)
@@ -233,11 +309,17 @@ def watch_descendant(
         except BaseException as stop_error:
             fault("benign_stop", stop_error)
     result: dict[str, object] = {
-        "status": "provisional_complete" if first is None and witnessed and released and closed and stopped else "incomplete",
-        "accepted": False, "witnessed_populated_after_leader_exit": witnessed,
-        "release_acknowledged": released, "cgroup_closed": closed, "cleanup_confirmed": stopped,
+        "status": "provisional_complete"
+        if first is None and witnessed and released and closed and stopped
+        else "incomplete",
+        "accepted": False,
+        "witnessed_populated_after_leader_exit": witnessed,
+        "release_acknowledged": released,
+        "cgroup_closed": closed,
+        "cleanup_confirmed": stopped,
         "first_fault": None if first is None else asdict(first),
-        "supplemental": [asdict(value) for value in supplemental], "no_retry": True,
+        "supplemental": [asdict(value) for value in supplemental],
+        "no_retry": True,
     }
     try:
         remaining()
@@ -254,16 +336,27 @@ def worker(path: Path, digest: str) -> int:
     if hashlib.sha256(raw).hexdigest() != owned._digest(digest):
         raise ValueError("Benign request bytes differ")
     request = owned.decoded(raw, 4096)
-    if set(request) != {"schema", "unit", "token", "deadline"} or request["schema"] != "d1-descendant-request-v1":
+    if (
+        set(request) != {"schema", "unit", "token", "deadline"}
+        or request["schema"] != "d1-descendant-request-v1"
+    ):
         raise ValueError("Exact benign request required")
     unit, token, deadline = request["unit"], request["token"], request["deadline"]
-    if type(unit) is not str or not unit.startswith("d1-descendant-") or not unit.endswith(".service"):
+    if (
+        type(unit) is not str
+        or not unit.startswith("d1-descendant-")
+        or not unit.endswith(".service")
+    ):
         raise ValueError("Fixed benign unit name required")
-    owned._digest(unit[len("d1-descendant-"):-len(".service")], 24)
+    owned._digest(unit[len("d1-descendant-") : -len(".service")], 24)
     token = owned._digest(token)
     if type(deadline) is not float or not 0 < deadline - time.monotonic() <= 30.0:
         raise ValueError("Finite original benign child deadline required")
-    if path.name != "descendant-request.json" or sys.flags.isolated != 1 or sys.flags.dont_write_bytecode != 1:
+    if (
+        path.name != "descendant-request.json"
+        or sys.flags.isolated != 1
+        or sys.flags.dont_write_bytecode != 1
+    ):
         raise ValueError("Fixed isolated benign worker required")
     invocation, group = owned.service_identity(unit)
     ready_r, ready_w = os.pipe()
@@ -301,7 +394,9 @@ def worker(path: Path, digest: str) -> int:
         close_once(ready_w)
         try:
             if primary is None:
-                readable, _, _ = select.select([ready_r], [], [], min(5.0, max(0.0, deadline - time.monotonic())))
+                readable, _, _ = select.select(
+                    [ready_r], [], [], min(5.0, max(0.0, deadline - time.monotonic()))
+                )
                 if not readable or os.read(ready_r, 2) != b"R":
                     raise TimeoutError("Descendant did not acknowledge readiness")
         except BaseException as ready_error:
@@ -318,12 +413,26 @@ def worker(path: Path, digest: str) -> int:
     code = 1
     try:
         if primary is None:
-            release_fd = os.open(path.parent / "release.fifo", os.O_RDWR | os.O_NONBLOCK | os.O_NOFOLLOW)
+            release_fd = os.open(
+                path.parent / "release.fifo", os.O_RDWR | os.O_NONBLOCK | os.O_NOFOLLOW
+            )
             descriptors.add(release_fd)
             info = os.fstat(release_fd)
-            if not stat.S_ISFIFO(info.st_mode) or info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) != 0o600:
+            if (
+                not stat.S_ISFIFO(info.st_mode)
+                or info.st_uid != os.getuid()
+                or stat.S_IMODE(info.st_mode) != 0o600
+            ):
                 raise ValueError("Owned private release FIFO required")
-            body = owned.encoded({"schema": "d1-descendant-ready-v1", "unit": unit, "invocation_id": invocation, "cgroup": group, "token": token})
+            body = owned.encoded(
+                {
+                    "schema": "d1-descendant-ready-v1",
+                    "unit": unit,
+                    "invocation_id": invocation,
+                    "cgroup": group,
+                    "token": token,
+                }
+            )
             owned.write_request(path.parent / "descendant-ready.json", body)
             if os.write(ready_w, b"R") != 1:
                 raise OSError("Ready handoff failed")
@@ -348,10 +457,18 @@ def worker(path: Path, digest: str) -> int:
             close_once(descriptor)
         if primary is not None:
             code = 1
-        done = {"schema": "d1-descendant-done-v1", "unit": unit,
-                "invocation_id": invocation, "cgroup": group, "token": token,
-                "exit_code": code, "first_fault": None if primary is None else asdict(Fault.capture(primary_phase, primary)),
-                "supplemental": [asdict(item) for item in supplemental]}
+        done = {
+            "schema": "d1-descendant-done-v1",
+            "unit": unit,
+            "invocation_id": invocation,
+            "cgroup": group,
+            "token": token,
+            "exit_code": code,
+            "first_fault": None
+            if primary is None
+            else asdict(Fault.capture(primary_phase, primary)),
+            "supplemental": [asdict(item) for item in supplemental],
+        }
         try:
             owned.write_request(path.parent / "descendant-done.json", owned.encoded(done))
         except BaseException:

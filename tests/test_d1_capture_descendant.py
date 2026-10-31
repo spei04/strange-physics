@@ -11,11 +11,11 @@ from types import SimpleNamespace
 from typing import NoReturn
 
 import pytest
+from test_d1_owned_capture import INVOCATION, MISSING, Clock, Manager, Records, state
 
 from scripts import d1_capture_descendant as benign
 from scripts import d1_owned_capture as owned
 from scripts.grid_q1_supervisor import CommandFailure, Fault, Plan, Systemd
-from test_d1_owned_capture import INVOCATION, MISSING, Clock, Manager, Records, state
 
 
 class Exit(BaseException):
@@ -38,14 +38,25 @@ class FakeHandshake:
 
     def ready(self) -> dict[str, object]:
         assert self.prepared
-        return {"schema": "d1-descendant-ready-v1", "unit": self.plan.unit,
-                "invocation_id": INVOCATION, "cgroup": "/user.slice/" + self.plan.unit,
-                "token": "f" * 64 if self.bad_ready else self.plan.token}
+        return {
+            "schema": "d1-descendant-ready-v1",
+            "unit": self.plan.unit,
+            "invocation_id": INVOCATION,
+            "cgroup": "/user.slice/" + self.plan.unit,
+            "token": "f" * 64 if self.bad_ready else self.plan.token,
+        }
 
     def done(self) -> dict[str, object]:
-        return {"schema": "d1-descendant-done-v1", "unit": self.plan.unit,
-                "invocation_id": INVOCATION, "cgroup": "/user.slice/" + self.plan.unit,
-                "token": self.plan.token, "exit_code": 0, "first_fault": None, "supplemental": []}
+        return {
+            "schema": "d1-descendant-done-v1",
+            "unit": self.plan.unit,
+            "invocation_id": INVOCATION,
+            "cgroup": "/user.slice/" + self.plan.unit,
+            "token": self.plan.token,
+            "exit_code": 0,
+            "first_fault": None,
+            "supplemental": [],
+        }
 
     def release(self, token: str) -> None:
         assert token == self.plan.token and "descendant-populated.json" in self.records.records
@@ -61,7 +72,9 @@ class FakeManager(Manager):
         assert self.submissions == 1
         self.events.append("submit")
         if not self.queue:
-            self.queue.extend([state(plan, "exited", populated=True), state(plan, "exited", cpu=200)])
+            self.queue.extend(
+                [state(plan, "exited", populated=True), state(plan, "exited", cpu=200)]
+            )
 
     def stop(self, plan: Plan, invocation: str, timeout: float) -> None:
         assert invocation == INVOCATION and "descendant-terminal.json" in self.records.records
@@ -72,28 +85,50 @@ class FakeManager(Manager):
 def plan(root: Path) -> benign.DescendantPlan:
     root.chmod(0o700)
     return benign.DescendantPlan(
-        root=root, admission_sha256="a" * 64, controller_sha256="b" * 64,
-        interpreter=Path("/synthetic/python"), token="c" * 64, started=100.0,
-        runtime_seconds=240, start_timeout_seconds=5, stop_timeout_seconds=5,
-        cpu_quota_percent=50, quota_period_us=100_000, cpu_watch_ns=120_000_000_000,
-        poll_seconds=4, observations=60, command_seconds=5, term_grace_seconds=2,
-        terminal_seconds=300, service_file_bytes=1024 * 1024,
+        root=root,
+        admission_sha256="a" * 64,
+        controller_sha256="b" * 64,
+        interpreter=Path("/synthetic/python"),
+        token="c" * 64,
+        started=100.0,
+        runtime_seconds=240,
+        start_timeout_seconds=5,
+        stop_timeout_seconds=5,
+        cpu_quota_percent=50,
+        quota_period_us=100_000,
+        cpu_watch_ns=120_000_000_000,
+        poll_seconds=4,
+        observations=60,
+        command_seconds=5,
+        term_grace_seconds=2,
+        terminal_seconds=300,
+        service_file_bytes=1024 * 1024,
     )
 
 
 @pytest.fixture(autouse=True)
-def no_live_operations(monkeypatch: pytest.MonkeyPatch) -> Callable[[benign.PipeHandshake, str], None]:
+def no_live_operations(
+    monkeypatch: pytest.MonkeyPatch,
+) -> Callable[[benign.PipeHandshake, str], None]:
     original_release = benign.PipeHandshake.release
+
     def denied(*args: object, **kwargs: object) -> NoReturn:
         raise AssertionError("Live manager/pipe operation forbidden")
+
     monkeypatch.setattr(Systemd, "command", denied)
     monkeypatch.setattr(benign.PipeHandshake, "prepare", denied)
     monkeypatch.setattr(benign.PipeHandshake, "release", denied)
     return original_release
 
 
-@pytest.mark.parametrize("kind", ("pass", "leader-only", "wrong-ready", "lost-release", "terminal-failed", "late"), ids=("pass", "leader-only", "wrong-ready", "lost-release", "receipt", "late"))
-def test_benign_witness_requires_live_descendant_and_bound_release(tmp_path: Path, kind: str) -> None:
+@pytest.mark.parametrize(
+    "kind",
+    ("pass", "leader-only", "wrong-ready", "lost-release", "terminal-failed", "late"),
+    ids=("pass", "leader-only", "wrong-ready", "lost-release", "receipt", "late"),
+)
+def test_benign_witness_requires_live_descendant_and_bound_release(
+    tmp_path: Path, kind: str
+) -> None:
     item = plan(tmp_path)
     clock = Clock()
     records = Records(tmp_path, [])
@@ -117,7 +152,11 @@ def test_benign_witness_requires_live_descendant_and_bound_release(tmp_path: Pat
     if kind == "pass":
         assert result["witnessed_populated_after_leader_exit"] is True
         assert result["release_acknowledged"] is True and result["cleanup_confirmed"] is True
-        assert records.events.index("descendant-populated.json") < records.events.index("descendant-terminal.json") < records.events.index("stop")
+        assert (
+            records.events.index("descendant-populated.json")
+            < records.events.index("descendant-terminal.json")
+            < records.events.index("stop")
+        )
     if kind in ("leader-only", "wrong-ready", "late"):
         assert not handshake.released
     if kind == "terminal-failed":
@@ -125,8 +164,38 @@ def test_benign_witness_requires_live_descendant_and_bound_release(tmp_path: Pat
     assert manager.submissions == (0 if kind == "late" else 1)
 
 
-@pytest.mark.parametrize("kind", ("leader", "child", "timeout", "bad-token", "fork-failed", "close-failed", "parent-close", "child-ready-close", "read-close", "late-buffered", "late-read"), ids=("leader", "child", "timeout", "bad-token", "fork", "close", "parent-close", "ready-close", "read-close", "late-buffered", "late-read"))
-def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+@pytest.mark.parametrize(
+    "kind",
+    (
+        "leader",
+        "child",
+        "timeout",
+        "bad-token",
+        "fork-failed",
+        "close-failed",
+        "parent-close",
+        "child-ready-close",
+        "read-close",
+        "late-buffered",
+        "late-read",
+    ),
+    ids=(
+        "leader",
+        "child",
+        "timeout",
+        "bad-token",
+        "fork",
+        "close",
+        "parent-close",
+        "ready-close",
+        "read-close",
+        "late-buffered",
+        "late-read",
+    ),
+)
+def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
     item = plan(tmp_path)
     path = tmp_path / "descendant-request.json"
     path.write_bytes(item.request)
@@ -146,7 +215,11 @@ def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path
         events.append(("close", fd))
         if kind == "late-buffered" and fd == 11:
             clock.value = 130.0
-        if (kind == "close-failed" and fd == 20) or (kind in ("parent-close", "child-ready-close") and fd == 11) or (kind == "read-close" and fd == 10):
+        if (
+            (kind == "close-failed" and fd == 20)
+            or (kind in ("parent-close", "child-ready-close") and fd == 11)
+            or (kind == "read-close" and fd == 10)
+        ):
             raise late_close_error
 
     def read(fd: int, size: int) -> bytes:
@@ -168,12 +241,23 @@ def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path
         raise Exit(code)
 
     fake_os = SimpleNamespace(
-        pipe=lambda: (10, 11), fork=fork, close=close, read=read, write=write,
-        open=lambda *args: 20, getuid=os.getuid,
+        pipe=lambda: (10, 11),
+        fork=fork,
+        close=close,
+        read=read,
+        write=write,
+        open=lambda *args: 20,
+        getuid=os.getuid,
         fstat=lambda fd: SimpleNamespace(st_mode=stat.S_IFIFO | 0o600, st_uid=os.getuid()),
-        O_RDWR=os.O_RDWR, O_NONBLOCK=os.O_NONBLOCK, O_NOFOLLOW=os.O_NOFOLLOW, _exit=exit_child,
+        O_RDWR=os.O_RDWR,
+        O_NONBLOCK=os.O_NONBLOCK,
+        O_NOFOLLOW=os.O_NOFOLLOW,
+        _exit=exit_child,
     )
-    def selected(readers: list[int], writers: list[int], errors: list[int], timeout: float) -> tuple[list[int], list[int], list[int]]:
+
+    def selected(
+        readers: list[int], writers: list[int], errors: list[int], timeout: float
+    ) -> tuple[list[int], list[int], list[int]]:
         events.append(("select", tuple(readers)))
         assert 0 <= timeout <= 30
         return ([] if kind == "timeout" else readers), [], []
@@ -182,7 +266,9 @@ def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path
         scoped.setattr(benign, "os", fake_os)
         scoped.setattr(benign, "select", SimpleNamespace(select=selected))
         scoped.setattr(benign, "time", SimpleNamespace(monotonic=clock.now))
-        scoped.setattr(benign, "sys", SimpleNamespace(flags=SimpleNamespace(isolated=1, dont_write_bytecode=1)))
+        scoped.setattr(
+            benign, "sys", SimpleNamespace(flags=SimpleNamespace(isolated=1, dont_write_bytecode=1))
+        )
         scoped.setattr(owned, "service_identity", lambda unit: (INVOCATION, "/user.slice/" + unit))
         if kind == "leader":
             assert benign.worker(path, item.request_sha256) == 0
@@ -198,7 +284,9 @@ def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path
             with pytest.raises(CommandFailure) as raised_pair:
                 benign.worker(path, item.request_sha256)
             assert raised_pair.value.primary is read_error
-            assert raised_pair.value.supplemental == (Fault.capture("worker_close", late_close_error),)
+            assert raised_pair.value.supplemental == (
+                Fault.capture("worker_close", late_close_error),
+            )
             assert events.count(("close", 10)) == events.count(("close", 11)) == 1
         elif kind == "fork-failed":
             with pytest.raises(OSError, match="fork refusal"):
@@ -220,18 +308,30 @@ def test_fixed_worker_fake_descriptors_preserve_order_and_owned_cleanup(tmp_path
             done = owned.decoded((tmp_path / "descendant-done.json").read_bytes(), 4096)
             assert done["exit_code"] == raised.value.code
             if kind in ("late-buffered", "late-read"):
-                expected_detail = "Original descendant deadline " + ("before release wait" if kind == "late-buffered" else "after release read")
-                assert done["first_fault"] == {"stage": "descendant", "kind": "TimeoutError", "detail": expected_detail}
+                expected_detail = "Original descendant deadline " + (
+                    "before release wait" if kind == "late-buffered" else "after release read"
+                )
+                assert done["first_fault"] == {
+                    "stage": "descendant",
+                    "kind": "TimeoutError",
+                    "detail": expected_detail,
+                }
                 assert done["supplemental"] == []
                 assert events.count(("close", 20)) == 1
                 assert (("read", 20) in events) is (kind == "late-read")
             if kind in ("close-failed", "child-ready-close"):
-                assert done["first_fault"] == {"stage": "worker_close", "kind": "PermissionError", "detail": str(late_close_error)}
+                assert done["first_fault"] == {
+                    "stage": "worker_close",
+                    "kind": "PermissionError",
+                    "detail": str(late_close_error),
+                }
                 assert done["supplemental"] == []
     assert os.close is not close
 
 
-def test_benign_command_failure_preserves_primary_and_close_facts(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_benign_command_failure_preserves_primary_and_close_facts(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     item = plan(tmp_path)
     clock = Clock()
     records = Records(tmp_path, [])
@@ -248,13 +348,16 @@ def test_benign_command_failure_preserves_primary_and_close_facts(tmp_path: Path
     monkeypatch.setattr(manager, "submit", submit)
     result = benign.watch_descendant(item, manager, records, handshake, clock.now, clock.sleep)
     assert result["first_fault"] == {"stage": "benign", "kind": "OSError", "detail": str(first)}
-    assert result["supplemental"] == [{"stage": "log_close", "kind": "PermissionError", "detail": "synthetic close failure"}]
+    assert result["supplemental"] == [
+        {"stage": "log_close", "kind": "PermissionError", "detail": "synthetic close failure"}
+    ]
     assert result["status"] == "incomplete" and manager.submissions == 1
     assert result["cleanup_confirmed"] is True and not handshake.released
 
 
 def test_release_write_and_close_failures_preserve_order_without_retry(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
     no_live_operations: Callable[[benign.PipeHandshake, str], None],
 ) -> None:
     write_error = OSError("synthetic FIFO write acknowledgement lost")
@@ -272,9 +375,14 @@ def test_release_write_and_close_failures_preserve_order_without_retry(
         raise close_error
 
     fake_os = SimpleNamespace(
-        open=lambda *args: 20, write=write, close=close, getuid=os.getuid,
+        open=lambda *args: 20,
+        write=write,
+        close=close,
+        getuid=os.getuid,
         fstat=lambda fd: SimpleNamespace(st_mode=stat.S_IFIFO | 0o600, st_uid=os.getuid()),
-        O_WRONLY=os.O_WRONLY, O_NONBLOCK=os.O_NONBLOCK, O_NOFOLLOW=os.O_NOFOLLOW,
+        O_WRONLY=os.O_WRONLY,
+        O_NONBLOCK=os.O_NONBLOCK,
+        O_NOFOLLOW=os.O_NOFOLLOW,
     )
     with monkeypatch.context() as scoped:
         scoped.setattr(benign, "os", fake_os)

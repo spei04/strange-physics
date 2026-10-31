@@ -393,7 +393,9 @@ def _check_loaded(plan: dict[str, Any]) -> None:
             raise BootstrapError("Unmapped module has no import specification")
         origin = spec.origin
         if name in ("sitecustomize", "_sysconfigdata__linux_x86_64-linux-gnu"):
-            if type(module) is not ModuleType or not _runtime_alias_origin(name, module, plan, files):
+            if type(module) is not ModuleType or not _runtime_alias_origin(
+                name, module, plan, files
+            ):
                 raise BootstrapError("Reviewed runtime source alias identity differs")
         if origin == "built-in":
             if name not in builtin:
@@ -402,8 +404,12 @@ def _check_loaded(plan: dict[str, Any]) -> None:
             if name not in frozen:
                 raise BootstrapError("Unlisted frozen module")
         elif origin not in files:
-            if type(module) is not ModuleType or not _runtime_alias_origin(name, module, plan, files):
-                raise BootstrapError("Loaded module origin is outside the protected runtime inventory")
+            if type(module) is not ModuleType or not _runtime_alias_origin(
+                name, module, plan, files
+            ):
+                raise BootstrapError(
+                    "Loaded module origin is outside the protected runtime inventory"
+                )
         if isinstance(origin, str):
             source_roots = (
                 Path(plan["checkout"]) / "tests",

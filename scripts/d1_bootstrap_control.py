@@ -216,17 +216,25 @@ def runtime_aliases(paths: dict[str, Path]) -> dict[Path, tuple[str, Path, str, 
     return {
         venv / "lib64": ("lib", venv / "lib", "directory", None, os.getuid()),
         stdlib / "_sysconfigdata__linux_x86_64-linux-gnu.py": (
-            config.name, config, "file", SYSCONFIG_SHA256, 0
+            config.name,
+            config,
+            "file",
+            SYSCONFIG_SHA256,
+            0,
         ),
         Path("/usr/lib/python3.12/config-3.12-x86_64-linux-gnu/libpython3.12.so"): (
             "../../x86_64-linux-gnu/libpython3.12.so.1",
             Path("/usr/lib/x86_64-linux-gnu/libpython3.12.so.1"),
-            "link", None, 0,
+            "link",
+            None,
+            0,
         ),
         Path("/usr/lib/x86_64-linux-gnu/libpython3.12.so.1"): (
             "libpython3.12.so.1.0",
             Path("/usr/lib/x86_64-linux-gnu/libpython3.12.so.1.0"),
-            "file", None, 0,
+            "file",
+            None,
+            0,
         ),
         stdlib / "sitecustomize.py": (
             "/etc/python3.12/sitecustomize.py",
@@ -250,7 +258,10 @@ def _absent(path: Path) -> None:
         raise PreflightError("Startup path is present, including a dangling link")
     after = path.parent.lstat()
     if (before.st_dev, before.st_ino, before.st_uid, before.st_mode) != (
-        after.st_dev, after.st_ino, after.st_uid, after.st_mode
+        after.st_dev,
+        after.st_ino,
+        after.st_uid,
+        after.st_mode,
     ):
         raise PreflightError("Startup absence parent changed")
 
@@ -273,7 +284,8 @@ def _startup_hooks(
         for name in item["entries"]
     }
     customization = {
-        path for path in candidates
+        path
+        for path in candidates
         if path.name in ("sitecustomize", "usercustomize")
         or path.name.startswith(("sitecustomize.", "usercustomize."))
     }
@@ -291,10 +303,9 @@ def _startup_hooks(
         ):
             raise PreflightError("Unreviewed startup customization")
         # The reviewed hook is inert only when its optional import is unavailable.
-        if (
-            any(path.name.startswith("apport_python_hook") for path in candidates)
-            or any(name == "apport_python_hook" or name.startswith("apport_python_hook.")
-                   for name in plan.get("builtin_modules", []) + plan.get("frozen_modules", []))
+        if any(path.name.startswith("apport_python_hook") for path in candidates) or any(
+            name == "apport_python_hook" or name.startswith("apport_python_hook.")
+            for name in plan.get("builtin_modules", []) + plan.get("frozen_modules", [])
         ):
             raise PreflightError("Unreviewed apport startup dependency")
         expected.update((str(hook), str(target)))
@@ -443,7 +454,9 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
             raise PreflightError("Invalid interpreter link")
         path = _path(item["path"])
         if path not in allowed_links | aliases.keys() or path in inventory:
-            raise PreflightError("Only explicit interpreter and reviewed runtime links are permitted")
+            raise PreflightError(
+                "Only explicit interpreter and reviewed runtime links are permitted"
+            )
         _ancestors(path)
         info = path.lstat()
         if (
@@ -496,8 +509,7 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
     for name in plan["startup_hook_files"]:
         hook = _path(name)
         if inventory.get(hook) != "file" and not (
-            inventory.get(hook) == "link"
-            and hook == paths["stdlib"] / "sitecustomize.py"
+            inventory.get(hook) == "link" and hook == paths["stdlib"] / "sitecustomize.py"
         ):
             raise PreflightError("Reviewed startup hook source is missing")
     for name in plan["absent_startup_paths"]:

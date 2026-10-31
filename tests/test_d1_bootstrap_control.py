@@ -495,6 +495,7 @@ def test_absence_rejects_every_existing_entry(
 
 def test_absence_does_not_hide_permission_errors(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(control, "_ancestors", lambda path: None)
+
     class DeniedPath(Path):
         def lstat(self) -> os.stat_result:
             if self.name == "python312.zip":
@@ -513,7 +514,9 @@ def test_closed_venv_lib64_alias(
     alias = Path(plan["venv_root"]) / "lib64"
     alias.symlink_to(literal)
     plan["links"].append({"path": str(alias), "uid": os.getuid(), "target": literal})
-    next(d for d in plan["directories"] if d["path"] == plan["venv_root"])["entries"].append("lib64")
+    next(d for d in plan["directories"] if d["path"] == plan["venv_root"])["entries"].append(
+        "lib64"
+    )
     if literal == "lib":
         control.validate_plan(plan)
     else:
@@ -521,7 +524,20 @@ def test_closed_venv_lib64_alias(
             control.validate_plan(plan)
 
 
-@pytest.mark.parametrize("case", ["reviewed", "changed_hash", "omitted", "apport_py", "apport_dir", "apport_so", "apport_pyc", "apport_frozen", "apport_builtin"])
+@pytest.mark.parametrize(
+    "case",
+    [
+        "reviewed",
+        "changed_hash",
+        "omitted",
+        "apport_py",
+        "apport_dir",
+        "apport_so",
+        "apport_pyc",
+        "apport_frozen",
+        "apport_builtin",
+    ],
+)
 def test_reviewed_ubuntu_hook_requires_absent_optional_dependency(case: str) -> None:
     stdlib = Path("/protected/stdlib")
     site = Path("/protected/site")
@@ -537,22 +553,36 @@ def test_reviewed_ubuntu_hook_requires_absent_optional_dependency(case: str) -> 
             {"path": str(dynamic), "entries": []},
         ],
         "links": [{"path": str(hook), "uid": 0, "target": str(target)}],
-        "builtin_modules": [], "frozen_modules": [],
+        "builtin_modules": [],
+        "frozen_modules": [],
     }
     if case in ("apport_py", "apport_dir", "apport_so", "apport_pyc"):
-        suffix = {"apport_py": ".py", "apport_dir": "", "apport_so": ".cpython-312-x86_64-linux-gnu.so", "apport_pyc": ".pyc"}[case]
+        suffix = {
+            "apport_py": ".py",
+            "apport_dir": "",
+            "apport_so": ".cpython-312-x86_64-linux-gnu.so",
+            "apport_pyc": ".pyc",
+        }[case]
         plan["directories"][2]["entries"].append("apport_python_hook" + suffix)
     if case == "apport_frozen":
         plan["frozen_modules"] = ["apport_python_hook"]
     if case == "apport_builtin":
         plan["builtin_modules"] = ["apport_python_hook"]
-    inventory = {stdlib: "directory", site: "directory", dynamic: "directory", hook: "link", target: "file"}
+    inventory = {
+        stdlib: "directory",
+        site: "directory",
+        dynamic: "directory",
+        hook: "link",
+        target: "file",
+    }
     hashes = {str(target): "0" * 64 if case == "changed_hash" else control.SITE_CUSTOMIZE_SHA256}
     if case == "reviewed":
         control._startup_hooks(plan, {"stdlib": stdlib, "site_packages": site}, inventory, hashes)
     else:
         with pytest.raises(control.PreflightError):
-            control._startup_hooks(plan, {"stdlib": stdlib, "site_packages": site}, inventory, hashes)
+            control._startup_hooks(
+                plan, {"stdlib": stdlib, "site_packages": site}, inventory, hashes
+            )
 
 
 def test_libpython_build_alias_cannot_be_relocated() -> None:
@@ -560,7 +590,9 @@ def test_libpython_build_alias_cannot_be_relocated() -> None:
     aliases = control.runtime_aliases(paths)
     relocated = paths["stdlib"] / "config-3.12-x86_64-linux-gnu/libpython3.12.so"
     assert relocated not in aliases
-    assert aliases[Path("/usr/lib/python3.12/config-3.12-x86_64-linux-gnu/libpython3.12.so")][:2] == (
+    assert aliases[Path("/usr/lib/python3.12/config-3.12-x86_64-linux-gnu/libpython3.12.so")][
+        :2
+    ] == (
         "../../x86_64-linux-gnu/libpython3.12.so.1",
         Path("/usr/lib/x86_64-linux-gnu/libpython3.12.so.1"),
     )

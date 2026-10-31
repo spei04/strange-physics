@@ -818,9 +818,13 @@ def test_case_cleanup_owns_sibling_control_root(
             capture_root.mkdir(mode=0o700)
 
 
-@pytest.mark.parametrize("phase", ("entry", "preflight", "reserve"), ids=("late-entry", "late-preflight", "reserve"))
+@pytest.mark.parametrize(
+    "phase", ("entry", "preflight", "reserve"), ids=("late-entry", "late-preflight", "reserve")
+)
 def test_service_work_cutoff_prevents_target_launch(
-    capture_root: Path, monkeypatch: pytest.MonkeyPatch, phase: str,
+    capture_root: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    phase: str,
 ) -> None:
     item = spec(capture_root)
     request = owned.encoded(owned.request_record(item, 100.0))
@@ -841,10 +845,14 @@ def test_service_work_cutoff_prevents_target_launch(
         scoped.setattr(owned, "preflight", preflight)
         scoped.setattr(owned, "time", SimpleNamespace(monotonic=clock.now))
         scoped.setattr(owned, "service_identity", lambda unit: (INVOCATION, "/user.slice/" + unit))
-        scoped.setattr(owned, "sys", SimpleNamespace(
-            flags=SimpleNamespace(isolated=1, dont_write_bytecode=1),
-            pycache_prefix=str(capture_root / "service-pycache"),
-        ))
+        scoped.setattr(
+            owned,
+            "sys",
+            SimpleNamespace(
+                flags=SimpleNamespace(isolated=1, dont_write_bytecode=1),
+                pycache_prefix=str(capture_root / "service-pycache"),
+            ),
+        )
         assert owned.service_entry(path, hashlib.sha256(request).hexdigest()) == 1
     record = json.loads((capture_root / "capture-service.json").read_bytes())
     assert record["launch"] is None and record["first_fault"]["kind"] == "TimeoutError"
