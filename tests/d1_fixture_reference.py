@@ -700,10 +700,7 @@ class D1FixtureProducer:
             stage = "rounding"
             plan = fixed_plan(source, coefficients())
             if self._owner_prepare_used:
-                if (
-                    prepared_owner is None
-                    or self.prepared_reference_owner is not prepared_owner
-                ):
+                if prepared_owner is None or self.prepared_reference_owner is not prepared_owner:
                     raise ValueError("Prepared fixture owner changed before its first call")
                 oracle = prepared_owner
             else:

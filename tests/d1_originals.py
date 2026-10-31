@@ -33,10 +33,28 @@ _CASES = ("M01", "M02", "M03", "M04", "D03", "F02", "F04", "W03")
 _COUNTERS = ("series_values", "lookups", "exp_calls", "log_calls", "trig_calls", "machin_terms")
 # j00..j21; j22 is the separately retained exact math.exp builtin.
 _SLOTS = (
-    (0, 0), (1, 0), (2, 0), (3, 0),
-    (4, 1), (4, 2), (5, 1), (5, 2), (6, 1), (6, 2), (7, 1), (7, 2),
-    (8, 1), (8, 2), (9, 1), (9, 2), (10, 1), (10, 2), (11, 1), (11, 2),
-    (12, 2), (12, 3),
+    (0, 0),
+    (1, 0),
+    (2, 0),
+    (3, 0),
+    (4, 1),
+    (4, 2),
+    (5, 1),
+    (5, 2),
+    (6, 1),
+    (6, 2),
+    (7, 1),
+    (7, 2),
+    (8, 1),
+    (8, 2),
+    (9, 1),
+    (9, 2),
+    (10, 1),
+    (10, 2),
+    (11, 1),
+    (11, 2),
+    (12, 2),
+    (12, 3),
 )
 
 
@@ -63,23 +81,49 @@ class PreparedOriginals:
     emitter: BuiltinFunctionType
 
 
-_REFERENCE_FIELDS = frozenset((
-    "channels", "arithmetic", "constants_oracle", "cache", "seen", "normalized",
-    "results", "consumed_training", "calls", "logical_completed", "cache_hits",
-    "normalizations_completed", "failed", "constants_started", "constant_values",
-))
-_PRODUCER_FIELDS = frozenset((
-    "root", "commit", "pins", "started", "_owner_prepare_used", "_owner_prepare_busy",
-    "_owner_prepare_fault", "_prepared_reference_owner", "_prepared_owner_anchor",
-))
+_REFERENCE_FIELDS = frozenset(
+    (
+        "channels",
+        "arithmetic",
+        "constants_oracle",
+        "cache",
+        "seen",
+        "normalized",
+        "results",
+        "consumed_training",
+        "calls",
+        "logical_completed",
+        "cache_hits",
+        "normalizations_completed",
+        "failed",
+        "constants_started",
+        "constant_values",
+    )
+)
+_PRODUCER_FIELDS = frozenset(
+    (
+        "root",
+        "commit",
+        "pins",
+        "started",
+        "_owner_prepare_used",
+        "_owner_prepare_busy",
+        "_owner_prepare_fault",
+        "_prepared_reference_owner",
+        "_prepared_owner_anchor",
+    )
+)
 _ORACLE_FIELDS = frozenset(("values", "pi", *_COUNTERS))
 
 
 def _layouts() -> None:
     # These three concrete classes use ordinary object lookup and instance dicts.
     # Never evaluate a substituted descriptor while checking supposedly fresh state.
-    for cls, fields in ((EndpointOracle, _ORACLE_FIELDS), (D1Reference, _REFERENCE_FIELDS),
-                        (D1FixtureProducer, _PRODUCER_FIELDS)):
+    for cls, fields in (
+        (EndpointOracle, _ORACLE_FIELDS),
+        (D1Reference, _REFERENCE_FIELDS),
+        (D1FixtureProducer, _PRODUCER_FIELDS),
+    ):
         namespace = vars(cls)
         descriptor = namespace.get("__dict__")
         if (
@@ -163,7 +207,10 @@ def _anchors(value: OriginalAnchors) -> None:
         or reference_module.D1Reference is not D1Reference
         or sys.modules.get("d1_fixture_reference") is not fixture_module
         or sys.modules.get("d1_prefix_evidence") is not reference_module
-        or any(name in sys.modules for name in ("tests.d1_fixture_reference", "tests.d1_prefix_evidence"))
+        or any(
+            name in sys.modules
+            for name in ("tests.d1_fixture_reference", "tests.d1_prefix_evidence")
+        )
     ):
         raise ValueError("Fixed canonical consumer classes required")
     _layouts()
@@ -204,13 +251,17 @@ def _owners(reference: D1Reference, producer: D1FixtureProducer) -> tuple[Endpoi
         or producer_fields["_owner_prepare_used"] is not True
         or producer_fields["_owner_prepare_busy"] is not False
         or producer_fields["_owner_prepare_fault"] is not None
-        or producer_fields["_prepared_reference_owner"] is not producer_fields["_prepared_owner_anchor"]
+        or producer_fields["_prepared_reference_owner"]
+        is not producer_fields["_prepared_owner_anchor"]
     ):
         raise ValueError("Actual ordered consumer owner containers required")
     raw_owners: tuple[object, ...] = (
         producer_fields["_prepared_reference_owner"],
-        channels["strong"], channels["weak"], channels["future"],
-        *arithmetic.values(), reference_fields["constants_oracle"],
+        channels["strong"],
+        channels["weak"],
+        channels["future"],
+        *arithmetic.values(),
+        reference_fields["constants_oracle"],
     )
     owners: list[EndpointOracle] = []
     caches: list[dict[object, object]] = []

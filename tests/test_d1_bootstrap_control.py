@@ -19,9 +19,11 @@ from scripts import d1_bootstrap_control as control
 
 def fake_process_api(start: Any) -> SimpleNamespace:
     return SimpleNamespace(
-        Popen=start, TimeoutExpired=subprocess.TimeoutExpired,
+        Popen=start,
+        TimeoutExpired=subprocess.TimeoutExpired,
         SubprocessError=subprocess.SubprocessError,
-        DEVNULL=subprocess.DEVNULL, STDOUT=subprocess.STDOUT,
+        DEVNULL=subprocess.DEVNULL,
+        STDOUT=subprocess.STDOUT,
     )
 
 
@@ -142,13 +144,19 @@ def synthetic_plan(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> dict[str,
         add(path)
     digest = hashlib.sha256(b"synthetic source\n").hexdigest()
     installation = {
-        "evidence_kind": "accepted_release_candidate", "source_commit": "a" * 40,
-        "python_version": "3.12.3", "python_executable_sha256": digest,
-        "lock_path": str(lock), "uv_lock_sha256": digest,
-        "archive_path": str(archive), "archive_sha256": digest,
-        "provenance_path": str(provenance), "provenance_sha256": digest,
-        "package_files": [{"path": path.name, "sha256": digest, "bytes": 17}
-                          for path in sorted(package.iterdir())],
+        "evidence_kind": "accepted_release_candidate",
+        "source_commit": "a" * 40,
+        "python_version": "3.12.3",
+        "python_executable_sha256": digest,
+        "lock_path": str(lock),
+        "uv_lock_sha256": digest,
+        "archive_path": str(archive),
+        "archive_sha256": digest,
+        "provenance_path": str(provenance),
+        "provenance_sha256": digest,
+        "package_files": [
+            {"path": path.name, "sha256": digest, "bytes": 17} for path in sorted(package.iterdir())
+        ],
         "dependency_files": [{"path": "dependency.py", "sha256": digest, "bytes": 17}],
     }
     record = tmp_path / "installation.json"
@@ -163,42 +171,78 @@ def synthetic_plan(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> dict[str,
 
     monkeypatch.setattr(control, "_read", fake_read)
     return {
-        "version": "d1-protected-capture-v1", "source_commit": "a" * 40,
-        "checkout": str(root), "interpreter": str(venv / "bin/python"),
-        "venv_root": str(venv), "python_version": "3.12.3",
-        "startup_hook_files": [], "absent_startup_paths": [],
-        "bootstrap": routes["d1_bootstrap"], "controller": str(controller),
-        "controller_interpreter": str(interpreter), "site_packages": str(site),
-        "stdlib": str(stdlib), "installation_record": str(record),
+        "version": "d1-protected-capture-v1",
+        "source_commit": "a" * 40,
+        "checkout": str(root),
+        "interpreter": str(venv / "bin/python"),
+        "venv_root": str(venv),
+        "python_version": "3.12.3",
+        "startup_hook_files": [],
+        "absent_startup_paths": [],
+        "bootstrap": routes["d1_bootstrap"],
+        "controller": str(controller),
+        "controller_interpreter": str(interpreter),
+        "site_packages": str(site),
+        "stdlib": str(stdlib),
+        "installation_record": str(record),
         "files": [
-            {"path": path, "sha256": hashlib.sha256(raw).hexdigest(),
-             "bytes": len(raw), "uid": os.getuid()} for path, raw in payloads.items()
+            {
+                "path": path,
+                "sha256": hashlib.sha256(raw).hexdigest(),
+                "bytes": len(raw),
+                "uid": os.getuid(),
+            }
+            for path, raw in payloads.items()
         ],
         "directories": [
             {"path": str(path), "uid": os.getuid(), "entries": sorted(os.listdir(path))}
-            for path in (venv, venv / "bin", venv / "lib", venv / "lib/python3.12", site, package, stdlib)
+            for path in (
+                venv,
+                venv / "bin",
+                venv / "lib",
+                venv / "lib/python3.12",
+                site,
+                package,
+                stdlib,
+            )
         ],
-        "links": [{"path": str(venv / "bin/python"), "uid": os.getuid(), "target": str(interpreter)}],
+        "links": [
+            {"path": str(venv / "bin/python"), "uid": os.getuid(), "target": str(interpreter)}
+        ],
         "import_map": routes,
-        "startup_sys_path": [str(site), str(stdlib)], "frozen_modules": ["os"],
+        "startup_sys_path": [str(site), str(stdlib)],
+        "frozen_modules": ["os"],
         "builtin_modules": ["sys"],
     }
 
 
 def test_structural_inventory_accepts_exact_routes(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     plan = synthetic_plan(tmp_path, monkeypatch)
     hashes = control.validate_plan(plan)
     assert plan["bootstrap"] in hashes
 
 
-@pytest.mark.parametrize("mutation", [
-    "missing_route", "checkout_native", "source_mismatch", "unlisted_member",
-    "missing_runtime", "controller", "unapproved_link", "duplicate", "extra_field",
-])
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        "missing_route",
+        "checkout_native",
+        "source_mismatch",
+        "unlisted_member",
+        "missing_runtime",
+        "controller",
+        "unapproved_link",
+        "duplicate",
+        "extra_field",
+    ],
+)
 def test_inventory_failures(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, mutation: str,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    mutation: str,
 ) -> None:
     plan = synthetic_plan(tmp_path, monkeypatch)
     if mutation == "missing_route":
@@ -206,12 +250,17 @@ def test_inventory_failures(
     elif mutation == "checkout_native":
         plan["import_map"]["strange_physics"] = str(Path(plan["checkout"]) / "src/strange_physics")
     elif mutation == "source_mismatch":
-        plan["files"] = [item for item in plan["files"] if item["path"] !=
-                         str(Path(plan["checkout"]) / "src/strange_physics/contracts.py")]
+        plan["files"] = [
+            item
+            for item in plan["files"]
+            if item["path"] != str(Path(plan["checkout"]) / "src/strange_physics/contracts.py")
+        ]
     elif mutation == "unlisted_member":
         plan["directories"][0]["entries"].append("missing.py")
     elif mutation == "missing_runtime":
-        plan["directories"] = [item for item in plan["directories"] if item["path"] != plan["stdlib"]]
+        plan["directories"] = [
+            item for item in plan["directories"] if item["path"] != plan["stdlib"]
+        ]
     elif mutation == "controller":
         plan["controller"] = "/wrong/controller.py"
     elif mutation == "unapproved_link":
@@ -224,7 +273,9 @@ def test_inventory_failures(
         control.validate_plan(plan)
 
 
-def test_failed_preflight_never_starts_child(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_failed_preflight_never_starts_child(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     attempts: list[object] = []
 
     def reject(path: Path, digest: str) -> dict[str, Any]:
@@ -240,11 +291,18 @@ def test_failed_preflight_never_starts_child(tmp_path: Path, monkeypatch: pytest
 
 @pytest.mark.parametrize("outcome", ["success", "nonzero", "timeout", "malformed", "custody"])
 def test_owned_fake_child_lifecycle(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, outcome: str,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    outcome: str,
 ) -> None:
-    plan = {"interpreter": "/fixed/python", "bootstrap": "/fixed/bootstrap.py",
-            "source_commit": "a" * 40, "checkout": "/fixed/source",
-            "venv_root": "/fixed/venv", "stdlib": "/fixed/stdlib"}
+    plan = {
+        "interpreter": "/fixed/python",
+        "bootstrap": "/fixed/bootstrap.py",
+        "source_commit": "a" * 40,
+        "checkout": "/fixed/source",
+        "venv_root": "/fixed/venv",
+        "stdlib": "/fixed/stdlib",
+    }
     validations: list[object] = []
     launches: list[tuple[list[str], dict[str, Any]]] = []
     killed: list[bool] = []
@@ -273,11 +331,17 @@ def test_owned_fake_child_lifecycle(
     def start(argv: list[str], **kwargs: Any) -> FakeChild:
         launches.append((argv, kwargs))
         report = {
-            "kind": "d1-capture-only", "source_commit": plan["source_commit"],
-            "owners": 13, "original_methods": 22, "emitter": "math.exp",
-            "primitive_calls_permitted": False, "retention_activated": False,
+            "kind": "d1-capture-only",
+            "source_commit": plan["source_commit"],
+            "owners": 13,
+            "original_methods": 22,
+            "emitter": "math.exp",
+            "primitive_calls_permitted": False,
+            "retention_activated": False,
         }
-        kwargs["stdout"].write(b"invalid" if outcome == "malformed" else json.dumps(report).encode())
+        kwargs["stdout"].write(
+            b"invalid" if outcome == "malformed" else json.dumps(report).encode()
+        )
         kwargs["stdout"].flush()
         return FakeChild()
 
@@ -298,7 +362,9 @@ def test_owned_fake_child_lifecycle(
 
 @pytest.mark.parametrize("case", ["direct", "declared_hop", "unprotected_hop", "cycle"])
 def test_literal_interpreter_chain_never_skips_a_hop(case: str) -> None:
-    start, alias, binary = (Path(value) for value in ("/owned/python", "/owned/python3", "/runtime/python"))
+    start, alias, binary = (
+        Path(value) for value in ("/owned/python", "/owned/python3", "/runtime/python")
+    )
     inventory = {start: "link", binary: "file"}
     targets = {start: str(binary)}
     if case == "declared_hop":
@@ -317,7 +383,8 @@ def test_literal_interpreter_chain_never_skips_a_hop(case: str) -> None:
 
 
 def test_indirect_uninventoried_interpreter_link_fails_preflight(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     plan = synthetic_plan(tmp_path, monkeypatch)
     entry = Path(plan["interpreter"])
@@ -330,7 +397,9 @@ def test_indirect_uninventoried_interpreter_link_fails_preflight(
         control.validate_plan(plan)
 
 
-def test_membership_overflow_stops_after_one_extra_observation(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_membership_overflow_stops_after_one_extra_observation(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     seen: list[int] = []
 
     class Entries:
@@ -351,17 +420,30 @@ def test_membership_overflow_stops_after_one_extra_observation(monkeypatch: pyte
     assert seen == [0, 1, 2]
 
 
-@pytest.mark.parametrize("case", ["empty", "reviewed", "omitted", "unknown_pth", "customize",
-                                 "archive", "changed_source", "changed_import_line"])
+@pytest.mark.parametrize(
+    "case",
+    [
+        "empty",
+        "reviewed",
+        "omitted",
+        "unknown_pth",
+        "customize",
+        "archive",
+        "changed_source",
+        "changed_import_line",
+    ],
+)
 def test_startup_hook_membership_is_derived_not_asserted(
-    monkeypatch: pytest.MonkeyPatch, case: str,
+    monkeypatch: pytest.MonkeyPatch,
+    case: str,
 ) -> None:
     site = Path("/protected/site")
     hook, source = site / "_virtualenv.pth", site / "_virtualenv.py"
     entries = [] if case == "empty" else [hook.name, source.name]
     expected = [] if case in ("empty", "omitted") else [str(hook), str(source)]
     plan: dict[str, Any] = {
-        "startup_sys_path": [str(site)], "startup_hook_files": expected,
+        "startup_sys_path": [str(site)],
+        "startup_hook_files": expected,
         "directories": [{"path": str(site), "entries": entries}],
         "files": [{"path": str(hook), "uid": os.getuid()}],
     }

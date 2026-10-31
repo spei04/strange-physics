@@ -461,8 +461,14 @@ def test_prepare_owner_precedes_all_producer_work(monkeypatch: pytest.MonkeyPatc
         owner = value.prepare_reference_owner()
     assert value.prepared_reference_owner is owner
     assert not value.started and owner.values == {} and owner.pi is None
-    assert (owner.lookups, owner.series_values, owner.exp_calls, owner.log_calls,
-            owner.trig_calls, owner.machin_terms) == (0, 0, 0, 0, 0, 0)
+    assert (
+        owner.lookups,
+        owner.series_values,
+        owner.exp_calls,
+        owner.log_calls,
+        owner.trig_calls,
+        owner.machin_terms,
+    ) == (0, 0, 0, 0, 0, 0)
 
 
 def test_prepared_run_uses_exact_owner_without_replacement(
@@ -600,13 +606,17 @@ def test_swallowed_preparation_reentry_stays_failed(
     assert later.value is raised.value
 
 
-@pytest.mark.parametrize("kind", ("lost", "substituted", "wrong-type"), ids=("lost", "substituted", "wrong-type"))
+@pytest.mark.parametrize(
+    "kind", ("lost", "substituted", "wrong-type"), ids=("lost", "substituted", "wrong-type")
+)
 def test_prepared_owner_tampering_fails_before_work_or_replacement(
     monkeypatch: pytest.MonkeyPatch, kind: str
 ) -> None:
     value = D1FixtureProducer(ROOT, COMMIT, pins())
     owner = value.prepare_reference_owner()
-    replacement: object = None if kind == "lost" else (EndpointOracle() if kind == "substituted" else object())
+    replacement: object = (
+        None if kind == "lost" else (EndpointOracle() if kind == "substituted" else object())
+    )
     object.__setattr__(value, "_prepared_reference_owner", replacement)
     calls: list[str] = []
 
@@ -615,7 +625,13 @@ def test_prepared_owner_tampering_fails_before_work_or_replacement(
         raise AssertionError("Tampered prepared owner must fail before work or allocation")
 
     with monkeypatch.context() as scoped:
-        for name in ("EndpointOracle", "verify_sources", "coefficients", "fixed_plan", "_inventories"):
+        for name in (
+            "EndpointOracle",
+            "verify_sources",
+            "coefficients",
+            "fixed_plan",
+            "_inventories",
+        ):
             scoped.setattr(producer, name, forbidden)
         with pytest.raises(ValueError, match="identity lost or substituted") as first:
             value.run(ids(), inventories())

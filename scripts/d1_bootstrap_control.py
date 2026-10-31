@@ -13,9 +13,9 @@ import os
 import re
 import resource
 import stat
-import threading
 import subprocess
 import sys
+import threading
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -31,24 +31,40 @@ CHILD_WALL_LIMIT = 60
 CLEANUP_LIMIT = 5
 VIRTUALENV_HOOK_SHA256 = "cfb3db86aaa53bb62b5ff764970bec2d71c9228590a0ebec57f6ec926cc0bf1a"
 HELPERS = (
-    "d1_bootstrap", "d1_bounds", "d1_fixture_reference", "d1_originals",
-    "d1_prefix_evidence", "endpoint_belief_reference", "grid_q1_bounds",
-    "grid_q1_evidence", "grid_q1_inputs", "grid_q1_reference",
+    "d1_bootstrap",
+    "d1_bounds",
+    "d1_fixture_reference",
+    "d1_originals",
+    "d1_prefix_evidence",
+    "endpoint_belief_reference",
+    "grid_q1_bounds",
+    "grid_q1_evidence",
+    "grid_q1_inputs",
+    "grid_q1_reference",
 )
 NATIVE_MODULES = (
-    "strange_physics", "strange_physics.bounded_json",
-    "strange_physics.calibration_fixture_contracts", "strange_physics.contracts",
-    "strange_physics.control_contracts", "strange_physics.finite_log_weight_contracts",
-    "strange_physics.fitting_contracts", "strange_physics.laws",
+    "strange_physics",
+    "strange_physics.bounded_json",
+    "strange_physics.calibration_fixture_contracts",
+    "strange_physics.contracts",
+    "strange_physics.control_contracts",
+    "strange_physics.finite_log_weight_contracts",
+    "strange_physics.fitting_contracts",
+    "strange_physics.laws",
     "strange_physics.native_endpoint_belief_contracts",
-    "strange_physics.native_prediction_contracts", "strange_physics.native_spring_contracts",
-    "strange_physics.prediction_contracts", "strange_physics.research_contracts",
+    "strange_physics.native_prediction_contracts",
+    "strange_physics.native_spring_contracts",
+    "strange_physics.prediction_contracts",
+    "strange_physics.research_contracts",
     "strange_physics.serialization",
 )
 SOURCE_PIN_PATHS = (
-    "docs/research/RA_N03_CALIBRATION_SLICE.md", "tests/endpoint_belief_reference.py",
-    "tests/d1_fixture_reference.py", "src/strange_physics/calibration_fixture_contracts.py",
-    "src/strange_physics/contracts.py", "src/strange_physics/bounded_json.py",
+    "docs/research/RA_N03_CALIBRATION_SLICE.md",
+    "tests/endpoint_belief_reference.py",
+    "tests/d1_fixture_reference.py",
+    "src/strange_physics/calibration_fixture_contracts.py",
+    "src/strange_physics/contracts.py",
+    "src/strange_physics/bounded_json.py",
     "src/strange_physics/research_contracts.py",
 )
 
@@ -123,7 +139,11 @@ def _read(path: Path, limit: int, uid: int) -> bytes:
         after = os.fstat(descriptor)
         raw = b"".join(chunks)
         fields = ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns")
-        if len(raw) > limit or any(getattr(before, key) != getattr(after, key) for key in fields) or len(raw) != before.st_size:
+        if (
+            len(raw) > limit
+            or any(getattr(before, key) != getattr(after, key) for key in fields)
+            or len(raw) != before.st_size
+        ):
             raise PreflightError("Protected file changed during bounded read")
         return raw
     finally:
@@ -162,7 +182,9 @@ def _names(path: Path, limit: int) -> list[str]:
 
 
 def _interpreter_file(
-    start: Path, inventory: dict[Path, str], targets: dict[Path, str],
+    start: Path,
+    inventory: dict[Path, str],
+    targets: dict[Path, str],
 ) -> Path:
     seen: set[Path] = set()
     current = start
@@ -186,8 +208,10 @@ def _interpreter_file(
 
 
 def _startup_hooks(
-    plan: dict[str, Any], paths: dict[str, Path],
-    inventory: dict[Path, str], hashes: dict[str, str],
+    plan: dict[str, Any],
+    paths: dict[str, Path],
+    inventory: dict[Path, str],
+    hashes: dict[str, str],
 ) -> None:
     site = paths["site_packages"]
     startup = {_path(name) for name in plan["startup_sys_path"]}
@@ -195,11 +219,16 @@ def _startup_hooks(
         if inventory.get(path) == "file":
             raise PreflightError("Startup archive imports have not been reviewed")
     candidates = {
-        _path(item["path"]) / name for item in plan["directories"]
-        if _path(item["path"]) in startup | {site} for name in item["entries"]
+        _path(item["path"]) / name
+        for item in plan["directories"]
+        if _path(item["path"]) in startup | {site}
+        for name in item["entries"]
     }
-    if any(path.name in ("sitecustomize", "usercustomize") or
-           path.name.startswith(("sitecustomize.", "usercustomize.")) for path in candidates):
+    if any(
+        path.name in ("sitecustomize", "usercustomize")
+        or path.name.startswith(("sitecustomize.", "usercustomize."))
+        for path in candidates
+    ):
         raise PreflightError("Unreviewed startup customization")
     pth = {path for path in candidates if path.parent == site and path.suffix == ".pth"}
     expected: set[str] = set()
@@ -222,21 +251,53 @@ def _startup_hooks(
 def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
     """Check a closed inventory, actual source routes and controller before launch."""
     required = {
-        "version", "source_commit", "checkout", "interpreter", "bootstrap",
-        "controller", "controller_interpreter", "site_packages", "stdlib", "venv_root",
-        "python_version", "startup_hook_files", "absent_startup_paths", "installation_record", "files", "directories", "links", "import_map",
-        "startup_sys_path", "frozen_modules", "builtin_modules",
+        "version",
+        "source_commit",
+        "checkout",
+        "interpreter",
+        "bootstrap",
+        "controller",
+        "controller_interpreter",
+        "site_packages",
+        "stdlib",
+        "venv_root",
+        "python_version",
+        "startup_hook_files",
+        "absent_startup_paths",
+        "installation_record",
+        "files",
+        "directories",
+        "links",
+        "import_map",
+        "startup_sys_path",
+        "frozen_modules",
+        "builtin_modules",
     }
     if set(plan) != required or plan["version"] != "d1-protected-capture-v1":
         raise PreflightError("Launch record is incomplete or has unknown fields")
     if re.fullmatch("[0-9a-f]{40}", str(plan["source_commit"])) is None:
         raise PreflightError("Invalid source commit")
-    paths = {key: _path(plan[key]) for key in (
-        "checkout", "interpreter", "bootstrap", "controller", "controller_interpreter",
-        "site_packages", "stdlib", "venv_root", "installation_record",
-    )}
-    for field in ("startup_sys_path", "frozen_modules", "builtin_modules",
-                  "startup_hook_files", "absent_startup_paths"):
+    paths = {
+        key: _path(plan[key])
+        for key in (
+            "checkout",
+            "interpreter",
+            "bootstrap",
+            "controller",
+            "controller_interpreter",
+            "site_packages",
+            "stdlib",
+            "venv_root",
+            "installation_record",
+        )
+    }
+    for field in (
+        "startup_sys_path",
+        "frozen_modules",
+        "builtin_modules",
+        "startup_hook_files",
+        "absent_startup_paths",
+    ):
         if not isinstance(plan[field], list) or len(plan[field]) > 1024:
             raise PreflightError("Missing bounded startup inventory")
         if len(plan[field]) != len(set(plan[field])) or not all(
@@ -251,7 +312,9 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
         raise PreflightError("Target must use the pinned virtual environment entry point")
     minor = ".".join(plan["python_version"].split(".")[:2])
     if paths["site_packages"] != paths["venv_root"] / "lib" / ("python" + minor) / "site-packages":
-        raise PreflightError("Installation path differs from the fixed Linux virtual environment layout")
+        raise PreflightError(
+            "Installation path differs from the fixed Linux virtual environment layout"
+        )
     files, directories, links = plan["files"], plan["directories"], plan["links"]
     if not all(isinstance(items, list) for items in (files, directories, links)):
         raise PreflightError("Inventory collections must be lists")
@@ -286,15 +349,22 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
         _ancestors(path)
         _safe_mode(path.lstat(), item["uid"], directory=True)
         entries = item["entries"]
-        if not isinstance(entries, list) or len(entries) > ENTRY_LIMIT or any(
-            not isinstance(name, str) or name in ("", ".", "..") or "/" in name for name in entries
-        ) or len(entries) != len(set(entries)):
+        if (
+            not isinstance(entries, list)
+            or len(entries) > ENTRY_LIMIT
+            or any(
+                not isinstance(name, str) or name in ("", ".", "..") or "/" in name
+                for name in entries
+            )
+            or len(entries) != len(set(entries))
+        ):
             raise PreflightError("Invalid closed directory membership")
         if sorted(_names(path, len(entries))) != sorted(entries):
             raise PreflightError("Directory membership differs")
         inventory[path] = "directory"
     allowed_links = {
-        paths["interpreter"].parent / "python", paths["interpreter"].parent / "python3",
+        paths["interpreter"].parent / "python",
+        paths["interpreter"].parent / "python3",
         paths["interpreter"].parent / "python3.12",
     }
     targets: dict[Path, str] = {}
@@ -306,8 +376,12 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
             raise PreflightError("Only the explicit interpreter links are permitted")
         _ancestors(path)
         info = path.lstat()
-        if (type(item["uid"]) is not int or item["uid"] not in (0, os.getuid())
-                or not stat.S_ISLNK(info.st_mode) or info.st_uid != item["uid"]):
+        if (
+            type(item["uid"]) is not int
+            or item["uid"] not in (0, os.getuid())
+            or not stat.S_ISLNK(info.st_mode)
+            or info.st_uid != item["uid"]
+        ):
             raise PreflightError("Interpreter link owner or type differs")
         if not isinstance(item["target"], str) or os.readlink(path) != item["target"]:
             raise PreflightError("Interpreter literal link target differs")
@@ -319,7 +393,9 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
     for item in directories:
         if any(_path(item["path"]) / name not in inventory for name in item["entries"]):
             raise PreflightError("Closed directory contains an unpinned entry")
-    if any(inventory.get(paths[key]) != "directory" for key in ("stdlib", "site_packages", "venv_root")):
+    if any(
+        inventory.get(paths[key]) != "directory" for key in ("stdlib", "site_packages", "venv_root")
+    ):
         raise PreflightError("Complete stdlib and installation roots are required")
     venv_config = paths["venv_root"] / "pyvenv.cfg"
     if inventory.get(venv_config) != "file":
@@ -327,7 +403,8 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
     config = _read(venv_config, 65536, os.getuid()).decode("utf-8")
     settings = {
         line.split("=", 1)[0].strip().lower(): line.split("=", 1)[1].strip()
-        for line in config.splitlines() if "=" in line
+        for line in config.splitlines()
+        if "=" in line
     }
     if settings.get("include-system-site-packages") != "false":
         raise PreflightError("Global site packages must be disabled")
@@ -346,10 +423,13 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
         if path not in inventory and name not in plan["absent_startup_paths"]:
             raise PreflightError("Startup search path is neither pinned nor observed absent")
     _startup_hooks(plan, paths, inventory, hashes)
-    if paths["controller"] != Path(__file__).absolute() or paths["controller_interpreter"] != Path(
-        sys.executable
-    ).resolve():
-        raise PreflightError("Controller context differs from the independently accepted invocation")
+    if (
+        paths["controller"] != Path(__file__).absolute()
+        or paths["controller_interpreter"] != Path(sys.executable).resolve()
+    ):
+        raise PreflightError(
+            "Controller context differs from the independently accepted invocation"
+        )
     for key in ("controller", "controller_interpreter", "bootstrap", "installation_record"):
         if inventory.get(paths[key]) != "file":
             raise PreflightError("Launch/control/installation evidence is not pinned")
@@ -363,14 +443,18 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
     for name in HELPERS + NATIVE_MODULES:
         relative = name.replace(".", "/")
         expected = (
-            paths["checkout"] / "tests" / (name + ".py") if name in HELPERS else
-            paths["site_packages"] / (relative + ("/__init__.py" if name == "strange_physics" else ".py"))
+            paths["checkout"] / "tests" / (name + ".py")
+            if name in HELPERS
+            else paths["site_packages"]
+            / (relative + ("/__init__.py" if name == "strange_physics" else ".py"))
         )
         if _path(routes[name]) != expected or inventory.get(expected) != "file":
             raise PreflightError("Module route differs from the fixed normal-import layout")
         if name in NATIVE_MODULES:
-            checkout_copy = paths["checkout"] / "src" / (
-                relative + ("/__init__.py" if name == "strange_physics" else ".py")
+            checkout_copy = (
+                paths["checkout"]
+                / "src"
+                / (relative + ("/__init__.py" if name == "strange_physics" else ".py"))
             )
             if hashes.get(str(checkout_copy)) != hashes[str(expected)]:
                 raise PreflightError("Installed project bytes differ from reviewed source")
@@ -378,7 +462,10 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
         raise PreflightError("Fixture source pins are incomplete")
     # The record is the existing accepted installation evidence, not a new trust flag.
     accepted = json.loads(_read(paths["installation_record"], PLAN_LIMIT, os.getuid()))
-    if not isinstance(accepted, dict) or accepted.get("evidence_kind") != "accepted_release_candidate":
+    if (
+        not isinstance(accepted, dict)
+        or accepted.get("evidence_kind") != "accepted_release_candidate"
+    ):
         raise PreflightError("Missing independently accepted installed build")
     if accepted.get("source_commit") != plan["source_commit"]:
         raise PreflightError("Accepted installation source differs")
@@ -387,13 +474,16 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
     ) != hashes.get(str(target_executable)):
         raise PreflightError("Accepted interpreter identity differs")
     for key, hash_key in (
-        ("lock_path", "uv_lock_sha256"), ("archive_path", "archive_sha256"),
+        ("lock_path", "uv_lock_sha256"),
+        ("archive_path", "archive_sha256"),
         ("provenance_path", "provenance_sha256"),
     ):
         if hashes.get(str(_path(accepted.get(key)))) != _digest(accepted.get(hash_key)):
             raise PreflightError("Accepted build provenance is absent from protected inventory")
-    for field, base in (("package_files", paths["site_packages"] / "strange_physics"),
-                        ("dependency_files", paths["site_packages"])):
+    for field, base in (
+        ("package_files", paths["site_packages"] / "strange_physics"),
+        ("dependency_files", paths["site_packages"]),
+    ):
         entries = accepted.get(field)
         limit = 128 if field == "package_files" else 10000
         if not isinstance(entries, list) or not 1 <= len(entries) <= limit:
@@ -414,8 +504,10 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
             if hashes.get(str(base / rel)) != _digest(entry.get("sha256")):
                 raise PreflightError("Accepted installation bytes are not protected")
         observed = {
-            str(path.relative_to(base)) for path, kind in inventory.items()
-            if kind == "file" and path.is_relative_to(base)
+            str(path.relative_to(base))
+            for path, kind in inventory.items()
+            if kind == "file"
+            and path.is_relative_to(base)
             and "__pycache__" not in path.relative_to(base).parts
             and (field == "package_files" or not path.is_relative_to(base / "strange_physics"))
         }
@@ -462,12 +554,23 @@ def launch(plan_path: Path, plan_sha256: str, output: Path) -> LaunchResult:
             os.chmod(output / "child.log", 0o600)
             process = subprocess.Popen(
                 [
-                    plan["interpreter"], "-I", "-B", "-X", f"pycache_prefix={cache}",
-                    plan["bootstrap"], str(plan_path), plan_sha256, str(cache),
+                    plan["interpreter"],
+                    "-I",
+                    "-B",
+                    "-X",
+                    f"pycache_prefix={cache}",
+                    plan["bootstrap"],
+                    str(plan_path),
+                    plan_sha256,
+                    str(cache),
                 ],
-                stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT,
+                stdin=subprocess.DEVNULL,
+                stdout=log,
+                stderr=subprocess.STDOUT,
                 env={"LANG": "C.UTF-8", "LC_ALL": "C.UTF-8"},
-                cwd=output, close_fds=True, preexec_fn=_child_limits,
+                cwd=output,
+                close_fds=True,
+                preexec_fn=_child_limits,
             )
             try:
                 code = process.wait(timeout=CHILD_WALL_LIMIT)
@@ -499,9 +602,13 @@ def launch(plan_path: Path, plan_sha256: str, output: Path) -> LaunchResult:
         try:
             report = json.loads(_read(log_path, LOG_LIMIT, os.getuid()))
             report_ok = report == {
-                "kind": "d1-capture-only", "source_commit": plan["source_commit"],
-                "owners": 13, "original_methods": 22, "emitter": "math.exp",
-                "primitive_calls_permitted": False, "retention_activated": False,
+                "kind": "d1-capture-only",
+                "source_commit": plan["source_commit"],
+                "owners": 13,
+                "original_methods": 22,
+                "emitter": "math.exp",
+                "primitive_calls_permitted": False,
+                "retention_activated": False,
             }
         except (OSError, ValueError):
             failure = "invalid_capture_report"
@@ -511,24 +618,43 @@ def launch(plan_path: Path, plan_sha256: str, output: Path) -> LaunchResult:
     except (OSError, PreflightError):
         failure = "output_census_unavailable"
     capture_observed = (
-        reaped and code == 0 and custody and not timed_out and size <= LOG_LIMIT
-        and report_ok and failure is None and elapsed <= CHILD_WALL_LIMIT + CLEANUP_LIMIT
+        reaped
+        and code == 0
+        and custody
+        and not timed_out
+        and size <= LOG_LIMIT
+        and report_ok
+        and failure is None
+        and elapsed <= CHILD_WALL_LIMIT + CLEANUP_LIMIT
     )
     # No concurrent child work is permitted in the accepted controller context.
-    cpu = (after.ru_utime + after.ru_stime) - (before.ru_utime + before.ru_stime) if reaped else None
+    cpu = (
+        (after.ru_utime + after.ru_stime) - (before.ru_utime + before.ru_stime) if reaped else None
+    )
     # A reaped leader is not proof that startup left no surviving descendants.
     # No caller flag can promote this observation into final capture acceptance.
     failure = failure or (
         "outer_owned_tree_closure_unproved" if capture_observed else "capture_not_observed"
     )
     return LaunchResult(
-        code, reaped, timed_out, custody, size, elapsed, cpu,
-        capture_observed, None, False, failure,
+        code,
+        reaped,
+        timed_out,
+        custody,
+        size,
+        elapsed,
+        cpu,
+        capture_observed,
+        None,
+        False,
+        failure,
     )
 
 
 def main() -> int:
-    print("D1 protected capture is disabled pending an independently accepted runtime and invocation.")
+    print(
+        "D1 protected capture is disabled pending an independently accepted runtime and invocation."
+    )
     return 64
 
 

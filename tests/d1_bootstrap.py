@@ -25,13 +25,21 @@ if TYPE_CHECKING:
 METHOD_NAMES = ("position", "exp", "log", "circle_constant")
 CONSUMERS = ("d1_fixture_reference", "d1_prefix_evidence", "d1_originals")
 FORBIDDEN_HELPERS = (
-    "d1_primitive_recording", "d1_primitive_sink", "d1_primitive_bridge",
-    "d1_primitive_codec", "d1_codec_append", "d1_table_retention", "d1_source_files",
+    "d1_primitive_recording",
+    "d1_primitive_sink",
+    "d1_primitive_bridge",
+    "d1_primitive_codec",
+    "d1_codec_append",
+    "d1_table_retention",
+    "d1_source_files",
 )
 SOURCE_PIN_PATHS = (
-    "docs/research/RA_N03_CALIBRATION_SLICE.md", "tests/endpoint_belief_reference.py",
-    "tests/d1_fixture_reference.py", "src/strange_physics/calibration_fixture_contracts.py",
-    "src/strange_physics/contracts.py", "src/strange_physics/bounded_json.py",
+    "docs/research/RA_N03_CALIBRATION_SLICE.md",
+    "tests/endpoint_belief_reference.py",
+    "tests/d1_fixture_reference.py",
+    "src/strange_physics/calibration_fixture_contracts.py",
+    "src/strange_physics/contracts.py",
+    "src/strange_physics/bounded_json.py",
     "src/strange_physics/research_contracts.py",
 )
 PLAN_LIMIT = 4 * 1024**2
@@ -53,7 +61,10 @@ def read_launch_record(path: Path, expected_sha256: str) -> dict[str, Any]:
             raw = stream.read(PLAN_LIMIT + 1)
         after = os.fstat(descriptor)
         fields = ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns")
-        if any(getattr(before, key) != getattr(after, key) for key in fields) or len(raw) != before.st_size:
+        if (
+            any(getattr(before, key) != getattr(after, key) for key in fields)
+            or len(raw) != before.st_size
+        ):
             raise BootstrapError("Launch record changed")
     finally:
         os.close(descriptor)
@@ -70,9 +81,11 @@ def _source_module(name: str, plan: dict[str, Any]) -> ModuleType:
     origin = plan["import_map"].get(name)
     spec = module.__spec__
     if (
-        not isinstance(origin, str) or spec is None
+        not isinstance(origin, str)
+        or spec is None
         or type(spec.loader) is not importlib.machinery.SourceFileLoader
-        or spec.origin != origin or module.__file__ != origin
+        or spec.origin != origin
+        or module.__file__ != origin
     ):
         raise BootstrapError("Canonical source module origin or ordinary loader differs")
     return module
@@ -97,9 +110,11 @@ def _check_loaded(plan: dict[str, Any]) -> None:
             parent_spec = parent.__dict__.get("__spec__")
             expected = str(Path(plan["stdlib"]) / "typing.py")
             if (
-                parent_spec is None or parent_spec.name != "typing"
+                parent_spec is None
+                or parent_spec.name != "typing"
                 or type(parent_spec.loader) is not importlib.machinery.SourceFileLoader
-                or parent_spec.origin != expected or parent.__dict__.get("__file__") != expected
+                or parent_spec.origin != expected
+                or parent.__dict__.get("__file__") != expected
                 or expected not in files
                 or not isinstance(module, type)
                 or module is not parent.__dict__.get(name.partition(".")[2])
@@ -122,7 +137,8 @@ def _check_loaded(plan: dict[str, Any]) -> None:
             raise BootstrapError("Loaded module origin is outside the protected runtime inventory")
         if isinstance(origin, str):
             source_roots = (
-                Path(plan["checkout"]) / "tests", Path(plan["checkout"]) / "src",
+                Path(plan["checkout"]) / "tests",
+                Path(plan["checkout"]) / "src",
                 Path(plan["site_packages"]) / "strange_physics",
             )
             if any(Path(origin).is_relative_to(root) for root in source_roots):
@@ -132,15 +148,21 @@ def _check_loaded(plan: dict[str, Any]) -> None:
             raise BootstrapError("Protected helper or native source was loaded under an alias")
         if name.startswith("strange_physics") and name not in routes:
             raise BootstrapError("Unmapped installed project import")
-        if name in routes and (origin != routes[name] or type(spec.loader) is not
-                               importlib.machinery.SourceFileLoader):
+        if name in routes and (
+            origin != routes[name] or type(spec.loader) is not importlib.machinery.SourceFileLoader
+        ):
             raise BootstrapError("Mapped module escaped its source loader")
 
 
-def _raw_anchors(plan: dict[str, Any]) -> tuple[
-    ModuleType, type[EndpointOracle],
+def _raw_anchors(
+    plan: dict[str, Any],
+) -> tuple[
+    ModuleType,
+    type[EndpointOracle],
     tuple[FunctionType, FunctionType, FunctionType, FunctionType],
-    tuple[CodeType, CodeType, CodeType, CodeType], ModuleType, BuiltinFunctionType,
+    tuple[CodeType, CodeType, CodeType, CodeType],
+    ModuleType,
+    BuiltinFunctionType,
 ]:
     oracle = _source_module("endpoint_belief_reference", plan)
     owner = oracle.__dict__.get("EndpointOracle")
@@ -161,17 +183,23 @@ def _raw_anchors(plan: dict[str, Any]) -> tuple[
     if emitter.__module__ != "math" or emitter.__name__ != "exp":
         raise BootstrapError("Density emitter differs from the fixed runtime builtin")
     return (
-        oracle, cast("type[EndpointOracle]", owner), functions,
+        oracle,
+        cast("type[EndpointOracle]", owner),
+        functions,
         cast(tuple[CodeType, CodeType, CodeType, CodeType], codes),
-        actual_math, emitter,
+        actual_math,
+        emitter,
     )
 
 
 def _unchanged(
     raw: tuple[
-        ModuleType, type[EndpointOracle],
+        ModuleType,
+        type[EndpointOracle],
         tuple[FunctionType, FunctionType, FunctionType, FunctionType],
-        tuple[CodeType, CodeType, CodeType, CodeType], ModuleType, BuiltinFunctionType,
+        tuple[CodeType, CodeType, CodeType, CodeType],
+        ModuleType,
+        BuiltinFunctionType,
     ],
 ) -> None:
     oracle, owner, functions, codes, actual_math, emitter = raw
@@ -219,7 +247,10 @@ def capture(plan: dict[str, Any]) -> PreparedOriginals:
     )
     _require_no_denied_work()
     prepared = prepare_originals(
-        anchors, root=root, commit=plan["source_commit"], pins=pins,
+        anchors,
+        root=root,
+        commit=plan["source_commit"],
+        pins=pins,
     )
     _require_no_denied_work()
     _unchanged(raw)
@@ -235,8 +266,13 @@ def _deny_external_work(event: str, args: tuple[object, ...]) -> None:
     global _DENIED_WORK
     del args
     if event in (
-        "subprocess.Popen", "os.system", "os.posix_spawn", "os.exec", "os.fork",
-        "os.forkpty", "pty.spawn",
+        "subprocess.Popen",
+        "os.system",
+        "os.posix_spawn",
+        "os.exec",
+        "os.fork",
+        "os.forkpty",
+        "pty.spawn",
     ) or event.startswith("socket."):
         if _DENIED_WORK is None:
             _DENIED_WORK = event[:128]
@@ -251,7 +287,11 @@ def _empty_cache(cache: Path) -> bool:
 def child(plan_path: Path, plan_digest: str, cache: Path) -> dict[str, object]:
     if not sys.flags.isolated or not sys.flags.dont_write_bytecode:
         raise BootstrapError("Expected isolated interpreter and disabled bytecode writes")
-    if sys._xoptions.get("pycache_prefix") != str(cache) or not cache.is_dir() or not _empty_cache(cache):
+    if (
+        sys._xoptions.get("pycache_prefix") != str(cache)
+        or not cache.is_dir()
+        or not _empty_cache(cache)
+    ):
         raise BootstrapError("Expected the fresh owned empty bytecode prefix")
     plan = read_launch_record(plan_path, plan_digest)
     if ".".join(str(part) for part in sys.version_info[:3]) != plan["python_version"]:
@@ -276,9 +316,13 @@ def child(plan_path: Path, plan_digest: str, cache: Path) -> dict[str, object]:
     # Strong references stay alive through the final checks. No future child can
     # reconstruct these anchors from this bounded capture-only completion report.
     return {
-        "kind": "d1-capture-only", "source_commit": plan["source_commit"],
-        "owners": len(prepared.owners), "original_methods": len(prepared.original_methods),
-        "emitter": "math.exp", "primitive_calls_permitted": False, "retention_activated": False,
+        "kind": "d1-capture-only",
+        "source_commit": plan["source_commit"],
+        "owners": len(prepared.owners),
+        "original_methods": len(prepared.original_methods),
+        "emitter": "math.exp",
+        "primitive_calls_permitted": False,
+        "retention_activated": False,
     }
 
 

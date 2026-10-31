@@ -47,9 +47,13 @@ def fake_boundary(monkeypatch: pytest.MonkeyPatch) -> tuple[dict[str, Any], dict
     fixture.__dict__["SourcePin"] = lambda **kw: kw
     originals = ModuleType("d1_originals")
     prefix = ModuleType("d1_prefix_evidence")
-    objects = {"endpoint_belief_reference": oracle, "math": actual_math,
-               "d1_fixture_reference": fixture, "d1_prefix_evidence": prefix,
-               "d1_originals": originals}
+    objects = {
+        "endpoint_belief_reference": oracle,
+        "math": actual_math,
+        "d1_fixture_reference": fixture,
+        "d1_prefix_evidence": prefix,
+        "d1_originals": originals,
+    }
     captured: list[tuple[Any, ...]] = []
 
     def anchors(*values: Any) -> tuple[Any, ...]:
@@ -60,11 +64,17 @@ def fake_boundary(monkeypatch: pytest.MonkeyPatch) -> tuple[dict[str, Any], dict
     def prepare(held: tuple[Any, ...], **kwargs: Any) -> SimpleNamespace:
         calls.append("prepare")
         assert kwargs["commit"] == "a" * 40
-        assert kwargs["pins"] == tuple({"path": rel, "sha256": "b" * 64}
-                                       for rel in bootstrap.SOURCE_PIN_PATHS)
+        assert kwargs["pins"] == tuple(
+            {"path": rel, "sha256": "b" * 64} for rel in bootstrap.SOURCE_PIN_PATHS
+        )
         assert held[0] is oracle and held[1] is Owner and held[-1] is math.exp
-        return SimpleNamespace(reference=object(), producer=object(), owners=(Owner(),) * 13,
-                               original_methods=(Owner().position,) * 22, emitter=math.exp)
+        return SimpleNamespace(
+            reference=object(),
+            producer=object(),
+            owners=(Owner(),) * 13,
+            original_methods=(Owner().position,) * 22,
+            emitter=math.exp,
+        )
 
     originals.__dict__["OriginalAnchors"] = anchors
     originals.__dict__["prepare_originals"] = prepare
@@ -81,26 +91,42 @@ def fake_boundary(monkeypatch: pytest.MonkeyPatch) -> tuple[dict[str, Any], dict
     monkeypatch.setattr(bootstrap, "_source_module", source)
     monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules=module_table))
     monkeypatch.setattr(bootstrap, "math", actual_math)
-    monkeypatch.setattr(bootstrap, "importlib", SimpleNamespace(import_module=lambda name: objects[name]))
+    monkeypatch.setattr(
+        bootstrap, "importlib", SimpleNamespace(import_module=lambda name: objects[name])
+    )
     monkeypatch.setattr(bootstrap, "_check_loaded", lambda plan: None)
     for name in ("endpoint_belief_reference", *bootstrap.CONSUMERS):
         module_table.pop(name, None)
     module_table["math"] = actual_math
     plan = {
-        "checkout": "/synthetic", "source_commit": "a" * 40,
+        "checkout": "/synthetic",
+        "source_commit": "a" * 40,
         "import_map": {"endpoint_belief_reference": Owner.position.__code__.co_filename},
-        "files": [{"path": "/synthetic/" + rel, "sha256": "b" * 64}
-                  for rel in bootstrap.SOURCE_PIN_PATHS],
+        "files": [
+            {"path": "/synthetic/" + rel, "sha256": "b" * 64} for rel in bootstrap.SOURCE_PIN_PATHS
+        ],
     }
-    return plan, {"calls": calls, "objects": objects, "owner": Owner, "captured": captured, "modules": module_table}
+    return plan, {
+        "calls": calls,
+        "objects": objects,
+        "owner": Owner,
+        "captured": captured,
+        "modules": module_table,
+    }
 
 
-def test_capture_retains_before_consumers_and_constructs_once(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_capture_retains_before_consumers_and_constructs_once(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     plan, context = fake_boundary(monkeypatch)
     prepared = bootstrap.capture(plan)
     assert context["calls"] == [
-        "endpoint_belief_reference", "d1_fixture_reference", "d1_prefix_evidence",
-        "d1_originals", "anchors", "prepare",
+        "endpoint_belief_reference",
+        "d1_fixture_reference",
+        "d1_prefix_evidence",
+        "d1_originals",
+        "anchors",
+        "prepare",
     ]
     held = context["captured"][0]
     for name, function, code in zip(bootstrap.METHOD_NAMES, held[2], held[3], strict=True):
@@ -109,9 +135,12 @@ def test_capture_retains_before_consumers_and_constructs_once(monkeypatch: pytes
     assert prepared.emitter is held[-1] and len(prepared.owners) == 13
 
 
-@pytest.mark.parametrize("mutation", ["module", "class", "function", "code", "math_module", "emitter"])
+@pytest.mark.parametrize(
+    "mutation", ["module", "class", "function", "code", "math_module", "emitter"]
+)
 def test_retained_identity_detects_replacement(
-    monkeypatch: pytest.MonkeyPatch, mutation: str,
+    monkeypatch: pytest.MonkeyPatch,
+    mutation: str,
 ) -> None:
     plan, context = fake_boundary(monkeypatch)
     raw = bootstrap._raw_anchors(plan)
@@ -187,8 +216,18 @@ def test_normal_source_loader_and_origin_are_required(monkeypatch: pytest.Monkey
         bootstrap._source_module("synthetic", plan)
 
 
-@pytest.mark.parametrize("event", ["subprocess.Popen", "os.system", "os.exec", "os.fork",
-                                  "os.posix_spawn", "socket.connect", "socket.__new__"])
+@pytest.mark.parametrize(
+    "event",
+    [
+        "subprocess.Popen",
+        "os.system",
+        "os.exec",
+        "os.fork",
+        "os.posix_spawn",
+        "socket.connect",
+        "socket.__new__",
+    ],
+)
 def test_external_work_events_are_rejected_without_invocation(event: str) -> None:
     with pytest.raises(bootstrap.BootstrapError, match="spawn"):
         bootstrap._deny_external_work(event, ())
@@ -209,10 +248,22 @@ def test_record_read_uses_expected_digest(tmp_path: Path) -> None:
         bootstrap.read_launch_record(path, "0" * 64)
 
 
-@pytest.mark.parametrize("case", ["allowed", "unknown_origin", "alias", "tests_alias", "missing_spec",
-                                 "unknown_builtin", "unknown_frozen", "native_outside_map"])
+@pytest.mark.parametrize(
+    "case",
+    [
+        "allowed",
+        "unknown_origin",
+        "alias",
+        "tests_alias",
+        "missing_spec",
+        "unknown_builtin",
+        "unknown_frozen",
+        "native_outside_map",
+    ],
+)
 def test_loaded_registry_matches_fixed_origins(
-    monkeypatch: pytest.MonkeyPatch, case: str,
+    monkeypatch: pytest.MonkeyPatch,
+    case: str,
 ) -> None:
     name = "owned"
     origin = "/owned/source.py"
@@ -220,8 +271,11 @@ def test_loaded_registry_matches_fixed_origins(
     loader = importlib.machinery.SourceFileLoader(name, origin)
     module.__spec__ = importlib.machinery.ModuleSpec(name, loader, origin=origin)
     plan = {
-        "files": [{"path": origin}], "import_map": {name: origin}, "checkout": "/owned",
-        "frozen_modules": ["os"], "builtin_modules": ["sys"],
+        "files": [{"path": origin}],
+        "import_map": {name: origin},
+        "checkout": "/owned",
+        "frozen_modules": ["os"],
+        "builtin_modules": ["sys"],
         "site_packages": "/owned/.venv/lib/python3.12/site-packages",
     }
     if case == "unknown_origin":
@@ -246,10 +300,23 @@ def test_loaded_registry_matches_fixed_origins(
             bootstrap._check_loaded(plan)
 
 
-@pytest.mark.parametrize("case", ["success", "not_isolated", "bytecode_writes", "used_cache",
-                                 "path", "version", "prefix", "checkout_path"])
+@pytest.mark.parametrize(
+    "case",
+    [
+        "success",
+        "not_isolated",
+        "bytecode_writes",
+        "used_cache",
+        "path",
+        "version",
+        "prefix",
+        "checkout_path",
+    ],
+)
 def test_child_startup_gates_without_importing_consumers(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, case: str,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    case: str,
 ) -> None:
     cache = tmp_path / "cache"
     cache.mkdir()
@@ -258,14 +325,21 @@ def test_child_startup_gates_without_importing_consumers(
     captured: list[object] = []
     hooks: list[object] = []
     plan = {
-        "checkout": str(root), "venv_root": str(venv), "python_version": "3.12.3",
-        "startup_sys_path": ["/owned/stdlib"], "builtin_modules": ["sys"],
-        "bootstrap": str(Path(bootstrap.__file__).absolute()), "source_commit": "a" * 40,
+        "checkout": str(root),
+        "venv_root": str(venv),
+        "python_version": "3.12.3",
+        "startup_sys_path": ["/owned/stdlib"],
+        "builtin_modules": ["sys"],
+        "bootstrap": str(Path(bootstrap.__file__).absolute()),
+        "source_commit": "a" * 40,
     }
     state = SimpleNamespace(
         flags=SimpleNamespace(isolated=1, dont_write_bytecode=1),
-        _xoptions={"pycache_prefix": str(cache)}, version_info=(3, 12, 3),
-        prefix=str(venv), path=["/owned/stdlib"], builtin_module_names=("sys",),
+        _xoptions={"pycache_prefix": str(cache)},
+        version_info=(3, 12, 3),
+        prefix=str(venv),
+        path=["/owned/stdlib"],
+        builtin_module_names=("sys",),
         addaudithook=hooks.append,
     )
     if case == "not_isolated":
@@ -302,20 +376,31 @@ def test_child_startup_gates_without_importing_consumers(
         assert captured == [] and hooks == []
 
 
-@pytest.mark.parametrize("name", [
-    "d1_primitive_recording", "d1_primitive_sink", "d1_codec_append",
-    "d1_table_retention", "unmapped_helper", "strange_physics.unmapped",
-])
+@pytest.mark.parametrize(
+    "name",
+    [
+        "d1_primitive_recording",
+        "d1_primitive_sink",
+        "d1_codec_append",
+        "d1_table_retention",
+        "unmapped_helper",
+        "strange_physics.unmapped",
+    ],
+)
 def test_pinned_but_unmapped_checkout_origin_is_rejected(
-    monkeypatch: pytest.MonkeyPatch, name: str,
+    monkeypatch: pytest.MonkeyPatch,
+    name: str,
 ) -> None:
     origin = "/owned/tests/" + name + ".py"
     module = ModuleType(name)
     loader = importlib.machinery.SourceFileLoader(name, origin)
     module.__spec__ = importlib.machinery.ModuleSpec(name, loader, origin=origin)
     plan = {
-        "checkout": "/owned", "files": [{"path": origin}], "import_map": {},
-        "frozen_modules": [], "builtin_modules": [],
+        "checkout": "/owned",
+        "files": [{"path": origin}],
+        "import_map": {},
+        "frozen_modules": [],
+        "builtin_modules": [],
         "site_packages": "/owned/.venv/lib/python3.12/site-packages",
     }
     monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={name: module}))
@@ -347,7 +432,8 @@ def test_cache_scan_observes_only_first_unexpected_entry(monkeypatch: pytest.Mon
 
 @pytest.mark.parametrize("stage", ["consumer", "anchors", "prepare"])
 def test_swallowed_denied_work_still_rejects_capture(
-    monkeypatch: pytest.MonkeyPatch, stage: str,
+    monkeypatch: pytest.MonkeyPatch,
+    stage: str,
 ) -> None:
     plan, context = fake_boundary(monkeypatch)
 
@@ -396,20 +482,27 @@ def test_first_denied_event_remains_sticky() -> None:
 
 @pytest.mark.parametrize("case", ["dependency_inside_checkout_venv", "installed_project_alias"])
 def test_runtime_inside_checkout_preserves_installed_source_boundary(
-    monkeypatch: pytest.MonkeyPatch, case: str,
+    monkeypatch: pytest.MonkeyPatch,
+    case: str,
 ) -> None:
     site = "/owned/.venv/lib/python3.12/site-packages"
     name = "dependency.module" if case == "dependency_inside_checkout_venv" else "project_alias"
-    suffix = "/dependency/module.py" if case == "dependency_inside_checkout_venv" else (
-        "/strange_physics/unlisted.py"
+    suffix = (
+        "/dependency/module.py"
+        if case == "dependency_inside_checkout_venv"
+        else ("/strange_physics/unlisted.py")
     )
     origin = site + suffix
     module = ModuleType(name)
     loader = importlib.machinery.SourceFileLoader(name, origin)
     module.__spec__ = importlib.machinery.ModuleSpec(name, loader, origin=origin)
     plan = {
-        "checkout": "/owned", "site_packages": site, "files": [{"path": origin}],
-        "import_map": {}, "frozen_modules": [], "builtin_modules": [],
+        "checkout": "/owned",
+        "site_packages": site,
+        "files": [{"path": origin}],
+        "import_map": {},
+        "frozen_modules": [],
+        "builtin_modules": [],
     }
     monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={name: module}))
     if case == "dependency_inside_checkout_venv":
@@ -422,7 +515,9 @@ def test_runtime_inside_checkout_preserves_installed_source_boundary(
 @pytest.mark.parametrize("namespace", ["io", "re"])
 @pytest.mark.parametrize("case", ["canonical", "impostor", "wrong_parent_origin"])
 def test_typing_namespace_alias_requires_exact_protected_parent(
-    monkeypatch: pytest.MonkeyPatch, namespace: str, case: str,
+    monkeypatch: pytest.MonkeyPatch,
+    namespace: str,
+    case: str,
 ) -> None:
     origin = "/runtime/stdlib/typing.py"
     parent = ModuleType("typing")
@@ -438,13 +533,24 @@ def test_typing_namespace_alias_requires_exact_protected_parent(
         parent.__spec__.origin = "/runtime/other/typing.py"
         parent.__file__ = "/runtime/other/typing.py"
     plan: dict[str, Any] = {
-        "checkout": "/owned", "site_packages": "/owned/.venv/site", "stdlib": "/runtime/stdlib",
+        "checkout": "/owned",
+        "site_packages": "/owned/.venv/site",
+        "stdlib": "/runtime/stdlib",
         "files": [{"path": origin}, {"path": "/runtime/other/typing.py"}],
-        "import_map": {}, "frozen_modules": [], "builtin_modules": [],
+        "import_map": {},
+        "frozen_modules": [],
+        "builtin_modules": [],
     }
-    monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={
-        "typing": parent, "typing." + namespace: observed,
-    }))
+    monkeypatch.setattr(
+        bootstrap,
+        "sys",
+        SimpleNamespace(
+            modules={
+                "typing": parent,
+                "typing." + namespace: observed,
+            }
+        ),
+    )
     if case == "canonical":
         bootstrap._check_loaded(plan)
     else:

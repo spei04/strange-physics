@@ -32,15 +32,19 @@ PATHS = (
 
 
 def anchors() -> OriginalAnchors:
-    values = tuple(vars(EndpointOracle)[name] for name in ("position", "exp", "log", "circle_constant"))
+    values = tuple(
+        vars(EndpointOracle)[name] for name in ("position", "exp", "log", "circle_constant")
+    )
     assert len(values) == 4 and all(type(value) is FunctionType for value in values)
     emitter = vars(math)["exp"]
     assert type(emitter) is BuiltinFunctionType
     return OriginalAnchors(
-        oracle_module, EndpointOracle,
+        oracle_module,
+        EndpointOracle,
         (values[0], values[1], values[2], values[3]),
         (values[0].__code__, values[1].__code__, values[2].__code__, values[3].__code__),
-        math, emitter,
+        math,
+        emitter,
     )
 
 
@@ -49,7 +53,9 @@ def pins() -> tuple[SourcePin, ...]:
 
 
 def prepare(value: OriginalAnchors | None = None) -> PreparedOriginals:
-    return prepare_originals(anchors() if value is None else value, root=ROOT, commit=COMMIT, pins=pins())
+    return prepare_originals(
+        anchors() if value is None else value, root=ROOT, commit=COMMIT, pins=pins()
+    )
 
 
 def denied(*args: object, **kwargs: object) -> NoReturn:
@@ -71,30 +77,85 @@ def test_actual_consumers_own_all_thirteen_and_fixed_original_slots() -> None:
     saved = anchors()
     result = prepare(saved)
     assert result.producer.prepared_reference_owner is result.owners[0]
-    assert all(a is b for a, b in zip(result.owners[1:4], result.reference.channels.values(), strict=True))
-    assert all(a is b for a, b in zip(result.owners[4:12], result.reference.arithmetic.values(), strict=True))
+    assert all(
+        a is b for a, b in zip(result.owners[1:4], result.reference.channels.values(), strict=True)
+    )
+    assert all(
+        a is b
+        for a, b in zip(result.owners[4:12], result.reference.arithmetic.values(), strict=True)
+    )
     assert result.owners[12] is result.reference.constants_oracle
     assert len({id(owner) for owner in result.owners}) == 13
     assert len({id(owner.values) for owner in result.owners}) == 13
     expected = (
-        (0, 0), (1, 0), (2, 0), (3, 0),
-        (4, 1), (4, 2), (5, 1), (5, 2), (6, 1), (6, 2), (7, 1), (7, 2),
-        (8, 1), (8, 2), (9, 1), (9, 2), (10, 1), (10, 2), (11, 1), (11, 2),
-        (12, 2), (12, 3),
+        (0, 0),
+        (1, 0),
+        (2, 0),
+        (3, 0),
+        (4, 1),
+        (4, 2),
+        (5, 1),
+        (5, 2),
+        (6, 1),
+        (6, 2),
+        (7, 1),
+        (7, 2),
+        (8, 1),
+        (8, 2),
+        (9, 1),
+        (9, 2),
+        (10, 1),
+        (10, 2),
+        (11, 1),
+        (11, 2),
+        (12, 2),
+        (12, 3),
     )
     assert len(result.original_methods) == 22
     for method, (owner, definition) in zip(result.original_methods, expected, strict=True):
-        assert method.__self__ is result.owners[owner] and method.__func__ is saved.functions[definition]
+        assert (
+            method.__self__ is result.owners[owner]
+            and method.__func__ is saved.functions[definition]
+        )
     assert result.emitter is saved.emitter and result.emitter is math.exp
     for owner in result.owners:
-        assert (owner.lookups, owner.series_values, owner.exp_calls, owner.log_calls,
-                owner.trig_calls, owner.machin_terms) == (0, 0, 0, 0, 0, 0)
+        assert (
+            owner.lookups,
+            owner.series_values,
+            owner.exp_calls,
+            owner.log_calls,
+            owner.trig_calls,
+            owner.machin_terms,
+        ) == (0, 0, 0, 0, 0, 0)
         assert owner.values == {} and owner.pi is None
 
 
 @pytest.mark.parametrize(
-    "kind", ("record", "function-list", "function-count", "code-list", "code-count", "code", "class", "module", "math-module", "emitter"),
-    ids=("record", "function-list", "function-count", "code-list", "code-count", "code", "class", "module", "math-module", "emitter"),
+    "kind",
+    (
+        "record",
+        "function-list",
+        "function-count",
+        "code-list",
+        "code-count",
+        "code",
+        "class",
+        "module",
+        "math-module",
+        "emitter",
+    ),
+    ids=(
+        "record",
+        "function-list",
+        "function-count",
+        "code-list",
+        "code-count",
+        "code",
+        "class",
+        "module",
+        "math-module",
+        "emitter",
+    ),
 )
 def test_bad_anchors_reject_before_construction(monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
     value = anchors()
@@ -125,8 +186,14 @@ def test_bad_anchors_reject_before_construction(monkeypatch: pytest.MonkeyPatch,
             prepare(malformed)
 
 
-@pytest.mark.parametrize("kind", ("root", "commit", "count", "order", "digest"), ids=("root", "commit", "count", "order", "digest"))
-def test_bad_producer_declarations_precede_construction(monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+@pytest.mark.parametrize(
+    "kind",
+    ("root", "commit", "count", "order", "digest"),
+    ids=("root", "commit", "count", "order", "digest"),
+)
+def test_bad_producer_declarations_precede_construction(
+    monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
     root, commit, source_pins = ROOT, COMMIT, pins()
     if kind == "root":
         root = Path("relative")
@@ -144,8 +211,14 @@ def test_bad_producer_declarations_precede_construction(monkeypatch: pytest.Monk
             prepare_originals(anchors(), root=root, commit=commit, pins=source_pins)
 
 
-@pytest.mark.parametrize("kind", ("fixture-alias", "reference-alias", "producer-class", "reference-class", "namespace"), ids=("fixture-alias", "reference-alias", "producer-class", "reference-class", "namespace"))
-def test_changed_consumers_reject_before_construction(monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+@pytest.mark.parametrize(
+    "kind",
+    ("fixture-alias", "reference-alias", "producer-class", "reference-class", "namespace"),
+    ids=("fixture-alias", "reference-alias", "producer-class", "reference-class", "namespace"),
+)
+def test_changed_consumers_reject_before_construction(
+    monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
     saved = anchors()
     with monkeypatch.context() as scoped:
         scoped.setattr(D1Reference, "__init__", denied)
@@ -164,8 +237,29 @@ def test_changed_consumers_reject_before_construction(monkeypatch: pytest.Monkey
 
 
 @pytest.mark.parametrize(
-    "kind", ("duplicate", "shared-cache", "bool-counter", "used-cache", "pi", "shadow", "wrong-owner", "channel-order", "case-order"),
-    ids=("duplicate", "shared-cache", "bool-counter", "used-cache", "pi", "shadow", "wrong-owner", "channel-order", "case-order"),
+    "kind",
+    (
+        "duplicate",
+        "shared-cache",
+        "bool-counter",
+        "used-cache",
+        "pi",
+        "shadow",
+        "wrong-owner",
+        "channel-order",
+        "case-order",
+    ),
+    ids=(
+        "duplicate",
+        "shared-cache",
+        "bool-counter",
+        "used-cache",
+        "pi",
+        "shadow",
+        "wrong-owner",
+        "channel-order",
+        "case-order",
+    ),
 )
 def test_actual_owner_container_mutations_fail(monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
     original_init = D1Reference.__init__
@@ -199,11 +293,14 @@ def test_actual_owner_container_mutations_fail(monkeypatch: pytest.MonkeyPatch, 
 
 
 @pytest.mark.parametrize("kind", ("code", "emitter", "alias"), ids=("code", "emitter", "alias"))
-def test_definitions_rechecked_after_all_owners_created(monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+def test_definitions_rechecked_after_all_owners_created(
+    monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
     saved = anchors()
     original_prepare = D1FixtureProducer.prepare_reference_owner
     created: list[EndpointOracle] = []
     with monkeypatch.context() as scoped:
+
         def prepare_owner(producer: D1FixtureProducer) -> EndpointOracle:
             owner = original_prepare(producer)
             created.append(owner)
@@ -245,8 +342,23 @@ def test_constructor_failure_propagates_exact_exception(monkeypatch: pytest.Monk
 
 
 @pytest.mark.parametrize(
-    "kind", ("oracle-counter", "reference-field", "producer-field", "oracle-hook", "reference-hook", "producer-hook"),
-    ids=("oracle-counter", "reference-field", "producer-field", "oracle-hook", "reference-hook", "producer-hook"),
+    "kind",
+    (
+        "oracle-counter",
+        "reference-field",
+        "producer-field",
+        "oracle-hook",
+        "reference-hook",
+        "producer-hook",
+    ),
+    ids=(
+        "oracle-counter",
+        "reference-field",
+        "producer-field",
+        "oracle-hook",
+        "reference-hook",
+        "producer-hook",
+    ),
 )
 def test_postconstruction_descriptor_and_hook_never_execute(
     monkeypatch: pytest.MonkeyPatch, kind: str
@@ -265,6 +377,7 @@ def test_postconstruction_descriptor_and_hook_never_execute(
         raise AssertionError("Freshness validation must not evaluate a substituted lookup hook")
 
     with monkeypatch.context() as scoped:
+
         def prepare_owner(producer: D1FixtureProducer) -> EndpointOracle:
             owner = original_prepare(producer)
             created.append(owner)
@@ -273,7 +386,9 @@ def test_postconstruction_descriptor_and_hook_never_execute(
             elif kind == "reference-field":
                 scoped.setattr(D1Reference, "channels", property(getter), raising=False)
             elif kind == "producer-field":
-                scoped.setattr(D1FixtureProducer, "_prepared_reference_owner", property(getter), raising=False)
+                scoped.setattr(
+                    D1FixtureProducer, "_prepared_reference_owner", property(getter), raising=False
+                )
             elif kind == "oracle-hook":
                 scoped.setattr(EndpointOracle, "__getattribute__", lookup)
             elif kind == "reference-hook":
