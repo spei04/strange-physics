@@ -250,7 +250,38 @@ unknown exact trigger/phase/forbidden-entry census and all charges. Later succes
 does not reconstruct that missing history or reset earlier scientific unknowns.
 The private checkpoint digest is 212f2261db7a9305dc9470697b7a2692dbf3873cf43ae31503177f5ab30954c9.
 
-One original ordinary PR CI attempt is next. The broader suite includes historical
-physics checks and cannot substitute for this private guard receipt or authorize
-D1 science. The next integration path and missing trust/resource evidence are
-listed in the [loaded-definition design](D1_LOADED_DEFINITION_DESIGN.md).
+The original ordinary PR CI result is recorded below. That broader suite includes
+historical physics checks and cannot substitute for the private guard receipt or
+authorize D1 science. The next integration path and missing trust/resource evidence
+are listed in the [loaded-definition design](D1_LOADED_DEFINITION_DESIGN.md).
+
+## Original CI acceptance
+
+[PR #155](https://github.com/spei04/strange-physics/pull/155)'s
+[original CI run](https://github.com/spei04/strange-physics/actions/runs/41190075377)
+passed all six required jobs in attempt 1. The frozen head is
+`f36f0895b7dc0ef6c809ba6b59d579734cd165b2`; tested merge
+`82301e8068753eaae3e94722749689c0bed75898` has the exact PR base/head parents and
+the same tree. The release-candidate job was correctly skipped for this PR.
+
+Python 3.12 and 3.14 each passed 6,086 tests, full typing over 227 files and
+1,567 external JSON Schema fixture checks with all references resolved. Package
+allowlists passed, and each runtime completed one eight-experiment smoke run
+without failure. Repeated printed smoke summaries represent the same run.
+Both analytic-reference jobs passed 24 cases/72 phases. Dependency and static
+security checks reported no identified issues. The existing two serializer
+warnings per runtime and three dependency-audit flag advisories remain retained;
+the serializer warning details match the parent run after timestamp removal.
+
+The six required jobs total 1,367 elapsed job-seconds against 4,980 configured
+timeout-seconds. The provider start-to-terminal interval is separately 600 seconds;
+these overlapping wall measures are not added or represented as CPU or billing.
+Whole-CI CPU, provider cost and external control usage remain unknown. The private
+CI seal digest is
+`cce91ac198e050b07cebf8baf813ff530ef089518d7366465b4b0d00ced7b9e7`.
+
+Hosted aggregate counts and source selection support coverage of the new tests;
+they do not reproduce the local ordered 62-case/186-phase guard receipt or
+reconstruct the interrupted attempt's missing history. The draft remains
+unmerged. This acceptance does not establish actual runtime provenance, reserved
+inventory acceptance, whole-path fit or D1 scientific admission.
