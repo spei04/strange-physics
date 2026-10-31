@@ -65,7 +65,16 @@ Evidence and the actual installation remain private in the cloud, owner protecte
 
 ## Follow-up work
 
-The next source work must address both defects without weakening rejection:
+The [source repair](https://github.com/spei04/strange-physics/commit/ed3053a7137949c6a6adb2619291687325f783f0)
+and 27 new regression cases have passed static review under standing implementation
+authority. Lead is preparing the [complete repair and validation proposal](D1_RUNTIME_REPAIR_PLAN.md)
+for diagnosis, software checks, one PR CI, protected-main candidate delivery,
+acquisition/setup, actual runtime validation and failure closeout. No tests,
+new candidate execution or runtime commands are admitted by this source task.
+The closed Unit22 200/600 account and consumed four-stage continuation do not
+provide a fresh test budget or retry authority.
+
+The source repair must address both defects without weakening rejection:
 
 1. Add bounded diagnostics for the rejected loaded-module key and import specification. Admit any frozen-module alias only with concrete evidence and exact protected identity checks; retain negative cases for forged or unlisted aliases.
 2. Reconcile a failed controller through verified retained invocation/group/profile evidence before service cleanup makes independent binding impossible. Preserve rejection of identity mismatch, missing evidence and uncertain closure. A failed capture must remain failed even when its service is closed.

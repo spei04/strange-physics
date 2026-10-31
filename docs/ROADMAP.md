@@ -1,8 +1,6 @@
 # Strange Physics — enterprise product blueprint and living roadmap
 
-**Current checkpoint:** [Canonical progress and next action](EXECUTION_LOG.md#current-assignment-board).
-
-2026-10-31: the approved [runtime continuation](research/D1_RUNTIME_QUALIFICATION_RESULT.md) passed materialization, three guard probes and the descendant handshake. Capture failed before capture JSON with an unlisted frozen module; its name is unknown and the runtime remains unqualified. The capture receipt retains unresolved owner/accounting evidence and its full 150 CPU service hold. Cumulative runtime charges are 219.91242 CPU / 113.7971664420329 wall seconds within the approved 400/600 account; all prior failures remain. Research/Quality accepted the failed-run evidence, Platform reconciled the ledger/docs and Lead owns custody. Candidate source remains exact [main 5e0b3e7](https://github.com/spei04/strange-physics/commit/5e0b3e7db436061f4d7c9a5e983f7878cea31974). A source repair is proposed only, without implementation or runtime allocation; no retry, new service or scientific run is admitted. Enterprise readiness remains an open gate.
+**Current checkpoint:** the source repair has passed static review; validation is pending. [Next owners and action](EXECUTION_LOG.md#current-assignment-board) · [Retained result](research/D1_RUNTIME_QUALIFICATION_RESULT.md).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 

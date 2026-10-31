@@ -137,10 +137,11 @@ refund. These charged amounts are not complete measured whole-operation costs.
 Capture receipt SHA-256:
 `bb55fdfb736774e56a6607c740be3e1ca2e4d0de9a30514cb3a4d2cccaa7923f`.
 Research and Quality independently accepted the failed-run evidence and retained
-accounting. A source repair for the frozen-module admission path is proposed
-only, without implementation/runtime allocation. All four continuation attempts
-are consumed; no retry, new service or remainder transfer is admitted. The
-scientific run remains unstarted.
+accounting. The source repair has passed static review. Software qualification,
+new candidate delivery and actual execution await the [complete repair and
+validation proposal](D1_RUNTIME_REPAIR_PLAN.md).
+All four continuation attempts are consumed; no test, retry, new service or
+remainder transfer is admitted. The scientific run remains unstarted.
 
 ## Final review and ledger
 

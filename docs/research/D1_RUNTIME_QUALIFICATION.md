@@ -58,8 +58,10 @@ Cumulative runtime charges are 219.91242 CPU / 113.7971664420329 wall seconds,
 including the full unreconciled 150 CPU capture service hold. The table below
 retains the approved pre-execution allocations and original forecast, not
 actual successful coverage. Research/Quality accepted the failed-run evidence and retained uncertainties.
-Source repair is proposed only, without implementation/runtime allocation.
-No retry, new service or scientific run is admitted.
+The source repair has passed static review. The [complete repair and validation
+proposal](D1_RUNTIME_REPAIR_PLAN.md) covers diagnosis, software qualification,
+new candidate delivery and actual runtime execution, pending approval.
+No test, retry, new service or scientific run is admitted.
 
 | Approved continuation stage | CPU seconds | Active-wall seconds |
 | --- | ---: | ---: |
