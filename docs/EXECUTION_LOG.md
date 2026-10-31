@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** PRs #138–#147 passed CI. Table formatting, lint and 215-file typing passed; local test qualification is incomplete. Codec source passed independent review.
-- **Assignments:** Platform completed sink CI. Research prepares codec checks; Quality reviews their controls. Lead publishes the table checkpoint and prepares its PR.
-- **Open gates:** Raw transcript storage exceeds 16 MiB. Lossless encoding, actual installation, protected inventory, historical evidence, complete material binding, aggregate fit and scientific admission remain pending. Owner appointment and exposure policy remain approved; no D1 batch is running.
+- **Verified:** PRs #138–#147 passed CI; table #148 is running. Codec checks passed 96 cases, 288 phases and 217-file typing.
+- **Assignments:** Platform verifies #148. Quality reviews the append design; Research owns its next source slice after review. Lead publishes codec evidence.
+- **Open gates:** Storage-adapter acknowledgement, metadata retention, source authentication, actual installation, protected inventory, historical evidence, complete material binding, aggregate fit and scientific admission remain pending. Owner appointment and exposure policy remain approved; no D1 batch is running.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Quality / Research / Platform / Project lead | Pure codec acceptance and append-adapter design | Codec de7c16f passed 96 cases/288 phases and full 217-file typing; all 23 children closed, 97.408103 CPU seconds charged. Earlier typing failure retained; precise state annotations preserve method bodies, and the missing-intent regression now reaches its guard. Table #148 remains frozen in CI, with its incomplete local census preserved. Research designs bounded append acknowledgement and raw fallback; independent review caught swallowed-reentry fault ordinals up to 3. No D1 batch. |
 | 2026-10-31 | Quality / Research / Platform / Project lead | Identity-table qualification and pure event codec | Registry #146 passed six required jobs with 5,493 tests per runtime; sink #147 is frozen in CI. Table source 6b23db5 passed formatting/lint/215-file typing and exact 95-case collection; the bounded test child hit SIGXCPU with no terminal census. All 33 children closed, 109.748763 CPU seconds charged, prior lint/typing failures retained. Pure codec source 20684e3 passed independent review with 96 authored cases still unrun; separate controls next. No D1 batch. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Lossless codec contract and pure identity-table slice | Exposure #145 passed six required jobs with 5,445 tests per runtime; registry #146 is frozen in CI. Independently reviewed codec contract af61389 preserves source-manifest meaning and adds canonical wire validation; its byte envelope remains conditional on future implementation and installation. Research authors bounded table construction/validation first; event encoding and activation remain separate slices. Sink ff332cd is published and awaits dependent PR delivery. No D1 batch. |
 | 2026-10-31 | Quality / Research / Platform / Project lead | Primitive file sink acceptance and transcript size proof | Sink e76284a passed 59 cases/177 phases and 213-file typing; independent audit verified 29 closed children, 3,009,024 retained logical bytes and 104.997527 charged CPU seconds. Collection-ID and typing failures remain recorded. The full-success raw transcript exceeds 16 MiB by syntax alone; reviewed lossless encoding and full output fit remain dependencies. Exposure #145 CI continues; no D1 batch. |
