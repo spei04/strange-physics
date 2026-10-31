@@ -14,8 +14,8 @@ import json
 import math
 import os
 import sys
-from pathlib import Path
 from collections.abc import Callable
+from pathlib import Path
 from types import BuiltinFunctionType, CodeType, FrameType, FunctionType, ModuleType
 from typing import TYPE_CHECKING, Any, NoReturn, cast
 
@@ -56,17 +56,47 @@ _RANDOM_BYTES = 34683
 # Fixed defining routes apply BEFORE importing these modules. No source-selected
 # callback, imports, resolve/stat or argument inspection occurs in the profile.
 _HELPER_DENIALS = {
-    "endpoint_belief_reference": ("binary", "EndpointOracle.position", "EndpointOracle.exp",
-        "EndpointOracle.log", "EndpointOracle.circle_constant", "EndpointOracle.trig"),
-    "d1_fixture_reference": ("D1FixtureProducer.run", "coefficients", "fixed_plan",
-        "verify_sources", "_inventories"),
-    "d1_prefix_evidence": ("D1Reference._endpoint", "D1Reference.training",
-        "D1Reference.take_training", "D1Reference.future", "D1Reference.constants",
-        "D1Reference.normalize", "D1Reference.census", "D1Reference.require_complete",
-        "qualify_prefix", "qualify_future", "joint_enclosure", "training_forecast",
-        "duplicate_forecast", "require_reference_reserve"),
-    "d1_bounds": ("enclose_cdf", "generalized_quantile", "enclose_predictive", "enclose_scores",
-        "certify_d1_prefix", "certify_d1_prior", "pair_scores", "classify_matched_panel"),
+    "endpoint_belief_reference": (
+        "binary",
+        "EndpointOracle.position",
+        "EndpointOracle.exp",
+        "EndpointOracle.log",
+        "EndpointOracle.circle_constant",
+        "EndpointOracle.trig",
+    ),
+    "d1_fixture_reference": (
+        "D1FixtureProducer.run",
+        "coefficients",
+        "fixed_plan",
+        "verify_sources",
+        "_inventories",
+    ),
+    "d1_prefix_evidence": (
+        "D1Reference._endpoint",
+        "D1Reference.training",
+        "D1Reference.take_training",
+        "D1Reference.future",
+        "D1Reference.constants",
+        "D1Reference.normalize",
+        "D1Reference.census",
+        "D1Reference.require_complete",
+        "qualify_prefix",
+        "qualify_future",
+        "joint_enclosure",
+        "training_forecast",
+        "duplicate_forecast",
+        "require_reference_reserve",
+    ),
+    "d1_bounds": (
+        "enclose_cdf",
+        "generalized_quantile",
+        "enclose_predictive",
+        "enclose_scores",
+        "certify_d1_prefix",
+        "certify_d1_prior",
+        "pair_scores",
+        "classify_matched_panel",
+    ),
     "grid_q1_reference": ("GridQ1Reference.__init__",),
 }
 _NATIVE_DENIALS = {
@@ -82,7 +112,6 @@ _NATIVE_DENIALS = {
 
 class BootstrapError(ValueError):
     """The actual fresh-child import or retained-object boundary differs."""
-
 
 
 class _PrimitiveWindow:
@@ -101,10 +130,16 @@ class _PrimitiveWindow:
     def __init__(self, plan: dict[str, Any], emitter: BuiltinFunctionType) -> None:
         root = Path(plan["checkout"])
         site = Path(plan["site_packages"])
-        self.routes = {str(root / "tests" / (name + ".py")): frozenset(names)
-                       for name, names in _HELPER_DENIALS.items()}
-        self.routes.update({str(site / "strange_physics" / (name + ".py")): frozenset(names)
-                            for name, names in _NATIVE_DENIALS.items()})
+        self.routes = {
+            str(root / "tests" / (name + ".py")): frozenset(names)
+            for name, names in _HELPER_DENIALS.items()
+        }
+        self.routes.update(
+            {
+                str(site / "strange_physics" / (name + ".py")): frozenset(names)
+                for name, names in _NATIVE_DENIALS.items()
+            }
+        )
         self.codes = ()
         self.emitter = emitter
         self.callback = self.profile
@@ -159,8 +194,13 @@ class _PrimitiveWindow:
         if not self.armed or self.getprofile() is not self.callback:
             self.deny("capture-profile-missing")
 
-    def retain(self, owner: type[EndpointOracle], codes: tuple[CodeType, ...],
-               emitter: BuiltinFunctionType, origin: str) -> None:
+    def retain(
+        self,
+        owner: type[EndpointOracle],
+        codes: tuple[CodeType, ...],
+        emitter: BuiltinFunctionType,
+        origin: str,
+    ) -> None:
         self.check()
         if self.codes or emitter is not self.emitter or len(codes) != 4:
             self.deny("retained-window-binding")
@@ -185,20 +225,29 @@ def _prepare_standard_library(plan: dict[str, Any]) -> None:
         raise BootstrapError("Standard initialization must precede helper lookup")
     origin = str(Path(plan["stdlib"]) / "random.py")
     entries = [item for item in plan["files"] if item.get("path") == origin]
-    if (len(entries) != 1 or entries[0].get("sha256") != _RANDOM_SHA256
-            or type(entries[0].get("bytes")) is not int
-            or entries[0]["bytes"] != _RANDOM_BYTES):
+    if (
+        len(entries) != 1
+        or entries[0].get("sha256") != _RANDOM_SHA256
+        or type(entries[0].get("bytes")) is not int
+        or entries[0]["bytes"] != _RANDOM_BYTES
+    ):
         raise BootstrapError("Reviewed random source pin is required before initialization")
     original = math.__dict__.get("exp")
     if type(original) is not BuiltinFunctionType:
         raise BootstrapError("Intact runtime exp is required before initialization")
     module = importlib.import_module("random")
     spec = module.__spec__
-    if (type(module) is not ModuleType or module.__name__ != "random"
-            or sys.modules.get("random") is not module or spec is None
-            or type(spec.loader) is not importlib.machinery.SourceFileLoader
-            or spec.origin != origin or module.__file__ != origin
-            or math.exp is not original or module.__dict__.get("_exp") is not original):
+    if (
+        type(module) is not ModuleType
+        or module.__name__ != "random"
+        or sys.modules.get("random") is not module
+        or spec is None
+        or type(spec.loader) is not importlib.machinery.SourceFileLoader
+        or spec.origin != origin
+        or module.__file__ != origin
+        or math.exp is not original
+        or module.__dict__.get("_exp") is not original
+    ):
         raise BootstrapError("Actual random origin or retained exp alias differs")
     _check_loaded(plan)
     _require_no_denied_work()
@@ -210,10 +259,14 @@ def _start_window(plan: dict[str, Any]) -> _PrimitiveWindow:
     global _WINDOW
     if _WINDOW is not None:
         raise BootstrapError("Capture window is already consumed")
-    if (not _STANDARD_ATTEMPTED or _PREPARED_RANDOM is None or _PREPARED_EXP is None
-            or sys.modules.get("random") is not _PREPARED_RANDOM
-            or _PREPARED_RANDOM.__dict__.get("_exp") is not _PREPARED_EXP
-            or math.exp is not _PREPARED_EXP):
+    if (
+        not _STANDARD_ATTEMPTED
+        or _PREPARED_RANDOM is None
+        or _PREPARED_EXP is None
+        or sys.modules.get("random") is not _PREPARED_RANDOM
+        or _PREPARED_RANDOM.__dict__.get("_exp") is not _PREPARED_EXP
+        or math.exp is not _PREPARED_EXP
+    ):
         raise BootstrapError("Retained standard-library initialization is required")
     window = _PrimitiveWindow(plan, _PREPARED_EXP)
     _WINDOW = window
