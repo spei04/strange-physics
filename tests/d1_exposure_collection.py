@@ -86,10 +86,20 @@ class _Metadata(Message):
 
 class Reason(_Metadata):
     code: Literal[
-        "extracted", "no-records", "exact-projection", "unsupported-format",
-        "unsupported-world", "unsupported-query", "unsupported-history",
-        "ambiguous-role", "unresolved-source", "unresolved-execution",
-        "earlier-external-gap", "post-cutoff-gap", "source-design", "analytic-only",
+        "extracted",
+        "no-records",
+        "exact-projection",
+        "unsupported-format",
+        "unsupported-world",
+        "unsupported-query",
+        "unsupported-history",
+        "ambiguous-role",
+        "unresolved-source",
+        "unresolved-execution",
+        "earlier-external-gap",
+        "post-cutoff-gap",
+        "source-design",
+        "analytic-only",
     ]
     detail: Detail
 
@@ -152,9 +162,9 @@ class CollectionContext(_Metadata):
         "strange-physics.d1-exposure-context.v1"
     )
     collection_id: OpaqueId
-    protocol_sha256: Literal[
-        "657c3c74346aedb165473b4672ed18ba5671da82e4873a2a3e6f514b58387399"
-    ] = PROTOCOL_SHA256
+    protocol_sha256: Literal["657c3c74346aedb165473b4672ed18ba5671da82e4873a2a3e6f514b58387399"] = (
+        PROTOCOL_SHA256
+    )
     source_commit: Commit
     policy_sha256: Hash
     extractor_id: OpaqueId
@@ -226,8 +236,9 @@ class SourceBinding(_Metadata):
 class Compatibility(_Metadata):
     status: Literal["compatible", "incompatible", "unknown"]
     reason: Reason
-    source_indices: Annotated[tuple[Annotated[int, Field(ge=0, lt=8)], ...],
-                              Field(min_length=1, max_length=8)]
+    source_indices: Annotated[
+        tuple[Annotated[int, Field(ge=0, lt=8)], ...], Field(min_length=1, max_length=8)
+    ]
 
 
 class CompatibilitySet(_Metadata):
@@ -269,8 +280,10 @@ class OccurrenceRecord(_Record):
     kind: Literal["execution-occurrence"]
     execution: ExecutionIdentity
     subject_locator: Locator
-    roles: Annotated[tuple[Literal["observation-truth", "candidate", "reference", "unknown"], ...],
-                     Field(min_length=1, max_length=4)]
+    roles: Annotated[
+        tuple[Literal["observation-truth", "candidate", "reference", "unknown"], ...],
+        Field(min_length=1, max_length=4),
+    ]
     world_id: OpaqueId | None
     unresolved_world: Reason | None
 
@@ -375,8 +388,13 @@ class CollectionRoot(_Metadata):
 
 def _canonical(value: Message, limit: int) -> bytes:
     bounded_canonical(value, limit)
-    return json.dumps(value.model_dump(mode="json"), sort_keys=True, separators=(",", ":"),
-                      ensure_ascii=True, allow_nan=False).encode("ascii")
+    return json.dumps(
+        value.model_dump(mode="json"),
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+        allow_nan=False,
+    ).encode("ascii")
 
 
 def _parse[M: Message](raw: bytes, model: type[M], limit: int) -> M:
@@ -462,7 +480,10 @@ def verify_collection(
             raise ContractViolation("invalid_request", 422)
         part = parse_part(actual.raw)
         if (part.context_sha256, part.index, part.kind, len(part.records)) != (
-            root.context_sha256, bound.index, bound.kind, bound.row_count,
+            root.context_sha256,
+            bound.index,
+            bound.kind,
+            bound.row_count,
         ):
             raise ContractViolation("invalid_request", 422)
         for row in part.records:
@@ -491,13 +512,21 @@ def verify_collection(
                 or row.projections.world != world.projections.world
             ):
                 raise ContractViolation("invalid_request", 422)
-    expected_counts = RoleCounts(physical_world=counts["physical-world"],
-                                execution_occurrence=counts["execution-occurrence"],
-                                design_or_analytic_material=counts["design-or-analytic-material"])
+    expected_counts = RoleCounts(
+        physical_world=counts["physical-world"],
+        execution_occurrence=counts["execution-occurrence"],
+        design_or_analytic_material=counts["design-or-analytic-material"],
+    )
     if root.row_counts != expected_counts or any(
         c.row_count != coverage[c.input_id] for c in root.coverage
     ):
         raise ContractViolation("invalid_request", 422)
     objects = {item.raw_sha256: item.byte_length for item in root.context.inputs}
-    return StructuralCollection(root, tuple(parts), hashlib.sha256(root_raw).hexdigest(),
-                                actual_bytes, len(objects), sum(objects.values()))
+    return StructuralCollection(
+        root,
+        tuple(parts),
+        hashlib.sha256(root_raw).hexdigest(),
+        actual_bytes,
+        len(objects),
+        sum(objects.values()),
+    )
