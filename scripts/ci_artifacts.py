@@ -25,6 +25,7 @@ MODULES = frozenset(
         "artifact_contracts.py",
         "artifact_checkpoints.py",
         "bounded_json.py",
+        "calibration_fixture_contracts.py",
         "cli.py",
         "contracts.py",
         "control_contracts.py",

@@ -22,7 +22,7 @@ jobs:
   checks:
     name: Checks (Python ${{ matrix.python }})
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -51,7 +51,7 @@ jobs:
       - run: uv run --no-sync ruff check .
       - run: uv run --no-sync ruff format --check .
       - run: uv run --no-sync mypy src tests examples
-      - run: uv run --no-sync pytest -p no:cacheprovider --ignore=tests/test_laplace_analytic_reference.py
+      - run: uv run --no-sync pytest -p no:cacheprovider --ignore=tests/test_laplace_analytic_reference.py --durations=25
       - name: Validate external JSON Schema fixtures and references
         run: uv run --no-sync python scripts/validate_contracts.py
       - name: Build and inspect package archives offline
@@ -206,6 +206,7 @@ jobs:
       - name: Record archive checksums and source/lock identity
         run: |
           .venv/bin/python scripts/ci_artifacts.py --dist "$RUNNER_TEMP/candidate" --runtime-requirements "$RUNNER_TEMP/runtime-requirements.txt"
+          cp "$RUNNER_TEMP/runtime-requirements.txt" "$RUNNER_TEMP/candidate/runtime-requirements.txt"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: release-candidate-${{ github.sha }}-${{ github.run_attempt }}
@@ -214,6 +215,7 @@ jobs:
             ${{ runner.temp }}/candidate/strange_physics-*.tar.gz
             ${{ runner.temp }}/candidate/provenance.json
             ${{ runner.temp }}/candidate/SHA256SUMS
+            ${{ runner.temp }}/candidate/runtime-requirements.txt
           if-no-files-found: error
           include-hidden-files: false
           retention-days: 7
