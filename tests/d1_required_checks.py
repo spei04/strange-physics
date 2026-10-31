@@ -146,7 +146,7 @@ def _posterior(key: str, case: str, count: int) -> tuple[RequiredCheck, ...]:
            constants=("two-global-plus-four-per-node-checks", "retain-vector-and-maximum",
                       "joint-domain=[-32,4]", "perturbation<1", "positive-exp-sum-denominators")),
         _p(key, "normalizer.complete", "bind_prefix", "BoundPrefix.result.normalization",
-           "BoundPrefix.normalizer_input", "QualifiedPrefixEvidence.emitted",
+           "BoundPrefix.result.normalizer_input", "QualifiedPrefixEvidence.emitted",
            relation="exact-normalized-work-and-positive-emissions",
            constants=(f"exp_evaluations={count}", "log_evaluations=1", "underflow=empty",
                       "all-finite-joint-and-normalized-logs", "0<emitted<=1")),

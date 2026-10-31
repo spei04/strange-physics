@@ -111,6 +111,9 @@ def test_duplicate_prefix_keeps_both_channels_and_one_overlapping_reserve() -> N
     assert "variation-uses-fixed-reserve" in two["overlapping_reserve"].constants
     assert two["reference.normalization"].limit == D("1e-48")
     assert "two-global-plus-four-per-node-checks" in two["reference.normalization"].constants
+    assert tuple(operand.field for operand in two["normalizer.complete"].operands[:2]) == (
+        "BoundPrefix.result.normalization", "BoundPrefix.result.normalizer_input",
+    )
 
 
 def test_record1_uses_matched_posterior_and_training_time_not_a_second_prior() -> None:
