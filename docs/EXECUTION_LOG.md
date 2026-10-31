@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Verified:** PRs #138–#143 passed CI; kernel #144 is running. Exposure contracts passed 91 cases and 209-file typing. The fixed report registry passed 48 cases and 211-file typing after a recorded typing repair.
-- **Assignments:** Platform verifies #144. Lead publishes the registry. Research implements durable recorder storage; Quality reviews its source and evidence.
-- **Open gates:** Owner appointment and exposure policy are approved. Actual protected inventory, historical evidence, durable recording installation, full material binding and scientific admission remain pending. No D1 batch is running.
+- **Verified:** PRs #138–#144 passed CI; exposure #145 is running. Sink checks passed 59 cases and 213-file typing. Exposure and registry checks remain accepted.
+- **Assignments:** Platform verifies #145. Lead publishes the sink and byte-fit proof. Research defines the lossless codec contract; Quality reviews it next.
+- **Open gates:** Full raw transcript storage exceeds the proposed 16 MiB partition. Owner and exposure policy are approved; protected inventory, historical evidence, installation, complete binding, aggregate fit and scientific admission remain pending. No D1 batch is running.
 
 ## Approval and execution capacity
 
@@ -18,6 +18,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Quality / Research / Platform / Project lead | Primitive file sink acceptance and transcript size proof | Sink e76284a passed 59 cases/177 phases and 213-file typing; independent audit verified 29 closed children, 3,009,024 retained logical bytes and 104.997527 charged CPU seconds. Collection-ID and typing failures remain recorded. The full-success raw transcript exceeds 16 MiB by syntax alone; reviewed lossless encoding and full output fit remain dependencies. Exposure #145 CI continues; no D1 batch. |
 | 2026-10-31 | Platform / Quality / Research / Project lead | Registry acceptance, kernel CI and durable storage | Report #143 passed six required jobs with 5,295 tests per runtime. Kernel #144 is frozen in CI. Registry a7f3abb passed 48 cases/144 phases and 211-file typing after a retained typing-only failure; independent review verified all 23 child closures. Research authors the reviewed file-sink slice; Quality reviews source next. No D1 batch. |
 | 2026-10-31 | Platform / Quality / Research / Project lead | Exposure collection acceptance and fixed report checks | Exposure source b2ca4e7 passed 91 cases/273 phases and full 209-file typing; independent review verified all 12 child closures. Registry source 299ad886 passed source review with 48 authored cases; Quality prepares its checks. Research reviews durable recorder storage. Kernel fa35df5 is published; report #143 CI remains pending. No D1 batch. |
 | 2026-10-31 | Platform / Quality / Research / Project lead | Recorder acceptance, report CI and repeated-loss verification | PR #142 passed six required jobs with 5,206 tests per runtime. Reviewed report repair is frozen in #143. Kernel source 72548b4 passed 59 cases/177 phases and 207-file typing with independent closure review; supplied material remains unauthenticated. Exposure contracts 419605d and isolated regression 4b53f35 passed source review with 91 unexecuted cases. Research next owns fixed gate descriptors. No D1 batch. |

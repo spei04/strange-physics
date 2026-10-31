@@ -1,11 +1,13 @@
 # D1 primitive file sink
 
-Source-only implementation, 2026-10-30. The private helper
+Synthetic filesystem checks accepted, 2026-10-31. The private helper
 [tests/d1_primitive_sink.py](../../tests/d1_primitive_sink.py) implements a
 synchronous file callback for the unchanged [primitive recorder](D1_PRIMITIVE_RECORDING.md).
-It has not been imported, executed or qualified at this checkpoint. It does not
-install instrumentation, run a primitive, authenticate source, admit a batch,
-complete the report binder or establish production/power-loss durability.
+All 59 synthetic cases and full 213-file typing passed at
+e76284a3c5e950783c4d25c6cb14d22b50398d11, with independent outcome review.
+This does not install instrumentation, run an actual primitive, authenticate
+source, admit a batch, complete the report binder or establish production or
+power-loss durability.
 
 ## Contract and ownership
 
@@ -79,10 +81,14 @@ from these logical-byte counts.
 
 The 16 by 4 MiB ceiling is not 64 MiB of payload permission. Shard tail slack and
 the fixed metadata reservations can cause earlier exhaustion. The proposed
-16 MiB transcript partition and 64 MiB whole-science fit from the
-[report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md) are still unproved. The existing raw
-recorder encoding is deliberately not replaced by an unreviewed compact codec.
-If it cannot fit, stop and design a lossless reviewed representation within the
+16 MiB transcript partition from the
+[report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md)
+cannot hold the complete successful raw JSONL transcript: field names and
+punctuation alone require 16,860,600 bytes, 83,384 bytes above that partition.
+The [source-bound calculation](D1_TRANSCRIPT_BYTE_FIT.md) preserves the fixed
+55,100-call plan and distinguishes full success from partial failure. Actual
+64 MiB whole-science fit and a lossless compact representation remain unproved.
+The unchanged sink does not supply a codec. A reviewed representation must fit the
 unchanged allocation; never drop intents/returns or increase a cap silently.
 
 ## Append, failure and closeout
@@ -146,10 +152,10 @@ repairs, deletes or promotes recovered material to a successful original run.
 A later binder must also authenticate actual bytes against independently retained
 identities, parse the event schema, and reconcile process/service outcomes.
 
-## Authored checks and operation accounting
+## Verified synthetic checks and operation accounting
 
-The 26 test functions contain 59 synthetic cases / 177 expected phases by AST
-inspection only. They cover strict context/limits; exact byte retention;
+The 26 test functions passed all 59 synthetic cases and 177 ordered
+setup/call/teardown phases in the bounded engineering checks. They cover strict context/limits; exact byte retention;
 private/exclusive paths; positive short writes and zero progress; partial writes,
 interrupts and fsync failures; primary plus close failure; recorder intent failure
 with zero invocation and return retention failure without a primitive failure;
@@ -166,8 +172,8 @@ bytes; other cases write only small synthetic lines. A conservative source-only
 retained test-file estimate is below 1.5 MiB: at most 59 directories, each bounded
 by 20,480 metadata bytes plus 4,096 synthetic event bytes and 64 substitution/
 orphan bytes. Actual counts/bytes, pytest artifacts and engineering-control files
-must be measured under the later engineering allowance; this estimate is neither
-observed output nor full scientific-transcript fit. Maximum context and terminal
+were measured under the engineering allowance; this initial estimate is neither
+total observed engineering output nor full scientific-transcript fit. Maximum context and terminal
 shapes are tested by pure encoding without sixteen data files. No test calls an
 actual oracle, predictor, simulator, historical reader or protected inventory.
 Shared `os` monkeypatches use scoped contexts so temporary-directory teardown
@@ -183,10 +189,30 @@ partial write, unsuccessful fsync, metadata attempt, repeated inspection and
 failure branch must appear in the final work manifest. This conditional source
 census does not measure latency, device writes, CPU cost or power-loss behavior.
 
-Only AST parsing, source inspection and Git whitespace checks were performed.
-A source-edit script's over-specific text-count assertion failed after the helper
-edit but before its test edit; the actual diff was inspected and the test-only
-edit was completed separately. No helper imports or test execution occurred.
-Formatter/lint/full typing, fake-only filesystem qualification, independent review,
-serializer fit, scoped primitive installation/restoration, complete material
-binding and operational/numerical admission remain pending.
+Initial source authoring used AST parsing, inspection and Git whitespace
+checks only. An over-specific edit-script assertion stopped after its helper
+edit; that diff was inspected and the test edit completed separately.
+
+Subsequent bounded engineering retained two failures: initial collection
+rejected a 4,185-character automatically generated test ID, and full typing
+rejected reuse of an exception-target name in a cleanup loop. Descriptive IDs
+and a distinct loop variable repaired those issues without changing test
+values, assertions or sink behavior. Both failed attempts remain in the ledger.
+
+The final check passed formatting, linting, full configured typing across 213
+files, all 59 cases and all 177 ordered phases, with no skip, xfail or forbidden
+entrypoint attempt. Independent review joined source, environment, collection,
+raw phase records and JUnit, and confirmed all 29 child closures across five
+attempts. The cumulative charge was 104.997527 CPU seconds and 131.587996 active
+wall seconds within the unchanged 120/300-second engineering limits.
+
+Retained output was 3,009,024 logical bytes: 3,005,264 regular-file bytes plus
+3,760 bytes belonging to 27 symlinks, with one zero-payload FIFO and 113
+directories separately counted. The census never followed links or opened the
+FIFO. Both earlier control snapshots, failures and partial records remain.
+Filesystem-block usage, external authoring/review/publication costs and
+whole-operation accounting are not established by that logical-byte count.
+
+Lossless codec fit, scoped primitive installation/restoration, actual source
+authentication, complete material binding, operational closure and numerical
+admission remain pending.
