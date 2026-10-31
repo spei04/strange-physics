@@ -194,6 +194,18 @@ remain inventoried outside that unit. External control usage and peak memory are
 unknown. Earlier failed units and scientific-budget uncertainty remain unchanged.
 The private checkpoint digest is d3a7b3781b1b8a80083b3b31ec83e02a72b91220c90a8efa119adbe5c7e456a3.
 
-One original ordinary PR CI attempt is next. That broader suite includes historical
-physics checks; it does not grant source authentication, protected inventory,
-installation, activation or D1 scientific admission.
+Original [PR #154 CI](https://github.com/spei04/strange-physics/actions/runs/41186546429)
+passed all six required jobs at frozen e9a6207cc3c739b2588b667645e7578a8b6a21c1;
+the tested merge d417bd7d535480c68282fc64a8933d0d898b0a32 has the same tree.
+Both Python 3.12 and 3.14 passed 6,024 tests, 225-file typing, 1,567 external
+schema/reference checks, package allowlists and one 8/8 smoke run each. The
+separate analytic jobs passed 24 cases/72 phases each; security checks reported
+no issues. Two existing serializer warnings per runtime and security-tool flag
+warnings remain retained. The candidate job was skipped on this draft PR.
+
+Observed required-job wall time was 1,700 seconds against 4,980 configured; the
+955-second provider interval is separate, not added to parallel job time. Whole
+CI CPU and dollars remain unknown. Hosted aggregate coverage is inferred from
+the frozen test selection; it does not recreate the private 114/342 phase receipt.
+This ordinary suite includes historical physics checks, not a D1 batch, and
+grants no source authentication, protected inventory, installation or activation.
