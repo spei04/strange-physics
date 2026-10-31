@@ -142,6 +142,13 @@ class SinkCloseout:
     terminal_sha256: str | None
 
 
+@dataclass(frozen=True, slots=True)
+class ContextObservation:
+    raw: bytes
+    sha256: str
+    byte_length: int
+
+
 @dataclass(frozen=True)
 class SinkInspection:
     context_sha256: str | None
@@ -568,6 +575,35 @@ class PrimitiveFileSink:
             except BaseException:
                 self._anchor.closure_uncertain = True
                 raise
+
+    def observe_context(self) -> ContextObservation:
+        """Read current canonical C while idle; never authenticates or transfers ownership."""
+        self._enter(finishing=False)
+        try:
+            if self._reserved_events != 0:
+                raise SinkStopped("Context observation requires zero reserved events")
+            self._drain_close_faults()
+            self._check_active()
+            if self._anchor.closure_uncertain:
+                raise SinkStopped("Prior descriptor closure is uncertain")
+            raw = _read_file(self._anchor, "context.json", CONTEXT_BYTES)
+            if raw != self._context_raw:
+                raise ValueError("Actual context bytes changed")
+            self._drain_close_faults()
+            if self._anchor.closure_uncertain:
+                raise SinkStopped("Context read descriptor closure is uncertain")
+            observation = ContextObservation(raw, hashlib.sha256(raw).hexdigest(), len(raw))
+            self._check_reentry()
+            self._check_active()
+            return observation
+        except BaseException as observation_error:
+            # Keep a read/validation failure ahead of its supplemental close failure.
+            if self.first_exception is not observation_error:
+                self._remember("context_observation", observation_error)
+            self._drain_close_faults()
+            raise
+        finally:
+            self._busy = False
 
     def append(self, raw: bytes) -> None:
         self._enter(finishing=False)
