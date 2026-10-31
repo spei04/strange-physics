@@ -599,6 +599,7 @@ class D1FixtureProducer:
         self._owner_prepare_busy: bool = False
         self._owner_prepare_fault: BaseException | None = None
         self._prepared_reference_owner: EndpointOracle | None = None
+        self._prepared_owner_anchor: EndpointOracle | None = None
 
     def _preparation_failure(self, error: BaseException) -> None:
         if self._owner_prepare_fault is None:
@@ -610,9 +611,23 @@ class D1FixtureProducer:
         """Borrow the successfully prepared owner; never construct or replace one."""
         if self._owner_prepare_fault is not None:
             raise self._owner_prepare_fault
-        owner = self._prepared_reference_owner
-        if self._owner_prepare_busy or owner is None:
+        if self._owner_prepare_busy:
+            error = ValueError("Fixture owner observation reentered preparation")
+            self._preparation_failure(error)
+            assert self._owner_prepare_fault is not None
+            raise self._owner_prepare_fault
+        if not self._owner_prepare_used:
             raise ValueError("Fixture reference owner has not been prepared")
+        owner = self._prepared_reference_owner
+        if (
+            owner is None
+            or owner is not self._prepared_owner_anchor
+            or type(owner) is not oracle_module.EndpointOracle
+        ):
+            error = ValueError("Prepared fixture owner identity lost or substituted")
+            self._preparation_failure(error)
+            assert self._owner_prepare_fault is not None
+            raise self._owner_prepare_fault
         return owner
 
     def prepare_reference_owner(self) -> EndpointOracle:
@@ -632,6 +647,9 @@ class D1FixtureProducer:
             owner = EndpointOracle()
             if self._owner_prepare_fault is not None:
                 raise self._owner_prepare_fault
+            if type(owner) is not oracle_module.EndpointOracle:
+                raise ValueError("Preparation did not construct the actual oracle class")
+            self._prepared_owner_anchor = owner
             self._prepared_reference_owner = owner
             return owner
         except BaseException as preparation_error:
@@ -646,6 +664,8 @@ class D1FixtureProducer:
     def run(
         self, ids: tuple[PublicIds, ...], inventories: tuple[D1ExposureInventory, ...]
     ) -> FixtureBatch:
+        if self._owner_prepare_fault is not None:
+            raise self._owner_prepare_fault
         if self._owner_prepare_busy:
             error = ValueError("Fixture run reentered owner preparation")
             self._preparation_failure(error)
@@ -653,6 +673,7 @@ class D1FixtureProducer:
             raise self._owner_prepare_fault
         if self.started:
             raise ValueError("Producer attempt already consumed; no retry")
+        prepared_owner = self.prepared_reference_owner if self._owner_prepare_used else None
         self.started = True
         source: Sources | None = None
         plan: Plan | None = None
@@ -678,8 +699,14 @@ class D1FixtureProducer:
             checked_inventories = _inventories(inventories)
             stage = "rounding"
             plan = fixed_plan(source, coefficients())
-            oracle = self._prepared_reference_owner
-            if oracle is None:
+            if self._owner_prepare_used:
+                if (
+                    prepared_owner is None
+                    or self.prepared_reference_owner is not prepared_owner
+                ):
+                    raise ValueError("Prepared fixture owner changed before its first call")
+                oracle = prepared_owner
+            else:
                 oracle = EndpointOracle()
             traces = [QueryTrace(query=q, status="unrun") for q in plan.queries]
             # All other methods remain unused. The fixed instance is never reset/replaced.

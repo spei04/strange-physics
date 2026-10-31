@@ -545,8 +545,9 @@ def test_failed_owner_preparation_is_consumed(monkeypatch: pytest.MonkeyPatch) -
         with pytest.raises(OSError) as second:
             value.prepare_reference_owner()
     assert first.value is failure and second.value is failure and allocations == [None]
-    with pytest.raises(ValueError, match="consumed"):
+    with pytest.raises(OSError) as later:
         value.run(ids(), inventories())
+    assert later.value is failure
 
 
 def test_repeated_owner_preparation_does_not_replace(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -563,8 +564,9 @@ def test_repeated_owner_preparation_does_not_replace(monkeypatch: pytest.MonkeyP
         with pytest.raises(ValueError) as second:
             value.prepare_reference_owner()
     assert first.value is second.value and owner.values == {}
-    with pytest.raises(ValueError, match="consumed"):
+    with pytest.raises(ValueError) as later:
         value.run(ids(), inventories())
+    assert later.value is first.value
 
 
 @pytest.mark.parametrize("kind", ("prepare", "run"), ids=("prepare", "run"))
@@ -593,5 +595,35 @@ def test_swallowed_preparation_reentry_stays_failed(
             value.prepare_reference_owner()
     assert len(seen) == 1 and raised.value is seen[0] and len(allocations) == 1
     assert allocations[0].values == {} and allocations[0].lookups == 0
-    with pytest.raises(ValueError, match="consumed"):
+    with pytest.raises(ValueError) as later:
         value.run(ids(), inventories())
+    assert later.value is raised.value
+
+
+@pytest.mark.parametrize("kind", ("lost", "substituted", "wrong-type"), ids=("lost", "substituted", "wrong-type"))
+def test_prepared_owner_tampering_fails_before_work_or_replacement(
+    monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
+    value = D1FixtureProducer(ROOT, COMMIT, pins())
+    owner = value.prepare_reference_owner()
+    replacement: object = None if kind == "lost" else (EndpointOracle() if kind == "substituted" else object())
+    object.__setattr__(value, "_prepared_reference_owner", replacement)
+    calls: list[str] = []
+
+    def forbidden(*args: object, **kwargs: object) -> NoReturn:
+        calls.append("work-or-allocation")
+        raise AssertionError("Tampered prepared owner must fail before work or allocation")
+
+    with monkeypatch.context() as scoped:
+        for name in ("EndpointOracle", "verify_sources", "coefficients", "fixed_plan", "_inventories"):
+            scoped.setattr(producer, name, forbidden)
+        with pytest.raises(ValueError, match="identity lost or substituted") as first:
+            value.run(ids(), inventories())
+        with pytest.raises(ValueError) as repeated:
+            value.run(ids(), inventories())
+        with pytest.raises(ValueError) as observation:
+            _ = value.prepared_reference_owner
+    assert first.value is repeated.value is observation.value
+    assert value.started and calls == []
+    assert vars(value)["_prepared_owner_anchor"] is owner
+    assert owner.values == {} and owner.lookups == 0

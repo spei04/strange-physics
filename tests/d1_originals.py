@@ -12,7 +12,14 @@ import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from types import BuiltinFunctionType, CodeType, FunctionType, MethodType, ModuleType
+from types import (
+    BuiltinFunctionType,
+    CodeType,
+    FunctionType,
+    GetSetDescriptorType,
+    MethodType,
+    ModuleType,
+)
 
 import d1_fixture_reference as fixture_module
 import d1_prefix_evidence as reference_module
@@ -54,6 +61,52 @@ class PreparedOriginals:
     owners: tuple[EndpointOracle, ...]
     original_methods: tuple[MethodType, ...]
     emitter: BuiltinFunctionType
+
+
+_REFERENCE_FIELDS = frozenset((
+    "channels", "arithmetic", "constants_oracle", "cache", "seen", "normalized",
+    "results", "consumed_training", "calls", "logical_completed", "cache_hits",
+    "normalizations_completed", "failed", "constants_started", "constant_values",
+))
+_PRODUCER_FIELDS = frozenset((
+    "root", "commit", "pins", "started", "_owner_prepare_used", "_owner_prepare_busy",
+    "_owner_prepare_fault", "_prepared_reference_owner", "_prepared_owner_anchor",
+))
+_ORACLE_FIELDS = frozenset(("values", "pi", *_COUNTERS))
+
+
+def _layouts() -> None:
+    # These three concrete classes use ordinary object lookup and instance dicts.
+    # Never evaluate a substituted descriptor while checking supposedly fresh state.
+    for cls, fields in ((EndpointOracle, _ORACLE_FIELDS), (D1Reference, _REFERENCE_FIELDS),
+                        (D1FixtureProducer, _PRODUCER_FIELDS)):
+        namespace = vars(cls)
+        descriptor = namespace.get("__dict__")
+        if (
+            cls.__bases__ != (object,)
+            or any(name in namespace for name in ("__getattribute__", "__getattr__", "__setattr__"))
+            or type(descriptor) is not GetSetDescriptorType
+            or descriptor.__objclass__ is not cls
+            or descriptor.__name__ != "__dict__"
+        ):
+            raise ValueError("Fixed ordinary consumer field layout required")
+        for name in fields:
+            if cls is EndpointOracle and name in _COUNTERS:
+                if type(namespace.get(name)) is not int or namespace[name] != 0:
+                    raise ValueError("Ordinary zero oracle counter class field required")
+            elif cls is EndpointOracle and name == "pi":
+                if "pi" not in namespace or namespace["pi"] is not None:
+                    raise ValueError("Ordinary absent-pi class field required")
+            elif name in namespace:
+                raise ValueError("Instance field has conflicting class layout")
+
+
+def _instance_fields(value: object, expected: frozenset[str]) -> dict[str, object]:
+    # _layouts has checked the exact class's own built-in __dict__ descriptor.
+    data = object.__getattribute__(value, "__dict__")
+    if type(data) is not dict or any(type(key) is not str for key in data) or set(data) != expected:
+        raise ValueError("Exact ordinary instance field set required")
+    return data
 
 
 def _anchors(value: OriginalAnchors) -> None:
@@ -113,6 +166,7 @@ def _anchors(value: OriginalAnchors) -> None:
         or any(name in sys.modules for name in ("tests.d1_fixture_reference", "tests.d1_prefix_evidence"))
     ):
         raise ValueError("Fixed canonical consumer classes required")
+    _layouts()
 
 
 def _inputs(root: Path, commit: str, pins: tuple[SourcePin, ...]) -> None:
@@ -136,35 +190,46 @@ def _inputs(root: Path, commit: str, pins: tuple[SourcePin, ...]) -> None:
 def _owners(reference: D1Reference, producer: D1FixtureProducer) -> tuple[EndpointOracle, ...]:
     if type(reference) is not D1Reference or type(producer) is not D1FixtureProducer:
         raise ValueError("Actual fixed reference and fixture producer required")
+    reference_fields = _instance_fields(reference, _REFERENCE_FIELDS)
+    producer_fields = _instance_fields(producer, _PRODUCER_FIELDS)
+    channels, arithmetic = reference_fields["channels"], reference_fields["arithmetic"]
     if (
-        type(reference.channels) is not dict
-        or tuple(reference.channels) != ("strong", "weak", "future")
-        or type(reference.arithmetic) is not dict
-        or tuple(reference.arithmetic) != _CASES
-        or producer.started
+        type(channels) is not dict
+        or any(type(key) is not str for key in channels)
+        or tuple(channels) != ("strong", "weak", "future")
+        or type(arithmetic) is not dict
+        or any(type(key) is not str for key in arithmetic)
+        or tuple(arithmetic) != _CASES
+        or producer_fields["started"] is not False
+        or producer_fields["_owner_prepare_used"] is not True
+        or producer_fields["_owner_prepare_busy"] is not False
+        or producer_fields["_owner_prepare_fault"] is not None
+        or producer_fields["_prepared_reference_owner"] is not producer_fields["_prepared_owner_anchor"]
     ):
         raise ValueError("Actual ordered consumer owner containers required")
-    owners = (
-        producer.prepared_reference_owner,
-        reference.channels["strong"], reference.channels["weak"], reference.channels["future"],
-        *reference.arithmetic.values(),
-        reference.constants_oracle,
+    raw_owners: tuple[object, ...] = (
+        producer_fields["_prepared_reference_owner"],
+        channels["strong"], channels["weak"], channels["future"],
+        *arithmetic.values(), reference_fields["constants_oracle"],
     )
-    for index, owner in enumerate(owners):
+    owners: list[EndpointOracle] = []
+    caches: list[dict[object, object]] = []
+    for owner in raw_owners:
         if type(owner) is not EndpointOracle:
             raise ValueError("Every owner must be the exact captured oracle class")
-        if any(owner is previous for previous in owners[:index]):
+        if any(owner is previous for previous in owners):
             raise ValueError("All thirteen oracle owners must be distinct")
-        if type(owner.values) is not dict or owner.values or owner.pi is not None:
+        fields = _instance_fields(owner, _ORACLE_FIELDS)
+        values = fields["values"]
+        if type(values) is not dict or values or fields["pi"] is not None:
             raise ValueError("Fresh empty oracle cache and absent pi required")
-        if any(owner.values is previous.values for previous in owners[:index]):
+        if any(values is previous for previous in caches):
             raise ValueError("Oracle caches must have distinct identities")
-        if any(type(getattr(owner, name)) is not int or getattr(owner, name) != 0 for name in _COUNTERS):
+        caches.append(values)
+        if any(type(fields[name]) is not int or fields[name] != 0 for name in _COUNTERS):
             raise ValueError("All six original oracle counters must be exact zero integers")
-        instance_fields = vars(owner)
-        if any(name in instance_fields for name in (*_METHOD_NAMES, "trig")):
-            raise ValueError("Original owner methods must not be shadowed")
-    return owners
+        owners.append(owner)
+    return tuple(owners)
 
 
 def prepare_originals(

@@ -242,3 +242,48 @@ def test_constructor_failure_propagates_exact_exception(monkeypatch: pytest.Monk
         with pytest.raises(OSError) as raised:
             prepare()
     assert raised.value is failure and called == ["reference"]
+
+
+@pytest.mark.parametrize(
+    "kind", ("oracle-counter", "reference-field", "producer-field", "oracle-hook", "reference-hook", "producer-hook"),
+    ids=("oracle-counter", "reference-field", "producer-field", "oracle-hook", "reference-hook", "producer-hook"),
+)
+def test_postconstruction_descriptor_and_hook_never_execute(
+    monkeypatch: pytest.MonkeyPatch, kind: str
+) -> None:
+    saved = anchors()
+    original_prepare = D1FixtureProducer.prepare_reference_owner
+    getter_calls: list[str] = []
+    created: list[EndpointOracle] = []
+
+    def getter(value: object) -> object:
+        getter_calls.append("descriptor")
+        raise AssertionError("Freshness validation must not evaluate a substituted descriptor")
+
+    def lookup(value: object, name: str) -> object:
+        getter_calls.append("hook")
+        raise AssertionError("Freshness validation must not evaluate a substituted lookup hook")
+
+    with monkeypatch.context() as scoped:
+        def prepare_owner(producer: D1FixtureProducer) -> EndpointOracle:
+            owner = original_prepare(producer)
+            created.append(owner)
+            if kind == "oracle-counter":
+                scoped.setattr(EndpointOracle, "lookups", property(getter))
+            elif kind == "reference-field":
+                scoped.setattr(D1Reference, "channels", property(getter), raising=False)
+            elif kind == "producer-field":
+                scoped.setattr(D1FixtureProducer, "_prepared_reference_owner", property(getter), raising=False)
+            elif kind == "oracle-hook":
+                scoped.setattr(EndpointOracle, "__getattribute__", lookup)
+            elif kind == "reference-hook":
+                scoped.setattr(D1Reference, "__getattribute__", lookup)
+            else:
+                scoped.setattr(D1FixtureProducer, "__getattribute__", lookup)
+            return owner
+
+        scoped.setattr(D1FixtureProducer, "prepare_reference_owner", prepare_owner)
+        with pytest.raises(ValueError):
+            prepare(saved)
+    assert len(created) == 1 and getter_calls == []
+    assert created[0].values == {} and created[0].lookups == 0
