@@ -207,6 +207,15 @@ the single injected native emitter. Its exact reviewed implementation, kind
 remain a **pre-sealing prerequisite**, fixed by the outer catalog, not chosen by
 S at runtime. This proposal does not silently promote `math.exp` or a test lambda
 to the scientific emitter. The allowed kinds for d0–d3 are only `python_method`.
+Their declared module is exactly `endpoint_belief_reference`, their qualified
+names are exactly `EndpointOracle.position`, `EndpointOracle.exp`,
+`EndpointOracle.log` and `EndpointOracle.circle_constant`, and all four name the
+same checkout member. Every definition member has a non-null `loaded_module`
+exactly equal to its definition's `module`. Both `python_method` and
+`python_function` require `checkout_source`; `runtime_builtin` requires
+`trusted_runtime_member`. This is fixed first-version declaration consistency,
+not loaded-code proof. A Python emitter from a separately trusted runtime would
+require a reviewed contract change; no actual d4 implementation is selected here.
 
 Instance rows repeat T's fixed mapping: i00 fixture; i01/i02/i03 strong/weak/future;
 i04–i11 arithmetic for M01/M02/M03/M04/D03/F02/F04/W03; i12 constants;
