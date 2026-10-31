@@ -87,6 +87,8 @@ class PipeHandshake:
 
     def release(self, token: str) -> None:
         fd = os.open(self.root / "release.fifo", os.O_WRONLY | os.O_NONBLOCK | os.O_NOFOLLOW)
+        primary: BaseException | None = None
+        supplemental: list[Fault] = []
         try:
             info = os.fstat(fd)
             if not stat.S_ISFIFO(info.st_mode) or info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) != 0o600:
@@ -94,8 +96,19 @@ class PipeHandshake:
             raw = (owned._digest(token) + "\n").encode("ascii")
             if os.write(fd, raw) != len(raw):
                 raise OSError("Unknown/partial release write; no retry")
-        finally:
-            os.close(fd)
+        except BaseException as release_error:
+            primary = release_error
+        try:
+            os.close(fd)  # Exactly one attempt, including lost close confirmation.
+        except BaseException as close_error:
+            if primary is None:
+                primary = close_error
+            else:
+                supplemental.append(Fault.capture("release_close", close_error))
+        if primary is not None:
+            if supplemental:
+                raise CommandFailure(primary, tuple(supplemental)) from None
+            raise primary
 
 
 def watch_descendant(
