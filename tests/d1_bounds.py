@@ -35,7 +35,11 @@ type Role = Literal["prior", "posterior"]
 
 
 def _digest(value: str, size: int = 64) -> None:
-    if type(value) is not str or len(value) != size or any(c not in "0123456789abcdef" for c in value):
+    if (
+        type(value) is not str
+        or len(value) != size
+        or any(c not in "0123456789abcdef" for c in value)
+    ):
         raise ValueError("Exact lowercase evidence identity required")
 
 
@@ -74,10 +78,7 @@ def _coverage(evidence: EndpointEvidence, count: int) -> None:
         raise ValueError("Actual endpoint channel evidence required")
     evidence.__post_init__()
     expected = tuple(range(count))
-    if (
-        evidence.requested != expected or evidence.completed != expected
-        or evidence.failed != ()
-    ):
+    if evidence.requested != expected or evidence.completed != expected or evidence.failed != ():
         raise ValueError("Exact all-node ordered coverage required; no surviving subset")
 
 
@@ -95,7 +96,11 @@ class D1Identity:
     protocol_sha256: str = PROTOCOL_SHA256
 
     def __post_init__(self) -> None:
-        if self.case not in CASE_IDS or type(self.count) is not int or self.count not in (256, 1024):
+        if (
+            self.case not in CASE_IDS
+            or type(self.count) is not int
+            or self.count not in (256, 1024)
+        ):
             raise ValueError("Outside the fixed D1 case/grid matrix")
         _bounded(self.scale)
         allowed = (D("0.25"),) if self.case in ("D03", "W03") else (D("0.125"), D("0.25"), D("0.5"))
@@ -103,8 +108,11 @@ class D1Identity:
             raise ValueError("Outside the frozen D1 scale/protocol")
         _digest(self.source_commit, 40)
         for value in (
-            self.observation_sha256, self.future_query_sha256, self.future_values_sha256,
-            self.probabilities_sha256, self.evidence_sha256,
+            self.observation_sha256,
+            self.future_query_sha256,
+            self.future_values_sha256,
+            self.probabilities_sha256,
+            self.evidence_sha256,
         ):
             _digest(value)
 
@@ -123,8 +131,10 @@ class D1PrefixPremises:
         self.identity.__post_init__()
         count = 2 if self.identity.case == "D03" else 1
         if (
-            type(self.recorded) is not tuple or type(self.training) is not tuple
-            or len(self.recorded) != count or len(self.training) != count
+            type(self.recorded) is not tuple
+            or type(self.training) is not tuple
+            or len(self.recorded) != count
+            or len(self.training) != count
         ):
             raise ValueError("Every declared prefix record requires its own endpoint evidence")
         q = D("0.125") if self.identity.case == "W03" else ONE
@@ -132,7 +142,8 @@ class D1PrefixPremises:
         for recorded, training in zip(self.recorded, self.training, strict=True):
             _interval(recorded)
             if (
-                recorded.lower != recorded.upper or not lower <= recorded.lower <= q
+                recorded.lower != recorded.upper
+                or not lower <= recorded.lower <= q
                 or D.from_float(float(recorded.lower)) != recorded.lower
             ):
                 raise ValueError("Recorded observation must be the actual bounded binary64 point")
@@ -180,10 +191,14 @@ def _finest_reasons(identity: D1Identity, bounds: tuple[Decimal, ...]) -> tuple[
     if identity.count != 1024:
         return ()
     return tuple(
-        name for value, limit, name in zip(
-            bounds, (D("0.0081"), D("0.018"), D("0.019"), D("0.056")),
-            ("finest_cell_mass", "finest_mean", "finest_second", "finest_variance"), strict=True,
-        ) if value > limit
+        name
+        for value, limit, name in zip(
+            bounds,
+            (D("0.0081"), D("0.018"), D("0.019"), D("0.056")),
+            ("finest_cell_mass", "finest_mean", "finest_second", "finest_variance"),
+            strict=True,
+        )
+        if value > limit
     )
 
 
@@ -220,19 +235,38 @@ def certify_d1_prefix(premises: D1PrefixPremises) -> D1Certificate:
     delta = _up_add(variation, RESERVE)
     mean, second, var = _moments(delta, identity.count, epsilon)
     reasons = tuple(
-        name for okay, name in (
-            (all(e.max_abs_error_upper <= ENDPOINT_ERROR for e in premises.training),
-             "training_endpoint"),
+        name
+        for okay, name in (
+            (
+                all(e.max_abs_error_upper <= ENDPOINT_ERROR for e in premises.training),
+                "training_endpoint",
+            ),
             (premises.future.max_abs_error_upper <= ENDPOINT_ERROR, "future_endpoint"),
             (a <= LOG_ERROR, "whole_prefix_node_error"),
             (b <= LOG_ERROR, "centered_normalizer_error"),
             (c <= LOG_ERROR, "normalized_probability_error"),
             (reserve <= RESERVE, "overlapping_reserve"),
-        ) if not okay
+        )
+        if not okay
     ) + _finest_reasons(identity, (delta, mean, second, var))
     return D1Certificate(
-        identity, "posterior", premises, None, endpoint, log_derivative, variation, (a, b, c),
-        reserve, RESERVE, delta, epsilon, mean, second, var, not reasons, reasons,
+        identity,
+        "posterior",
+        premises,
+        None,
+        endpoint,
+        log_derivative,
+        variation,
+        (a, b, c),
+        reserve,
+        RESERVE,
+        delta,
+        epsilon,
+        mean,
+        second,
+        var,
+        not reasons,
+        reasons,
     )
 
 
@@ -244,23 +278,42 @@ def certify_d1_prior(identity: D1Identity, future: EndpointEvidence) -> D1Certif
     _coverage(future, identity.count)
     epsilon = _up_add(ENDPOINT_ERROR, REFERENCE_ERROR)
     mean, second, variance = _moments(ZERO, identity.count, epsilon)
-    reasons = (() if future.max_abs_error_upper <= ENDPOINT_ERROR else ("future_endpoint",))
+    reasons = () if future.max_abs_error_upper <= ENDPOINT_ERROR else ("future_endpoint",)
     reasons += _finest_reasons(identity, (ZERO, mean, second, variance))
     return D1Certificate(
-        identity, "prior", None, future, ZERO, ZERO, ZERO, (ZERO, ZERO, ZERO),
-        ZERO, ZERO, ZERO, epsilon, mean, second, variance, not reasons, reasons,
+        identity,
+        "prior",
+        None,
+        future,
+        ZERO,
+        ZERO,
+        ZERO,
+        (ZERO, ZERO, ZERO),
+        ZERO,
+        ZERO,
+        ZERO,
+        epsilon,
+        mean,
+        second,
+        variance,
+        not reasons,
+        reasons,
     )
 
 
 def _validate_certificate(certificate: D1Certificate) -> None:
     if type(certificate) is not D1Certificate:
         raise ValueError("Conditional D1 certificate required")
-    if certificate.role == "posterior" and certificate.prefix is not None and (
-        certificate.prior_future is None
+    if (
+        certificate.role == "posterior"
+        and certificate.prefix is not None
+        and (certificate.prior_future is None)
     ):
         expected = certify_d1_prefix(certificate.prefix)
-    elif certificate.role == "prior" and certificate.prefix is None and (
-        certificate.prior_future is not None
+    elif (
+        certificate.role == "prior"
+        and certificate.prefix is None
+        and (certificate.prior_future is not None)
     ):
         expected = certify_d1_prior(certificate.identity, certificate.prior_future)
     else:
@@ -317,15 +370,21 @@ def enclose_cdf(
         _interval(cell.image)
         if (
             not ZERO <= cell.mass.lower <= cell.mass.upper <= ONE
-            or cell.image.lower < support.lower or cell.image.upper > support.upper
+            or cell.image.lower < support.lower
+            or cell.image.upper > support.upper
         ):
             raise ValueError("Cell mass/image is outside its certified support")
     # At most 1024 masses in [0,1], with exponent >= -256: 260 digits
     # represent both sums exactly. Directed 100-digit sums can hide a tiny
     # infeasible residual; the support-endpoint rule must not conceal it.
     exact = Context(
-        prec=260, rounding=ROUND_HALF_EVEN, Emin=-999999, Emax=999999,
-        capitals=1, clamp=0, flags=[],
+        prec=260,
+        rounding=ROUND_HALF_EVEN,
+        Emin=-999999,
+        Emax=999999,
+        capitals=1,
+        clamp=0,
+        flags=[],
         traps=[Inexact, InvalidOperation, DivisionByZero, Overflow],
     )
     try:
@@ -341,7 +400,12 @@ def enclose_cdf(
     low_events = sorted(cells, key=lambda c: (c.image.lower, c.index))
     high_events = sorted(cells, key=lambda c: (c.image.upper, c.index))
     thresholds = sorted(
-        {support.lower, support.upper, *(c.image.lower for c in cells), *(c.image.upper for c in cells)}
+        {
+            support.lower,
+            support.upper,
+            *(c.image.lower for c in cells),
+            *(c.image.upper for c in cells),
+        }
     )
     possible, certain = point(0), point(0)
     low_index = high_index = updates = 0
@@ -356,9 +420,13 @@ def enclose_cdf(
             certain = plus(certain, high_events[high_index].mass)
             high_index += 1
             updates += 1
-        cdf = point(1) if x == support.upper else Interval(
-            max(ZERO, minus(certain, point(delta)).lower),
-            min(ONE, plus(possible, point(delta)).upper),
+        cdf = (
+            point(1)
+            if x == support.upper
+            else Interval(
+                max(ZERO, minus(certain, point(delta)).lower),
+                min(ONE, plus(possible, point(delta)).upper),
+            )
         )
         knots.append(CDFKnot(x, cdf))
     envelope = CDFEnvelope(support, tuple(knots), evidence_sha256, len(cells), updates, delta)
@@ -373,7 +441,8 @@ def _validate_cdf(envelope: CDFEnvelope) -> None:
     _nonnegative(envelope.delta_upper)
     _digest(envelope.evidence_sha256)
     if (
-        type(envelope.cell_count) is not int or not 1 <= envelope.cell_count <= MAX_CELLS
+        type(envelope.cell_count) is not int
+        or not 1 <= envelope.cell_count <= MAX_CELLS
         or type(envelope.knots) is not tuple
         or not 1 <= len(envelope.knots) <= 2 * envelope.cell_count + 2
         or envelope.mass_updates != 2 * envelope.cell_count
@@ -392,7 +461,8 @@ def _validate_cdf(envelope: CDFEnvelope) -> None:
         if not ZERO <= knot.cdf.lower <= knot.cdf.upper <= ONE:
             raise ValueError("CDF range is invalid")
         if previous is not None and (
-            knot.x <= previous.x or knot.cdf.lower < previous.cdf.lower
+            knot.x <= previous.x
+            or knot.cdf.lower < previous.cdf.lower
             or knot.cdf.upper < previous.cdf.upper
         ):
             raise ValueError("CDF brackets require strictly ordered knots and monotone bounds")
@@ -449,8 +519,12 @@ def _expand(value: Interval, error: Decimal) -> Interval:
 
 
 def enclose_predictive(
-    certificate: D1Certificate, values: tuple[float, ...], masses: tuple[Interval, ...],
-    *, future_values_sha256: str, probabilities_sha256: str,
+    certificate: D1Certificate,
+    values: tuple[float, ...],
+    masses: tuple[Interval, ...],
+    *,
+    future_values_sha256: str,
+    probabilities_sha256: str,
 ) -> PredictiveEnclosure:
     """Enclose continuous dk predictions; literal emitted-distribution estimates stay separate."""
     _validate_certificate(certificate)
@@ -462,13 +536,20 @@ def enclose_predictive(
         certificate.role not in ("prior", "posterior")
         or future_values_sha256 != identity.future_values_sha256
         or probabilities_sha256 != identity.probabilities_sha256
-        or type(values) is not tuple or type(masses) is not tuple
-        or len(values) != identity.count or len(masses) != identity.count
+        or type(values) is not tuple
+        or type(masses) is not tuple
+        or len(values) != identity.count
+        or len(masses) != identity.count
     ):
-        raise ValueError("Complete ordered prediction/mass arrays and exact evidence joins required")
+        raise ValueError(
+            "Complete ordered prediction/mass arrays and exact evidence joins required"
+        )
     for error in (
-        certificate.delta_upper, certificate.epsilon, certificate.mean_error,
-        certificate.second_error, certificate.variance_error,
+        certificate.delta_upper,
+        certificate.epsilon,
+        certificate.mean_error,
+        certificate.second_error,
+        certificate.variance_error,
     ):
         _nonnegative(error)
     expected_epsilon = _up_add(ENDPOINT_ERROR, REFERENCE_ERROR)
@@ -509,16 +590,21 @@ def enclose_predictive(
     # Their actual observed extrema are the finite distribution's exact support.
     finite_support = Interval(min(x.lower for x in samples), max(x.upper for x in samples))
     finite_cdf = enclose_cdf(finite_cells, ZERO, finite_support, identity.evidence_sha256)
-    cdf = enclose_cdf(continuous_cells, certificate.delta_upper, Interval(-ONE, ONE),
-                      identity.evidence_sha256)
+    cdf = enclose_cdf(
+        continuous_cells, certificate.delta_upper, Interval(-ONE, ONE), identity.evidence_sha256
+    )
     return PredictiveEnclosure(
-        certificate, mean, second, finite_variance,
+        certificate,
+        mean,
+        second,
+        finite_variance,
         _clip(_expand(mean, certificate.mean_error), -ONE, ONE),
         _clip(_expand(second, certificate.second_error), ZERO, ONE),
         _clip(_expand(finite_variance, certificate.variance_error), ZERO, ONE),
         (generalized_quantile(finite_cdf, LOW_TAIL), generalized_quantile(finite_cdf, HIGH_TAIL)),
         (generalized_quantile(cdf, LOW_TAIL), generalized_quantile(cdf, HIGH_TAIL)),
-        finite_cdf, cdf,
+        finite_cdf,
+        cdf,
     )
 
 
@@ -556,16 +642,20 @@ def enclose_scores(
     _validate_cdf(prediction.cdf)
     _validate_cdf(prediction.finite_cdf)
     for value in (
-        prediction.finite_mean, prediction.finite_second, prediction.finite_variance,
-        prediction.mean, prediction.second, prediction.variance,
+        prediction.finite_mean,
+        prediction.finite_second,
+        prediction.finite_variance,
+        prediction.mean,
+        prediction.second,
+        prediction.variance,
     ):
         _interval(value)
     cert = prediction.certificate
     variance_check = minus(prediction.finite_second, square(prediction.finite_mean))
     if (
-        prediction.finite_variance != Interval(max(ZERO, variance_check.lower), variance_check.upper)
-        or
-        prediction.cdf.evidence_sha256 != cert.identity.evidence_sha256
+        prediction.finite_variance
+        != Interval(max(ZERO, variance_check.lower), variance_check.upper)
+        or prediction.cdf.evidence_sha256 != cert.identity.evidence_sha256
         or prediction.finite_cdf.evidence_sha256 != cert.identity.evidence_sha256
         or prediction.cdf.support != Interval(-ONE, ONE)
         or prediction.cdf.delta_upper != cert.delta_upper
@@ -573,15 +663,17 @@ def enclose_scores(
         or prediction.cdf.cell_count != cert.identity.count
         or prediction.finite_cdf.cell_count != cert.identity.count
         or prediction.mean != _clip(_expand(prediction.finite_mean, cert.mean_error), -ONE, ONE)
-        or prediction.second != _clip(_expand(prediction.finite_second, cert.second_error), ZERO, ONE)
-        or prediction.variance != _clip(
-            _expand(prediction.finite_variance, cert.variance_error), ZERO, ONE
-        )
-        or prediction.quantiles != (
+        or prediction.second
+        != _clip(_expand(prediction.finite_second, cert.second_error), ZERO, ONE)
+        or prediction.variance
+        != _clip(_expand(prediction.finite_variance, cert.variance_error), ZERO, ONE)
+        or prediction.quantiles
+        != (
             generalized_quantile(prediction.cdf, LOW_TAIL),
             generalized_quantile(prediction.cdf, HIGH_TAIL),
         )
-        or prediction.finite_quantiles != (
+        or prediction.finite_quantiles
+        != (
             generalized_quantile(prediction.finite_cdf, LOW_TAIL),
             generalized_quantile(prediction.finite_cdf, HIGH_TAIL),
         )
@@ -595,8 +687,11 @@ def enclose_scores(
     if low.probability != LOW_TAIL or high.probability != HIGH_TAIL:
         raise ValueError("Only the frozen central90 interval is scored")
     return ScoreEnclosure(
-        prediction, truth, truth_evidence_sha256,
-        square(minus(prediction.mean, truth)), interval_score(low.value, high.value, truth),
+        prediction,
+        truth,
+        truth_evidence_sha256,
+        square(minus(prediction.mean, truth)),
+        interval_score(low.value, high.value, truth),
     )
 
 
@@ -618,18 +713,29 @@ def pair_scores(posterior: ScoreEnclosure, prior: ScoreEnclosure) -> PairedScore
     a, b = posterior.prediction.certificate, prior.prediction.certificate
     ia, ib = a.identity, b.identity
     if (
-        a.role != "posterior" or b.role != "prior" or not a.passed or not b.passed
-        or ia.case != ib.case or ia.count != ib.count or ia.scale != ib.scale
-        or ia.source_commit != ib.source_commit or ia.protocol_sha256 != ib.protocol_sha256
+        a.role != "posterior"
+        or b.role != "prior"
+        or not a.passed
+        or not b.passed
+        or ia.case != ib.case
+        or ia.count != ib.count
+        or ia.scale != ib.scale
+        or ia.source_commit != ib.source_commit
+        or ia.protocol_sha256 != ib.protocol_sha256
         or ia.observation_sha256 != ib.observation_sha256
         or ia.future_query_sha256 != ib.future_query_sha256
         or ia.future_values_sha256 != ib.future_values_sha256
         or posterior.truth != prior.truth
         or posterior.truth_evidence_sha256 != prior.truth_evidence_sha256
     ):
-        raise ValueError("Prior/posterior scores must share exact case/probe/truth/source identities")
+        raise ValueError(
+            "Prior/posterior scores must share exact case/probe/truth/source identities"
+        )
     return PairedScores(
-        ia.case, posterior, prior, minus(posterior.squared_loss, prior.squared_loss),
+        ia.case,
+        posterior,
+        prior,
+        minus(posterior.squared_loss, prior.squared_loss),
         minus(posterior.interval_score, prior.interval_score),
     )
 
@@ -676,7 +782,9 @@ def classify_matched_panel(rows: tuple[PanelEntry, ...]) -> PanelDecision:
         raise ValueError("A panel cannot pool different implementation versions")
     point_delta = divide(total(tuple(p.point_difference for p in completed)), point(4))
     interval_delta = divide(total(tuple(p.interval_difference for p in completed)), point(4))
-    return PanelDecision(_screen_outcome(point_delta, interval_delta), 4, 4, point_delta, interval_delta)
+    return PanelDecision(
+        _screen_outcome(point_delta, interval_delta), 4, 4, point_delta, interval_delta
+    )
 
 
 def _screen_outcome(

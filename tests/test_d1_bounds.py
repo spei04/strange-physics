@@ -28,7 +28,7 @@ from d1_bounds import (
     pair_scores,
 )
 from grid_q1_bounds import ArithmeticEvidence, EndpointEvidence, Interval
-from grid_q1_evidence import divide, point, plus, times
+from grid_q1_evidence import divide, plus, point, times
 
 from strange_physics.calibration_fixture_contracts import CASE_IDS, CaseId
 
@@ -50,19 +50,28 @@ def premises(case: CaseId = "M03", count: int = 256, scale: str = "0.25") -> D1P
     records = 2 if case == "D03" else 1
     label = 0.09375 if case == "W03" else 0.75
     return D1PrefixPremises(
-        i, (point(label),) * records, (endpoint(count),) * records, endpoint(count),
+        i,
+        (point(label),) * records,
+        (endpoint(count),) * records,
+        endpoint(count),
         ArithmeticEvidence(D(0), D("1e-48"), D(0), D(0), D(0)),
     )
 
 
 def cdf(
-    locations: tuple[str, ...], masses: tuple[str, ...],
-    delta: str = "0", support: tuple[str, str] = ("-1", "1"),
+    locations: tuple[str, ...],
+    masses: tuple[str, ...],
+    delta: str = "0",
+    support: tuple[str, str] = ("-1", "1"),
 ) -> CDFEnvelope:
     return enclose_cdf(
-        tuple(PredictiveCell(i, point(D(m)), point(D(x)))
-              for i, (x, m) in enumerate(zip(locations, masses, strict=True))),
-        D(delta), Interval(D(support[0]), D(support[1])), S,
+        tuple(
+            PredictiveCell(i, point(D(m)), point(D(x)))
+            for i, (x, m) in enumerate(zip(locations, masses, strict=True))
+        ),
+        D(delta),
+        Interval(D(support[0]), D(support[1])),
+        S,
     )
 
 
@@ -74,13 +83,15 @@ def prediction(
     # Explicit synthetic surrogate arrays. They are not the physical D1 cosine map.
     values = tuple(1.0 - (i + 0.5) / count for i in range(count))
     unit = divide(point(1), point(count))
-    weights = (unit,) * count if prior else (
-        (times(unit, point(D("1.98"))),) * (count // 2)
-        + (times(unit, point(D("0.02"))),) * (count // 2)
+    weights = (
+        (unit,) * count
+        if prior
+        else (
+            (times(unit, point(D("1.98"))),) * (count // 2)
+            + (times(unit, point(D("0.02"))),) * (count // 2)
+        )
     )
-    return enclose_predictive(
-        cert, values, weights, future_values_sha256=U, probabilities_sha256=S
-    )
+    return enclose_predictive(cert, values, weights, future_values_sha256=U, probabilities_sha256=S)
 
 
 @pytest.mark.parametrize("case", CASE_IDS)
@@ -113,7 +124,9 @@ def test_weak_excitation_uses_its_own_derivative_and_residual() -> None:
     assert weak.mean_error < strong.mean_error
 
 
-@pytest.mark.parametrize("change", ("record_missing", "repeated_value", "node_missing", "failed_node"))
+@pytest.mark.parametrize(
+    "change", ("record_missing", "repeated_value", "node_missing", "failed_node")
+)
 def test_prefix_incompleteness_never_normalizes_survivors(change: str) -> None:
     p = premises("D03")
     with pytest.raises(ValueError):
@@ -162,8 +175,13 @@ def test_prior_has_exact_cell_mass_and_no_likelihood_reserve() -> None:
 def test_certificate_arithmetic_mutation_is_rejected() -> None:
     cert = replace(certify_d1_prefix(premises()), delta_upper=D(0), mean_error=D(0))
     with pytest.raises(ValueError, match="arithmetic"):
-        enclose_predictive(cert, (0.5,) * 256, (point(D("0.00390625")),) * 256,
-                           future_values_sha256=U, probabilities_sha256=S)
+        enclose_predictive(
+            cert,
+            (0.5,) * 256,
+            (point(D("0.00390625")),) * 256,
+            future_values_sha256=U,
+            probabilities_sha256=S,
+        )
 
 
 def test_endpoint_failure_cannot_be_relabelled_passed() -> None:
@@ -172,9 +190,13 @@ def test_endpoint_failure_cannot_be_relabelled_passed() -> None:
     cert = certify_d1_prefix(p)
     assert not cert.passed
     with pytest.raises(ValueError, match="failed"):
-        enclose_predictive(replace(cert, passed=True, reasons=()), (0.5,) * 256,
-                           (point(D("0.00390625")),) * 256,
-                           future_values_sha256=U, probabilities_sha256=S)
+        enclose_predictive(
+            replace(cert, passed=True, reasons=()),
+            (0.5,) * 256,
+            (point(D("0.00390625")),) * 256,
+            future_values_sha256=U,
+            probabilities_sha256=S,
+        )
 
 
 def test_point_atoms_and_threshold_equality_use_generalized_inverse() -> None:
@@ -227,20 +249,32 @@ def test_mass_intervals_crossing_and_delta_tail_remain_ambiguous() -> None:
 
 
 def test_widening_masses_images_and_tv_never_narrows_quantile_claim() -> None:
-    narrow = enclose_cdf((
-        PredictiveCell(0, point(D("0.25")), point(0)),
-        PredictiveCell(1, point(D("0.75")), point(D("0.5"))),
-    ), D(0), Interval(D(-1), D(1)), S)
-    wide = enclose_cdf((
-        PredictiveCell(0, Interval(D("0.2"), D("0.3")), Interval(D("-0.1"), D("0.1"))),
-        PredictiveCell(1, Interval(D("0.7"), D("0.8")), Interval(D("0.4"), D("0.6"))),
-    ), D("0.01"), Interval(D(-1), D(1)), S)
+    narrow = enclose_cdf(
+        (
+            PredictiveCell(0, point(D("0.25")), point(0)),
+            PredictiveCell(1, point(D("0.75")), point(D("0.5"))),
+        ),
+        D(0),
+        Interval(D(-1), D(1)),
+        S,
+    )
+    wide = enclose_cdf(
+        (
+            PredictiveCell(0, Interval(D("0.2"), D("0.3")), Interval(D("-0.1"), D("0.1"))),
+            PredictiveCell(1, Interval(D("0.7"), D("0.8")), Interval(D("0.4"), D("0.6"))),
+        ),
+        D("0.01"),
+        Interval(D(-1), D(1)),
+        S,
+    )
     for p in (D("0.05"), D("0.95")):
         a, b = generalized_quantile(narrow, p).value, generalized_quantile(wide, p).value
         assert b.lower <= a.lower <= a.upper <= b.upper
 
 
-@pytest.mark.parametrize("kind", ("missing_mass", "excess_mass", "wrong_index", "bad_support", "nan"))
+@pytest.mark.parametrize(
+    "kind", ("missing_mass", "excess_mass", "wrong_index", "bad_support", "nan")
+)
 def test_invalid_cdf_inputs_fail_closed(kind: str) -> None:
     cells = (PredictiveCell(0, point(1), point(0)),)
     support, delta = Interval(D(-1), D(1)), D(0)
@@ -279,9 +313,7 @@ def test_exact_mass_feasibility_rejects_tiny_residuals(
 
 
 @pytest.mark.parametrize("ambient_precision", (3, 80))
-def test_exact_mass_feasibility_preserves_tiny_feasible_interval(
-    ambient_precision: int
-) -> None:
+def test_exact_mass_feasibility_preserves_tiny_feasible_interval(ambient_precision: int) -> None:
     second = Interval(D("0.4" + "9" * 109), D("0.5" + "0" * 108 + "1"))
     cells = (PredictiveCell(0, point(D("0.5")), point(0)), PredictiveCell(1, second, point(0)))
     with localcontext() as context:
@@ -301,15 +333,17 @@ def test_malformed_persisted_cdf_cannot_remove_support_terminal() -> None:
         generalized_quantile(malformed, D("0.95"))
 
 
-@pytest.mark.parametrize("truth,expected", (("0.5", "1"), ("0", "1"), ("1", "1"),
-                                         ("-0.1", "3"), ("1.1", "3")))
+@pytest.mark.parametrize(
+    "truth,expected", (("0.5", "1"), ("0", "1"), ("1", "1"), ("-0.1", "3"), ("1.1", "3"))
+)
 def test_interval_score_exact_boundaries_and_miss_penalty(truth: str, expected: str) -> None:
     assert interval_score(point(0), point(1), point(D(truth))) == point(D(expected))
 
 
 def test_score_encloses_uncertain_truth_and_ordered_endpoints() -> None:
-    score = interval_score(Interval(D(0), D("0.1")), Interval(D("0.9"), D(1)),
-                           Interval(D("-0.1"), D("1.1")))
+    score = interval_score(
+        Interval(D(0), D("0.1")), Interval(D("0.9"), D(1)), Interval(D("-0.1"), D("1.1"))
+    )
     assert score.lower >= 0
     for lo, hi, truth in ((D(0), D(1), D("0.5")), (D("0.1"), D("0.9"), D("-0.1"))):
         exact = interval_score(point(lo), point(hi), point(truth))
@@ -321,7 +355,9 @@ def test_score_encloses_uncertain_truth_and_ordered_endpoints() -> None:
 def test_predictive_outputs_keep_finite_and_continuous_targets_separate() -> None:
     value = prediction()
     assert value.cdf.mass_updates == value.finite_cdf.mass_updates == 512
-    assert value.mean.lower <= value.finite_mean.lower <= value.finite_mean.upper <= value.mean.upper
+    assert (
+        value.mean.lower <= value.finite_mean.lower <= value.finite_mean.upper <= value.mean.upper
+    )
     assert value.cdf.delta_upper > value.finite_cdf.delta_upper == 0
     assert len(value.cdf.knots) <= 2 * 256 + 2
     assert all(q.probability in (D("0.05"), D("0.95")) for q in value.quantiles)
@@ -342,8 +378,9 @@ def test_predictive_joins_reject_other_arrays_or_prior_weights(kind: str) -> Non
     else:
         masses = (point(D("0.003")),) + masses[1:]
     with pytest.raises(ValueError):
-        enclose_predictive(cert, values, masses, future_values_sha256=future_hash,
-                           probabilities_sha256=mass_hash)
+        enclose_predictive(
+            cert, values, masses, future_values_sha256=future_hash, probabilities_sha256=mass_hash
+        )
 
 
 def test_score_joins_recompute_fields_and_bind_truth() -> None:
@@ -357,18 +394,24 @@ def test_score_joins_recompute_fields_and_bind_truth() -> None:
         pair_scores(posterior, replace(prior, truth_evidence_sha256=T))
 
 
-@pytest.mark.parametrize("point_bounds,interval_bounds,outcome", (
-    (("-2", "-1"), ("-1", "-0.1"), "local-screen-passed"),
-    (("0", "0"), ("-1", "-0.1"), "screen-not-met"),
-    (("-1", "-0.1"), ("0", "0"), "screen-not-met"),
-    (("-1", "0.1"), ("-1", "-0.1"), "inconclusive"),
-    (("-1", "-0.1"), ("-1", "0.1"), "inconclusive"),
-    (("0.1", "1"), ("-1", "1"), "screen-not-met"),
-))
+@pytest.mark.parametrize(
+    "point_bounds,interval_bounds,outcome",
+    (
+        (("-2", "-1"), ("-1", "-0.1"), "local-screen-passed"),
+        (("0", "0"), ("-1", "-0.1"), "screen-not-met"),
+        (("-1", "-0.1"), ("0", "0"), "screen-not-met"),
+        (("-1", "0.1"), ("-1", "-0.1"), "inconclusive"),
+        (("-1", "-0.1"), ("-1", "0.1"), "inconclusive"),
+        (("0.1", "1"), ("-1", "1"), "screen-not-met"),
+    ),
+)
 def test_frozen_two_metric_sign_rule(
     point_bounds: tuple[str, str], interval_bounds: tuple[str, str], outcome: str
 ) -> None:
-    assert _screen_outcome(Interval(*map(D, point_bounds)), Interval(*map(D, interval_bounds))) == outcome
+    assert (
+        _screen_outcome(Interval(*map(D, point_bounds)), Interval(*map(D, interval_bounds)))
+        == outcome
+    )
 
 
 def test_no_survivor_panel_and_no_stress_case_substitution() -> None:
@@ -401,7 +444,8 @@ def test_ambient_decimal_context_does_not_change_certificate_cdf_or_score() -> N
 def test_prior_linear_surrogate_contains_known_continuous_moments_and_quantiles() -> None:
     value = prediction(prior=True)
     for interval, exact in (
-        (value.mean, Fraction(1, 2)), (value.second, Fraction(1, 3)),
+        (value.mean, Fraction(1, 2)),
+        (value.second, Fraction(1, 3)),
         (value.variance, Fraction(1, 12)),
         (value.quantiles[0].value, Fraction(1, 20)),
         (value.quantiles[1].value, Fraction(19, 20)),
@@ -412,10 +456,15 @@ def test_prior_linear_surrogate_contains_known_continuous_moments_and_quantiles(
 def test_full_matched_panel_aggregates_both_metrics_and_preserves_incomplete_rows() -> None:
     cases: tuple[CaseId, ...] = ("M01", "M02", "M03", "M04")
     rows = tuple(
-        PanelEntry(case, "completed", pair_scores(
-            enclose_scores(prediction(case, count=1024), point(D("0.75")), S),
-            enclose_scores(prediction(case, prior=True, count=1024), point(D("0.75")), S),
-        )) for case in cases
+        PanelEntry(
+            case,
+            "completed",
+            pair_scores(
+                enclose_scores(prediction(case, count=1024), point(D("0.75")), S),
+                enclose_scores(prediction(case, prior=True, count=1024), point(D("0.75")), S),
+            ),
+        )
+        for case in cases
     )
     result = classify_matched_panel(rows)
     assert result.outcome == "local-screen-passed"
