@@ -77,7 +77,7 @@ bind every materialized fixture to them, obtain the separate owner's review,
 and exclude the four reserved coefficient values and eight paired construction blueprints from untouched study data; this is not exclusion of all linear-spring laws.
 Neither an `externally-reviewed` string nor successful parsing closes RA-N03.
 
-## Bounded interface and pending checks
+## Bounded interface and engineering checks
 
 Public JSON is limited to 32 KiB; private audit/inventory messages to 1 MiB.
 An inventory contains at most 1,024 supplied rows. These are parser bounds, not
@@ -88,15 +88,37 @@ claim. Existing bounded parsing rejects duplicate JSON keys, oversized nesting,
 nonfinite values, out-of-range hexadecimal exponents and extra fields.
 
 The schema function labels public versus private roots. The source generator
-\`scripts/generate_calibration_fixture_schema.py --output-dir DIRECTORY\` emits
-schema JSON plus arbitrary structural examples; its default is \`contracts/\`.
+`scripts/generate_calibration_fixture_schema.py --output-dir DIRECTORY` emits
+schema JSON plus arbitrary structural examples; its default is `contracts/`.
 It imports no oracle, predictor or test helper. The schema audit registration,
 archive module allowlist and persisted-schema byte/example parity tests are
-authored. Running generation, independent schema validation and tests remains
-pending the next engineering step. No tests or project imports were run while authoring
-this checkpoint. Test endpoints are arbitrary legal structural values, not
+included. Test endpoints are arbitrary legal structural values, not
 reference-generated D1 truth; the five actual reference-oracle methods are
-poisoned in the authored test fixture.
+poisoned in the test fixture.
+
+At source `0b9f39f4ce5ba02cdc0ebc4e5dd687ed5427141d`, focused cloud checks
+passed formatting, lint, strict typing across 195 files and all 76 contract
+cases (228 setup/call/teardown phases). Structural generation produced six
+valid, nine schema-negative and five runtime-negative examples. The test
+receipt records zero forbidden calls. Fixed future position `1.0` and time
+`0.75` have equal minimum/maximum constraints, with both runtime and schema
+negative cases.
+
+The first typing attempt failed on unsupported floating-point `Literal`
+annotations; the fixed-value repair then passed. Two attempts at the full schema audit
+ended at CPU limits before a child receipt was available. Their
+internal progress is unknown and neither establishes schema-audit acceptance.
+Both failures remain retained. The unchanged source and environment were
+verified after each closed attempt. Configured hosted schema, security,
+package and multi-runtime checks remain pending; this focused checkpoint is
+not a release or production-readiness claim.
+
+The local engineering unit is closed to further execution: measured process
+CPU plus five retained closeout reservations charged 118.962146 of 120 CPU
+seconds; active wall plus reservations charged 148.230369 of 300 seconds.
+Reservations are not measured consumption. External control/authoring CPU
+remains unknown, so these totals are not whole-operation cost. This ledger
+does not replenish earlier scientific allocations.
 
 The historical Q1 files, CORE contracts, NativeWorldCatalog, scientific gates,
 prior costs and reservations are unchanged. The future D1 generator, exposure
