@@ -1,16 +1,16 @@
 # Conditional recorder, codec and file-sink handoff tests
 
-This is an authored test slice, not an installed D1 execution path. Its base is
+This is a verified conditional test slice, not an installed D1 execution path. Its base is
 `56a5c473fb113e03bd519764dcee81937320097c`, containing the accepted Unit13 bridge
 code at `1c815203bbe1519207933dd1819fbc93203e6dd5`. Only
 `tests/test_d1_codec_handoff.py` and this guide are added. Existing recorder,
-bridge, codec, table and sink code are unchanged. No imports, collection, tests,
-formatter, typing, actual files or callbacks were executed during authoring.
+bridge, codec, table and sink code are unchanged. Authoring used source inspection only. The separate local engineering verification
+and its limits are recorded below.
 
 The [bridge scope](D1_CODEC_APPEND.md), [append design](D1_CODEC_APPEND_DESIGN.md)
 and [codec contract](D1_PRIMITIVE_CODEC_CONTRACT.md) remain authoritative.
-The tests require a new independently reviewed engineering guard and admission
-before execution; no scientific allocation or earlier balance is inherited.
+Local verification used independently reviewed engineering controls and fresh
+source-bound admissions; no scientific allocation or earlier balance was inherited.
 
 ## Conditional objects and actual bytes
 
@@ -51,7 +51,7 @@ retain their defining-code/alias/process/network denials. This is not an OS sand
 | Context mismatch after sink creation | Constructor rejects without an event callback; the already-owned sink is still finished once. |
 
 Static census: eight cases in seven test functions, with 24 prospective pytest
-setup/call/teardown phases. They have not run. The one parameterization uses two
+setup/call/teardown phases. All passed in the local check below. The parameterization uses two
 short explicit IDs; other cases are individually named.
 
 Success cases expand actual shard lines with the same T and compare the resulting
@@ -119,10 +119,45 @@ logs, JUnit/phase reports, retained failures and other engineering outputs remai
 separately counted. The estimate is not measured physical disk use or proof of
 whole-study fit. All actual I/O must remain under the owned temporary paths.
 
-## Limits of a future passing result
+## Local engineering verification
 
-A passing engineering run would support these specific source interfaces, failure
-orders, exact small-line replay and resource cleanup assertions. It would not
+Frozen code `d4f3bfc0208989f3599856caac048b1ca48d0440` passed the separately
+reviewed Unit14 check. Its 401 source files, 35 imported project sources, 26
+scientific defining-code guards and pinned environment matched before and after.
+Only the new test file was formatted; its AST remained unchanged. Existing helper
+implementations were not modified.
+
+| Attempt | Result |
+| --- | --- |
+| 1 — preparation | Owned sentinel stopped before its body; eight exact ordered IDs collected with zero test phases. Six children closed. |
+| 2 — verification | Formatting, lint and full typing across 220 files passed. All eight cases and 24 ordered phases passed without skips or expected failures. Six children closed. |
+
+Independent review checked the actual eight sink roots: 23 private payload files
+totaled 11,742 bytes. The partial-return case retained a 39-byte intent and seven
+return-prefix bytes against a 72-byte event reservation, with distinct write and
+close faults. Source assertions confirmed actual descriptor closure while the
+sink correctly retained close uncertainty. Every terminal file remained
+`pending_external_confirmation`; retained bytes do not infer recorder acknowledgement.
+
+Across both closed attempts, measured CPU was 41.210102 seconds. Including two
+5-second CPU and 10-second active-wall closeout holds, the retained charge is
+51.210102 CPU seconds and 61.042984643019736 active-wall seconds. The separately
+sampled approximately 5.426-microsecond wall difference remains recorded. Final
+owned logical output was 1,671,566 bytes: 1,670,565 regular-file bytes and 1,001
+bytes for seven pytest-created symlinks, across 57 regular files, 19 directories
+and no FIFOs. This is not physical disk use or whole-operation accounting;
+external authoring, review and transport costs remain separately unknown.
+Earlier units and their failures/holds are retained without balance transfer.
+
+Parent [PR #150](https://github.com/spei04/strange-physics/pull/150) passed its
+original CI attempt: all six required jobs, 5,842 tests per runtime, 219-file
+typing, 1,567 schema checks, package inspection and the existing smoke/reference
+checks. This local handoff result is separate from subsequent hosted CI.
+
+## Limits of this passing result
+
+This engineering result supports these specific source interfaces, failure
+orders, exact small-line replay and resource cleanup assertions. It does not
 supply S/T/C/A custody/activation, real primitive/source ownership, historical
 exposure completeness, crash/power-loss durability, full-call memory/byte fit,
 scientific calibration, report binding or a scientific run admission. Those
