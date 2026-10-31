@@ -1,6 +1,6 @@
 # D1 owned capture lifecycle
 
-Private software qualification passed at
+Historical private software qualification passed at
 [f1adcabb](https://github.com/spei04/strange-physics/commit/f1adcabb9a0e7e5d917c240dc772f67943c0eb41):
 37 cases completed all 111 ordered phases, with formatting, lint and full
 233-file typing passing. Independent review verified all 20 owned child-process
@@ -10,10 +10,12 @@ Python ASTs and all comments.
 These tests exercise the actual lifecycle with fake service and protected-plan
 APIs. The CLI remains disabled. No protected startup, actual capture service,
 scientific operation or final runtime acceptance is established. Ordinary CI for
-this exact implementation is a separate verification step.
+this exact implementation subsequently failed seven lifecycle cases per runtime.
+Both raw failures remain retained; successor validation is pending.
 
-The existing [bootstrap](D1_BOOTSTRAP.md) and original-owner source remain
-unchanged. `grid_q1_supervisor.py`, its profiles, argv, result validation and
+The lifecycle component leaves original-owner source unchanged. The separately
+reviewed [bootstrap guard](D1_BOOTSTRAP.md) is combined with this component for
+successor validation. `grid_q1_supervisor.py`, its profiles, argv, result validation and
 numerical meanings are also unchanged. The new capture path never calls the
 GRID `Files.result` or `execute` functions.
 
@@ -133,7 +135,7 @@ resume capability.
 
 ## Authored tests and remaining qualification
 
-Verified test count: **37 cases in 16 functions, 111 passing phases**, maximum
+Historical Unit20 test count: **37 cases in 16 functions, 111 passing phases**, maximum
 literal node-ID length 103. The guarded check matched its exact prior collection. They cover the absent/running/
 leader-exited-populated/terminal-empty/receipt/stop sequence; exact source and
 report substitutions; preflight deadline exhaustion; lost acknowledgement;
@@ -152,7 +154,7 @@ One composition uses the actual existing receipt writer on owned temporary
 files. The service-entry tests use a fake launch and fake service identity; they
 cannot establish real cgroup, startup, owner capture or process closure.
 
-Source-derived conservative fixture ceiling: at most 33 request files at 4 KiB,
+Historical Unit20 source-derived conservative fixture ceiling: at most 33 request files at 4 KiB,
 nine other receipt files at 64 KiB and two child logs at 64 KiB, totaling
 **856,064 bytes**. Request bounds are asserted in the authored tests. There are
 at most 44 regular pathnames, no symlinks, hardlinks or FIFOs, and at most 101
@@ -178,3 +180,37 @@ observations. It must include a benign leader/descendant case proving leader
 exit alone is insufficient. Existing Unit19 failures, costs and unknowns remain
 retained. No current result qualifies S/A, installation/pass2, exposure evidence,
 whole scientific fit or a D1 batch.
+## Lifecycle test cleanup correction
+
+The original PR157 CI run failed seven cases on each Python runtime: 6,270
+passed and seven failed. Formatting, lint and full typing passed; schema,
+package and smoke stages were skipped. The isolated private qualification had
+used all-retained pytest paths, while ordinary CI uses failed-only retention.
+After a passing case, pytest removed its numbered run directory but left the
+adapter's sibling control directory. Reusing the numbered path could therefore
+fail before preflight or submission. The original logs did not capture that
+first exception, so the cause of that historical CI failure remains a
+source/order inference; the new regression separately targets the mechanism.
+
+The reviewed repair at 22779331 places run and control directories inside the
+same pytest-owned case directory. Production exclusivity and lifecycle behavior
+are unchanged. The new behavioral regression reproduces the old collision,
+checks its exact FileExistsError and zero submissions, then removes/recreates
+the fixed enclosing directory and requires the intended report-join failure
+with one submission and confirmed stop in both cycles. Existing assertions are
+preserved with first-fault diagnostics added to the previously failing paths.
+
+The repaired module has 38 cases in 17 functions. All 38 passed in 0.51 seconds
+at combined source 5ac97608a2d0c6395942cde258a0090fa9d72a9a using the repository's
+failed-only retention policy. This includes the behavioral collision/cleanup
+regression and the previously failing paths. Focused formatting/lint passed,
+all three child processes closed, and source/environment hashes were unchanged.
+The separate ordinary check charged 9.927693 CPU / 14.854678 active-wall seconds,
+including its 5/10 closeout reservation. Normal pytest cleanup left no retained
+fixtures. This is ordinary software evidence, not private guard or protected
+runtime qualification. Full combined CI is pending.
+
+The earlier 37/111 private result remains attached to its original bytes.
+Conservative successor fixture planning includes up to four additional request
+slots and nested case directories; the original Unit20 fixture census above
+is historical.

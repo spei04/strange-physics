@@ -1,6 +1,11 @@
 # D1 protected bootstrap and original-object capture
 
-Status: source interfaces and the minimal test typing repair at
+Current software checkpoint: the capture-window suite passed all **80 cases /
+240 ordered phases** at cb32c43e71e6e14dc267d7bc39e4aa7bb9143c9e,
+with formatting/lint and full 233-file typing. This uses helper-local fakes;
+actual protected startup and runtime instrumentation remain unqualified.
+
+Historical Unit19 source interfaces and the minimal test typing repair at
 [0c76a102](https://github.com/spei04/strange-physics/commit/0c76a1021f87f76d638d598d6ea5e64fb608e797)
 are independently reviewed. Private engineering qualification is **incomplete**.
 Both guard sentinels and collection of 143 cases/zero phases passed at 11629b1.
@@ -36,13 +41,15 @@ estimate below is superseded by the observed 232-file scope.
 The standalone controller exits 64. Final capture acceptance remains false
 even for a clean direct-child observation. The separate
 [named-service lifecycle source](D1_OWNED_CAPTURE.md) passed its separate guarded
-37-case/111-phase check and full 233-file typing at f1adcabb. Its ordinary CI is
-running on [PR #157](https://github.com/spei04/strange-physics/pull/157); it remains
-outside the frozen PR #156 CI scope. Protected-runtime qualification is pending.
+37-case/111-phase check and full 233-file typing at f1adcabb. Its original ordinary CI on
+[PR #157](https://github.com/spei04/strange-physics/pull/157) failed seven lifecycle
+cases per runtime under failed-only pytest cleanup. The test ownership repair
+and this guard are now combined for successor validation. The failed run remains
+outside the frozen PR #156 CI scope and is retained. Protected-runtime qualification is pending.
 The current environment is not admitted for protected startup. No child
 bootstrap, installation, environment repair or D1 scientific batch ran.
 
-## Capture-window source extension (unqualified)
+## Capture-window source extension (software qualified; runtime pending)
 
 Source checkpoint `f76b604dd4a8c8bfdd15d6c2258ee4f0f0b2fa8a`, integrated without Python changes at
 `bf7c10ed2c3b634caac9fdc4811fcb51726060db` onto the frozen PR #157 source, adds the guard to the actual
@@ -51,6 +58,23 @@ module change. No project import, formatter, typecheck, collection, test body,
 profiler installation, primitive probe, real child or service ran during
 source authoring. The separate 37-case owned-lifecycle qualification is unchanged.
 This extension is not qualified by that suite or the older Unit19 collection.
+
+The first private full check stopped at one type error before any test body:
+the identity check against math.exp narrowed the retained builtin to a Callable.
+The two-line repair revalidates its exact builtin type before constructing the
+guard, without a cast, suppression or relaxed identity check. A prospective
+engineering amendment permitted one fresh preparation/check pair within the
+same 200-CPU/600-wall/8-MiB account. Earlier controls, failures and all charges
+were retained; no scientific protocol or budget changed.
+
+The new preparation collected the exact 80 cases without source changes. The
+final check passed all 240 phases with no skips, xfails or forbidden attempts.
+Across five invocations all 32 children closed. Measured controller/child CPU
+was 85.378867 seconds; retained closeout reservations brought the charge to
+110.378867 CPU and 136.488404 active-wall seconds. The closed evidence set is
+1,826,566 logical bytes. The remaining allowance is not reused. These counts
+qualify the fake-only software window; no actual capture profiler, service,
+protected installation or scientific run was executed.
 
 The ordered boundaries are now concrete:
 
@@ -111,7 +135,7 @@ remain unmeasured; these per-event bounds are not a whole-path fit proof or a
 new CPU allowance.
 
 The authored bootstrap suite now has **80 cases in 30 test functions**, or
-**240 prospective phases**: the previous 56 cases plus 24 guard cases. The
+**240 passing phases at cb32c43**: the previous 56 cases plus 24 guard cases. The
 maximum statically derived node ID is 125 characters; new parameter IDs are
 short explicit literals. The earlier positive identity/order assertions remain,
 with added guard-state checks. Synthetic fixtures now carry a local fake
