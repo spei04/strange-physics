@@ -8,11 +8,12 @@ from dataclasses import dataclass
 from decimal import Decimal
 from typing import Annotated, Literal, Self
 
-from pydantic import AfterValidator, Field, model_validator
+from pydantic import AfterValidator, ConfigDict, Field, ValidationError, model_validator
 
 from strange_physics.bounded_json import bounded_canonical, parse_bounded_json
 from strange_physics.calibration_fixture_contracts import PROTOCOL_SHA256
 from strange_physics.contracts import Identifier, Message
+from strange_physics.control_contracts import ContractViolation
 
 Kind = Literal[
     "fixture",
@@ -146,7 +147,13 @@ def fixed_row_manifest() -> tuple[RowSpec, ...]:
 ROW_MANIFEST = fixed_row_manifest()
 
 
-class DecimalAtom(Message):
+class _ReportMessage(Message):
+    """Revalidate actual local DTO instances before serialization."""
+
+    model_config = ConfigDict(revalidate_instances="always")
+
+
+class DecimalAtom(_ReportMessage):
     """Lossless bounded Decimal tuple, including quantum and signed zero."""
 
     sign: Annotated[int, Field(ge=0, le=1)]
@@ -193,7 +200,7 @@ def _hex(value: str) -> str:
 Binary64 = Annotated[str, Field(min_length=1, max_length=32), AfterValidator(_hex)]
 
 
-class Binary64Atom(Message):
+class Binary64Atom(_ReportMessage):
     value: Binary64
 
 
@@ -206,10 +213,10 @@ def encode_binary64(value: float) -> Binary64Atom:
 def decode_binary64(value: Binary64Atom) -> float:
     if type(value) is not Binary64Atom:
         raise ValueError("Exact Binary64Atom required")
-    return float.fromhex(Binary64Atom.model_validate_json(value.model_dump_json()).value)
+    return float.fromhex(Binary64Atom.model_validate(vars(value)).value)
 
 
-class IntervalAtom(Message):
+class IntervalAtom(_ReportMessage):
     lower: DecimalAtom
     upper: DecimalAtom
 
@@ -220,7 +227,7 @@ class IntervalAtom(Message):
         return self
 
 
-class TableRef(Message):
+class TableRef(_ReportMessage):
     table_id: Identifier
     kind: Kind | Literal["fault"]
     path: Annotated[str, Field(min_length=1, max_length=192)]
@@ -248,12 +255,12 @@ class TableRef(Message):
         return self
 
 
-class TableSlot(Message):
+class TableSlot(_ReportMessage):
     table_id: Identifier
     index: Annotated[int, Field(ge=0, lt=37_120)]
 
 
-class RowState(Message):
+class RowState(_ReportMessage):
     ordinal: Annotated[int, Field(ge=0, lt=135)]
     key: Annotated[str, Field(min_length=1, max_length=96)]
     kind: Kind
@@ -291,7 +298,7 @@ class RowState(Message):
         return self
 
 
-class Denominator(Message):
+class Denominator(_ReportMessage):
     kind: Kind
     planned: Annotated[int, Field(ge=1, le=135)]
     unrun: Annotated[int, Field(ge=0, le=135)]
@@ -314,7 +321,7 @@ def group_denominators(rows: tuple[RowState, ...]) -> tuple[Denominator, ...]:
     )
 
 
-class D1ReportStructure(Message):
+class D1ReportStructure(_ReportMessage):
     schema_version: Literal["strange-physics.d1-report-structure.v1"] = (
         "strange-physics.d1-report-structure.v1"
     )
@@ -398,8 +405,12 @@ def parse_report_structure(raw: bytes) -> D1ReportStructure:
 
 
 def validate_report_structure(value: D1ReportStructure) -> D1ReportStructure:
-    """Reparse actual nested material; constructed/copied models are not authority."""
+    """Revalidate actual nested types before serialization can normalize them."""
     if type(value) is not D1ReportStructure:
         raise ValueError("Exact structural report required")
-    bounded_canonical(value, REPORT_BYTES)
-    return parse_report_structure(value.model_dump_json().encode())
+    try:
+        normalized = D1ReportStructure.model_validate(value)
+    except ValidationError:
+        raise ContractViolation("invalid_request", 422) from None
+    bounded_canonical(normalized, REPORT_BYTES)
+    return parse_report_structure(normalized.model_dump_json().encode())

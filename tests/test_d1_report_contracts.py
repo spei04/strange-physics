@@ -138,6 +138,43 @@ def test_actual_nested_row_bypasses_are_revalidated(field: str, replacement: obj
         check(value.model_copy(update={"rows": (bad, *value.rows[1:])}))
 
 
+@pytest.mark.parametrize(
+    "target",
+    ["ordinal", "slot-index", "byte-length", "record-count", "planned", "completed"],
+)
+def test_nested_integer_booleans_are_rejected_before_serialization(target: str) -> None:
+    value = fixture()
+    if target == "ordinal":
+        row = value.rows[1].model_copy(update={"ordinal": True})
+        value = value.model_copy(update={"rows": (value.rows[0], row, *value.rows[2:])})
+    elif target == "slot-index":
+        completion = value.rows[0].completion
+        assert completion is not None
+        row = value.rows[0].model_copy(
+            update={"completion": completion.model_copy(update={"index": False})}
+        )
+        value = value.model_copy(update={"rows": (row, *value.rows[1:])})
+    elif target == "byte-length":
+        table = value.tables[0].model_copy(update={"byte_length": True})
+        value = value.model_copy(update={"tables": (table, *value.tables[1:])})
+    elif target == "record-count":
+        table = value.tables[-1].model_copy(update={"record_count": True})
+        value = value.model_copy(update={"tables": (*value.tables[:-1], table)})
+    else:
+        denominator = value.denominators[-1].model_copy(update={target: True})
+        value = value.model_copy(update={"denominators": (*value.denominators[:-1], denominator)})
+    with pytest.raises(ContractViolation):
+        check(value)
+
+
+def test_constructed_nested_mapping_cannot_hide_integer_boolean() -> None:
+    data = fixture().model_dump(mode="python")
+    data["rows"][1]["ordinal"] = True
+    value = c.D1ReportStructure.model_construct(**data)
+    with pytest.raises(ContractViolation):
+        check(value)
+
+
 def test_constructed_nested_mapping_is_normalized_before_cross_row_access() -> None:
     value = fixture()
     copied = c.D1ReportStructure.model_construct(**value.model_dump(mode="python"))
@@ -373,6 +410,13 @@ def test_binary64_round_trip_is_exact(value: float) -> None:
 def test_binary64_nonfinite_noncanonical_and_overflow_are_contained(text: str) -> None:
     with pytest.raises(ValueError):
         c.Binary64Atom(value=text)
+
+
+@pytest.mark.parametrize("raw_value", [b"0x1.0000000000000p+0", True, 1.0, "0x1p+0"])
+def test_constructed_binary64_is_revalidated_without_json_coercion(raw_value: object) -> None:
+    bad = c.encode_binary64(1.0).model_copy(update={"value": raw_value})
+    with pytest.raises(ValueError):
+        c.decode_binary64(bad)
 
 
 def test_interval_reversal_is_rejected() -> None:

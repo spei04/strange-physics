@@ -1,9 +1,11 @@
 # D1 report structure: B1 sub-slice
 
 Source only, 2026-10-30. `tests/d1_report_contracts.py` implements a structural
-envelope from the [report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md). Its78 authored
-synthetic cases have not been collected or executed. This is not completion of
-B1's numerical payload codecs or gate registry, not the material binder, and
+envelope from the [report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md).
+The earlier local 78-case check retained 76 passes and two Decimal revalidation
+failures. The repaired source has 89 authored synthetic cases, including nested
+type-bypass regressions; this successor has not been executed. This is not
+completion of B1's numerical payload codecs or gate registry, not the material binder, and
 not permission to run D1. Numerical, recorder, production and workflow source
 are unchanged.
 
@@ -82,10 +84,20 @@ proposed table codec tags identify roles, not an implemented raw-array format.
 `parse_report_structure(raw)` reuses the project's bounded strict JSON parser:
 at most4 MiB, depth16 and100,000 structural nodes before typed decoding. Duplicate
 JSON keys, nonfinite literals, extras and malformed UTF-8 are rejected.
-`validate_report_structure(value)` serializes/reparses the actual nested object;
-`model_construct` and `model_copy` do not bypass that public boundary. Scalar
-decoders likewise revalidate their actual models. Trusted internal model methods
-are not alternate public validation entrypoints.
+`validate_report_structure(value)` revalidates the actual nested model instances
+before bounded serialization and JSON reparsing. All eight local DTOs use
+`revalidate_instances="always"`; inherited strict, extra-forbidden, frozen,
+finite-value and default-validation settings remain intact. This rejects boolean
+integer fields before serialization can turn them into valid integers, including
+inside `model_construct` and `model_copy` results. Valid constructed nested
+mappings are normalized before cross-row access. Only Pydantic validation errors
+are translated to the existing `ContractViolation` boundary.
+
+Decimal and binary64 decoders validate their raw model fields without a JSON
+roundtrip, so bytes or booleans cannot acquire valid scalar types through
+serialization. Trusted internal model methods are not alternate public validation
+entrypoints. These checks establish structure only, not payload authenticity or
+numerical acceptance.
 
 There are at most512 table descriptors, each declaring at most4 MiB and37,120
 records. Their declared byte sum may not exceed the unchanged64 MiB science
