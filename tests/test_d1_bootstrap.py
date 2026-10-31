@@ -8,8 +8,8 @@ import json
 import math
 import sys
 from pathlib import Path
-from types import ModuleType, SimpleNamespace
-from typing import Any
+from types import CodeType, FrameType, ModuleType, SimpleNamespace
+from typing import Any, NoReturn, cast
 
 import d1_bootstrap as bootstrap
 import pytest
@@ -19,6 +19,10 @@ import pytest
 def isolated_denied_work_state(monkeypatch: pytest.MonkeyPatch) -> None:
     # Test isolation only: the production once-per-child latch has no reset API.
     monkeypatch.setattr(bootstrap, "_DENIED_WORK", None)
+    monkeypatch.setattr(bootstrap, "_STANDARD_ATTEMPTED", False)
+    monkeypatch.setattr(bootstrap, "_PREPARED_RANDOM", None)
+    monkeypatch.setattr(bootstrap, "_PREPARED_EXP", None)
+    monkeypatch.setattr(bootstrap, "_WINDOW", None)
 
 
 def fake_boundary(monkeypatch: pytest.MonkeyPatch) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -36,6 +40,9 @@ def fake_boundary(monkeypatch: pytest.MonkeyPatch) -> tuple[dict[str, Any], dict
             raise AssertionError("primitive body must never run")
 
         def circle_constant(self) -> None:
+            raise AssertionError("primitive body must never run")
+
+        def trig(self) -> None:
             raise AssertionError("primitive body must never run")
 
     Owner.__module__ = "endpoint_belief_reference"
@@ -89,7 +96,23 @@ def fake_boundary(monkeypatch: pytest.MonkeyPatch) -> tuple[dict[str, Any], dict
         return objects[name]
 
     monkeypatch.setattr(bootstrap, "_source_module", source)
-    monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules=module_table))
+    profile_state: list[object] = [None]
+    def set_profile(callback: object) -> None:
+        bootstrap._deny_external_work("sys.setprofile", ())
+        profile_state[0] = callback
+    def stopped(code: int) -> NoReturn:
+        assert code == 86
+        raise bootstrap.BootstrapError("Capture observed denied work: " + str(bootstrap._DENIED_WORK))
+    monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(
+        modules=module_table, getprofile=lambda: profile_state[0],
+        setprofile=set_profile, gettrace=lambda: None))
+    monkeypatch.setattr(bootstrap, "os", SimpleNamespace(write=lambda fd, raw: len(raw), _exit=stopped))
+    prepared_random = ModuleType("random")
+    prepared_random.__dict__["_exp"] = math.exp
+    module_table["random"] = prepared_random
+    monkeypatch.setattr(bootstrap, "_STANDARD_ATTEMPTED", True)
+    monkeypatch.setattr(bootstrap, "_PREPARED_RANDOM", prepared_random)
+    monkeypatch.setattr(bootstrap, "_PREPARED_EXP", math.exp)
     monkeypatch.setattr(bootstrap, "math", actual_math)
     monkeypatch.setattr(
         bootstrap, "importlib", SimpleNamespace(import_module=lambda name: objects[name])
@@ -100,6 +123,7 @@ def fake_boundary(monkeypatch: pytest.MonkeyPatch) -> tuple[dict[str, Any], dict
     module_table["math"] = actual_math
     plan = {
         "checkout": "/synthetic",
+        "site_packages": "/synthetic/venv/site-packages",
         "source_commit": "a" * 40,
         "import_map": {"endpoint_belief_reference": Owner.position.__code__.co_filename},
         "files": [
@@ -112,6 +136,7 @@ def fake_boundary(monkeypatch: pytest.MonkeyPatch) -> tuple[dict[str, Any], dict
         "owner": Owner,
         "captured": captured,
         "modules": module_table,
+        "profile": profile_state,
     }
 
 
@@ -133,6 +158,10 @@ def test_capture_retains_before_consumers_and_constructs_once(
         assert context["owner"].__dict__[name] is function
         assert function.__code__ is code
     assert prepared.emitter is held[-1] and len(prepared.owners) == 13
+    window = bootstrap._WINDOW
+    assert window is not None and context["profile"][0] is window.callback
+    assert len(window.codes) == 5
+    assert all(actual is expected for actual, expected in zip(window.codes[:4], held[3], strict=True))
 
 
 @pytest.mark.parametrize(
@@ -360,6 +389,8 @@ def test_child_startup_gates_without_importing_consumers(
     monkeypatch.setattr(bootstrap, "sys", state)
     monkeypatch.setattr(bootstrap, "read_launch_record", lambda *args: plan)
     monkeypatch.setattr(bootstrap, "_check_loaded", lambda record: None)
+    standard: list[object] = []
+    monkeypatch.setattr(bootstrap, "_prepare_standard_library", standard.append)
 
     def capture(record: dict[str, Any]) -> SimpleNamespace:
         captured.append(record)
@@ -370,10 +401,11 @@ def test_child_startup_gates_without_importing_consumers(
         result = bootstrap.child(tmp_path / "record", "b" * 64, cache)
         assert result["owners"] == 13 and result["primitive_calls_permitted"] is False
         assert captured == [plan] and hooks == [bootstrap._deny_external_work]
+        assert standard == [plan]
     else:
         with pytest.raises(bootstrap.BootstrapError):
             bootstrap.child(tmp_path / "record", "b" * 64, cache)
-        assert captured == [] and hooks == []
+        assert captured == [] and hooks == [] and standard == []
 
 
 @pytest.mark.parametrize(
@@ -556,3 +588,212 @@ def test_typing_namespace_alias_requires_exact_protected_parent(
     else:
         with pytest.raises(bootstrap.BootstrapError, match="Typing namespace"):
             bootstrap._check_loaded(plan)
+
+
+# All frame/code objects below are owned synthetic metadata. The dummy body is
+# never called, and helper-local sys/os proxies never install a real profiler.
+def guard_dummy() -> None:
+    raise AssertionError("synthetic primitive body must not execute")
+
+
+def frame_for(code: CodeType) -> FrameType:
+    return cast(FrameType, SimpleNamespace(f_code=code))
+
+
+def fresh_window(monkeypatch: pytest.MonkeyPatch) -> tuple[dict[str, Any], dict[str, Any], bootstrap._PrimitiveWindow]:
+    plan, context = fake_boundary(monkeypatch)
+    window = bootstrap._start_window(plan)
+    return plan, context, window
+
+
+@pytest.mark.parametrize("name", ("position", "exp", "log", "circle_constant", "trig"),
+                         ids=("position", "exp", "log", "circle", "trig"))
+def test_fixed_oracle_routes_deny_before_retained_codes(
+    monkeypatch: pytest.MonkeyPatch, name: str,
+) -> None:
+    _, _, window = fresh_window(monkeypatch)
+    assert window.codes == ()
+    code = guard_dummy.__code__.replace(co_filename="/synthetic/tests/endpoint_belief_reference.py",
+                                      co_qualname="EndpointOracle." + name)
+    with pytest.raises(bootstrap.BootstrapError, match="denied work"):
+        window.profile(frame_for(code), "call", None)
+    assert bootstrap._DENIED_WORK == "source:EndpointOracle." + name
+
+
+def test_first_oracle_import_is_inside_window(monkeypatch: pytest.MonkeyPatch) -> None:
+    plan, context = fake_boundary(monkeypatch)
+    original_import = bootstrap._source_module
+    def importer(name: str, record: dict[str, Any]) -> ModuleType:
+        if name == "endpoint_belief_reference":
+            window = bootstrap._WINDOW
+            assert window is not None and window.armed and window.codes == ()
+            code = guard_dummy.__code__.replace(
+                co_filename="/synthetic/tests/endpoint_belief_reference.py",
+                co_qualname="EndpointOracle.position")
+            window.profile(frame_for(code), "call", None)
+        return original_import(name, record)
+    monkeypatch.setattr(bootstrap, "_source_module", importer)
+    with pytest.raises(bootstrap.BootstrapError, match="EndpointOracle.position"):
+        bootstrap.capture(plan)
+    assert context["calls"] == [] and context["captured"] == []
+
+
+def test_exact_retained_code_is_bound_before_first_consumer(monkeypatch: pytest.MonkeyPatch) -> None:
+    plan, context = fake_boundary(monkeypatch)
+    original_import = bootstrap._source_module
+    def importer(name: str, record: dict[str, Any]) -> ModuleType:
+        if name == "d1_fixture_reference":
+            window = bootstrap._WINDOW
+            assert window is not None and len(window.codes) == 5
+            code = context["owner"].position.__code__
+            assert code is window.codes[0]
+            window.profile(frame_for(code), "call", None)
+        return original_import(name, record)
+    monkeypatch.setattr(bootstrap, "_source_module", importer)
+    with pytest.raises(bootstrap.BootstrapError, match="retained-oracle-code"):
+        bootstrap.capture(plan)
+    assert context["calls"] == ["endpoint_belief_reference"]
+    assert context["captured"] == []
+
+
+@pytest.mark.parametrize("denied", (True, False), ids=("exp", "other"))
+def test_retained_c_identity_without_invoking_callable(monkeypatch: pytest.MonkeyPatch, denied: bool) -> None:
+    _, _, window = fresh_window(monkeypatch)
+    if denied:
+        with pytest.raises(bootstrap.BootstrapError, match="retained-c:math.exp"):
+            window.profile(frame_for(guard_dummy.__code__), "c_call", math.exp)
+    else:
+        window.profile(frame_for(guard_dummy.__code__), "c_call", len)
+        window.profile(frame_for(guard_dummy.__code__), "call", None)
+        window.profile(frame_for(guard_dummy.__code__), "return", math.exp)
+        window.check()
+        assert bootstrap._DENIED_WORK is None
+
+
+def test_consumer_scientific_route_is_denied_without_import(monkeypatch: pytest.MonkeyPatch) -> None:
+    _, context, window = fresh_window(monkeypatch)
+    code = guard_dummy.__code__.replace(co_filename="/synthetic/tests/d1_prefix_evidence.py",
+                                      co_qualname="qualify_prefix")
+    with pytest.raises(bootstrap.BootstrapError, match="source:qualify_prefix"):
+        window.profile(frame_for(code), "call", None)
+    assert context["calls"] == []
+
+
+@pytest.mark.parametrize("event", ("sys.setprofile", "sys.settrace"), ids=("profile", "trace"))
+def test_armed_guard_replacement_is_fatal(monkeypatch: pytest.MonkeyPatch, event: str) -> None:
+    _, context, window = fresh_window(monkeypatch)
+    with pytest.raises(bootstrap.BootstrapError, match="guard-removal"):
+        bootstrap._deny_external_work(event, ())
+    assert context["profile"][0] is window.callback
+    assert bootstrap._DENIED_WORK == "guard-removal:" + event
+
+
+@pytest.mark.parametrize("kind", ("profile", "trace"), ids=("profile", "trace"))
+def test_preexisting_instrumentation_rejects_before_import(monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+    plan, context = fake_boundary(monkeypatch)
+    if kind == "profile":
+        context["profile"][0] = object()
+    else:
+        # Change only the helper-local namespace; never global sys tracing.
+        proxy = SimpleNamespace(modules=context["modules"], getprofile=lambda: None,
+                                gettrace=lambda: object(), setprofile=lambda callback: None)
+        monkeypatch.setattr(bootstrap, "sys", proxy)
+    with pytest.raises(bootstrap.BootstrapError, match="preexisting"):
+        bootstrap.capture(plan)
+    assert context["calls"] == []
+
+
+def test_missing_profile_cannot_produce_success(monkeypatch: pytest.MonkeyPatch) -> None:
+    _, context, window = fresh_window(monkeypatch)
+    context["profile"][0] = None
+    with pytest.raises(bootstrap.BootstrapError, match="capture-profile-missing"):
+        window.check()
+
+
+@pytest.mark.parametrize("write_fails", (False, True), ids=("diagnostic", "write-failed"))
+def test_swallowed_first_denial_survives_diagnostic_uncertainty(
+    monkeypatch: pytest.MonkeyPatch, write_fails: bool,
+) -> None:
+    _, _, window = fresh_window(monkeypatch)
+    writes: list[bytes] = []; exits: list[int] = []
+    def write(fd: int, raw: bytes) -> int:
+        assert fd == 2
+        writes.append(raw)
+        if write_fails:
+            raise OSError("synthetic diagnostic failure")
+        return 1  # Deliberately partial: no diagnostic acknowledgement claim.
+    def stop(code: int) -> NoReturn:
+        exits.append(code)
+        raise bootstrap.BootstrapError("synthetic fatal child exit")
+    monkeypatch.setattr(bootstrap, "os", SimpleNamespace(write=write, _exit=stop))
+    for label in ("first-denial", "later-denial"):
+        with pytest.raises(bootstrap.BootstrapError):
+            window.deny(label)
+    with pytest.raises(bootstrap.BootstrapError):
+        window.check()
+    assert bootstrap._DENIED_WORK == "first-denial"
+    assert writes == [b"D1_DENIED:first-denial\n"] and exits == [86, 86, 86]
+
+
+def standard_boundary(monkeypatch: pytest.MonkeyPatch) -> tuple[dict[str, Any], dict[str, Any]]:
+    module = ModuleType("random")
+    origin = "/runtime/stdlib/random.py"
+    module.__file__ = origin
+    loader = importlib.machinery.SourceFileLoader("random", origin)
+    module.__spec__ = importlib.machinery.ModuleSpec("random", loader, origin=origin)
+    module.__dict__["_exp"] = math.exp
+    actual_math = ModuleType("math"); actual_math.__dict__["exp"] = math.exp
+    imports: list[str] = []; checks: list[object] = []
+    state = SimpleNamespace(path=["/runtime/stdlib"], modules={"random": module})
+    def load(name: str) -> ModuleType:
+        assert bootstrap._WINDOW is None and state.path == ["/runtime/stdlib"]
+        imports.append(name)
+        return module
+    monkeypatch.setattr(bootstrap, "sys", state)
+    monkeypatch.setattr(bootstrap, "math", actual_math)
+    monkeypatch.setattr(bootstrap, "importlib", SimpleNamespace(import_module=load, machinery=importlib.machinery))
+    monkeypatch.setattr(bootstrap, "_check_loaded", checks.append)
+    plan = {"checkout": "/owned", "stdlib": "/runtime/stdlib", "files": [{
+        "path": origin, "bytes": 34683,
+        "sha256": "0693d4ded36916f5b07d6c395cc331dbf1011bb70e90daaa29eaa32490a09425"}]}
+    return plan, {"module": module, "state": state, "imports": imports, "checks": checks}
+
+
+def test_reviewed_standard_initialization_precedes_helper_lookup(monkeypatch: pytest.MonkeyPatch) -> None:
+    plan, context = standard_boundary(monkeypatch)
+    bootstrap._prepare_standard_library(plan)
+    assert context["imports"] == ["random"] and context["checks"] == [plan]
+    assert bootstrap._PREPARED_RANDOM is context["module"]
+    assert bootstrap._PREPARED_EXP is math.exp and bootstrap._WINDOW is None
+    with pytest.raises(bootstrap.BootstrapError, match="consumed"):
+        bootstrap._prepare_standard_library(plan)
+    assert context["imports"] == ["random"]
+
+
+@pytest.mark.parametrize("kind", ("pin", "origin", "alias", "helper-path", "import-error"),
+                         ids=("pin", "origin", "alias", "lookup", "import"))
+def test_standard_failure_cannot_start_capture(monkeypatch: pytest.MonkeyPatch, kind: str) -> None:
+    plan, context = standard_boundary(monkeypatch)
+    if kind == "pin": plan["files"][0]["sha256"] = "0" * 64
+    elif kind == "origin": context["module"].__spec__.origin = "/other/random.py"
+    elif kind == "alias": context["module"].__dict__["_exp"] = len
+    elif kind == "helper-path": context["state"].path.append("/owned/tests")
+    else:
+        def failed_import(name: str) -> NoReturn:
+            raise OSError("synthetic stdlib import failure")
+        monkeypatch.setattr(bootstrap, "importlib", SimpleNamespace(import_module=failed_import))
+    with pytest.raises((bootstrap.BootstrapError, OSError)):
+        bootstrap._prepare_standard_library(plan)
+    assert bootstrap._PREPARED_RANDOM is None and bootstrap._PREPARED_EXP is None
+    assert bootstrap._WINDOW is None and bootstrap._STANDARD_ATTEMPTED is True
+    with pytest.raises(bootstrap.BootstrapError, match="consumed"):
+        bootstrap._prepare_standard_library(plan)
+    with pytest.raises(bootstrap.BootstrapError, match="initialization"):
+        bootstrap._start_window(plan)
+
+
+def test_window_cannot_be_recreated_after_consumption(monkeypatch: pytest.MonkeyPatch) -> None:
+    plan, _, window = fresh_window(monkeypatch)
+    with pytest.raises(bootstrap.BootstrapError, match="consumed"):
+        bootstrap._start_window(plan)
+    assert bootstrap._WINDOW is window
