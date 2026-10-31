@@ -25,8 +25,8 @@ if TYPE_CHECKING:
 METHOD_NAMES = ("position", "exp", "log", "circle_constant")
 CONSUMERS = ("d1_fixture_reference", "d1_prefix_evidence", "d1_originals")
 FORBIDDEN_HELPERS = (
-    "d1_sink", "d1_recorder", "d1_primitive_bridge", "d1_primitive_codec",
-    "d1_retention_table", "d1_source_files",
+    "d1_primitive_recording", "d1_primitive_sink", "d1_primitive_bridge",
+    "d1_primitive_codec", "d1_codec_append", "d1_table_retention", "d1_source_files",
 )
 SOURCE_PIN_PATHS = (
     "docs/research/RA_N03_CALIBRATION_SLICE.md", "tests/endpoint_belief_reference.py",
@@ -101,6 +101,9 @@ def _check_loaded(plan: dict[str, Any]) -> None:
                 raise BootstrapError("Unlisted frozen module")
         elif origin not in files:
             raise BootstrapError("Loaded module origin is outside the protected runtime inventory")
+        if isinstance(origin, str) and Path(origin).is_relative_to(Path(plan["checkout"])):
+            if routes.get(name) != origin:
+                raise BootstrapError("Unmapped checkout helper or project source was loaded")
         if origin in routes.values() and name not in routes:
             raise BootstrapError("Protected helper or native source was loaded under an alias")
         if name.startswith("strange_physics") and name not in routes:
@@ -203,10 +206,15 @@ def _deny_external_work(event: str, args: tuple[object, ...]) -> None:
         raise BootstrapError("Capture child cannot spawn processes or use the network")
 
 
+def _empty_cache(cache: Path) -> bool:
+    with os.scandir(cache) as entries:
+        return next(entries, None) is None
+
+
 def child(plan_path: Path, plan_digest: str, cache: Path) -> dict[str, object]:
     if not sys.flags.isolated or not sys.flags.dont_write_bytecode:
         raise BootstrapError("Expected isolated interpreter and disabled bytecode writes")
-    if sys._xoptions.get("pycache_prefix") != str(cache) or not cache.is_dir() or any(cache.iterdir()):
+    if sys._xoptions.get("pycache_prefix") != str(cache) or not cache.is_dir() or not _empty_cache(cache):
         raise BootstrapError("Expected the fresh owned empty bytecode prefix")
     plan = read_launch_record(plan_path, plan_digest)
     if ".".join(str(part) for part in sys.version_info[:3]) != plan["python_version"]:

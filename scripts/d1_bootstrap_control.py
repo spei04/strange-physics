@@ -147,6 +147,41 @@ def read_plan(path: Path, digest: str) -> dict[str, Any]:
     return value
 
 
+def _names(path: Path, limit: int) -> list[str]:
+    """Consume at most the expected membership plus one rejecting observation."""
+    names: list[str] = []
+    with os.scandir(path) as entries:
+        for entry in entries:
+            if len(names) == limit:
+                raise PreflightError("Directory membership exceeds its bound")
+            names.append(entry.name)
+    return names
+
+
+def _interpreter_file(
+    start: Path, inventory: dict[Path, str], targets: dict[Path, str],
+) -> Path:
+    seen: set[Path] = set()
+    current = start
+    for _ in range(len(targets) + 1):
+        if current in seen:
+            raise PreflightError("Interpreter link cycle")
+        seen.add(current)
+        if inventory.get(current) == "file":
+            return current
+        if inventory.get(current) != "link" or current not in targets:
+            raise PreflightError("Interpreter hop lacks protected inventory")
+        literal = targets[current]
+        target = Path(literal)
+        if not literal or len(literal) > 4096 or ".." in target.parts:
+            raise PreflightError("Invalid literal interpreter link target")
+        next_path = target if target.is_absolute() else current.parent / target
+        if str(target) != literal:
+            raise PreflightError("Noncanonical literal interpreter link target")
+        current = _path(str(next_path))
+    raise PreflightError("Interpreter chain exceeds its finite inventory")
+
+
 def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
     """Check a closed inventory, actual source routes and controller before launch."""
     required = {
@@ -218,13 +253,14 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
             not isinstance(name, str) or name in ("", ".", "..") or "/" in name for name in entries
         ) or len(entries) != len(set(entries)):
             raise PreflightError("Invalid closed directory membership")
-        if sorted(os.listdir(path)) != sorted(entries):
+        if sorted(_names(path, len(entries))) != sorted(entries):
             raise PreflightError("Directory membership differs")
         inventory[path] = "directory"
     allowed_links = {
         paths["interpreter"].parent / "python", paths["interpreter"].parent / "python3",
         paths["interpreter"].parent / "python3.12",
     }
+    targets: dict[Path, str] = {}
     for item in links:
         if not isinstance(item, dict) or set(item) != {"path", "uid", "target"}:
             raise PreflightError("Invalid interpreter link")
@@ -233,11 +269,16 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
             raise PreflightError("Only the explicit interpreter links are permitted")
         _ancestors(path)
         info = path.lstat()
-        if not stat.S_ISLNK(info.st_mode) or info.st_uid != item["uid"]:
+        if (type(item["uid"]) is not int or item["uid"] not in (0, os.getuid())
+                or not stat.S_ISLNK(info.st_mode) or info.st_uid != item["uid"]):
             raise PreflightError("Interpreter link owner or type differs")
-        if os.readlink(path) != item["target"] or path.resolve() not in inventory:
-            raise PreflightError("Interpreter link target is not a pinned regular file")
+        if not isinstance(item["target"], str) or os.readlink(path) != item["target"]:
+            raise PreflightError("Interpreter literal link target differs")
         inventory[path] = "link"
+        targets[path] = item["target"]
+    for path in targets:
+        _interpreter_file(path, inventory, targets)
+    target_executable = _interpreter_file(paths["interpreter"], inventory, targets)
     for item in directories:
         if any(_path(item["path"]) / name not in inventory for name in item["entries"]):
             raise PreflightError("Closed directory contains an unpinned entry")
@@ -305,7 +346,7 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
         raise PreflightError("Accepted installation source differs")
     if accepted.get("python_version") != plan["python_version"] or accepted.get(
         "python_executable_sha256"
-    ) != hashes.get(str(paths["interpreter"].resolve())):
+    ) != hashes.get(str(target_executable)):
         raise PreflightError("Accepted interpreter identity differs")
     for key, hash_key in (
         ("lock_path", "uv_lock_sha256"), ("archive_path", "archive_sha256"),
@@ -427,9 +468,9 @@ def launch(plan_path: Path, plan_sha256: str, output: Path) -> LaunchResult:
         except (OSError, ValueError):
             failure = "invalid_capture_report"
     try:
-        if any(cache.iterdir()) or set(os.listdir(output)) != {"pycache", "child.log"}:
+        if _names(cache, 0) or set(_names(output, 2)) != {"pycache", "child.log"}:
             failure = "unexpected_capture_output"
-    except OSError:
+    except (OSError, PreflightError):
         failure = "output_census_unavailable"
     captured = (
         reaped and code == 0 and custody and not timed_out and size <= LOG_LIMIT

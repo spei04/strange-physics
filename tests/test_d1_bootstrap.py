@@ -214,7 +214,7 @@ def test_loaded_registry_matches_fixed_origins(
     loader = importlib.machinery.SourceFileLoader(name, origin)
     module.__spec__ = importlib.machinery.ModuleSpec(name, loader, origin=origin)
     plan = {
-        "files": [{"path": origin}], "import_map": {name: origin},
+        "files": [{"path": origin}], "import_map": {name: origin}, "checkout": "/owned",
         "frozen_modules": ["os"], "builtin_modules": ["sys"],
     }
     if case == "unknown_origin":
@@ -293,3 +293,45 @@ def test_child_startup_gates_without_importing_consumers(
         with pytest.raises(bootstrap.BootstrapError):
             bootstrap.child(tmp_path / "record", "b" * 64, cache)
         assert captured == [] and hooks == []
+
+
+@pytest.mark.parametrize("name", [
+    "d1_primitive_recording", "d1_primitive_sink", "d1_codec_append",
+    "d1_table_retention", "unmapped_helper", "strange_physics.unmapped",
+])
+def test_pinned_but_unmapped_checkout_origin_is_rejected(
+    monkeypatch: pytest.MonkeyPatch, name: str,
+) -> None:
+    origin = "/owned/tests/" + name + ".py"
+    module = ModuleType(name)
+    loader = importlib.machinery.SourceFileLoader(name, origin)
+    module.__spec__ = importlib.machinery.ModuleSpec(name, loader, origin=origin)
+    plan = {
+        "checkout": "/owned", "files": [{"path": origin}], "import_map": {},
+        "frozen_modules": [], "builtin_modules": [],
+    }
+    monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={name: module}))
+    with pytest.raises(bootstrap.BootstrapError):
+        bootstrap._check_loaded(plan)
+
+
+def test_cache_scan_observes_only_first_unexpected_entry(monkeypatch: pytest.MonkeyPatch) -> None:
+    seen: list[int] = []
+
+    class Entries:
+        def __enter__(self) -> Entries:
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            return None
+
+        def __iter__(self) -> Entries:
+            return self
+
+        def __next__(self) -> object:
+            seen.append(len(seen))
+            return object()
+
+    monkeypatch.setattr(bootstrap, "os", SimpleNamespace(scandir=lambda path: Entries()))
+    assert not bootstrap._empty_cache(Path("/synthetic"))
+    assert seen == [0]

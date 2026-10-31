@@ -9,6 +9,7 @@ import stat
 import subprocess
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 
 import pytest
@@ -282,3 +283,58 @@ def test_owned_fake_child_lifecycle(
     assert result.reaped and result.captured == (outcome == "success")
     assert killed == ([True] if outcome == "timeout" else [])
     assert stat.S_IMODE((tmp_path / "output/child.log").stat().st_mode) == 0o600
+
+
+@pytest.mark.parametrize("case", ["direct", "declared_hop", "unprotected_hop", "cycle"])
+def test_literal_interpreter_chain_never_skips_a_hop(case: str) -> None:
+    start, alias, binary = (Path(value) for value in ("/owned/python", "/owned/python3", "/runtime/python"))
+    inventory = {start: "link", binary: "file"}
+    targets = {start: str(binary)}
+    if case == "declared_hop":
+        inventory[alias] = "link"
+        targets = {start: "python3", alias: str(binary)}
+    elif case == "unprotected_hop":
+        targets[start] = "/tmp/flip"
+    elif case == "cycle":
+        inventory[alias] = "link"
+        targets = {start: "python3", alias: "python"}
+    if case in ("direct", "declared_hop"):
+        assert control._interpreter_file(start, inventory, targets) == binary
+    else:
+        with pytest.raises(control.PreflightError):
+            control._interpreter_file(start, inventory, targets)
+
+
+def test_indirect_uninventoried_interpreter_link_fails_preflight(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    plan = synthetic_plan(tmp_path, monkeypatch)
+    entry = Path(plan["interpreter"])
+    flip = tmp_path / "flip"
+    flip.symlink_to(Path(sys.executable).resolve())
+    entry.unlink()
+    entry.symlink_to(flip)
+    plan["links"][0]["target"] = str(flip)
+    with pytest.raises(control.PreflightError, match="hop"):
+        control.validate_plan(plan)
+
+
+def test_membership_overflow_stops_after_one_extra_observation(monkeypatch: pytest.MonkeyPatch) -> None:
+    seen: list[int] = []
+
+    class Entries:
+        def __enter__(self) -> Entries:
+            return self
+
+        def __exit__(self, *args: object) -> None:
+            return None
+
+        def __iter__(self) -> Any:
+            for number in range(100):
+                seen.append(number)
+                yield SimpleNamespace(name=str(number))
+
+    monkeypatch.setattr(control, "os", SimpleNamespace(scandir=lambda path: Entries()))
+    with pytest.raises(control.PreflightError, match="bound"):
+        control._names(Path("/synthetic"), 2)
+    assert seen == [0, 1, 2]
