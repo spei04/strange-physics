@@ -212,7 +212,23 @@ ambient Decimal precision; strict co-primary/tie rules; actual four-row
 aggregation and incomplete denominators. No D1 truth/forecasts or reference
 methods are invoked by these tests.
 
-The implementation is authored but unexecuted. Independent source review and
-a separately bounded engineering check remain necessary. Actual reference
-premises for every D1 prefix, the complete finite operation/byte census, report
-contracts, disabled runner and numerical allocation are subsequent work.
+Independent source review found a rounded-mass feasibility defect: a tiny exact
+excess could be hidden by outward rounding before the support-endpoint rule.
+The repaired exact sums and eight regressions were independently accepted.
+At source `312774cf06a389c2f88cbd664fbfd08d9cc28d36`, formatting, lint,
+strict typing across 197 files and all 69 synthetic cases (207 phases) passed.
+The first typing attempt failed on two inferred tuple shapes; explicit local
+annotations repaired them without changing calculations or assertions.
+
+All owned check processes closed; source and environment stayed unchanged.
+The test receipt records zero forbidden calls. These tests perform synthetic
+interval arithmetic, with no actual D1 labels, reference solves or batch.
+The separate unit2 engineering ledger charged 90.330926 CPU seconds and
+105.836336 active wall seconds including retained closeout reservations and
+the earlier failed typing attempt. These are not whole-operation costs:
+authoring/external control remains unmeasured. Unit1 costs are separate and
+retained. Hosted multi-runtime verification for this new slice remains pending.
+
+Actual reference premises for every D1 prefix, the complete finite operation/byte
+census, report contracts, disabled runner and numerical allocation are subsequent
+work. Passing these synthetic tests does not establish a calibration result.

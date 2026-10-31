@@ -109,9 +109,14 @@ annotations; the fixed-value repair then passed. Two attempts at the full schema
 ended at CPU limits before a child receipt was available. Their
 internal progress is unknown and neither establishes schema-audit acceptance.
 Both failures remain retained. The unchanged source and environment were
-verified after each closed attempt. Configured hosted schema, security,
-package and multi-runtime checks remain pending; this focused checkpoint is
-not a release or production-readiness claim.
+verified after each closed attempt. Subsequently, all six required jobs in
+[PR #138 CI](https://github.com/spei04/strange-physics/actions/runs/41152465569)
+passed on head `8b7704a85a42052f4d68718467844d82cf1e1379`: each Python 3.12/3.14
+job passed 4,966 ordinary tests, 1,567 schema checks, package inspection and
+CLI smoke; each separate analytic job passed 24 cases. Security and the final
+gate passed. This closes the configured engineering checks for unit1, while
+retaining the failed local audits. The protected-main release candidate was
+correctly skipped; this is not a release or production-readiness claim.
 
 The local engineering unit is closed to further execution: measured process
 CPU plus five retained closeout reservations charged 118.962146 of 120 CPU
