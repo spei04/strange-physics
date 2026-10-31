@@ -3,7 +3,7 @@
 Source-only slice, 2026-10-30. The facade in
 `tests/d1_primitive_recording.py` and its authored fake tests have not been
 executed or qualified. It implements the in-memory ordering boundary from the
-[report design](D1_REPORT_BINDING_DESIGN.md), not a durable file sink, a driver,
+[report design](https://github.com/spei04/strange-physics/blob/23b5765e2f967e5286754d4c70be8b1da71ef56f/docs/research/D1_REPORT_BINDING_DESIGN.md), not a durable file sink, a driver,
 a report schema or numerical admission. Existing numerical files are unchanged.
 
 ## Exact interface and supported boundary
