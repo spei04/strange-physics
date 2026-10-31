@@ -1,7 +1,9 @@
 # D1 exposure policy decisions
 
-Status: proposed for owner review; no protocol amendment, inventory-completeness
-claim or numerical execution is approved by this document.
+Status: the owner approved the recommended policy and its source implementation
+on 2026-10-31. Evaluation custody remains unresolved. This approval does not
+establish inventory completeness, amend the frozen protocol bytes, or authorize
+numerical execution.
 
 The next implementation can compare supplied exposure records. It cannot infer
 that those records cover every experiment or that a test catalog is an untouched
@@ -47,16 +49,17 @@ history cannot be reconciled, that is a separate explicit protocol decision.
 
 ## Ownership and next implementation
 
-The project owner approves or revises the policy and names the evaluation
-custodian. The custodian may be the owner or a designated reviewer; the role is
-not assumed to exist merely because this plan names it.
+The project owner approved the policy; the separate evaluation-custodian
+question remains unanswered. The custodian may be the owner or a designated
+reviewer; the role is not assumed to exist merely because this plan names it.
 
-After that decision, Research can implement one bounded nonnumerical extraction
-slice, Quality can independently check its coverage and overlap rules, and the
-lead can integrate its evidence. This does not authorize archive searches,
+Research may now implement one bounded nonnumerical extraction slice, Quality
+can independently check its coverage and overlap rules, and the lead can
+integrate its evidence. Actual reserved-world acceptance still needs the named
+custodian and its immutable inventory. This does not authorize archive searches,
 new endpoints, tuning after overlap inspection, or a scientific rerun.
 
 Adapter, report and disabled-runner source work may continue in parallel.
 The frozen D1 protocol, experiment counts, previous failed attempts and resource
-ledgers remain unchanged. This document is a reviewable decision package,
-not a statement that the system is scientifically or operationally ready.
+ledgers remain unchanged. Policy approval is not a statement that the system
+is scientifically or operationally ready.
