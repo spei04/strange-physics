@@ -36,7 +36,7 @@ def no_scientific_callbacks(monkeypatch: pytest.MonkeyPatch) -> None:
             "d1_bounds", "grid_q1_driver", "grid_q1_reference",
         } or name in {
             "strange_physics.native_prediction", "strange_physics.native_endpoint_beliefs",
-            "strange_physics.simulation", "strange_physics.finite_normalizer",
+            "strange_physics.simulation", "strange_physics.finite_log_weights",
         }:
             forbidden()
         return original_import(name, *args, **kwargs)
