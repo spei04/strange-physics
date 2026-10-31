@@ -58,9 +58,12 @@ def inputs(
     count = len(emitted)
     return RepeatedLossInput(
         count,
-        tuple(RepeatedLossNode(i, e, mass, Fraction(1, count))
-              for i, (e, mass) in enumerate(zip(emitted, masses, strict=True))),
-        D(one_error), D(two_error),
+        tuple(
+            RepeatedLossNode(i, e, mass, Fraction(1, count))
+            for i, (e, mass) in enumerate(zip(emitted, masses, strict=True))
+        ),
+        D(one_error),
+        D(two_error),
     )
 
 
@@ -75,7 +78,8 @@ def test_exact_two_node_square_law_retains_components(no_numerics: list[str]) ->
     assert result.squared_sum == point(D(10))
     assert result.gamma == point(D(0)) and result.allowance == point(D(1))
     assert tuple(n.transformed_probability for n in result.nodes) == (
-        point(D("0.1")), point(D("0.9")),
+        point(D("0.1")),
+        point(D("0.9")),
     )
     assert all(n.observed_ratio == point(D(1)) for n in result.nodes)
     assert result.disposition == "contained"
@@ -97,10 +101,14 @@ def test_exact_uniform_surrogates(count: int) -> None:
 
 
 def test_exact_fraction_reference_enclosed_without_reference_calls() -> None:
-    value = inputs((1.0, 2.0, 3.0),
-                   (Interval(D("0.07"), D("0.08")),
-                    Interval(D("0.28"), D("0.29")),
-                    Interval(D("0.64"), D("0.65"))))
+    value = inputs(
+        (1.0, 2.0, 3.0),
+        (
+            Interval(D("0.07"), D("0.08")),
+            Interval(D("0.28"), D("0.29")),
+            Interval(D("0.64"), D("0.65")),
+        ),
+    )
     result = repeated_loss_witness(value)
     squares = tuple(Fraction.from_float(n.one_emitted) ** 2 for n in value.nodes)
     denominator = sum(squares, Fraction(0))
@@ -116,8 +124,9 @@ def test_exact_fraction_reference_enclosed_without_reference_calls() -> None:
 
 
 def test_nonzero_derived_allowance_and_inclusive_lower_endpoint() -> None:
-    value = inputs((1.0, 1.0), (point(D("0.375")), point(D("0.625"))),
-                   one_error="0.03125", two_error="0.125")
+    value = inputs(
+        (1.0, 1.0), (point(D("0.375")), point(D("0.625"))), one_error="0.03125", two_error="0.125"
+    )
     result = repeated_loss_witness(value)
     assert result.gamma == point(D("0.25"))
     assert result.allowance.lower == D("0.75")
@@ -127,10 +136,13 @@ def test_nonzero_derived_allowance_and_inclusive_lower_endpoint() -> None:
 
 
 def test_inclusive_both_allowance_endpoints_with_feasible_mass_intervals() -> None:
-    result = repeated_loss_witness(inputs(
-        (1.0, 1.0), (Interval(D("0.25"), D(1)), Interval(D("0.25"), D("0.75"))),
-        two_error="0.5",
-    ))
+    result = repeated_loss_witness(
+        inputs(
+            (1.0, 1.0),
+            (Interval(D("0.25"), D(1)), Interval(D("0.25"), D("0.75"))),
+            two_error="0.5",
+        )
+    )
     assert result.allowance == Interval(D("0.5"), D(2))
     assert result.nodes[0].observed_ratio == result.allowance
     assert result.disposition == "contained"
@@ -146,9 +158,12 @@ def test_disjoint_retains_every_node_and_original_input() -> None:
 
 
 def test_overlap_is_never_a_pass_or_a_disjoint_claim() -> None:
-    result = repeated_loss_witness(inputs(
-        (1.0, 1.0), (Interval(D("0.5"), D("0.51")), Interval(D("0.49"), D("0.5"))),
-    ))
+    result = repeated_loss_witness(
+        inputs(
+            (1.0, 1.0),
+            (Interval(D("0.5"), D("0.51")), Interval(D("0.49"), D("0.5"))),
+        )
+    )
     assert result.disposition == "overlap"
     assert result.overlap_indices == (0, 1) and result.disjoint_indices == ()
     assert result.nodes[0].observed_ratio.lower == D(1)
@@ -156,20 +171,27 @@ def test_overlap_is_never_a_pass_or_a_disjoint_claim() -> None:
 
 
 def test_disjoint_takes_precedence_but_retains_overlapping_nodes() -> None:
-    result = repeated_loss_witness(inputs(
-        (1.0, 1.0, 1.0),
-        (point(D("0.1")), Interval(D("0.3"), D("0.4")), Interval(D("0.5"), D("0.6"))),
-    ))
+    result = repeated_loss_witness(
+        inputs(
+            (1.0, 1.0, 1.0),
+            (point(D("0.1")), Interval(D("0.3"), D("0.4")), Interval(D("0.5"), D("0.6"))),
+        )
+    )
     assert result.disposition == "disjoint"
     assert result.disjoint_indices == (0, 2) and result.overlap_indices == (1,)
 
 
 def test_hostile_ambient_context_cannot_change_result() -> None:
-    value = inputs((1.0, 2.0, 3.0),
-                   (Interval(D("0.07"), D("0.08")),
-                    Interval(D("0.28"), D("0.29")),
-                    Interval(D("0.64"), D("0.65"))),
-                   one_error="1e-10", two_error="2e-10")
+    value = inputs(
+        (1.0, 2.0, 3.0),
+        (
+            Interval(D("0.07"), D("0.08")),
+            Interval(D("0.28"), D("0.29")),
+            Interval(D("0.64"), D("0.65")),
+        ),
+        one_error="1e-10",
+        two_error="2e-10",
+    )
     expected = repeated_loss_witness(value)
     with localcontext() as context:
         context.prec = 2
@@ -188,8 +210,9 @@ def test_signed_zero_error_is_retained_but_does_not_change_bound() -> None:
     assert result.disposition == "contained"
 
 
-@pytest.mark.parametrize("bad", (0.0, -0.0, -1.0, float("nan"), float("inf"),
-                                 float("-inf"), 1e-300, 1e129, 1, True))
+@pytest.mark.parametrize(
+    "bad", (0.0, -0.0, -1.0, float("nan"), float("inf"), float("-inf"), 1e-300, 1e129, 1, True)
+)
 def test_invalid_emitted_values_fail_closed(bad: object) -> None:
     value = inputs()
     with pytest.raises(ValueError):
@@ -197,8 +220,9 @@ def test_invalid_emitted_values_fail_closed(bad: object) -> None:
         repeated_loss_witness(changed_node(value, node))
 
 
-@pytest.mark.parametrize("bad", (D("NaN"), D("Infinity"), D("-Infinity"), D("-0.1"),
-                                 D("1.1"), D("1e-257"), 0, True))
+@pytest.mark.parametrize(
+    "bad", (D("NaN"), D("Infinity"), D("-Infinity"), D("-0.1"), D("1.1"), D("1e-257"), 0, True)
+)
 def test_invalid_component_bounds(bad: object) -> None:
     with pytest.raises(ValueError):
         repeated_loss_witness(replace(inputs(), one_log_ratio_upper=cast(Decimal, bad)))
@@ -233,8 +257,9 @@ def test_incomplete_or_wrong_order_never_uses_survivors(kind: str) -> None:
         repeated_loss_witness(replace(value, nodes=nodes))
 
 
-@pytest.mark.parametrize("mass", (Fraction(0), Fraction(-1), Fraction(1, 3), Fraction(1),
-                                  D("0.5"), 0.5))
+@pytest.mark.parametrize(
+    "mass", (Fraction(0), Fraction(-1), Fraction(1, 3), Fraction(1), D("0.5"), 0.5)
+)
 def test_wrong_or_inexact_prior_cannot_use_uniform_simplification(mass: object) -> None:
     value = inputs()
     with pytest.raises(ValueError, match="uniform"):
@@ -242,9 +267,18 @@ def test_wrong_or_inexact_prior_cannot_use_uniform_simplification(mass: object) 
         repeated_loss_witness(changed_node(value, node))
 
 
-@pytest.mark.parametrize("lower,upper", (("0", "0.1"), ("-0", "0.1"), ("-0.1", "0.1"),
-                                        ("0.1", "1.1"), ("0.2", "0.1"),
-                                        ("NaN", "0.1"), ("0.1", "Infinity")))
+@pytest.mark.parametrize(
+    "lower,upper",
+    (
+        ("0", "0.1"),
+        ("-0", "0.1"),
+        ("-0.1", "0.1"),
+        ("0.1", "1.1"),
+        ("0.2", "0.1"),
+        ("NaN", "0.1"),
+        ("0.1", "Infinity"),
+    ),
+)
 def test_bypassed_interval_is_revalidated(lower: str, upper: str) -> None:
     value = inputs()
     mass = object.__new__(Interval)
