@@ -17,6 +17,14 @@ import pytest
 from scripts import d1_bootstrap_control as control
 
 
+def fake_process_api(start: Any) -> SimpleNamespace:
+    return SimpleNamespace(
+        Popen=start, TimeoutExpired=subprocess.TimeoutExpired,
+        SubprocessError=subprocess.SubprocessError,
+        DEVNULL=subprocess.DEVNULL, STDOUT=subprocess.STDOUT,
+    )
+
+
 def test_standalone_entry_is_disabled(capsys: pytest.CaptureFixture[str]) -> None:
     assert control.main() == 64
     assert "disabled" in capsys.readouterr().out
@@ -223,7 +231,7 @@ def test_failed_preflight_never_starts_child(tmp_path: Path, monkeypatch: pytest
         raise control.PreflightError("missing custody")
 
     monkeypatch.setattr(control, "read_plan", reject)
-    monkeypatch.setattr(control.subprocess, "Popen", lambda *a, **k: attempts.append(a))
+    monkeypatch.setattr(control, "subprocess", fake_process_api(lambda *a, **k: attempts.append(a)))
     with pytest.raises(control.PreflightError, match="custody"):
         control.launch(tmp_path / "missing", "a" * 64, tmp_path / "output")
     assert attempts == []
@@ -273,7 +281,7 @@ def test_owned_fake_child_lifecycle(
         kwargs["stdout"].flush()
         return FakeChild()
 
-    monkeypatch.setattr(control.subprocess, "Popen", start)
+    monkeypatch.setattr(control, "subprocess", fake_process_api(start))
     result = control.launch(tmp_path / "record", "a" * 64, tmp_path / "output")
     assert len(launches) == 1
     argv, kwargs = launches[0]
@@ -341,3 +349,39 @@ def test_membership_overflow_stops_after_one_extra_observation(monkeypatch: pyte
     with pytest.raises(control.PreflightError, match="bound"):
         control._names(Path("/synthetic"), 2)
     assert seen == [0, 1, 2]
+
+
+@pytest.mark.parametrize("case", ["empty", "reviewed", "omitted", "unknown_pth", "customize",
+                                 "archive", "changed_source", "changed_import_line"])
+def test_startup_hook_membership_is_derived_not_asserted(
+    monkeypatch: pytest.MonkeyPatch, case: str,
+) -> None:
+    site = Path("/protected/site")
+    hook, source = site / "_virtualenv.pth", site / "_virtualenv.py"
+    entries = [] if case == "empty" else [hook.name, source.name]
+    expected = [] if case in ("empty", "omitted") else [str(hook), str(source)]
+    plan = {
+        "startup_sys_path": [str(site)], "startup_hook_files": expected,
+        "directories": [{"path": str(site), "entries": entries}],
+        "files": [{"path": str(hook), "uid": os.getuid()}],
+    }
+    inventory = {site: "directory", hook: "file", source: "file"}
+    hashes = {str(source): control.VIRTUALENV_HOOK_SHA256}
+    raw = b"import _virtualenv"
+    if case == "unknown_pth":
+        entries.append("unknown.pth")
+    elif case == "customize":
+        entries.append("sitecustomize.py")
+    elif case == "archive":
+        plan["startup_sys_path"].append("/protected/runtime.zip")
+        inventory[Path("/protected/runtime.zip")] = "file"
+    elif case == "changed_source":
+        hashes[str(source)] = "0" * 64
+    elif case == "changed_import_line":
+        raw = b"import arbitrary_startup\n"
+    monkeypatch.setattr(control, "_read", lambda *args: raw)
+    if case in ("empty", "reviewed"):
+        control._startup_hooks(plan, {"site_packages": site}, inventory, hashes)
+    else:
+        with pytest.raises(control.PreflightError):
+            control._startup_hooks(plan, {"site_packages": site}, inventory, hashes)

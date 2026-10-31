@@ -29,6 +29,7 @@ LOG_LIMIT = 64 * 1024
 CHILD_CPU_LIMIT = 30
 CHILD_WALL_LIMIT = 60
 CLEANUP_LIMIT = 5
+VIRTUALENV_HOOK_SHA256 = "cfb3db86aaa53bb62b5ff764970bec2d71c9228590a0ebec57f6ec926cc0bf1a"
 HELPERS = (
     "d1_bootstrap", "d1_bounds", "d1_fixture_reference", "d1_originals",
     "d1_prefix_evidence", "endpoint_belief_reference", "grid_q1_bounds",
@@ -184,6 +185,40 @@ def _interpreter_file(
     raise PreflightError("Interpreter chain exceeds its finite inventory")
 
 
+def _startup_hooks(
+    plan: dict[str, Any], paths: dict[str, Path],
+    inventory: dict[Path, str], hashes: dict[str, str],
+) -> None:
+    site = paths["site_packages"]
+    startup = {_path(name) for name in plan["startup_sys_path"]}
+    for path in startup:
+        if inventory.get(path) == "file":
+            raise PreflightError("Startup archive imports have not been reviewed")
+    candidates = {
+        _path(item["path"]) / name for item in plan["directories"]
+        if _path(item["path"]) in startup | {site} for name in item["entries"]
+    }
+    if any(path.name in ("sitecustomize", "usercustomize") or
+           path.name.startswith(("sitecustomize.", "usercustomize.")) for path in candidates):
+        raise PreflightError("Unreviewed startup customization")
+    pth = {path for path in candidates if path.parent == site and path.suffix == ".pth"}
+    expected: set[str] = set()
+    if pth:
+        hook, source = site / "_virtualenv.pth", site / "_virtualenv.py"
+        if pth != {hook}:
+            raise PreflightError("Unreviewed executable startup hook")
+        if inventory.get(hook) != "file" or inventory.get(source) != "file":
+            raise PreflightError("Startup hook must use pinned regular files")
+        owners = {item["path"]: item["uid"] for item in plan["files"]}
+        if _read(hook, 128, owners[str(hook)]) != b"import _virtualenv":
+            raise PreflightError("Startup hook import line differs")
+        if hashes.get(str(source)) != VIRTUALENV_HOOK_SHA256:
+            raise PreflightError("Startup hook source differs from its independent review")
+        expected = {str(hook), str(source)}
+    if set(plan["startup_hook_files"]) != expected:
+        raise PreflightError("Startup hook membership is incomplete")
+
+
 def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
     """Check a closed inventory, actual source routes and controller before launch."""
     required = {
@@ -310,6 +345,7 @@ def validate_plan(plan: dict[str, Any]) -> dict[str, str]:
         path = _path(name)
         if path not in inventory and name not in plan["absent_startup_paths"]:
             raise PreflightError("Startup search path is neither pinned nor observed absent")
+    _startup_hooks(plan, paths, inventory, hashes)
     if paths["controller"] != Path(__file__).absolute() or paths["controller_interpreter"] != Path(
         sys.executable
     ).resolve():
