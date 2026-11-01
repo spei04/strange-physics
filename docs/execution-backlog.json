@@ -15835,10 +15835,10 @@
       }
     },
     "current_summary": {
-      "verified": "The complete continuation is approved. The typing fix is reviewed but unvalidated; all earlier failures and charges remain retained.",
-      "next": "Research prepares cycle-three controls; Quality reviews their exact bounds and outcomes; Platform prepares hosted evidence collection; Lead executes the approved gates.",
-      "blocker": "Exact cycle-three controls and admissions must be sealed before format, collection and regression checks; downstream CI and runtime remain conditional.",
-      "record": "research/D1_RUNTIME_REPAIR_RESULT.md#third-cycle-continuation-approved-2026-11-01"
+      "verified": "Format5 passed; the source-freeze control incorrectly rejected one allowed formatting change. Independent diagnosis is complete; collection and regression tests remain unrun.",
+      "next": "Research prepares the corrected freeze and helpers; Quality reviews them; Lead prepares one complete event and review amendment.",
+      "blocker": "A corrected freeze requires a fourth preparation event beyond the approved three. No retry or dependent phase is admitted.",
+      "record": "research/D1_RUNTIME_REPAIR_RESULT.md#third-cycle-format-pass-and-freeze-control-error-2026-11-01"
     },
     "laplace_reference_validation": {
       "status": "local_software_validation_independently_accepted",

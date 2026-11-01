@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Result:** The complete continuation is approved. The typing fix is reviewed but unvalidated; all earlier failures and charges remain retained. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#third-cycle-continuation-approved-2026-11-01).
-- **Next:** Research prepares cycle-three controls; Quality reviews their exact bounds and outcomes; Platform prepares hosted evidence collection; Lead executes the approved gates.
-- **Blocker:** Exact cycle-three controls and admissions must be sealed before format, collection and regression checks; downstream CI and runtime remain conditional.
+- **Result:** Format5 passed; the source-freeze control incorrectly rejected one allowed formatting change. Independent diagnosis is complete; collection and regression tests remain unrun. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#third-cycle-format-pass-and-freeze-control-error-2026-11-01).
+- **Next:** Research prepares the corrected freeze and helpers; Quality reviews them; Lead prepares one complete event and review amendment.
+- **Blocker:** A corrected freeze requires a fourth preparation event beyond the approved three. No retry or dependent phase is admitted.
 
 ## Approval and execution capacity
 
@@ -32,6 +32,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-11-01 | Research / Quality / Platform / Project lead | Formatter-change correction | Format5 passed and the follow-up operator stopped before Git. Quality verified the failure and single formatting-only delta. Research prepares the corrected freeze/helpers; Platform drafts the bounded amendment; Lead retains all charges and publishes the review. |
 | 2026-11-01 | Research / Quality / Platform / Project lead | Approved third-cycle continuation | Research adapts the finite software controls, Quality independently reviews the unchanged guards and accounting, Platform prepares hosted evidence collection, and Lead seals and executes. Previous failures and charges remain retained; no new validation result is claimed. |
 | 2026-11-01 | Research / Quality / Platform / Project lead | Second cycle closed at typing; one complete continuation proposal | Five typing errors stopped regression dispatch. Research's 4d83811c fix is source-reviewed but untested; Quality reviews eventual qualification, Platform prepares the decision, and Lead owns approval. Both cycles and all B charges remain retained; E2 is closed 20/60 and E7 closeout used 3/10 once. No CI or runtime work follows without the amendment. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#second-cycle-check-stopped-at-typing-2026-11-01). |
 | 2026-11-01 | Research / Platform / Quality / Project lead | Second cycle preparation and formatting passed | Research owns the next source checkpoint, Quality independently reviews it, Lead executes the guarded checks, and Platform corrects runtime-controller findings. All prior failure charges remain retained. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#second-software-cycle). |

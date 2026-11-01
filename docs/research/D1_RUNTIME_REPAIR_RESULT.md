@@ -1,6 +1,6 @@
 # D1 repair package progress
 
-**The complete third-cycle continuation is approved; execution controls are being sealed.** The typing correction remains reviewed but unvalidated. Earlier formatting/lint passes, typing failure and all charges remain retained. No new regression, CI, installation or runtime result is claimed.
+**Format5 passed; an incorrect source-freeze control stopped progression before collection or tests.** The independent failure review confirmed a single formatting-only line collapse. The control omitted the approved formatting-change commit path. All original failures and charges remain retained; no runtime or scientific result is claimed.
 
 ## Approval and source
 
@@ -117,6 +117,20 @@ One final200 CPU /600 active-wall software cycle is authorized inside B's unchan
 The approved software-output bound is29,180,520 bytes within32MiB, including retained files, all nine bounded logs, receipts, fixtures, maps and failure reserves. Actual controls must enforce these bounds and be independently accepted before dispatch. This is no authority for a fourth software cycle, extra CI, another installation/capture, scientific run or capacity purchase.
 
 Research owns cycle-three software controls and source joins; Quality owns independent review; Platform prepares the fixed hosted evidence collector; Lead records admissions and remains sole executor. The existing clean cloud checkouts and owned pinned environment are reused. Direct approval provenance is retained privately at1,809 bytes, SHA-256 `1b1034d050d76b6e10042b8e7ed850ef3d31df35a6fcefa328e99a2445f2ed24`; its runtime copy will be created inside the counted staging operation.
+
+### Third-cycle format pass and freeze control error (2026-11-01)
+
+The third-cycle initial controls and independent readback passed. Format5 then completed both import sorting and formatting with six closed child observations, source/environment checks, and no failure. Its receipt is11,286 bytes, SHA-256 `5fd142f8856debacc3566bf437886194f393336485e5952b11f911eec7a29215`. The formatter reported one file reformatted and three unchanged.
+
+Only `tests/d1_bootstrap.py` changed: the parenthesized conditional expression assigning `alias_fields` collapsed from three lines to one. It is27,739 bytes, SHA-256 `23c155779dde7645445e99ea6a31c17455161f52f539ca2b2e746baf46f09888`. Lead compared it with public source4d83811 and verified equal Python syntax trees without executing either source; Quality independently accepted the exact delta. No condition, loader identity rule, import or test case changed. The working source remains uncommitted.
+
+The subsequent freeze operator incorrectly required the after-format map to equal its pre-format map. The approved step3 expressly required reviewing and committing formatting changes. Both implementation and source review missed this discrepancy. The operator returned a known closed AssertionError before any Git child, with no prepare admission. Its2,724-byte receipt has SHA-256 `ddd7a98b864f1aa80fd71aa565f79357cf6b61eefef0d731faa61d93ef4f987e`. This is a failed preparation; the formatter phase passed.
+
+The independent outcome reader completed once, exit0, and retained both complete format logs, exact outer outcomes, before/after maps, failed preparation, and the current changed source bytes. Its53,186-byte proof has SHA-256 `1695e3843effe944b6df2d80a59d907111d885711d75421694a06bc24bb82317`; its1,052-byte receipt has SHA-256 `15635259c84d2bf58cba59cc79b50423ad5451f65d8c334ff9c7fe95e0c23f0c`. The proof records85 software entries and912,737 logical bytes without following links. It does not claim a fresh Git identity or environment scan. The exact historical assertion line was not recorded; source inspection identifies the incompatible fixed-map check.
+
+B retains **88.53152 CPU /131.49357407726347 active-wall seconds**, including this cycle's **11.882541 /21.376798707060516**. E2 retains **28/84**, with its original2/6 handoff reserve remaining. Format's charge is7.477703/10.804920787923038; the failed freeze's charge is2.069936/5.048387152142823. No old charge is reset or refunded.
+
+The approved three-preparation inventory is insufficient for a corrected freeze plus the remaining post-collection binder while retaining this failed preparation. Source preparation continues toward a narrow fourth-event amendment; no corrected freeze, repeated formatter, phase6/7, PR/main CI, installation, capture or science has been dispatched. The original downstream ceilings remain conditional and unchanged.
 
 ## Actual startup evidence
 
