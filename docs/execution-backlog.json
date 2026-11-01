@@ -15835,10 +15835,10 @@
       }
     },
     "current_summary": {
-      "verified": "Formatting passed. The revision checkpoint stopped before Git because its reader rejects normal checkout file permissions. The failure and all earlier charges are retained.",
-      "next": "Research corrects the checkout reader and prepares the approved second cycle; Platform versions controls; Quality reviews; Lead executes.",
-      "blocker": "Second-cycle preparation must pass before collection and regression tests; later CI, installation and runtime gates remain open.",
-      "record": "research/D1_RUNTIME_REPAIR_RESULT.md#source-freeze-checkpoint"
+      "verified": "The second software cycle preparation and formatting passed. The exact source checkpoint is next; collection and regression tests have not run.",
+      "next": "Research prepares the source checkpoint; Quality reviews it; Lead executes the guarded checks. Platform corrects the runtime controller review findings.",
+      "blocker": "The formatted source must be verified before collection and regression tests; CI, installation and runtime gates remain open.",
+      "record": "research/D1_RUNTIME_REPAIR_RESULT.md#second-software-cycle"
     },
     "laplace_reference_validation": {
       "status": "local_software_validation_independently_accepted",

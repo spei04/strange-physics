@@ -1,6 +1,6 @@
 # D1 repair package progress
 
-**Formatting passed; the revision checkpoint failed before any Git command.** A bounded diagnosis found that the checkpoint applies private-record permission restrictions to ordinary checkout files. The approved second software cycle is being prepared with a narrow reader correction. No tests, CI, installation, capture, science or capacity action has followed.
+**Second-cycle preparation and formatting passed.** The corrected reader accepts ordinary checkout permissions while preserving strict private-record custody. The next source checkpoint must join the actual formatting outcome before guarded collection and regression tests. No tests, CI, installation, capture, science or capacity action has followed.
 
 ## Approval and source
 
@@ -29,6 +29,16 @@ The one source-freeze invocation returned exit one with known usage/closure, no 
 The exact failed receipt records 187,055 requested read bytes, 23 software entries / 239,917 bytes before the source check, and a bare assertion failure. A bounded metadata diagnosis inspected the 437 manifest entries and 12 distinct parent directories without reading checkout payloads or executing project code. It found **393 ordinary checkout files rejected only by the new no-group-write rule**; the first current rejection is `.gitattributes` with mode `0664`. All three helper files have the expected private metadata and exact hashes. The accepted phase runner did not impose that source-file mode restriction. The historical exception did not record its line or path, so the metadata observation is not presented as a recovered traceback.
 
 The correction separates ordinary checkout reads from strict private-record reads; no permission changes are needed. The known failed preparation consumes cycle one. Quality accepted using the already approved second cycle with every prior charge retained once: cycle two remains limited to 200 CPU / 600 wall within aggregate 400/1,200, without transferring unused cycle-one capacity. Its preparation will commit only the two verified formatting changes, preserve the original files and version the controls. Actual format attempt two must then be observed before its source-freeze record, collection and checks can be admitted. No future result is preclaimed.
+
+### Second software cycle
+
+The approved second-cycle preparation passed once with known usage and closure. Its eight Git operations committed only the two retained formatter changes, verified all 437 source files, and confirmed a clean checkout at `fbe9d367fba03719ea9018961eaf013831ffb436` (tree `ace4404a5da45dedf6f6c32434502bdc50221b84`). The separate checkout reader permits normal source-file permissions without changing them; private records retain their stricter checks. Original controls, the failed first-cycle checkpoint, and its successful formatting outcome remain preserved.
+
+Preparation charged **2.448797 CPU / 5.844272852875292 wall seconds**, including the 2/5 closeout reservation. It read back its saved records and the namespace-only second-cycle controls within that counted invocation. The exact preparation receipt is 10,396 bytes, SHA-256 `b12fa5bca4318f7b0e18ba508fe4542ffdb586f1b61ceac5e1c4a2e58c86e0d3`; its format admission is 3,153 bytes, SHA-256 `4e41617d0ef8cb73ba4e7b454ecc0557eab4957010771efc110ce50b965de62a`. Independent review accepted these actual joins without another E2 reader.
+
+Format attempt two then returned exit zero, known closure and usage, no failure and no terminal-write error. Actual stdout identifies the 10,282-byte attempt receipt, SHA-256 `a32a5e6ce87fea6042a338f48156cc8ac380c7733db08b777fb294bd22fe7321`. It measured 4.644141 CPU / 5.073653000872582 active-wall seconds and retained **6.644141 CPU / 10.073653000872582 wall**, including closeout. The outer process completed in 5.529233457986265 seconds, covered by that charge.
+
+B now retains **26.692448000000002 CPU / 47.57802653266117 wall seconds** across both cycles; cycle two retains **9.092938 CPU / 15.917925853747874 wall**. Failed first-cycle work remains charged once. E2 remains 18/45, with its final 2/15 slot retained for software evidence review. Formatting is not a regression-test result: a counted checkpoint must still reconcile the exact durable attempt and original stdout, source manifests and current commit before admitting collection. No third cycle is authorized.
 
 ## Actual startup evidence
 
@@ -86,6 +96,6 @@ All records and installations remain private in the cloud, with their prior rete
 
 ## Next owners and gates
 
-Research owns the corrected second-cycle preparation; Platform versions its controls and has completed disabled runtime-controller drafts. Quality reviews the exact controls and restart evidence before Lead executes. Acquisition/setup and runtime control sources remain unsealed and unexecuted. Collection, typing and guarded regression tests remain required.
+Research owns the actual-format source checkpoint and subsequent collection evidence binding. Quality reviews those controls and results; Lead remains the sole executor. Platform is correcting the disabled runtime controller after independent review found a valid cleared-terminal cgroup case and an understated native-output reservation. Acquisition/setup and runtime controls remain unsealed and unexecuted. Collection, typing and guarded regression tests remain required.
 
 Only accepted B evidence permits the one original PR CI sequence and protected-main candidate delivery. A passing startup diagnostic does not establish capture qualification, scientific adequacy, exposure independence or production readiness. Scientific storage guards remain unchanged; the separate capacity proposal has not been approved or executed.
