@@ -15835,10 +15835,10 @@
       }
     },
     "current_summary": {
-      "verified": "Formatting passed after the independently reviewed control correction and reseal. Earlier preparation, evidence and charges are retained. Regression tests remain unrun.",
-      "next": "Research prepares the formatted revision checkpoint; Quality reviews it; Lead executes collection and regression checks. Platform prepares runtime controls.",
-      "blocker": "The next software admission requires the exact formatted revision and observed-outcome join; later CI, installation and runtime gates remain open.",
-      "record": "research/D1_RUNTIME_REPAIR_RESULT.md#software-preparation-and-controls"
+      "verified": "Formatting passed. The revision checkpoint stopped before Git because its reader rejects normal checkout file permissions. The failure and all earlier charges are retained.",
+      "next": "Research corrects the checkout reader and prepares the approved second cycle; Platform versions controls; Quality reviews; Lead executes.",
+      "blocker": "Second-cycle preparation must pass before collection and regression tests; later CI, installation and runtime gates remain open.",
+      "record": "research/D1_RUNTIME_REPAIR_RESULT.md#source-freeze-checkpoint"
     },
     "laplace_reference_validation": {
       "status": "local_software_validation_independently_accepted",

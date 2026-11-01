@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Result:** Formatting passed after the independently reviewed control correction and reseal. Earlier preparation, evidence and charges are retained. Regression tests remain unrun. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#software-preparation-and-controls).
-- **Next:** Research prepares the formatted revision checkpoint; Quality reviews it; Lead executes collection and regression checks. Platform prepares runtime controls.
-- **Blocker:** The next software admission requires the exact formatted revision and observed-outcome join; later CI, installation and runtime gates remain open.
+- **Result:** Formatting passed. The revision checkpoint stopped before Git because its reader rejects normal checkout file permissions. The failure and all earlier charges are retained. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#source-freeze-checkpoint).
+- **Next:** Research corrects the checkout reader and prepares the approved second cycle; Platform versions controls; Quality reviews; Lead executes.
+- **Blocker:** Second-cycle preparation must pass before collection and regression tests; later CI, installation and runtime gates remain open.
 
 ## Approval and execution capacity
 
@@ -26,6 +26,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-11-01 | Research / Platform / Quality / Project lead | Revision checkpoint failed before Git; second cycle preparation | The reader rejected ordinary checkout permissions; no source commit or test followed. Research separates checkout and private-record reading, Platform versions controls, Quality reviews, and Lead owns the approved second cycle. The first format outcome and failed preparation remain retained. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#source-freeze-checkpoint). |
 | 2026-11-01 | Platform / Quality / Research / Project lead | Control correction and first formatting pass completed | Platform completed the corrected controls and moved to the runtime controller. Quality accepted the actual reseal; Research prepares the formatted revision checkpoint and Quality reviews it before Lead runs collection and regression checks. First format returned zero; its detailed outcome join is pending. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#software-preparation-and-controls). |
 | 2026-10-31 | Platform / Quality / Research / Project lead | Preparation passed; formatter paused | Lead withdrew formatting admission after runner accounting/cleanup findings. Platform corrects and versions the runner, Quality reviews, and Lead executes subsequent checks. Acquisition/setup controls are source-reviewed but unsealed. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#software-preparation-and-controls). |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Source and initial B preparation accepted; execution pending | Independent review accepted source 58a8 and its 345/1035 prospective census; preparation bd9701de is accepted but unexecuted. E2 retains 10 CPU / 25 wall. E5 operator 2/5 is closed; C remains unaccepted after exporter findings and incomplete verifier/setup review. Quality prepares the counted launcher, Platform corrects C, and Lead owns actual B. A/E1 and all earlier charges remain unchanged; no new tests, CI, install, capture, science or capacity action. |

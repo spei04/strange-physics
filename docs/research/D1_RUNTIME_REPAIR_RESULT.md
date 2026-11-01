@@ -1,6 +1,6 @@
 # D1 repair package progress
 
-**Formatting passed after the reviewed control correction and reseal.** The next checkpoint joins its observed completion to the exact formatted source revision. Regression tests, CI, installation, capture and science remain unrun in this repair package. Acquisition/setup controls are source-reviewed but unsealed; no capacity action has occurred.
+**Formatting passed; the revision checkpoint failed before any Git command.** A bounded diagnosis found that the checkpoint applies private-record permission restrictions to ordinary checkout files. The approved second software cycle is being prepared with a narrow reader correction. No tests, CI, installation, capture, science or capacity action has followed.
 
 ## Approval and source
 
@@ -18,9 +18,17 @@ Quality accepted the actual preparation and prospective formatting admission. Be
 
 The one control reseal returned zero with known usage, no children and no phase dispatch. Its exact readback contains the original seven files plus five versioned outputs: **12 files / 177,592 bytes**. The reseal charge is **2.24322 CPU / 5.25870868191123 wall seconds**, including its 2/5 closeout hold. Its initial 5/15 reservation is nonadditive. Combined B preparation is **7.810121 CPU / 14.522244021762162 wall**.
 
-The first format phase then returned zero with a single matching-identity stdout, known closure/usage and no terminal-write error. It reports **5.714151 measured CPU / 7.083330078050494 active wall**, charged **7.714151 / 12.083330078050494** including closeout. The observed outer completion took 9.365 seconds, within that retained wall charge. Cumulative B is **15.524272 CPU / 26.605574099812657 wall**. The source-freeze preparation must still join the exact durable attempt, child rows, manifests and original stdout before admitting collection. No regression-test result is inferred from formatting.
+The first format phase then returned zero with a single matching-identity stdout, known closure/usage and no terminal-write error. It reports **5.714151 measured CPU / 7.083330078050494 active wall**, charged **7.714151 / 12.083330078050494** including closeout. The observed outer completion took 9.365 seconds, within that retained wall charge. Cumulative B is **15.524272 CPU / 26.605574099812657 wall**. The later preparation verified the exact format attempt, six child dispatches, two stages and original stdout, then stopped before Git while checking source custody. No regression-test result is inferred from formatting.
 
 C v2 acquisition/setup controls are independently accepted for their disabled source scope, indexed by `ba417a6c`. The complete exporter, candidate verifier and setup bodies were reviewed with their diffs and recipe. Exact candidate, receiver, tool/startup/custody identities and acquisition charges still require sealing before execution. Their storage checks are detection and acceptance ceilings, not an aggregate filesystem quota.
+
+### Source-freeze checkpoint
+
+The one source-freeze invocation returned exit one with known usage/closure, no children, no Git dispatch and no next admission. It retained the successful format outcome and reported only two formatter changes: the capture-owner helper and its tests. Its charge is **2.075238 CPU / 5.054526579100639 wall**, including the 2/5 closeout hold. Cumulative B is now **17.59951 CPU / 31.660100678913295 wall**; the original 5/15 preparation reservation is nonadditive.
+
+The exact failed receipt records 187,055 requested read bytes, 23 software entries / 239,917 bytes before the source check, and a bare assertion failure. A bounded metadata diagnosis inspected the 437 manifest entries and 12 distinct parent directories without reading checkout payloads or executing project code. It found **393 ordinary checkout files rejected only by the new no-group-write rule**; the first current rejection is `.gitattributes` with mode `0664`. All three helper files have the expected private metadata and exact hashes. The accepted phase runner did not impose that source-file mode restriction. The historical exception did not record its line or path, so the metadata observation is not presented as a recovered traceback.
+
+The correction separates ordinary checkout reads from strict private-record reads; no permission changes are needed. The known failed preparation consumes cycle one. Quality accepted using the already approved second cycle with every prior charge retained once: cycle two remains limited to 200 CPU / 600 wall within aggregate 400/1,200, without transferring unused cycle-one capacity. Its preparation will commit only the two verified formatting changes, preserve the original files and version the controls. Actual format attempt two must then be observed before its source-freeze record, collection and checks can be admitted. No future result is preclaimed.
 
 ## Actual startup evidence
 
@@ -50,7 +58,7 @@ Fresh before/after checks covered 437 source files, 2,498 protected-plan files a
 
 Measured controller plus waited-child CPU was 4.296822 seconds; active wall was 4.187402 seconds. The last row above includes its 2 CPU / 5 wall closeout hold. Preparation is counted once. These are charged values with retained reservations, not a whole-operation cost measurement.
 
-The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within their 10/30 allocation. E2 software-control and actual-preparation readback review now retains **16 CPU / 40 wall seconds** in total. The latest reader used the reserved review slot named `cycle2-admission` for cycle-one reseal readback; it did not run a second cycle. E5 retains **4 CPU / 10 wall seconds**: the original operator read at 2/5 remains charged, and the complete correction read adds 2/5. Its full nine-file packet was retained in memory and reviewed without another cloud read; C v2 source acceptance does not authorize acquisition or setup. Authoring, inference, transport and provider-dollar costs are separately unmeasured.
+The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within their 10/30 allocation. E2 software-control and actual-preparation readback review now retains **18 CPU / 45 wall seconds** in total. The slots named `cycle2-admission` and `cycle2-result` were used for cycle-one reseal and failed-checkpoint diagnosis; these review names do not mean cycle two has executed. E5 retains **4 CPU / 10 wall seconds**: the original operator read at 2/5 remains charged, and the complete correction read adds 2/5. Its full nine-file packet was retained in memory and reviewed without another cloud read; C v2 source acceptance does not authorize acquisition or setup. Authoring, inference, transport and provider-dollar costs are separately unmeasured.
 
 | Private evidence | SHA-256 |
 | --- | --- |
@@ -65,7 +73,10 @@ The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within th
 | Successful reseal terminal, 2,145 bytes | `1af743d95d3b4f5c2ae659067fdb900a1eda0f20041f6188440ef043aa53dff5` |
 | Replacement format admission, 2,521 bytes | `48c4ecc903b9db4433056151e9b7dea81d63e7330d763ffc7b28aa51b07b59ba` |
 | E2 reseal readback receipt, 933 bytes | `eda992437bdbc371e0d5d81eb4e8eb51c2e1f99531d6a4225a72df9f63b6f7c6` |
-| Format attempt receipt reported by actual stdout, 9,800 bytes; durable join pending | `bc610a2cc424e3ea70fb9bbb6d77c92a0bf4a88964954cfeb3accc43aa5d37f6` |
+| Format attempt receipt, 9,800 bytes; durable join verified | `bc610a2cc424e3ea70fb9bbb6d77c92a0bf4a88964954cfeb3accc43aa5d37f6` |
+| Known failed source-freeze preparation, 1,959 bytes | `e60bc27e4b927224a729bd40b22b1a45159a404cd5aa2d1338a8fd8f3893ade8` |
+| Retained successful format outcome, 1,089 bytes | `1571d9d5f4016b4eaa4e6df926acb82fb5ec2a5888bdf0ba8b0ee4066bc5c483` |
+| E2 failed-checkpoint metadata reader, 924 bytes | `985aabce24df0bcb8b73e6ac6e55fe70aeab3ec199411ea90ad5102b14d666fb` |
 | Accepted disabled C v2 index, 2,926 bytes | `ba417a6c514e233b3e35b405fb3b89388d122fadb5dff20b94d7f24c9334b501` |
 | E5 complete correction reader, 915 bytes | `c769d930a575784062b6b78a63a786955a24d161a25f9921419107d557dbfc85` |
 
@@ -75,6 +86,6 @@ All records and installations remain private in the cloud, with their prior rete
 
 ## Next owners and gates
 
-Research prepares the exact formatted source checkpoint and observed-outcome join; Quality reviews it before Lead executes collection, typing and guarded regression tests. Platform has moved to the disabled runtime controller. The withdrawn original formatting admission cannot be reused. Acquisition/setup remains source-accepted, unsealed and unexecuted. The accepted source census, preparation and first format outcome do not substitute for collection, typing or guarded-test results.
+Research owns the corrected second-cycle preparation; Platform versions its controls and has completed disabled runtime-controller drafts. Quality reviews the exact controls and restart evidence before Lead executes. Acquisition/setup and runtime control sources remain unsealed and unexecuted. Collection, typing and guarded regression tests remain required.
 
 Only accepted B evidence permits the one original PR CI sequence and protected-main candidate delivery. A passing startup diagnostic does not establish capture qualification, scientific adequacy, exposure independence or production readiness. Scientific storage guards remain unchanged; the separate capacity proposal has not been approved or executed.
