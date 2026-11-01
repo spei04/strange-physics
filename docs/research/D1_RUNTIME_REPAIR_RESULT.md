@@ -1,6 +1,6 @@
 # D1 repair package progress
 
-**Format5 passed; an incorrect source-freeze control stopped progression before collection or tests.** The complete [correction amendment](D1_FORMAT_FREEZE_AMENDMENT_DECISION.md) is now independently reviewed and awaits owner approval. The independent failure review confirmed a single formatting-only line collapse. The control omitted the approved formatting-change commit path. All original failures and charges remain retained; no runtime or scientific result is claimed.
+**The freeze-correction amendment is approved, and the corrected freeze passed.** Only the reviewed formatting change was committed. Collection, regression, CI and runtime remain conditional on their actual gates; earlier failures and charges are preserved.
 
 ## Approval and source
 
@@ -139,6 +139,16 @@ The original57ca958 continuation approval remains settled. This separate [review
 Research authored the immutable disabled correction, versioned helpers and postcollection successor. Lead and Quality accepted the complete source, including the original-deadline rearm fix. Platform independently verified the complete writer census, histories and remaining-path arithmetic. The decision is15,776 bytes, SHA-256 `1262fa9099560a501ca7e4be037cffc1bf0a7b6c7e9894bf18ade2a90d088a56`. Proposed E2 is38/114; proposed package is1,208/3,024. Neither increase is approved yet.
 
 All correction controls remain disabled and approval-dependent fields unsealed. The source checkout retains the one reviewed formatter-only change; the documentation checkout and private source/evidence records remain needed for this pending work. No corrected freeze or dependent phase has been executed.
+
+### Approved corrected freeze passed (2026-11-01)
+
+The owner approved the complete amendment at immutable decision17ab2b2cd5cbb8f076f49826300dfc96b476f1dd. Direct approval provenance is retained privately at2,501 bytes, SHA-256 `0b33bd4261bac3c2bd071ed4796d8ed9502819a5478e9930bc24540e1ab0db7a`. Research independently verified that activation made only the four reviewed literal substitutions.
+
+The corrected operator ran once and completed with exit0,1.220148041000357 observed outer seconds, known closure and no failure. Its eight guarded Git operations committed only the reviewed formatter change, with437-source checks and the existing after-format map reused. The new commit is `de464a1719c2e68f7773d7e04cdef0a8b9be5d51`, tree `5c6c187481fab89cbde1e4fc7c6e41cc9191e88e`. This source has not yet passed collection, typing or regression.
+
+The15,295-byte preparation receipt has SHA-256 `a088ee4301d3e385929a3d9f4c6df61422e3ee7383896a3ea462a391d74f052b`; its4,848-byte prepare admission has SHA-256 `eea26599c069be4052cf185e46840f3198a57c24e4b82bbad78f8df248f66aad`. Both versioned helpers and the direct approval were copied and read back inside that invocation. The independent4/12 control review remains required before the admission may be used.
+
+The correction retains2.519764 CPU /6.023639492690563 wall. B now retains **91.051284 /137.51721356995404**, including this cycle's **14.402305 /27.40043819975108**. E2 retains28/84 before the pending control review, within its approved38/114 ceiling. Original failures, formatter outcome and old approval records remain immutable. No formatter was repeated, and no phase6/7 or downstream CI/runtime stage has run.
 
 ## Actual startup evidence
 

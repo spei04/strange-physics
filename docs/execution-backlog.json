@@ -15835,10 +15835,10 @@
       }
     },
     "current_summary": {
-      "verified": "Format5 passed; the failed freeze control and formatting-only source delta are independently diagnosed. The complete correction and remaining-path amendment have passed source and accounting review.",
-      "next": "Owner approval of the reviewed fourth-preparation and E2 review amendment, then the sole executor seals the actual approval and resumes the existing gates.",
-      "blocker": "The correction remains disabled: the current inventory permits only three preparations and the existing E2 reserve does not cover the two added reviews.",
-      "record": "research/D1_FORMAT_FREEZE_AMENDMENT_DECISION.md"
+      "verified": "The freeze correction amendment is approved. The corrected freeze passed, committed only the reviewed formatting change, and retained every earlier failure and charge.",
+      "next": "Quality verifies the actual corrected controls; Lead then executes prepare6 and check7 before the original conditional CI, installation and runtime sequence.",
+      "blocker": "Collection and regression tests require the independent control readback; no new passing test or runtime result is claimed.",
+      "record": "research/D1_RUNTIME_REPAIR_RESULT.md#approved-corrected-freeze-passed-2026-11-01"
     },
     "laplace_reference_validation": {
       "status": "local_software_validation_independently_accepted",

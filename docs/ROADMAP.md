@@ -1,6 +1,6 @@
 # Strange Physics — enterprise product blueprint and living roadmap
 
-**Current checkpoint:** format5 passed and the failed freeze control is diagnosed. The complete correction and remaining-path amendment are independently reviewed and await owner approval before collection or tests. [Decision](research/D1_FORMAT_FREEZE_AMENDMENT_DECISION.md). [Next owners and action](EXECUTION_LOG.md#current-assignment-board) · [Current evidence](research/D1_RUNTIME_REPAIR_RESULT.md).
+**Current checkpoint:** the complete freeze-correction amendment is approved and the corrected freeze passed on source de464a1. Independent control readback precedes the remaining collection and regression checks. [Progress](research/D1_RUNTIME_REPAIR_RESULT.md#approved-corrected-freeze-passed-2026-11-01). [Next owners and action](EXECUTION_LOG.md#current-assignment-board) · [Current evidence](research/D1_RUNTIME_REPAIR_RESULT.md).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 
