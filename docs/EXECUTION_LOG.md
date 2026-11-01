@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Result:** The freeze correction amendment is approved. The corrected freeze passed, committed only the reviewed formatting change, and retained every earlier failure and charge. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#approved-corrected-freeze-passed-2026-11-01).
-- **Next:** Quality verifies the actual corrected controls; Lead then executes prepare6 and check7 before the original conditional CI, installation and runtime sequence.
-- **Blocker:** Collection and regression tests require the independent control readback; no new passing test or runtime result is claimed.
+- **Result:** Formatting, lint and full typing passed. Guarded regression recorded 344 passed/1 failed; the independent diagnostic review and failure-only handoff completed with all charges preserved. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#final-check-attempt-2026-11-01).
+- **Next:** Owner review of the independently accepted test-boundary correction and one bounded continuation cycle. [Decision](research/D1_TEST_BOUNDARY_CONTINUATION_DECISION.md).
+- **Blocker:** The approved phase 7 limit is consumed. The prospective test patch and continuation remain unapproved; CI, installation and runtime are unrun.
 
 ## Approval and execution capacity
 
@@ -16,9 +16,12 @@ seconds; E2 is38/114. All previous charges stay retained. The original181
 configured CI job-minutes, C/D limits,1GiB global artifacts and single-capture
 scope remain unchanged.
 
-The corrected freeze passed on source de464a1. The complete software output
-bound is29,966,952 bytes inside32MiB. Independent control and outcome acceptance
-still precede dependent execution. Only remaining attempts6/7 are permitted.
+The corrected freeze and independent control readback passed on source de464a1.
+Preparation 6 collected 345 cases and the postcollection binder passed. Check7
+failed with known closure and retained charges; the final outcome review and
+failure-only handoff passed. One fixture-boundary assertion failed; 344 cases passed. All allowed software phases are consumed. Downstream CI and runtime
+remain unrun. The original stop rule applies; this record does not authorize
+an additional cycle or attempt.
 [Approval registry](research/APPROVALS.md#format-freeze-correction-2026-11-01).
 
 2026-10-19 — Product owner approved execution baseline `2d78e3598252e211110883b164854b64c356eeda` and requested independent engineer subagents, reassignment on completion and this short log.
@@ -31,6 +34,8 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-11-01 | Platform / Quality / Research / Project lead | Failed-test cause and bounded continuation | Platform prepared the test-boundary patch; Quality independently accepted it; Research prepared failure-only handoff and accepted the continuation review; Lead accepted actual diagnostics/closeout. No further test attempt or CI was run. |
+| 2026-11-01 | Quality / Research / Platform / Project lead | Final check failed; evidence closeout | Lead executed prepare 6 and check 7 once; Quality prepares the final bounded diagnostic reader; Research accepted Platform's future CI transport source. No CI dispatched. |
 | 2026-11-01 | Quality / Research / Platform / Project lead | Approved correction executed | Lead executed the corrected freeze once; Quality prepares actual control readback; Research binds the remaining collection/check controls; Platform prepares the original hosted evidence transport. No tests or CI dispatched yet. |
 | 2026-11-01 | Research / Quality / Platform / Project lead | Complete freeze amendment reviewed | Research authored immutable disabled controls; Quality and Lead reviewed the complete software path and timer fix; Platform independently checked the proposal, writer inventory and retained costs. Lead publishes one complete approval handoff. |
 | 2026-11-01 | Research / Quality / Platform / Project lead | Formatter-change correction | Format5 passed and the follow-up operator stopped before Git. Quality verified the failure and single formatting-only delta. Research prepares the corrected freeze/helpers; Platform drafts the bounded amendment; Lead retains all charges and publishes the review. |

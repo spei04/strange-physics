@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**Current checkpoint:** the complete freeze-correction amendment is approved and the corrected freeze passed on source de464a1. Independent control readback precedes the remaining collection and regression checks. [Progress](research/D1_RUNTIME_REPAIR_RESULT.md#approved-corrected-freeze-passed-2026-11-01). [Next owners and action](EXECUTION_LOG.md#current-assignment-board) · [Current evidence](research/D1_RUNTIME_REPAIR_RESULT.md).
+**Current checkpoint:** formatting, lint and typing passed; guarded tests recorded 344 passed and one failed fixture-boundary assertion. Diagnostic review and failure closeout passed. The reviewed test-only continuation awaits approval. [Decision](research/D1_TEST_BOUNDARY_CONTINUATION_DECISION.md). [Next owners and action](EXECUTION_LOG.md#current-assignment-board) · [Current evidence](research/D1_RUNTIME_REPAIR_RESULT.md).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 

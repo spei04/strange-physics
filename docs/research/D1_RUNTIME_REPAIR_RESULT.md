@@ -1,6 +1,6 @@
 # D1 repair package progress
 
-**The freeze-correction amendment is approved, and the corrected freeze passed.** Only the reviewed formatting change was committed. Collection, regression, CI and runtime remain conditional on their actual gates; earlier failures and charges are preserved.
+**Formatting, lint and typing passed; guarded tests recorded 344 passed and one failed.** The failing assertion includes an earlier fixture read in the parent event history. Independent diagnosis and failure closeout passed. A reviewed test-only correction and bounded continuation await approval; CI, installation and runtime remain unrun.
 
 ## Approval and source
 
@@ -149,6 +149,30 @@ The corrected operator ran once and completed with exit0,1.220148041000357 obser
 The15,295-byte preparation receipt has SHA-256 `a088ee4301d3e385929a3d9f4c6df61422e3ee7383896a3ea462a391d74f052b`; its4,848-byte prepare admission has SHA-256 `eea26599c069be4052cf185e46840f3198a57c24e4b82bbad78f8df248f66aad`. Both versioned helpers and the direct approval were copied and read back inside that invocation. The independent4/12 control review remains required before the admission may be used.
 
 The correction retains2.519764 CPU /6.023639492690563 wall. B now retains **91.051284 /137.51721356995404**, including this cycle's **14.402305 /27.40043819975108**. E2 retains28/84 before the pending control review, within its approved38/114 ceiling. Original failures, formatter outcome and old approval records remain immutable. No formatter was repeated, and no phase6/7 or downstream CI/runtime stage has run.
+
+### Final check attempt (2026-11-01)
+
+The corrected-control reader completed once with exit 0 and 0.6564124589785933 observed outer seconds, no reader failure and no child dispatch. Its 17,040-byte proof has SHA-256 `915596daf635340d2e096d7772fd36392fad77034cb82c226e1bfe09137e4a6a`; the 1,076-byte receipt has SHA-256 `155d9528266391570810c3174c3b3a31d6ab62fc2bb16d6cc9cf3bfef0b2f2de`. It verified the actual corrected freeze, copied controls, admission and retained history. E2 retained 32/96 afterward.
+
+Preparation 6 completed with exit 0 and 11.532548084011069 observed outer seconds. Its 13,815-byte receipt is `84f278d2f6054fb1da7c6f7dc90bd8ce956c391002902690f1e3c559617c8435`. The postcollection binder completed with exit 0 and 0.20762299999478273 outer seconds; it verified seven guarded dispatches, both expected sentinel denials and 345 collected cases with zero test phases. Its 8,615-byte preparation is `5138cda860137723ac13480d97692cad1e9fcd8e26a8422a43c2efd2f7ffffd4`, and its 5,317-byte check admission is `fb1761459c2ffb899dc53b3c2351736c9f3f762b0a4d535fcb2f66252c0b6c62`. Research independently verified its ten activation substitutions before the single invocation.
+
+Check7 returned exit 1 after 39.56933608400868 observed outer seconds. The16-kilobyte parent receipt reports `AssertionError:` with known closure, known usage, no failure notes and no terminal-write error. Its exact identity is 15,686 bytes, SHA-256 `bfa052de48606e8fcadd31de14c4e1716c0306fa006814af1a6ed51a3a76ce7d`. At return, the outer stdout alone did not identify the failing stage. The subsequent accounted review below established the actual outcome without rerunning tests.
+
+Retained charges: prepare 6 **13.303761999999999 /16.24836637591943**, postcollection **2.067903 /5.045593403279781**, check 7 **41.022137 /44.34231841377914**, in CPU /active-wall seconds. B now retains **147.445086 /203.1534917629324**, including cycle 3 **70.796107 /93.03671639272943**. E2 subsequently reached its full 38/114 ceiling through the diagnostic review and failure-only handoff described below. All prior failures remain counted once.
+
+The immutable approved amendment permits no phase beyond 7 and requires downstream work to stop on a failed software phase. No PR workflow, main workflow, candidate installation or runtime capture has started. Platform's memory-only CI transport is independently source-reviewed and remains disabled; source acceptance does not establish a CI result. This section is an execution record, not a continuation approval.
+
+#### Diagnostic review and failure closeout
+
+The independently reviewed 4/12 outcome reader completed once: exit 0, 0.3353352499999965 observed outer seconds, no reader failure. The 389,735-byte proof is `bf5541be4edc67cb79ee1af1ec1a26399bfd2406233b1bc55835836518206b60`; its 1,062-byte receipt is `b2749903115188ea722c074e7061126c37906a1afd55baef74236776e3c3cd11`. It verified the original inputs, complete stage logs, test collector and JUnit, and preserved every prior cost once.
+
+Formatting and lint exited 0. Typing reported no issues in 236 source files. Regression recorded 345 cases: 344 passed calls and one failed call, with 345 passed setup and 345 passed teardown phases, no skips or xfails, no forbidden attempts and no oracle poisons. The sole failure is `test_reaped_controller_rejoins_live_before_cleared_terminal[failed-child]` at the shared-history assertion in `tests/test_d1_capture_owner.py`. Source and environment identities matched before and after both phases. The full test log is 2,953 bytes, SHA-256 `a01690f3927957cc6e46b86e0da3baf22a41f68c8ed0e89f6fa2481f2b5b63ac`; collector 258,245 bytes, `b79d82ca22ebcac187b7d65729fe3304d926ab5418ad115fb39048ee3d7d19ad`; JUnit 48,638 bytes, `1306778a590cb4e6197fe001ad2011f901410db09aa03fed2321ad6ec76d87a4`.
+
+Source review shows that fixture construction first calls the successful synthetic controller using the same event list. That controller reads the service report before the helper rewrites its records into the failed-child scenario. The parent report join is already gated on a successful child with no prior fault. The assertion incorrectly includes the earlier fixture read. Platform prepared a one-file test correction that marks the return boundary and retains the failed-parent prohibition, with positive checks for the fixture and successful-parent reads. Quality independently reversed the exact patch to the original source and accepted it. Production code and all existing invariants remain unchanged in the proposal; no corrected test has been executed.
+
+The reserved 2/6 failure handoff completed once: exit 0, 0.28124254199999266 observed outer seconds, known descriptor closure and no handoff failure. It wrote no admission. Its 2,232-byte receipt is `ed1ea85e2cdbb51d15d68a1b3dd3bed9e5c8f335a2b0e92b6ea8f5492cc045e5`; the 946-byte known-failure outcome is `34e8e73daffd9bc74d5d2e7844a4bd162034311d209feb475de222f813c7d7b4`; the 4,813-byte software index is `eb522b9cb86333f05e4e4ab78ee98eae560542aa49c9aad2eec68455c4b5499c`. B remains failed at 147.445086/203.1534917629324; E2 is closed at 38/114. No budget was refunded.
+
+The [continuation decision](D1_TEST_BOUNDARY_CONTINUATION_DECISION.md) contains the complete reviewed patch, prospective steps, limits and stop rules. It is not approved. A separate portfolio review supplied read-only diagnostic leads; those external review costs remain unmeasured and are not reported as part of E2. Both existing cloud checkouts remain necessary for unmerged source, owned dependencies and result documentation; no checkout or private evidence was removed.
 
 ## Actual startup evidence
 
