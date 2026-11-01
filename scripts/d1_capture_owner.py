@@ -110,9 +110,8 @@ def retained_controller_state(
     if (
         type(request) is not bytes
         or request != owned.encoded(owned.request_record(plan.spec, started))
-        or set(intent) != {
-            "spec", "unit", "started", "deadline", "cpu_baseline", "no_retry", "profile"
-        }
+        or set(intent)
+        != {"spec", "unit", "started", "deadline", "cpu_baseline", "no_retry", "profile"}
         or intent.get("spec") != plan.spec.record()
         or intent.get("unit") != plan.unit
         or intent.get("started") != started
@@ -357,9 +356,8 @@ def watch(
                 ):
                     raise ValueError("Controller terminal identity differs")
                 joined = owned.join_report(plan, files, invocation, group, started, deadline)
-                if (
-                    joined != child_result.get("report_join")
-                    or joined != terminal.get("report_join")
+                if joined != child_result.get("report_join") or joined != terminal.get(
+                    "report_join"
                 ):
                     raise ValueError("Controller report bytes differ from retained terminal joins")
                 successful_child = True

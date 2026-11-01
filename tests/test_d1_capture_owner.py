@@ -334,7 +334,6 @@ def test_command_failure_preserves_underlying_first_and_close_facts(
         } in supplemental
 
 
-
 def retained_terminal_start(
     values: tuple[owned.CaptureSpec, Clock, Records, Start, WatchManager],
     monkeypatch: pytest.MonkeyPatch,
@@ -357,7 +356,9 @@ def retained_terminal_start(
                 ActiveState="failed", SubState="failed", Result="exit-code", ExecMainStatus="1"
             )
             controller_fault = {
-                "stage": "attempt", "kind": "ValueError", "detail": "Named service failed"
+                "stage": "attempt",
+                "kind": "ValueError",
+                "detail": "Named service failed",
             }
             terminal.update(first_fault=controller_fault, report_join=None)
             final.update(status="incomplete", first_fault=controller_fault, report_join=None)
@@ -407,14 +408,40 @@ def test_reaped_controller_rejoins_live_before_cleared_terminal(
 @pytest.mark.parametrize(
     "case",
     (
-        "missing-live", "malformed-live", "request", "source", "started", "profile",
-        "unit", "invocation", "group", "quota", "burst", "decreasing-cpu",
-        "terminal-cpu", "terminal-unit", "final-source", "boolean-cpu",
+        "missing-live",
+        "malformed-live",
+        "request",
+        "source",
+        "started",
+        "profile",
+        "unit",
+        "invocation",
+        "group",
+        "quota",
+        "burst",
+        "decreasing-cpu",
+        "terminal-cpu",
+        "terminal-unit",
+        "final-source",
+        "boolean-cpu",
     ),
     ids=(
-        "missing-live", "malformed-live", "request", "source", "started", "profile",
-        "unit", "invocation", "group", "quota", "burst", "decreasing-cpu",
-        "terminal-cpu", "terminal-unit", "final-source", "boolean-cpu",
+        "missing-live",
+        "malformed-live",
+        "request",
+        "source",
+        "started",
+        "profile",
+        "unit",
+        "invocation",
+        "group",
+        "quota",
+        "burst",
+        "decreasing-cpu",
+        "terminal-cpu",
+        "terminal-unit",
+        "final-source",
+        "boolean-cpu",
     ),
 )
 def test_failed_child_cannot_adopt_unjoined_retained_evidence(
@@ -433,10 +460,14 @@ def test_failed_child_cannot_adopt_unjoined_retained_evidence(
             records.raw["capture-observation-00.json"] = b"{"
             return child
         name = (
-            "capture-request.json" if case == "request"
-            else "capture-intent.json" if case in ("source", "started", "profile")
-            else "capture-terminal-before-stop.json" if case.startswith("terminal-")
-            else "capture-final.json" if case == "final-source"
+            "capture-request.json"
+            if case == "request"
+            else "capture-intent.json"
+            if case in ("source", "started", "profile")
+            else "capture-terminal-before-stop.json"
+            if case.startswith("terminal-")
+            else "capture-final.json"
+            if case == "final-source"
             else "capture-observation-00.json"
         )
         record = json.loads(records.raw[name])
@@ -484,7 +515,8 @@ def test_failed_child_cannot_adopt_unjoined_retained_evidence(
 
 
 @pytest.mark.parametrize(
-    "case", ("unit", "invocation", "group", "profile", "quota", "cpu"),
+    "case",
+    ("unit", "invocation", "group", "profile", "quota", "cpu"),
     ids=("unit", "invocation", "group", "profile", "quota", "cpu"),
 )
 def test_cleared_manager_snapshot_must_match_verified_terminal(
