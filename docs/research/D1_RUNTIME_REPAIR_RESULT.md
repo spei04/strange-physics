@@ -1,12 +1,12 @@
 # D1 repair package progress
 
-**Second-cycle preparation and formatting passed.** The corrected reader accepts ordinary checkout permissions while preserving strict private-record custody. The next source checkpoint must join the actual formatting outcome before guarded collection and regression tests. No tests, CI, installation, capture, science or capacity action has followed.
+**Software qualification stopped at typing; both approved cycles are consumed.** Formatting and lint passed, but five typing errors prevented regression-test dispatch. E2 is closed with all charges retained. The narrow typing fix is source-reviewed but unexecuted; the [complete continuation decision](D1_RUNTIME_REPAIR_CONTINUATION_DECISION.md) remains proposed, not approved. CI, candidate setup and actual capture are unstarted.
 
 ## Approval and source
 
 The owner approved the complete [repair and validation proposal](https://github.com/spei04/strange-physics/blob/ca0b26ae4763fd5f0db080395d0d8cd61fb6b833/docs/research/D1_RUNTIME_REPAIR_PLAN.md): 1,190 CPU / 2,970 active-wall seconds, one original PR/main CI sequence capped at 181 configured job-minutes, and 1 GiB of new artifacts. This is a fresh bounded package; the [previous failed capture](D1_RUNTIME_QUALIFICATION_RESULT.md), its full service reservation and all earlier charges/unknowns remain intact.
 
-Source [58a8be4e873eb39ab7b0f37d7745ed85a5bae619](https://github.com/spei04/strange-physics/commit/58a8be4e873eb39ab7b0f37d7745ed85a5bae619) and its final import/fixture census are independently accepted by source review. It follows the owner/diagnostic repair at `ed3053a`; the latest change touches only the two bootstrap files, checks the two observed aliases before generic origin admission and adds 16 regression cases. The seven targets contain **345 cases / 1,035 prospective phases**. These checks have not run. The independently accepted preparation `bd9701de` has now executed once; its successful result, the withdrawn original admission and the later first format outcome are recorded below.
+Source [58a8be4e873eb39ab7b0f37d7745ed85a5bae619](https://github.com/spei04/strange-physics/commit/58a8be4e873eb39ab7b0f37d7745ed85a5bae619) and its final import/fixture census are independently accepted by source review. It follows the owner/diagnostic repair at `ed3053a`; the latest change touches only the two bootstrap files, checks the two observed aliases before generic origin admission and adds 16 regression cases. The seven targets contain **345 cases / 1,035 prospective phases**. The regression bodies have not run; current software-check outcomes are recorded below. The independently accepted preparation `bd9701de` has now executed once; its successful result, the withdrawn original admission and the later first format outcome are recorded below.
 
 ## Software preparation and controls
 
@@ -40,6 +40,74 @@ Format attempt two then returned exit zero, known closure and usage, no failure 
 
 B now retains **26.692448000000002 CPU / 47.57802653266117 wall seconds** across both cycles; cycle two retains **9.092938 CPU / 15.917925853747874 wall**. Failed first-cycle work remains charged once. E2 remains 18/45, with its final 2/15 slot retained for software evidence review. Formatting is not a regression-test result: a counted checkpoint must still reconcile the exact durable attempt and original stdout, source manifests and current commit before admitting collection. No third cycle is authorized.
 
+### Second-cycle check stopped at typing (2026-11-01)
+
+The second cycle is closed with a software qualification failure. Formatting
+and lint passed, then full typing reported **five errors in two files, checking
+236 source files**. The failures are four loader/specification type mismatches
+and one assertion using a function that returns `None`. The unchanged original
+798-byte typing log has SHA-256
+`b56ff9aa898815e81a851acd46aa55a1bb07be063046a52ffb5e89d097fc2f34`.
+The three check stages are format, lint and typing; **regression tests were not
+dispatched**, and there is no test collector receipt or JUnit result.
+
+All four phase invocations and six preparation charges are retained once.
+B totals **76.648979 CPU / 110.11677537020296 active-wall seconds**;
+cycle two totals **59.049469 / 78.45667469128966**. These charged totals include
+retained closeout reservations and failed work, not just measured test CPU.
+The retained software census contains **66 entries / 721,512 bytes**.
+
+The final independent E2 evidence reader returned zero, with an empty stderr,
+no reader failure and observed outer elapsed time 0.239522499992745 seconds.
+Its 971-byte receipt is
+`b178bedf775530ed2243494d82b6d342d020349767ca41331cacb81bc626518d`;
+the 64,069-byte evidence payload is
+`250dbe1ee26616f7b249df05ca4c0e62ffdef3b2b9facc82e70181d9f06f8091`.
+Its reserved 2 CPU / 15 wall closes E2 at **20 / 60**, rather than creating a
+new allowance. Known closure does not turn the typing failure into a pass.
+
+Both approved B cycles are consumed. Research committed the two-file typing
+fix at [4d83811cb46892c55e772392b5b29dc7ce008b42](https://github.com/spei04/strange-physics/commit/4d83811cb46892c55e772392b5b29dc7ce008b42),
+tree `dfa20b44235dd9f87ab6300b6f9835ef6796ac83`. Lead and Quality accepted
+its source: exact frozen-loader identity and behavioral assertions remain
+intact; imports and case counts are unchanged. No typing or regression tests
+have run on the fix. The [continuation decision](D1_RUNTIME_REPAIR_CONTINUATION_DECISION.md)
+proposes one final 200/600 cycle within unchanged aggregate B 400/1,200, plus
+10/30 for E2 review. That would make the package 1,200 CPU / 3,000 active-wall
+seconds; it is **not approved or admitted**. The original PR/main sequence,
+C/D work, installations and capture remain unstarted. No scientific or
+capacity action is included.
+
+### Current package closeout (2026-11-01)
+
+The one final E7 closeout returned zero with no failure; its outer elapsed time
+was 0.9306244170002174 seconds. The fixed **3 CPU / 10 wall** charge is retained
+once inside original E7 10/30, leaving **7/20** for later final review. The
+2,906-byte result has SHA-256
+`b8586716e965b29570b0386e996cd0e09a3c825ca1578a4dee3d24a02fc463ff`.
+This elapsed observation is not the charged command allowance.
+
+| Retained scope | Entries | Logical bytes |
+| --- | ---: | ---: |
+| Current repair root | 157 | 2,247,844 |
+| All old and new records in the named private evidence directory | 4,672 | 63,995,181 |
+
+The repair root includes software 721,512 bytes, reviews 1,384,184, controls
+88,276 and evidence 53,872. The no-follow census also retained 179 links,
+10 hard-link names and four FIFOs in the wider evidence directory. The
+conservative combined upper bound, including the result reservation, is
+**66,300,369 bytes**, below 1 GiB. It includes historical records: it is not
+new growth, a fresh pool allocation or proof of a universal transient-peak
+quota. The old installation was not reread and no data was deleted.
+
+Actual free space was **43,511,271,424 bytes**. Scientific storage guards remain
+unchanged. Research confirmed the unchanged 8,024,322-byte two-suite fixture
+bound covers the single proposed suite, but every future stage must still fit
+all retained bytes plus its full writes and closeout reservation in its pool.
+Source `4d83811c` is published on a feature branch without a PR or CI run.
+The [complete amendment](D1_RUNTIME_REPAIR_CONTINUATION_DECISION.md) remains
+proposed, not approved; no additional software or runtime command followed.
+
 ## Actual startup evidence
 
 One diagnostic used the original accepted installation and exact source `5e0b3e7`. Its controller and launch admission were independently reviewed before execution. The diagnostic observed 81 registry entries and 18 frozen rows. Its only unlisted keys were:
@@ -68,7 +136,7 @@ Fresh before/after checks covered 437 source files, 2,498 protected-plan files a
 
 Measured controller plus waited-child CPU was 4.296822 seconds; active wall was 4.187402 seconds. The last row above includes its 2 CPU / 5 wall closeout hold. Preparation is counted once. These are charged values with retained reservations, not a whole-operation cost measurement.
 
-The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within their 10/30 allocation. E2 software-control and actual-preparation readback review now retains **18 CPU / 45 wall seconds** in total. The slots named `cycle2-admission` and `cycle2-result` were used for cycle-one reseal and failed-checkpoint diagnosis; these review names do not mean cycle two has executed. E5 retains **4 CPU / 10 wall seconds**: the original operator read at 2/5 remains charged, and the complete correction read adds 2/5. Its full nine-file packet was retained in memory and reviewed without another cloud read; C v2 source acceptance does not authorize acquisition or setup. Authoring, inference, transport and provider-dollar costs are separately unmeasured.
+The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within their 10/30 allocation. E2 software-control, preparation and failure-evidence review is closed at **20 CPU / 60 wall seconds**, including the final 2/15 reader once. The slots named `cycle2-admission` and `cycle2-result` were used for cycle-one reseal and failed-checkpoint diagnosis; these historical review names describe those earlier uses, not additional cycle-two charges. E5 retains **4 CPU / 10 wall seconds**: the original operator read at 2/5 remains charged, and the complete correction read adds 2/5. Its full nine-file packet was retained in memory and reviewed without another cloud read; C v2 source acceptance does not authorize acquisition or setup. Authoring, inference, transport and provider-dollar costs are separately unmeasured.
 
 | Private evidence | SHA-256 |
 | --- | --- |
@@ -96,6 +164,20 @@ All records and installations remain private in the cloud, with their prior rete
 
 ## Next owners and gates
 
-Research owns the actual-format source checkpoint and subsequent collection evidence binding. Quality reviews those controls and results; Lead remains the sole executor. Platform is correcting the disabled runtime controller after independent review found a valid cleared-terminal cgroup case and an understated native-output reservation. Acquisition/setup and runtime controls remain unsealed and unexecuted. Collection, typing and guarded regression tests remain required.
+Research's narrow typing fix is source-reviewed; Quality will independently
+review its eventual qualification evidence. Platform maintains the complete
+continuation decision and preserved delivery/runtime drafts. Lead owns the
+one approval handoff and
+remains the sole executor. No third-cycle command is admitted.
 
-Only accepted B evidence permits the one original PR CI sequence and protected-main candidate delivery. A passing startup diagnostic does not establish capture qualification, scientific adequacy, exposure independence or production readiness. Scientific storage guards remain unchanged; the separate capacity proposal has not been approved or executed.
+The [proposed amendment](D1_RUNTIME_REPAIR_CONTINUATION_DECISION.md) pins the reviewed
+fix and finite cycle-three namespace. Cumulative fixture/output fit and exact
+executable controls must be sealed before admission after approval. Both prior cycles, their failures and E2 consumption
+remain retained. C v2 and D v6 remain disabled source checkpoints; actual
+candidate/runtime pins and hosted evidence controls still require sealing.
+
+Only independently accepted B evidence permits the original PR CI sequence and
+protected-main candidate delivery. Startup diagnosis does not establish capture
+qualification, scientific adequacy, exposure independence or production
+readiness. Scientific storage guards remain unchanged; the separate capacity
+proposal has not been approved or executed.

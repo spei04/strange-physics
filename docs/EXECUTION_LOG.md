@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Result:** The second software cycle preparation and formatting passed. The exact source checkpoint is next; collection and regression tests have not run. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#second-software-cycle).
-- **Next:** Research prepares the source checkpoint; Quality reviews it; Lead executes the guarded checks. Platform corrects the runtime controller review findings.
-- **Blocker:** The formatted source must be verified before collection and regression tests; CI, installation and runtime gates remain open.
+- **Result:** The second software cycle stopped at five typing errors. Formatting and lint passed; regression tests were not dispatched. The two-file fix is reviewed but untested. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#second-cycle-check-stopped-at-typing-2026-11-01).
+- **Next:** Lead presents the complete continuation decision. After approval, Research prepares the exact third-cycle controls and Quality reviews them; Platform owns delivery evidence.
+- **Gate:** Both cycles and E2 are consumed. The final cycle and 10/30 review extension await approval; CI, setup and capture are unstarted.
 
 ## Approval and execution capacity
 
@@ -16,6 +16,11 @@ before launch. Closed Unit22 and the consumed prior continuation are not reused.
 The new allocation excludes science, releases and capacity purchases; earlier
 charges, failures and unknowns remain retained.
 
+**2026-11-01 checkpoint:** both approved software cycles and E2 are now consumed.
+The [proposed continuation](research/D1_RUNTIME_REPAIR_CONTINUATION_DECISION.md)
+adds one final B cycle inside its unchanged aggregate and 10 CPU / 30 wall of
+E2 review; no amendment or further execution is currently approved.
+
 2026-10-19 — Product owner approved execution baseline `2d78e3598252e211110883b164854b64c356eeda` and requested independent engineer subagents, reassignment on completion and this short log.
 
 SP-00.a is complete for the amended execution mode: one project lead plus at most three concurrent engineers. Lead owns TL and unassigned BE/FE lanes; Platform covers PL1/PL2 sequentially; Research covers RS1/RS2 sequentially; Quality covers QE. Lead obtains peer review before integration. The nine-human-team schedule remains a reference and will be reforecast; these assignments do not establish human operations, external assessor availability or partner commitments. D01–D05 recommendations accepted as scope/provisional targets; D06 retains concrete paid and release approvals.
@@ -26,6 +31,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-11-01 | Research / Quality / Platform / Project lead | Second cycle closed at typing; one complete continuation proposal | Five typing errors stopped regression dispatch. Research's 4d83811c fix is source-reviewed but untested; Quality reviews eventual qualification, Platform prepares the decision, and Lead owns approval. Both cycles and all B charges remain retained; E2 is closed 20/60 and E7 closeout used 3/10 once. No CI or runtime work follows without the amendment. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#second-cycle-check-stopped-at-typing-2026-11-01). |
 | 2026-11-01 | Research / Platform / Quality / Project lead | Second cycle preparation and formatting passed | Research owns the next source checkpoint, Quality independently reviews it, Lead executes the guarded checks, and Platform corrects runtime-controller findings. All prior failure charges remain retained. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#second-software-cycle). |
 | 2026-11-01 | Research / Platform / Quality / Project lead | Revision checkpoint failed before Git; second cycle preparation | The reader rejected ordinary checkout permissions; no source commit or test followed. Research separates checkout and private-record reading, Platform versions controls, Quality reviews, and Lead owns the approved second cycle. The first format outcome and failed preparation remain retained. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#source-freeze-checkpoint). |
 | 2026-11-01 | Platform / Quality / Research / Project lead | Control correction and first formatting pass completed | Platform completed the corrected controls and moved to the runtime controller. Quality accepted the actual reseal; Research prepares the formatted revision checkpoint and Quality reviews it before Lead runs collection and regression checks. First format returned zero; its detailed outcome join is pending. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#software-preparation-and-controls). |

@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**Current checkpoint:** startup diagnosis passed; the repaired source is preparing for bounded software qualification. [Next owners and action](EXECUTION_LOG.md#current-assignment-board) · [Current evidence](research/D1_RUNTIME_REPAIR_RESULT.md).
+**Current checkpoint:** both software cycles are consumed after a typing failure; the reviewed fix is untested and the complete continuation decision awaits approval. [Next owners and action](EXECUTION_LOG.md#current-assignment-board) · [Current evidence](research/D1_RUNTIME_REPAIR_RESULT.md).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 
