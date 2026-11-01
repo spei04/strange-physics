@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**Current checkpoint:** format5 passed, but the freeze control incorrectly rejected an allowed formatting-only change. Independent diagnosis is complete; a bounded correction amendment is being prepared before collection or tests. [Next owners and action](EXECUTION_LOG.md#current-assignment-board) · [Current evidence](research/D1_RUNTIME_REPAIR_RESULT.md).
+**Current checkpoint:** format5 passed and the failed freeze control is diagnosed. The complete correction and remaining-path amendment are independently reviewed and await owner approval before collection or tests. [Decision](research/D1_FORMAT_FREEZE_AMENDMENT_DECISION.md). [Next owners and action](EXECUTION_LOG.md#current-assignment-board) · [Current evidence](research/D1_RUNTIME_REPAIR_RESULT.md).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 

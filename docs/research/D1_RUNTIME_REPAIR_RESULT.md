@@ -1,6 +1,6 @@
 # D1 repair package progress
 
-**Format5 passed; an incorrect source-freeze control stopped progression before collection or tests.** The independent failure review confirmed a single formatting-only line collapse. The control omitted the approved formatting-change commit path. All original failures and charges remain retained; no runtime or scientific result is claimed.
+**Format5 passed; an incorrect source-freeze control stopped progression before collection or tests.** The complete [correction amendment](D1_FORMAT_FREEZE_AMENDMENT_DECISION.md) is now independently reviewed and awaits owner approval. The independent failure review confirmed a single formatting-only line collapse. The control omitted the approved formatting-change commit path. All original failures and charges remain retained; no runtime or scientific result is claimed.
 
 ## Approval and source
 
@@ -131,6 +131,14 @@ The independent outcome reader completed once, exit0, and retained both complete
 B retains **88.53152 CPU /131.49357407726347 active-wall seconds**, including this cycle's **11.882541 /21.376798707060516**. E2 retains **28/84**, with its original2/6 handoff reserve remaining. Format's charge is7.477703/10.804920787923038; the failed freeze's charge is2.069936/5.048387152142823. No old charge is reset or refunded.
 
 The approved three-preparation inventory is insufficient for a corrected freeze plus the remaining post-collection binder while retaining this failed preparation. Source preparation continues toward a narrow fourth-event amendment; no corrected freeze, repeated formatter, phase6/7, PR/main CI, installation, capture or science has been dispatched. The original downstream ceilings remain conditional and unchanged.
+
+### Complete freeze amendment ready for approval (2026-11-01)
+
+The original57ca958 continuation approval remains settled. This separate [reviewed amendment](D1_FORMAT_FREEZE_AMENDMENT_DECISION.md) is needed only for a fourth preparation event and E2's two additional4/12 reviews. It preserves the successful formatter and all failures, retains this cycle's200/600 and B400/1,200 ceilings, and permits only the remaining phases6/7 before the original conditional CI, installation and runtime sequence.
+
+Research authored the immutable disabled correction, versioned helpers and postcollection successor. Lead and Quality accepted the complete source, including the original-deadline rearm fix. Platform independently verified the complete writer census, histories and remaining-path arithmetic. The decision is15,776 bytes, SHA-256 `1262fa9099560a501ca7e4be037cffc1bf0a7b6c7e9894bf18ade2a90d088a56`. Proposed E2 is38/114; proposed package is1,208/3,024. Neither increase is approved yet.
+
+All correction controls remain disabled and approval-dependent fields unsealed. The source checkout retains the one reviewed formatter-only change; the documentation checkout and private source/evidence records remain needed for this pending work. No corrected freeze or dependent phase has been executed.
 
 ## Actual startup evidence
 
