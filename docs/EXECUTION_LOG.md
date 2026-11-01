@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **A passed:** the [startup diagnosis](research/D1_RUNTIME_REPAIR_RESULT.md) supports exactly two importlib aliases. Earlier failures and charges remain retained.
-- **Research / Quality:** the source draft adds 16 cases, reaching 345 prospective cases. Research finishes its fixture/import census; Quality reviews the exact source and disabled controls.
-- **Lead / Platform:** Lead owns bounded software qualification and delivery. Platform's candidate controls are prepared. Science and capacity changes remain separately gated; reuse the existing checkouts.
+- **Source / B:** source `58a8be4` and its 345-case / 1,035-phase prospective census are independently accepted. Initial B preparation `bd9701de` is accepted but unexecuted; E2 retains 10 CPU / 25 wall.
+- **Quality / Lead:** Quality prepares the counted launcher; Lead owns actual B qualification and delivery. No new tests or CI have run.
+- **Platform / Research:** C controls remain unaccepted after exporter findings and incomplete verifier/setup review. Platform corrects them; Research reviews. E5's operator reader closed at 2 CPU / 5 wall. A and earlier charges remain unchanged; no install, capture, science or capacity action.
 
 ## Approval and execution capacity
 
@@ -26,6 +26,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-10-31 | Research / Quality / Platform / Project lead | Source and initial B preparation accepted; execution pending | Independent review accepted source 58a8 and its 345/1035 prospective census; preparation bd9701de is accepted but unexecuted. E2 retains 10 CPU / 25 wall. E5 operator 2/5 is closed; C remains unaccepted after exporter findings and incomplete verifier/setup review. Quality prepares the counted launcher, Platform corrects C, and Lead owns actual B. A/E1 and all earlier charges remain unchanged; no new tests, CI, install, capture, science or capacity action. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Startup diagnosis accepted; software qualification next | One A diagnostic passed with both exact importlib aliases, known process closure and unchanged source/runtime checks. Cumulative A 12.296822 CPU / 24.187402 wall; E1 closed 10 CPU / 25 wall. Research committed 58a8be4 with 16 alias cases; total 345/1035 remains prospective. Quality reviews source/census and controls; Lead owns B and original CI delivery; Platform has prepared disabled C controls. No new capture or science. |
 | 2026-10-31 | Project lead / Research / Quality / Platform | Complete repair package approved | Owner approved ca0b26ae and all finite limits. Lead activated the new private ledger with a retained 2 CPU / 5 wall preparation hold in A. Research prepares the diagnostic parent control; Quality reviews it; Platform prepares disabled B controls. No diagnostic, test, CI or new capture has run. Capacity recovery remains separately unresolved. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Repair draft reviewed; complete validation proposal | Research authored bounded frozen-module diagnostics, strict failed-controller evidence reconciliation and 27 regression cases. Quality accepted the exact four-file draft by static review. Research owns startup-only diagnostic preparation; Platform drafts the complete allocation; Lead integrates the reviewable source and plan. No new tests, CI, runtime or scientific execution. |

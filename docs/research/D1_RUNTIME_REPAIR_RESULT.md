@@ -1,12 +1,12 @@
 # D1 repair package progress
 
-**Startup diagnosis passed; software qualification is next.** The approved package is still in progress. No new capture, scientific run or release has occurred.
+**Source and initial B preparation are accepted; software qualification has not run.** The approved package remains in progress. C acquisition/setup controls are not yet accepted. No new tests, CI, installation, capture, scientific run or capacity action has occurred.
 
 ## Approval and source
 
 The owner approved the complete [repair and validation proposal](https://github.com/spei04/strange-physics/blob/ca0b26ae4763fd5f0db080395d0d8cd61fb6b833/docs/research/D1_RUNTIME_REPAIR_PLAN.md): 1,190 CPU / 2,970 active-wall seconds, one original PR/main CI sequence capped at 181 configured job-minutes, and 1 GiB of new artifacts. This is a fresh bounded package; the [previous failed capture](D1_RUNTIME_QUALIFICATION_RESULT.md), its full service reservation and all earlier charges/unknowns remain intact.
 
-The new source draft is [58a8be4e873eb39ab7b0f37d7745ed85a5bae619](https://github.com/spei04/strange-physics/commit/58a8be4e873eb39ab7b0f37d7745ed85a5bae619), following the reviewed owner/diagnostic repair at `ed3053a`. The latest change touches only the two bootstrap files. It checks the two observed aliases before generic origin admission and adds 16 regression cases. The seven-target census is **345 cases / 1,035 prospective phases**; those checks have not run.
+Source [58a8be4e873eb39ab7b0f37d7745ed85a5bae619](https://github.com/spei04/strange-physics/commit/58a8be4e873eb39ab7b0f37d7745ed85a5bae619) and its final import/fixture census are independently accepted by source review. It follows the owner/diagnostic repair at `ed3053a`; the latest change touches only the two bootstrap files, checks the two observed aliases before generic origin admission and adds 16 regression cases. The seven targets contain **345 cases / 1,035 prospective phases**. These checks have not run. Initial B preparation `bd9701de` is independently accepted but remains unexecuted; the counted launcher is still being prepared.
 
 ## Actual startup evidence
 
@@ -36,7 +36,7 @@ Fresh before/after checks covered 437 source files, 2,498 protected-plan files a
 
 Measured controller plus waited-child CPU was 4.296822 seconds; active wall was 4.187402 seconds. The last row above includes its 2 CPU / 5 wall closeout hold. Preparation is counted once. These are charged values with retained reservations, not a whole-operation cost measurement.
 
-The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within their 10/30 allocation. E2 software-control review remains in progress. Authoring, inference, transport and provider-dollar costs are separately unmeasured.
+The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within their 10/30 allocation. E2 software-control review retains **10 CPU / 25 wall seconds**. The E5 operator reader closed at **2 CPU / 5 wall seconds**; this does not establish acceptance of C. Its visible exporter has accounting, error-preservation and interruption findings, while truncated output left verifier/setup review incomplete. Corrected controls and the remaining source review are pending. Authoring, inference, transport and provider-dollar costs are separately unmeasured.
 
 | Private evidence | SHA-256 |
 | --- | --- |
@@ -53,6 +53,6 @@ All records and installations remain private in the cloud, with their prior rete
 
 ## Next owners and gates
 
-Research supplies the final source/import/fixture census. Quality reviews the exact source and disabled software controls. Lead then seals and executes B's bounded formatter, collection, typing and guarded-test sequence. Platform has prepared disabled candidate-acquisition/setup controls.
+Quality prepares the fixed counted launcher; Lead owns sealing and actual B execution. Platform corrects the disabled C acquisition/setup controls, and Research independently reviews them. The accepted source census and initial preparation do not substitute for B's formatter, collection, typing and guarded-test results.
 
 Only accepted B evidence permits the one original PR CI sequence and protected-main candidate delivery. A passing startup diagnostic does not establish capture qualification, scientific adequacy, exposure independence or production readiness. Scientific storage guards remain unchanged; the separate capacity proposal has not been approved or executed.

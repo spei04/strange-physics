@@ -15835,9 +15835,9 @@
       }
     },
     "current_summary": {
-      "verified": "A startup diagnosis passed: both exact importlib aliases satisfy the approved identity/source condition. A charged 12.296822 CPU / 24.187402 wall; E1 closed 10 CPU / 25 wall. Source 58a8be4 adds 16 cases, total 345/1035 prospective. Earlier failures/charges remain retained.",
-      "next": "Research finalizes the source/import/fixture census; Quality reviews source and disabled B controls; Lead seals and executes bounded software qualification. Platform has prepared disabled candidate setup controls.",
-      "blocker": "B, new CI/candidate delivery and actual capture remain unrun. Science retains exposure, adequacy, independence and 50/45 GiB capacity gates; the separate capacity proposal is unapproved.",
+      "verified": "A startup diagnosis passed; A remains 12.296822 CPU / 24.187402 wall and E1 closed 10 CPU / 25 wall. Source 58a8be4 and its 345/1035 prospective census are independently accepted. Initial B preparation bd9701de is accepted but unexecuted. E2 retains 10 CPU / 25 wall; E5 operator 2 CPU / 5 wall is closed. All earlier failures/charges remain retained.",
+      "next": "Quality prepares the fixed counted launcher; Lead owns actual B qualification and delivery. Platform corrects C acquisition/setup controls; Research independently reviews them. No new tests, CI, installation or capture has run.",
+      "blocker": "C controls are not accepted: exporter findings remain and truncated review output leaves verifier/setup review incomplete. B and new CI/candidate/runtime delivery remain unrun. Science retains exposure, adequacy, independence and 50/45 GiB capacity gates; no capacity action is approved or executed.",
       "record": "EXECUTION_LOG.md#current-assignment-board"
     },
     "laplace_reference_validation": {
