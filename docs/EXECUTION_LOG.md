@@ -8,18 +8,19 @@
 
 ## Approval and execution capacity
 
-**Current repair scope (2026-10-31):** the owner approved the complete package
-at `ca0b26ae`: 1,190 CPU / 2,970 active-wall seconds, one original PR/main CI
-sequence capped at 181 configured job-minutes, and 1 GiB of new artifacts.
-Each dependent control still requires exact sealing and independent acceptance
-before launch. Closed Unit22 and the consumed prior continuation are not reused.
-The new allocation excludes science, releases and capacity purchases; earlier
-charges, failures and unknowns remain retained.
+**Current repair scope (2026-11-01):** the owner approved the complete
+[continuation at decision57ca958](research/D1_RUNTIME_REPAIR_CONTINUATION_DECISION.md).
+One final200 CPU /600 active-wall software cycle fits inside the unchanged
+B400/1,200 aggregate, with all earlier charges retained. E2 receives10/30 more,
+raising the whole package ceiling to1,200 CPU /3,000 wall. The original181
+configured PR/main CI job-minutes,1GiB artifact ceiling and C/D limits stay
+unchanged. E7 retains3/10 with7/20 remaining.
 
-**2026-11-01 checkpoint:** both approved software cycles and E2 are now consumed.
-The [proposed continuation](research/D1_RUNTIME_REPAIR_CONTINUATION_DECISION.md)
-adds one final B cycle inside its unchanged aggregate and 10 CPU / 30 wall of
-E2 review; no amendment or further execution is currently approved.
+Exact controls and admissions require sealing and independent acceptance before
+their dependent launches. Source4d83811 is reviewed but unvalidated; no fourth
+software cycle, extra CI, scientific run, release or capacity purchase is
+authorized. The original proposal atca0b26ae and all failed/unknown work remain
+part of the retained history. [Approval registry](research/APPROVALS.md#runtime-repair-continuation-2026-11-01).
 
 2026-10-19 — Product owner approved execution baseline `2d78e3598252e211110883b164854b64c356eeda` and requested independent engineer subagents, reassignment on completion and this short log.
 

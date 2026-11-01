@@ -15,3 +15,16 @@ The approved implementation effort remains provisional17–26 engineer-days for 
 Provider/paid pilots, expanded cells/families, official studies, adaptation claims, infrastructure and release retain separate gates. No scientific result or production readiness is established by this approval.
 
 **Assignments:** Research owns RA-01; Quality prepares RA-02 and reviews RA-01; Platform reviews provenance and activation boundaries; lead owns approval, integration and progress. VAL1 draftPR101 at1014592 is preserved with its generator deferred. Reuse the two existing cloud checkouts and pinned independent environments.
+
+
+## Runtime repair continuation 2026-11-01
+
+The owner approved the complete [reviewed continuation](https://github.com/spei04/strange-physics/blob/57ca958b275376bdf3182acc1024c6a99b4d6ae3/docs/research/D1_RUNTIME_REPAIR_CONTINUATION_DECISION.md). The frozen decision is17,639 bytes, SHA-256 `0897608bc45a1463115a32a72c41c691d4cecfd3cf5bc20a944578acf63206be`; direct approval provenance is retained privately. This amends the original engineering repair package atca0b26ae, not the scientific comparison protocol.
+
+One additional software cycle is authorized, limited to200 CPU /600 active-wall seconds inside B's unchanged400/1,200 aggregate. Only attempts5(format),6(prepare) and7(check) may follow the four consumed attempts. The current source is reviewed but unvalidated commit`4d83811cb46892c55e772392b5b29dc7ce008b42`; all prior failures and charges remain retained.
+
+E2 receives10 CPU /30 wall more, becoming30/90 including its retained20/60. The whole package ceiling becomes1,200 CPU /3,000 wall. E7 retains3/10 and has7/20 left. The original one PR and one protected-main CI sequence remains181 configured job-minutes; candidate acquisition/installation stays150/450 and the single ordered runtime sequence500/900.
+
+The1GiB artifact ceiling and all pools remain unchanged. The complete prospective software-output bound is29,180,520 bytes within32MiB; exact controls must enforce the approved individual and cumulative write limits. Source/collection/typing/guarded-regression gates precede CI; exact candidate and custody gates precede runtime. This approval does not waive those gates or establish a passing result.
+
+No fourth software cycle, automatic retry, extra CI, second installation/capture, scientific run, capacity purchase or release is included. [Current progress and assignments](../EXECUTION_LOG.md#current-assignment-board) record the actual state.
