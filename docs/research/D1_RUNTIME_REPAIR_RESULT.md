@@ -1,12 +1,12 @@
 # D1 repair package progress
 
-**Software preparation passed; formatting is paused pending a runner correction.** The successful preparation remains valid. Acquisition/setup controls are source-reviewed but unsealed and unexecuted. No formatter, tests, CI, installation, capture, scientific run or capacity action has occurred in this repair package.
+**Formatting passed after the reviewed control correction and reseal.** The next checkpoint joins its observed completion to the exact formatted source revision. Regression tests, CI, installation, capture and science remain unrun in this repair package. Acquisition/setup controls are source-reviewed but unsealed; no capacity action has occurred.
 
 ## Approval and source
 
 The owner approved the complete [repair and validation proposal](https://github.com/spei04/strange-physics/blob/ca0b26ae4763fd5f0db080395d0d8cd61fb6b833/docs/research/D1_RUNTIME_REPAIR_PLAN.md): 1,190 CPU / 2,970 active-wall seconds, one original PR/main CI sequence capped at 181 configured job-minutes, and 1 GiB of new artifacts. This is a fresh bounded package; the [previous failed capture](D1_RUNTIME_QUALIFICATION_RESULT.md), its full service reservation and all earlier charges/unknowns remain intact.
 
-Source [58a8be4e873eb39ab7b0f37d7745ed85a5bae619](https://github.com/spei04/strange-physics/commit/58a8be4e873eb39ab7b0f37d7745ed85a5bae619) and its final import/fixture census are independently accepted by source review. It follows the owner/diagnostic repair at `ed3053a`; the latest change touches only the two bootstrap files, checks the two observed aliases before generic origin admission and adds 16 regression cases. The seven targets contain **345 cases / 1,035 prospective phases**. These checks have not run. The independently accepted preparation `bd9701de` has now executed once; its successful result and the later formatting pause are recorded below.
+Source [58a8be4e873eb39ab7b0f37d7745ed85a5bae619](https://github.com/spei04/strange-physics/commit/58a8be4e873eb39ab7b0f37d7745ed85a5bae619) and its final import/fixture census are independently accepted by source review. It follows the owner/diagnostic repair at `ed3053a`; the latest change touches only the two bootstrap files, checks the two observed aliases before generic origin admission and adds 16 regression cases. The seven targets contain **345 cases / 1,035 prospective phases**. These checks have not run. The independently accepted preparation `bd9701de` has now executed once; its successful result, the withdrawn original admission and the later first format outcome are recorded below.
 
 ## Software preparation and controls
 
@@ -14,7 +14,11 @@ The one preparation passed with **four closed children and known usage**, produc
 
 The preparation charge is **5.566901 CPU / 9.263535339850932 active-wall seconds**, including the 2 CPU / 5 wall closeout reservation once. The initial 10 CPU / 30 wall intent is not an additional charge. The later final observed counters were 3.568835 CPU / 4.270335783716291 wall; these are a separate observation, not a value to add to the charged total.
 
-Quality accepted the actual preparation and prospective formatting admission. Before formatting began, Lead found missing-child-record handling, unknown-usage charging, cleanup and `SIGHUP` weaknesses in the shared check runner `97b026d8`. **That formatting admission is withdrawn.** Platform owns the runner correction and versioned reseal; Quality reviews it before Lead executes. The successful preparation is retained, and no formatter or test invocation followed it.
+Quality accepted the actual preparation and prospective formatting admission. Before formatting began, Lead found missing-child-record handling, unknown-usage charging, cleanup and `SIGHUP` weaknesses in the shared check runner `97b026d8`. **That original formatting admission was withdrawn before use.** Platform produced the versioned correction, Quality accepted its source and actual reseal, and Lead executed the first format phase under the replacement admission. The successful original preparation and all withdrawn controls remain retained.
+
+The one control reseal returned zero with known usage, no children and no phase dispatch. Its exact readback contains the original seven files plus five versioned outputs: **12 files / 177,592 bytes**. The reseal charge is **2.24322 CPU / 5.25870868191123 wall seconds**, including its 2/5 closeout hold. Its initial 5/15 reservation is nonadditive. Combined B preparation is **7.810121 CPU / 14.522244021762162 wall**.
+
+The first format phase then returned zero with a single matching-identity stdout, known closure/usage and no terminal-write error. It reports **5.714151 measured CPU / 7.083330078050494 active wall**, charged **7.714151 / 12.083330078050494** including closeout. The observed outer completion took 9.365 seconds, within that retained wall charge. Cumulative B is **15.524272 CPU / 26.605574099812657 wall**. The source-freeze preparation must still join the exact durable attempt, child rows, manifests and original stdout before admitting collection. No regression-test result is inferred from formatting.
 
 C v2 acquisition/setup controls are independently accepted for their disabled source scope, indexed by `ba417a6c`. The complete exporter, candidate verifier and setup bodies were reviewed with their diffs and recipe. Exact candidate, receiver, tool/startup/custody identities and acquisition charges still require sealing before execution. Their storage checks are detection and acceptance ceilings, not an aggregate filesystem quota.
 
@@ -46,7 +50,7 @@ Fresh before/after checks covered 437 source files, 2,498 protected-plan files a
 
 Measured controller plus waited-child CPU was 4.296822 seconds; active wall was 4.187402 seconds. The last row above includes its 2 CPU / 5 wall closeout hold. Preparation is counted once. These are charged values with retained reservations, not a whole-operation cost measurement.
 
-The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within their 10/30 allocation. E2 software-control and actual-preparation readback review now retains **14 CPU / 35 wall seconds** in total. E5 retains **4 CPU / 10 wall seconds**: the original operator read at 2/5 remains charged, and the complete correction read adds 2/5. Its full nine-file packet was retained in memory and reviewed without another cloud read; C v2 source acceptance does not authorize acquisition or setup. Authoring, inference, transport and provider-dollar costs are separately unmeasured.
+The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within their 10/30 allocation. E2 software-control and actual-preparation readback review now retains **16 CPU / 40 wall seconds** in total. The latest reader used the reserved review slot named `cycle2-admission` for cycle-one reseal readback; it did not run a second cycle. E5 retains **4 CPU / 10 wall seconds**: the original operator read at 2/5 remains charged, and the complete correction read adds 2/5. Its full nine-file packet was retained in memory and reviewed without another cloud read; C v2 source acceptance does not authorize acquisition or setup. Authoring, inference, transport and provider-dollar costs are separately unmeasured.
 
 | Private evidence | SHA-256 |
 | --- | --- |
@@ -58,6 +62,10 @@ The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within th
 | Independent outcome reader | `67a0038713857fdc4f9c61cde53115079ef50bb247365a7afef29bbb95df53d0` |
 | Successful software-preparation terminal, 4,460 bytes | `4e93b26ac6a533e79ceafdbab853499f28c83dd503b2146c307a492f9369b817` |
 | E2 preparation readback receipt, 936 bytes | `d09da0c082a019d7e060dbf0f183ce3fcf993a5de2f71515b48857e79a8f29cb` |
+| Successful reseal terminal, 2,145 bytes | `1af743d95d3b4f5c2ae659067fdb900a1eda0f20041f6188440ef043aa53dff5` |
+| Replacement format admission, 2,521 bytes | `48c4ecc903b9db4433056151e9b7dea81d63e7330d763ffc7b28aa51b07b59ba` |
+| E2 reseal readback receipt, 933 bytes | `eda992437bdbc371e0d5d81eb4e8eb51c2e1f99531d6a4225a72df9f63b6f7c6` |
+| Format attempt receipt reported by actual stdout, 9,800 bytes; durable join pending | `bc610a2cc424e3ea70fb9bbb6d77c92a0bf4a88964954cfeb3accc43aa5d37f6` |
 | Accepted disabled C v2 index, 2,926 bytes | `ba417a6c514e233b3e35b405fb3b89388d122fadb5dff20b94d7f24c9334b501` |
 | E5 complete correction reader, 915 bytes | `c769d930a575784062b6b78a63a786955a24d161a25f9921419107d557dbfc85` |
 
@@ -67,6 +75,6 @@ All records and installations remain private in the cloud, with their prior rete
 
 ## Next owners and gates
 
-Platform corrects and versions the shared check runner; Quality reviews the resealed controls; Lead owns the next software qualification invocation. The withdrawn formatting admission cannot be reused. Research has completed the independent C v2 source review; acquisition/setup remains unsealed and unexecuted. The accepted source census and successful preparation do not substitute for formatter, collection, typing or guarded-test results.
+Research prepares the exact formatted source checkpoint and observed-outcome join; Quality reviews it before Lead executes collection, typing and guarded regression tests. Platform has moved to the disabled runtime controller. The withdrawn original formatting admission cannot be reused. Acquisition/setup remains source-accepted, unsealed and unexecuted. The accepted source census, preparation and first format outcome do not substitute for collection, typing or guarded-test results.
 
 Only accepted B evidence permits the one original PR CI sequence and protected-main candidate delivery. A passing startup diagnostic does not establish capture qualification, scientific adequacy, exposure independence or production readiness. Scientific storage guards remain unchanged; the separate capacity proposal has not been approved or executed.

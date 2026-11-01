@@ -2,9 +2,9 @@
 
 ## Current assignment board
 
-- **Result:** Software preparation passed with source and dependencies unchanged. Acquisition/setup controls are source-reviewed but still unsealed. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#software-preparation-and-controls).
-- **Next:** Platform corrects and versions the check runner; Quality reviews the sealed correction; Lead executes software qualification.
-- **Blocker:** Formatting admission was withdrawn after runner accounting and cleanup weaknesses were found. Formatting, tests, CI, installation, capture and science remain unrun in this repair package.
+- **Result:** Formatting passed after the independently reviewed control correction and reseal. Earlier preparation, evidence and charges are retained. Regression tests remain unrun. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#software-preparation-and-controls).
+- **Next:** Research prepares the formatted revision checkpoint; Quality reviews it; Lead executes collection and regression checks. Platform prepares runtime controls.
+- **Blocker:** The next software admission requires the exact formatted revision and observed-outcome join; later CI, installation and runtime gates remain open.
 
 ## Approval and execution capacity
 
@@ -26,6 +26,7 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-11-01 | Platform / Quality / Research / Project lead | Control correction and first formatting pass completed | Platform completed the corrected controls and moved to the runtime controller. Quality accepted the actual reseal; Research prepares the formatted revision checkpoint and Quality reviews it before Lead runs collection and regression checks. First format returned zero; its detailed outcome join is pending. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#software-preparation-and-controls). |
 | 2026-10-31 | Platform / Quality / Research / Project lead | Preparation passed; formatter paused | Lead withdrew formatting admission after runner accounting/cleanup findings. Platform corrects and versions the runner, Quality reviews, and Lead executes subsequent checks. Acquisition/setup controls are source-reviewed but unsealed. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#software-preparation-and-controls). |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Source and initial B preparation accepted; execution pending | Independent review accepted source 58a8 and its 345/1035 prospective census; preparation bd9701de is accepted but unexecuted. E2 retains 10 CPU / 25 wall. E5 operator 2/5 is closed; C remains unaccepted after exporter findings and incomplete verifier/setup review. Quality prepares the counted launcher, Platform corrects C, and Lead owns actual B. A/E1 and all earlier charges remain unchanged; no new tests, CI, install, capture, science or capacity action. |
 | 2026-10-31 | Research / Quality / Platform / Project lead | Startup diagnosis accepted; software qualification next | One A diagnostic passed with both exact importlib aliases, known process closure and unchanged source/runtime checks. Cumulative A 12.296822 CPU / 24.187402 wall; E1 closed 10 CPU / 25 wall. Research committed 58a8be4 with 16 alias cases; total 345/1035 remains prospective. Quality reviews source/census and controls; Lead owns B and original CI delivery; Platform has prepared disabled C controls. No new capture or science. |

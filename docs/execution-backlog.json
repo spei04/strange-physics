@@ -15835,9 +15835,9 @@
       }
     },
     "current_summary": {
-      "verified": "Software preparation passed with source and dependencies unchanged. Acquisition/setup controls are source-reviewed but remain unsealed. Earlier evidence and charges are retained.",
-      "next": "Platform corrects and versions the check runner; Quality reviews the sealed correction; Lead executes software qualification.",
-      "blocker": "Formatting admission was withdrawn after runner accounting and cleanup weaknesses were found. Formatting and tests remain unrun; later delivery and runtime prerequisites remain open.",
+      "verified": "Formatting passed after the independently reviewed control correction and reseal. Earlier preparation, evidence and charges are retained. Regression tests remain unrun.",
+      "next": "Research prepares the formatted revision checkpoint; Quality reviews it; Lead executes collection and regression checks. Platform prepares runtime controls.",
+      "blocker": "The next software admission requires the exact formatted revision and observed-outcome join; later CI, installation and runtime gates remain open.",
       "record": "research/D1_RUNTIME_REPAIR_RESULT.md#software-preparation-and-controls"
     },
     "laplace_reference_validation": {
