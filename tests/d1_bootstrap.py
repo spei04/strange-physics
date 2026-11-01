@@ -389,9 +389,7 @@ def _check_loaded(plan: dict[str, Any]) -> None:
             alias_spec = module.__dict__.get("__spec__") if type(module) is ModuleType else None
             # FrozenImporter is a class-based loader, not a Loader instance.
             alias_fields: dict[str, object] = (
-                alias_spec.__dict__
-                if type(alias_spec) is importlib.machinery.ModuleSpec
-                else {}
+                alias_spec.__dict__ if type(alias_spec) is importlib.machinery.ModuleSpec else {}
             )
             if (
                 type(name) is not str
