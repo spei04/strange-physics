@@ -15835,10 +15835,10 @@
       }
     },
     "current_summary": {
-      "verified": "A startup diagnosis passed; A remains 12.296822 CPU / 24.187402 wall and E1 closed 10 CPU / 25 wall. Source 58a8be4 and its 345/1035 prospective census are independently accepted. Initial B preparation bd9701de is accepted but unexecuted. E2 retains 10 CPU / 25 wall; E5 operator 2 CPU / 5 wall is closed. All earlier failures/charges remain retained.",
-      "next": "Quality prepares the fixed counted launcher; Lead owns actual B qualification and delivery. Platform corrects C acquisition/setup controls; Research independently reviews them. No new tests, CI, installation or capture has run.",
-      "blocker": "C controls are not accepted: exporter findings remain and truncated review output leaves verifier/setup review incomplete. B and new CI/candidate/runtime delivery remain unrun. Science retains exposure, adequacy, independence and 50/45 GiB capacity gates; no capacity action is approved or executed.",
-      "record": "EXECUTION_LOG.md#current-assignment-board"
+      "verified": "Software preparation passed with source and dependencies unchanged. Acquisition/setup controls are source-reviewed but remain unsealed. Earlier evidence and charges are retained.",
+      "next": "Platform corrects and versions the check runner; Quality reviews the sealed correction; Lead executes software qualification.",
+      "blocker": "Formatting admission was withdrawn after runner accounting and cleanup weaknesses were found. Formatting and tests remain unrun; later delivery and runtime prerequisites remain open.",
+      "record": "research/D1_RUNTIME_REPAIR_RESULT.md#software-preparation-and-controls"
     },
     "laplace_reference_validation": {
       "status": "local_software_validation_independently_accepted",

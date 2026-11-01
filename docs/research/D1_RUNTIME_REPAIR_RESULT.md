@@ -1,12 +1,22 @@
 # D1 repair package progress
 
-**Source and initial B preparation are accepted; software qualification has not run.** The approved package remains in progress. C acquisition/setup controls are not yet accepted. No new tests, CI, installation, capture, scientific run or capacity action has occurred.
+**Software preparation passed; formatting is paused pending a runner correction.** The successful preparation remains valid. Acquisition/setup controls are source-reviewed but unsealed and unexecuted. No formatter, tests, CI, installation, capture, scientific run or capacity action has occurred in this repair package.
 
 ## Approval and source
 
 The owner approved the complete [repair and validation proposal](https://github.com/spei04/strange-physics/blob/ca0b26ae4763fd5f0db080395d0d8cd61fb6b833/docs/research/D1_RUNTIME_REPAIR_PLAN.md): 1,190 CPU / 2,970 active-wall seconds, one original PR/main CI sequence capped at 181 configured job-minutes, and 1 GiB of new artifacts. This is a fresh bounded package; the [previous failed capture](D1_RUNTIME_QUALIFICATION_RESULT.md), its full service reservation and all earlier charges/unknowns remain intact.
 
-Source [58a8be4e873eb39ab7b0f37d7745ed85a5bae619](https://github.com/spei04/strange-physics/commit/58a8be4e873eb39ab7b0f37d7745ed85a5bae619) and its final import/fixture census are independently accepted by source review. It follows the owner/diagnostic repair at `ed3053a`; the latest change touches only the two bootstrap files, checks the two observed aliases before generic origin admission and adds 16 regression cases. The seven targets contain **345 cases / 1,035 prospective phases**. These checks have not run. Initial B preparation `bd9701de` is independently accepted but remains unexecuted; the counted launcher is still being prepared.
+Source [58a8be4e873eb39ab7b0f37d7745ed85a5bae619](https://github.com/spei04/strange-physics/commit/58a8be4e873eb39ab7b0f37d7745ed85a5bae619) and its final import/fixture census are independently accepted by source review. It follows the owner/diagnostic repair at `ed3053a`; the latest change touches only the two bootstrap files, checks the two observed aliases before generic origin admission and adds 16 regression cases. The seven targets contain **345 cases / 1,035 prospective phases**. These checks have not run. The independently accepted preparation `bd9701de` has now executed once; its successful result and the later formatting pause are recorded below.
+
+## Software preparation and controls
+
+The one preparation passed with **four closed children and known usage**, producing exactly seven files / 111,250 bytes. Source and environment identities were unchanged. Its terminal is 4,460 bytes, pinned in the evidence table below.
+
+The preparation charge is **5.566901 CPU / 9.263535339850932 active-wall seconds**, including the 2 CPU / 5 wall closeout reservation once. The initial 10 CPU / 30 wall intent is not an additional charge. The later final observed counters were 3.568835 CPU / 4.270335783716291 wall; these are a separate observation, not a value to add to the charged total.
+
+Quality accepted the actual preparation and prospective formatting admission. Before formatting began, Lead found missing-child-record handling, unknown-usage charging, cleanup and `SIGHUP` weaknesses in the shared check runner `97b026d8`. **That formatting admission is withdrawn.** Platform owns the runner correction and versioned reseal; Quality reviews it before Lead executes. The successful preparation is retained, and no formatter or test invocation followed it.
+
+C v2 acquisition/setup controls are independently accepted for their disabled source scope, indexed by `ba417a6c`. The complete exporter, candidate verifier and setup bodies were reviewed with their diffs and recipe. Exact candidate, receiver, tool/startup/custody identities and acquisition charges still require sealing before execution. Their storage checks are detection and acceptance ceilings, not an aggregate filesystem quota.
 
 ## Actual startup evidence
 
@@ -36,7 +46,7 @@ Fresh before/after checks covered 437 source files, 2,498 protected-plan files a
 
 Measured controller plus waited-child CPU was 4.296822 seconds; active wall was 4.187402 seconds. The last row above includes its 2 CPU / 5 wall closeout hold. Preparation is counted once. These are charged values with retained reservations, not a whole-operation cost measurement.
 
-The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within their 10/30 allocation. E2 software-control review retains **10 CPU / 25 wall seconds**. The E5 operator reader closed at **2 CPU / 5 wall seconds**; this does not establish acceptance of C. Its visible exporter has accounting, error-preservation and interruption findings, while truncated output left verifier/setup review incomplete. Corrected controls and the remaining source review are pending. Authoring, inference, transport and provider-dollar costs are separately unmeasured.
+The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within their 10/30 allocation. E2 software-control and actual-preparation readback review now retains **14 CPU / 35 wall seconds** in total. E5 retains **4 CPU / 10 wall seconds**: the original operator read at 2/5 remains charged, and the complete correction read adds 2/5. Its full nine-file packet was retained in memory and reviewed without another cloud read; C v2 source acceptance does not authorize acquisition or setup. Authoring, inference, transport and provider-dollar costs are separately unmeasured.
 
 | Private evidence | SHA-256 |
 | --- | --- |
@@ -46,6 +56,10 @@ The five E1 review readers are closed at **10 CPU / 25 wall seconds**, within th
 | A terminal, 12,029 bytes | `194931c3a064db2dda267457a887af663795d4eb48ff6a75c882790e0612da14` |
 | Diagnostic log, 7,808 bytes | `6b98b78815d671f01df23b91cc88060801bc277a1cfc609e3d77372f815f9f7a` |
 | Independent outcome reader | `67a0038713857fdc4f9c61cde53115079ef50bb247365a7afef29bbb95df53d0` |
+| Successful software-preparation terminal, 4,460 bytes | `4e93b26ac6a533e79ceafdbab853499f28c83dd503b2146c307a492f9369b817` |
+| E2 preparation readback receipt, 936 bytes | `d09da0c082a019d7e060dbf0f183ce3fcf993a5de2f71515b48857e79a8f29cb` |
+| Accepted disabled C v2 index, 2,926 bytes | `ba417a6c514e233b3e35b405fb3b89388d122fadb5dff20b94d7f24c9334b501` |
+| E5 complete correction reader, 915 bytes | `c769d930a575784062b6b78a63a786955a24d161a25f9921419107d557dbfc85` |
 
 The external control-copy census retained 37 files / 406,013 bytes. The controller checked the runtime-root output bound but discarded that census's returned totals; no exact final runtime-root byte/count claim is made. Later whole-package accounting must retain its own fresh census. This does not erase the known terminal/log sizes or earlier evidence.
 
@@ -53,6 +67,6 @@ All records and installations remain private in the cloud, with their prior rete
 
 ## Next owners and gates
 
-Quality prepares the fixed counted launcher; Lead owns sealing and actual B execution. Platform corrects the disabled C acquisition/setup controls, and Research independently reviews them. The accepted source census and initial preparation do not substitute for B's formatter, collection, typing and guarded-test results.
+Platform corrects and versions the shared check runner; Quality reviews the resealed controls; Lead owns the next software qualification invocation. The withdrawn formatting admission cannot be reused. Research has completed the independent C v2 source review; acquisition/setup remains unsealed and unexecuted. The accepted source census and successful preparation do not substitute for formatter, collection, typing or guarded-test results.
 
 Only accepted B evidence permits the one original PR CI sequence and protected-main candidate delivery. A passing startup diagnostic does not establish capture qualification, scientific adequacy, exposure independence or production readiness. Scientific storage guards remain unchanged; the separate capacity proposal has not been approved or executed.
