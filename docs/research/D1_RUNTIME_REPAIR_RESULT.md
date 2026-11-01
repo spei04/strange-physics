@@ -1,6 +1,6 @@
 # D1 repair package progress
 
-**Software qualification stopped at typing; both approved cycles are consumed.** Formatting and lint passed, but five typing errors prevented regression-test dispatch. E2 is closed with all charges retained. The narrow typing fix is source-reviewed but unexecuted; the [complete continuation decision](D1_RUNTIME_REPAIR_CONTINUATION_DECISION.md) remains proposed, not approved. CI, candidate setup and actual capture are unstarted.
+**The complete third-cycle continuation is approved; execution controls are being sealed.** The typing correction remains reviewed but unvalidated. Earlier formatting/lint passes, typing failure and all charges remain retained. No new regression, CI, installation or runtime result is claimed.
 
 ## Approval and source
 
@@ -107,6 +107,16 @@ all retained bytes plus its full writes and closeout reservation in its pool.
 Source `4d83811c` is published on a feature branch without a PR or CI run.
 The [complete amendment](D1_RUNTIME_REPAIR_CONTINUATION_DECISION.md) remains
 proposed, not approved; no additional software or runtime command followed.
+
+### Third-cycle continuation approved (2026-11-01)
+
+The owner approved the complete [continuation at exact decision commit57ca958](https://github.com/spei04/strange-physics/blob/57ca958b275376bdf3182acc1024c6a99b4d6ae3/docs/research/D1_RUNTIME_REPAIR_CONTINUATION_DECISION.md). Its original17,639 bytes and SHA-256 `0897608bc45a1463115a32a72c41c691d4cecfd3cf5bc20a944578acf63206be` remain the decision identity; the proposal's preapproval status is historical.
+
+One final200 CPU /600 active-wall software cycle is authorized inside B's unchanged400/1,200 aggregate, for attempts5 format,6 preparation and7 checks. The source is the reviewed, unvalidated `4d83811cb46892c55e772392b5b29dc7ce008b42`. B's76.648979 CPU /110.11677537020296 wall remains charged. The additional E2 review allocation is10/30, making its ceiling30/90 while its original20/60 stays retained. E7 retains3/10, leaving7/20. The full package ceiling is now1,200 CPU /3,000 wall; the original181 configured CI job-minutes and C/D limits are unchanged.
+
+The approved software-output bound is29,180,520 bytes within32MiB, including retained files, all nine bounded logs, receipts, fixtures, maps and failure reserves. Actual controls must enforce these bounds and be independently accepted before dispatch. This is no authority for a fourth software cycle, extra CI, another installation/capture, scientific run or capacity purchase.
+
+Research owns cycle-three software controls and source joins; Quality owns independent review; Platform prepares the fixed hosted evidence collector; Lead records admissions and remains sole executor. The existing clean cloud checkouts and owned pinned environment are reused. Direct approval provenance is retained privately at1,809 bytes, SHA-256 `1b1034d050d76b6e10042b8e7ed850ef3d31df35a6fcefa328e99a2445f2ed24`; its runtime copy will be created inside the counted staging operation.
 
 ## Actual startup evidence
 
