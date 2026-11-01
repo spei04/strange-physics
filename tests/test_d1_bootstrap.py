@@ -932,9 +932,8 @@ def test_unlisted_frozen_diagnostic_preserves_rejected_identity(
     monkeypatch: pytest.MonkeyPatch, key: str, spec_name: str
 ) -> None:
     module = ModuleType(key)
-    module.__spec__ = importlib.machinery.ModuleSpec(
-        spec_name, importlib.machinery.FrozenImporter, origin="frozen"
-    )
+    module.__spec__ = importlib.machinery.ModuleSpec(spec_name, None, origin="frozen")
+    module.__spec__.__dict__["loader"] = importlib.machinery.FrozenImporter
     monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={key: module}))
     plan = {"files": [], "import_map": {}, "frozen_modules": ["allowed"], "builtin_modules": []}
     with pytest.raises(bootstrap.BootstrapError, match="Unlisted frozen module") as caught:
@@ -950,9 +949,8 @@ def test_unlisted_frozen_diagnostic_is_bounded_and_escaped(
 ) -> None:
     key = "bad\n" + "\U0001f600" * 200
     module = ModuleType(key)
-    module.__spec__ = importlib.machinery.ModuleSpec(
-        key, importlib.machinery.FrozenImporter, origin="frozen"
-    )
+    module.__spec__ = importlib.machinery.ModuleSpec(key, None, origin="frozen")
+    module.__spec__.__dict__["loader"] = importlib.machinery.FrozenImporter
     monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules={key: module}))
     with pytest.raises(bootstrap.BootstrapError) as caught:
         bootstrap._check_loaded(
@@ -986,9 +984,8 @@ def test_frozen_alias_requires_exact_canonical_join(
     key = alias + ".unreviewed" if case == "alias-key" else alias
     origin = "/synthetic/stdlib/bootstrap.py"
     module = ModuleType(alias)
-    retained_spec = importlib.machinery.ModuleSpec(
-        canonical, importlib.machinery.FrozenImporter, origin="frozen"
-    )
+    retained_spec = importlib.machinery.ModuleSpec(canonical, None, origin="frozen")
+    retained_spec.__dict__["loader"] = importlib.machinery.FrozenImporter
     module.__spec__ = retained_spec
     # Alias first: a later canonical rejection must not mask a missing alias check.
     registry = {key: module, canonical: module}
@@ -1018,7 +1015,7 @@ def test_frozen_alias_requires_exact_canonical_join(
         retained_spec.loader = importlib.machinery.SourceFileLoader(canonical, origin)
     monkeypatch.setattr(bootstrap, "sys", SimpleNamespace(modules=registry))
     if case == "joined":
-        assert bootstrap._check_loaded(plan) is None
+        bootstrap._check_loaded(plan)
         assert registry[key] is registry[canonical] is module
         assert plan["frozen_modules"] == [canonical]
     else:
