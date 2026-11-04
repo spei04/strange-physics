@@ -247,3 +247,7 @@ protected-main candidate delivery. Startup diagnosis does not establish capture
 qualification, scientific adequacy, exposure independence or production
 readiness. Scientific storage guards remain unchanged; the separate capacity
 proposal has not been approved or executed.
+
+## 2026-11-04 — Test-boundary continuation stopped at control review
+
+The approved test-only correction and source freeze passed. The copied-control reader then failed on an approval-cache load-order defect; failure-only handoff passed. Phases8/9 were not invoked. See the [complete result](D1_TEST_BOUNDARY_CONTINUATION_RESULT.md) and [proposed successor](D1_CONTROL_REVIEW_CONTINUATION_DECISION.md). Earlier failures and charges remain retained.

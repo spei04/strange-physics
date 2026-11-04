@@ -2,13 +2,17 @@
 
 ## Current assignment board
 
-- **Result:** Formatting, lint and full typing passed. Guarded regression recorded 344 passed/1 failed; the independent diagnostic review and failure-only handoff completed with all charges preserved. [Evidence](research/D1_RUNTIME_REPAIR_RESULT.md#final-check-attempt-2026-11-01).
-- **Next:** Owner review of the independently accepted test-boundary correction and one bounded continuation cycle. [Decision](research/D1_TEST_BOUNDARY_CONTINUATION_DECISION.md).
-- **Blocker:** The approved phase 7 limit is consumed. The prospective test patch and continuation remain unapproved; CI, installation and runtime are unrun.
+- **Result:** The approved test-only correction is committed at `ae0eea2`; 437 source paths, pinned environment and copied helpers verified. Timed control review failed on approval-cache ordering; sole failure closeout passed. [Evidence](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md).
+- **Next:** Owner review of one complete cycle-5 control repair and validation continuation, preserving the source commit and all prior charges. [Decision](research/D1_CONTROL_REVIEW_CONTINUATION_DECISION.md).
+- **Owners:** Research owns the minimal approval-load correction; Platform owns finite consumer/storage/budget changes; Quality owns independent correction/proposal review; Lead owns evidence and execution after approval. No successor invocation has begun.
 
 ## Approval and execution capacity
 
-**Current repair scope (2026-11-01):** the original continuation57ca958 and
+**Latest approved execution (2026-11-04 UTC / 2026-11-03 Pacific):** owner approved the test-boundary package on 2026-11-03. Its test-only apply and source freeze passed, but the copied-control review failed before phases 8/9. Failure-only handoff completed; the source remains at `ae0eea2`. E2 retains44/132; the stopped B index retains a nonadditive367.445086/863.1534917629324 hold. The approved ceiling remains B400/1200, E2 48/144, whole package1218/3054. Proposed successor ceilings are not active. [Observed result](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md).
+
+The approved320GiB disk amendment and disposable-copy filesystem recovery correction remain recorded. No capacity resource operation or resize occurred; the earlier entry was cancelled and future maintenance requires fresh coordination. The scheduling release permits independently approved engineering work under its own admission.
+
+**Historical repair scope (2026-11-01):** the original continuation57ca958 and
 the complete freeze-correction amendment17ab2b2 are both approved. This adds one
 corrected preparation event inside the unchanged cycle200/600 and B400/1,200
 limits, plus E2 reviews8/24. The package ceiling is1,208 CPU /3,024 active-wall
@@ -34,6 +38,10 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-11-04 | Lead | Execute approved source freeze, control review and failure closeout | Apply passed at ae0eea2; control failed on approval-cache ordering; closeout passed. All original outputs retained. No phases8/9, CI, installation or runtime. |
+| 2026-11-04 | Research | Diagnose and prepare minimal review-script correction | One existing approval load moved before lookup in a proposed diff; no executable changed. |
+| 2026-11-04 | Platform | Complete successor dependency/resource plan | Preserve applied source and failed records; specify cycle5 namespaces, append-only inventory and one bounded end-to-end package. |
+| 2026-11-04 | Quality | Independent defect, exact diff and proposal review | Confirmed missed cache-order defect and minimal correction; checking complete successor accounting before owner approval. |
 | 2026-11-01 | Platform / Quality / Research / Project lead | Failed-test cause and bounded continuation | Platform prepared the test-boundary patch; Quality independently accepted it; Research prepared failure-only handoff and accepted the continuation review; Lead accepted actual diagnostics/closeout. No further test attempt or CI was run. |
 | 2026-11-01 | Quality / Research / Platform / Project lead | Final check failed; evidence closeout | Lead executed prepare 6 and check 7 once; Quality prepares the final bounded diagnostic reader; Research accepted Platform's future CI transport source. No CI dispatched. |
 | 2026-11-01 | Quality / Research / Platform / Project lead | Approved correction executed | Lead executed the corrected freeze once; Quality prepares actual control readback; Research binds the remaining collection/check controls; Platform prepares the original hosted evidence transport. No tests or CI dispatched yet. |

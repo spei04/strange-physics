@@ -1,11 +1,11 @@
 # Strange Physics — enterprise product blueprint and living roadmap
 
-**Current checkpoint:** formatting, lint and typing passed; guarded tests recorded 344 passed and one failed fixture-boundary assertion. Diagnostic review and failure closeout passed. The reviewed test-only continuation awaits approval. [Decision](research/D1_TEST_BOUNDARY_CONTINUATION_DECISION.md). [Next owners and action](EXECUTION_LOG.md#current-assignment-board) · [Current evidence](research/D1_RUNTIME_REPAIR_RESULT.md).
+**Current checkpoint:** the approved test correction and source freeze passed at `ae0eea2`. The timed control review failed before test collection because it referenced approval metadata before loading it; failure closeout passed. Phases 8/9, CI, installation and runtime remain unrun. [Result](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md) · [Reviewed successor proposal](research/D1_CONTROL_REVIEW_CONTINUATION_DECISION.md) · [Assignments](EXECUTION_LOG.md#current-assignment-board).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 
 **Document owner:** product owner and engineering lead
-**Last verified:** 2026-10-31
+**Last verified:** 2026-11-04
 **Repository:** [spei04/strange-physics](https://github.com/spei04/strange-physics)
 **Execution:** [Current assignment board](EXECUTION_LOG.md#current-assignment-board); detailed checkpoints below are historical.
 

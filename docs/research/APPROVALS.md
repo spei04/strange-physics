@@ -37,3 +37,9 @@ The owner approved the complete [freeze correction amendment](https://github.com
 One additional corrected-freeze preparation is authorized at10/30 within the existing cycle200/600 and B400/1,200; the cycle has four preparation events and39 bounded metadata leaves. The only remaining software phases are6 and7. E2 receives8/24 for corrected-control and final-outcome reviews, becoming38/114 while retaining the original2/6 handoff. The whole package becomes1,208/3,024. All failed costs and original records remain retained.
 
 The complete software-output reservation is29,966,952 bytes inside32MiB. Existing CI181 configured job-minutes, C150/450, D500/900, all scientific restrictions, the single capture and global1GiB remain unchanged. No formatter replay, fourth cycle, extra CI, second installation/capture, capacity purchase or release is included. [Current evidence](D1_RUNTIME_REPAIR_RESULT.md#approved-corrected-freeze-passed-2026-11-01) distinguishes approvals and successful controls from pending tests/runtime.
+
+## Test-boundary continuation — approved 2026-11-03, stopped 2026-11-04 UTC
+
+The owner approved the [test-only correction and fourth software cycle](D1_TEST_BOUNDARY_CONTINUATION_DECISION.md), including E2 48/144 and whole-package1218/3054, through the recorded Portfolio approval relay. The private owner record is2,350 bytes, SHA-256 `a3ad1a57367f14ddca52ece7f2797191a62e9ca3e98b4d7ae0c11e11943af529`, bound to decision SHA-256 `f0d08336dfd78f7a26492f8008e33732c658138a4d479623bf261c2efcecfa1e`.
+
+The source freeze passed at `ae0eea2`; copied-control review failed and its sole failure handoff passed. [Actual result](D1_TEST_BOUNDARY_CONTINUATION_RESULT.md). Existing approval was present; the error was a reader load-order defect. The [complete successor proposal](D1_CONTROL_REVIEW_CONTINUATION_DECISION.md) is not approved by that earlier answer. No scientific execution is authorized.
