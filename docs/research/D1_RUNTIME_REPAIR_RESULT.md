@@ -1,6 +1,6 @@
 # D1 repair package progress
 
-**Latest status: cycle 6 approved; exact source and fixture preparation in progress.** The previous cycle-5 rebind report failed after four isolated cases passed; failure closeout completed. No cycle-6 acceptance check, phases 8/9, CI, installation or new runtime capture has run. [Approved scope](D1_DISPATCH_RECORD_CONTINUATION_DECISION.md) · [Direct approval](APPROVALS.md#dispatch-record-continuation--approved-2026-11-03-pacific) · [Retained result](D1_CONTROL_REVIEW_CONTINUATION_RESULT.md).
+**Latest status: cycle 6 stopped on an SSH connection failure; failure closeout is blocked before invocation.** No remote outer result or new qualification result was returned. Original evidence and the full current/prior holds are retained; remote duration and usage remain unknown. The frozen handoff cannot represent that unknown duration. No dependent phase, CI, installation or new runtime capture was dispatched. [Incident and evidence](D1_DISPATCH_RECORD_CONTINUATION_RESULT.md) · [Original approved scope](D1_DISPATCH_RECORD_CONTINUATION_DECISION.md).
 
 **Historical check 7:** formatting, lint and typing passed, while guarded tests recorded 344 passed and one failed. The test-only correction was subsequently approved and committed at `ae0eea2`. The detailed checkpoints below retain their original scope.
 

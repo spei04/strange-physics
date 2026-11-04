@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**Current checkpoint:** the owner approved the complete cycle-6 record correction and remaining engineering validation. Platform is preparing the finite source changes, Research the seven-case acceptance harness and review controls, and Quality the independent composed review. No cycle-6 event has run. The failed cycle-5 attempt and all earlier charges remain retained. [Approved scope](research/D1_DISPATCH_RECORD_CONTINUATION_DECISION.md) · [Direct approval](research/APPROVALS.md#dispatch-record-continuation--approved-2026-11-03-pacific) · [Assignments](EXECUTION_LOG.md#current-assignment-board).
+**Current checkpoint:** the single approved cycle-6 invocation stopped at an SSH banner-exchange timeout, with no remote execution result. Original evidence is preserved; remote duration and usage remain unknown. The failure handoff is uninvoked because its frozen contract cannot represent unknown remote timing. A narrow closeout correction is being prepared; no retry or downstream execution is authorized. [Incident and evidence](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md) · [Assignments](EXECUTION_LOG.md#current-assignment-board).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 

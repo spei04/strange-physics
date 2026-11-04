@@ -2,9 +2,15 @@
 
 ## Current assignment board
 
-- **Current:** Cycle 6 is owner-approved; exact source and fixture preparation are in progress. The single counted sequence requires independent source acceptance, current shared-capacity reconciliation and complete stage admission. [Approved scope](research/D1_DISPATCH_RECORD_CONTINUATION_DECISION.md).
-- **Retained result:** Cycle 5 stopped on a missing Git dispatch kind after four isolated cases passed. Failure closeout succeeded; original records and charges remain retained. [Evidence](research/D1_CONTROL_REVIEW_CONTINUATION_RESULT.md).
-- **Source:** Application/test source remains `ae0eea2`; existing cloud checkouts are reused. The reviewed producer fix belongs to the private execution controls.
+- **Current:** Cycle 6 stopped at an SSH banner-exchange timeout. No remote result was returned; remote execution and duration remain unknown. The failure handoff is uninvoked because its input contract rejects unknown timing. [Incident and immutable evidence](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md).
+- **Closeout engineer:** Prepare a versioned, disabled unknown-duration correction; preserve frozen sources and the original unconsumed 2 CPU / 6 wall closeout limit. No retry or downstream authority.
+- **Quality:** Independently review incident recovery and the proposed closeout source/contract joins. The incident record is accepted; correction review is pending.
+- **Lead:** Preserve original observations, publish progress and keep all dependent execution stopped.
+- **Retained:** Full current 225/675 hold plus all prior holds. E2 remains 46/138. Application/test source stays at ae0eea2; both existing cloud checkouts remain needed.
+
+## 2026-11-03 Pacific — cycle-6 transport failure
+
+Platform and Research completed the source graph; Quality accepted source and admission arithmetic. Lead invoked the original transport once. It closed with SSH exit 255, empty stdout and no remote outer record. No later phase or retry was dispatched. After the interrupted turn, Lead recovered the exact input and error bytes against their original SHA-256 observations and saved private evidence; Quality accepted that provenance and retained accounting. The initial source review missed the unknown-duration closeout path. A closeout engineer now owns the narrow correction, with separate Quality review. [Complete status](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md).
 
 ## 2026-11-03 Pacific / 2026-11-04 UTC — cycle-6 assignments
 
