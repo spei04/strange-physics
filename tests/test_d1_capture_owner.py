@@ -371,6 +371,8 @@ def retained_terminal_start(
             del current["ObservedCPUMaxBurst"]
             current["CPUUsageNSec"] = "350"
             manager.queue.append(Snapshot(current, None))
+        # Keep fixture controller reads separate from the parent that resumes next.
+        records.events.append("fixture-controller-return")
         return child
 
     monkeypatch.setattr(start, "start", completed)
@@ -385,6 +387,10 @@ def test_reaped_controller_rejoins_live_before_cleared_terminal(
     item, _, records, start, manager = values
     retained_terminal_start(values, monkeypatch, failed=failed)
     result = watch(values)
+    assert records.events.count("fixture-controller-return") == 1
+    controller_return = records.events.index("fixture-controller-return")
+    assert "read:capture-service.json" in records.events[:controller_return]
+    owner_events = records.events[controller_return + 1 :]
     assert result["status"] == ("incomplete" if failed else "provisional_complete"), result
     assert result["accepted"] is False and result["named_ownership_released"] is False
     assert result["child_reaped"] is True and result["child_code"] == (1 if failed else 0)
@@ -397,12 +403,13 @@ def test_reaped_controller_rejoins_live_before_cleared_terminal(
     if failed:
         assert first(result)["detail"] == "Owned controller returned a failure"
         assert result["supplemental"] == []
-        assert "read:capture-service.json" not in records.events
+        assert "read:capture-service.json" not in owner_events
         saved = records.records["capture-owner-terminal.json"]["snapshot"]
         assert type(saved) is dict
         assert "ObservedCPUMax" not in saved["properties"]
     else:
         assert result["first_fault"] is None
+        assert "read:capture-service.json" in owner_events
 
 
 @pytest.mark.parametrize(
