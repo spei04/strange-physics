@@ -1,6 +1,8 @@
 # D1 repair package progress
 
-**Formatting, lint and typing passed; guarded tests recorded 344 passed and one failed.** The failing assertion includes an earlier fixture read in the parent event history. Independent diagnosis and failure closeout passed. A reviewed test-only correction and bounded continuation await approval; CI, installation and runtime remain unrun.
+**Latest status: stopped after the cycle-5 rebind report failed.** Its four isolated cases passed and failure closeout completed; no phases 8/9, CI, installation or new runtime capture followed. The reviewed producer fix remains unapplied. [Current result](D1_CONTROL_REVIEW_CONTINUATION_RESULT.md) · [Proposed complete continuation](D1_DISPATCH_RECORD_CONTINUATION_DECISION.md).
+
+**Historical check 7:** formatting, lint and typing passed, while guarded tests recorded 344 passed and one failed. The test-only correction was subsequently approved and committed at `ae0eea2`. The detailed checkpoints below retain their original scope.
 
 ## Approval and source
 

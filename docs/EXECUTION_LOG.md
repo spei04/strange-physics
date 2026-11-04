@@ -2,15 +2,26 @@
 
 ## Current assignment board
 
-- **Result:** The approved test-only correction is committed at `ae0eea2`; 437 source paths, pinned environment and copied helpers verified. Timed control review failed on approval-cache ordering; sole failure closeout passed. [Evidence](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md).
-- **Next:** Implement the approved cycle-5 controls and four-case isolated regression harness, then obtain independent exact-source acceptance before the single validation sequence. [Approved scope](research/D1_CONTROL_REVIEW_CONTINUATION_DECISION.md).
-- **Owners:** Research owns the minimal approval-load correction; Platform owns finite consumer/storage/budget changes; Quality owns independent correction/proposal review; Lead owns evidence and execution under the recorded approval. No successor invocation has begun.
+- **Result:** Cycle 5 stopped after a final-report `KeyError: 'kind'`. Four isolated cases passed; all five recorded children closed. Failure handoff passed. [Evidence](research/D1_CONTROL_REVIEW_CONTINUATION_RESULT.md).
+- **Next:** Owner decision on the [complete record-contract continuation](research/D1_DISPATCH_RECORD_CONTINUATION_DECISION.md). The one-line producer correction is reviewed; no retry or later stage is authorized.
+- **Owners:** Platform supplied the minimal unapplied diff; Quality verified cause and fix; Research completed E2 and CI source reviews; Lead executed the original attempt/closeout and retains evidence. Source remains `ae0eea2`.
+
+## 2026-11-04 — cycle-5 execution and stop
+
+| Engineer | Assigned work | Observed status |
+| --- | --- | --- |
+| Platform | Rebind/phase consumers and storage/cost joins | Exact sources reviewed; rebind report failed; one-line producer diff retained unapplied |
+| Research | Four-case isolated harness, E2 controls and CI source review | Four cases recorded passed; E2 failure handoff passed; CI review is static only |
+| Quality | Independent exact graph and incident review | Initial source review missed the producer shape; actual cause and prospective correction independently verified |
+| Lead | Approval, inventory, original execution and durable progress | One rebind and one failure handoff; all dependent work stopped; original streams and charges retained |
+
+The candidate receiver remains an explicitly unreviewed disabled source artifact; its known start-claim issue and retention date are recorded. No C/D invocation or capacity operation occurred.
 
 ## Approval and execution capacity
 
-**Current approved scope (2026-11-04 UTC):** the owner approved the complete cycle-5 package. B600/1800, E2 54/162 and whole-package1424/3672 are now authorized for its named sequence. New cycle225/675 preserves the earlier nonadditive hold once; initial15/45 includes the regression5/15. Exact successor controls and fixture are being prepared for independent review. Source ae0eea2, old evidence,1GiB storage and original conditional downstream limits remain fixed. [Direct approval](research/APPROVALS.md#control-review-continuation--approved-2026-11-04-utc).
+**Current approved scope (2026-11-04 UTC):** the cycle-5 package was approved and executed; its initial rebind failed and sole failure handoff completed. B retains 592.445086/1538.1534917629324 and E2 retains 46/138. The approved ceilings remain B 600/1800, E2 54/162 and package 1424/3672; unused allocation grants no retry. [Direct approval](research/APPROVALS.md#control-review-continuation--approved-2026-11-04-utc) · [Result](research/D1_CONTROL_REVIEW_CONTINUATION_RESULT.md).
 
-**Latest approved execution (2026-11-04 UTC / 2026-11-03 Pacific):** owner approved the test-boundary package on 2026-11-03. Its test-only apply and source freeze passed, but the copied-control review failed before phases 8/9. Failure-only handoff completed; the source remains at `ae0eea2`. E2 retains44/132; the stopped B index retains a nonadditive367.445086/863.1534917629324 hold. That attempt ran under B400/1200, E2 48/144 and whole-package1218/3054; the subsequently approved scope is recorded above. [Observed result](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md).
+**Previous cycle-4 execution (2026-11-04 UTC / 2026-11-03 Pacific):** owner approved the test-boundary package on 2026-11-03. Its test-only apply and source freeze passed, but the copied-control review failed before phases 8/9. Failure-only handoff completed; the source remains at `ae0eea2`. E2 retains44/132; the stopped B index retains a nonadditive367.445086/863.1534917629324 hold. That attempt ran under B400/1200, E2 48/144 and whole-package1218/3054; the subsequently approved scope is recorded above. [Observed result](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md).
 
 The approved320GiB disk amendment and disposable-copy filesystem recovery correction remain recorded. No capacity resource operation or resize occurred; the earlier entry was cancelled and future maintenance requires fresh coordination. The scheduling release permits independently approved engineering work under its own admission.
 

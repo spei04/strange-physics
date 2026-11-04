@@ -1,6 +1,6 @@
 # Strange Physics — enterprise product blueprint and living roadmap
 
-**Current checkpoint:** the test correction and source freeze passed at `ae0eea2`; the copied-control review failed and failure closeout passed. The owner approved the complete cycle-5 repair and validation package. Engineers are preparing its exact controls and isolated regression check for independent review. [Result](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md) · [Approved scope](research/D1_CONTROL_REVIEW_CONTINUATION_DECISION.md) · [Assignments](EXECUTION_LOG.md#current-assignment-board).
+**Current checkpoint:** the approved cycle-5 regression recorded four passing cases, but the rebind's final report failed on a missing dispatch field. Its sole failure closeout passed; no software phase 8/9, CI, installation or runtime followed. The minimal producer fix is independently reviewed and unapplied. [Actual result](research/D1_CONTROL_REVIEW_CONTINUATION_RESULT.md) · [Complete continuation proposal](research/D1_DISPATCH_RECORD_CONTINUATION_DECISION.md) · [Assignments](EXECUTION_LOG.md#current-assignment-board).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 
