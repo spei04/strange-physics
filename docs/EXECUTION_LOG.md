@@ -3,12 +3,14 @@
 ## Current assignment board
 
 - **Result:** The approved test-only correction is committed at `ae0eea2`; 437 source paths, pinned environment and copied helpers verified. Timed control review failed on approval-cache ordering; sole failure closeout passed. [Evidence](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md).
-- **Next:** Owner review of one complete cycle-5 control repair and validation continuation, preserving the source commit and all prior charges. [Decision](research/D1_CONTROL_REVIEW_CONTINUATION_DECISION.md).
-- **Owners:** Research owns the minimal approval-load correction; Platform owns finite consumer/storage/budget changes; Quality owns independent correction/proposal review; Lead owns evidence and execution after approval. No successor invocation has begun.
+- **Next:** Implement the approved cycle-5 controls and four-case isolated regression harness, then obtain independent exact-source acceptance before the single validation sequence. [Approved scope](research/D1_CONTROL_REVIEW_CONTINUATION_DECISION.md).
+- **Owners:** Research owns the minimal approval-load correction; Platform owns finite consumer/storage/budget changes; Quality owns independent correction/proposal review; Lead owns evidence and execution under the recorded approval. No successor invocation has begun.
 
 ## Approval and execution capacity
 
-**Latest approved execution (2026-11-04 UTC / 2026-11-03 Pacific):** owner approved the test-boundary package on 2026-11-03. Its test-only apply and source freeze passed, but the copied-control review failed before phases 8/9. Failure-only handoff completed; the source remains at `ae0eea2`. E2 retains44/132; the stopped B index retains a nonadditive367.445086/863.1534917629324 hold. The approved ceiling remains B400/1200, E2 48/144, whole package1218/3054. Proposed successor ceilings are not active. [Observed result](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md).
+**Current approved scope (2026-11-04 UTC):** the owner approved the complete cycle-5 package. B600/1800, E2 54/162 and whole-package1424/3672 are now authorized for its named sequence. New cycle225/675 preserves the earlier nonadditive hold once; initial15/45 includes the regression5/15. Exact successor controls and fixture are being prepared for independent review. Source ae0eea2, old evidence,1GiB storage and original conditional downstream limits remain fixed. [Direct approval](research/APPROVALS.md#control-review-continuation--approved-2026-11-04-utc).
+
+**Latest approved execution (2026-11-04 UTC / 2026-11-03 Pacific):** owner approved the test-boundary package on 2026-11-03. Its test-only apply and source freeze passed, but the copied-control review failed before phases 8/9. Failure-only handoff completed; the source remains at `ae0eea2`. E2 retains44/132; the stopped B index retains a nonadditive367.445086/863.1534917629324 hold. That attempt ran under B400/1200, E2 48/144 and whole-package1218/3054; the subsequently approved scope is recorded above. [Observed result](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md).
 
 The approved320GiB disk amendment and disposable-copy filesystem recovery correction remain recorded. No capacity resource operation or resize occurred; the earlier entry was cancelled and future maintenance requires fresh coordination. The scheduling release permits independently approved engineering work under its own admission.
 
@@ -38,10 +40,13 @@ SP-00.a is complete for the amended execution mode: one project lead plus at mos
 
 | UTC start | Engineer | Task / scope | State / next handoff |
 | --- | --- | --- | --- |
+| 2026-11-04 | Platform | Approved cycle5 B controls | Adapt counted rebind, unchanged guard behavior, runner and postcollection joins; no project source patch or extra checkout. |
+| 2026-11-04 | Research | Approved E2 successors and isolated regression | Preserve old approval/source proof separately from new authority; implement exact cold-cache and failure-closeout cases. |
+| 2026-11-04 | Quality / Lead | Exact implementation acceptance and execution | Quality reviews final sources and cross-component contracts; Lead seals actual inventory and alone executes after acceptance. |
 | 2026-11-04 | Lead | Execute approved source freeze, control review and failure closeout | Apply passed at ae0eea2; control failed on approval-cache ordering; closeout passed. All original outputs retained. No phases8/9, CI, installation or runtime. |
 | 2026-11-04 | Research | Diagnose and prepare minimal review-script correction | One existing approval load moved before lookup in a proposed diff; no executable changed. |
 | 2026-11-04 | Platform | Complete successor dependency/resource plan | Preserve applied source and failed records; specify cycle5 namespaces, append-only inventory and one bounded end-to-end package. |
-| 2026-11-04 | Quality | Independent defect, exact diff and proposal review | Confirmed missed cache-order defect and minimal correction; checking complete successor accounting before owner approval. |
+| 2026-11-04 | Quality | Independent defect, exact diff and proposal review | Confirmed missed cache-order defect and minimal correction; accepted complete successor accounting before owner approval. |
 | 2026-11-01 | Platform / Quality / Research / Project lead | Failed-test cause and bounded continuation | Platform prepared the test-boundary patch; Quality independently accepted it; Research prepared failure-only handoff and accepted the continuation review; Lead accepted actual diagnostics/closeout. No further test attempt or CI was run. |
 | 2026-11-01 | Quality / Research / Platform / Project lead | Final check failed; evidence closeout | Lead executed prepare 6 and check 7 once; Quality prepares the final bounded diagnostic reader; Research accepted Platform's future CI transport source. No CI dispatched. |
 | 2026-11-01 | Quality / Research / Platform / Project lead | Approved correction executed | Lead executed the corrected freeze once; Quality prepares actual control readback; Research binds the remaining collection/check controls; Platform prepares the original hosted evidence transport. No tests or CI dispatched yet. |

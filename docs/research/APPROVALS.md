@@ -43,3 +43,11 @@ The complete software-output reservation is29,966,952 bytes inside32MiB. Existin
 The owner approved the [test-only correction and fourth software cycle](D1_TEST_BOUNDARY_CONTINUATION_DECISION.md), including E2 48/144 and whole-package1218/3054, through the recorded Portfolio approval relay. The private owner record is2,350 bytes, SHA-256 `a3ad1a57367f14ddca52ece7f2797191a62e9ca3e98b4d7ae0c11e11943af529`, bound to decision SHA-256 `f0d08336dfd78f7a26492f8008e33732c658138a4d479623bf261c2efcecfa1e`.
 
 The source freeze passed at `ae0eea2`; copied-control review failed and its sole failure handoff passed. [Actual result](D1_TEST_BOUNDARY_CONTINUATION_RESULT.md). Existing approval was present; the error was a reader load-order defect. The [complete successor proposal](D1_CONTROL_REVIEW_CONTINUATION_DECISION.md) is not approved by that earlier answer. No scientific execution is authorized.
+
+## Control-review continuation — approved 2026-11-04 UTC
+
+The owner directly answered “Approve complete continuation (recommended)” for the [complete cycle-5 package](https://github.com/spei04/strange-physics/blob/23455231be1df3c452c72e4e6076c1935bb44c70/docs/research/D1_CONTROL_REVIEW_CONTINUATION_DECISION.md). Its exact reviewed document is11,745 bytes, SHA-256 `02d4d5839bbf4e6544d59505676b35d878a6b1a559c571070f222ee9b5fd322d`. The private direct owner record is2,812 bytes, SHA-256 `6821fc055ec749d8dc6c132b8e3ff80e026af2143709e1dd7608f94b6dde7d1f`.
+
+Authorized: one cycle5 with unused phases8/9,225 CPU/675 wall; the initial15/45 preparation includes regression5/15 and staging10/30. B becomes600/1800, E2 becomes54/162 and the package becomes1424/3672. The retained old B hold remains once, and E2 opens44/132. Preserve source `ae0eea2`, all previous records and the267-row original inventory through an explicit append-only transition. The1GiB artifact cap, original conditional CI/install/runtime sequence and scientific restrictions remain unchanged.
+
+Exact successor control, fixture and input/output review precede execution within this approval. No successor event is claimed by this approval record; source/control preparation is in progress.

@@ -1,6 +1,6 @@
 # Strange Physics — enterprise product blueprint and living roadmap
 
-**Current checkpoint:** the approved test correction and source freeze passed at `ae0eea2`. The timed control review failed before test collection because it referenced approval metadata before loading it; failure closeout passed. Phases 8/9, CI, installation and runtime remain unrun. [Result](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md) · [Reviewed successor proposal](research/D1_CONTROL_REVIEW_CONTINUATION_DECISION.md) · [Assignments](EXECUTION_LOG.md#current-assignment-board).
+**Current checkpoint:** the test correction and source freeze passed at `ae0eea2`; the copied-control review failed and failure closeout passed. The owner approved the complete cycle-5 repair and validation package. Engineers are preparing its exact controls and isolated regression check for independent review. [Result](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md) · [Approved scope](research/D1_CONTROL_REVIEW_CONTINUATION_DECISION.md) · [Assignments](EXECUTION_LOG.md#current-assignment-board).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 
