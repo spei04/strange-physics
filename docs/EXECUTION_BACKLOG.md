@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**Current checkpoint:** the approved cycle-5 regression recorded four passing cases, but the rebind's final report failed on a missing dispatch field. Its sole failure closeout passed; no software phase 8/9, CI, installation or runtime followed. The minimal producer fix is independently reviewed and unapplied. [Actual result](research/D1_CONTROL_REVIEW_CONTINUATION_RESULT.md) · [Complete continuation proposal](research/D1_DISPATCH_RECORD_CONTINUATION_DECISION.md) · [Assignments](EXECUTION_LOG.md#current-assignment-board).
+**Current checkpoint:** the owner approved the complete cycle-6 record correction and remaining engineering validation. Platform is preparing the finite source changes, Research the seven-case acceptance harness and review controls, and Quality the independent composed review. No cycle-6 event has run. The failed cycle-5 attempt and all earlier charges remain retained. [Approved scope](research/D1_DISPATCH_RECORD_CONTINUATION_DECISION.md) · [Direct approval](research/APPROVALS.md#dispatch-record-continuation--approved-2026-11-03-pacific) · [Assignments](EXECUTION_LOG.md#current-assignment-board).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 

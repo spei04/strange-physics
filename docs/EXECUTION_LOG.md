@@ -2,9 +2,20 @@
 
 ## Current assignment board
 
-- **Result:** Cycle 5 stopped after a final-report `KeyError: 'kind'`. Four isolated cases passed; all five recorded children closed. Failure handoff passed. [Evidence](research/D1_CONTROL_REVIEW_CONTINUATION_RESULT.md).
-- **Next:** Owner decision on the [complete record-contract continuation](research/D1_DISPATCH_RECORD_CONTINUATION_DECISION.md). The one-line producer correction is reviewed; no retry or later stage is authorized.
-- **Owners:** Platform supplied the minimal unapplied diff; Quality verified cause and fix; Research completed E2 and CI source reviews; Lead executed the original attempt/closeout and retains evidence. Source remains `ae0eea2`.
+- **Current:** Cycle 6 is owner-approved; exact source and fixture preparation are in progress. The single counted sequence requires independent source acceptance, current shared-capacity reconciliation and complete stage admission. [Approved scope](research/D1_DISPATCH_RECORD_CONTINUATION_DECISION.md).
+- **Retained result:** Cycle 5 stopped on a missing Git dispatch kind after four isolated cases passed. Failure closeout succeeded; original records and charges remain retained. [Evidence](research/D1_CONTROL_REVIEW_CONTINUATION_RESULT.md).
+- **Source:** Application/test source remains `ae0eea2`; existing cloud checkouts are reused. The reviewed producer fix belongs to the private execution controls.
+
+## 2026-11-03 Pacific / 2026-11-04 UTC — cycle-6 assignments
+
+| Engineer | Assigned work | Exit evidence |
+| --- | --- | --- |
+| Platform | One-line Git producer correction; finite rebind, runner, child and postcollection joins | Disabled exact sources, preserved history, bounded output/transient forecast |
+| Research | Existing four cases plus three actual producer/report cases; E2 control, outcome and handoff | Seven-case harness and acyclic source graph; exact original-input/output joins |
+| Quality | Independent review of producers, consumers, failure paths, accounting and storage | Accepted exact graph and actual fixture bindings before one invocation |
+| Lead | Direct approval, retained inventory, shared-capacity reconciliation and original execution | Published progress, original observations and truthful success or failure closeout |
+
+The direct owner decision adds 227 CPU / 681 active-wall seconds to the complete package, preserves all prior charges and grants no automatic retry. Source preparation and static review are separate from the single acceptance execution. No scientific run, maintenance entry, deployment or release is included.
 
 ## 2026-11-04 — cycle-5 execution and stop
 
@@ -19,7 +30,7 @@ The candidate receiver remains an explicitly unreviewed disabled source artifact
 
 ## Approval and execution capacity
 
-**Current approved scope (2026-11-04 UTC):** the cycle-5 package was approved and executed; its initial rebind failed and sole failure handoff completed. B retains 592.445086/1538.1534917629324 and E2 retains 46/138. The approved ceilings remain B 600/1800, E2 54/162 and package 1424/3672; unused allocation grants no retry. [Direct approval](research/APPROVALS.md#control-review-continuation--approved-2026-11-04-utc) · [Result](research/D1_CONTROL_REVIEW_CONTINUATION_RESULT.md).
+**Current approved scope (2026-11-04 UTC):** the owner approved one cycle-6 continuation, with B 825/2475, E2 56/168 and whole-package 1651/4353 CPU/active-wall seconds. B opens with the unchanged 592.445086/1538.1534917629324 retained hold; E2 opens at 46/138. One new 225/675 B allowance covers the named preparation and phases 8/9. Exact-source review and fresh complete storage/phase admission precede execution. [Direct approval](research/APPROVALS.md#dispatch-record-continuation--approved-2026-11-03-pacific) · [Prior result](research/D1_CONTROL_REVIEW_CONTINUATION_RESULT.md).
 
 **Previous cycle-4 execution (2026-11-04 UTC / 2026-11-03 Pacific):** owner approved the test-boundary package on 2026-11-03. Its test-only apply and source freeze passed, but the copied-control review failed before phases 8/9. Failure-only handoff completed; the source remains at `ae0eea2`. E2 retains44/132; the stopped B index retains a nonadditive367.445086/863.1534917629324 hold. That attempt ran under B400/1200, E2 48/144 and whole-package1218/3054; the subsequently approved scope is recorded above. [Observed result](research/D1_TEST_BOUNDARY_CONTINUATION_RESULT.md).
 

@@ -1,6 +1,6 @@
 # D1 repair package progress
 
-**Latest status: stopped after the cycle-5 rebind report failed.** Its four isolated cases passed and failure closeout completed; no phases 8/9, CI, installation or new runtime capture followed. The reviewed producer fix remains unapplied. [Current result](D1_CONTROL_REVIEW_CONTINUATION_RESULT.md) · [Proposed complete continuation](D1_DISPATCH_RECORD_CONTINUATION_DECISION.md).
+**Latest status: cycle 6 approved; exact source and fixture preparation in progress.** The previous cycle-5 rebind report failed after four isolated cases passed; failure closeout completed. No cycle-6 acceptance check, phases 8/9, CI, installation or new runtime capture has run. [Approved scope](D1_DISPATCH_RECORD_CONTINUATION_DECISION.md) · [Direct approval](APPROVALS.md#dispatch-record-continuation--approved-2026-11-03-pacific) · [Retained result](D1_CONTROL_REVIEW_CONTINUATION_RESULT.md).
 
 **Historical check 7:** formatting, lint and typing passed, while guarded tests recorded 344 passed and one failed. The test-only correction was subsequently approved and committed at `ae0eea2`. The detailed checkpoints below retain their original scope.
 
