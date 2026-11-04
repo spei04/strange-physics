@@ -2,11 +2,13 @@
 
 ## Current assignment board
 
-- **Current:** Cycle 6 stopped at an SSH banner-exchange timeout. No remote result was returned; remote execution and duration remain unknown. The failure handoff is uninvoked because its input contract rejects unknown timing. [Incident and immutable evidence](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md).
-- **Closeout engineer:** Prepare a versioned, disabled unknown-duration correction; preserve frozen sources and the original unconsumed 2 CPU / 6 wall closeout limit. No retry or downstream authority.
-- **Quality:** Independently review incident recovery and the proposed closeout source/contract joins. The incident record is accepted; correction review is pending.
-- **Lead:** Preserve original observations, publish progress and keep all dependent execution stopped.
-- **Retained:** Full current 225/675 hold plus all prior holds. E2 remains 46/138. Application/test source stays at ae0eea2; both existing cloud checkouts remain needed.
+- **Result:** Cycle 6 failed in SSH; the authorized failure closeout completed. Original remote usage remains unknown. [Evidence](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md).
+- **Owner and next action:** Lead maintains this checkpoint; any further validation needs a separately scoped proposal and approval. Engineering and independent review of this closeout are complete.
+- **Limits:** No retry, downstream execution or science is admitted. All prior/current holds remain retained; E2 is 48/144. Both existing cloud checkouts remain needed.
+
+## 2026-11-03 Pacific — sole failure closeout completed
+
+The closeout engineer prepared a narrowly versioned unknown-time reader; Quality independently accepted exact source and joins. Lead used the original uninvoked 2/6 handoff once under the approved routine-correction clause. It returned zero with known descriptor closure and E2 48/144; Quality accepted the original observations and exact durable receipt/index. The rebind remains failed or unknown, B retains 817.445086/2213.1534917629324, and no retry or downstream work is admitted. Original buffers and source history remain private and preserved. [Immutable evidence and limits](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md).
 
 ## 2026-11-03 Pacific — cycle-6 transport failure
 

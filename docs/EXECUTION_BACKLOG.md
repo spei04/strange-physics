@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**Current checkpoint:** the single approved cycle-6 invocation stopped at an SSH banner-exchange timeout, with no remote execution result. Original evidence is preserved; remote duration and usage remain unknown. The failure handoff is uninvoked because its frozen contract cannot represent unknown remote timing. A narrow closeout correction is being prepared; no retry or downstream execution is authorized. [Incident and evidence](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md) · [Assignments](EXECUTION_LOG.md#current-assignment-board).
+**Current checkpoint:** the approved cycle-6 invocation failed in SSH with no remote execution result. Its sole failure closeout is complete after an independently reviewed correction within the original allowance. Remote usage remains unknown; all charges are retained. No retry or downstream execution is admitted. [Result and evidence](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md) · [Current owners](EXECUTION_LOG.md#current-assignment-board).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 
