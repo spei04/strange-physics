@@ -1,6 +1,6 @@
 # Strange Physics — execution backlog
 
-**Current checkpoint:** the approved cycle-6 invocation failed in SSH with no remote execution result. Its sole failure closeout is complete after an independently reviewed correction within the original allowance. Remote usage remains unknown; all charges are retained. No retry or downstream execution is admitted. [Result and evidence](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md) · [Current owners](EXECUTION_LOG.md#current-assignment-board).
+**Current checkpoint:** cycle 6 failed in SSH and its authorized failure closeout is complete; original remote usage remains unknown and all holds are retained. A complete, independently reviewed [continuation proposal](research/D1_DURABLE_VALIDATION_CONTINUATION_DECISION.md) is ready for owner approval. No further validation is authorized or executed. [Retained result](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md) · [Current owners](EXECUTION_LOG.md#current-assignment-board).
 
 Approved scope and budgets: [research approvals](research/APPROVALS.md). Operating rules: [cloud execution and capacity](EXECUTION_LOG.md#approval-and-execution-capacity).
 

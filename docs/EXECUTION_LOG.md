@@ -2,9 +2,13 @@
 
 ## Current assignment board
 
-- **Result:** Cycle 6 failed in SSH; the authorized failure closeout completed. Original remote usage remains unknown. [Evidence](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md).
-- **Owner and next action:** Lead maintains this checkpoint; any further validation needs a separately scoped proposal and approval. Engineering and independent review of this closeout are complete.
-- **Limits:** No retry, downstream execution or science is admitted. All prior/current holds remain retained; E2 is 48/144. Both existing cloud checkouts remain needed.
+- **Result:** Cycle 6 failed in SSH; its failure closeout completed. Remote usage remains unknown and prior holds remain retained. [Evidence](research/D1_DISPATCH_RECORD_CONTINUATION_RESULT.md).
+- **Owner and next action:** Lead prepared one complete [continuation proposal](research/D1_DURABLE_VALIDATION_CONTINUATION_DECISION.md); Platform and Quality completed independent review. Execution awaits owner approval.
+- **Boundary:** New delivery, software and engineering-storage allowances are proposed only. No new validation, CI, runtime or science was dispatched. Both cloud checkouts remain needed.
+
+## 2026-11-04 Pacific — complete continuation proposal reviewed
+
+Lead composed the [single complete decision](research/D1_DURABLE_VALIDATION_CONTINUATION_DECISION.md). Platform reviewed retained transport/CI/C/D sources, durability, input framing and storage; Quality independently reviewed dependency order, accounting, failure eligibility and original-response persistence. Their findings are incorporated, including a full-size synthetic input boundary within the existing qualification case. Review is complete; no implementation, diagnostic workload, validation, CI or spending was authorized by this planning request. The current checkpoint remains three bullets; historical results and scientific/storage gates are preserved.
 
 ## 2026-11-03 Pacific — sole failure closeout completed
 

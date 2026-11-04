@@ -1,6 +1,6 @@
 # D1 repair package progress
 
-**Latest status: cycle 6 failed in SSH; its authorized failure closeout is complete.** The independently reviewed unknown-time correction used the original 2/6 closeout slot once. E2 is 48/144; all prior/current B holds remain retained and the failed rebind's remote usage remains unknown. No new qualification result, retry or downstream admission is claimed. [Complete result and evidence](D1_DISPATCH_RECORD_CONTINUATION_RESULT.md) · [Original approved scope](D1_DISPATCH_RECORD_CONTINUATION_DECISION.md).
+**Latest status: cycle 6 failed in SSH; its authorized failure closeout is complete.** E2 remains48/144 and B retains817.445086/2213.1534917629324; original remote usage is unknown. The complete [durable-delivery continuation proposal](D1_DURABLE_VALIDATION_CONTINUATION_DECISION.md) has passed independent planning review and awaits owner approval. Its new allowances are not current execution authority. No new validation, CI or runtime was dispatched. [Retained result and evidence](D1_DISPATCH_RECORD_CONTINUATION_RESULT.md).
 
 **Historical check 7:** formatting, lint and typing passed, while guarded tests recorded 344 passed and one failed. The test-only correction was subsequently approved and committed at `ae0eea2`. The detailed checkpoints below retain their original scope.
 
